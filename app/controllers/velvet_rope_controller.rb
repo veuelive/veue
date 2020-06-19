@@ -1,0 +1,2 @@
+class VelvetRopeController < ApplicationController
+end
