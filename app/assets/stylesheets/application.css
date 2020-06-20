@@ -13,9 +13,3 @@
  *= require "global"
  *= require_self
  */
-
- @font-face {
-    font-family: 'bebas';
-    src: url('/fonts/BebasNeue-Regular.eot'), url('/fonts/BebasNeue-Regular.woff2') format('woff2') ;
-    /* src: url('/fonts/BebasNeue-Regular.eot?#iefix') format('embedded-opentype'); */
-} 
