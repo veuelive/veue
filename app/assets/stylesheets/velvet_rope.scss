@@ -13,3 +13,15 @@ h3 {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
 }
+
+.text-forms {
+    display: flex;
+    flex-wrap: wrap;
+
+    & > div {
+        flex: 1;
+        padding: 10px;
+        // max-width: 40vw;
+        min-width: 200px;
+    }
+}

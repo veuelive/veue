@@ -2,63 +2,63 @@
 .content
   %form{:action => "https://veuelive.us10.list-manage.com/subscribe/post?u=d75108d414522fb615e1db0b1&id=754e710071", :method => "post", :name => "mc-embedded-subscribe-form", :novalidate => "", :target => "_blank"}
     #mc_embed_signup_scroll
-      %div
-        .input-control
-          %input#mce-EMAIL.required.email{:name => "EMAIL", :placeholder => "Email", :type => "email", :value => ""}/
-        .input-control
-          %input#mce-FNAME{:name => "FNAME", :placeholder => "First Name", :type => "text", :value => ""}/
-        .input-control
+      .text-forms
+        .name
+          %input#mce-FNAME{:name => "FNAME", :placeholder => "First Name", :type => "text", :value => "" }/
+        .name
           %input#mce-LNAME{:name => "LNAME", :type => "text", :value => "", placeholder: "Last Name"}/
+        .email
+          %input#mce-EMAIL.required.email{:name => "EMAIL", :placeholder => "Email", :type => "email", :value => "", pattern: "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"}/
       
-      .content-no-padding
+      .content-creator
         %strong Would you be interested in learning more about being a content creator on our platform?
-        .row
+        .yes-or-no
           .form-ext-control.form-ext-radio.col-4
             %input.form-ext-input#mce-CONTENTINT-0{:name => "CONTENTINT", :type => "radio", :value => "Yes!"}/
             %label.form-ext-label{:for => "mce-CONTENTINT-0"} Yes!
           .form-ext-control.form-ext-radio.col-4
-            %input.form-ext-input#mce-CONTENTINT-1{:name => "CONTENTINT", :type => "radio", :value => "I'd rather watch others"}/
+            %input.form-ext-input#mce-CONTENTINT-1{:name => "CONTENTINT", :type => "radio",   :value => "I'd rather watch others"}/
             %label.form-ext-label{:for => "mce-CONTENTINT-1"} I'd rather watch others.
-      .content-no-padding
+      .product-interest
         %strong What sort of products get you excited?
-        .content.row
-          .col-4
+        .product-grid
+          .product-type
             %input{:id => "mce-group[13961]-13961-0", :name => "group[13961][1]", :type => "checkbox", :value => "1"}/
             %label{:for => "mce-group[13961]-13961-0"} Women's Fashion
-          .col-4
+          .product-type
             %input{:id => "mce-group[13961]-13961-1", :name => "group[13961][2]", :type => "checkbox", :value => "2"}/
             %label{:for => "mce-group[13961]-13961-1"} Men's Fashion
-          .col-4
+          .product-type
             %input{:id => "mce-group[13961]-13961-2", :name => "group[13961][4]", :type => "checkbox", :value => "4"}/
             %label{:for => "mce-group[13961]-13961-2"} Kid's Fashion
-          .col-4
+          .product-type
             %input{:id => "mce-group[13961]-13961-3", :name => "group[13961][8]", :type => "checkbox", :value => "8"}/
             %label{:for => "mce-group[13961]-13961-3"} Sports Equipment
-          .col-4
+          .product-type
             %input{:id => "mce-group[13961]-13961-4", :name => "group[13961][16]", :type => "checkbox", :value => "16"}/
             %label{:for => "mce-group[13961]-13961-4"} Software
-          .col-4
+          .product-type
             %input{:id => "mce-group[13961]-13961-5", :name => "group[13961][32]", :type => "checkbox", :value => "32"}/
             %label{:for => "mce-group[13961]-13961-5"} Boardgames
-          .col-4
+          .product-type
             %input{:id => "mce-group[13961]-13961-6", :name => "group[13961][64]", :type => "checkbox", :value => "64"}/
             %label{:for => "mce-group[13961]-13961-6"} Home Decor
-          .col-4
+          .product-type
             %input{:id => "mce-group[13961]-13961-7", :name => "group[13961][128]", :type => "checkbox", :value => "128"}/
             %label{:for => "mce-group[13961]-13961-7"} Furniture
-          .col-4
+          .product-type
             %input{:id => "mce-group[13961]-13961-8", :name => "group[13961][256]", :type => "checkbox", :value => "256"}/
             %label{:for => "mce-group[13961]-13961-8"} Shoes
-          .col-4
+          .product-type
             %input{:id => "mce-group[13961]-13961-9", :name => "group[13961][512]", :type => "checkbox", :value => "512"}/
             %label{:for => "mce-group[13961]-13961-9"} Antiques
-          .col-4
+          .product-type
             %input{:id => "mce-group[13961]-13961-10", :name => "group[13961][1024]", :type => "checkbox", :value => "1024"}/
             %label{:for => "mce-group[13961]-13961-10"} Audio Equipment
-          .col-4
+          .product-type
             %input{:id => "mce-group[13961]-13961-11", :name => "group[13961][2048]", :type => "checkbox", :value => "2048"}/
             %label{:for => "mce-group[13961]-13961-11"} Appliances
-          .col-4
+          .product-type
             %input{:id => "mce-group[13961]-13961-12", :name => "group[13961][4096]", :type => "checkbox", :value => "4096"}/
             %label{:for => "mce-group[13961]-13961-12"} Kitchen Equipment
       #mce-responses.clear
@@ -70,4 +70,3 @@
       .u-text-center
         .btn-container
           %input.btn-primary.btn-animated{:name => "subscribe", :type => "submit", :value => "Subscribe"}/
-/ End mc_embed_signup
