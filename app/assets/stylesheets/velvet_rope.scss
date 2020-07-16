@@ -3,13 +3,13 @@
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
 h1.title {
-    font-size: 20rem;
+    font-size: 20vw;
     font-family: 'Roboto', sans-serif;
     font-weight: 100;
 }
 
 h3 {
-    font-size: 2rem;
+    font-size: 3vw;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
 }
@@ -21,7 +21,19 @@ h3 {
     & > div {
         flex: 1;
         padding: 10px;
-        // max-width: 40vw;
         min-width: 200px;
     }
+}
+
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    .product-type {
+        width: 200px;
+    }
+}
+
+.section {
+    margin-top: 20px;
 }
