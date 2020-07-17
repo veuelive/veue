@@ -11,11 +11,12 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :trackable
 
-  def self.find_for_database_authentication warden_condition
+  def self.find_for_database_authentication(warden_condition)
     conditions = warden_condition.dup
     login = conditions.delete(:login)
     where(conditions).where(
-        ["lower(username) = :value OR lower(email) = :value",
-         { value: login.strip.downcase}]).first
+      ["lower(username) = :value OR lower(email) = :value",
+       {value: login.strip.downcase}]
+    ).first
   end
 end
