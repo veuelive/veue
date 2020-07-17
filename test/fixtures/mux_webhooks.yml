@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  event: MyString
+  webhook_id: 
+  event_at: 2020-07-17 12:01:05
+  environment: MyString
+  object_type: MyString
+  object_id: MyString
+  json: MyText
+
+two:
+  event: MyString
+  webhook_id: 
+  event_at: 2020-07-17 12:01:05
+  environment: MyString
+  object_type: MyString
+  object_id: MyString
+  json: MyText

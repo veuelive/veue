@@ -1,0 +1,2 @@
+module MuxWebhooksHelper
+end

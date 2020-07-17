@@ -1,0 +1,2 @@
+class MuxWebhook < ApplicationRecord
+end

@@ -21,6 +21,9 @@ gem "jbuilder", "~> 2.7"
 gem "devise"
 gem "haml-rails"
 
+gem 'nanoid'
+gem 'mux_ruby'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

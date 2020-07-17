@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_200_716_172_947) do
+ActiveRecord::Schema.define(version: 2020_07_17_160105) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +41,33 @@ ActiveRecord::Schema.define(version: 20_200_716_172_947) do
     t.index ["unlock_token"], name: "index_admins_on_unlock_token", unique: true
   end
 
+  create_table "mux_webhooks", force: :cascade do |t|
+    t.bigint "stream_id"
+    t.string "event"
+    t.string "webhook_id"
+    t.datetime "event_at"
+    t.string "environment"
+    t.string "object_type"
+    t.string "object_id"
+    t.text "json"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stream_id"], name: "index_mux_webhooks_on_stream_id"
+  end
+
+  create_table "streams", force: :cascade do |t|
+    t.string "slug", limit: 21
+    t.bigint "user_id"
+    t.string "stream_key"
+    t.string "name"
+    t.string "state"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["slug"], name: "index_streams_on_slug"
+    t.index ["state"], name: "index_streams_on_state"
+    t.index ["user_id"], name: "index_streams_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email", default: "", null: false
@@ -66,4 +94,5 @@ ActiveRecord::Schema.define(version: 20_200_716_172_947) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
+
 end

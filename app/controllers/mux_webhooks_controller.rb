@@ -1,0 +1,2 @@
+class MuxWebhooksController < ApplicationController
+end

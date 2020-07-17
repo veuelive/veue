@@ -5,18 +5,8 @@
       %ul
         - @stream.errors.full_messages.each do |message|
           %li= message
-
-  .field
-    = f.label :slug
-    = f.text_field :slug
-  .field
-    = f.label :stream_key
-    = f.text_field :stream_key
   .field
     = f.label :name
     = f.text_field :name
-  .field
-    = f.label :state
-    = f.text_field :state
   .actions
     = f.submit 'Save'

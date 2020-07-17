@@ -11,6 +11,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :trackable
 
+  has_many :streams
+
+  # This allows us to lookup users via either email OR username. Pretty cool, huh?
   def self.find_for_database_authentication(warden_condition)
     conditions = warden_condition.dup
     login = conditions.delete(:login)
