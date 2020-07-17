@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 2020_07_17_160105) do
     t.text "json"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["object_id"], name: "index_mux_webhooks_on_object_id"
     t.index ["stream_id"], name: "index_mux_webhooks_on_stream_id"
   end
 
@@ -59,10 +60,19 @@ ActiveRecord::Schema.define(version: 2020_07_17_160105) do
     t.string "slug", limit: 21
     t.bigint "user_id"
     t.string "stream_key"
+    t.string "mux_live_stream_id"
+    t.string "mux_asset_id"
+    t.string "mux_playback_id"
+    t.string "mux_asset_state"
+    t.string "mux_live_stream_state"
     t.string "name"
     t.string "state"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["mux_asset_id"], name: "index_streams_on_mux_asset_id"
+    t.index ["mux_live_stream_id"], name: "index_streams_on_mux_live_stream_id"
+    t.index ["mux_live_stream_state"], name: "index_streams_on_mux_live_stream_state"
+    t.index ["mux_playback_id"], name: "index_streams_on_mux_playback_id"
     t.index ["slug"], name: "index_streams_on_slug"
     t.index ["state"], name: "index_streams_on_state"
     t.index ["user_id"], name: "index_streams_on_user_id"

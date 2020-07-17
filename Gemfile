@@ -23,6 +23,7 @@ gem "haml-rails"
 
 gem 'nanoid'
 gem 'mux_ruby'
+gem "figaro"
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

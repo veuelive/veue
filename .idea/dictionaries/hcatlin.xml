@@ -15,6 +15,8 @@
       <w>trackable</w>
       <w>turbolinks</w>
       <w>webdrivers</w>
+      <w>webhook</w>
+      <w>webhooks</w>
       <w>webpacker</w>
     </words>
   </dictionary>
