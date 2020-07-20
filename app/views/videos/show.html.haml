@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @video.user_id
+%p
+  %b Title:
+  = @video.title
+
+= link_to 'Edit', edit_video_path(@video)
+\|
+= link_to 'Back', videos_path

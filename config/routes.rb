@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  resources :streams
 
+  resources :videos
   post '/mux/webhook', to: "mux_webhooks#index"
 
   devise_for :users

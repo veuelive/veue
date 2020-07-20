@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+jorts:
+  user: hcatlin
+  title: Jort Shopping
+
+games:
+  user: hcatlin
+  title: Steam Games

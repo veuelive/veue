@@ -1,0 +1,16 @@
+= form_for @video do |f|
+  - if @video.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@video.errors.count, "error")} prohibited this video from being saved:"
+      %ul
+        - @video.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :user_id
+    = f.text_field :user_id
+  .field
+    = f.label :title
+    = f.text_field :title
+  .actions
+    = f.submit 'Save'

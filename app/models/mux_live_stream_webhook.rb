@@ -1,0 +1,4 @@
+
+class MuxLiveStreamWebhook < MuxWebhook
+
+end

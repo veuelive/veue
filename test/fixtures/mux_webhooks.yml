@@ -5,8 +5,6 @@ one:
   webhook_id: 
   event_at: 2020-07-17 12:01:05
   environment: MyString
-  object_type: MyString
-  object_id: MyString
   json: MyText
 
 two:
@@ -14,6 +12,4 @@ two:
   webhook_id: 
   event_at: 2020-07-17 12:01:05
   environment: MyString
-  object_type: MyString
-  object_id: MyString
   json: MyText
