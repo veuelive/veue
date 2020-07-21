@@ -118,7 +118,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
           PGPORT: ${{ job.services.postgres.ports[5432] }}
         run: |
-          rails db:setup
+          bundle exec rails db:setup
 
       - name: Run tests
         env:
@@ -128,4 +128,4 @@ jobs:
           POSTGRES_USER: rails_github_actions
           POSTGRES_PASSWORD: postgres
           PGPORT: ${{ job.services.postgres.ports[5432] }}
-        run: rake test
+        run: bundle exec rake
