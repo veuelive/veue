@@ -24,14 +24,22 @@ class MuxLiveStreamWebhook < MuxWebhook
     logger.debug(payload.inspect)
     case event_name
     when "active", "connected", "recording"
-      video = mux_live_stream.ensure_video_exists!
-      video.go_live! if video.may_go_live?
-      playback = payload["playback_ids"].find { |playback| playback["policy"] == "public" }
-      video.update!(playback_url: playback["id"]) if playback
+      stream_is_live(mux_live_stream)
     when "disconnected", "idle"
-      mux_live_stream.video.pause! if mux_live_stream.video&.may_pause?
+      stream_is_offline(mux_live_stream)
     else
       logger.debug "Unhandled MuxLiveStreamWebhook event #{event}"
     end
+  end
+
+  def stream_is_offline(mux_live_stream)
+    mux_live_stream.video.pause! if mux_live_stream.video&.may_pause?
+  end
+
+  def stream_is_live(mux_live_stream)
+    video = mux_live_stream.ensure_video_exists!
+    video.go_live! if video.may_go_live?
+    playback = payload["playback_ids"].find { |playback| playback["policy"] == "public" }
+    video.update!(playback_url: playback["id"]) if playback
   end
 end
