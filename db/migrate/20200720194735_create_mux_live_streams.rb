@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateMuxLiveStreams < ActiveRecord::Migration[6.0]
   def change
     create_table :mux_live_streams do |t|
@@ -12,7 +14,7 @@ class CreateMuxLiveStreams < ActiveRecord::Migration[6.0]
 
       t.timestamps
 
-      t.index [:user_id, :state]
+      t.index %i[user_id state]
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MuxService
   def initialize
     @live_api = MuxRuby::LiveStreamsApi.new

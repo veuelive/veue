@@ -1,3 +1,18 @@
+require: rubocop-rails
+
+inherit_mode:
+  merge:
+    - Exclude
+
+AllCops:
+  TargetRubyVersion: 2.7.1
+  EnabledByDefault: true
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'bin/{rails,rake}'
+    - !ruby/regexp /old_and_unused\.rb$/
 
 # Commonly used screens these days easily fit more than 80 characters.
 Layout/LineLength:
@@ -16,6 +31,19 @@ Metrics/ClassLength:
 # from a regular assignment.
 Layout/SpaceAroundEqualsInParameterDefault:
   EnforcedStyle: no_space
+
+Style/Copyright:
+  Enabled: false
+
+Style/MethodCallWithArgsParentheses:
+  IgnoredMethods:
+    - require
+    - gem
+    - source
+    - ruby
+
+Style/DocumentationMethod:
+  Enabled: false
 
 # Single quotes being faster is hardly measurable and only affects parse time.
 # Enforcing double quotes reduces the times where you need to change them
@@ -76,12 +104,6 @@ Style/SignalException:
 Lint/SuppressedException:
   Enabled: false
 
-Layout/SpaceInsideBlockBraces:
-  # The space here provides no real gain in readability while consuming
-  # horizontal space that could be used for a better parameter name.
-  # Also {| differentiates better from a hash than { | does.
-  SpaceBeforeBlockParameters: false
-
 # No trailing space differentiates better from the block:
 # foo} means hash, foo } means block.
 Layout/SpaceInsideHashLiteralBraces:
@@ -116,7 +138,7 @@ Style/Documentation:
   Enabled: false 
 
 # This is just silly. Calling the argument `other` in all cases makes no sense.
-Layout/BinaryOperatorParameterName:
+Naming/BinaryOperatorParameterName:
   Enabled: false 
 
 # There are valid cases, for example debugging Cucumber steps,

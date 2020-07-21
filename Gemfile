@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
-git_source(:github) {|repo| "https://github.com/#{repo}.git" }
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "rails", "~> 6.0.3", ">= 6.0.3.2"
@@ -18,12 +20,20 @@ gem "jbuilder", "~> 2.7"
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 
+# Used for our user authentication stack
 gem "devise"
+
+# Powers our templates
 gem "haml-rails"
 
-gem 'nanoid'
-gem 'mux_ruby'
+# Allows us to do development ENV configuration management with a config/application.yml file
 gem "figaro"
+
+# Ruby library for working with the video streaming network Mux
+gem "mux_ruby"
+
+# Generates short UUIDs that we use for slugs in some models like Video
+gem "nanoid"
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -34,24 +44,25 @@ gem "bootsnap", ">= 1.4.2", require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
+  # Rubocop for making sure that our code follows standards- like a comment for every gem!
+  gem "rubocop-rails", require: false
 end
 
 group :development do
-  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
+  # Comes default with Rails 6- used for monitoring file changes
   gem "listen", "~> 3.2"
-  gem "web-console", ">= 3.3.0"
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem "rubocop", require: false
-  gem "rubocop-rails", require: false
-  gem "rufo"
-  gem "solargraph"
+  # For fast loading Rails development
   gem "spring"
+  # I'm guessing this connects listen + spring- came with the default generator
   gem "spring-watcher-listen", "~> 2.0.0"
+  # Gives a friendly console interface for bugs during development
+  gem "web-console", ">= 3.3.0"
 end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem "capybara", ">= 2.15"
+  # Selenium can pop open a web browser and run tests!
   gem "selenium-webdriver"
   # Easy installation and use of web drivers to run system tests with browsers
   gem "webdrivers"

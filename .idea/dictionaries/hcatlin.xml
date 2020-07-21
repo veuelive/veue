@@ -7,11 +7,13 @@
       <w>capybara</w>
       <w>confirmable</w>
       <w>jbuilder</w>
+      <w>nanoid</w>
       <w>omniauthable</w>
       <w>registerable</w>
       <w>rememberable</w>
       <w>rubocop</w>
       <w>rufo</w>
+      <w>solargraph</w>
       <w>trackable</w>
       <w>turbolinks</w>
       <w>veue</w>
