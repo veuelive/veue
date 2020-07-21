@@ -1,6 +1,9 @@
 <component name="InspectionProjectProfileManager">
   <profile version="1.0">
     <option name="myName" value="Project Default" />
+    <inspection_tool class="RubyClassMethodNamingConvention" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="m_maxLength" value="80" />
+    </inspection_tool>
     <inspection_tool class="RubyConvertAllHashesInFileInspections" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
   </profile>
 </component>
