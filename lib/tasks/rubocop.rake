@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-require "rubocop/rake_task"
+unless Rails.env.production?
+  require "rubocop/rake_task"
 
-RuboCop::RakeTask.new do |task|
-  task.requires << "rubocop-rails"
+  RuboCop::RakeTask.new do |task|
+    task.requires << "rubocop-rails"
+  end
 end
