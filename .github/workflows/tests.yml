@@ -118,7 +118,8 @@ jobs:
           POSTGRES_PASSWORD: postgres
           PGPORT: ${{ job.services.postgres.ports[5432] }}
         run: |
-          bundle exec rails db:setup
+          cp config/database.ci.yml config/database.yml
+          bundle exec rake db:create db:migrate
 
       - name: Run tests
         env:
