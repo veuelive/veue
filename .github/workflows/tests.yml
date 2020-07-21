@@ -1,14 +1,10 @@
 name: Rails Tests
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  [push, pull_request]
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
 
     services:
@@ -45,7 +41,7 @@ jobs:
           PGUSER: postgres
           RAILS_ENV: test
         run: |
-        bundle exec rake test
-        bundle exec rake test:system
-        # or Rspec
-        # bundle exec rspec
+          bundle exec rake test
+          bundle exec rake test:system
+          # or Rspec
+          # bundle exec rspec
