@@ -19,7 +19,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.6.x
+          ruby-version: .ruby-version
 
       - name: Install PostgreSQL 11 client
         run: |
