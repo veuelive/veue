@@ -68,7 +68,6 @@ ActiveRecord::Schema.define(version: 2020_07_20_195019) do
     t.string "mux_id"
     t.string "stream_key"
     t.string "playback_id"
-    t.string "mux_status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["mux_id"], name: "index_mux_live_streams_on_mux_id"
@@ -121,7 +120,9 @@ ActiveRecord::Schema.define(version: 2020_07_20_195019) do
 
   create_table "videos", force: :cascade do |t|
     t.bigint "user_id", null: false
+    t.string "slug"
     t.string "title"
+    t.string "playback_url"
     t.string "state"
     t.bigint "mux_live_stream_id"
     t.datetime "created_at", precision: 6, null: false

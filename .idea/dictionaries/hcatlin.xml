@@ -1,6 +1,7 @@
 <component name="ProjectDictionaryState">
   <dictionary name="hcatlin">
     <words>
+      <w>aasm</w>
       <w>authenticatable</w>
       <w>bootsnap</w>
       <w>byebug</w>
@@ -13,6 +14,7 @@
       <w>rememberable</w>
       <w>rubocop</w>
       <w>rufo</w>
+      <w>sidekiq</w>
       <w>solargraph</w>
       <w>trackable</w>
       <w>turbolinks</w>

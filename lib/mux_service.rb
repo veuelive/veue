@@ -16,4 +16,8 @@ class MuxService
 
     @live_api.create_live_stream(create_live_stream_request)
   end
+
+  def destroy_live_stream(live_stream_id)
+    @live_api.delete_live_stream(live_stream_id)
+  end
 end

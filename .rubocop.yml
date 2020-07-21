@@ -41,6 +41,13 @@ Style/MethodCallWithArgsParentheses:
     - gem
     - source
     - ruby
+    - perform_later
+    - perform_now
+    - puts
+    - print
+    - error
+    - debug
+    - warn
 
 Style/DocumentationMethod:
   Enabled: false

@@ -6,6 +6,7 @@ class CreateVideos < ActiveRecord::Migration[6.0]
       t.belongs_to :user, null: false, foreign_key: true
       t.string :slug
       t.string :title
+      t.string :playback_url
       t.string :state, index: true
       t.belongs_to :mux_live_stream
 

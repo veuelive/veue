@@ -3,24 +3,45 @@
 class MuxWebhook < ApplicationRecord
   belongs_to :mux_target, polymorphic: true, optional: true
 
-  class << self
-    def build_from_json(json)
-      payload = JSON.parse(json)
+  def process!
+    logger.warn("No specific handler for webhook of type #{event}")
+  end
 
-      klass, mux_target = determine_target(payload)
+  # Helper method to split up a long series of event names to the core items
+  # Aka, "video.live_stream.disconnected" => "disconnected"
+  def event_name
+    @event_name ||= event.split(".").last
+  end
+
+  def payload
+    @payload ||= JSON.parse(json)["data"]
+  end
+
+  class << self
+    def handle_webhook(json)
+      webhook = build_from_json(json)
+      logger.debug "Setting Job for Later"
+      MuxWebhookJob.perform_later webhook
+    end
+
+    def build_from_json(json)
+      webhook_payload = JSON.parse(json)
+
+      klass, mux_target = determine_target(webhook_payload)
 
       klass.create!(
-        event: payload["type"],
-        webhook_id: payload["id"],
-        event_at: payload["created_at"],
-        environment: payload["environment"]["name"],
+        event: webhook_payload["type"],
+        webhook_id: webhook_payload["id"],
+        event_at: webhook_payload["created_at"],
+        environment: webhook_payload["environment"]["name"],
         mux_target: mux_target,
         json: json
       )
     end
 
     def determine_target(payload)
-      case payload["object"]
+      object = payload["object"]
+      case object["type"]
       when "asset"
         klass = MuxAssetWebhook
         mux_target = MuxAsset.find_by(mux_id: object["id"])

@@ -10,7 +10,7 @@ class CreateMuxLiveStreams < ActiveRecord::Migration[6.0]
       t.string :mux_id, index: true
       t.string :stream_key
       t.string :playback_id
-      t.string :mux_status
+      # t.string :mux_status
 
       t.timestamps
 

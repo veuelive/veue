@@ -35,6 +35,12 @@ gem "mux_ruby"
 # Generates short UUIDs that we use for slugs in some models like Video
 gem "nanoid"
 
+# Helps us build state machines
+gem "aasm"
+
+# Background Job Running Library for ActiveJob
+gem "sidekiq"
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
