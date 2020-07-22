@@ -2,11 +2,14 @@
   <dictionary name="hcatlin">
     <words>
       <w>aasm</w>
+      <w>activeadmin</w>
       <w>authenticatable</w>
       <w>bootsnap</w>
       <w>byebug</w>
+      <w>cancancan</w>
       <w>capybara</w>
       <w>confirmable</w>
+      <w>hcatlin</w>
       <w>jbuilder</w>
       <w>nanoid</w>
       <w>omniauthable</w>

@@ -1,5 +1,6 @@
 // Load Active Admin's styles into Webpacker,
 // see `active_admin.scss` for customization.
-import "../stylesheets/active_admin";
+import "./active_admin/active_admin";
 
+// Now load the JS
 import "@activeadmin/activeadmin";
