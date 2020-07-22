@@ -13,10 +13,6 @@ class MuxWebhook < ApplicationRecord
     @event_name ||= event.split(".").last
   end
 
-  def payload
-    @payload ||= JSON.parse(json)["data"]
-  end
-
   class << self
     def handle_webhook(json)
       webhook = build_from_json(json)
@@ -32,10 +28,11 @@ class MuxWebhook < ApplicationRecord
       klass.create!(
         event: webhook_payload["type"],
         webhook_id: webhook_payload["id"],
-        event_at: webhook_payload["created_at"],
-        environment: webhook_payload["environment"]["name"],
+        event_received_at: webhook_payload["created_at"],
+        mux_environment: webhook_payload["environment"]["name"],
         mux_target: mux_target,
-        json: json
+        payload: webhook_payload["data"],
+        mux_request_id: webhook_payload["request_id"],
       )
     end
 

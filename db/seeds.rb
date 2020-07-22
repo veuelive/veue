@@ -10,12 +10,19 @@
 
 unless Rails.env.production?
   %w[hcatlin@gmail.com malrase@gmail.com].map do |email|
-    User.create({
+    user = User.new(
       email: email,
       username: email.split("@").first,
-      confirmed_at: Time.zone.now,
       password: "mohawk",
       password_confirmation: "mohawk"
-    })
+    )
+    user.skip_confirmation!
+    user.save!
   end
 end
+
+Admin.create!(
+  email: 'test@veuelive.com',
+  password: 'password',
+  password_confirmation: 'password'
+) if Rails.env.development?

@@ -6,10 +6,12 @@ class CreateMuxWebhooks < ActiveRecord::Migration[6.0]
       t.belongs_to :mux_target, polymorphic: true, index: true
       t.string :type
       t.string :event
-      t.string :webhook_id
-      t.datetime :event_at
-      t.string :environment
-      t.text :json
+      t.string :webhook_id, unique: true # Should be for idempotency
+      t.datetime :event_received_at
+      t.datetime :finished_processing_at
+      t.string :mux_environment
+      t.string :mux_request_id
+      t.json :payload
 
       t.timestamps
     end

@@ -29,15 +29,15 @@ class User < ApplicationRecord
     find_by(conditions).find_by(
       [
         "lower(username) = :value OR lower(email) = :value",
-        {value: login.strip.downcase}
-      ]
+        {value: login.strip.downcase},
+      ],
     )
   end
 
   def setup_as_streamer!
     stream_object = MuxLiveStream.create!(user: self)
     update!({
-              mux_live_stream: stream_object
+              mux_live_stream: stream_object,
             })
   end
 end

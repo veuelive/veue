@@ -41,6 +41,15 @@ gem "aasm"
 # Background Job Running Library for ActiveJob
 gem "sidekiq"
 
+# Used for our admin interfaces
+gem "activeadmin"
+
+# Helps set up role-based access
+gem "cancancan"
+
+# A decorator pattern for our models
+gem "draper"
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
