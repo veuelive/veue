@@ -56,18 +56,18 @@ ActiveRecord::Schema.define(version: 2020_07_22_145315) do
   end
 
   create_table "mux_assets", force: :cascade do |t|
-    t.string "state"
+    t.string "mux_status"
     t.string "mux_id"
     t.string "playback_id"
     t.bigint "user_id", null: false
     t.bigint "video_id", null: false
-    t.string "mux_status"
     t.float "duration"
     t.string "max_stored_resolution"
     t.float "max_stored_frame_rate"
     t.string "aspect_ratio"
     t.boolean "per_title_encode"
     t.boolean "is_live"
+    t.datetime "latest_mux_webhook_at"
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -78,14 +78,15 @@ ActiveRecord::Schema.define(version: 2020_07_22_145315) do
 
   create_table "mux_live_streams", force: :cascade do |t|
     t.bigint "user_id"
-    t.string "state"
+    t.string "mux_status"
     t.string "mux_id"
     t.string "stream_key"
     t.string "playback_id"
+    t.datetime "latest_mux_webhook_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["mux_id"], name: "index_mux_live_streams_on_mux_id"
-    t.index ["user_id", "state"], name: "index_mux_live_streams_on_user_id_and_state"
+    t.index ["user_id", "mux_status"], name: "index_mux_live_streams_on_user_id_and_mux_status"
   end
 
   create_table "mux_webhooks", force: :cascade do |t|

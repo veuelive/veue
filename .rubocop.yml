@@ -48,6 +48,7 @@ Style/MethodCallWithArgsParentheses:
     - error
     - debug
     - warn
+    - info
 
 Style/DocumentationMethod:
   Enabled: false

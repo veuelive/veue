@@ -14,7 +14,7 @@ class MuxLiveStream < ApplicationRecord
     live_stream_response = MUX_SERVICE.create_live_stream
     data = live_stream_response.data
     self.mux_id = data.id
-    self.state = data.status
+    self.mux_status = data.status
     self.stream_key = data.stream_key
     self.playback_id = data.playback_ids&.first&.id
   end
@@ -23,7 +23,9 @@ class MuxLiveStream < ApplicationRecord
   # MuxLiveStream when we have some kind of video event start
   # This will get called when we _need_ a Video model to exist
   def ensure_video_exists!
-    return video if video
+    if video&.live?
+      return video if video
+    end
 
     create_video(user_id: user_id)
   end
