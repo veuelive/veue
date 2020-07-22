@@ -89,6 +89,14 @@ Style/ParenthesesAroundCondition:
 Lint/AssignmentInCondition:
   AllowSafeAssignment: false
 
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+
 # A specialized exception class will take one or more arguments and construct the message from it.
 # So both variants make sense. 
 Style/RaiseArgs:
