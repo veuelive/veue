@@ -6,17 +6,16 @@ body {
 
   .layout-container {
     background-clip: content-box;
-    margin: 2vw;
+    margin: 2vh 2vw 2vh 2vw;
     border: 1px solid #E2E3E7;
     border-radius: 50px;
     display: flex;
-    height: 100vh;
+    height: 95vh;
     background: white;
     align-items: stretch;
 
     > .sidebar {
-      width: 10vw;
-      max-width: 100px;
+      width: 80px;
       border-right: 1px solid white;
 
       display: flex;
@@ -29,8 +28,10 @@ body {
         align-items: center;
 
         .logo {
-          height: 10vw;
-          font-size: 8vw;
+          height: 60px;
+          margin-top: 30px;
+          color: #666666;
+          font-size: 40px;
         }
 
         nav {
@@ -44,6 +45,11 @@ body {
             }
           }
         }
+      }
+
+      .sidebar-bottom {
+        margin: 40px;
+        text-align: center;
       }
     }
 
