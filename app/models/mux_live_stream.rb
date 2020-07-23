@@ -5,8 +5,6 @@ class MuxLiveStream < ApplicationRecord
   has_many :mux_webhooks, as: :webhook_target, dependent: :restrict_with_exception
   has_many :videos, dependent: :nullify
 
-  has_one :video, dependent: :nullify
-
   before_create :setup_with_mux
   before_destroy :remove_from_mux
 

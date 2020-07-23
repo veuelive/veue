@@ -97,4 +97,15 @@ RSpec.describe "MuxWebhooks" do
       expect(MuxLiveStream.first.mux_status).to eq("idle")
     end
   end
+
+  context "we have two videos in total!" do
+    it "should create two videos" do
+      skip_ahead_to_next!("video.asset.live_stream_completed")
+      skip_ahead_to_next!("video.asset.ready")
+      # So this would be into the second stream now
+      expect(Video.count).to eq(2)
+      expect(Video.where(state: "live").count).to eq(1)
+      expect(Video.where(state: "finished").count).to eq(1)
+    end
+  end
 end
