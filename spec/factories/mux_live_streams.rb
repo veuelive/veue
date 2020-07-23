@@ -5,9 +5,5 @@ FactoryBot.define do
     stream_key { Faker::Alphanumeric.alphanumeric(number: 20) }
     user { association :user }
     mux_status { "idle" }
-
-    # This is the ID that's in the webhooks text fixtures
-    factory :stream_for_webhooks do
-    end
   end
 end

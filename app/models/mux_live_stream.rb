@@ -11,6 +11,7 @@ class MuxLiveStream < ApplicationRecord
   before_destroy :remove_from_mux
 
   def setup_with_mux
+    return if mux_id
     live_stream_response = MUX_SERVICE.create_live_stream
     data = live_stream_response.data
     self.mux_id = data.id

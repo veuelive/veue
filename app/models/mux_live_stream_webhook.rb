@@ -2,10 +2,12 @@
 
 class MuxLiveStreamWebhook < MuxWebhook
   def process_recording_event!
-    mux_target.user.videos.create!
+    mux_target.videos.create!(
+      user: mux_target.user,
+      playback_url: MUX_SERVICE.url_for_playback_id(mux_target.playback_id),
+    )
     mux_target.video.mux_assets.create!(
       mux_id: payload["active_asset_id"],
-      user: mux_target.video.user,
     )
     mux_target.video.go_live! if mux_target.video.may_go_live?
   end

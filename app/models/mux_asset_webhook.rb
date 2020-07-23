@@ -2,10 +2,8 @@
 
 class MuxAssetWebhook < MuxWebhook
   def process_live_stream_completed_event!
-    mux_target&.video&.finish!
-  end
-
-  def process_ready
-    mux_target&.video&.asset_ready!
+    video = mux_target&.video
+    video.playback_url = MUX_SERVICE.url_for_playback_id(self.mux_target.playback_id)
+    video.finish!
   end
 end

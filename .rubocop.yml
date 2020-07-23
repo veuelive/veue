@@ -54,6 +54,12 @@ Style/MethodCallWithArgsParentheses:
     - context
     - to
     - include
+    - post
+    - get
+    - put
+    - delete
+    - patch
+    - to_not
 
 Style/DocumentationMethod:
   Enabled: false

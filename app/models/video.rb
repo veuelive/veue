@@ -20,9 +20,6 @@ class Video < ApplicationRecord
     # The stream is over, but we might not be ready to do replay yet
     state :finished
 
-    # We are totally ready for a replay now!
-    state :completed
-
     event :go_live do
       transitions from: :waiting, to: :live
       transitions from: :paused, to: :live
@@ -34,10 +31,6 @@ class Video < ApplicationRecord
 
     event :finish do
       transitions from: %i[live paused], to: :finished
-    end
-
-    event :asset_ready do
-      transitions from: :finished, to: :completed
     end
   end
 end

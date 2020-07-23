@@ -2,6 +2,7 @@
 
 class MuxWebhook < ApplicationRecord
   belongs_to :mux_target, polymorphic: true, optional: true
+  validates :mux_id, presence: true, uniqueness: true
 
   def process!
     logger.warn("No specific handler for webhook of type #{event}")
@@ -15,13 +16,9 @@ class MuxWebhook < ApplicationRecord
 
   class << self
     def handle_webhook(json)
-      data = JSON.parse(json)
-      File.open("test/fixtures/webhooks/#{Time.now.utc.to_i}-#{data['id']}.json", "w+") do |file|
-        file.write(json)
-      end
-      # webhook = build_from_json(json)
-      # logger.debug "Setting Job for Later"
-      # MuxWebhookJob.perform_later webhook
+      webhook = build_from_json(json)
+      logger.debug "Setting Job for Later"
+      MuxWebhookJob.perform_later webhook
     end
 
     def build_from_json(json)

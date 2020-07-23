@@ -129,4 +129,4 @@ jobs:
           POSTGRES_USER: rails_github_actions
           POSTGRES_PASSWORD: postgres
           PGPORT: ${{ job.services.postgres.ports[5432] }}
-        run: bundle exec rake
+        run: bundle exec rspec

@@ -20,4 +20,8 @@ class MuxService
   def destroy_live_stream(live_stream_id)
     @live_api.delete_live_stream(live_stream_id)
   end
+
+  def url_for_playback_id(playback_id)
+    "https://stream.mux.com/#{playback_id}.m3u8"
+  end
 end

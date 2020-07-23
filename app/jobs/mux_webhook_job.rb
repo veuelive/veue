@@ -40,6 +40,7 @@ class MuxWebhookJob < ApplicationJob
 
       playback = webhook.payload["playback_ids"]&.find { |playback| playback["policy"] == "public" }
       target.playback_id = playback["id"] if playback
+      target.mux_status = webhook.payload["status"]
 
       target.save!
     else
