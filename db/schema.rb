@@ -59,7 +59,6 @@ ActiveRecord::Schema.define(version: 2020_07_22_145315) do
     t.string "mux_status"
     t.string "mux_id"
     t.string "playback_id"
-    t.bigint "user_id", null: false
     t.bigint "video_id", null: false
     t.float "duration"
     t.string "max_stored_resolution"
@@ -72,7 +71,6 @@ ActiveRecord::Schema.define(version: 2020_07_22_145315) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["mux_id"], name: "index_mux_assets_on_mux_id"
-    t.index ["user_id"], name: "index_mux_assets_on_user_id"
     t.index ["video_id"], name: "index_mux_assets_on_video_id"
   end
 
@@ -94,7 +92,7 @@ ActiveRecord::Schema.define(version: 2020_07_22_145315) do
     t.bigint "mux_target_id"
     t.string "type"
     t.string "event"
-    t.string "webhook_id"
+    t.string "mux_id"
     t.datetime "event_received_at"
     t.datetime "finished_processing_at"
     t.string "mux_environment"
@@ -149,7 +147,6 @@ ActiveRecord::Schema.define(version: 2020_07_22_145315) do
     t.index ["user_id"], name: "index_videos_on_user_id"
   end
 
-  add_foreign_key "mux_assets", "users"
   add_foreign_key "mux_assets", "videos"
   add_foreign_key "videos", "users"
 end

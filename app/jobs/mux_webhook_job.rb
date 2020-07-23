@@ -5,9 +5,9 @@ class MuxWebhookJob < ApplicationJob
 
   def perform(webhook)
     if webhook.finished_processing_at
-      logger.warn "Attempted to double-process webhook #{webhook.id} / #{webhook.webhook_id}"
-    elsif (webhook.mux_target&.latest_mux_webhook_at || Time.at(0)) > webhook.event_received_at
-      logger.warn "Processed webhook too late #{webhook.id} / #{webhook.webhook_id}"
+      logger.warn "Attempted to double-process webhook #{webhook.id} / #{webhook.mux_id}"
+    elsif (webhook.mux_target&.latest_mux_webhook_at || Time.zone.at(0)) > webhook.event_received_at
+      logger.warn "Processed webhook too late #{webhook.id} / #{webhook.mux_id}"
     else
       logger.info "Processing event #{webhook.event}"
       process_webhook(webhook)
@@ -23,7 +23,7 @@ class MuxWebhookJob < ApplicationJob
     if webhook.respond_to?(method_name)
       webhook.send(method_name)
     else
-      logger.debug("nothing to do for webhook of event #{webhook.event_name} / #{webhook.webhook_id}")
+      logger.debug("nothing to do for webhook of event #{webhook.event_name} / #{webhook.mux_id}")
     end
 
     webhook.finished_processing_at = Time.now.utc

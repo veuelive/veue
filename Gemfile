@@ -59,6 +59,15 @@ group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   # Rubocop for making sure that our code follows standards- like a comment for every gem!
   gem "rubocop-rails", require: false
+
+  # Used for our main testing framework
+  gem "rspec-rails"
+
+  # For generating fixtures and data
+  gem "factory_bot_rails"
+
+  # Generates fake data for our tests- how nice!
+  gem "faker"
 end
 
 group :development do

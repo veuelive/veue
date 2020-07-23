@@ -1,0 +1,32 @@
+{
+  "type": "video.asset.created",
+  "request_id": null,
+  "object": {
+    "type": "asset",
+    "id": "vgujaomNlu3Ox02MEAmdEwJSBficuORkmlhoAwtF2H02w"
+  },
+  "id": "a03891cf-7ce1-4de8-ae84-f15d1a43273d",
+  "environment": {
+    "name": "Development",
+    "id": "26579i"
+  },
+  "data": {
+    "status": "preparing",
+    "playback_ids": [
+      {
+        "policy": "public",
+        "id": "IMro0296JacUHHd8Q9s01xXlAOcLbgCRwFoT01BARoTsNY"
+      }
+    ],
+    "mp4_support": "none",
+    "master_access": "none",
+    "live_stream_id": "5HbIDF4gWH4zg02XnrPWJEzOuUwdo01okqwn01jwlXnhUM",
+    "is_live": true,
+    "id": "vgujaomNlu3Ox02MEAmdEwJSBficuORkmlhoAwtF2H02w",
+    "created_at": 1595519093
+  },
+  "created_at": "2020-07-23T15:44:53.000000Z",
+  "attempts": [],
+  "accessor_source": null,
+  "accessor": null
+}

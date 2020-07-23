@@ -15,9 +15,13 @@ class MuxWebhook < ApplicationRecord
 
   class << self
     def handle_webhook(json)
-      webhook = build_from_json(json)
-      logger.debug "Setting Job for Later"
-      MuxWebhookJob.perform_later webhook
+      data = JSON.parse(json)
+      File.open("test/fixtures/webhooks/#{Time.now.utc.to_i}-#{data['id']}.json", "w+") do |file|
+        file.write(json)
+      end
+      # webhook = build_from_json(json)
+      # logger.debug "Setting Job for Later"
+      # MuxWebhookJob.perform_later webhook
     end
 
     def build_from_json(json)
@@ -27,7 +31,7 @@ class MuxWebhook < ApplicationRecord
 
       klass.create!(
         event: webhook_payload["type"],
-        webhook_id: webhook_payload["id"],
+        mux_id: webhook_payload["id"],
         event_received_at: webhook_payload["created_at"],
         mux_environment: webhook_payload["environment"]["name"],
         mux_target: mux_target,

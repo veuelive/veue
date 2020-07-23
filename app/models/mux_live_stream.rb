@@ -19,17 +19,6 @@ class MuxLiveStream < ApplicationRecord
     self.playback_id = data.playback_ids&.first&.id
   end
 
-  # It's possible that we don't have a live Video object for this
-  # MuxLiveStream when we have some kind of video event start
-  # This will get called when we _need_ a Video model to exist
-  def ensure_video_exists!
-    if video&.live?
-      return video if video
-    end
-
-    create_video(user_id: user_id)
-  end
-
   # When we get destroyed, we should call Mux and let them know we're gone
   def remove_from_mux
     MUX_SERVICE.destroy_live_stream(mux_id)

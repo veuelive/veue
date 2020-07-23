@@ -49,6 +49,11 @@ Style/MethodCallWithArgsParentheses:
     - debug
     - warn
     - info
+    - describe
+    - it
+    - context
+    - to
+    - include
 
 Style/DocumentationMethod:
   Enabled: false

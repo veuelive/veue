@@ -9,20 +9,22 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 unless Rails.env.production?
-  %w[hcatlin@gmail.com malrase@gmail.com].map do |email|
+  %w[test@veuelive.com hcatlin@gmail.com malrase@gmail.com].map do |email|
     user = User.new(
       email: email,
       username: email.split("@").first,
-      password: "mohawk",
-      password_confirmation: "mohawk"
+      password: 'mohawk',
+      password_confirmation: 'mohawk',
     )
     user.skip_confirmation!
     user.save!
   end
 end
 
-Admin.create!(
-  email: 'test@veuelive.com',
-  password: 'password',
-  password_confirmation: 'password'
-) if Rails.env.development?
+if Rails.env.development?
+  Admin.create!(
+    email: 'test@veuelive.com',
+    password: 'mohawk',
+    password_confirmation: 'mohawk',
+  )
+end
