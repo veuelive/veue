@@ -1,18 +1,3 @@
-GIT
-  remote: git@github.com:hcatlin/activeadmin.git
-  revision: afaf6e5c0b3862f99481de2452e758e78bd2f79e
-  branch: issue-6206
-  specs:
-    activeadmin (2.7.0)
-      arbre (~> 1.2, >= 1.2.1)
-      formtastic (>= 3.1, < 5.0)
-      formtastic_i18n (~> 0.4)
-      inherited_resources (~> 1.7)
-      jquery-rails (~> 4.2)
-      kaminari (~> 1.0, >= 1.2.1)
-      railties (>= 5.2, < 6.1)
-      ransack (~> 2.1, >= 2.1.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -54,6 +39,17 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    activeadmin (2.7.0)
+      arbre (~> 1.2, >= 1.2.1)
+      formtastic (~> 3.1)
+      formtastic_i18n (~> 0.4)
+      inherited_resources (~> 1.7)
+      jquery-rails (~> 4.2)
+      kaminari (~> 1.0, >= 1.0.1)
+      railties (>= 5.2, < 6.1)
+      ransack (~> 2.1, >= 2.1.1)
+      sassc-rails (~> 2.1)
+      sprockets (>= 3.0, < 4.1)
     activejob (6.0.3.2)
       activesupport (= 6.0.3.2)
       globalid (>= 0.3.6)
@@ -294,6 +290,14 @@ GEM
     ruby_parser (3.14.2)
       sexp_processor (~> 4.9)
     rubyzip (2.3.0)
+    sassc (2.4.0)
+      ffi (~> 1.9)
+    sassc-rails (2.1.2)
+      railties (>= 4.0.0)
+      sassc (>= 2.0)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
@@ -352,7 +356,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm
-  activeadmin!
+  activeadmin
   bootsnap (>= 1.4.2)
   byebug
   cancancan

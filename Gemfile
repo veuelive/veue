@@ -40,7 +40,7 @@ gem "aasm"
 gem "sidekiq"
 
 # Used for our admin interfaces
-gem "activeadmin", git: "git@github.com:hcatlin/activeadmin.git", branch: "issue-6206"
+gem "activeadmin"
 
 # Helps set up role-based access
 gem "cancancan"

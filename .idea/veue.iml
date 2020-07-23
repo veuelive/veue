@@ -35,7 +35,7 @@
     <orderEntry type="library" scope="PROVIDED" name="actionpack (v6.0.3.2, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="actiontext (v6.0.3.2, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="actionview (v6.0.3.2, RVM: ruby-2.7.1) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="activeadmin (v2.7.0@afaf6e, RVM: ruby-2.7.1) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="activeadmin (v2.7.0, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activejob (v6.0.3.2, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activemodel (v6.0.3.2, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activemodel-serializers-xml (v1.0.2, RVM: ruby-2.7.1) [gem]" level="application" />
@@ -133,6 +133,8 @@
     <orderEntry type="library" scope="PROVIDED" name="ruby-progressbar (v1.10.1, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ruby_parser (v3.14.2, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rubyzip (v2.3.0, RVM: ruby-2.7.1) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="sassc (v2.4.0, RVM: ruby-2.7.1) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="sassc-rails (v2.1.2, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="selenium-webdriver (v3.142.7, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sexp_processor (v4.15.0, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sidekiq (v6.1.0, RVM: ruby-2.7.1) [gem]" level="application" />
