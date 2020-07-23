@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(version: 2020_07_22_145315) do
     t.bigint "user_id", null: false
     t.string "slug"
     t.string "title"
-    t.string "playback_url"
+    t.string "mux_playback_id"
     t.string "state"
     t.bigint "mux_live_stream_id"
     t.datetime "created_at", precision: 6, null: false
