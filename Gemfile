@@ -17,7 +17,10 @@ gem "turbolinks", "~> 5"
 gem "jbuilder", "~> 2.7"
 
 # Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 4.0'
+gem "redis"
+
+# Background Job Running Library for ActiveJob
+gem "sidekiq"
 
 # Used for our user authentication stack
 gem "devise"
@@ -36,9 +39,6 @@ gem "nanoid"
 
 # Helps us build state machines
 gem "aasm"
-
-# Background Job Running Library for ActiveJob
-gem "sidekiq"
 
 # Used for our admin interfaces
 gem "activeadmin"

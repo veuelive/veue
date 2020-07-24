@@ -374,7 +374,7 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.2)
-  redis (~> 4.0)
+  redis
   rspec-rails
   rubocop-rails
   selenium-webdriver
