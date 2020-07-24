@@ -59,19 +59,19 @@ RSpec.describe "MuxWebhooks" do
       video = Video.first
       expect(video.mux_live_stream).to be_valid
       expect(video).to be_live
-      expect(video.mux_live_stream.playback_id).to_not be_blank
+      expect(video.mux_live_stream.mux_playback_id).to_not be_blank
     end
 
     it "should generate an asset" do
       skip_ahead_to_next!("video.asset.ready")
       video = Video.first
       expect(video.mux_assets.count).to eq(1)
-      expect(MuxAsset.first.playback_id).to eq("01DDGAbzPG8pJmYr5B02sf9uV1TVAWXRH001r8NHEs01IO00")
+      expect(MuxAsset.first.mux_playback_id).to eq("01DDGAbzPG8pJmYr5B02sf9uV1TVAWXRH001r8NHEs01IO00")
     end
 
     it "should use the live playback_id while live" do
       skip_ahead_to_next!("video.asset.ready")
-      expect(Video.first.playback_id).to eq("5vstusY6jN3rFtmxBR0202ket1k8gGZgjhb021QAbFt9WY")
+      expect(Video.first.mux_playback_id).to eq("5vstusY6jN3rFtmxBR0202ket1k8gGZgjhb021QAbFt9WY")
     end
 
     it "should have a mux_live_stream status of active!" do
@@ -90,7 +90,7 @@ RSpec.describe "MuxWebhooks" do
     end
 
     it "should use the asset playback_id" do
-      expect(Video.first.playback_id).to eq("01DDGAbzPG8pJmYr5B02sf9uV1TVAWXRH001r8NHEs01IO00")
+      expect(Video.first.mux_playback_id).to eq("01DDGAbzPG8pJmYr5B02sf9uV1TVAWXRH001r8NHEs01IO00")
     end
 
     it "should transition the mux_live_stream to idle" do

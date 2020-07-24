@@ -9,7 +9,7 @@ class CreateMuxLiveStreams < ActiveRecord::Migration[6.0]
 
       t.string :mux_id, index: true
       t.string :stream_key
-      t.string :playback_id
+      t.string :mux_playback_id
 
       t.datetime :latest_mux_webhook_at
 

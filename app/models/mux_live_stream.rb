@@ -15,7 +15,7 @@ class MuxLiveStream < ApplicationRecord
     self.mux_id = data.id
     self.mux_status = data.status
     self.stream_key = data.stream_key
-    self.playback_id = data.playback_ids&.first&.id
+    self.mux_playback_id = data.playback_ids&.first&.id
   end
 
   # When we get destroyed, we should call Mux and let them know we're gone
