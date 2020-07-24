@@ -24,7 +24,7 @@ Metrics/MethodLength:
   Max: 20
 
 # The guiding principle of classes is SRP, SRP can't be accurately measured by LoC
-Metrics/ClassLength
+Metrics/ClassLength:
   Max: 1500
 
 Metrics/BlockLength:
