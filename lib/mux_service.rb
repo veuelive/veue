@@ -3,6 +3,7 @@
 class MuxService
   def initialize
     @live_api = MuxRuby::LiveStreamsApi.new
+    @asset_api = MuxRuby::AssetsApi.new
   end
 
   def create_live_stream
@@ -19,6 +20,10 @@ class MuxService
 
   def destroy_live_stream(live_stream_id)
     @live_api.delete_live_stream(live_stream_id)
+  end
+
+  def destroy_asset(asset_id)
+    @asset_api.delete_asset(asset_id)
   end
 
   def url_for_playback_id(playback_id)
