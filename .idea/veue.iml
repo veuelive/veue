@@ -68,7 +68,6 @@
     <orderEntry type="library" scope="PROVIDED" name="faker (v2.13.0, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ffi (v1.13.1, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="figaro (v1.2.0, RVM: ruby-2.7.1) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="font-awesome-rails (v4.7.0.5, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="formtastic (v3.1.5, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="formtastic_i18n (v0.6.0, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="globalid (v0.4.2, RVM: ruby-2.7.1) [gem]" level="application" />
