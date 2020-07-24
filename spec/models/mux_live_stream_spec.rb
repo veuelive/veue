@@ -1,4 +1,6 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe MuxLiveStream, type: :model do
   context "talking with Mux service" do

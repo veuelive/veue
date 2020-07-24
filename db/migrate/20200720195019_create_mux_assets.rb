@@ -5,7 +5,7 @@ class CreateMuxAssets < ActiveRecord::Migration[6.0]
     create_table :mux_assets do |t|
       t.string :mux_status
 
-      t.string :mux_id, index: true
+      t.string :mux_id, index: { unique: true }
       t.string :mux_playback_id
       t.belongs_to :video, null: false, foreign_key: true
 

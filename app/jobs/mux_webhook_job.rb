@@ -4,11 +4,7 @@ class MuxWebhookJob < ApplicationJob
   queue_as :default
 
   def perform(webhook)
-    if webhook.finished_processing_at
-      logger.warn "Attempted to double-process webhook #{webhook.id} / #{webhook.mux_id}"
-    elsif (webhook.mux_target&.latest_mux_webhook_at || Time.zone.at(0)) > webhook.event_received_at
-      logger.warn "Processed webhook too late #{webhook.id} / #{webhook.mux_id}"
-    else
+    check_preconditions(webhook) do
       logger.info "Processing event #{webhook.event}"
       process_webhook(webhook)
       process_target(webhook)
@@ -17,11 +13,21 @@ class MuxWebhookJob < ApplicationJob
 
   private
 
+  def check_preconditions(webhook, &block)
+    return if webhook.finished_processing_at
+
+    if (webhook.mux_target&.latest_mux_webhook_at || Time.zone.at(0)) > webhook.event_received_at
+      logger.warn "Processed webhook too late #{webhook.id} / #{webhook.mux_id}"
+    else
+      block.call
+    end
+  end
+
   def process_webhook(webhook)
     method_name = "process_" + webhook.event_name + "_event!"
 
     if webhook.respond_to?(method_name)
-      webhook.send(method_name)
+      webhook.__send__(method_name)
     else
       logger.debug("nothing to do for webhook of event #{webhook.event_name} / #{webhook.mux_id}")
     end

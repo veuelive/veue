@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :mux_live_stream do
     mux_id { Faker::Alphanumeric.unique.alphanumeric(number: 46) }

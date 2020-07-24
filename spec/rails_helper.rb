@@ -20,7 +20,6 @@ rescue ActiveRecord::PendingMigrationError => e
   exit(1)
 end
 RSpec.configure do |config|
-
   config.include WebhookHelpers
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your

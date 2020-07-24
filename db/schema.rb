@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2020_07_22_145315) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["mux_id"], name: "index_mux_assets_on_mux_id"
+    t.index ["mux_id"], name: "index_mux_assets_on_mux_id", unique: true
     t.index ["video_id"], name: "index_mux_assets_on_video_id"
   end
 
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 2020_07_22_145315) do
     t.datetime "latest_mux_webhook_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["mux_id"], name: "index_mux_live_streams_on_mux_id"
+    t.index ["mux_id"], name: "index_mux_live_streams_on_mux_id", unique: true
     t.index ["user_id", "mux_status"], name: "index_mux_live_streams_on_user_id_and_mux_status"
   end
 
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 2020_07_22_145315) do
     t.json "payload"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["mux_id"], name: "index_mux_webhooks_on_mux_id", unique: true
     t.index ["mux_target_type", "mux_target_id"], name: "index_mux_webhooks_on_mux_target_type_and_mux_target_id"
   end
 
