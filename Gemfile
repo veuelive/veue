@@ -49,6 +49,9 @@ gem "cancancan"
 # A decorator pattern for our models
 gem "draper"
 
+# Our APM and alerting provider
+gem "appsignal"
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

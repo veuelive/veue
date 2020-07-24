@@ -75,6 +75,8 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    appsignal (2.10.11)
+      rack
     arbre (1.2.1)
       activesupport (>= 3.0.0)
     ast (2.4.1)
@@ -357,6 +359,7 @@ PLATFORMS
 DEPENDENCIES
   aasm
   activeadmin
+  appsignal
   bootsnap (>= 1.4.2)
   byebug
   cancancan
