@@ -6,7 +6,7 @@ class VideosController < ApplicationController
   # GET /videos
   # GET /videos.json
   def index
-    @videos = Video.all
+    @videos = Video.all.decorate
   end
 
   # GET /videos/1
@@ -17,7 +17,7 @@ class VideosController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_video
-    @video = Video.find(params[:id])
+    @video = Video.find(params[:id]).decorate
   end
 
   # Only allow a list of trusted parameters through.

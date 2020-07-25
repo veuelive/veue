@@ -1,3 +1,8 @@
+- content_for :header do
+  <link href="https://vjs.zencdn.net/7.8.3/video-js.css" rel="stylesheet" />
+
+  <script src="https://vjs.zencdn.net/7.8.3/video.js"></script>
+
 %p#notice= notice
 
 %p
@@ -7,30 +12,8 @@
   %b State:
   = @video.state
 
-:plain
-  <video id="myVideo" controls></video>
+%video.video-js.vjs-liveui{controls: true, "data-setup": "{\"liveui\": true}"}
+  %source{src: "https://stream.mux.com/#{@video.mux_playback_id}.m3u8", type: "application/x-mpegURL"}
 
-  <!-- Use HLS.js to support the HLS format in browsers. -->
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@0.8.2"></script>
-  <script>
-    (function(){
-      // Replace with your asset's playback ID
-      var playbackId = "#{@video.mux_playback_id}";
-      var url = "https://stream.mux.com/"+playbackId+".m3u8";
-      var video = document.getElementById("myVideo");
 
-      // Let native HLS support handle it if possible
-      if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = url;
-      } else if (Hls.isSupported()) {
-        // HLS.js-specific setup code
-        hls = new Hls();
-        hls.loadSource(url);
-        hls.attachMedia(video);
-      }
-    })();
-  </script>
-
-= link_to 'Edit', edit_video_path(@video)
-\|
 = link_to 'Back', videos_path

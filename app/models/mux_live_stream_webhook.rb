@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MuxLiveStreamWebhook < MuxWebhook
-  def process_recording_event!
+  def process_active_event!
     video = mux_target.videos.create!(
       user: mux_target.user,
       mux_playback_id: mux_target.mux_playback_id,

@@ -12,6 +12,7 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "video.js": "^7.8.4",
     "webpack-dev-server": "^3.11.0"
   }
 }
