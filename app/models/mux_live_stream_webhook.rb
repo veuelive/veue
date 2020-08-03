@@ -2,7 +2,7 @@
 
 class MuxLiveStreamWebhook < MuxWebhook
   def process_recording_event!
-    mux_target.videos.pending.first.update(mux_playback_id: get_playback_id)
+    mux_target.videos.pending.first.update(mux_playback_id: playback_id)
   end
 
   def process_active_event!

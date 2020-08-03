@@ -4,8 +4,6 @@ class MuxWebhook < ApplicationRecord
   belongs_to :mux_target, polymorphic: true, optional: true
   validates :mux_id, presence: true, uniqueness: true
 
-  LIVE_SHOULD_START_EVENT = "video.live_stream.active"
-
   def process!
     logger.warn("No specific handler for webhook of type #{event}")
   end
@@ -17,7 +15,7 @@ class MuxWebhook < ApplicationRecord
   end
 
   # This isn't always safe... but this is helpful for many webhook callback responses
-  def get_playback_id
+  def playback_id
     payload["playback_ids"].each do |playback|
       return playback["id"] if playback["policy"] == "public"
     end
@@ -51,7 +49,6 @@ class MuxWebhook < ApplicationRecord
     end
 
     def build_from_json(webhook_payload)
-
       klass, mux_target = determine_target(webhook_payload)
 
       klass.create!(

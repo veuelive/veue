@@ -6,12 +6,12 @@ class MuxAssetWebhook < MuxWebhook
   end
 
   def process_created_event!
-    mux_live_stream = MuxLiveStream.find_by_mux_id(payload["live_stream_id"])
+    mux_live_stream = MuxLiveStream.find_by(mux_id: payload["live_stream_id"])
     video = Video.create!(
       user: mux_live_stream.user,
       mux_live_stream: mux_live_stream,
     )
-    mux_asset.update(video: video)
+    mux_asset.update!(video: video)
   end
 
   def process_live_stream_completed_event!
