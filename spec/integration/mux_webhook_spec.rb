@@ -54,7 +54,7 @@ RSpec.describe "MuxWebhooks" do
   context "start a stream!" do
     it "should create a new video" do
       expect(Video.count).to eq(0)
-      skip_ahead_to_next!("video.live_stream.recording")
+      skip_ahead_to_next!("video.live_stream.active")
       expect(Video.count).to eq(1)
       video = Video.first
       expect(video.mux_live_stream).to be_valid
@@ -101,7 +101,7 @@ RSpec.describe "MuxWebhooks" do
   context "we have two videos in total!" do
     it "should create two videos" do
       skip_ahead_to_next!("video.asset.live_stream_completed")
-      skip_ahead_to_next!("video.asset.ready")
+      skip_ahead_to_next!("video.live_stream.active")
       # So this would be into the second stream now
       expect(Video.count).to eq(2)
       expect(Video.where(state: "live").count).to eq(1)
