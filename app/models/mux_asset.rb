@@ -2,5 +2,5 @@
 
 class MuxAsset < ApplicationRecord
   belongs_to :video
-  has_many :mux_webhooks, as: :webhook_target, dependent: :nullify
+  has_many :mux_webhooks, as: :mux_target, dependent: :nullify
 end
