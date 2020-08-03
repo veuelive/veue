@@ -1,8 +1,3 @@
-- content_for :header do
-  <link href="https://vjs.zencdn.net/7.8.3/video-js.css" rel="stylesheet" />
-
-  <script src="https://vjs.zencdn.net/7.8.3/video.js"></script>
-
 %p#notice= notice
 
 %p
@@ -12,8 +7,19 @@
   %b State:
   = @video.state
 
-%video.video-js.vjs-liveui{controls: true, "data-setup": "{\"liveui\": true}"}
-  %source{src: "https://stream.mux.com/#{@video.mux_playback_id}.m3u8", type: "application/x-mpegURL"}
+
+.video-player
+  .player{"data-controller" => "video-player", "data-video-player-playback-id" => @video.mux_playback_id}
+    %video.player__video.viewer{"data-action" => "click->video-player#togglePlay timeupdate->video-player#progressUpdate", "data-target" => "video-player.video"}
+    .player__controls
+      .progress{"data-action" => "click->video-player#scrub mousedown->video-player#mousedown mouseup->video-player#mouseup mousemove->video-player#mousemove", "data-target" => "video-player.progress"}
+        .progress__filled{"data-target" => "video-player.progressBar"}
+      %button.player__button.toggle{"data-action" => "click->video-player#togglePlay", "data-target" => "video-player.toggle", :title => "Toggle Play"} ►
+      %input.player__slider{alt: "Volume", "data-action" => "change->video-player#rangeUpdate mousemove->video-player#rangeUpdate", :max => "1", :min => "0", :name => "volume", :step => "0.05", :type => "range", :value => "1"}/
+      %input.player__slider{"data-action" => "change->video-player#rangeUpdate mousemove->video-player#rangeUpdate", :max => "2", :min => "0.5", :name => "playbackRate", :step => "0.1", :type => "range", :value => "1"}/
+      %button.player__button{"data-action" => "click->video-player#skip", "data-skip" => "-10"} « 10s
+      %button.player__button{"data-action" => "click->video-player#skip", "data-skip" => "25"} 25s »
+
 
 
 = link_to 'Back', videos_path

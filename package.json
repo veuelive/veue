@@ -8,11 +8,13 @@
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.2.2",
     "hls.js": "^0.14.4",
-    "turbolinks": "^5.2.0"
+    "stimulus": "^1.1.1",
+    "ts-loader": "^8.0.2",
+    "turbolinks": "^5.2.0",
+    "typescript": "^3.9.7"
   },
   "version": "0.1.0",
   "devDependencies": {
-    "video.js": "^7.8.4",
     "webpack-dev-server": "^3.11.0"
   }
 }

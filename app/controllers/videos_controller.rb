@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class VideosController < ApplicationController
-  before_action :set_video, only: %i[show]
+  before_action :current_video, only: %i[show]
 
   # GET /videos
   # GET /videos.json
@@ -16,8 +16,8 @@ class VideosController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_video
-    @video = Video.find(params[:id]).decorate
+  def current_video
+    @video ||= Video.find(params[:id]).decorate
   end
 
   # Only allow a list of trusted parameters through.
