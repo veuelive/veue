@@ -3,11 +3,11 @@
   "request_id": null,
   "object": {
     "type": "asset",
-    "id": "D00s6IEULAWv00rfV8HyMM7kJYuw1mYVHitZjDo1CJ5pI"
+    "id": "OGDoCxGloyo1pDSHvuh6OGq4w7qYA19900K9cldCgrXM"
   },
-  "id": "fad152f4-2dd4-4fad-871c-4ab33dd4668c",
+  "id": "dd72a9d3-f299-433c-b0f5-de8ef050303d",
   "environment": {
-    "name": "Development",
+    "name": "Hampton",
     "id": "26579i"
   },
   "data": {
@@ -17,13 +17,13 @@
         "max_width": 2048,
         "max_height": 1152,
         "max_frame_rate": 60,
-        "id": "Ri00LeD00300WmTjNBy5UzDxWCMxt4500KH01ViQwtippIDQ"
+        "id": "EubjPGh9bqXtKeXgj26WXZjr401QnSLG9VLpXYTz2PYM"
       },
       {
         "type": "audio",
         "max_channels": 2,
         "max_channel_layout": "stereo",
-        "id": "pgpb02hSLV8eGuazz2Gams5ndDd00f2B00KGGNkdJzB7fI"
+        "id": "SSO2Wj4fCmpa82ZidAkj94cSlLEhDixJUgzr5TyMf3I"
       }
     ],
     "status": "ready",
@@ -31,13 +31,13 @@
     "max_stored_resolution": "UHD",
     "max_stored_frame_rate": 60,
     "master_access": "none",
-    "live_stream_id": "5HbIDF4gWH4zg02XnrPWJEzOuUwdo01okqwn01jwlXnhUM",
-    "id": "D00s6IEULAWv00rfV8HyMM7kJYuw1mYVHitZjDo1CJ5pI",
-    "duration": 34.043,
-    "created_at": 1595519040,
+    "live_stream_id": "g00vIr21CVV3P3tV8012vVGAztjDpv201XTTLGc8fwAQzk",
+    "id": "OGDoCxGloyo1pDSHvuh6OGq4w7qYA19900K9cldCgrXM",
+    "duration": 14.043,
+    "created_at": 1596476499,
     "aspect_ratio": "16:9"
   },
-  "created_at": "2020-07-23T15:44:36.000000Z",
+  "created_at": "2020-08-03T17:41:56.000000Z",
   "attempts": [],
   "accessor_source": null,
   "accessor": null

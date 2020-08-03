@@ -8,7 +8,7 @@ class Video < ApplicationRecord
 
   aasm column: "state" do
     # We aren't totally live yet, but it'sa coming!
-    state :waiting, initial: true
+    state :pending, initial: true
 
     # The video is live! Things are happening!
     # Despite the name, normally this comes from a "recording" event coming from Mux
@@ -21,7 +21,7 @@ class Video < ApplicationRecord
     state :finished
 
     event :go_live do
-      transitions from: :waiting, to: :live
+      transitions from: :pending, to: :live
       transitions from: :paused, to: :live
     end
 

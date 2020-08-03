@@ -24,7 +24,7 @@ RSpec.describe MuxLiveStream, type: :model do
       mux_ruby_live_stream.playback_ids.map! { |playback_data| MuxRuby::PlaybackID.new(playback_data) }
       mux_response = MuxRuby::LiveStreamResponse.new(data: mux_ruby_live_stream)
 
-      allow(@mux_service).to receive(:create_live_stream).and_return(mux_response)
+      expect(@mux_service).to receive(:create_live_stream).and_return(mux_response)
 
       # Okay, let's do it!
       @user.setup_as_streamer!

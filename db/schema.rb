@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_22_145315) do
+ActiveRecord::Schema.define(version: 2020_08_03_184520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 2020_07_22_145315) do
     t.string "mux_status"
     t.string "mux_id"
     t.string "mux_playback_id"
-    t.bigint "video_id", null: false
+    t.bigint "video_id"
     t.float "duration"
     t.string "max_stored_resolution"
     t.float "max_stored_frame_rate"
