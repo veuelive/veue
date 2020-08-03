@@ -103,8 +103,8 @@ RSpec.describe "MuxWebhooks" do
       skip_ahead_to_next!(MuxWebhook::LIVE_SHOULD_START_EVENT)
       # So this would be into the second stream now
       expect(Video.count).to eq(2)
-      expect(Video.where(state: "live").count).to eq(1)
-      expect(Video.where(state: "finished").count).to eq(1)
+      expect(Video.live.count).to eq(1)
+      expect(Video.finished.count).to eq(1)
     end
   end
 end
