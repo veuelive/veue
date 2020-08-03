@@ -17,7 +17,7 @@ class VideosController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def current_video
-    @video ||= Video.find(params[:id]).decorate
+    @video = @current_video ||= Video.find(params[:id]).decorate
   end
 
   # Only allow a list of trusted parameters through.
