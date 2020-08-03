@@ -72,6 +72,9 @@ group :development, :test do
 
   # Generates fake data for our tests- how nice!
   gem "faker"
+
+  # Used for integrating with FFMPEG for RTMP test feeds
+  gem "posix-spawn"
 end
 
 group :development do
