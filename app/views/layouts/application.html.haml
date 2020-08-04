@@ -10,9 +10,7 @@
     = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = yield :header if content_for?(:header)
-  %body
-    .layout-container
-      .sidebar
-        = render partial: "shared/sidebar"
-      .main-content
+  %body{body_attributes}
+    #layout-container
+      #main-container{stimulus_attributes(page_stim_controller, @data_attributes)}
         = yield

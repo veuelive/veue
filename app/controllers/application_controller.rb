@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include HttpAuthConcern
 
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :setup_data_attributes
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(
@@ -18,5 +19,9 @@ class ApplicationController < ActionController::Base
       :account_update,
       keys: %i[username name email password_confirmation current_password],
     )
+  end
+
+  def setup_data_attributes
+    @data_attributes = {}
   end
 end

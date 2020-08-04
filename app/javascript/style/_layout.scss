@@ -1,64 +1,40 @@
+@use "utils";
+
 
 body {
   margin: 0;
-  padding: 0;
-  background: #E2E3E7;
+  background: #DDE3F0;
+  padding: 2vh 2vw 2vh 2vw;
+}
 
-  .layout-container {
-    background-clip: content-box;
-    margin: 2vh 2vw 2vh 2vw;
-    border: 1px solid #E2E3E7;
-    border-radius: 50px;
+$rounded-corners: 20px;
+
+#layout-container {
+  background-clip: content-box;
+  margin: auto;
+  border: 1px solid #e2e3e7;
+  border-radius: $rounded-corners;
+  display: flex;
+  background: white;
+  align-items: stretch;
+  max-width: 140vh;
+
+  #main-container {
+    width: 100%;
     display: flex;
-    height: 95vh;
-    background: white;
-    align-items: stretch;
+    flex-direction: row;
 
-    > .sidebar {
-      width: 80px;
-      border-right: 1px solid white;
-
-      display: flex;
-      flex-direction: column;
-
-      .sidebar-top {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        .logo {
-          height: 60px;
-          margin-top: 30px;
-          color: #666666;
-          font-size: 40px;
-        }
-
-        nav {
-          ul {
-            padding: 0;
-            list-style-type: none;
-
-            svg {
-              width: 25px;
-              height: 25px;
-            }
-          }
-        }
-      }
-
-      .sidebar-bottom {
-        margin: 40px;
-        text-align: center;
-      }
+    .content-area__right__big {
+      flex: 10;
+      background: #F5F6F8;
+      padding: 15px;
+      border-radius: $rounded-corners 0 0 $rounded-corners;
     }
 
-    > .main-content {
-      padding: 20px;
-      border-radius: 0 50px 50px 0;
-      flex: 1;
-      flex-grow: 2;
-      background: #F2F3F7;
+    .content-area__left__small {
+      flex: 3;
+      background: white;
+      border-radius: 0 $rounded-corners $rounded-corners 0;
     }
   }
 }
