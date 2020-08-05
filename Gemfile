@@ -95,4 +95,6 @@ group :test do
   gem "selenium-webdriver"
   # Easy installation and use of web drivers to run system tests with browsers
   gem "webdrivers"
+  # Used for testing JSON responses
+  gem "rspec-json_expectations"
 end

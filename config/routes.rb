@@ -9,5 +9,8 @@ Rails.application.routes.draw do
   devise_for :admins, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
+  # API
+  get "/deskie/user_data" => "deskie#user_data", as: :deskie_user_data
+
   root "videos#index"
 end

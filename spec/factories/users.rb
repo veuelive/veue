@@ -7,5 +7,9 @@ FactoryBot.define do
     confirmed_at { 5.days.ago }
     password { "mohawk" }
     password_confirmation { password }
+
+    factory :streamer do
+      mux_live_stream
+    end
   end
 end
