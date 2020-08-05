@@ -8,5 +8,4 @@ class DeskieController < ApplicationController
   def user_data
     render(json: {stream_key: current_user.mux_live_stream.stream_key})
   end
-
 end
