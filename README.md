@@ -87,6 +87,8 @@ Video > Output Resolution > 2048x2048
 Setup your scene so that there is a 2048x1440 Browser window at the top, and a 608 pixel high "Video Capture"
 stream (that's your webcam) in the bottom right corner.
 
+![image](https://user-images.githubusercontent.com/111/89562488-04bb7500-d7e8-11ea-8b1f-9bcf190ea67c.png)
+
 ### Webhook Setup
 
 Setup an account with [ngrok](https://ngrok.com/) and install the command line utility for it using their instructions.
