@@ -30,7 +30,7 @@ class Video < ApplicationRecord
     end
 
     event :finish do
-      transitions from: %i[live paused], to: :finished
+      transitions from: %i[live paused pending], to: :finished
     end
   end
 end

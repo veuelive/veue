@@ -3,9 +3,9 @@
 .content-area__right__big
   %canvas.browser-video-area{"data-target": "pages--videos-show.browserVideoCanvas", width: 2048, height: 1440}
 .content-area__left__small
-  %canvas.streamer-webcam-view{"data-target": "pages--videos-show.personVideoCanvas", width: 1500, height: 1220}
+  %canvas.streamer-webcam-view{"data-target": "pages--videos-show.personVideoCanvas", width: 800, height: 600}
 
-  %video.player__video.viewer{"data-action" => "click->video-player#togglePlay timeupdate->video-player#progressUpdate", "data-target" => "pages--videos-show.video"}
+  %video.player__video.viewer{"data-action" => "canplay->pages--videos-show#videoLoaded timeupdate->pages--videos-show#progressUpdate", "data-target" => "pages--videos-show.video"}
   -#.player__controls
   -#  .progress{"data-action" => "click->video-player#scrub mousedown->video-player#mousedown mouseup->video-player#mouseup mousemove->video-player#mousemove", "data-target" => "video-player.progress"}
   -#    .progress__filled{"data-target" => "video-player.progressBar"}

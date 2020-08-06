@@ -58,19 +58,29 @@ export default class extends Controller {
         this.toggleTarget.textContent = this.isPaused ? "►" : "❚ ❚";
     }
 
+    videoLoaded() {
+        this.computeFrame();
+    }
+
+    progressUpdate(event) {
+        const percent = this.video.currentTime / this.video.duration * 100;
+        console.log(`${percent}%`);
+    }
+
     computeFrame() {
         let browserCtx = this.browserVideoCanvasContext;
         let personCtx = this.personVideoCanvasContext;
         let fullVideoWidth = this.video.videoWidth;
         let fullVideoHeight = this.video.videoHeight;
-        console.log(this.video.videoHeight);
-        let browserHeight = 1440
+        this.video
 
-        browserCtx.drawImage(this.video, 0, 0, 2048, 2048);
-        personCtx.drawImage(this.video, -1840, -2175, 3300, 3200);
+        let sy = (1440 / 2048) * fullVideoHeight
+
+        let ratioToOriginal = (fullVideoHeight / 2048)
+
+        browserCtx.drawImage(this.video, 0, 0, fullVideoWidth, fullVideoHeight, 0, 0, 2048, 2048);
+        personCtx.drawImage(this.video, 0, sy, 800 * ratioToOriginal, 600 * ratioToOriginal, 0, 0, 800, 600);
         let frame = browserCtx.getImageData(0, 0, fullVideoWidth, fullVideoHeight);
-
-        // debugger
 
         return;
     }
