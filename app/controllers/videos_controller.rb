@@ -4,14 +4,14 @@ class VideosController < ApplicationController
   before_action :current_video, only: %i[show]
 
   # GET /videos
-  # GET /videos.json
   def index
     @videos = Video.all.decorate
   end
 
   # GET /videos/1
-  # GET /videos/1.json
   def show; end
+
+  def streamer; end
 
   private
 

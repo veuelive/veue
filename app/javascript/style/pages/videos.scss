@@ -1,13 +1,10 @@
 
 
-#videos__show {
+#videos__show, #videos__streamer {
 
   canvas {
     width: 100%;
     border-radius: 20px;
-  }
-
-  canvas.streamer-webcam-view {
   }
 
   video {

@@ -21,6 +21,7 @@ class User < ApplicationRecord
   has_many :videos, dependent: :destroy
   has_many :mux_live_streams, dependent: :destroy
   belongs_to :mux_live_stream, optional: true
+  delegate :stream_key, to: :mux_live_stream
 
   # This allows us to lookup users via either email OR username. Pretty cool, huh?
   def self.find_for_database_authentication(warden_condition)

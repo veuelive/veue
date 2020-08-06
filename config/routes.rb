@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  get '/streamer', to: "videos#streamer"
+
   devise_for :admins, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 

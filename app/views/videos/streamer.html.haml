@@ -1,0 +1,10 @@
+- @data_attributes["playback-id"] = current_user.stream_key
+
+.content-area__right__big
+  .browser
+    <webview id="foo" src="https://www.jcrew.com/" style="width:640px; height:480px"></webview>
+    //%iframe{"data-target": "pages--videos-show.browserIFrame", width: 1600, height: 1125, src: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src"}
+.content-area__left__small
+  %canvas{"data-target": "pages--videos-streamer.personVideoCanvas", width: 800, height: 600}
+
+%video.player__video.viewer{"data-action" => "canplay->pages--videos-show#videoLoaded timeupdate->pages--videos-show#progressUpdate", "data-target" => "#{page_stim_controller}.personVideo"}
