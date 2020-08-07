@@ -1,0 +1,8 @@
+#!/bin/bash
+
+files=$(git status -s | grep -E 'A|M' | awk '{print $2}')
+files="$files $(git status -s | grep -E 'R' | awk '{print $4}')"
+echo $files | xargs ./bin/rubocop --display-cop-names --extra-details -A --force-exclusion
+
+echo "Running tests"
+./bin/rspec

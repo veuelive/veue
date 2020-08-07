@@ -18,7 +18,7 @@ We use the following Third-Party services:
 * Heroku (Hosting)
 * AppSignal (APM)
 
-## Developing
+## Developer Setup
 
 Developing with this application is more complicated than some others due to the need to test and setup
 video streaming. To do this we will need to setup all of the following:
@@ -117,3 +117,16 @@ if you load your ngrok hostname.
 If you click "Start Stream" in OBS, then that should connect to Mux, then Mux should send a signal via the 
 webhook, that will go through your ngrok and hit your local development server. This will generate a new
 `Video` and in a few seconds, you should see a live stream on your local machine! YAYYYY!
+
+### Linting And Pre-Commit hooks
+
+Here at Veue Industries, we've made pre-commit hooks a breeze! Never get stuck
+being called out with a red X on Github because our linters caught you nasty,
+horrible, terrible extra space at the end of a file! :O
+
+We have all of our hooks in the folder `.githooks` and we share them! Yay! How
+do you 'install' them – why just use the handy command below and you are GTG.
+
+```$> git config core.hooksPath .githooks```
+
+Boom! Ya good!
