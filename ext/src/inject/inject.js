@@ -13,35 +13,30 @@ if (window !== window.parent) {
 //     }, 10);
 // // });
 
-    console.log("posting connect message", window.location.href)
-    postVeueMessage("connect", window.location.href)
+    let secret = Math.random()
 
-    /**
-     * this is our main 'control' logic for the browser
-     */
-    window.addEventListener("message", (messageEvent) => {
-        const {type, event, value} = messageEvent.data
-        if (type == "veue") {
-            switch (type) {
-                case "history":
-                    switch (value) {
-                        case "back":
-                            history.back();
-                        case "forward":
-                            history.forward();
-                    }
-                case "navigate":
-                    window.location.href = value;
-            }
+    let bootstrapCallback = (messageEvent) => {
+        console.log("INSIDE THE CALLBAKCS")
+        if(messageEvent.data.secret !== secret) {
+            console.error("Bad Secret?")
+            return
         }
-    })
+        window.removeEventListener("message", bootstrapCallback)
+        // Here comes the trojan horse!
+        eval(messageEvent.data.payload)
+
+    }
+    window.addEventListener("message", bootstrapCallback)
+    console.log("posting connect message", window.location.origin)
+    postVeueMessage("connect", window.location.origin)
 
     function postVeueMessage(event, value) {
         window.parent.postMessage(
             {
                 type: "veue",
                 event: event,
-                value: value
+                value: value,
+                secret: secret
             }, "http://localhost:3000")
     }
 }

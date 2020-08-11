@@ -9,8 +9,17 @@ export default class extends Controller {
     listenerCallback: EventListenerOrEventListenerObject
 
     connect() {
-        this.listenerCallback = (msg) => {
-            console.log("From controller, we got message ", msg)
+        this.listenerCallback = (msg: MessageEvent) => {
+            if(msg.data.type === "veue" && msg.data.event === "connect") {
+                fetch("/inject.js").then((response) => {
+                    response.text().then((javascript) => {
+                      this.iframeTarget.contentWindow.postMessage({
+                          secret: msg.data.secret,
+                          payload: javascript
+                      }, msg.data.value)
+                    })
+                })
+            }
         };
         window.addEventListener("message", this.listenerCallback)
     }
