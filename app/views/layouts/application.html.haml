@@ -13,4 +13,9 @@
   %body{body_attributes}
     #layout-container
       #main-container{stimulus_attributes(page_stim_controller, @data_attributes)}
+        - if flash[:notice]
+          .flash_notice
+            = flash[:notice]
+        - if flash[:alert]
+          .flash_error= flash[:alert]
         = yield

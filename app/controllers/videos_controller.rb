@@ -2,6 +2,7 @@
 
 class VideosController < ApplicationController
   before_action :current_video, only: %i[show]
+  before_action :authenticate_user!, only: %(streamer)
 
   # GET /videos
   def index

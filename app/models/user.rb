@@ -5,7 +5,8 @@ class User < ApplicationRecord
   attr_accessor :login
 
   validates :username,
-            presence: true
+            presence: true,
+            uniqueness: true
 
   # Include default devise modules. Others available are:
   # and :omniauthable
@@ -26,7 +27,7 @@ class User < ApplicationRecord
   # This allows us to lookup users via either email OR username. Pretty cool, huh?
   def self.find_for_database_authentication(warden_condition)
     conditions = warden_condition.dup
-    login = conditions.delete(:login)
+    login = conditions.delete(:email)
     find_by(conditions).find_by(
       [
         "lower(username) = :value OR lower(email) = :value",
