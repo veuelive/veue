@@ -44,6 +44,11 @@ export default class extends Controller {
         this.sendMessageToIframe("refresh")
     }
 
+    addressChange(e: Event) {
+        let target = e.target as HTMLInputElement
+        this.sendMessageToIframe("go", target.value)
+    }
+
     private sendInjectedJavascript() {
         fetch(this.data.get("inject-js-path")).then((response) => {
             response.text().then((javascript) => {

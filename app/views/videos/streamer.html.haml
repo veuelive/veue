@@ -3,10 +3,14 @@
 .content-area__right__big
   .browser{"data-controller": "veue-browser", "data-veue-browser-inject-js-path": asset_pack_path('toxoplasmosis.js')}
     .browser__toolbar
-      %input{type: "text", "data-target": "veue-browser.addressBar", value: "https://sonos.com"}
+      %input{type: "text", list: "datalist-sites", "data-target": "veue-browser.addressBar", value: "https://sonos.com", "data-action": "veue-browser#addressChange"}
+      %datalist#datalist-sites
+        %option https://apple.com
+        %option https://revolve.com
+        %option https://sonos.com
       %button{"data-action": "veue-browser#refresh"} Refresh
     .browser__frame
-      %iframe{"data-target": "veue-browser.iframe", width: 1200, height: 925, "data-action" => "load->veue-browser#iframeLoaded"}
+      %iframe{"data-target": "veue-browser.iframe", width: 1200, height: 784, "data-action" => "load->veue-browser#iframeLoaded"}
 
 .content-area__left__small
   %canvas{"data-target": "pages--videos-streamer.personVideoCanvas", width: 800, height: 600}
