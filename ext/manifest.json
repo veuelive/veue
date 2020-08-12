@@ -21,6 +21,7 @@
     "tabs",
     "webRequest",
     "webRequestBlocking",
+    "cookies",
     "<all_urls>"
   ],
   "content_scripts": [

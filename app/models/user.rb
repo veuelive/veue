@@ -24,17 +24,17 @@ class User < ApplicationRecord
   belongs_to :mux_live_stream, optional: true
   delegate :stream_key, to: :mux_live_stream
 
-  # This allows us to lookup users via either email OR username. Pretty cool, huh?
-  def self.find_for_database_authentication(warden_condition)
-    conditions = warden_condition.dup
-    login = conditions.delete(:email)
-    find_by(conditions).find_by(
-      [
-        "lower(username) = :value OR lower(email) = :value",
-        {value: login.strip.downcase},
-      ],
-    )
-  end
+  # # This allows us to lookup users via either email OR username. Pretty cool, huh?
+  # def self.find_for_database_authentication(warden_condition)
+  #   conditions = warden_condition.dup
+  #   login = conditions.delete(:email)
+  #   find_by(conditions).find_by(
+  #     [
+  #       "lower(username) = :value OR lower(email) = :value",
+  #       {value: login.strip.downcase},
+  #     ],
+  #   )
+  # end
 
   def setup_as_streamer!
     stream_object = MuxLiveStream.create!(user: self)
