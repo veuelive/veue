@@ -4,21 +4,29 @@ import Hls from 'hls.js';
 export default class extends Controller {
     static targets = [
         "iframe",
+        "addressBar",
     ]
-    readonly iframeTarget!: HTMLIFrameElement;
+    readonly iframeTarget!: HTMLIFrameElement
+    readonly addressBarTarget!: HTMLInputElement
+    secret: number
     listenerCallback: EventListenerOrEventListenerObject
 
     connect() {
+        this.iframeTarget.setAttribute("src", this.addressBarTarget.value)
+
+        // This sneaky bit of code uses a secret to send over some javascript
+        // that will get evaluated! :O
         this.listenerCallback = (msg: MessageEvent) => {
-            if(msg.data.type === "veue" && msg.data.event === "connect") {
-                fetch("/inject.js").then((response) => {
-                    response.text().then((javascript) => {
-                      this.iframeTarget.contentWindow.postMessage({
-                          secret: msg.data.secret,
-                          payload: javascript
-                      }, msg.data.value)
-                    })
-                })
+            console.log("Got message", msg.data)
+            let {type, event, veue, url, secret} = msg.data
+            if(type === "veue") {
+                this.addressBarTarget.setAttribute("value", url)
+                switch(event) {
+                    // This comes after sending the activate
+                    case "connect":
+                        this.secret = secret
+                        this.sendInjectedJavascript()
+                }
             }
         };
         window.addEventListener("message", this.listenerCallback)
@@ -29,6 +37,30 @@ export default class extends Controller {
     }
 
     iframeLoaded() {
-        console.log("Loaded!")
+        this.sendMessageToIframe("activate")
+    }
+
+    refresh() {
+        this.sendMessageToIframe("refresh")
+    }
+
+    private sendInjectedJavascript() {
+        fetch(this.data.get("inject-js-path")).then((response) => {
+            response.text().then((javascript) => {
+                this.sendMessageToIframe("inject", javascript)
+            })
+        })
+    }
+
+    private sendMessageToIframe(event, payload?) {
+        let message = {
+            type: "veue",
+            event: event,
+            secret: this.secret,
+            origin: window.location.origin,
+            payload: payload
+        };
+        console.log("Sending message: ", message)
+        this.iframeTarget.contentWindow.postMessage(message,  "*")
     }
 }

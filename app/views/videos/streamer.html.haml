@@ -1,9 +1,12 @@
 - @data_attributes["playback-id"] = current_user.stream_key
 
 .content-area__right__big
-  .browser{"data-controller": "veue-browser"}
-    -#<webview id="foo" src="https://www.jcrew.com/" style="width:640px; height:480px"></webview>
-    %iframe{"data-target": "veue-browser.iframe", width: 1200, height: 925, src: "https://veuelive.com", "data-action" => "load->veue-browser#iframeLoaded"}
+  .browser{"data-controller": "veue-browser", "data-veue-browser-inject-js-path": asset_pack_path('toxoplasmosis.js')}
+    .browser__toolbar
+      %input{type: "text", "data-target": "veue-browser.addressBar", value: "https://sonos.com"}
+      %button{"data-action": "veue-browser#refresh"} Refresh
+    .browser__frame
+      %iframe{"data-target": "veue-browser.iframe", width: 1200, height: 925, "data-action" => "load->veue-browser#iframeLoaded"}
 
 .content-area__left__small
   %canvas{"data-target": "pages--videos-streamer.personVideoCanvas", width: 800, height: 600}

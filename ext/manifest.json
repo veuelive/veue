@@ -31,7 +31,7 @@
       ],
       "all_frames": true,
       "js": [
-        "src/inject/inject.js"
+        "src/bootstrap.js"
       ]
     }
   ]
