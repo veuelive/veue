@@ -7,6 +7,7 @@ class VideosController < ApplicationController
   # GET /videos
   def index
     @videos = Video.all.decorate
+    ActionCable.server.broadcast "room_channel", content: "hello world"
   end
 
   # GET /videos/1
