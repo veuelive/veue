@@ -1,16 +1,15 @@
-- @data_attributes["playback-id"] = @video.mux_playback_id
+.content-area{"data-controller": "audience-view", "data-audience-view-playback-id": @video.mux_playback_id}
+  .content-area__right__big
+    %canvas.browser-video-area{"data-target": "audience-view.browserVideoCanvas", width: 2048, height: 1440}
+  .content-area__left__small
+    %canvas.streamer-webcam-view{"data-target": "audience-view.personVideoCanvas", width: 800, height: 600}
 
-.content-area__right__big
-  %canvas.browser-video-area{"data-target": "pages--videos-show.browserVideoCanvas", width: 2048, height: 1440}
-.content-area__left__small
-  %canvas.streamer-webcam-view{"data-target": "pages--videos-show.personVideoCanvas", width: 800, height: 600}
-
-  %video.player__video.viewer{"data-action" => "canplay->pages--videos-show#videoLoaded timeupdate->pages--videos-show#progressUpdate", "data-target" => "pages--videos-show.video"}
-  -#.player__controls
-  -#  .progress{"data-action" => "click->video-player#scrub mousedown->video-player#mousedown mouseup->video-player#mouseup mousemove->video-player#mousemove", "data-target" => "video-player.progress"}
-  -#    .progress__filled{"data-target" => "video-player.progressBar"}
-  %button.player__button.toggle{"data-action" => "click->pages--videos-show#togglePlay", "data-target" => "pages--videos-show.toggle", :title => "Toggle Play"} ►
-  -#  %input.player__slider{alt: "Volume", "data-action" => "change->video-player#rangeUpdate mousemove->video-player#rangeUpdate", :max => "1", :min => "0", :name => "volume", :step => "0.05", :type => "range", :value => "1"}/
-  -#  %input.player__slider{"data-action" => "change->video-player#rangeUpdate mousemove->video-player#rangeUpdate", :max => "2", :min => "0.5", :name => "playbackRate", :step => "0.1", :type => "range", :value => "1"}/
-  -#  %button.player__button{"data-action" => "click->video-player#skip", "data-skip" => "-10"} « 10s
-  -#  %button.player__button{"data-action" => "click->video-player#skip", "data-skip" => "25"} 25s »
+    %video.player__video.viewer{"data-action" => "canplay->audience-view#videoLoaded timeupdate->audience-view#progressUpdate", "data-target" => "audience-view.video"}
+    -#.player__controls
+    -#  .progress{"data-action" => "click->video-player#scrub mousedown->video-player#mousedown mouseup->video-player#mouseup mousemove->video-player#mousemove", "data-target" => "video-player.progress"}
+    -#    .progress__filled{"data-target" => "video-player.progressBar"}
+    %button.player__button.toggle{"data-action" => "click->audience-view#togglePlay", "data-target" => "audience-view.toggle", :title => "Toggle Play"} ►
+    -#  %input.player__slider{alt: "Volume", "data-action" => "change->video-player#rangeUpdate mousemove->video-player#rangeUpdate", :max => "1", :min => "0", :name => "volume", :step => "0.05", :type => "range", :value => "1"}/
+    -#  %input.player__slider{"data-action" => "change->video-player#rangeUpdate mousemove->video-player#rangeUpdate", :max => "2", :min => "0.5", :name => "playbackRate", :step => "0.1", :type => "range", :value => "1"}/
+    -#  %button.player__button{"data-action" => "click->video-player#skip", "data-skip" => "-10"} « 10s
+    -#  %button.player__button{"data-action" => "click->video-player#skip", "data-skip" => "25"} 25s »

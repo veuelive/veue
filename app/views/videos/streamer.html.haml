@@ -1,18 +1,18 @@
-- @data_attributes["playback-id"] = current_user.stream_key
+.content-area{"data-controller": "streamer-view"}
 
-.content-area__right__big
-  .browser{"data-controller": "veue-browser", "data-veue-browser-inject-js-path": asset_pack_path('toxoplasmosis.js')}
-    .browser__toolbar
-      %input{type: "text", list: "datalist-sites", "data-target": "veue-browser.addressBar", value: "https://sonos.com", "data-action": "veue-browser#addressChange"}
-      %datalist#datalist-sites
-        %option https://apple.com
-        %option https://revolve.com
-        %option https://sonos.com
-      %button{"data-action": "veue-browser#refresh"} Refresh
-    .browser__frame
-      %iframe{"data-target": "veue-browser.iframe", width: 1200, height: 784, "data-action" => "load->veue-browser#iframeLoaded"}
+  .content-area__right__big
+    .browser{"data-controller": "veue-browser", "data-veue-browser-inject-js-path": asset_pack_path('toxoplasmosis.js')}
+      .browser__toolbar
+        %input{type: "text", list: "datalist-sites", "data-target": "veue-browser.addressBar", value: "https://sonos.com", "data-action": "veue-browser#addressChange"}
+        %datalist#datalist-sites
+          %option https://apple.com
+          %option https://revolve.com
+          %option https://sonos.com
+        %button{"data-action": "veue-browser#refresh"} Refresh
+      .browser__frame
+        %iframe{"data-target": "veue-browser.iframe", width: 1200, height: 784, "data-action" => "load->veue-browser#iframeLoaded"}
 
-.content-area__left__small
-  %canvas{"data-target": "pages--videos-streamer.personVideoCanvas", width: 800, height: 600}
+  .content-area__left__small
+    %canvas{"data-target": "streamer-view.personVideoCanvas", width: 800, height: 600}
 
-%video.player__video.viewer{"data-action" => "canplay->pages--videos-show#videoLoaded timeupdate->pages--videos-show#progressUpdate", "data-target" => "#{page_stim_controller}.personVideo"}
+  %video.player__video.viewer{"data-action" => "canplay->pages--videos-show#videoLoaded timeupdate->pages--videos-show#progressUpdate", "data-target" => "#{page_stim_controller}.personVideo"}

@@ -3,7 +3,7 @@
 
 body {
   margin: 0;
-  background: #DDE3F0;
+  background: #dde3f0;
   padding: 2vh 2vw 2vh 2vw;
 }
 
@@ -21,21 +21,24 @@ $rounded-corners: 20px;
 
   #main-container {
     width: 100%;
-    display: flex;
-    flex-direction: row;
 
-    .content-area__right__big {
-      flex: 10;
-      background: #F5F6F8;
-      padding: 15px;
-      border-radius: $rounded-corners 0 0 $rounded-corners;
-    }
+    .content-area {
+      display: flex;
+      flex-direction: row;
 
-    .content-area__left__small {
-      flex: 3;
-      background: white;
-      border-radius: 0 $rounded-corners $rounded-corners 0;
-      padding: 15px;
+      .content-area__right__big {
+        flex: 10;
+        background: #f5f6f8;
+        padding: 15px;
+        border-radius: $rounded-corners 0 0 $rounded-corners;
+      }
+
+      .content-area__left__small {
+        flex: 3;
+        background: white;
+        border-radius: 0 $rounded-corners $rounded-corners 0;
+        padding: 15px;
+      }
     }
   }
 }

@@ -12,7 +12,7 @@
     = yield :header if content_for?(:header)
   %body{body_attributes}
     #layout-container
-      #main-container{stimulus_attributes(page_stim_controller, @data_attributes)}
+      #main-container
         - if flash[:notice]
           .flash_notice
             = flash[:notice]
