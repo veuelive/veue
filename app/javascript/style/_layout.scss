@@ -16,8 +16,8 @@ $rounded-corners: 20px;
   border-radius: $rounded-corners;
   display: flex;
   background: white;
-  align-items: stretch;
-  max-width: 250vh;
+  //align-items: stretch;
+  max-width: 200vh;
 
   #main-container {
     width: 100%;

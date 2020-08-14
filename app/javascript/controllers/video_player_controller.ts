@@ -1,6 +1,10 @@
 import {Controller} from "stimulus";
 import Hls from 'hls.js';
 
+/**
+ * THIS IS NOT USED AT VEUE BUT IS A SAMPLE OF SOME CODE THAT WE CAN USE TO THINK ABOUT HOW TO BUILD THINGS!
+ */
+
 export default class extends Controller {
     static targets = [
         "video",

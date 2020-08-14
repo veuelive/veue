@@ -72,7 +72,6 @@ export default class extends Controller {
         let personCtx = this.personVideoCanvasContext;
         let fullVideoWidth = this.video.videoWidth;
         let fullVideoHeight = this.video.videoHeight;
-        this.video
 
         let sy = (1440 / 2048) * fullVideoHeight
 

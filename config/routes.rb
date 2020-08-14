@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   get '/videos/streamer', to: "videos#streamer"
+  get '/videos/_iframe_start', to: "videos#iframe_start"
   resources :videos
   post "/mux/webhook", to: "mux_webhooks#index"
 
