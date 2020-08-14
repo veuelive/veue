@@ -7,3 +7,62 @@
         = image_tag video.thumbnail_url
 
 %br
+
+.chat-section
+  .web-account-header
+    / .account-header-grid
+    /   .account-header-profile
+    /     %h3.account-header-profile__title
+    /       = image_tag 'profile.png', class: 'profile-img-1'
+    /       %select.profile-select
+    /         %option{:value => "0"} Annet Aniston
+    /         %option{:value => "1"} Aniston 1
+    /         %option{:value => "2"} Aniston 3
+    /         %option{:value => "3"} Aniston 6
+    /         %option{:value => "4"} Aniston 8
+    /         %option{:value => "5"} Aniston 9
+    /       = image_tag 'dropdown-arrow_03.png'
+    /   .account-bell
+    /     = image_tag 'bell_06.png'
+    / .men-big-img
+    /   = image_tag 'man-img_03.png', class: 'men-big-img__pic'
+    .follow-section
+      .follow-grid
+        %h3.follow-title
+          = image_tag 'profile-2.png', class: 'profile-follow-img'
+          Jonathan Davis
+        %button.follow-btn Follow
+      %h3.follow-subtitle Stream #4
+      %p.follow-pera High-Performance Wireless Earphones
+    .web-comment-section
+      .web-comment-grid
+        .web-comment-image
+          = image_tag 'profile.png'
+        .web--message
+          %p.web--message__name Annent Aniston
+          %label.web--message__lable Hi Everyone!
+          %label.web--message__lable How are your Bell
+      .web-comment-grid
+        .web-comment-image
+          = image_tag 'profile-2.png'
+        .web--message
+          %p.web--message__name Ehsan Aniston
+          %label.web--message__lable Hi Everyone!
+          %label.web--message__lable How are your Bell
+      .web-comment-grid
+        .web-comment-image
+          = image_tag 'profile-2.png'
+        .web--message
+          %p.web--message__name Haziq Aniston
+          %label.web--message__lable Hi Everyone!
+          %label.web--message__lable How are your Ehsan what is this man
+  .web-message-write
+    / %ul.message-write_unorder
+    /   %li.message-write-list
+    /     %a.message-write-link{:href => "#"}
+    /       = image_tag 'file-1.png'
+    /   %li.message-write-list
+    /     %a.message-write-link{:href => "#"}
+    /       = image_tag 'file-upload.png'
+    .write-area
+      %textarea.write-area__text{:placeholder => "write your message..."}
