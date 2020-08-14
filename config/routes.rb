@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get '/videos/streamer', to: "videos#streamer"
   get '/videos/_iframe_start', to: "videos#iframe_start"
   resources :videos
-  resources :live_messages, only: [:create]
+  resources :chat_messages, only: [:create]
   post "/mux/webhook", to: "mux_webhooks#index"
 
   devise_for :users

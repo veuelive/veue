@@ -56,47 +56,11 @@ $medium-gray: #d0d0d0;
 
 .chat-section {
   background-color: $white-color;
-  padding: 1.5rem 0;
-  border-top-right-radius: 0.5rem;
-  width: 404px;
-  position: absolute;
-  right: 20px;
   .web-account-header {
-    padding: 0 1.5rem;
-    .account-header-grid {
-      @include grid-style(grid, 50% 50%, 1%);
-      align-items: center;
-    }
-    .account-header-profile {
-      .profile-select {
-        @include text-style (1rem,$light-black,$poppins, 400);
-        border: none;
-        -webkit-appearance: none;
-        appearance: none;
-      }
-      .profile-img-1 {
-        position: relative;
-        margin-right: 0.5rem;
-        top: 0.5rem;
-      }
-      .men-image {
-        border-radius: 0.5rem;
-      }
-    }
-    .account-bell {
-      text-align: right;
-    }
-    .men-big-img {
-      margin-top: 1rem;
-      &__pic {
-        width: 100%;
-        border-radius: 0.5rem;
-      }
-    }
     .follow-section {
       box-shadow: $box-shadow;
       margin: 2rem 0;
-      padding: 1rem;
+      padding: .5rem;
       border-radius: 0.5rem;
       .follow-grid {
         @include grid-style(grid, 70% 29%, 1%);
@@ -115,7 +79,7 @@ $medium-gray: #d0d0d0;
           border: 0;
           position: relative;
           top: 0.5rem;
-          padding: 0.3rem 1.5rem;
+          padding: 0.3rem .5rem;
           border-radius: 2rem;
           @include text-style (1rem,$light-black,$poppins, 400);
         }
