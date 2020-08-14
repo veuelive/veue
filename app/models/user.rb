@@ -23,6 +23,7 @@ class User < ApplicationRecord
   has_many :mux_live_streams, dependent: :destroy
   belongs_to :mux_live_stream, optional: true
   delegate :stream_key, to: :mux_live_stream
+  has_many :live_messages, dependent: :destroy
 
   # # This allows us to lookup users via either email OR username. Pretty cool, huh?
   # def self.find_for_database_authentication(warden_condition)
@@ -41,5 +42,9 @@ class User < ApplicationRecord
     update!({
               mux_live_stream: stream_object,
             })
+  end
+
+  def full_name
+    "#{first_name} #{last_name}"
   end
 end

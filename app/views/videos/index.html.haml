@@ -36,33 +36,17 @@
       %p.follow-pera High-Performance Wireless Earphones
     .web-comment-section
       .web-comment-grid
-        .web-comment-image
-          = image_tag 'profile.png'
-        .web--message
-          %p.web--message__name Annent Aniston
-          %label.web--message__lable Hi Everyone!
-          %label.web--message__lable How are your Bell
-      .web-comment-grid
-        .web-comment-image
-          = image_tag 'profile-2.png'
-        .web--message
-          %p.web--message__name Ehsan Aniston
-          %label.web--message__lable Hi Everyone!
-          %label.web--message__lable How are your Bell
-      .web-comment-grid
-        .web-comment-image
-          = image_tag 'profile-2.png'
-        .web--message
-          %p.web--message__name Haziq Aniston
-          %label.web--message__lable Hi Everyone!
-          %label.web--message__lable How are your Ehsan what is this man
-  .web-message-write
-    / %ul.message-write_unorder
-    /   %li.message-write-list
-    /     %a.message-write-link{:href => "#"}
-    /       = image_tag 'file-1.png'
-    /   %li.message-write-list
-    /     %a.message-write-link{:href => "#"}
-    /       = image_tag 'file-upload.png'
-    .write-area
-      %textarea.write-area__text{:placeholder => "write your message..."}
+        = LiveMessages.each do |message|
+          / .web-comment-image
+          /   = image_tag message.user.profile_avatar
+          .web--message
+            %p.web--message__name
+              = message.user.full_name
+            %label.web--message__label
+              = message.body
+  - if user_signed_in?
+    = form_for LiveMessage.new, remote: true do |f|
+      .web-message-write
+        .write-area
+          = f.text_area :body, class: 'write-area__text', placeholder: 'write your message...'
+      = f.submit 'Message'
