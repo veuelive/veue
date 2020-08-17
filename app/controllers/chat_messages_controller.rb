@@ -4,17 +4,17 @@ class ChatMessagesController < ApplicationController
   before_action :messages_params
 
   def create
-    if user_signed_in?
-      message = current_user.chat_messages.new(messages_params)
-      if message.save
-        ActionCable.server.broadcast(
-          "chat_room",
-          {text: message.body, user_name: current_user.full_name, video_id: message.video_id},
-        )
-        render(json: {success: true})
-      else
-        render(json: {success: false, error_messages: message.errors.full_messages})
-      end
+    return unless user_signed_in?
+
+    message = current_user.chat_messages.new(messages_params)
+    if message.save
+      ActionCable.server.broadcast(
+        "chat_room",
+        {text: message.body, user_name: current_user.full_name, video_id: message.video_id},
+      )
+      render(json: {success: true})
+    else
+      render(json: {success: false, error_messages: message.errors.full_messages})
     end
   end
 
