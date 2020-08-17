@@ -5,6 +5,7 @@ class Video < ApplicationRecord
 
   belongs_to :mux_live_stream
   has_many :mux_assets, dependent: :destroy
+  has_many :chat_messages, dependent: :destroy
 
   aasm column: "state" do
     # We aren't totally live yet, but it'sa coming!

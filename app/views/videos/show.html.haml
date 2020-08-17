@@ -3,7 +3,6 @@
     %canvas.browser-video-area{"data-target": "audience-view.browserVideoCanvas", width: 2048, height: 1440}
   .content-area__left__small
     %canvas.streamer-webcam-view{"data-target": "audience-view.personVideoCanvas", width: 800, height: 600}
-
     %video.player__video.viewer{"data-action" => "canplay->audience-view#videoLoaded timeupdate->audience-view#progressUpdate", "data-target" => "audience-view.video"}
     -#.player__controls
     -#  .progress{"data-action" => "click->video-player#scrub mousedown->video-player#mousedown mouseup->video-player#mouseup mousemove->video-player#mousemove", "data-target" => "video-player.progress"}
@@ -13,3 +12,22 @@
     -#  %input.player__slider{"data-action" => "change->video-player#rangeUpdate mousemove->video-player#rangeUpdate", :max => "2", :min => "0.5", :name => "playbackRate", :step => "0.1", :type => "range", :value => "1"}/
     -#  %button.player__button{"data-action" => "click->video-player#skip", "data-skip" => "-10"} « 10s
     -#  %button.player__button{"data-action" => "click->video-player#skip", "data-skip" => "25"} 25s »
+    .chat-section
+      .web-account-header
+        .web-comment-section
+          .web-comment-grid{ id: "video-chat-#{@video.id}" }
+            - @video.chat_messages.each do |message|
+              / .web-comment-image
+              /   = image_tag message.user.profile_avatar
+              .web--message
+                %p.web--message__name
+                  = message.user.full_name
+                %label.web--message__label
+                  = message.body
+      - if user_signed_in?
+        = form_for ChatMessage.new, remote: true do |f|
+          .web-message-write
+            .write-area
+              = f.hidden_field :video_id, value: @video.id
+              = f.text_area :body, class: 'write-area__text', placeholder: 'write your message...'
+          = f.submit 'Message'

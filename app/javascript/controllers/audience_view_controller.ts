@@ -33,6 +33,8 @@ export default class extends Controller {
         let hls = new Hls();
         hls.loadSource(url);
         hls.attachMedia(this.video);
+
+        this.formSubmissionHandler();
     }
 
     timerCallback() {
@@ -82,6 +84,15 @@ export default class extends Controller {
         let frame = browserCtx.getImageData(0, 0, fullVideoWidth, fullVideoHeight);
 
         return;
+    }
+
+    formSubmissionHandler() {
+        const formElement = document.querySelector("#new_chat_message")
+        
+        formElement.addEventListener("ajax:success", (event) => {
+            const inputArea = document.getElementById('chat_message_body') as HTMLInputElement
+            inputArea.value = ""
+        })
     }
 
     get video() {
