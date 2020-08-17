@@ -31,19 +31,67 @@ function isElegibleRequest(e) {
     return true
 }
 
-function rewriteRequestHeader(e) {
-    if (isElegibleRequest(e)) {
-        e.requestHeaders = e.requestHeaders.filter(h => !h.name.startsWith("Sec-Fetch"))
+async function rewriteRequestHeader(e) {
+    if (!isElegibleRequest(e)) {
+        return e.requestHeaders
     }
+
+    // First, let's get rid of the Sec-Fetch related headers.... nobody need y'all!
+    let headers = e.requestHeaders.filter(h => !h.name.startsWith("Sec-Fetch"))
+
+    const targetDomain = extractDomain(e.url)
+    const initiatorDomain = extractDomain(e.initiator)
+
+    // Okay, if this is true, we feel good about adding these back in!
+    if(targetDomain === initiatorDomain) {
+        // Second, let's put in the SameSite cookies that would have been stripped out
+        let cookies = await new Promise((resolve) => {
+            chrome.cookies.getAll({domain: "." + targetDomain}, resolve)
+        })
+
+        let smuggledCookies = cookies.filter(cookie => cookie.sameSite !== "no_restriction")
+
+        let cookieHeader = headers.find((header) => header.name === "Cookie")
+
+        if(!cookieHeader) {
+            cookieHeader = {
+                name: "Cookie",
+                value: ""
+            }
+            headers.push(cookieHeader)
+        }
+
+        smuggledCookies.forEach((cookie) => {
+            const newValue = cookie.name + "=" + cookie.value
+            if(cookieHeader.value.length > 0)
+                cookieHeader.value += "; ";
+            cookieHeader.value += newValue
+        })
+    }
+    return headers
+}
+
+function extractDomain(hostname) {
+    let url = new URL(hostname)
+    const parts = url.hostname.split(".")
+    if (parts.length === 1) {
+        return parts[0]
+    }
+    // Normally, we want to leave 2 parts... like amazon.com
+    let leaveParts = 2
+    // But with 'co' domains, we want to leave more!
+    if (parts[parts.length - 2] === "co") {
+        leaveParts = 3
+    }
+    return parts.slice(parts.length - leaveParts, parts.length).join(".")
 }
 
 
 let DELETE_FROM_RESPONSE = ["x-frame-options", "content-security-policy"]
 
 function rewriteResponseHeader(e) {
-    console.log(e)
     e.responseHeaders.forEach((header) => {
-        if(header.name.toLowerCase() == "set-cookie") {
+        if (header.name.toLowerCase() == "set-cookie") {
             console.log(e.url, header.value)
         }
     })
@@ -54,7 +102,6 @@ function rewriteResponseHeader(e) {
             header.name = header.name.toLowerCase()
             if (header.name === "set-cookie") {
                 header.value = header.value + "; SameSite=None"
-                console.log(e.url, header.value)
             }
         })
         headers = headers.filter((header) => DELETE_FROM_RESPONSE.indexOf(header.name) == -1)
@@ -74,3 +121,8 @@ chrome.webRequest.onHeadersReceived.addListener(rewriteResponseHeader,
     {urls},
     ["blocking", "responseHeaders", "extraHeaders"]);
 
+chrome.cookies.onChanged.addListener((change) => {
+    console.log(change.cookie.name, change.cookie.domain)
+    console.log(change)
+
+})
