@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::Base
   include HttpAuthConcern
+  include DeviseHelperConcern
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :setup_data_attributes
