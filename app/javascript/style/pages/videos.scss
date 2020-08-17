@@ -97,7 +97,6 @@ $medium-gray: #d0d0d0;
     .web-comment-section {
       margin-top: 5rem;
       .web-comment-grid {
-        @include grid-style(grid, 15% 84%, 1%);
         align-items: center;
         margin-bottom: 1rem;
         .web--message {

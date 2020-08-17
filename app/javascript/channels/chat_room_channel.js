@@ -12,6 +12,24 @@ consumer.subscriptions.create("ChatRoomChannel", {
 
   received(data) {
     // Called when there's incoming data on the websocket for this channel
-    console.log('data in chatRoomChannel', data)
+    const elementId = `video-chat-${data.video_id}`
+    const newMessageHtml = messageHtml(data.text, data.user_name)
+    const messageStream = document.getElementById(elementId)
+    if (messageHtml) {
+      messageStream.insertAdjacentHTML('beforeend', newMessageHtml)
+    }
   }
 });
+
+function messageHtml(message, name) {
+  return `
+    <div class="web--message">
+      <p class="web--message__name">
+        ${name}
+      </p>
+      <label class="web--message__label">
+        ${message}
+      </label>
+    </div>
+  `
+}

@@ -23,7 +23,7 @@
         %h3.follow-subtitle Stream #4
         %p.follow-pera High-Performance Wireless Earphones
       .web-comment-section
-        .web-comment-grid
+        .web-comment-grid{ id: "video-chat-#{@video.id}" }
           - @video.chat_messages.each do |message|
             / .web-comment-image
             /   = image_tag message.user.profile_avatar
@@ -36,5 +36,6 @@
       = form_for ChatMessage.new, remote: true do |f|
         .web-message-write
           .write-area
+            = f.hidden_field :video_id, value: @video.id
             = f.text_area :body, class: 'write-area__text', placeholder: 'write your message...'
         = f.submit 'Message'
