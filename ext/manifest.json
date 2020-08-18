@@ -16,12 +16,16 @@
     ],
     "persistent": true
   },
+  "browser_action":  {
+    "title": "Start Stream"
+  },
   "permissions": [
     "contentSettings",
     "tabs",
     "webRequest",
     "webRequestBlocking",
     "cookies",
+    "tabCapture",
     "<all_urls>"
   ],
   "content_scripts": [
