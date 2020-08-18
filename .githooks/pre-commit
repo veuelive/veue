@@ -2,9 +2,19 @@
 
 rvm use
 
+echo "Formatting Javascript & Sass"
+FILES=$(git diff --cached --name-only --diff-filter=ACMR "*.js" "*.jsx" "*.scss" "*.md" "*.json" "*.ts"| sed 's| |\\ |g')
+
+# Prettify all selected files
+echo "$FILES" | xargs ./node_modules/.bin/prettier --write --loglevel warn
+
+echo "Running Rubocop"
 files=$(git status -s | grep -E 'A|M' | awk '{print $2}')
 files="$files $(git status -s | grep -E 'R' | awk '{print $4}')"
 echo $files | xargs ./bin/rubocop --display-cop-names --extra-details -A --force-exclusion
+
+# Make sure we save the changes
+git add .
 
 echo "Running tests"
 ./bin/rspec
