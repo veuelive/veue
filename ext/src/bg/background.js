@@ -20,10 +20,4 @@ chrome.browserAction.onClicked.addListener((tab) => {
   chrome.getUserMedia({ video: true, audio: true }, (camera) => {
     console.log("Camera", camera);
   });
-
-  // activeWindow = clickEvent.windowId
-  // chrome.windows.update(activeWindow, )
-  // chrome.windows.create({
-  //     url: "http://"
-  // })
 });

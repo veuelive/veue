@@ -24,13 +24,16 @@
     "webRequestBlocking",
     "cookies",
     "tabCapture",
-    "<all_urls>"
+    "http://localhost:3000",
+    "https://veuelive.com"
   ],
   "content_scripts": [
     {
-      "matches": ["https://*/*", "http://*/*"],
-      "all_frames": true,
-      "js": ["src/bootstrap.js"]
+      "matches": [
+        "https://veuelive.com/videos/streamer",
+        "http://localhost:3000/videos/streamer"
+      ],
+      "js": ["src/mediator.js"]
     }
   ]
 }
