@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class ChatRoomChannel < ApplicationCable::Channel
+class LiveVideoChannel < ApplicationCable::Channel
   def subscribed
-    stream_from("chat_channel_#{params[:roomId]}")
+    stream_from(stream_name)
   end
 
   def unsubscribed
@@ -12,10 +12,10 @@ class ChatRoomChannel < ApplicationCable::Channel
   private
 
   def stream_name
-    "chat_channel_#{video_id}"
+    "live_video_#{video_id}"
   end
 
   def video_id
-    params.fetch('data').fetch('roomId')
+    params.fetch('roomId')
   end
 end
