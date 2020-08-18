@@ -1,7 +1,5 @@
-
-
-#videos__show, #videos__streamer {
-
+#videos__show,
+#videos__streamer {
   canvas {
     width: 100%;
     border-radius: 20px;
@@ -33,22 +31,22 @@
 }
 
 // Realtime chat section
-@import url('https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i&display=swap');
-$poppins: 'Poppins', sans-serif;
+@import url("https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i&display=swap");
+$poppins: "Poppins", sans-serif;
 $box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
 $white-color: #fff;
-$light-black:#0e0e0e;
-$light-silver:#d8d8d8;
+$light-black: #0e0e0e;
+$light-silver: #d8d8d8;
 $light-blue: #616583;
 $medium-gray: #d0d0d0;
 
-@mixin text-style ($f-size, $color, $f-family ,$f-weight) {
+@mixin text-style($f-size, $color, $f-family, $f-weight) {
   font-size: $f-size;
   color: $color;
   font-family: $f-family;
   font-weight: $f-weight;
 }
-@mixin grid-style ($grid, $row, $gap) {
+@mixin grid-style($grid, $row, $gap) {
   display: $grid;
   grid-template-columns: $row;
   grid-gap: $gap;
@@ -60,13 +58,13 @@ $medium-gray: #d0d0d0;
     .follow-section {
       box-shadow: $box-shadow;
       margin: 2rem 0;
-      padding: .5rem;
+      padding: 0.5rem;
       border-radius: 0.5rem;
       .follow-grid {
         @include grid-style(grid, 70% 29%, 1%);
         align-items: center;
         .follow-title {
-          @include text-style (1rem,$light-black,$poppins, 400);
+          @include text-style(1rem, $light-black, $poppins, 400);
           margin: 0;
           .profile-follow-img {
             position: relative;
@@ -79,18 +77,18 @@ $medium-gray: #d0d0d0;
           border: 0;
           position: relative;
           top: 0.5rem;
-          padding: 0.3rem .5rem;
+          padding: 0.3rem 0.5rem;
           border-radius: 2rem;
-          @include text-style (1rem,$light-black,$poppins, 400);
+          @include text-style(1rem, $light-black, $poppins, 400);
         }
       }
       .follow-subtitle {
-        @include text-style (1rem,$light-black,$poppins, 400);
+        @include text-style(1rem, $light-black, $poppins, 400);
         margin-bottom: 0rem;
         padding-top: 0.5rem;
       }
       .follow-pera {
-        @include text-style (1rem,$light-blue,$poppins, 400);
+        @include text-style(1rem, $light-blue, $poppins, 400);
         margin: 0;
       }
     }
@@ -101,13 +99,13 @@ $medium-gray: #d0d0d0;
         margin-bottom: 1rem;
         .web--message {
           &__name {
-            @include text-style (1rem,$medium-gray,$poppins, 400);
+            @include text-style(1rem, $medium-gray, $poppins, 400);
             margin-top: 0;
           }
           &__lable {
             background-color: $light-silver;
             padding: 0.5rem 1.5rem;
-            @include text-style (1rem,$light-black,$poppins, 400);
+            @include text-style(1rem, $light-black, $poppins, 400);
             border-top-left-radius: 0.5rem;
             border-bottom-left-radius: 1rem;
             border-top-right-radius: 1rem;
@@ -118,7 +116,7 @@ $medium-gray: #d0d0d0;
         }
       }
     }
-  } 
+  }
   .web-message-write {
     border-top: 1px solid $light-silver;
     .message-write_unorder {
@@ -137,7 +135,7 @@ $medium-gray: #d0d0d0;
       padding: 0 1.5rem;
       &__text {
         border: none;
-        @include text-style (1rem,$light-black,$poppins, 400);
+        @include text-style(1rem, $light-black, $poppins, 400);
         resize: none;
       }
     }

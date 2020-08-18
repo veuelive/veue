@@ -1,9 +1,9 @@
-import consumer from "./consumer"
+import consumer from "./consumer";
 
 consumer.subscriptions.create("ChatRoomChannel", {
   connected() {
     // Called when the subscription is ready for use on the server
-    console.log("Connected to chat room channel!!")
+    console.log("Connected to chat room channel!!");
   },
 
   disconnected() {
@@ -12,13 +12,13 @@ consumer.subscriptions.create("ChatRoomChannel", {
 
   received(data) {
     // Called when there's incoming data on the websocket for this channel
-    const elementId = `video-chat-${data.video_id}`
-    const newMessageHtml = messageHtml(data.text, data.user_name)
-    const messageStream = document.getElementById(elementId)
+    const elementId = `video-chat-${data.video_id}`;
+    const newMessageHtml = messageHtml(data.text, data.user_name);
+    const messageStream = document.getElementById(elementId);
     if (messageHtml) {
-      messageStream.insertAdjacentHTML('beforeend', newMessageHtml)
+      messageStream.insertAdjacentHTML("beforeend", newMessageHtml);
     }
-  }
+  },
 });
 
 function messageHtml(message, name) {
@@ -31,5 +31,5 @@ function messageHtml(message, name) {
         ${message}
       </label>
     </div>
-  `
+  `;
 }
