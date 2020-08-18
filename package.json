@@ -17,7 +17,19 @@
   "version": "0.1.0",
   "devDependencies": {
     "eslint": "^7.7.0",
+    "husky": ">=4",
+    "lint-staged": ">=10",
     "prettier": "2.0.5",
     "webpack-dev-server": "^3.11.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint --cache --fix",
+    "*.{js,css,md,ts,scss,sass,json}": "prettier --write",
+    "*.rb": "rubocop -A"
   }
 }
