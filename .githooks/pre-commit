@@ -1,5 +1,4 @@
-#!/bin/bash
-export PATH="$PATH:$HOME/.rvm/bin"
+#!/bin/bash --login
 
 rvm use
 
