@@ -13,7 +13,7 @@ class ChatMessagesController < ApplicationController
     end
 
     ActionCable.server.broadcast(
-      "chat_room",
+      "chat_room_#{message.video_id}",
       {text: message.body, user_name: current_user.full_name, video_id: message.video_id},
     )
     render(json: {success: true})
