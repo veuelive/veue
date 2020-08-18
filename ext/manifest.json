@@ -11,12 +11,10 @@
   },
   "default_locale": "en",
   "background": {
-    "scripts": [
-      "src/bg/background.js"
-    ],
+    "scripts": ["src/bg/background.js"],
     "persistent": true
   },
-  "browser_action":  {
+  "browser_action": {
     "title": "Start Stream"
   },
   "permissions": [
@@ -30,14 +28,9 @@
   ],
   "content_scripts": [
     {
-      "matches": [
-        "https://*/*",
-        "http://*/*"
-      ],
+      "matches": ["https://*/*", "http://*/*"],
       "all_frames": true,
-      "js": [
-        "src/bootstrap.js"
-      ]
+      "js": ["src/bootstrap.js"]
     }
   ]
 }

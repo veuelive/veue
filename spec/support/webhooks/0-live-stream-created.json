@@ -30,9 +30,7 @@
       }
     ],
     "new_asset_settings": {
-      "playback_policies": [
-        "public"
-      ]
+      "playback_policies": ["public"]
     },
     "id": "g00vIr21CVV3P3tV8012vVGAztjDpv201XTTLGc8fwAQzk",
     "created_at": 1595620677,

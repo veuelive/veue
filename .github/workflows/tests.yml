@@ -1,7 +1,6 @@
 name: Rails Tests
 
-on:
-  [push, pull_request]
+on: [push, pull_request]
 
 jobs:
   linters:
@@ -46,10 +45,10 @@ jobs:
       - name: Run linters
         run: |
           bundle exec rubocop --parallel
-#      - name: Run security checks
-#        run: |
-#          bin/bundler-audit --update
-#          bin/brakeman -q -w2
+  #      - name: Run security checks
+  #        run: |
+  #          bin/bundler-audit --update
+  #          bin/brakeman -q -w2
 
   tests:
     name: Tests
@@ -68,10 +67,10 @@ jobs:
           --health-timeout 5s
           --health-retries 5
       redis:
-         image: redis
-         ports:
-         - 6379:6379
-         options: --entrypoint redis-server
+        image: redis
+        ports:
+          - 6379:6379
+        options: --entrypoint redis-server
 
     steps:
       - name: Checkout code

@@ -5,30 +5,30 @@ using the best practices of the Rails community and the included tooling around 
 
 We use the following technologies:
 
-* Postgres
-* Haml
-* Sass CSS
-* Webpacker
-* Stimulus.js
-* Typescript
+- Postgres
+- Haml
+- Sass CSS
+- Webpacker
+- Stimulus.js
+- Typescript
 
 We use the following Third-Party services:
 
-* Mux (Video Streaming platform)
-* Heroku (Hosting)
-* AppSignal (APM)
+- Mux (Video Streaming platform)
+- Heroku (Hosting)
+- AppSignal (APM)
 
 ## Developer Setup
 
 Developing with this application is more complicated than some others due to the need to test and setup
 video streaming. To do this we will need to setup all of the following:
 
-1) Mux Test API Tokens
-2) an ngrok tunnel
-3) Configure Mux Webhook
-4) Setup OBS for streaming**
+1. Mux Test API Tokens
+2. an ngrok tunnel
+3. Configure Mux Webhook
+4. Setup OBS for streaming\*\*
 
-** The last one is only until we get Deskie up and running....
+\*\* The last one is only until we get Deskie up and running....
 
 ### Setup Mux Account
 
@@ -101,7 +101,7 @@ $> ngrok http 3000
 This will open a public endpoint that we can use for our webhook. Do not close this tab! Copy the https url in there.
 It will look something like `https://edbd2cc7d2fc.ngrok.io`
 
-Go to Mux.com and go into your settings. Click on Webhooks. Create a new webhook. Select your environment, and 
+Go to Mux.com and go into your settings. Click on Webhooks. Create a new webhook. Select your environment, and
 set the webhook url to be something _like_ `https://edbd2cc7d2fc.ngrok.io/mux/webhook` by adding `/mux/webhook` to the
 end of your ngrok tunnel.
 
@@ -111,10 +111,10 @@ Start up your Rails development server as you normally would!
 
 `rails s`
 
-You should be able to load the site on `localhost:3000` or alternately, you should be able to see it 
+You should be able to load the site on `localhost:3000` or alternately, you should be able to see it
 if you load your ngrok hostname.
 
-If you click "Start Stream" in OBS, then that should connect to Mux, then Mux should send a signal via the 
+If you click "Start Stream" in OBS, then that should connect to Mux, then Mux should send a signal via the
 webhook, that will go through your ngrok and hit your local development server. This will generate a new
 `Video` and in a few seconds, you should see a live stream on your local machine! YAYYYY!
 
@@ -127,6 +127,6 @@ horrible, terrible extra space at the end of a file! :O
 We have all of our hooks in the folder `.githooks` and we share them! Yay! How
 do you 'install' them – why just use the handy command below and you are GTG.
 
-```$> git config core.hooksPath .githooks```
+`$> git config core.hooksPath .githooks`
 
 Boom! Ya good!

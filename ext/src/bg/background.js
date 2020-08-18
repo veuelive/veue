@@ -1,30 +1,29 @@
-let streaming = false
+let streaming = false;
 
-let activeTabId
+let activeTabId;
 
 chrome.browserAction.onClicked.addListener((tab) => {
-    console.log(tab)
-    activeTabId = tab.id
+  console.log(tab);
+  activeTabId = tab.id;
 
-    chrome.tabCapture.capture({video: true}, (mediaStream) => {
-        console.log("tab capture", mediaStream)
-    })
-    chrome.windows.create({
-        tabId: activeTabId,
-        width: 1200,
-        height: 784,
-    })
-    chrome.windows.create({
-        type: 'popup',
+  chrome.tabCapture.capture({ video: true }, (mediaStream) => {
+    console.log("tab capture", mediaStream);
+  });
+  chrome.windows.create({
+    tabId: activeTabId,
+    width: 1200,
+    height: 784,
+  });
+  chrome.windows.create({
+    type: "popup",
+  });
+  chrome.getUserMedia({ video: true, audio: true }, (camera) => {
+    console.log("Camera", camera);
+  });
 
-    })
-    chrome.getUserMedia({video: true, audio: true}, (camera) => {
-        console.log("Camera", camera)
-    })
-
-    // activeWindow = clickEvent.windowId
-    // chrome.windows.update(activeWindow, )
-    // chrome.windows.create({
-    //     url: "http://"
-    // })
-})
+  // activeWindow = clickEvent.windowId
+  // chrome.windows.update(activeWindow, )
+  // chrome.windows.create({
+  //     url: "http://"
+  // })
+});
