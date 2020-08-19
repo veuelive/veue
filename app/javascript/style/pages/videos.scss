@@ -37,13 +37,13 @@
 // Realtime chat section
 .chat-section {
   background-color: $white-color;
-  .web-account-header {
-    .web-comment-section {
+  .account-header {
+    .comment-section {
       margin-top: 5rem;
-      .web-comment-grid {
+      .comment-grid {
         align-items: center;
         margin-bottom: 1rem;
-        .web--message {
+        .chat-message {
           &__name {
             @include text-style(1rem, $medium-gray, $poppins, 400);
             margin-top: 0;
@@ -63,7 +63,7 @@
       }
     }
   }
-  .web-message-write {
+  .message-write {
     border-top: 1px solid $light-silver;
     .write-area {
       padding: 0 1.5rem;
