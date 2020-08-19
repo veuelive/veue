@@ -4,10 +4,11 @@
       .web-comment-grid{ id: "live-chat-#{video.id}", "data-target": "chat.chatMessages" }
         - video.chat_messages.each do |message|
           .web--message
-            %p.web--message__name
+            .web--message__name
               = message.user.full_name
-            %label.web--message__label
+            .web--message__label
               = message.body
+
   - if user_signed_in?
     = form_for ChatMessage.new, remote: true, data: { target: "chat.chatForm" } do |f|
       .web-message-write
