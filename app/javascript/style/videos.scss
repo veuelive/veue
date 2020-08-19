@@ -1,6 +1,6 @@
-@import '../vars';
-@import '../utils/text_style';
-@import '../utils/grid_style';
+@use 'utils/text';
+@use 'utils/color';
+@use 'utils/font';
 
 #videos__show,
 #videos__streamer {
@@ -36,7 +36,7 @@
 
 // Realtime chat section
 .chat-section {
-  background-color: $white-color;
+  background-color: color.$white-color;
   .account-header {
     .comment-section {
       margin-top: 5rem;
@@ -45,17 +45,14 @@
         margin-bottom: 1rem;
         .chat-message {
           &__name {
-            @include text-style(1rem, $medium-gray, $poppins, 400);
+            @include text.fn(1rem, color.$medium-gray, font.$poppins, 400);
             margin-top: 0;
           }
           &__lable {
-            background-color: $light-silver;
+            background-color: color.$light-silver;
             padding: 0 1.5rem;
-            @include text-style(1rem, $light-black, $poppins, 400);
-            border-top-left-radius: 0.5rem;
-            border-bottom-left-radius: 1rem;
-            border-top-right-radius: 1rem;
-            border-bottom-right-radius: 1rem;
+            @include text.fn(1rem, color.$light-black, font.$poppins, 400);
+            border-radius: 0.5rem 1rem 1rem 1rem;
             display: inline-block;
             margin-bottom: 0.5rem;
           }
@@ -64,12 +61,12 @@
     }
   }
   .message-write {
-    border-top: 1px solid $light-silver;
+    border-top: 1px solid color.$light-silver;
     .write-area {
       padding: 0 1.5rem;
       &__text {
         border: none;
-        @include text-style(1rem, $light-black, $poppins, 400);
+        @include text.fn(1rem, color.$light-black, font.$poppins, 400);
         resize: none;
       }
     }
