@@ -16,6 +16,6 @@ class LiveVideoChannel < ApplicationCable::Channel
   end
 
   def video_id
-    params.fetch('roomId')
+    params.fetch("roomId")
   end
 end

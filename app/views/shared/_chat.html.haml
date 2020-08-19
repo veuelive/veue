@@ -1,17 +1,16 @@
 .chat-section{ "data-controller": "chat", "data-chat-video-id": video.id }
-  .web-account-header
-    .web-comment-section
-      .web-comment-grid{ id: "live-chat-#{video.id}", "data-target": "chat.chatMessages" }
+  .account-header
+    .comment-section
+      .comment-grid{ id: "live-chat-#{video.id}", "data-target": "chat.chatMessages" }
         - video.chat_messages.each do |message|
-          .web--message
-            .web--message__name
+          .chat-message
+            .chat-message__name
               = message.user.full_name
-            .web--message__label
+            .chat-message__label
               = message.body
-
   - if user_signed_in?
     = form_for ChatMessage.new, remote: true, data: { target: "chat.chatForm" } do |f|
-      .web-message-write
+      .message-write
         .write-area
           = f.hidden_field :video_id, value: video.id
           = f.text_area :body, class: 'write-area__text', placeholder: 'write your message...', data: { target: "chat.messageInput" }
