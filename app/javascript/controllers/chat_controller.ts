@@ -1,4 +1,4 @@
-import {Controller} from "stimulus";
+import { Controller } from "stimulus"
 import consumer from "../channels/consumer"
 
 export default class extends Controller {
@@ -23,11 +23,6 @@ export default class extends Controller {
         channel: "LiveVideoChannel",
         roomId: this.videoId
     }, {
-      connected() {
-        const data = JSON.parse(this.identifier)
-        console.log(`Connected to chat room channel from chat controller!! ${data.roomId}`)
-      },
-
       received(data) {
         // Called when there's incoming data on the websocket for this channel
         const newMessageHtml = `
@@ -40,12 +35,9 @@ export default class extends Controller {
               </label>
             </div>
         `
-
-        const messageStream = this.chatMessagesTarget
-        console.log(messageStream)
-        if (messageStream) {
-          messageStream.insertAdjacentHTML('beforeend', newMessageHtml)
-        }
+        const chatId = `live-chat-${data.video_id}`;
+        const chatArea = document.getElementById(chatId)
+        chatArea.insertAdjacentHTML('beforeend', newMessageHtml)
       }
     })
   }
