@@ -2,67 +2,58 @@ import { Controller } from "stimulus";
 import Hls from "hls.js";
 
 export default class extends Controller {
-  static targets = ["iframe", "addressBar"];
-  readonly iframeTarget!: HTMLIFrameElement;
+  static targets = ["addressBar"];
   readonly addressBarTarget!: HTMLInputElement;
   secret: number;
-  listenerCallback: EventListenerOrEventListenerObject;
+  krangMessageCallback: EventListenerOrEventListenerObject;
 
-  connect() {
-    this.iframeTarget.setAttribute("src", this.addressBarTarget.value);
-
-    // This sneaky bit of code uses a secret to send over some javascript
-    // that will get evaluated! :O
-    this.listenerCallback = (msg: MessageEvent) => {
+  connect(): void {
+    this.krangMessageCallback = (msg: MessageEvent) => {
       console.log("Got message", msg.data);
-      let { type, event, veue, url, secret } = msg.data;
+      const { type, event, secret } = msg.data;
       if (type === "veue") {
-        this.addressBarTarget.setAttribute("value", url);
         switch (event) {
           // This comes after sending the activate
-          case "connect":
+          case "awaiting_command":
             this.secret = secret;
-            this.sendInjectedJavascript();
+            this.sendKrangToDimensionX();
         }
       }
     };
-    window.addEventListener("message", this.listenerCallback);
+    // This sneaky bit of code uses a secret to send over some javascript
+    // that will get evaluated! :O
+    window.addEventListener("message", this.krangMessageCallback);
+    console.log("Ready to listen!");
   }
 
-  disconnect() {
-    window.removeEventListener("message", this.listenerCallback);
+  disconnect(): void {
+    window.removeEventListener("message", this.krangMessageCallback);
   }
 
-  iframeLoaded() {
-    this.sendMessageToIframe("activate");
+  refresh(): void {
+    this.sendMessageToKrang("refresh");
   }
 
-  refresh() {
-    this.sendMessageToIframe("refresh");
+  addressChange(e: Event): void {
+    const target = e.target as HTMLInputElement;
+    this.sendMessageToKrang("go", target.value);
   }
 
-  addressChange(e: Event) {
-    let target = e.target as HTMLInputElement;
-    this.sendMessageToIframe("go", target.value);
-  }
-
-  private sendInjectedJavascript() {
-    fetch(this.data.get("inject-js-path")).then((response) => {
-      response.text().then((javascript) => {
-        this.sendMessageToIframe("inject", javascript);
-      });
+  private sendKrangToDimensionX() {
+    this.sendMessageToKrang("awaken", {
+      krangPath: this.data.get("krang"),
+      technodromePath: this.data.get("technodrome"),
     });
   }
 
-  private sendMessageToIframe(event, payload?) {
-    let message = {
+  private sendMessageToKrang(event, payload?) {
+    const message = {
       type: "veue",
       event: event,
       secret: this.secret,
-      origin: window.location.origin,
       payload: payload,
     };
     console.log("Sending message: ", message);
-    this.iframeTarget.contentWindow.postMessage(message, "*");
+    window.postMessage(message, window.location.origin);
   }
 }

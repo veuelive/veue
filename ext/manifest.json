@@ -11,12 +11,12 @@
   },
   "default_locale": "en",
   "background": {
-    "scripts": ["src/bg/background.js"],
-    "persistent": true
+    "scripts": ["src/bg/background.js"]
   },
   "browser_action": {
     "title": "Start Stream"
   },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'",
   "permissions": [
     "contentSettings",
     "tabs",
@@ -24,6 +24,7 @@
     "webRequestBlocking",
     "cookies",
     "tabCapture",
+    "activeTab",
     "http://localhost:3000",
     "https://veuelive.com"
   ],
@@ -33,7 +34,7 @@
         "https://veuelive.com/videos/streamer",
         "http://localhost:3000/videos/streamer"
       ],
-      "js": ["src/mediator.js"]
+      "js": ["src/dimensionX.js"]
     }
   ]
 }

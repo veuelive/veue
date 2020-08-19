@@ -1,5 +1,4 @@
 import { Controller } from "stimulus";
-import Hls from "hls.js";
 
 export default class extends Controller {
   static targets = ["webcamVideoTag", "webcamCanvas"];
@@ -8,29 +7,37 @@ export default class extends Controller {
 
   private webcamCanvasContext: CanvasRenderingContext2D;
 
-  connect() {
+  connect(): void {
     this.webcamCanvasContext = this.webcamCanvasTarget.getContext("2d");
 
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })
       .then((stream) => {
         this.webcamVideoTagTarget.srcObject = stream;
-        this.webcamVideoTagTarget.onloadedmetadata = (e) => {
-          this.webcamVideoTagTarget.play();
-          this.timerCallback();
+        this.webcamVideoTagTarget.onloadedmetadata = () => {
+          this.webcamVideoTagTarget.play().then(() => this.timerCallback());
         };
       });
+
+    window.postMessage(
+      {
+        type: "veue",
+        action: "inject",
+        krang: this.data.get("krang-js-path"),
+        tox_path: this.data.get("tox-js-path"),
+      },
+      "*"
+    );
   }
 
-  timerCallback() {
+  timerCallback(): void {
     this.computeFrame();
-    let self = this;
     setTimeout(() => {
-      self.timerCallback();
+      this.timerCallback();
     }, 16); // roughly 60 frames per second
   }
 
-  computeFrame() {
+  computeFrame(): void {
     this.webcamCanvasContext.drawImage(
       this.webcamVideoTagTarget,
       0,
