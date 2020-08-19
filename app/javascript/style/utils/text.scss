@@ -1,4 +1,4 @@
-@mixin text-style($f-size, $color, $f-family, $f-weight) {
+@mixin fn($f-size, $color, $f-family, $f-weight) {
   font-size: $f-size;
   color: $color;
   font-family: $f-family;
