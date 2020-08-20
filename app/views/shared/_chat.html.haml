@@ -1,17 +1,23 @@
 .chat-section{ "data-controller": "chat", "data-chat-video-id": video.id }
-  .account-header
-    .comment-section
-      .comment-grid{ id: "live-chat-#{video.id}", "data-target": "chat.chatMessages" }
-        - video.chat_messages.each do |message|
-          .chat-message
-            .chat-message__name
-              = message.user.full_name
-            .chat-message__label
-              = message.body
+  .p-1
+    .account-header
+      .comment-section
+        .comment-grid{ id: "live-chat-#{video.id}", "data-target": "chat.chatMessages" }
+          - video.chat_messages.each do |message|
+            - if user_signed_in? && current_user.chat_messages.include?(message)
+              .chat-message-right
+                .chat-message-right__label
+                  = message.body
+            - else
+              .chat-message-left
+                .chat-message-left__name
+                  = message.user.full_name
+                .chat-message-left__label
+                  = message.body
   - if user_signed_in?
-    = form_for ChatMessage.new, remote: true, data: { target: "chat.chatForm" } do |f|
+    = form_for ChatMessage.new, remote: true, html: { class: 'flex' }, data: { target: "chat.chatForm" } do |f|
       .message-write
         .write-area
           = f.hidden_field :video_id, value: video.id
-          = f.text_area :body, class: 'write-area__text', placeholder: 'write your message...', data: { target: "chat.messageInput" }
-      = f.submit 'Message'
+          = f.text_area :body, class: 'write-area__text w-full outline-none', placeholder: 'Write your message...', data: { target: "chat.messageInput" }
+      = f.submit 'Send'

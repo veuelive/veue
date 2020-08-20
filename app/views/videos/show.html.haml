@@ -2,14 +2,29 @@
   .content-area__right__big
     %canvas.browser-video-area{"data-target": "audience-view.browserVideoCanvas", width: 2048, height: 1440}
   .content-area__left__small
-    %canvas.streamer-webcam-view{"data-target": "audience-view.personVideoCanvas", width: 800, height: 600}
-    %video.player__video.viewer{"data-action" => "canplay->audience-view#videoLoaded timeupdate->audience-view#progressUpdate", "data-target" => "audience-view.video"}
-    -#.player__controls
-    -#  .progress{"data-action" => "click->video-player#scrub mousedown->video-player#mousedown mouseup->video-player#mouseup mousemove->video-player#mousemove", "data-target" => "video-player.progress"}
-    -#    .progress__filled{"data-target" => "video-player.progressBar"}
-    %button.player__button.toggle{"data-action" => "click->audience-view#togglePlay", "data-target" => "audience-view.toggle", :title => "Toggle Play"} ►
-    -#  %input.player__slider{alt: "Volume", "data-action" => "change->video-player#rangeUpdate mousemove->video-player#rangeUpdate", :max => "1", :min => "0", :name => "volume", :step => "0.05", :type => "range", :value => "1"}/
-    -#  %input.player__slider{"data-action" => "change->video-player#rangeUpdate mousemove->video-player#rangeUpdate", :max => "2", :min => "0.5", :name => "playbackRate", :step => "0.1", :type => "range", :value => "1"}/
-    -#  %button.player__button{"data-action" => "click->video-player#skip", "data-skip" => "-10"} « 10s
-    -#  %button.player__button{"data-action" => "click->video-player#skip", "data-skip" => "25"} 25s »
+    .stream-area.relative
+      %canvas.streamer-webcam-view{"data-target": "audience-view.personVideoCanvas", width: 800, height: 600}
+      %video.player__video.viewer{"data-action" => "canplay->audience-view#videoLoaded timeupdate->audience-view#progressUpdate", "data-target" => "audience-view.video"}
+      -#.player__controls
+      -#  .progress{"data-action" => "click->video-player#scrub mousedown->video-player#mousedown mouseup->video-player#mouseup mousemove->video-player#mousemove", "data-target" => "video-player.progress"}
+      -#    .progress__filled{"data-target" => "video-player.progressBar"}
+      %button.player__button.play-button.absolute.outline-none.toggle{"data-action" => "click->audience-view#togglePlay", "data-target" => "audience-view.toggle", :title => "Toggle Play"} ►
+      -#  %input.player__slider{alt: "Volume", "data-action" => "change->video-player#rangeUpdate mousemove->video-player#rangeUpdate", :max => "1", :min => "0", :name => "volume", :step => "0.05", :type => "range", :value => "1"}/
+      -#  %input.player__slider{"data-action" => "change->video-player#rangeUpdate mousemove->video-player#rangeUpdate", :max => "2", :min => "0.5", :name => "playbackRate", :step => "0.1", :type => "range", :value => "1"}/
+      -#  %button.player__button{"data-action" => "click->video-player#skip", "data-skip" => "-10"} « 10s
+      -#  %button.player__button{"data-action" => "click->video-player#skip", "data-skip" => "25"} 25s »
+    .p-1
+      .streamer-profile.text-capitalised
+        .streamer-info
+          .streamer-info__avatar
+            = image_tag 'avatar-placeholder', class: 'rounded h-1 w-1'
+            .streamer-name
+              = current_video.user.full_name
+          .follow-btn
+            follow
+        .stream-info
+          .stream-num
+            stream # 4
+          .stream-name
+            high‑performance wireless earphones
     = render partial: 'shared/chat', locals: { video: current_video }
