@@ -12,7 +12,6 @@ $rounded-corners: 20px;
   border: 1px solid #e2e3e7;
   border-radius: $rounded-corners;
   display: flex;
-  background: white;
   //align-items: stretch;
   max-width: 200vh;
 
@@ -24,16 +23,17 @@ $rounded-corners: 20px;
       flex-direction: row;
 
       .content-area__right__big {
-        flex: 10;
-        background: #f5f6f8;
-        padding: 15px;
+        flex: 9;
+        padding-right: 15px;
         border-radius: $rounded-corners 0 0 $rounded-corners;
       }
 
       .content-area__left__small {
         flex: 3;
+        display: inline-block;
+        overflow: hidden;
         background: white;
-        border-radius: 0 $rounded-corners $rounded-corners 0;
+        border-radius: 10px;
       }
     }
   }
