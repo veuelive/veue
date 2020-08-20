@@ -2,11 +2,16 @@
 @use 'utils/color';
 @use 'utils/font';
 
+.content-area__left__small {
+  border-top-left-radius: 0.625rem;
+  border-top-right-radius: 0.625rem;
+}
 #videos__show,
 #videos__streamer {
   canvas {
     width: 100%;
-    border-radius: 20px;
+    border-top-left-radius: 0.625rem;
+    border-top-right-radius: 0.625rem;
   }
 
   video {
@@ -35,23 +40,44 @@
 
 // Realtime chat section
 .chat-section {
-  background-color: color.$white-color;
+  background-color: color.$white;
   .account-header {
     .comment-section {
-      margin-top: 5rem;
       .comment-grid {
-        align-items: center;
-        margin-bottom: 1rem;
-        .chat-message {
-          &__name {
-            @include text.fn(1rem, color.$medium-gray, font.$poppins, 400);
-            margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        .chat-message-right {
+          display: flex;
+          justify-content: flex-end;
+          width: 100%;
+          &__label {
+            padding: 0.5rem 1rem;
+            border: 2px solid color.$gray-light-blue;
+            color: color.$gray-bluish;
+            @include text-style(0.75rem, color.$dark-text, $poppins, 400);
+            border-top-left-radius: 1rem;
+            border-bottom-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            border-bottom-right-radius: 0.5rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
           }
-          &__lable {
-            background-color: color.$light-silver;
-            padding: 0 1.5rem;
-            @include text.fn(1rem, color.$light-black, font.$poppins, 400);
-            border-radius: 0.5rem 1rem 1rem 1rem;
+        }
+        .chat-message-left {
+          margin-bottom: 1.5rem;
+          &__name {
+            color: color.$gray;
+            margin-bottom: 0.25rem;
+          }
+          &__label {
+            background-color: color.$gray-lighter;
+            color: color.$gray-darker-2;
+            padding: 0.5rem 1rem;
+            @include text-style(0.75rem, color.$dark-text, $poppins, 400);
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            border-bottom-right-radius: 1rem;
             display: inline-block;
             margin-bottom: 0.5rem;
           }
@@ -59,15 +85,127 @@
       }
     }
   }
+
+  input[type="submit"] {
+    background: $gray-light;
+    color: $gray-darker;
+    border: none;
+  }
+
   .message-write {
-    border-top: 1px solid color.$light-silver;
+    border-top: 1px solid color.$gray-light-1;
+    width: 90%;
     .write-area {
-      padding: 0 1.5rem;
+      margin-top: 1rem;
+      padding: 0rem 0.5rem;
       &__text {
         border: none;
         @include text.fn(1rem, color.$light-black, font.$poppins, 400);
         resize: none;
       }
     }
+  }
+}
+
+.text-capitalised {
+  text-transform: capitalize;
+}
+
+.streamer-profile {
+  border: 1px solid $gray-light;
+  border-radius: 10px;
+  padding: 1rem;
+  .streamer-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    &__avatar {
+      display: flex;
+      padding-right: 0.25rem;
+      align-items: center;
+      .streamer-name {
+        font-size: 14px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 2.57;
+        letter-spacing: 0.7px;
+        text-align: left;
+        padding-left: 0.5rem;
+      }
+    }
+    .follow-btn {
+      border-radius: 10px;
+      padding: 0.5rem;
+      background-color: $gray-light;
+      color: $gray-darker-1;
+      font-size: 1rem;
+    }
+  }
+  .stream-info {
+    .stream-num {
+      color: $gray-dark;
+      margin-bottom: 0.5rem;
+    }
+    .stream-name {
+      color: $gray-darker;
+      font-size: 1rem;
+    }
+  }
+}
+.rounded {
+  border-radius: 50%;
+}
+.h-1 {
+  height: 2rem;
+}
+.w-full {
+  width: 100%;
+}
+.w-1 {
+  width: 2rem;
+}
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
+.outline-none {
+  &:focus {
+    outline: none;
+  }
+}
+.flex {
+  display: flex;
+}
+
+.play-button {
+  left: 5px;
+  bottom: 10px;
+  background: red;
+  color: white;
+  border: none;
+  padding: 0.35rem 0.65rem;
+  border-radius: 5px;
+}
+
+input,
+textarea {
+  &::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $gray-medium;
+    opacity: 1; /* Firefox */
+  }
+
+  &:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: $gray-medium;
+  }
+
+  &::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: $gray-medium;
   }
 }
