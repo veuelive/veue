@@ -46,6 +46,8 @@
       .comment-grid {
         display: flex;
         flex-direction: column;
+        max-height: 350px;
+        overflow-y: auto;
         .chat-message-right {
           display: flex;
           justify-content: flex-end;
