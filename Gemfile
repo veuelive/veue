@@ -100,5 +100,5 @@ group :test do
   # We use the assigns() helper in our specs, and this gem is needed for it
   gem "rails-controller-testing"
   # Adding Database Cleaner to make sure our DB is clean when we test
-  gem 'database_cleaner-active_record'
+  gem "database_cleaner-active_record"
 end

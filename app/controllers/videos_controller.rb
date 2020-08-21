@@ -2,7 +2,7 @@
 
 class VideosController < ApplicationController
   before_action :current_video, only: %i[show]
-  before_action :authenticate_user!, only: %w[new live]
+  before_action :authenticate_user!, only: %w[new streamer]
 
   # GET /videos
   def index
@@ -14,7 +14,7 @@ class VideosController < ApplicationController
 
   def new; end
 
-  def live
+  def streamer
     # @current_video = current_user.videos.where(id: params[:id]).decorate
   end
 
