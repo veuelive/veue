@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-
-  resources :videos, only: [:index, :show, :new] do
+  resources :videos, only: %i[index show new] do
     collection do
-      get 'live'
+      get "streamer"
     end
   end
   resources :chat_messages, only: [:create]
@@ -16,7 +15,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   # API
-  get "/deskie/user_data" => "deskie#user_data", as: :deskie_user_data
+  get "/deskie/user_data": "deskie#user_data", as: :deskie_user_data
 
   root "videos#index"
 end
