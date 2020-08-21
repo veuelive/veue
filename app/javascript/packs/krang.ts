@@ -17,7 +17,7 @@ class Krang {
 
   timerCallback = async () => {
     await this.processFrame();
-    setImmediate(this.timerCallback);
+    setTimeout(this.timerCallback, 1);
   };
   private portal: chrome.runtime.Port;
   private canvas: HTMLCanvasElement;
