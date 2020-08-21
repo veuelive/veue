@@ -28,12 +28,13 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "rspec"
     }
   },
   "lint-staged": {
     "*.{js,ts}": "eslint --cache --fix",
     "*.{js,css,md,ts,scss,sass,json}": "prettier --write",
-    "*.rb": "rubocop -A"
+    "*.rb": "./bin/rubocop -A"
   }
 }
