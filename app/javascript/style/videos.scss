@@ -56,7 +56,7 @@
             padding: 0.5rem 1rem;
             border: 2px solid color.$gray-light-blue;
             color: color.$gray-bluish;
-            @include text-style(0.75rem, color.$dark-text, $poppins, 400);
+            font-size: 0.75rem;
             border-top-left-radius: 1rem;
             border-bottom-left-radius: 1rem;
             border-top-right-radius: 1rem;
@@ -75,7 +75,7 @@
             background-color: color.$gray-lighter;
             color: color.$gray-darker-2;
             padding: 0.5rem 1rem;
-            @include text-style(0.75rem, color.$dark-text, $poppins, 400);
+            font-size: 0.75rem;
             border-top-left-radius: 0.5rem;
             border-bottom-left-radius: 1rem;
             border-top-right-radius: 1rem;
@@ -86,10 +86,10 @@
         }
         .chat-message-grouped {
           &__label {
-            background-color: $gray-lighter;
-            color: $gray-darker-2;
+            background-color: color.$gray-lighter;
+            color: color.$gray-darker-2;
             padding: 0.5rem 1rem;
-            @include text-style(0.75rem, $dark-text, $poppins, 400);
+            font-size: 0.75rem;
             border-top-left-radius: 0.5rem;
             border-bottom-left-radius: 1rem;
             border-top-right-radius: 1rem;
@@ -103,8 +103,8 @@
   }
 
   input[type="submit"] {
-    background: $gray-light;
-    color: $gray-darker;
+    background: color.$gray-light;
+    color: color.$gray-darker;
     border: none;
   }
 
@@ -128,7 +128,7 @@
 }
 
 .streamer-profile {
-  border: 1px solid $gray-light;
+  border: 1px solid color.$gray-light;
   border-radius: 10px;
   padding: 1rem;
   .streamer-info {
@@ -154,18 +154,18 @@
     .follow-btn {
       border-radius: 10px;
       padding: 0.5rem;
-      background-color: $gray-light;
-      color: $gray-darker-1;
+      background-color: color.$gray-light;
+      color: color.$gray-darker-1;
       font-size: 1rem;
     }
   }
   .stream-info {
     .stream-num {
-      color: $gray-dark;
+      color: color.$gray-dark;
       margin-bottom: 0.5rem;
     }
     .stream-name {
-      color: $gray-darker;
+      color: color.$gray-darker;
       font-size: 1rem;
     }
   }
@@ -211,17 +211,17 @@ input,
 textarea {
   &::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: $gray-medium;
+    color: color.$gray-medium;
     opacity: 1; /* Firefox */
   }
 
   &:-ms-input-placeholder {
     /* Internet Explorer 10-11 */
-    color: $gray-medium;
+    color: color.$gray-medium;
   }
 
   &::-ms-input-placeholder {
     /* Microsoft Edge */
-    color: $gray-medium;
+    color: color.$gray-medium;
   }
 }
