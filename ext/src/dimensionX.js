@@ -24,17 +24,25 @@ let bootstrapCallback = async (messageEvent) => {
     }
   }
 };
+
+chrome.runtime.onConnect.addListener((port) => {
+  port.onMessage.addListener((msg) => {
+    msg.type = "krang";
+    window.postMessage(msg);
+  });
+});
+
 window.addEventListener("message", bootstrapCallback);
 
-postVeueMessage("awaiting_command");
+window.postVeueMessage("awaiting_command");
 
-function postVeueMessage(event) {
+function postVeueMessage(event, payload) {
   let message = {
     type: "veue",
     event: event,
     url: window.location.href,
     secret: generatedSecret,
+    payload,
   };
-  console.log("Sending message", message, "*");
   window.postMessage(message, "*");
 }

@@ -9,6 +9,8 @@
           %option https://revolve.com
           %option https://sonos.com
         %button{"data-action": "veue-browser#refresh"} Refresh
+      .browser__frame
+        %canvas{width: 1200, height: 784, "data-target": "veue-browser.canvas"}
   .content-area__left__small
     %canvas{"data-target": "streamer-view.webcamCanvas", width: 800, height: 600}
     %video{"data-target": "streamer-view.webcamVideoTag", width: 800, height: 600}

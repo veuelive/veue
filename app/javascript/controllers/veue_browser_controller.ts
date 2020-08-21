@@ -2,27 +2,33 @@ import { Controller } from "stimulus";
 import Hls from "hls.js";
 
 export default class extends Controller {
-  static targets = ["addressBar"];
+  static targets = ["addressBar", "canvas"];
   readonly addressBarTarget!: HTMLInputElement;
+  readonly canvasTarget!: HTMLCanvasElement;
+  canvasCtx: CanvasRenderingContext2D;
   secret: number;
   krangMessageCallback: EventListenerOrEventListenerObject;
 
   connect(): void {
     this.krangMessageCallback = (msg: MessageEvent) => {
-      console.log("Got message", msg.data);
       const { type, event, secret } = msg.data;
-      if (type === "veue") {
-        switch (event) {
-          // This comes after sending the activate
-          case "awaiting_command":
-            this.secret = secret;
-            this.sendKrangToDimensionX();
-        }
+      switch (type) {
+        case "veue":
+          switch (event) {
+            // This comes after sending the activate
+            case "awaiting_command":
+              this.secret = secret;
+              this.sendKrangToDimensionX();
+          }
+          break;
+        case "krang":
+          this.paintFrame(msg.data);
       }
     };
     // This sneaky bit of code uses a secret to send over some javascript
     // that will get evaluated! :O
     window.addEventListener("message", this.krangMessageCallback);
+    this.canvasCtx = this.canvasTarget.getContext("2d");
     console.log("Ready to listen!");
   }
 
@@ -53,7 +59,17 @@ export default class extends Controller {
       secret: this.secret,
       payload: payload,
     };
-    console.log("Sending message: ", message);
     window.postMessage(message, window.location.origin);
+  }
+
+  private paintFrame(data: { frame: string; width: number; height: number }) {
+    const imageObj = new Image();
+    console.log(data);
+    imageObj.onload = () => {
+      this.canvasTarget.width = data.width;
+      this.canvasTarget.height = data.height;
+      this.canvasCtx.drawImage(imageObj, 0, 0);
+    };
+    imageObj.src = data.frame;
   }
 }

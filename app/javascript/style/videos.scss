@@ -3,7 +3,7 @@
 @use 'utils/font';
 
 #videos__show,
-#videos__streamer {
+#videos__live {
   canvas {
     width: 100%;
     border-radius: 20px;
@@ -22,6 +22,11 @@
       height: 2em;
       input {
         height: 2em;
+        width: 100%;
+      }
+    }
+    .browser__frame {
+      canvas {
         width: 100%;
       }
     }
