@@ -1,4 +1,4 @@
-.chat-section{ "data-controller": "chat", "data-chat-video-id": video.id }
+.chat-section{ "data-controller": "chat", "data-chat-video-id": video.id, "data-chat-user": user_signed_in? ? current_user.id : "" }
   .account-header
     .comment-section
       .comment-grid.p-1.layout-container-scrollable{ id: "live-chat-#{video.id}", "data-target": "chat.chatMessages" }

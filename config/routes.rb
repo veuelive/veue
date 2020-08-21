@@ -6,7 +6,11 @@ Rails.application.routes.draw do
       get "streamer"
     end
   end
-  resources :chat_messages, only: [:create]
+
+  resources :chat_messages, only: [:create] do
+    get :grouped_message, as: :member
+  end
+
   post "/mux/webhook", to: "mux_webhooks#index"
 
   devise_for :users

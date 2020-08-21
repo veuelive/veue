@@ -24,12 +24,12 @@ $rounded-corners: 20px;
 
       .content-area__right__big {
         flex: 9;
-        padding-right: 15px;
+        padding-right: 2rem;
         border-radius: $rounded-corners 0 0 $rounded-corners;
       }
 
       .content-area__left__small {
-        flex: 3;
+        flex: 2.5;
         display: inline-block;
         overflow: hidden;
         background: white;
