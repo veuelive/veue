@@ -97,4 +97,6 @@ group :test do
   gem "webdrivers"
   # Used for testing JSON responses
   gem "rspec-json_expectations"
+  # We use the assigns() helper in our specs, and this gem is needed for it
+  gem "rails-controller-testing"
 end

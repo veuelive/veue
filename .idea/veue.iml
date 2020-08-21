@@ -28,6 +28,7 @@
     </content>
     <orderEntry type="jdk" jdkName="RVM: ruby-2.7.1" jdkType="RUBY_SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Chrome" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="aasm (v5.0.8, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="actioncable (v6.0.3.2, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="actionmailbox (v6.0.3.2, RVM: ruby-2.7.1) [gem]" level="application" />
@@ -111,6 +112,7 @@
     <orderEntry type="library" scope="PROVIDED" name="rack-proxy (v0.6.5, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack-test (v1.1.0, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rails (v6.0.3.2, RVM: ruby-2.7.1) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rails-controller-testing (v1.0.5, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rails-dom-testing (v2.0.3, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rails-html-sanitizer (v1.3.0, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="railties (v6.0.3.2, RVM: ruby-2.7.1) [gem]" level="application" />
@@ -162,7 +164,6 @@
     <orderEntry type="library" scope="PROVIDED" name="websocket-extensions (v0.1.5, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="xpath (v3.2.0, RVM: ruby-2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="zeitwerk (v2.3.0, RVM: ruby-2.7.1) [gem]" level="application" />
-    <orderEntry type="library" name="Chrome" level="project" />
   </component>
   <component name="RModuleSettingsStorage">
     <LOAD_PATH number="0" />
