@@ -66,7 +66,7 @@
           }
         }
         .chat-message-left {
-          margin-bottom: 1.5rem;
+          margin-top: 1rem;
           &__name {
             color: color.$gray;
             margin-bottom: 0.25rem;
@@ -76,6 +76,20 @@
             color: color.$gray-darker-2;
             padding: 0.5rem 1rem;
             @include text-style(0.75rem, color.$dark-text, $poppins, 400);
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+          }
+        }
+        .chat-message-grouped {
+          &__label {
+            background-color: $gray-lighter;
+            color: $gray-darker-2;
+            padding: 0.5rem 1rem;
+            @include text-style(0.75rem, $dark-text, $poppins, 400);
             border-top-left-radius: 0.5rem;
             border-bottom-left-radius: 1rem;
             border-top-right-radius: 1rem;
