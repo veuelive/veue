@@ -5,6 +5,6 @@ FactoryBot.define do
     user factory: :streamer
     mux_live_stream { user.mux_live_stream }
     title { Faker::Company.bs }
-    mux_playback_id { Faker::Alphanumeric.alphanumeric }
+    mux_playback_id { mux_live_stream.mux_playback_id }
   end
 end

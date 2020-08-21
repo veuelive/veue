@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 describe VideosController do
   render_views
 
-  before :all do
+  before :example do
     @videos = create_list(:video, 5)
     @video = @videos.first
   end
@@ -21,7 +23,7 @@ describe VideosController do
 
   describe "show" do
     it "should render the video" do
-      get :show, params: { id: @video.id }
+      get :show, params: {id: @video.id}
 
       expect(response).to have_http_status(:ok)
     end
