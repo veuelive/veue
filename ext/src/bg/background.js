@@ -17,7 +17,6 @@ chrome.browserAction.onClicked.addListener((tab) => {
   });
 
   chrome.tabCapture.capture({ video: true }, (newMediaStream) => {
-    console.log("tab capture", newMediaStream);
     this.mediaStream = newMediaStream;
 
     // This window is responsible for creating DimensionX
@@ -37,10 +36,6 @@ chrome.runtime.onMessage.addListener((request, messageSender, sendResponse) => {
       mediaStream,
     };
 
-    let technodromePlans = request.technodromePlans;
-
     eval(request.krang);
-
-    sendResponse();
   }
 });

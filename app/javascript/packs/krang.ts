@@ -12,7 +12,6 @@ declare let KRANG_STARTUP: {
 class Krang {
   private activeTab: Tab;
   private dimensionXTab: Tab;
-  private mediaStream: MediaStream;
   private video: HTMLVideoElement;
   private startTime: number;
 
@@ -29,10 +28,9 @@ class Krang {
     console.log(startup);
     this.activeTab = startup.activeTab;
     this.dimensionXTab = startup.dimensionX;
-    this.mediaStream = startup.mediaStream;
     this.portal = chrome.tabs.connect(this.dimensionXTab.id);
 
-    const videoTrack = this.mediaStream.getVideoTracks()[0];
+    const videoTrack = startup.mediaStream.getVideoTracks()[0];
     this.imageCapture = new ImageCapture(videoTrack);
 
     this.canvas = document.getElementsByTagName("canvas")[0];
@@ -44,8 +42,6 @@ class Krang {
   }
 
   awaken() {
-    console.log("I AM KRANG AND I AM ALIVE!", this.mediaStream);
-
     // Sow the seeds of my own destruction... in case those ninja turtles best me!
     // Or more likely, one of my tabs got closed
     chrome.tabs.onRemoved.addListener((tabId) => {
@@ -62,12 +58,11 @@ class Krang {
     const width = imageBitmap.width;
     const height = imageBitmap.height;
 
-    console.log(width);
-
     this.canvas.width = width;
     this.canvas.height = height;
     this.canvasCtx.drawImage(imageBitmap, 0, 0);
     const frame = this.canvas.toDataURL("image/png", 1);
+    imageBitmap.close();
     this.portal.postMessage({ frame, width, height });
   }
 
