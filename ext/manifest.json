@@ -11,10 +11,7 @@
   },
   "default_locale": "en",
   "background": {
-    "scripts": ["src/bg/background.js"]
-  },
-  "browser_action": {
-    "title": "Start Stream"
+    "page": "src/background.html"
   },
   "content_security_policy": "script-src 'self' 'unsafe-eval'",
   "permissions": [
@@ -28,11 +25,20 @@
     "http://localhost:3000",
     "https://veuelive.com"
   ],
+  "browser_action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "19": "icons/icon19.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "Stream on Veue"
+  },
   "content_scripts": [
     {
       "matches": [
-        "https://veuelive.com/videos/streamer",
-        "http://localhost:3000/videos/streamer"
+        "https://veuelive.com/videos/live",
+        "http://localhost:3000/videos/live"
       ],
       "js": ["src/dimensionX.js"]
     }

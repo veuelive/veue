@@ -1,37 +1,83 @@
-//
-
 import Tab = chrome.tabs.Tab;
 
-let technodrome: Tab;
-declare let dimensionX: Tab;
-declare let technodromePlans: string;
+declare let KRANG_STARTUP: {
+  activeTab: Tab;
+  dimensionX: Tab;
+  technodromePlans: string;
+  mediaStream: MediaStream;
+  portal: chrome.runtime.Port;
+};
 
-console.log("I AM KRANG AND I AM ALIVE!");
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+class Krang {
+  private activeTab: Tab;
+  private dimensionXTab: Tab;
+  private mediaStream: MediaStream;
+  private video: HTMLVideoElement;
+  private startTime: number;
 
-chrome.windows.create(
-  { url: "http://renttherunway.com", type: "popup" },
-  (window) => {
-    technodrome = window.tabs[0];
-    chrome.tabs.executeScript(
-      technodrome.id,
-      {
-        code: technodromePlans,
-        runAt: "document-start",
-      },
-      (results) => {
-        // The technodrome is complete!
-        // chrome.tabCapture.capture({ video: true }, (mediaStream) => {
-        //   console.log(mediaStream);
-        // });
-        console.log("TECHNODROME IS ALIVE", results);
+  timerCallback = async () => {
+    await this.processFrame();
+    setImmediate(this.timerCallback);
+  };
+  private portal: chrome.runtime.Port;
+  private canvas: HTMLCanvasElement;
+  private canvasCtx: CanvasRenderingContext2D;
+  private imageCapture: ImageCapture;
+
+  constructor(startup) {
+    console.log(startup);
+    this.activeTab = startup.activeTab;
+    this.dimensionXTab = startup.dimensionX;
+    this.mediaStream = startup.mediaStream;
+    this.portal = chrome.tabs.connect(this.dimensionXTab.id);
+
+    const videoTrack = this.mediaStream.getVideoTracks()[0];
+    this.imageCapture = new ImageCapture(videoTrack);
+
+    this.canvas = document.getElementsByTagName("canvas")[0];
+    this.canvasCtx = this.canvas.getContext("2d");
+
+    chrome.tabs.executeScript(this.activeTab.id, {
+      code: startup.technodromePlans,
+    });
+  }
+
+  awaken() {
+    console.log("I AM KRANG AND I AM ALIVE!", this.mediaStream);
+
+    // Sow the seeds of my own destruction... in case those ninja turtles best me!
+    // Or more likely, one of my tabs got closed
+    chrome.tabs.onRemoved.addListener((tabId) => {
+      if (tabId === this.dimensionXTab.id || tabId === this.activeTab.id) {
+        this.selfDestruct();
       }
-    );
-  }
-);
+    });
 
-chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
-  if (tabId === dimensionX.id) {
-    // It's time, dimension X is collapsing, so let's cleanup!
-    console.log(removeInfo);
+    this.timerCallback().then(() => (this.startTime = Date.now()));
   }
-});
+
+  async processFrame() {
+    const imageBitmap = await this.imageCapture.grabFrame();
+    const width = imageBitmap.width;
+    const height = imageBitmap.height;
+
+    console.log(width);
+
+    this.canvas.width = width;
+    this.canvas.height = height;
+    this.canvasCtx.drawImage(imageBitmap, 0, 0);
+    const frame = this.canvas.toDataURL("image/png", 1);
+    this.portal.postMessage({ frame, width, height });
+  }
+
+  selfDestruct() {
+    // It's time, dimension X is collapsing, so let's cleanup!
+    chrome.tabs.remove(this.activeTab.id);
+    chrome.tabs.remove(this.dimensionXTab.id);
+    this.portal.disconnect();
+  }
+}
+
+const krang = new Krang(KRANG_STARTUP);
+krang.awaken();

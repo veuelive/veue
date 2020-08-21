@@ -2,7 +2,7 @@
 
 class VideosController < ApplicationController
   before_action :current_video, only: %i[show]
-  before_action :authenticate_user!, only: %(streamer)
+  before_action :authenticate_user!, only: %w[new live]
 
   # GET /videos
   def index
@@ -12,15 +12,15 @@ class VideosController < ApplicationController
   # GET /videos/1
   def show; end
 
-  def streamer; end
+  def new; end
 
-  def iframe_start
-    render(inline: "")
+  def live
+    # @current_video = current_user.videos.where(id: params[:id]).decorate
   end
 
   # Use callbacks to share common setup or constraints between actions.
   def current_video
-    @video = @current_video ||= Video.find(params[:id]).decorate
+    @current_video ||= Video.find(params[:id]).decorate
   end
   helper_method :current_video
 
