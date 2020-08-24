@@ -24,7 +24,7 @@ class MuxWebhookJob < ApplicationJob
   end
 
   def process_webhook(webhook)
-    method_name = "process_" + webhook.event_name + "_event!"
+    method_name = "process_#{webhook.event_name}_event!"
 
     if webhook.respond_to?(method_name)
       webhook.__send__(method_name)
@@ -41,16 +41,19 @@ class MuxWebhookJob < ApplicationJob
   def process_target(webhook)
     target = webhook.mux_target
 
-    if target
+    if target.blank?
+      logger.debug("No playback information")
+    else
       target.latest_mux_webhook_at = webhook.event_received_at
-
-      playback = webhook.payload["playback_ids"]&.find { |playback| playback["policy"] == "public" }
-      target.mux_playback_id = playback["id"] if playback
+      public_playback(target, webhook)
       target.mux_status = webhook.payload["status"]
 
       target.save!
-    else
-      logger.debug("No playback information")
     end
+  end
+
+  def public_playback(target, webhook)
+    playback = webhook.payload["playback_ids"]&.find { |playback| playback["policy"] == "public" }
+    target.mux_playback_id = playback["id"] if playback
   end
 end

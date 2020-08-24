@@ -3,7 +3,7 @@
 module WebhookHelpers
   def mux_webhooks
     @mux_webhooks ||=
-      Dir[Rails.root + "spec/support/webhooks/*.json"].sort.map do |file|
+      Dir[Rails.root.join("spec/support/webhooks/*.json")].sort.map do |file|
         JSON.parse(File.read(file))
       end
   end
