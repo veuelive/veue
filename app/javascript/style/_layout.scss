@@ -1,7 +1,6 @@
 body {
   margin: 0;
-  background: #dde3f0;
-  padding: 2vh 2vw 2vh 2vw;
+  background: #f5f6f8;
 }
 
 $rounded-corners: 20px;
@@ -11,12 +10,11 @@ $rounded-corners: 20px;
   margin: auto;
   border: 1px solid #e2e3e7;
   border-radius: $rounded-corners;
-  display: flex;
   //align-items: stretch;
-  max-width: 200vh;
 
   #main-container {
-    width: 100%;
+    display: flex;
+    padding: 0 2rem 2rem 2rem;
 
     .content-area {
       display: flex;
@@ -24,16 +22,18 @@ $rounded-corners: 20px;
 
       .content-area__right__big {
         flex: 9;
-        padding-right: 2rem;
-        border-radius: $rounded-corners 0 0 $rounded-corners;
+        margin-right: 2rem;
+        border-radius: $rounded-corners;
+        box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
       }
 
       .content-area__left__small {
-        flex: 2.5;
+        flex: 3;
         display: inline-block;
         overflow: hidden;
         background: white;
         border-radius: 10px;
+        box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
       }
     }
   }

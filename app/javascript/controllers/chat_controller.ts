@@ -1,30 +1,29 @@
 import { Controller } from "stimulus";
 import consumer from "../channels/consumer";
+import Rails from "@rails/ujs";
 
 export default class extends Controller {
   static targets = ["chatMessages", "chatForm", "messageInput"];
 
   readonly chatMessagesTarget!: HTMLElement;
-  readonly chatFormTarget!: HTMLElement;
+  readonly chatFormTarget!: HTMLFormElement;
   readonly messageInputTarget!: HTMLInputElement;
   private videoId: string;
   private userId: string;
+  private lastUserId: string;
 
   connect() {
     this.videoId = this.data.get("video-id");
     this.userId = this.data.get("user");
-    console.log(this.userId);
     this.createChatSubscription();
+    this.submitFormEvent();
   }
 
   createChatSubscription() {
-    /* 
-      messageHtml & sameUser variables will be having reference to
-      createHtml & isSameUser function of chat controller respectively
-    */
+    // messageHtml variable will be having reference to createHtml function of chat controller
     const messageHtml = this.createHtml;
-    const sameUser = this.isSameUser;
     const currentUserId = this.userId;
+    const dataMap = this.data;
 
     consumer.subscriptions.create(
       {
@@ -36,9 +35,8 @@ export default class extends Controller {
           // Called when there's incoming data on the websocket for this channel
           const chatId = `live-chat-${data.video_id}`;
           const chatArea = document.getElementById(chatId);
-          let sameUserFlag = {};
-          if (data.userId !== currentUserId)
-            sameUserFlag = JSON.parse(await sameUser(data.id, data.video_id));
+          const lastUser = parseInt(dataMap.get("last-user"));
+
           chatArea.insertAdjacentHTML(
             "beforeend",
             messageHtml(
@@ -46,30 +44,32 @@ export default class extends Controller {
               currentUserId,
               data.user_name,
               data.text,
-              sameUserFlag
+              parseInt(data.user_id) === lastUser
             )
           );
+          dataMap.set("last-user", data.user_id);
         },
       }
     );
   }
 
-  formSubmissionHandler() {
-    this.chatFormTarget.addEventListener("ajax:success", (event) => {
-      this.messageInputTarget.value = "";
+  submitFormEvent() {
+    this.messageInputTarget.addEventListener("keydown", async (event) => {
+      if (!event.shiftKey && event.keyCode === 13) {
+        event.preventDefault();
+        const formData = new FormData(this.chatFormTarget);
+        await Rails.ajax({
+          type: "post",
+          url: "/chat_messages",
+          data: formData,
+        });
+        this.messageInputTarget.value = "";
+      }
     });
-  }
-
-  async isSameUser(messageId, videoId) {
-    const response = await fetch(
-      `/chat_messages/${messageId}/grouped_message?video_id=${videoId}`
-    );
-    return response.text();
   }
 
   createHtml(id, uid, name, message, sameUser) {
     let html = "";
-    console.log("sameUser:", sameUser.grouped);
     if (id === parseInt(uid)) {
       html = `
         <div class="chat-message-right">
@@ -78,7 +78,7 @@ export default class extends Controller {
           </div>
         </div>
       `;
-    } else if (sameUser.grouped) {
+    } else if (sameUser) {
       html = `
         <div class="chat-message-grouped">
           <div class="chat-message-grouped__label">

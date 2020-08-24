@@ -1,5 +1,0 @@
-@mixin fn($grid, $row, $gap) {
-  display: $grid;
-  grid-template-columns: $row;
-  grid-gap: $gap;
-}

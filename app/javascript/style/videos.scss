@@ -1,6 +1,10 @@
-@use 'utils/text';
 @use 'utils/color';
+@use 'utils/border';
+@use 'utils/display';
 @use 'utils/font';
+@use 'utils/spacing';
+@use 'utils/scroll';
+@use 'utils/text';
 
 .content-area__left__small {
   border-top-left-radius: 0.625rem;
@@ -48,55 +52,47 @@
         flex-direction: column;
         max-height: 350px;
         overflow-y: auto;
-        .chat-message-right {
+        .message-right {
           display: flex;
           justify-content: flex-end;
           width: 100%;
-          &__label {
-            padding: 0.5rem 1rem;
+          &__text {
             border: 2px solid color.$gray-light-blue;
             color: color.$gray-bluish;
-            font-size: 0.75rem;
             border-top-left-radius: 1rem;
             border-bottom-left-radius: 1rem;
             border-top-right-radius: 1rem;
             border-bottom-right-radius: 0.5rem;
-            display: inline-block;
-            margin-bottom: 0.5rem;
           }
         }
-        .chat-message-left {
+        .message-left {
           margin-top: 1rem;
           &__name {
             color: color.$gray;
             margin-bottom: 0.25rem;
           }
-          &__label {
+          &__text {
             background-color: color.$gray-lighter;
             color: color.$gray-darker-2;
-            padding: 0.5rem 1rem;
-            font-size: 0.75rem;
-            border-top-left-radius: 0.5rem;
-            border-bottom-left-radius: 1rem;
-            border-top-right-radius: 1rem;
-            border-bottom-right-radius: 1rem;
-            display: inline-block;
-            margin-bottom: 0.5rem;
           }
         }
-        .chat-message-grouped {
-          &__label {
+        .message-grouped {
+          &__text {
             background-color: color.$gray-lighter;
             color: color.$gray-darker-2;
-            padding: 0.5rem 1rem;
-            font-size: 0.75rem;
-            border-top-left-radius: 0.5rem;
-            border-bottom-left-radius: 1rem;
-            border-top-right-radius: 1rem;
-            border-bottom-right-radius: 1rem;
-            display: inline-block;
-            margin-bottom: 0.5rem;
           }
+        }
+        .border-left {
+          border-top-left-radius: 0.5rem;
+          border-bottom-left-radius: 1rem;
+          border-top-right-radius: 1rem;
+          border-bottom-right-radius: 1rem;
+        }
+        .message-display {
+          padding: 0.5rem 1rem;
+          font-size: 0.75rem;
+          display: inline-block;
+          margin-bottom: 0.5rem;
         }
       }
     }
@@ -116,7 +112,10 @@
       padding: 0rem 0.5rem;
       &__text {
         border: none;
-        @include text.fn(1rem, color.$light-black, font.$poppins, 400);
+        font-size: 1rem;
+        color: color.$light-black;
+        font-family: font.$poppins;
+        font-weight: 400;
         resize: none;
       }
     }
@@ -170,32 +169,6 @@
     }
   }
 }
-.rounded {
-  border-radius: 50%;
-}
-.h-1 {
-  height: 2rem;
-}
-.w-full {
-  width: 100%;
-}
-.w-1 {
-  width: 2rem;
-}
-.relative {
-  position: relative;
-}
-.absolute {
-  position: absolute;
-}
-.outline-none {
-  &:focus {
-    outline: none;
-  }
-}
-.flex {
-  display: flex;
-}
 
 .play-button {
   left: 5px;
@@ -205,23 +178,4 @@
   border: none;
   padding: 0.35rem 0.65rem;
   border-radius: 5px;
-}
-
-input,
-textarea {
-  &::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: color.$gray-medium;
-    opacity: 1; /* Firefox */
-  }
-
-  &:-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: color.$gray-medium;
-  }
-
-  &::-ms-input-placeholder {
-    /* Microsoft Edge */
-    color: color.$gray-medium;
-  }
 }

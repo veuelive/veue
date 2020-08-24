@@ -1,0 +1,9 @@
+.layout-container-scrollable::-webkit-scrollbar {
+  width: 6px;
+  background-color: #fcfcfc;
+}
+
+.layout-container-scrollable::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background-color: #b0b0b0;
+}
