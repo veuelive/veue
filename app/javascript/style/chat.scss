@@ -1,0 +1,81 @@
+@use 'utils/color';
+@use 'utils/border';
+@use 'utils/font';
+@use 'utils/spacing';
+@use 'utils/scroll';
+@use 'utils/text';
+
+// Realtime chat section
+.chat-section {
+  background-color: color.$white;
+  .account-header {
+    .comment-section {
+      .comment-grid {
+        display: flex;
+        flex-direction: column;
+        max-height: 350px;
+        overflow-y: auto;
+        .message-right {
+          display: flex;
+          justify-content: flex-end;
+          width: 100%;
+          &__text {
+            border: 2px solid color.$gray-light-blue;
+            color: color.$gray-bluish;
+            border-top-left-radius: 1rem;
+            border-bottom-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            border-bottom-right-radius: 0.5rem;
+          }
+        }
+        .message-left {
+          margin-top: 1rem;
+          &__name {
+            color: color.$gray;
+            margin-bottom: 0.25rem;
+            font-size: 0.75rem;
+          }
+          &__text {
+            background-color: color.$gray-lighter;
+            color: color.$gray-darker-2;
+          }
+        }
+        .message-grouped {
+          &__text {
+            background-color: color.$gray-lighter;
+            color: color.$gray-darker-2;
+          }
+        }
+        .border-left {
+          border-top-left-radius: 0.5rem;
+          border-bottom-left-radius: 1rem;
+          border-top-right-radius: 1rem;
+          border-bottom-right-radius: 1rem;
+        }
+        .message-display {
+          padding: 0.5rem 1rem;
+          font-size: 0.75rem;
+          display: inline-block;
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+  }
+
+  .message-write {
+    border-top: 1px solid color.$gray-light-1;
+    width: 90%;
+    .write-area {
+      margin-top: 1rem;
+      padding: 0rem 0.5rem;
+      &__text {
+        border: none;
+        font-size: 1rem;
+        color: color.$light-black;
+        font-family: font.$poppins;
+        font-weight: 400;
+        resize: none;
+      }
+    }
+  }
+}

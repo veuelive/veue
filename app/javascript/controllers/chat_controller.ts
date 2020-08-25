@@ -72,8 +72,8 @@ export default class extends Controller {
     let html = "";
     if (id === parseInt(uid)) {
       html = `
-        <div class="chat-message-right">
-          <div class="chat-message-right__label">
+        <div class="message-right">
+          <div class="message-display message-right__text">
             ${message}
           </div>
         </div>
@@ -81,18 +81,18 @@ export default class extends Controller {
     } else if (sameUser) {
       html = `
         <div class="chat-message-grouped">
-          <div class="chat-message-grouped__label">
+          <div class="message-display border-left message-grouped__text">
             ${message}
           </div>
         </div>
       `;
     } else {
       html = `
-        <div class="chat-message-left">
-          <div class="chat-message-left__name">
+        <div class="message-left">
+          <div class="message-left__name">
             ${name}
           </div>
-          <div class="chat-message-left__label">
+          <div class="message-display border-left message-left__text">
             ${message}
           </div>
         </div>
