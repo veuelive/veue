@@ -27,4 +27,3 @@
         .write-area
           = f.hidden_field :video_id, value: video.id
           = f.text_area :body, class: 'write-area__text w-full outline-none', placeholder: 'Write your message...', data: { target: "chat.messageInput" }
-      = f.submit 'Send'

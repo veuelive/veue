@@ -79,7 +79,7 @@ export default class extends Controller {
       `;
     } else if (sameUser) {
       html = `
-        <div class="chat-message-grouped">
+        <div class="message-grouped">
           <div class="message-display border-left message-grouped__text">
             ${message}
           </div>

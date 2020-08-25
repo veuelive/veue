@@ -49,14 +49,11 @@
   }
 }
 
-.text-capitalised {
-  text-transform: capitalize;
-}
-
 .streamer-profile {
   border: 1px solid color.$gray-light;
   border-radius: 10px;
   padding: 1rem;
+  text-transform: capitalize;
   .streamer-info {
     display: flex;
     justify-content: space-between;
