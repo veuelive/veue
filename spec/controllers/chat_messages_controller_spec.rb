@@ -14,7 +14,7 @@ describe ChatMessagesController, type: :controller do
     }
   }
 
-  describe "create chat message with authenticated user" do
+  describe "create with authenticated user" do
     before do
       sign_in(user)
     end
@@ -40,6 +40,24 @@ describe ChatMessagesController, type: :controller do
       body = JSON.parse(response.body)
       expect(response).to have_http_status(200)
       expect(body["error_messages"][0]).to eq("Video must exist")
+    end
+  end
+
+  describe "create & broadcast" do
+    before do
+      sign_in(user)
+      @action_cable = ActionCable.server
+    end
+
+    it "should broadcast message on channel" do
+      expect { post :create, params: chat_message_params }.to(
+        have_broadcasted_to("live_video_#{video.id}").with(
+          text: chat_message_params[:chat_message][:body],
+          user_id: user.id,
+          user_name: user.username,
+          video_id: video.id,
+        ),
+      )
     end
   end
 
