@@ -43,8 +43,4 @@ class User < ApplicationRecord
               mux_live_stream: stream_object,
             })
   end
-
-  def full_name
-    "#{first_name} #{last_name}".capitalize
-  end
 end

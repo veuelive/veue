@@ -17,9 +17,9 @@
       .streamer-profile.text-capitalised
         .streamer-info
           .streamer-info__avatar
-            = image_tag 'avatar-placeholder', class: 'rounded h-1 w-1'
+            = image_tag 'avatar-placeholder', class: 'rounded h-2 w-2'
             .streamer-name
-              = current_video.user.full_name
+              = current_video.user.username
           .follow-btn
             follow
         .stream-info
