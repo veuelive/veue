@@ -21,6 +21,4 @@ class ChatMessage < ApplicationRecord
       },
     )
   end
-
-  def json_body(message); end
 end
