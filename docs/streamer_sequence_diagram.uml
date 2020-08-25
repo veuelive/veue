@@ -1,0 +1,145 @@
+// This document works on https://sequencediagrams.org
+
+title Streaming
+
+bottomparticipants
+
+actor Streamer
+participantgroup #eeeeee **Chrome**
+participantgroup #acdce7 **Capture Tab**
+participant Capture Tab
+participant Technodrome
+end
+participantgroup #82cbb2 **Extension Background**
+participant Extension
+participant Background.js
+participant Krang
+end
+participantgroup #a0febf **Veue Site Tab**
+participant Dimension X
+participant Streamer Page
+end
+end
+
+participant "Veue Rails Server" as Website
+participant WCS
+participant Mux
+
+actor Audience
+
+end
+
+Streamer->Capture Tab:Click\nExtension\nButton
+
+group Extension Initialization
+
+Capture Tab->Extension:Button Pressed
+Extension->*Background.js:Activate
+activate Background.js
+Background.js->Capture Tab:Start Capture
+
+
+Background.js->*Streamer Page:Open
+Streamer Page->Website:Load Streamer View
+Website-->Streamer Page:HTML
+
+activate Streamer Page
+
+// Load all of our scripts
+Background.js->Capture Tab:Create New Window with CaptureTab
+
+group Script Loading
+Background.js->*Dimension X:Load Content Script
+activate Dimension X
+Dimension X->(1)Streamer Page://awaiting_command//
+Streamer Page->(1)Dimension X://awaken//
+Dimension X->Website:Download Krang and Technodrome Code
+Website->Dimension X:Send Krang and Technodrome Code
+Dimension X->(1)Background.js://sendMessage// Krang \nand Technodrome Code
+Background.js->*Krang:exec(krangSource)
+activate Krang
+Background.js->Krang:new(...refs)
+deactivate Background.js
+Krang->Capture Tab:executeScript(technodromeSource)
+Capture Tab->*Technodrome:Create
+activate Technodrome
+end
+end
+
+group Streaming Setup
+Streamer Page->Streamer Page:Webcam Capture
+ref over Streamer Page:Webcam Capture\nMediaSource
+Streamer Page-#green>*WCS:Stream over WebRTC
+activate WCS #green
+
+
+
+
+Krang-#blue>WCS:Stream over WebRTC
+activate WCS #blue
+Krang->(1)Dimension X://ready//
+Dimension X->(1)Streamer Page://ready//
+
+Streamer Page-#blue>WCS:Play WebRTC Browser Stream
+
+Streamer Page->Streamer Page:Preview Ready
+
+end
+
+Streamer->Streamer Page:Press Button to Start
+
+group Begin Live Stream
+Streamer Page->Website:Start Stream
+Website->WCS:Create Mixer
+
+activate WCS #red
+box right of WCS:New Mixer has\n"stream_name"\nthat matches the\nMux stream key
+
+Website->WCS:Add <color:#blue>Stream</color> to <color:#red>Mixer</color>
+Website->WCS:Add <color:#green>Stream</color> to <color:#red>Mixer</color>
+
+Website->WCS:Publish to Mux
+WCS-#red>*Mux:
+activate Mux #336699
+
+Mux-#purple>Website:<color:#purple>Begin Stream
+
+Website->Streamer Page:Go Live!
+
+Mux-#purple>Website:So Many webhooks
+note over Website: MuxAsset
+
+note over Streamer Page:We're live!\nYAY!
+
+Website->Audience:HTML
+activate Audience
+Mux-#336699>Audience:HLS
+activate Audience #336699
+
+note over Streamer Page:...time passes...
+
+Streamer->Streamer Page:Press Stop
+
+group End Stream
+Streamer Page->Dimension X://self_destruct//
+
+Dimension X->Krang:
+deactivateafter Dimension X
+Technodrome<-Krang:Shutdown
+deactivate Technodrome
+deactivate Krang
+Streamer Page->Website:Start Shutdown
+Website->WCS:Shutdown Stream
+deactivate Mux
+Mux->Audience:Close
+deactivateafter Audience
+deactivate WCS
+Website->WCS:Shutdown Stream
+deactivate WCS
+
+Mux-#purple>Website:Asset Ready
+Website->WCS:Shutdown Stream
+deactivate WCS
+end
+
+end
