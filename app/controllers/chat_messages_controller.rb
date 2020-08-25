@@ -12,10 +12,6 @@ class ChatMessagesController < ApplicationController
       return
     end
 
-    ActionCable.server.broadcast(
-      "live_video_#{message.video_id}",
-      json_body(message),
-    )
     render(json: {success: true})
   end
 
@@ -27,15 +23,5 @@ class ChatMessagesController < ApplicationController
 
   def messages_params
     params.require(:chat_message).permit(:body, :video_id)
-  end
-
-  def json_body(message)
-    {
-      id: message.id,
-      text: message.body,
-      user_id: current_user.id,
-      user_name: current_user.full_name,
-      video_id: message.video_id,
-    }
   end
 end
