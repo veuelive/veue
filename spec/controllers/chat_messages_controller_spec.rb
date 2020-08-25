@@ -54,8 +54,7 @@ describe ChatMessagesController, type: :controller do
         have_broadcasted_to("live_video_#{video.id}").with(
           text: chat_message_params[:chat_message][:body],
           user_id: user.id,
-          user_name: user.username,
-          video_id: video.id,
+          user_name: user.username.capitalize,
         ),
       )
     end
