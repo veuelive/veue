@@ -30,14 +30,26 @@
         }
         .message-left {
           margin-top: 1rem;
-          &__name {
-            color: color.$gray;
-            margin-bottom: 0.25rem;
-            font-size: 0.75rem;
+          display: flex;
+          .message-content {
+            margin-left: 0.5rem;
+            &__name {
+              color: color.$gray;
+              margin-bottom: 0.25rem;
+              margin-top: 0.25rem;
+              font-size: 0.75rem;
+            }
+            &__text {
+              background-color: color.$gray-lighter;
+              color: color.$gray-darker-2;
+            }
           }
-          &__text {
-            background-color: color.$gray-lighter;
-            color: color.$gray-darker-2;
+          .user-avatar {
+            image {
+              width: 1.5rem;
+              height: 1.5rem;
+              border-radius: 50%;
+            }
           }
         }
         .message-grouped {
@@ -45,6 +57,7 @@
             background-color: color.$gray-lighter;
             color: color.$gray-darker-2;
           }
+          margin-left: 2.5rem;
         }
         .border-left {
           border-top-left-radius: 0.5rem;
@@ -56,7 +69,7 @@
           padding: 0.5rem 1rem;
           font-size: 0.75rem;
           display: inline-block;
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.25rem;
         }
       }
     }

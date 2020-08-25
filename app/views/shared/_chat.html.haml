@@ -13,10 +13,14 @@
                 = message.body
           - else
             .message-left
-              .message-left__name
-                = message.user.username.capitalize
-              .message-display.border-left.message-left__text
-                = message.body
+              .user-avatar
+                = image_tag 'avatar-placeholder', class: 'rounded h-2 w-2'
+              .message-content
+                .message-content__name
+                  = message.user.username.capitalize
+                .message-display.border-left.message-content__text
+                  = message.body
+          - @last_user = message.user
   - if user_signed_in?
     = form_for ChatMessage.new, remote: true, data: { target: "chat.chatForm" } do |f|
       .message-write

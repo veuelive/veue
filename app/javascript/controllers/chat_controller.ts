@@ -24,6 +24,7 @@ export default class extends Controller {
     const messageHtml = this.createHtml;
     const currentUserId = this.userId;
     const dataMap = this.data;
+    const chatArea = this.chatMessagesTarget;
 
     consumer.subscriptions.create(
       {
@@ -33,8 +34,6 @@ export default class extends Controller {
       {
         async received(data) {
           // Called when there's incoming data on the websocket for this channel
-          const chatId = `live-chat-${data.video_id}`;
-          const chatArea = document.getElementById(chatId);
           const lastUser = parseInt(dataMap.get("last-user"));
 
           chatArea.insertAdjacentHTML(
@@ -89,11 +88,16 @@ export default class extends Controller {
     } else {
       html = `
         <div class="message-left">
-          <div class="message-left__name">
-            ${name}
+          <div class="user-avatar">
+            <img src="/assets/avatar-placeholder.png" class="rounded h-2 w-2"/>
           </div>
-          <div class="message-display border-left message-left__text">
-            ${message}
+          <div class="message-content">
+            <div class="message-content__name">
+              ${name}
+            </div>
+            <div class="message-display border-left message-content__text">
+              ${message}
+            </div>
           </div>
         </div>
       `;

@@ -10,7 +10,7 @@ describe LiveVideoChannel, type: :channel do
   end
 
   it "subscribes to a stream with room id provided" do
-    subscribe
+    subscribe(roomId: video.id)
 
     expect(subscription).to be_confirmed
     expect(subscription).to have_stream_from("live_video_#{video.id}")
