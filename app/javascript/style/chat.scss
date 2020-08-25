@@ -9,6 +9,7 @@
 .chat-section {
   background-color: color.$white;
   .account-header {
+    margin-bottom: 4rem;
     .comment-section {
       .comment-grid {
         display: flex;
@@ -75,9 +76,14 @@
     }
   }
 
+  .chat-form {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+
   .message-write {
     border-top: 1px solid color.$gray-light-1;
-    width: 90%;
     .write-area {
       margin-top: 1rem;
       padding: 0rem 0.5rem;

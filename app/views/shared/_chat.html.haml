@@ -22,7 +22,7 @@
                   = message.body
           - @last_user = message.user
   - if user_signed_in?
-    = form_for ChatMessage.new, remote: true, data: { target: "chat.chatForm" } do |f|
+    = form_for ChatMessage.new, remote: true, html: { class: 'chat-form' }, data: { target: "chat.chatForm" } do |f|
       .message-write
         .write-area
           = f.hidden_field :video_id, value: video.id
