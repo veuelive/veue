@@ -1,49 +1,53 @@
 import { Controller } from "stimulus";
+import FlashPhoner from "flashphoner-api";
+
+const SESSION_STATUS = FlashPhoner.constants.SESSION_STATUS;
+const STREAM_STATUS = FlashPhoner.constants.STREAM_STATUS;
 
 export default class extends Controller {
-  static targets = ["webcamVideoTag", "webcamCanvas"];
-  readonly webcamVideoTagTarget!: HTMLVideoElement;
-  readonly webcamCanvasTarget!: HTMLCanvasElement;
-
-  private webcamCanvasContext: CanvasRenderingContext2D;
+  static targets = ["videoContainer"];
+  readonly videoContainerTarget!: HTMLDivElement;
+  private streamKey: string;
 
   connect(): void {
-    this.webcamCanvasContext = this.webcamCanvasTarget.getContext("2d");
+    const url = "ws://splinter.veue.cloud:8080";
+    FlashPhoner.init({url})
 
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: false })
-      .then((stream) => {
-        this.webcamVideoTagTarget.srcObject = stream;
-        this.webcamVideoTagTarget.onloadedmetadata = () => {
-          this.webcamVideoTagTarget.play().then(() => this.timerCallback());
-        };
-      });
+    this.streamKey = this.data.get("stream-key")
 
-    window.postMessage(
-      {
-        type: "veue",
-        action: "inject",
-        krang: this.data.get("krang-js-path"),
-        tox_path: this.data.get("tox-js-path"),
-      },
-      "*"
-    );
+    FlashPhoner.createSession({urlServer: url}).on(SESSION_STATUS.ESTABLISHED, (session) => {
+      //session connected, start streaming
+      console.log("We're streaming")
+      this.startStreaming(session)
+    }).on(SESSION_STATUS.DISCONNECTED, () => {
+      this.onStopped();
+    }).on(SESSION_STATUS.FAILED, () => {
+      this.onStopped();
+    });
   }
 
-  timerCallback(): void {
-    this.computeFrame();
-    setTimeout(() => {
-      this.timerCallback();
-    }, 16); // roughly 60 frames per second
+  private onStopped() {
+    console.log("STOPPED")
   }
 
-  computeFrame(): void {
-    this.webcamCanvasContext.drawImage(
-      this.webcamVideoTagTarget,
-      0,
-      0,
-      this.webcamVideoTagTarget.width,
-      this.webcamVideoTagTarget.height
-    );
+  startStreaming(session): void {
+    session.createStream({
+      name: this.streamKey + "-cam",
+      display: this.videoContainerTarget,
+      cacheLocalResources: true,
+      receiveVideo: false,
+      receiveAudio: false
+    }).on(STREAM_STATUS.PUBLISHING, (publishStream) => {
+      console.log(publishStream)
+
+    }).on(STREAM_STATUS.UNPUBLISHED, function(){
+      // setStatus(STREAM_STATUS.UNPUBLISHED);
+      // //enable start button
+      // onStopped();
+    }).on(STREAM_STATUS.FAILED, function(stream){
+      // setStatus(STREAM_STATUS.FAILED, stream);
+      // //enable start button
+      // onStopped();
+    }).publish();
   }
 }

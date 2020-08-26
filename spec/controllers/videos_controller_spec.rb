@@ -28,4 +28,18 @@ describe VideosController do
       expect(response).to have_http_status(:ok)
     end
   end
+
+  describe "streamer view" do
+    before :each do
+      @streamer = create(:streamer)
+      sign_in @streamer
+    end
+
+    it "should include the stream key!" do
+      get :streamer
+
+      expect(@streamer.stream_key).to have_attributes(size: (be > 2))
+      expect(response.body).to include(@streamer.stream_key)
+    end
+  end
 end
