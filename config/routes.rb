@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   resources :videos, only: %i[index show new] do
     collection do
-      get "streamer"
+      get "broadcast"
     end
   end
 

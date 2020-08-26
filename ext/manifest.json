@@ -37,8 +37,8 @@
   "content_scripts": [
     {
       "matches": [
-        "https://veuelive.com/videos/live",
-        "http://localhost:3000/videos/live"
+        "https://veuelive.com/videos/broadcast",
+        "http://localhost:3000/videos/broadcast"
       ],
       "js": ["src/dimensionX.js"]
     }
