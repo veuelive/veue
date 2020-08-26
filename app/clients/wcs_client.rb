@@ -5,7 +5,6 @@ class WcsClient
   class_attribute :conn, default: Faraday.new
 
   class << self
-
     def mixer_startup!(stream_key)
       wcs_post(
         "mixer/startup",
