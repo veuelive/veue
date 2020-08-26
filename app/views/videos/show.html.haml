@@ -1,5 +1,14 @@
 .content-area{"data-controller": "audience-view", "data-audience-view-playback-id": current_video.mux_playback_id, "data-audience-view-video-id": current_video.id}
   .content-area__right__big
+    .video-bar
+      .video-bar__search
+        %input.outline-none{ :placeholder => "https://www.nike.com/w/vapormax-shoes-220dzy7ok", :type => "text", "data-audience-view-address-value": current_video.slug, disabled: true }
+        .upload
+          = image_tag 'file-upload-icon', class: 'upload__file', alt: 'File'
+      .video-bar__button
+        %button.time-area.time-red
+          %span.dot.time-dot
+          1:36:24
     %canvas.browser-video-area{"data-target": "audience-view.browserVideoCanvas", width: 2048, height: 1440}
   .content-area__left__small
     .stream-area

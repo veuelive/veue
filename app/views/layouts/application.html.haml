@@ -12,6 +12,7 @@
     = yield :header if content_for?(:header)
   %body{body_attributes}
     #layout-container
+      = render partial: 'layouts/navbar'
       #main-container
         - if flash[:notice]
           .flash_notice
