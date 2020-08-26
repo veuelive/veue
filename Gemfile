@@ -52,6 +52,9 @@ gem "draper"
 # Our APM and alerting provider
 gem "appsignal"
 
+# HTTP Client for building API calls
+gem "faraday"
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
