@@ -1,5 +1,81 @@
 @use 'utils/color';
 
+.content-area__right__big {
+  canvas {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+  .video-bar {
+    margin: 0 auto;
+    height: 4.375rem;
+    background-color: color.$white;
+    box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
+    display: flex;
+    align-items: center;
+    padding: 0 1.1875rem;
+    justify-content: space-between;
+    border-top-left-radius: 0.625rem;
+    border-top-right-radius: 0.625rem;
+    &__search {
+      width: 79%;
+      display: flex;
+      align-items: center;
+      height: 2.375rem;
+      padding: 0.25rem 0.9375rem;
+      border: 1px solid color.$gray-light;
+      border-radius: 0.625rem;
+      position: relative;
+      input {
+        border: none;
+        width: 100%;
+        padding-left: 1.2rem;
+        font-size: 1rem;
+        background-color: color.$white;
+        color: color.$gray-dark-2;
+      }
+    }
+    &__button {
+      display: flex;
+    }
+  }
+  .upload {
+    position: absolute;
+    top: 0.85rem;
+  }
+  .time-area {
+    padding: 0.6875rem 1.125rem;
+    border: none;
+    border-radius: 0.9375rem;
+    margin-right: 0.4375rem;
+    font-weight: 600;
+  }
+  .time-red {
+    background-color: color.$red-light;
+    color: color.$red-medium;
+    .dot {
+      background-color: color.$red-medium;
+    }
+  }
+  .time-gray {
+    background-color: color.$gray-light;
+    color: color.$gray-dark-1;
+    .dot {
+      background-color: color.$gray-dark-1;
+    }
+  }
+  .view-img {
+    margin-right: 0.3125rem;
+  }
+  .time-dot {
+    width: 0.4375rem;
+    height: 0.4375rem;
+    display: inline-block;
+    border-radius: 0.4375rem;
+    vertical-align: middle;
+  }
+}
+
 .content-area__left__small {
   border-top-left-radius: 0.625rem;
   border-top-right-radius: 0.625rem;
@@ -22,8 +98,6 @@
 #videos__streamer {
   canvas {
     width: 100%;
-    border-top-left-radius: 0.625rem;
-    border-top-right-radius: 0.625rem;
   }
 
   video {
