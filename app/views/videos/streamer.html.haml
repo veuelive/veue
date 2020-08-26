@@ -1,4 +1,4 @@
-.content-area{"data-controller": "streamer-view"}
+.content-area{data: {controller: "streamer-view", "streamer-view": {"stream-key": current_user.stream_key}}}
 
   .content-area__right__big
     .browser{"data-controller": "veue-browser", "data-veue-browser-krang": asset_pack_url('krang.js'), "data-veue-browser-technodrome": asset_pack_url('technodrome.js')}
@@ -12,5 +12,4 @@
       .browser__frame
         %canvas{width: 1200, height: 784, "data-target": "veue-browser.canvas"}
   .content-area__left__small
-    %canvas{"data-target": "streamer-view.webcamCanvas", width: 800, height: 600}
-    %video{"data-target": "streamer-view.webcamVideoTag", width: 800, height: 600}
+    %div{data: {target: "streamer-view.videoContainer"}}

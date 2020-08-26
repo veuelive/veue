@@ -1260,6 +1260,11 @@ acorn@^7.3.1:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.4.0.tgz#e1ad486e6c54501634c6c397c5c121daa383607c"
   integrity sha512-+G7P8jJmCHr+S+cLfQxygbWhXy+8YTVGzAkpEbcLo2mLoL7tij/VG41QSHACSf5QgYRhMZYHuNc6drJaO0Da+w==
 
+adapterjs@0.14.3:
+  version "0.14.3"
+  resolved "https://registry.yarnpkg.com/adapterjs/-/adapterjs-0.14.3.tgz#b90cffda3a92e82930dd13d51fd7d8318fb4e4b7"
+  integrity sha1-uQz/2jqS6Ckw3RPVH9fYMY+05Lc=
+
 aggregate-error@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/aggregate-error/-/aggregate-error-3.0.1.tgz#db2fe7246e536f40d9b5442a39e117d7dd6a24e0"
@@ -2960,6 +2965,11 @@ es-to-primitive@^1.2.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
+es6-promise@4.0.5:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.0.5.tgz#7882f30adde5b240ccfa7f7d78c548330951ae42"
+  integrity sha1-eILzCt3lskDM+n99eMVIMwlRrkI=
+
 escalade@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/escalade/-/escalade-3.0.2.tgz#6a580d70edb87880f22b4c91d0d56078df6962c4"
@@ -3394,6 +3404,18 @@ findup-sync@^3.0.0:
     is-glob "^4.0.0"
     micromatch "^3.0.4"
     resolve-dir "^1.0.1"
+
+flashphoner-api@^0.5.28:
+  version "0.5.28"
+  resolved "https://registry.yarnpkg.com/flashphoner-api/-/flashphoner-api-0.5.28.tgz#b14ac7653360fde859045a8227824feb9d9603ee"
+  integrity sha512-rjziIq5Izyd0+Tx/wjMq6b0lGN/5miJeqGk0rhO/7ZfgY0Hl24uP/6ydhGUQskQEJblhYMID8ezsh/BsHWGdRw==
+  dependencies:
+    adapterjs "0.14.3"
+    es6-promise "4.0.5"
+    promise-polyfill "^6.0.1"
+    swfobject "^2.2.1"
+    uuid "^3.1.0"
+    webrtc-adapter "^4.2.1"
 
 flat-cache@^2.0.1:
   version "2.0.1"
@@ -6430,6 +6452,11 @@ promise-inflight@^1.0.1:
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
   integrity sha1-mEcocL8igTL8vdhoEputEsPAKeM=
 
+promise-polyfill@^6.0.1:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/promise-polyfill/-/promise-polyfill-6.1.0.tgz#dfa96943ea9c121fca4de9b5868cb39d3472e057"
+  integrity sha1-36lpQ+qcEh/KTem1hoyznTRy4Fc=
+
 proxy-addr@~2.0.5:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/proxy-addr/-/proxy-addr-2.0.6.tgz#fdc2336505447d3f2f2c638ed272caf614bbb2bf"
@@ -6956,6 +6983,11 @@ scss-tokenizer@^0.2.3:
   dependencies:
     js-base64 "^2.1.8"
     source-map "^0.4.2"
+
+sdp@^2.1.0:
+  version "2.12.0"
+  resolved "https://registry.yarnpkg.com/sdp/-/sdp-2.12.0.tgz#338a106af7560c86e4523f858349680350d53b22"
+  integrity sha512-jhXqQAQVM+8Xj5EjJGVweuEzgtGWb3tmEEpl3CLP3cStInSbVHSg0QWOGQzNq8pSID4JkpeV2mPqlMDLrm0/Vw==
 
 select-hose@^2.0.0:
   version "2.0.0"
@@ -7639,6 +7671,11 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
+swfobject@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/swfobject/-/swfobject-2.2.1.tgz#e55451d5dde59657335c86b01732c61a923293e2"
+  integrity sha1-5VRR1d3lllczXIawFzLGGpIyk+I=
+
 table@^5.2.3:
   version "5.4.6"
   resolved "https://registry.yarnpkg.com/table/-/table-5.4.6.tgz#1292d19500ce3f86053b05f0e8e7e4a3bb21079e"
@@ -8041,7 +8078,7 @@ utils-merge@1.0.1:
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
 
-uuid@^3.3.2, uuid@^3.4.0:
+uuid@^3.1.0, uuid@^3.3.2, uuid@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
@@ -8232,6 +8269,13 @@ webpack@^4.41.2:
     terser-webpack-plugin "^1.4.3"
     watchpack "^1.7.4"
     webpack-sources "^1.4.1"
+
+webrtc-adapter@^4.2.1:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/webrtc-adapter/-/webrtc-adapter-4.2.2.tgz#17896c047084fd4c567958a0cd4321e17f32773c"
+  integrity sha1-F4lsBHCE/UxWeVigzUMh4X8ydzw=
+  dependencies:
+    sdp "^2.1.0"
 
 websocket-driver@0.6.5:
   version "0.6.5"

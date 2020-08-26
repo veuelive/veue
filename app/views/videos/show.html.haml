@@ -4,7 +4,7 @@
   .content-area__left__small
     .stream-area
       %canvas.streamer-webcam-view{"data-target": "audience-view.personVideoCanvas", width: 800, height: 600}
-      %video.player__video.viewer{"data-action" => "canplay->audience-view#videoLoaded timeupdate->audience-view#progressUpdate", "data-target" => "audience-view.video"}
+      %video.player__video.viewer{"data-action" => "canplay->audience-view#videoLoaded timeupdate->audience-view#progressUpdate", "data-target" => "audience-view.video", style: "display: none;"}
       -#.player__controls
       -#  .progress{"data-action" => "click->video-player#scrub mousedown->video-player#mousedown mouseup->video-player#mouseup mousemove->video-player#mousemove", "data-target" => "video-player.progress"}
       -#    .progress__filled{"data-target" => "video-player.progressBar"}
