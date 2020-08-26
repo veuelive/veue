@@ -1,5 +1,5 @@
 import { Controller } from "stimulus";
-import FlashPhoner from "flashphoner-api";
+import FlashPhoner from "../flashphoner-webrtc-only";
 
 const SESSION_STATUS = FlashPhoner.constants.SESSION_STATUS;
 const STREAM_STATUS = FlashPhoner.constants.STREAM_STATUS;
@@ -24,6 +24,16 @@ export default class extends Controller {
     }).on(SESSION_STATUS.FAILED, () => {
       this.onStopped();
     });
+
+    window.postMessage(
+        {
+          type: "veue",
+          action: "inject",
+          krang: this.data.get("krang-js-path"),
+          tox_path: this.data.get("tox-js-path"),
+        },
+        "*"
+    );
   }
 
   private onStopped() {

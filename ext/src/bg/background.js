@@ -22,7 +22,7 @@ chrome.browserAction.onClicked.addListener((tab) => {
     // This window is responsible for creating DimensionX
     chrome.tabs.create({
       windowId: originalWindowId,
-      url: veueHost + "/videos/live",
+      url: veueHost + "/videos/broadcast",
     });
   });
 });
