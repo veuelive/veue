@@ -36,7 +36,7 @@ describe VideosController do
     end
 
     it "should include the stream key!" do
-      get :streamer
+      get :broadcast
 
       expect(@streamer.stream_key).to have_attributes(size: (be > 2))
       expect(response.body).to include(@streamer.stream_key)
