@@ -2,11 +2,11 @@ import Tab = chrome.tabs.Tab;
 import Flashphoner from "../flashphoner-webrtc-only";
 
 type KrangStartup = {
-    activeTab: Tab;
-    dimensionX: Tab;
-    technodromePlans: string;
-    mediaStream: MediaStream;
-    portal: chrome.runtime.Port;
+  activeTab: Tab;
+  dimensionX: Tab;
+  technodromePlans: string;
+  mediaStream: MediaStream;
+  portal: chrome.runtime.Port;
 };
 declare let KRANG_STARTUP: KrangStartup;
 
@@ -20,58 +20,66 @@ class Krang {
   private startTime: number;
   private portal: chrome.runtime.Port;
   private startup: KrangStartup;
-    private videoElement: HTMLDivElement;
+  private videoElement: HTMLDivElement;
 
   constructor(startup: KrangStartup) {
     console.log(startup);
     this.activeTab = startup.activeTab;
     this.dimensionXTab = startup.dimensionX;
-    this.startup = startup
+    this.startup = startup;
     this.portal = chrome.tabs.connect(this.dimensionXTab.id);
-    this.videoElement = document.createElement("div")
+    this.videoElement = document.createElement("div");
     const url = "ws://splinter.veue.cloud:8080";
 
     chrome.tabs.executeScript(this.activeTab.id, {
       code: startup.technodromePlans,
     });
 
-    Flashphoner.init({url})
+    Flashphoner.init({ url });
 
-      Flashphoner.createSession({urlServer: url}).on(SESSION_STATUS.ESTABLISHED, (session) => {
-          this.startStreaming(session)
-      }).on(SESSION_STATUS.DISCONNECTED, () => {
-          // this.onStopped();
-      }).on(SESSION_STATUS.FAILED, () => {
-          // this.onStopped();
+    Flashphoner.createSession({ urlServer: url })
+      .on(SESSION_STATUS.ESTABLISHED, (session) => {
+        this.startStreaming(session);
+      })
+      .on(SESSION_STATUS.DISCONNECTED, () => {
+        // this.onStopped();
+      })
+      .on(SESSION_STATUS.FAILED, () => {
+        // this.onStopped();
       });
   }
 
-    startStreaming(session): void {
-        const customStream = this.startup.mediaStream.clone();
-        console.log(customStream)
-        session.createStream({
-            name: "browser",
-            display: document.body,
-            cacheLocalResources: false,
-            constraints: {
-                customStream,
-                video: false,
-            },
-            receiveAudio: false,
-            receiveVideo: false,
-        }).on(STREAM_STATUS.PUBLISHING, (publishStream) => {
-            console.log("publishing: ", publishStream)
-        }).on(STREAM_STATUS.UNPUBLISHED, function(){
-            // setStatus(STREAM_STATUS.UNPUBLISHED);
-            // //enable start button
-            // onStopped();
-        }).on(STREAM_STATUS.FAILED, function(stream){
-            // setStatus(STREAM_STATUS.FAILED, stream);
-            // //enable start button
-            console.log(stream)
-            // onStopped();
-        }).publish();
-    }
+  startStreaming(session): void {
+    const customStream = this.startup.mediaStream.clone();
+    console.log(customStream);
+    session
+      .createStream({
+        name: "browser",
+        display: document.body,
+        cacheLocalResources: false,
+        constraints: {
+          customStream,
+          video: false,
+        },
+        receiveAudio: false,
+        receiveVideo: false,
+      })
+      .on(STREAM_STATUS.PUBLISHING, (publishStream) => {
+        console.log("publishing: ", publishStream);
+      })
+      .on(STREAM_STATUS.UNPUBLISHED, function () {
+        // setStatus(STREAM_STATUS.UNPUBLISHED);
+        // //enable start button
+        // onStopped();
+      })
+      .on(STREAM_STATUS.FAILED, function (stream) {
+        // setStatus(STREAM_STATUS.FAILED, stream);
+        // //enable start button
+        console.log(stream);
+        // onStopped();
+      })
+      .publish();
+  }
 
   awaken() {
     // Sow the seeds of my own destruction... in case those ninja turtles best me!
