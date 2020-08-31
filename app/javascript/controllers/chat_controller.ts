@@ -7,7 +7,8 @@ export default class extends Controller {
 
   readonly chatMessagesTarget!: HTMLElement;
   readonly chatFormTarget!: HTMLFormElement;
-  readonly messageInputTarget!: HTMLInputElement;
+  readonly messageInputTarget: HTMLInputElement;
+  readonly hasMessageInputTarget: boolean;
   private videoId: string;
   private userId: string;
   private lastUserId: string;
@@ -16,7 +17,9 @@ export default class extends Controller {
     this.videoId = this.data.get("video-id");
     this.userId = this.data.get("user");
     this.createChatSubscription();
-    this.submitFormEvent();
+    if (this.hasMessageInputTarget) {
+      this.submitFormEvent();
+    }
   }
 
   createChatSubscription() {
