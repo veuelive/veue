@@ -24,7 +24,7 @@ export default class extends Controller {
   connect() {
     this.isPaused = true;
 
-    let url = `https://stream.mux.com/${this.data.get("playback-id")}.m3u8`;
+    const url = `https://stream.mux.com/${this.data.get("playback-id")}.m3u8`;
     console.log(url);
 
     this.browserVideoCanvasContext = this.browserVideoCanvasTarget.getContext(
@@ -34,11 +34,9 @@ export default class extends Controller {
       "2d"
     );
 
-    let hls = new Hls();
+    const hls = new Hls();
     hls.loadSource(url);
     hls.attachMedia(this.video);
-
-    this.formSubmissionHandler();
   }
 
   timerCallback() {
@@ -46,9 +44,8 @@ export default class extends Controller {
       return;
     }
     this.computeFrame();
-    let self = this;
     setTimeout(() => {
-      self.timerCallback();
+      this.timerCallback();
     }, 16); // roughly 60 frames per second
   }
 
@@ -74,14 +71,14 @@ export default class extends Controller {
   }
 
   computeFrame() {
-    let browserCtx = this.browserVideoCanvasContext;
-    let personCtx = this.personVideoCanvasContext;
-    let fullVideoWidth = this.video.videoWidth;
-    let fullVideoHeight = this.video.videoHeight;
+    const browserCtx = this.browserVideoCanvasContext;
+    const personCtx = this.personVideoCanvasContext;
+    const fullVideoWidth = this.video.videoWidth;
+    const fullVideoHeight = this.video.videoHeight;
 
-    let sy = (1440 / 2048) * fullVideoHeight;
+    const sy = (1440 / 2048) * fullVideoHeight;
 
-    let ratioToOriginal = fullVideoHeight / 2048;
+    const ratioToOriginal = fullVideoHeight / 2048;
 
     browserCtx.drawImage(
       this.video,
@@ -105,20 +102,9 @@ export default class extends Controller {
       800,
       600
     );
-    let frame = browserCtx.getImageData(0, 0, fullVideoWidth, fullVideoHeight);
+    const frame = browserCtx.getImageData(0, 0, fullVideoWidth, fullVideoHeight);
 
     return;
-  }
-
-  formSubmissionHandler() {
-    const formElement = document.querySelector("#new_chat_message");
-
-    formElement.addEventListener("ajax:success", (event) => {
-      const inputArea = document.getElementById(
-        "chat_message_body"
-      ) as HTMLInputElement;
-      inputArea.value = "";
-    });
   }
 
   get video() {
