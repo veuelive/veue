@@ -8,6 +8,7 @@
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.2.2",
     "@types/chrome": "^0.0.122",
+    "@types/electron": "^1.6.10",
     "@types/w3c-image-capture": "^1.0.2",
     "hls.js": "^0.14.4",
     "sass": "^1.26.10",
