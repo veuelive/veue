@@ -9,6 +9,7 @@ default: &default
   check_yarn_integrity: false
   webpack_compile_output: true
 
+
   # Additional paths webpack should lookup modules
   # ['app/assets', 'engine/foo/app/assets']
   resolved_paths: ["app/assets/images"]
