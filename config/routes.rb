@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   post "/mux/webhook", to: "mux_webhooks#index"
 
-  devise_for :users
+  devise_for :users, controllers: {sessions: "users/sessions", registrations: "users/registrations"}
 
   devise_for :admins, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
