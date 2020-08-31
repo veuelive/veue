@@ -1,15 +1,19 @@
-.content-area{data: {controller: "streamer-view", "streamer-view": {"stream-key": current_user.stream_key}}}
+%div{data: {controller: "streamer-view", "streamer-view": {"stream-key": current_user.stream_key}}}
+  .content-area
 
-  .content-area__right__big
-    .browser{"data-controller": "veue-browser", "data-veue-browser-krang": asset_pack_url('krang.js'), "data-veue-browser-technodrome": asset_pack_url('technodrome.js')}
-      .browser__toolbar
-        %input{type: "text", list: "datalist-sites", "data-target": "veue-browser.addressBar", "data-action": "veue-browser#addressChange"}
-        %datalist#datalist-sites
-          %option https://apple.com
-          %option https://revolve.com
-          %option https://sonos.com
-        %button{"data-action": "veue-browser#refresh"} Refresh
-      .browser__frame
-        %canvas{width: 1200, height: 784, "data-target": "veue-browser.canvas"}
-  .content-area__left__small
-    %div{data: {target: "streamer-view.videoContainer"}}
+    .content-area__right__big
+      .browser{"data-controller": "veue-browser", "data-veue-browser-krang": asset_pack_url('krang.js'), "data-veue-browser-technodrome": asset_pack_url('technodrome.js')}
+        .browser__toolbar
+          %input{type: "text", list: "datalist-sites", "data-target": "veue-browser.addressBar", "data-action": "veue-browser#addressChange"}
+          %datalist#datalist-sites
+            %option https://apple.com
+            %option https://revolve.com
+            %option https://sonos.com
+          %button{"data-action": "veue-browser#refresh"} Refresh
+        .browser__frame
+          %canvas{width: 1200, height: 784}
+    .content-area__left__small
+      %video{data: {target: "streamer-view.videoContainer"}}
+
+
+  %canvas{width: 1200, height: 1200, "data-target": "streamer-view.debugCanvas"}

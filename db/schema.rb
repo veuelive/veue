@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_125355) do
+ActiveRecord::Schema.define(version: 2020_08_27_150154) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(version: 2020_08_25_125355) do
     t.string "name"
     t.text "description"
     t.index ["mux_live_stream_id"], name: "index_videos_on_mux_live_stream_id"
+    t.index ["slug"], name: "index_videos_on_slug", unique: true
     t.index ["state"], name: "index_videos_on_state"
     t.index ["user_id"], name: "index_videos_on_user_id"
   end
