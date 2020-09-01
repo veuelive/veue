@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "Videos", type: :system do
+describe "Videos", type: :feature do
   let(:user) { create(:user) }
   let(:video) { create(:video) }
 
