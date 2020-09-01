@@ -75,7 +75,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
       - name: Ruby gem cache
@@ -107,13 +106,11 @@ jobs:
       - name: Install packages
         run: |
           yarn install --pure-lockfile
-      - name: Install Headless Chrome
+      - name: Setup XVFB
         run: |
-            wget https://filebin.net/6cw0f2x2sfgqyhi0/headless_chrome.rb?t=7g4c257d -O headless_chrome.rb
-            chmod +x headless_chrome.rb
-      - name: ChromeWebDriver
-        run: |
-            ./headless_chrome.rb
+          export DISPLAY=:1
+          chromedriver --url-base=/wd/hub &
+          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
       - name: Setup test database
         env:
           RAILS_ENV: test

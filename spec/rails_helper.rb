@@ -2,6 +2,10 @@
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require "spec_helper"
+
+require "selenium/webdriver"
+require "webdrivers/chromedriver"
+
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../config/environment", __dir__)
 # Prevent database truncation if the environment is production
@@ -19,6 +23,31 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit(1)
 end
+
+Capybara.register_driver(:headless_chrome) do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+    Selenium::WebDriver::Chrome::Options.new(
+      args: %w[
+        headless
+        no-sandbox
+        no-gpu
+        single-process
+        disable-extensions
+        disable-dev-shm-usage
+        disable-setuid-sandbox
+        enable-features=NetworkService,NetworkServiceInProcess
+      ],
+    ),
+  )
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
+end
+
+Capybara.default_driver = :headless_chrome
+Capybara.javascript_driver = :headless_chrome
+
+Webdrivers.logger.level = :DEBUG
+
 RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :feature
   config.include Devise::Test::IntegrationHelpers, type: :request
