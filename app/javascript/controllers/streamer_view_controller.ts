@@ -6,6 +6,8 @@ export default class extends Controller {
   private debugCanvasTarget!: HTMLCanvasElement;
   private streamKey: string;
   private debugCanvasContext: CanvasRenderingContext2D;
+  private browserCanvas: HTMLCanvasElement;
+  private browserCanvasContext: CanvasRenderingContext2D;
   private audioTrack: MediaStreamTrack;
   private mediaRecorder: MediaRecorder;
   private ipcRenderer: any;
@@ -18,6 +20,9 @@ export default class extends Controller {
     this.streamKey = this.data.get("stream-key");
 
     this.debugCanvasContext = this.debugCanvasTarget.getContext("2d");
+
+    this.browserCanvas = document.createElement("canvas", {})
+    this.browserCanvasContext = this.browserCanvas.getContext("2d")
 
     navigator.getUserMedia(
       { audio: true, video: true },
@@ -34,21 +39,18 @@ export default class extends Controller {
       }
     );
 
-    ipcRenderer.on("browser-frame", (event, frame) => {
-      const browserImg = new Image();
-      browserImg.src = frame;
-      console.log(browserImg.height, browserImg.width);
-      this.debugCanvasContext.drawImage(
-        browserImg,
-        0,
-        0,
-        browserImg.width,
-        browserImg.height,
-        0,
-        0,
-        1200,
-        748
-      );
+    const capturer = eval("require('electron').desktopCapturer")
+    capturer.getSources({types: ["window", "screen"]}).then((sources) => console.log(sources))
+    ipcRenderer.on("browser-frame", (event, bitmap: Uint8Array, size) => {
+      // console.log(bitmap)
+      const imageData = new ImageData(new Uint8ClampedArray(bitmap), size.width, size.height)
+      if(size.width > 1280) {
+        this.browserCanvas.width = size.width
+        this.browserCanvas.height = size.height
+        this.browserCanvasContext.putImageData(imageData, 0, 0)
+        this.debugCanvasContext.drawImage(this.browserCanvas, 0, 0, 1280, 800)
+      }
+
     });
   }
 
