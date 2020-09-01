@@ -9,8 +9,5 @@ export default class extends Controller {
   secret: number;
   krangMessageCallback: EventListenerOrEventListenerObject;
 
-  connect(): void {
-
-  }
-
+  connect(): void {}
 }
