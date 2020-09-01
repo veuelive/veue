@@ -107,7 +107,9 @@ jobs:
       - name: Install packages
         run: |
           yarn install --pure-lockfile
-
+      - name: ChromeWebDriver
+        run: |
+            ./headless_chrome.rb
       - name: Setup test database
         env:
           RAILS_ENV: test
