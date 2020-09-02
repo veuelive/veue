@@ -1,1 +1,0 @@
-alert("DO NOT RESIZE THIS WINDOW!");
