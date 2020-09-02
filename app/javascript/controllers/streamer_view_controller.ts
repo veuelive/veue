@@ -20,6 +20,7 @@ export default class extends Controller {
     private mediaRecorder: MediaRecorder;
     private ipcRenderer: any;
     private browserDimensions: Rectangle;
+    private workArea: Rectangle;
 
     connect(): void {
         // This should only ever run in the Electron App!
@@ -29,15 +30,16 @@ export default class extends Controller {
         this.webcamVideoElement = document.createElement("video")
         this.browserVideoElement = document.createElement("video")
 
-        document.body.setAttribute("style",  "display: none")
-
         this.debugCanvasContext = this.debugCanvasTarget.getContext("2d");
 
         this.startWebcamCapture();
 
-        // ipcRenderer.on("visible", async (_, windowName, dimensions: Rectangle, workArea: Rectangle) => {
+        ipcRenderer.on("visible", async (_, dimensions: Rectangle, workArea: Rectangle) => {
+            this.browserDimensions = dimensions
+            this.workArea = workArea
             this.startBrowserCapture()
-        // })
+                .then(() => this.startStreaming())
+        })
     }
 
     private startWebcamCapture() {
@@ -70,7 +72,7 @@ export default class extends Controller {
             videoBitsPerSecond: 3000000,
         });
 
-        this.ipcRenderer.send("start", { streamKey: this.data.get("stream-key") });
+        this.ipcRenderer.send("start", {streamKey: this.data.get("stream-key")});
 
         this.mediaRecorder.addEventListener("dataavailable", async (e) => {
             const arrayBuffer = await e.data.arrayBuffer();
@@ -89,7 +91,7 @@ export default class extends Controller {
         const capturer = eval("require('electron').desktopCapturer")
         let source
 
-        while(!source) {
+        while (!source) {
             const sources = await capturer.getSources({types: ["window"]})
             source = sources.find((source) => source.name === "Veue")
         }
@@ -105,61 +107,26 @@ export default class extends Controller {
         });
 
         this.browserVideoElement.srcObject = mediaStream
-        document.body.appendChild((this.browserVideoElement))
-        await this.browserVideoElement.play()
+        this.browserVideoElement.addEventListener("loadedmetadata", () => {
+            this.browserVideoElement.play()
 
-        this.detectBrowserArea();
+            // const ratio = this.workArea.width / this.browserVideoElement.videoWidth
+            // const y = (this.browserDimensions.y - this.workArea.y) * ratio
+            // const x = this.browserDimensions.x  * ratio
+            // const width = this.browserDimensions.width * ratio
+            // const height = this.browserDimensions.height * ratio
 
-        console.log("browser", mediaStream)
-    }
+            //     // Override the values
+            // this.browserDimensions = {
+            //     x, y, width, height
+            // }
 
-    private detectBrowserArea() {
-        const canvas = document.createElement("canvas")
-        canvas.width = this.browserVideoElement.videoWidth
-        canvas.height = this.browserVideoElement.videoHeight
-        const ctx = canvas.getContext("2d")
-        ctx.drawImage(this.browserVideoElement, 0, 0, this.browserVideoElement.videoHeight, this.browserVideoElement.videoWidth)
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+            // console.log(ratio)
 
-        const l = imageData.data.length / 4;
+            console.log("browser", mediaStream)
 
-        const inRange = (color, min, max) => {
-            return color > min && color < max
-        }
-
-        let topX = -1
-        let topY = -1
-        let bottomX = 0
-        let bottomY = 0
-
-        for (let i = 0; i < l; i++) {
-            const r = imageData.data[i * 4 + 0];
-            const g = imageData.data[i * 4 + 1];
-            const b = imageData.data[i * 4 + 2];
-
-
-            if(inRange(r, 0, 55) && inRange(g, 100, 255) && inRange(b, 0, 55)) {
-                const x = Math.floor(i / imageData.width)
-                const y = i % imageData.width
-                if(x > bottomX) {
-                    bottomX = x
-                }
-                if(y > bottomY) {
-                    bottomY = y
-                }
-                if(topX == -1) {
-                    topX = x
-                }
-                if(topY == -1) {
-                    topY = y
-                }
-            }
-        }
-
-        const width = bottomX - topX
-        const height = bottomY - topY
-
-        console.log("DONE!", width, height)
+            this.debugCanvasTarget.parentElement.appendChild(this.browserVideoElement)
+        })
 
     }
 
@@ -175,10 +142,10 @@ export default class extends Controller {
 
         if (this.browserDimensions) {
             this.debugCanvasContext.drawImage(this.browserVideoElement,
-                this.browserDimensions.x,
-                this.browserDimensions.y,
-                1280,
-                800,
+                this.browserDimensions.x + 10,
+                this.browserDimensions.y + (this.workArea.y) + 30,
+                this.browserDimensions.width + 250,
+                this.browserDimensions.height + 160,
                 0,
                 0,
                 1280,
