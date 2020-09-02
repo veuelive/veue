@@ -21,7 +21,7 @@ export default class extends Controller {
   private personVideoCanvasContext: CanvasRenderingContext2D;
   private isPaused: boolean;
 
-  connect() {
+  connect(): void {
     this.isPaused = true;
 
     const url = `https://stream.mux.com/${this.data.get("playback-id")}.m3u8`;
@@ -34,12 +34,19 @@ export default class extends Controller {
       "2d"
     );
 
-    const hls = new Hls();
+    this.videoTarget.addEventListener("loadedmetadata", async () => {
+      await this.videoTarget.play()
+    })
+
+    const hls = new Hls({
+        liveMaxLatencyDurationCount: 10
+    });
     hls.loadSource(url);
     hls.attachMedia(this.video);
+
   }
 
-  timerCallback() {
+  private timerCallback() {
     if (this.video.paused || this.video.ended) {
       return;
     }
@@ -49,7 +56,7 @@ export default class extends Controller {
     }, 16); // roughly 60 frames per second
   }
 
-  togglePlay(event) {
+  togglePlay(): void {
     if (this.isPaused) {
       this.video.play().then(() => this.timerCallback());
     } else {
@@ -76,9 +83,9 @@ export default class extends Controller {
     const fullVideoWidth = this.video.videoWidth;
     const fullVideoHeight = this.video.videoHeight;
 
-    const sy = (1440 / 2048) * fullVideoHeight;
+    const sy = (800 / 1280) * fullVideoHeight;
 
-    const ratioToOriginal = fullVideoHeight / 2048;
+    const ratioToOriginal = fullVideoHeight / 1280;
 
     browserCtx.drawImage(
       this.video,
@@ -88,19 +95,19 @@ export default class extends Controller {
       fullVideoHeight,
       0,
       0,
-      2048,
-      2048
+      1280,
+        1280
     );
     personCtx.drawImage(
       this.video,
       0,
       sy,
-      800 * ratioToOriginal,
-      600 * ratioToOriginal,
+      640 * ratioToOriginal,
+      480 * ratioToOriginal,
       0,
       0,
-      800,
-      600
+      640,
+      480
     );
     const frame = browserCtx.getImageData(0, 0, fullVideoWidth, fullVideoHeight);
 

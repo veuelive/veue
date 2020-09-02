@@ -94,8 +94,7 @@
     border-radius: 5px;
   }
 }
-#videos__show,
-#videos__broadcast {
+#videos__show {
   canvas {
     width: 100%;
   }
@@ -162,5 +161,18 @@
       color: color.$gray-darker;
       font-size: 1rem;
     }
+  }
+}
+
+#videos__broadcast {
+
+  canvas, video {
+    width: 99%;
+    border: 1px solid green;
+  }
+
+  .browser__frame {
+    width: 1280px;
+    height: 800px;
   }
 }

@@ -9,10 +9,10 @@
         %button.time-area.time-red
           %span.dot.time-dot
           1:36:24
-    %canvas.browser-video-area{"data-target": "audience-view.browserVideoCanvas", width: 2048, height: 1440}
+    %canvas.browser-video-area{"data-target": "audience-view.browserVideoCanvas", width: 1280, height: 800}
   .content-area__left__small
     .stream-area
-      %canvas.streamer-webcam-view{"data-target": "audience-view.personVideoCanvas", width: 800, height: 600}
+      %canvas.streamer-webcam-view{"data-target": "audience-view.personVideoCanvas", width: 640, height: 480}
       %video.player__video.viewer{"data-action" => "canplay->audience-view#videoLoaded timeupdate->audience-view#progressUpdate", "data-target" => "audience-view.video", style: "display: none;"}
       -#.player__controls
       -#  .progress{"data-action" => "click->video-player#scrub mousedown->video-player#mousedown mouseup->video-player#mouseup mousemove->video-player#mousemove", "data-target" => "video-player.progress"}
