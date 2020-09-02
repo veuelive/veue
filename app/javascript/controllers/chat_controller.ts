@@ -13,7 +13,7 @@ export default class extends Controller {
   private userId: string;
   private lastUserId: string;
 
-  connect() {
+  connect(): void {
     this.videoId = this.data.get("video-id");
     this.userId = this.data.get("user");
     this.createChatSubscription();
@@ -22,7 +22,7 @@ export default class extends Controller {
     }
   }
 
-  createChatSubscription() {
+  createChatSubscription(): void {
     // messageHtml variable will be having reference to createHtml function of chat controller
     const messageHtml = this.createHtml;
     const currentUserId = this.userId;
@@ -55,7 +55,7 @@ export default class extends Controller {
     );
   }
 
-  submitFormEvent() {
+  submitFormEvent(): void {
     this.messageInputTarget.addEventListener("keydown", async (event) => {
       if (!event.shiftKey && event.keyCode === 13) {
         event.preventDefault();
@@ -70,7 +70,13 @@ export default class extends Controller {
     });
   }
 
-  createHtml(id, uid, name, message, sameUser) {
+  createHtml(
+    id: number,
+    uid: string,
+    name: string,
+    message: string,
+    sameUser: boolean
+  ): string {
     let html = "";
     if (id === parseInt(uid)) {
       html = `

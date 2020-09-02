@@ -1,16 +1,8 @@
 import { Controller } from "stimulus";
-import Bounds = chrome.system.display.Bounds;
-
-interface Rectangle {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
 
 export default class extends Controller {
   static targets = ["debugCanvas"];
-  private debugCanvasTarget!: HTMLCanvasElement;
+  private debugCanvasTarget!: CaptureStreamCanvas;
 
   private webcamVideoElement: HTMLVideoElement;
   private browserVideoElement: HTMLVideoElement;
@@ -18,7 +10,7 @@ export default class extends Controller {
   private debugCanvasContext: CanvasRenderingContext2D;
   private audioTrack: MediaStreamTrack;
   private mediaRecorder: MediaRecorder;
-  private ipcRenderer: any;
+  private ipcRenderer: IPCRenderer;
   private browserDimensions: Rectangle;
   private workArea: Rectangle;
 
@@ -67,9 +59,7 @@ export default class extends Controller {
   }
 
   startStreaming(): void {
-    // Have to do this gross bit of code because typescript is convinced captureStream() doesn't exist
-    const canvas = this.debugCanvasTarget as any;
-    const mediaStream = canvas.captureStream(60) as MediaStream;
+    const mediaStream = this.debugCanvasTarget.captureStream(60);
     mediaStream.addTrack(this.audioTrack);
     this.mediaRecorder = new MediaRecorder(mediaStream, {
       mimeType: "video/webm",
@@ -159,4 +149,19 @@ export default class extends Controller {
       );
     }
   }
+}
+
+interface Rectangle {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+type IPCRenderer = {
+  send(channel: string, ...args);
+};
+
+interface CaptureStreamCanvas extends HTMLCanvasElement {
+  captureStream(fps: number): MediaStream;
 }

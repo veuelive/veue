@@ -42,11 +42,11 @@ export default class extends Controller {
       liveMaxLatencyDurationCount: 10,
     });
     hls.loadSource(url);
-    hls.attachMedia(this.video);
+    hls.attachMedia(this.videoTarget);
   }
 
   private timerCallback() {
-    if (this.video.paused || this.video.ended) {
+    if (this.videoTarget.paused || this.videoTarget.ended) {
       return;
     }
     this.computeFrame();
@@ -57,9 +57,9 @@ export default class extends Controller {
 
   togglePlay(): void {
     if (this.isPaused) {
-      this.video.play().then(() => this.timerCallback());
+      this.videoTarget.play().then(() => this.timerCallback());
     } else {
-      this.video.pause();
+      this.videoTarget.pause();
     }
 
     this.isPaused = !this.isPaused;
@@ -67,27 +67,28 @@ export default class extends Controller {
     this.toggleTarget.textContent = this.isPaused ? "►" : "❚ ❚";
   }
 
-  videoLoaded() {
+  videoLoaded(): void {
     this.computeFrame();
   }
 
-  progressUpdate(event) {
-    const percent = (this.video.currentTime / this.video.duration) * 100;
+  progressUpdate(): void {
+    const percent =
+      (this.videoTarget.currentTime / this.videoTarget.duration) * 100;
     console.log(`${percent}%`);
   }
 
-  computeFrame() {
+  private computeFrame() {
     const browserCtx = this.browserVideoCanvasContext;
     const personCtx = this.personVideoCanvasContext;
-    const fullVideoWidth = this.video.videoWidth;
-    const fullVideoHeight = this.video.videoHeight;
+    const fullVideoWidth = this.videoTarget.videoWidth;
+    const fullVideoHeight = this.videoTarget.videoHeight;
 
     const sy = (800 / 1280) * fullVideoHeight;
 
     const ratioToOriginal = fullVideoHeight / 1280;
 
     browserCtx.drawImage(
-      this.video,
+      this.videoTarget,
       0,
       0,
       fullVideoWidth,
@@ -98,7 +99,7 @@ export default class extends Controller {
       1280
     );
     personCtx.drawImage(
-      this.video,
+      this.videoTarget,
       0,
       sy,
       640 * ratioToOriginal,
@@ -108,17 +109,7 @@ export default class extends Controller {
       640,
       480
     );
-    const frame = browserCtx.getImageData(
-      0,
-      0,
-      fullVideoWidth,
-      fullVideoHeight
-    );
 
     return;
-  }
-
-  get video() {
-    return this.videoTarget;
   }
 }
