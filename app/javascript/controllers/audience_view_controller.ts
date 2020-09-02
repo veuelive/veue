@@ -35,15 +35,14 @@ export default class extends Controller {
     );
 
     this.videoTarget.addEventListener("loadedmetadata", async () => {
-      await this.videoTarget.play()
-    })
+      await this.videoTarget.play();
+    });
 
     const hls = new Hls({
-        liveMaxLatencyDurationCount: 10
+      liveMaxLatencyDurationCount: 10,
     });
     hls.loadSource(url);
     hls.attachMedia(this.video);
-
   }
 
   private timerCallback() {
@@ -96,7 +95,7 @@ export default class extends Controller {
       0,
       0,
       1280,
-        1280
+      1280
     );
     personCtx.drawImage(
       this.video,
@@ -109,7 +108,12 @@ export default class extends Controller {
       640,
       480
     );
-    const frame = browserCtx.getImageData(0, 0, fullVideoWidth, fullVideoHeight);
+    const frame = browserCtx.getImageData(
+      0,
+      0,
+      fullVideoWidth,
+      fullVideoHeight
+    );
 
     return;
   }
