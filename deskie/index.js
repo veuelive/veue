@@ -1,6 +1,6 @@
 'use strict';
 const path = require('path');
-const {app, BrowserWindow, Menu, BrowserView, ipcMain} = require('electron');
+const {app, BrowserWindow, Menu, BrowserView, ipcMain, screen} = require('electron');
 /// const {autoUpdater} = require('electron-updater');
 const {is} = require('electron-util');
 const unhandled = require('electron-unhandled');
@@ -9,7 +9,7 @@ const contextMenu = require('electron-context-menu');
 const config = require('./config');
 const menu = require('./menu');
 const packageJson = require('./package.json');
-const { session } = require('electron')
+const {session} = require('electron')
 var ffmpegStatic = require('ffmpeg-static-electron');
 const child_process = require("child_process");
 const Buffer = require('buffer').Buffer;
@@ -35,13 +35,15 @@ app.setAppUserModelId(packageJson.build.appId);
 // Prevent window from being garbage collected
 let mainWindow;
 
-
 const createMainWindow = async () => {
 	const win = new BrowserWindow({
-		title: app.name,
+		title: "Veue",
 		show: false,
 		width: 2048,
 		height: 1200,
+		maximizable: false,
+		closable: false,
+		minimizable: false,
 		webPreferences: {
 			nodeIntegration: true
 		}
@@ -55,22 +57,13 @@ const createMainWindow = async () => {
 		win.show();
 
 		const view = new BrowserView()
-		win.setBrowserView(view)
-		view.setBounds({ x: 37, y: 137, width: 1200, height: 784 })
-		view.webContents.loadURL('https://jcrew.com')
-
-		let callback = () => {
-			view.webContents.capturePage()
-				.then((image) => {
-					console.log("Capture")
-					let dataUrl = image.toDataURL()
-					win.webContents.send("browser-frame", dataUrl)
-					setTimeout(callback, 100)
-				})
-		}
-
-		callback()
-	});
+		// view.webContents.loadFile("sample.html")
+		view.webContents.loadURL("http://revolve.com")
+		win.addBrowserView(view)
+		let bounds = {x: 33, y: 125, width: 1280, height: 800 };
+		view.setBounds(bounds)
+		win.webContents.send("visible", bounds, screen.getPrimaryDisplay().workArea)
+	})
 
 	win.on('closed', () => {
 		// Dereference the window
@@ -88,7 +81,7 @@ if (!app.requestSingleInstanceLock()) {
 
 
 ipcMain.on('stream', (event, data) => {
-	if(ffmpeg) {
+	if (ffmpeg) {
 		console.log("Sending data to ffmpeg ", data.payload.length)
 		ffmpeg.stdin.write(data.payload);
 	} else {
@@ -104,7 +97,7 @@ ipcMain.on("start", (_, data) => {
 	console.log("Streaming to ", rtmpUrl)
 
 	ffmpeg = child_process.spawn('ffmpeg', [
-		'-i','-',
+		'-i', '-',
 
 		// video codec config: low latency, adaptive bitrate
 		'-c:v', 'libx264', '-preset', 'medium', '-tune', 'animation',
@@ -172,7 +165,7 @@ app.on('activate', () => {
 (async () => {
 	await app.whenReady();
 
-	session.defaultSession.cookies.set({
+	await session.defaultSession.cookies.set({
 		url: "http://localhost:3000/",
 		name: "_veue_session",
 		value: '0KeqvKZtOz3Q4HuGCK6eJxVWMeIkth9mBBialkCGpzusVtX%2BbwGGUPnwu%2Fj4hHjfAP1E4u8tWDYBsNSJ5d734bo2ofxEnvZ15QSck9tauB9saT0E%2Fzdw4FJu%2BR7U0%2FSyu4rCqN%2FuCd4LMvY2QeqQK9huF3FQfpFBSWCW12fbU3IsYqtwM78TbA83CVqO8PIjYc0HFzeZIW5w3iO%2BxdN4vhJA82H3ngIytKYwHQZnEyfO70m%2BAstfWVP%2Fb6OHsZeCKsQjj2PyjT3PcCmJklsE9jcnzuDhttujDtuVOqM9qhu93oGfJN6%2FsSMOALjAkOA1syVVDZ%2FFztdU7CiSA2xl8bLNy8xHedQexHHQNoqNmxxR179mE8cxkcGp48NQ7qm0PDh1mvI%3D--mgPfio%2BIIyvJikGj--u40tLGG733lIKGQN41zing%3D%3D'
