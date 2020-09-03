@@ -2,12 +2,25 @@
 
 module Users
   class RegistrationsController < Devise::RegistrationsController
-    # before_action :configure_sign_up_params, only: [:create]
-    # before_action :configure_account_update_params, only: [:update]
-
     # GET /resource/sign_up
-    # def new
-    #   super
-    # end
+    def new
+      respond_to do |format|
+        build_resource
+        yield(resource) if block_given?
+
+        format.html { respond_with resource }
+        format.js { render_form }
+      end
+    end
+
+    private
+
+    def render_form
+      render(
+        partial: "form",
+        locals: {resource: resource, resource_name: resource_name, request_method: :post, remote: true},
+        content_type: "html",
+      )
+    end
   end
 end
