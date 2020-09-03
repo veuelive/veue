@@ -2,11 +2,67 @@
 
 module Users
   class SessionsController < Devise::SessionsController
-    # before_action :configure_sign_in_params, only: [:create]
+    skip_before_action :verify_authenticity_token, only: %i[create destroy]
 
     # GET /resource/sign_in
-    # def new
-    #   super
-    # end
+    def new
+      respond_to do |format|
+        build_resource
+        format.html { respond_with(resource, serialize_options(resource)) }
+        format.js { render_form }
+      end
+    end
+
+    # POST /resource/sign_in
+    def create
+      respond_to do |format|
+        create_resource
+        format.html {
+          set_flash_message!(:notice, :signed_in)
+          respond_with(resource, location: after_sign_in_path_for(resource))
+        }
+
+        format.json {
+          return render(json: {success: true, status: "login", user: resource.as_json})
+        }
+      end
+    end
+
+    # DELETE /resource/sign_out
+    def destroy
+      respond_to do |format|
+        signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+        yield if block_given?
+        format.html {
+          set_flash_message!(:notice, :signed_out) if signed_out
+          redirect_to(after_sign_out_path_for(resource_name))
+        }
+        format.json {
+          render(json: {success: true, message: "User signed out successfully!"})
+        }
+      end
+    end
+
+    private
+
+    def render_form
+      render(
+        partial: "form",
+        locals: {resource: resource, resource_name: resource_name, remote: true},
+        content_type: "html",
+      )
+    end
+
+    def build_resource
+      self.resource = resource_class.new(sign_in_params)
+      clean_up_passwords(resource)
+      yield(resource) if block_given?
+    end
+
+    def create_resource
+      self.resource = warden.authenticate!(auth_options)
+      sign_in(resource_name, resource)
+      yield(resource) if block_given?
+    end
   end
 end

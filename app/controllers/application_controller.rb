@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   include HttpAuthConcern
   include DeviseHelperConcern
 
+  protect_from_forgery unless: -> { request.format.json? }
+
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :setup_data_attributes
 
