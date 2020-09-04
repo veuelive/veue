@@ -20,12 +20,19 @@ We use the following Third-Party services:
 
 ## Overall Architecture
 
-This is the sequence diagram for how the Chrome Extension works with other components and how we setup a 
+This is the sequence diagram for how the Chrome Extension works with other components and how we setup a
 streamer session.
 
-![GitHub Logo](https://user-images.githubusercontent.com/111/91205353-667a4b00-e6d3-11ea-8b6d-4e3dfb21d961.png)
+![Sequence Diagram](https://user-images.githubusercontent.com/111/91205353-667a4b00-e6d3-11ea-8b6d-4e3dfb21d961.png)
 
 The source for this image can be found in the `docs` folder. Please update whenever you can!
+
+## Video Feeds
+
+In the initial version, video feeds are laid out according to the following arrangement. The
+streamers client is responsible for compositing the images this way.
+
+![Video Layout](docs/Video%20Feed%20Layout%20and%20Specification.png)
 
 ## Developer Setup
 
