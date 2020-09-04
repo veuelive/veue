@@ -16,9 +16,9 @@ module Users
     def create
       respond_to do |format|
         format.html { super }
-        format.json {
+        format.js {
           create_user
-          render_json_response
+          render_js_response
         }
       end
     end
@@ -30,18 +30,13 @@ module Users
       resource.save!
     end
 
-    def render_json_response
+    def render_js_response
       if resource.persisted?
         sign_up(resource_name, resource)
       else
         expire_data_after_sign_in!
       end
-      render(json: {
-               success: false,
-               status: "signup",
-               user: resource.as_json,
-               errors: resource.errors.messages,
-             })
+      render(partial: "layouts/nav/user_area", content_type: "html")
     end
 
     def render_form
