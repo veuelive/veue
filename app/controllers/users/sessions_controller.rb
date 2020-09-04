@@ -22,8 +22,8 @@ module Users
           respond_with(resource, location: after_sign_in_path_for(resource))
         }
 
-        format.json {
-          return render(json: {success: true, status: "login", user: resource.as_json})
+        format.js {
+          render(partial: "layouts/nav/user_area", content_type: "html")
         }
       end
     end
@@ -37,8 +37,9 @@ module Users
           set_flash_message!(:notice, :signed_out) if signed_out
           redirect_to(after_sign_out_path_for(resource_name))
         }
-        format.json {
-          render(json: {success: true, message: "User signed out successfully!"})
+
+        format.js {
+          render(partial: "layouts/nav/user_area", content_type: "html")
         }
       end
     end
@@ -48,7 +49,7 @@ module Users
     def render_form
       render(
         partial: "form",
-        locals: {resource: resource, resource_name: resource_name, remote: true, type: "json"},
+        locals: {resource: resource, resource_name: resource_name, remote: true},
         content_type: "html",
       )
     end

@@ -1,0 +1,23 @@
+- if user_signed_in?
+  %ul
+    %li
+      = image_tag 'avatar-placeholder', class: 'status-user__profile', alt: 'profile'
+    %li
+      %p.status-user__text
+        = current_user.username.capitalize
+    %li
+      = image_tag 'down-arrow', class: 'status-user__arrow', alt: 'Arrow'
+  .status-dropdown
+    %ul
+      %li
+        = link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'list-item', remote: true, data: { target: "authentication.signoutButton" }
+- else
+  %ul
+    %li
+      = link_to "Login", "javascript:void(0)", class: "list-item", data: { target: "authentication.loginButton" }
+    %li
+      = link_to "Signup", "javascript:void(0)", class: "list-item", data: { target: "authentication.signupButton" }
+  .modal#auth-modal{ "data-target": "authentication.modal" }
+    .modal-content{ "data-target": "authentication.modalContent" }
+      .modal-label{ "data-target": "authentication.modalLabel"}
+      .form-area{ "data-target": "authentication.formArea" }
