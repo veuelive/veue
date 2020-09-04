@@ -96,7 +96,7 @@ export default class extends Controller {
 
   formResponse(event) {
     const response = event.detail;
-    const loginHtml = this.loggedInUserView(response[0].user);
+    const loginHtml = this.logedInUserView(response[0].user);
 
     document.body.style.overflowY = "auto";
     this.listAreaTarget.innerHTML = loginHtml;
@@ -108,13 +108,12 @@ export default class extends Controller {
   }
 
   signoutUserHandler(event) {
-    console.log("logout created Html:", this.loggedOutUserView(), event);
     const logoutHtml = this.loggedOutUserView();
     this.listAreaTarget.innerHTML = logoutHtml;
     this.registerEventHandlers();
   }
 
-  loggedInUserView(user) {
+  logedInUserView(user) {
     return `
       <ul>
         <li>

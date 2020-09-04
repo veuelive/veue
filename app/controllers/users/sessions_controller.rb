@@ -48,7 +48,7 @@ module Users
     def render_form
       render(
         partial: "form",
-        locals: {resource: resource, resource_name: resource_name, remote: true},
+        locals: {resource: resource, resource_name: resource_name, remote: true, type: "json"},
         content_type: "html",
       )
     end
