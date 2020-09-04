@@ -17,7 +17,7 @@
           %ul
             %li
               = link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'list-item', remote: true, data: { target: "authentication.signoutButton", type: "json" }
-      - else
+      - elsif ["sessions", "registrations"].exclude? controller_name
         %ul
           %li
             = link_to "Login", "javascript:void(0)", class: "list-item", data: { target: "authentication.loginButton" }
