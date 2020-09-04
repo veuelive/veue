@@ -1,4 +1,4 @@
-= form_for(resource, as: resource_name, url: session_path(resource_name), remote: remote, data: { type: "json", target: "authentication.form" }) do |f|
+= form_for(resource, as: resource_name, url: session_path(resource_name), remote: remote, data: { type: type, target: "authentication.form" }) do |f|
   .field
     = f.label :email
     %br

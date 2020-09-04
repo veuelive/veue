@@ -13,12 +13,41 @@ module Users
       end
     end
 
+    def create
+      respond_to do |format|
+        format.html { super }
+        format.json {
+          create_user
+          render_json_response
+        }
+      end
+    end
+
     private
+
+    def create_user
+      build_resource(sign_up_params)
+      resource.save!
+    end
+
+    def render_json_response
+      if resource.persisted?
+        sign_up(resource_name, resource)
+      else
+        expire_data_after_sign_in!
+      end
+      render(json: {
+               success: false,
+               status: "signup",
+               user: resource.as_json,
+               errors: resource.errors.messages,
+             })
+    end
 
     def render_form
       render(
         partial: "form",
-        locals: {resource: resource, resource_name: resource_name, request_method: :post, remote: true},
+        locals: {resource: resource, resource_name: resource_name, request_method: :post, remote: true, type: "json"},
         content_type: "html",
       )
     end
