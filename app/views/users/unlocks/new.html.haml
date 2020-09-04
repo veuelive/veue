@@ -1,13 +1,13 @@
 .auth-area
-  %h2 Forgot your password?
+  %h2 Resend unlock instructions
   .auth-form
-    = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+    = form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f|
       = render "users/shared/error_messages", resource: resource
       .field
         = f.label :email
-        %br
+        %br/
         = f.email_field :email, autofocus: true, autocomplete: "email"
       .actions
-        = f.submit "Send me reset password instructions"
+        = f.submit "Resend unlock instructions"
   .shared-links
     = render "users/shared/links"

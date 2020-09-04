@@ -1,0 +1,81 @@
+@use 'utils/color';
+
+.auth-area {
+  margin-top: 1rem;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  border: 1px solid #80808026;
+  padding: 1rem;
+  margin-left: 30%;
+  margin-right: 30%;
+  border-radius: 1rem;
+  box-shadow: 0rem 0rem 1rem 0.1rem #8e8e8e4a;
+  h2,
+  h4 {
+    color: color.$purple;
+  }
+  h4 {
+    margin: 0;
+  }
+  #error_explanation {
+    ul {
+      list-style: none;
+      padding-left: 0;
+      text-align: left;
+    }
+  }
+  .auth-form {
+    display: inline-block;
+    .field {
+      margin-top: 1rem;
+      input[type="text"],
+      input[type="password"],
+      input[type="email"] {
+        margin-top: 0.5rem;
+        width: 250px;
+        height: 20px;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        border: solid 1px #e3e3e3;
+        background-color: #f5f6f8;
+        border: solid 1px color.$gray-medium-1;
+        background-color: color.$gray-light-1;
+        &:focus {
+          outline: none;
+        }
+      }
+      label,
+      em {
+        width: 81px;
+        font-size: 0.9rem;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        letter-spacing: 1.05px;
+        text-align: left;
+        color: #333b50;
+      }
+    }
+    .actions {
+      margin-top: 1.5rem;
+      input[type="submit"] {
+        padding: 0.75rem 2.5rem;
+        border-radius: 0.75rem;
+        background-color: color.$purple;
+        color: color.$white;
+        border: none;
+      }
+    }
+  }
+  .shared-links {
+    margin: 2rem 0;
+    a {
+      text-decoration: none;
+      color: color.$gray-darker;
+    }
+    .share-link {
+      margin-top: 0.25rem;
+    }
+  }
+}
