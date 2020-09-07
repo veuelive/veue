@@ -10,14 +10,14 @@
   .status-dropdown
     %ul
       %li
-        = link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'list-item', remote: true, data: { target: "authentication.signoutButton" }
+        = link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'list-item', remote: true, data: { action: "ajax:success->authentication#signoutUserHandler" }
 - else
   %ul
     %li
-      = link_to "Login", "javascript:void(0)", class: "list-item", data: { target: "authentication.loginButton" }
+      = link_to "Login", "javascript:void(0)", class: "list-item", data: { action: "click->authentication#getHtmlContent", "auth-target": "login" }
     %li
-      = link_to "Signup", "javascript:void(0)", class: "list-item", data: { target: "authentication.signupButton" }
-  .modal#auth-modal{ "data-target": "authentication.modal" }
+      = link_to "Signup", "javascript:void(0)", class: "list-item", data: { action: "click->authentication#getHtmlContent", "auth-target": "signup" }
+  .modal#auth-modal{ "data-target": "authentication.modal", "data-action": "click->authentication#hideModal" }
     .modal-content{ "data-target": "authentication.modalContent" }
       .modal-label{ "data-target": "authentication.modalLabel"}
       .form-area{ "data-target": "authentication.formArea" }
