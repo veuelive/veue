@@ -1,0 +1,58 @@
+// This document works on https://sequencediagram.org
+
+title Streaming V2
+
+bottomparticipants
+
+participantgroup Veue Streamer App
+participant Main
+participant BrowserView
+participant Renderer
+participant ffmpeg
+end
+
+participant Mux
+participant Veue
+
+Main->Renderer:Load Broadcast Page
+Renderer->Veue:Load Page (and Login and stuff)
+
+activate Veue
+Veue-->Renderer:HTML/JS Payload
+deactivate Veue
+
+activate Renderer
+
+Renderer-->Main: Loaded
+
+Main->Renderer:Become Visible
+Main->BrowserView:Create\nAs Overlay
+activate BrowserView
+
+Renderer->Renderer:Start \nWebcam\nCapture
+
+Renderer->Renderer:Start \nWindow\nCapture
+Renderer->Renderer:Start \nMediaRecorder
+
+Renderer->Main:Start Stream
+
+Main->ffmpeg:Start RTMP Connection
+
+activate ffmpeg
+ffmpeg->Mux:RTMP
+activate Mux
+Mux-->>Veue:Various\nWebhooks
+Mux-->>Veue:Various\nWebhooks
+
+loop #2f2e7b Media Recorder Fragment
+Renderer->Main:IPC
+Main->ffmpeg:Stdin
+ffmpeg->Mux:RTMP
+end
+
+Renderer->Main:Stop Stream
+Main->ffmpeg:Kill
+deactivate ffmpeg
+
+deactivate Mux
+Mux-->>Veue:Stream\nEnds\nWebhook
