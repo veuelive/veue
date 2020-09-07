@@ -9,14 +9,8 @@ export default class extends Controller {
     "modalLabel",
     "formArea",
     "form",
-    "loginButton",
-    "signupButton",
-    "signoutButton",
   ];
 
-  readonly loginButtonTarget!: HTMLAnchorElement;
-  readonly signupButtonTarget!: HTMLAnchorElement;
-  readonly signoutButtonTarget!: HTMLAnchorElement;
   readonly listAreaTarget!: HTMLElement;
   readonly modalTarget!: HTMLElement;
   readonly modalContentTarget!: HTMLElement;
@@ -26,47 +20,18 @@ export default class extends Controller {
   // boolean members for checking if targets present?
   readonly hasModalTarget: boolean;
   readonly hasFormTarget: boolean;
-  readonly hasLoginButtonTarget: boolean;
-  readonly hasSignupButtonTarget: boolean;
-  readonly hasSignoutButtonTarget: boolean;
   readonly hasModalLabelTarget: boolean;
 
   private target: string;
 
-  connect() {
-    this.registerEventHandlers();
-  }
-
-  registerEventHandlers() {
-    if (this.hasModalTarget) {
-      this.modalTarget.addEventListener("click", (event) =>
-        this.hideModal(event)
-      );
-    }
-    if (this.hasLoginButtonTarget) {
-      this.loginButtonTarget.addEventListener("click", (event) =>
-        this.getHtmlContent(event, "login")
-      );
-    }
-    if (this.hasSignupButtonTarget) {
-      this.signupButtonTarget.addEventListener("click", (event) =>
-        this.getHtmlContent(event, "signup")
-      );
-    }
-    if (this.hasSignoutButtonTarget) {
-      this.signoutButtonTarget.addEventListener("ajax:success", (event) =>
-        this.signoutUserHandler(event)
-      );
-    }
-  }
-
-  async getHtmlContent(event, target) {
-    this.target = target;
-    const url = target === "login" ? "/users/sign_in.js" : "/users/sign_up.js";
+  async getHtmlContent(event) {
+    this.target = event.target.dataset.authTarget;
+    const url =
+      this.target === "login" ? "/users/sign_in.js" : "/users/sign_up.js";
     const res = await Rails.ajax({
       type: "get",
       url,
-      success: (response) => this.createModal(response, target),
+      success: (response) => this.createModal(response, this.target),
     });
   }
 
@@ -98,16 +63,10 @@ export default class extends Controller {
     const response = event.detail;
     document.body.style.overflowY = "auto";
     this.listAreaTarget.innerHTML = response[0];
-    if (this.hasSignoutButtonTarget) {
-      this.signoutButtonTarget.addEventListener("ajax:success", (event) =>
-        this.signoutUserHandler(event)
-      );
-    }
   }
 
   signoutUserHandler(event) {
     const response = event.detail;
     this.listAreaTarget.innerHTML = response[0];
-    this.registerEventHandlers();
   }
 }
