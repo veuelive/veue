@@ -106,7 +106,6 @@ export default class extends Controller {
   }
 
   signoutUserHandler(event) {
-    console.log(event);
     const response = event.detail;
     this.listAreaTarget.innerHTML = response[0];
     this.registerEventHandlers();

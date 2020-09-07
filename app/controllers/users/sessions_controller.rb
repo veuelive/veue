@@ -2,8 +2,6 @@
 
 module Users
   class SessionsController < Devise::SessionsController
-    skip_before_action :verify_authenticity_token, only: %i[create destroy]
-
     # GET /resource/sign_in
     def new
       respond_to do |format|
@@ -32,8 +30,8 @@ module Users
     def destroy
       respond_to do |format|
         signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
-        yield if block_given?
         format.html {
+          yield if block_given?
           set_flash_message!(:notice, :signed_out) if signed_out
           redirect_to(after_sign_out_path_for(resource_name))
         }
