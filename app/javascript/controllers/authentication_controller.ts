@@ -1,6 +1,8 @@
 import { Controller } from "stimulus";
 import Rails from "@rails/ujs";
 
+import AuthObserver from "../shared/helpers/authObserver";
+
 export default class extends Controller {
   static targets = [
     "listArea",
@@ -20,6 +22,8 @@ export default class extends Controller {
   readonly hasModalLabelTarget: boolean;
 
   private target: string;
+  private authObj: AuthObserver;
+  private userSignedIn: boolean;
 
   async getHtmlContent(event) {
     this.target = event.target.dataset.authTarget;
@@ -55,10 +59,16 @@ export default class extends Controller {
     const response = event.detail;
     document.body.style.overflowY = "auto";
     this.listAreaTarget.innerHTML = response[0];
+    this.userSignedIn = true;
+    this.authObj = new AuthObserver(this.listAreaTarget, this.userSignedIn);
+    this.authObj.dispatchAuth();
   }
 
   signoutUserHandler(event) {
     const response = event.detail;
     this.listAreaTarget.innerHTML = response[0];
+    this.userSignedIn = false;
+    this.authObj = new AuthObserver(this.listAreaTarget, this.userSignedIn);
+    this.authObj.dispatchAuth();
   }
 }
