@@ -1,6 +1,5 @@
 import { Controller } from "stimulus";
 import consumer from "../channels/consumer";
-import Rails from "@rails/ujs";
 import { post } from "util/fetch";
 
 export default class extends Controller {
