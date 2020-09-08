@@ -2,6 +2,6 @@
   .navbar-link
     .navbar-logo
       = image_tag 'main-logo', alt: 'Logo'
-  #authentication{ "data-controller": "authentication" }
+  #authentication{ "data-controller": "authentication", "data-authentication-login": user_signed_in? ? "signedIn" : "signedOut" }
     .status-user{ "data-target": "authentication.listArea" }
       = render partial: 'layouts/nav/user_area'
