@@ -24,6 +24,11 @@ export default class extends Controller {
   private target: string;
   private authObj: AuthObserver;
   private userSignedIn: boolean;
+  private videoId: number;
+
+  connect() {
+    this.videoId = parseInt(this.data.get("videoId"));
+  }
 
   async getHtmlContent(event) {
     this.target = event.target.dataset.authTarget;
@@ -60,15 +65,27 @@ export default class extends Controller {
     document.body.style.overflowY = "auto";
     this.listAreaTarget.innerHTML = response[0];
     this.userSignedIn = true;
-    this.authObj = new AuthObserver(this.listAreaTarget, this.userSignedIn);
-    this.authObj.dispatchAuth();
+    if (this.videoId) {
+      this.authObj = new AuthObserver(
+        this.listAreaTarget,
+        this.userSignedIn,
+        this.videoId
+      );
+      this.authObj.dispatchAuth();
+    }
   }
 
   signoutUserHandler(event) {
     const response = event.detail;
     this.listAreaTarget.innerHTML = response[0];
     this.userSignedIn = false;
-    this.authObj = new AuthObserver(this.listAreaTarget, this.userSignedIn);
-    this.authObj.dispatchAuth();
+    if (this.videoId) {
+      this.authObj = new AuthObserver(
+        this.listAreaTarget,
+        this.userSignedIn,
+        this.videoId
+      );
+      this.authObj.dispatchAuth();
+    }
   }
 }
