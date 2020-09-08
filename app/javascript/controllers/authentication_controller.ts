@@ -8,7 +8,6 @@ export default class extends Controller {
     "modalContent",
     "modalLabel",
     "formArea",
-    "form",
   ];
 
   readonly listAreaTarget!: HTMLElement;
@@ -16,10 +15,8 @@ export default class extends Controller {
   readonly modalContentTarget!: HTMLElement;
   readonly modalLabelTarget!: HTMLElement;
   readonly formAreaTarget!: HTMLElement;
-  readonly formTarget: HTMLFormElement;
   // boolean members for checking if targets present?
   readonly hasModalTarget: boolean;
-  readonly hasFormTarget: boolean;
   readonly hasModalLabelTarget: boolean;
 
   private target: string;
@@ -43,11 +40,6 @@ export default class extends Controller {
     this.modalTarget.style.display = "block";
     this.modalContentTarget.classList.add(`${target}-modal`);
     this.formAreaTarget.innerHTML = response;
-    if (this.hasFormTarget) {
-      this.formTarget.addEventListener("ajax:success", (event) =>
-        this.formResponse(event)
-      );
-    }
   }
 
   hideModal(event) {
