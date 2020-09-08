@@ -7,9 +7,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :chat_messages, only: [:create] do
-    get :grouped_message, as: :member
-  end
+  resources :chat_messages, only: [:create]
+  resource :chat_message, only: [:show]
 
   post "/mux/webhook", to: "mux_webhooks#index"
 
