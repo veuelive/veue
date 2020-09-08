@@ -1,6 +1,7 @@
 import { Controller } from "stimulus";
 import consumer from "../channels/consumer";
 import Rails from "@rails/ujs";
+import { post } from "util/fetch";
 
 export default class extends Controller {
   static targets = ["chatMessages", "chatForm", "messageInput"];
@@ -59,12 +60,8 @@ export default class extends Controller {
     this.messageInputTarget.addEventListener("keydown", async (event) => {
       if (!event.shiftKey && event.keyCode === 13) {
         event.preventDefault();
-        const formData = new FormData(this.chatFormTarget);
-        await Rails.ajax({
-          type: "post",
-          url: "/chat_messages",
-          data: formData,
-        });
+        const body = new FormData(this.chatFormTarget);
+        await post("/chat_messages", { body });
         this.messageInputTarget.value = "";
       }
     });
