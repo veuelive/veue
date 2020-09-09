@@ -24,18 +24,25 @@ describe Users::SessionsController, type: :controller do
   end
 
   describe "POST create" do
-    it "should create user and redirect to root" do
+    it "should login user and redirect to root" do
       post :create, params: {user: {email: user.email, password: user.password}}
 
       expect(controller.current_user.id).to eq(user.id)
       expect(response).to redirect_to(root_path)
     end
 
-    it "should create user and render user_area partial" do
+    it "should login user and render user_area partial" do
       post :create, params: {user: {email: user.email, password: user.password}}, format: :js
 
       expect(controller.current_user.id).to eq(user.id)
       expect(response).to render_template("layouts/nav/_user_area")
+    end
+
+    it "should not login user and render errors partial" do
+      post :create, params: {user: {email: user.email, password: ""}}, format: :js
+
+      expect(controller.current_user).to eq(nil)
+      expect(response).to render_template("shared/_errors")
     end
   end
 
