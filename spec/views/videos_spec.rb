@@ -14,7 +14,7 @@ describe "Videos", type: :feature do
     it "should have chat form if user is logged in" do
       visit video_path(video)
 
-      expect(page).to have_selector(".chat-form")
+      expect(page).to have_selector(".message-write")
     end
   end
 
@@ -22,7 +22,7 @@ describe "Videos", type: :feature do
     it "should have chat form if user is logged in" do
       visit video_path(video)
 
-      expect(page).not_to(have_selector(".chat-form"))
+      expect(page).not_to(have_selector(".message-write"))
     end
   end
 end

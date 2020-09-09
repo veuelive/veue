@@ -7,10 +7,8 @@ describe ChatMessagesController, type: :controller do
   let(:video) { create(:video) }
   let(:chat_message_params) {
     {
-      chat_message: {
-        body: Faker::Lorem.characters(number: 10),
-        video_id: video.id,
-      },
+      body: Faker::Lorem.characters(number: 10),
+      video_id: video.to_param, # this actually comes from the URL
     }
   }
 
@@ -27,19 +25,11 @@ describe ChatMessagesController, type: :controller do
     end
 
     it "should not create message as 'body' is not present" do
-      post :create, params: {chat_message: {video_id: video.id}}
+      post :create, params: {video_id: video.to_param}
 
       body = JSON.parse(response.body)
       expect(response).to have_http_status(200)
       expect(body["error_messages"][0]).to eq("Body can't be blank")
-    end
-
-    it "should not create message as 'video_id' is not present" do
-      post :create, params: {chat_message: {body: Faker::Lorem.characters(number: 10)}}
-
-      body = JSON.parse(response.body)
-      expect(response).to have_http_status(200)
-      expect(body["error_messages"][0]).to eq("Video must exist")
     end
   end
 
@@ -51,8 +41,8 @@ describe ChatMessagesController, type: :controller do
 
     it "should broadcast message on channel" do
       expect { post :create, params: chat_message_params }.to(
-        have_broadcasted_to("live_video_#{video.id}").with(
-          text: chat_message_params[:chat_message][:body],
+        have_broadcasted_to("live_video_#{video.to_param}").with(
+          text: chat_message_params[:body],
           user_id: user.id,
           user_name: user.username.capitalize,
         ),

@@ -1,7 +1,7 @@
-.chat-section{ "data-controller": "chat", "data-chat-video-id": video.id, "data-chat-user": current_user_id, "data-chat-last-user": "" }
+.chat-section{ "data-controller": "chat", "data-chat-user": current_user_id, "data-chat-video-id": video.to_param }
   .account-header
     .comment-section
-      .comment-grid.p-1.layout-container-scrollable{ id: "live-chat-#{video.id}", "data-target": "chat.chatMessages" }
+      .comment-grid.p-1.layout-container-scrollable{ id: "live-chat", "data-target": "chat.chatMessages" }
         - video.chat_messages.each do |message|
           - if user_signed_in? && current_user.id == message.user_id
             .message-right
@@ -22,8 +22,6 @@
                   = message.body
           - @last_user = message.user
   - if user_signed_in?
-    = form_for ChatMessage.new, remote: true, html: { class: 'chat-form' }, data: { target: "chat.chatForm" } do |f|
-      .message-write
-        .write-area
-          = f.hidden_field :video_id, value: video.id
-          = f.text_area :body, class: 'write-area__text w-full outline-none', placeholder: 'Write your message...', data: { target: "chat.messageInput" }
+    .message-write
+      .write-area
+        = text_area_tag :body, "", class: 'write-area__text w-full outline-none', placeholder: 'Write your message...', data: { action: "keydown->chat#chatBoxKeyDown" }
