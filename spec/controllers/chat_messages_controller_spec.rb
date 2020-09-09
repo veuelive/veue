@@ -8,7 +8,7 @@ describe ChatMessagesController, type: :controller do
   let(:chat_message_params) {
     {
       body: Faker::Lorem.characters(number: 10),
-      video_id: video.to_param, # this actually comes from the URL
+      video_id: video.to_param,
     }
   }
 
