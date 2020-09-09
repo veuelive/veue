@@ -1,4 +1,5 @@
 = form_for(resource, as: resource_name, url: session_path(resource_name), remote: remote, data: { action: "ajax:success->authentication#formResponse" }) do |f|
+  .error-area{ "data-target": "authentication.errorArea"}
   .field
     = f.label :email
     %br

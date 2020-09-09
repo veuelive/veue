@@ -23,7 +23,7 @@
   }
   .login-modal {
     right: 8rem;
-    &:after {
+    &:before {
       content: "";
       position: absolute;
       top: -0.51rem;
@@ -37,7 +37,7 @@
   }
   .signup-modal {
     right: 3rem;
-    &:after {
+    &:before {
       content: "";
       position: absolute;
       top: -0.51rem;
@@ -53,6 +53,19 @@
     color: color.$purple;
     margin-bottom: 0.5rem;
     font-size: 1.2rem;
+  }
+  .error-area {
+    ul {
+      color: color.$red-medium;
+      display: block;
+      li {
+        max-width: 265px;
+      }
+    }
+  }
+  .form-area {
+    max-height: 435px;
+    overflow-y: scroll;
   }
   form {
     label,
