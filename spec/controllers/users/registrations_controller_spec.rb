@@ -29,7 +29,6 @@ describe Users::RegistrationsController, type: :controller do
         user: {
           username: Faker::Internet.unique.username,
           email: Faker::Internet.unique.email,
-          confirmed_at: 5.days.ago,
           password: "mohawk",
           password_confirmation: "mohawk",
         },
@@ -41,7 +40,6 @@ describe Users::RegistrationsController, type: :controller do
         user: {
           username: Faker::Internet.unique.username,
           email: Faker::Internet.unique.email,
-          confirmed_at: 5.days.ago,
           password: "",
           password_confirmation: "",
         },
