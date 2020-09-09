@@ -1,9 +1,6 @@
-import { Controller } from "stimulus";
-import Rails from "@rails/ujs";
+import BaseController from "./base_controller";
 
-import AuthObserver from "../shared/helpers/authObserver";
-
-export default class extends Controller {
+export default class extends BaseController {
   static targets = [
     "listArea",
     "modal",
@@ -25,36 +22,33 @@ export default class extends Controller {
   readonly hasErrorAreaTarget: boolean;
 
   private target: string;
-  private authObj: AuthObserver;
   private userSignedIn: boolean;
   private videoId: number;
 
-  connect() {
+  connect(): void {
     this.videoId = parseInt(this.data.get("videoId"));
   }
 
-  async getHtmlContent(event) {
-    this.target = event.target.dataset.authTarget;
+  async getHtmlContent(event: Event): Promise<void> {
+    const eventTarget = event.target as HTMLElement;
+    this.target = eventTarget.dataset.authTarget;
     const url =
       this.target === "login" ? "/users/sign_in.js" : "/users/sign_up.js";
-    const res = await Rails.ajax({
-      type: "get",
-      url,
-      success: (response) => this.createModal(response, this.target),
-    });
+    const response = await fetch(url);
+    this.createModal(response, this.target);
   }
 
-  createModal(response, target) {
+  createModal(response: Response, target: string): void {
     this.modalLabelTarget.innerHTML =
       target === "login" ? "Sign in to Veue" : "Create Account Veue";
     document.body.style.overflowY = "hidden";
 
     this.modalTarget.style.display = "block";
     this.modalContentTarget.classList.add(`${target}-modal`);
-    this.formAreaTarget.innerHTML = response;
+    response.text().then((text) => (this.formAreaTarget.innerHTML = text));
   }
 
-  hideModal(event) {
+  hideModal(event: Event): void {
     if (event.target === this.modalTarget) {
       event.preventDefault();
       this.modalTarget.style.display = "none";
@@ -64,7 +58,7 @@ export default class extends Controller {
     }
   }
 
-  formResponse(event) {
+  formResponse(event: CustomEvent): void {
     const response = event.detail;
     console.log("response", response[0].includes("error-messages"));
     document.body.style.overflowY = "auto";
@@ -75,21 +69,16 @@ export default class extends Controller {
     }
   }
 
-  signoutUserHandler(event) {
+  signoutUserHandler(event: CustomEvent): void {
     const response = event.detail;
     this.appendResponse(response[0], false);
   }
 
-  appendResponse(response, userSignedIn) {
-    this.listAreaTarget.innerHTML = response;
-    this.userSignedIn = userSignedIn;
-    if (this.videoId) {
-      this.authObj = new AuthObserver(
-        this.listAreaTarget,
-        this.userSignedIn,
-        this.videoId
-      );
-      this.authObj.dispatchAuth();
-    }
+  appendResponse(response: Response, userSignedIn: boolean): void {
+    response.text().then((text) => {
+      this.listAreaTarget.innerHTML = text;
+      this.userSignedIn = userSignedIn;
+      this.emitAuthChange();
+    });
   }
 }

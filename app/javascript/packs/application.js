@@ -4,8 +4,9 @@ ujs.start();
 import Turbolinks from "turbolinks";
 Turbolinks.start();
 
-import ActiveStorage from "@rails/activestorage";
-ActiveStorage.start();
+// import ActiveStorage from "@rails/activestorage";
+// ActiveStorage.start();
+
 // Load our SCSS
 import "../style/application.scss";
 

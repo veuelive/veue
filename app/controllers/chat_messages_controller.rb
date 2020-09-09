@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class ChatMessagesController < ApplicationController
-  before_action :set_video, only: [:show]
-  before_action :messages_params, only: [:create]
+  before_action :set_video
   before_action :authenticate_user!, only: [:create]
 
   def create
@@ -16,7 +15,7 @@ class ChatMessagesController < ApplicationController
     render(json: {success: true})
   end
 
-  def show
+  def index
     respond_to do |format|
       format.js {
         render(
@@ -31,14 +30,13 @@ class ChatMessagesController < ApplicationController
   private
 
   def build_chat_message
-    current_user.chat_messages.new(messages_params)
-  end
-
-  def messages_params
-    params.require(:chat_message).permit(:body, :video_id)
+    current_user.chat_messages.new(
+      body: params[:body],
+      video: @video,
+    )
   end
 
   def set_video
-    @video = Video.find_by(id: params[:video_id])
+    @video = Video.find_by(slug: params[:video_id])
   end
 end

@@ -5,10 +5,9 @@ Rails.application.routes.draw do
     collection do
       get "broadcast"
     end
-  end
 
-  resources :chat_messages, only: [:create]
-  resource :chat_message, only: [:show]
+    resources :chat_messages, only: [:create, :index]
+  end
 
   post "/mux/webhook", to: "mux_webhooks#index"
 

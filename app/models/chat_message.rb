@@ -12,7 +12,7 @@ class ChatMessage < ApplicationRecord
 
   def broadcast_message
     ActionCable.server.broadcast(
-      "live_video_#{video_id}",
+      "live_video_#{video.to_param}",
       {
         text: body,
         user_id: user.id,
