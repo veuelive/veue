@@ -21,7 +21,7 @@ module Users
         }
 
         format.js {
-          render(partial: "layouts/nav/user_area", content_type: "html")
+          render_partial
         }
       end
     end
@@ -52,6 +52,14 @@ module Users
       )
     end
 
+    def render_partial
+      if resource
+        render(partial: "layouts/nav/user_area", content_type: "html")
+      else
+        render(partial: "shared/errors", locals: {errors: ["Invalid Username or Password"]}, content_type: "html")
+      end
+    end
+
     def build_resource
       self.resource = resource_class.new(sign_in_params)
       clean_up_passwords(resource)
@@ -59,7 +67,9 @@ module Users
     end
 
     def create_resource
-      self.resource = warden.authenticate!(auth_options)
+      self.resource = warden.authenticate(auth_options)
+      return if resource.blank?
+
       sign_in(resource_name, resource)
       yield(resource) if block_given?
     end

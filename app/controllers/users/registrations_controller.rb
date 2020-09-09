@@ -17,26 +17,29 @@ module Users
       respond_to do |format|
         format.html { super }
         format.js {
-          create_user
-          render_js_response
+          build_resource(sign_up_params)
+          return_js_response
         }
       end
     end
 
     private
 
-    def create_user
-      build_resource(sign_up_params)
-      resource.save!
-    end
-
-    def render_js_response
+    def return_js_response
       if resource.persisted?
         sign_up(resource_name, resource)
       else
         expire_data_after_sign_in!
       end
-      render(partial: "layouts/nav/user_area", content_type: "html")
+      render_partial
+    end
+
+    def render_partial
+      if resource.save
+        render(partial: "layouts/nav/user_area", content_type: "html")
+      else
+        render(partial: "shared/errors", locals: {errors: resource.errors.full_messages}, content_type: "html")
+      end
     end
 
     def render_form
