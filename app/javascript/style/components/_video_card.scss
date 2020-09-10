@@ -1,0 +1,32 @@
+@use "../utils/scale";
+
+$screenshot_height_scalable: 5vw;
+$screenshot_height_fixed: 150px;
+$screenshot_width_scalable: $screenshot_height_scalable / scale.$video_ratio;
+$screenshot_width_fixed: $screenshot_height_fixed / scale.$video_ratio;
+
+$person_height_scalable: 1vw;
+$person_height_fixed: 50px;
+$person_width_scalable: $person_height_scalable / scale.$video_ratio;
+$person_width_fixed: $person_height_fixed / scale.$video_ratio;
+
+.video-card {
+  max-width: 80vw;
+  max-height: 80vh;
+  padding: 1em;
+  &__screenshot {
+    height: calc(#{$screenshot_height_scalable} + #{$screenshot_height_fixed});
+    overflow: hidden;
+    img {
+      width: calc(#{$screenshot_width_scalable} + #{$screenshot_width_fixed});
+    }
+  }
+
+  &__below {
+    display: flex;
+    flex-direction: row;
+    &__info {
+      flex: 1;
+    }
+  }
+}

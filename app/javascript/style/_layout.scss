@@ -10,13 +10,13 @@ $rounded-corners: 20px;
   margin: auto;
   border: 1px solid #e2e3e7;
   border-radius: $rounded-corners;
-  //align-items: stretch;
 
   #main-container {
     display: flex;
     padding: 0 2rem 2rem 2rem;
 
     .content-area {
+      flex: 1;
       display: flex;
       flex-direction: row;
 

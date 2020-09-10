@@ -6,7 +6,8 @@ class VideosController < ApplicationController
 
   # GET /videos
   def index
-    @videos = Video.all.decorate
+    @live_videos = Video.live.all.decorate
+    @recent_videos = Video.finished.all.decorate
   end
 
   # GET /videos/1

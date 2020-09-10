@@ -1,9 +1,10 @@
-%h1 Listing videos
 
-.videos
-  - @videos.each do |video|
-    .video
-      = link_to video_path(video) do
-        = image_tag video.thumbnail_url
+.content-area
+  - if @live_videos.any?
+    %h2 Live Videos!
+    .live-videos
+      = render collection: @live_videos, partial: "videos/video_card"
 
-%br
+  %h2 Recent Videos
+  .videos
+    = render collection: @recent_videos, partial: "videos/video_card"
