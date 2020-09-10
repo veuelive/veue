@@ -1,0 +1,8 @@
+- video = video_card
+.video-card{class: video.state}
+  = link_to video_path(video) do
+    .video-card__screenshot
+      = image_tag video.thumbnail_url
+  .video-card__below
+    .video-card__below__info
+      = video.user.username

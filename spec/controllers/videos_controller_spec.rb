@@ -6,16 +6,20 @@ describe VideosController do
   render_views
 
   before :example do
-    @videos = create_list(:video, 5)
+    @videos = create_list(:video, 5, {state: :finished})
     @video = @videos.first
+    @pending_video = create(:video, {state: :pending})
+    @live_video = create(:video, {state: :live})
   end
 
   describe "index" do
     it "render links to the videos" do
       get :index
-      expect(assigns(:videos)).to include(@video)
-
       expect(response.body).to include(video_path(@video))
+      expect(response.body).to include(video_path(@live_video))
+
+      # Don't show videos in non-visible states
+      expect(response.body).to_not include(video_path(@pending_video))
 
       expect(response).to have_http_status(:ok)
     end
