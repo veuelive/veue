@@ -9,6 +9,12 @@ Rails.application.routes.draw do
     resources :chat_messages, only: [:create, :index]
   end
 
+  resource :broadcast do
+    member do
+      get "blank"
+    end
+  end
+
   post "/mux/webhook", to: "mux_webhooks#index"
 
   devise_for :users, controllers: {sessions: "users/sessions", registrations: "users/registrations"}

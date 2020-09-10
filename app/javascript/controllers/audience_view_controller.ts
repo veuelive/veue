@@ -35,7 +35,7 @@ export default class extends Controller {
     );
 
     this.videoTarget.addEventListener("loadedmetadata", async () => {
-      await this.videoTarget.play();
+      await this.togglePlay();
     });
 
     const hls = new Hls({
