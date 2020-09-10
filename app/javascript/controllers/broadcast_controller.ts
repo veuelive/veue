@@ -1,10 +1,12 @@
 import { Controller } from "stimulus";
 
-export default class extends Controller {
-  static targets = ["debugCanvas"];
-  private debugCanvasTarget!: CaptureStreamCanvas;
+type BroadcastState = "loading" | "ready" | "live" | "failed";
 
-  private webcamVideoElement: HTMLVideoElement;
+export default class extends Controller {
+  static targets = ["debugCanvas", "webcamVideoElement"];
+  private debugCanvasTarget!: CaptureStreamCanvas;
+  private webcamVideoElementTarget!: HTMLVideoElement;
+
   private browserVideoElement: HTMLVideoElement;
 
   private debugCanvasContext: CanvasRenderingContext2D;
@@ -12,28 +14,66 @@ export default class extends Controller {
   private mediaRecorder: MediaRecorder;
   private ipcRenderer: IPCRenderer;
   private browserDimensions: Rectangle;
-  private workArea: Rectangle;
 
   connect(): void {
+    this.state = "loading";
+
     // This should only ever run in the Electron App!
     const { ipcRenderer } = eval("require('electron')");
     this.ipcRenderer = ipcRenderer;
 
-    this.webcamVideoElement = document.createElement("video");
     this.browserVideoElement = document.createElement("video");
 
     this.debugCanvasContext = this.debugCanvasTarget.getContext("2d");
 
     this.startWebcamCapture();
 
+    ipcRenderer.send("wakeup");
+
     ipcRenderer.on(
       "visible",
-      async (_, dimensions: Rectangle, workArea: Rectangle) => {
-        this.browserDimensions = dimensions;
-        this.workArea = workArea;
-        this.startBrowserCapture().then(() => this.startStreaming());
+      async (
+        _,
+        dimensions: Rectangle,
+        workArea: Rectangle,
+        windowSize: Rectangle,
+        windowTitle: string
+      ) => {
+        const yRatio = workArea.height / windowSize.height;
+        const xRatio = workArea.width / windowSize.width;
+
+        this.browserDimensions = {
+          height: (dimensions.height - dimensions.x) * yRatio,
+          width: (dimensions.width - dimensions.x) * yRatio,
+          x: dimensions.x * xRatio,
+          y: (dimensions.y + workArea.y) * yRatio,
+        };
+
+        console.log("Window title is " + windowTitle);
+        this.startBrowserCapture(windowTitle).then(() => {
+          console.log("ready!");
+          this.state = "ready";
+        });
       }
     );
+
+    ipcRenderer.on("stop", () => {
+      this.state = "failed";
+      this.mediaRecorder.stop();
+    });
+  }
+
+  set state(state: BroadcastState) {
+    const broadcastElement = document.getElementById("broadcast");
+    broadcastElement.className = "";
+    broadcastElement.className = "state-" + state;
+
+    // Hide all elements that shouldn't be visible in this state!
+    document
+      .querySelectorAll("*[data-showOnState]")
+      .forEach((element: HTMLElement) => {
+        element.hidden = element.dataset.showonstate !== state;
+      });
   }
 
   private startWebcamCapture() {
@@ -47,9 +87,9 @@ export default class extends Controller {
       })
       .then((mediaStream) => {
         console.log("webcam", mediaStream);
-        this.webcamVideoElement.srcObject = mediaStream;
+        this.webcamVideoElementTarget.srcObject = mediaStream;
         this.audioTrack = mediaStream.getAudioTracks()[0];
-        this.webcamVideoElement.play().then(() => {
+        this.webcamVideoElementTarget.play().then(() => {
           this.timerCallback();
         });
       })
@@ -59,6 +99,7 @@ export default class extends Controller {
   }
 
   startStreaming(): void {
+    this.state = "loading";
     const mediaStream = this.debugCanvasTarget.captureStream(60);
     mediaStream.addTrack(this.audioTrack);
     this.mediaRecorder = new MediaRecorder(mediaStream, {
@@ -79,15 +120,16 @@ export default class extends Controller {
     });
 
     this.mediaRecorder.start(1000);
+    this.state = "live";
   }
 
-  private async startBrowserCapture() {
+  private async startBrowserCapture(windowTitle: string) {
     const capturer = eval("require('electron').desktopCapturer");
     let source;
 
     while (!source) {
       const sources = await capturer.getSources({ types: ["window"] });
-      source = sources.find((source) => source.name === "Veue");
+      source = sources.find((source) => source.name === windowTitle);
     }
 
     const mediaStream = await navigator.mediaDevices.getUserMedia({
@@ -104,18 +146,7 @@ export default class extends Controller {
     this.browserVideoElement.addEventListener("loadedmetadata", () => {
       this.browserVideoElement.play();
 
-      // const ratio = this.workArea.width / this.browserVideoElement.videoWidth
-      // const y = (this.browserDimensions.y - this.workArea.y) * ratio
-      // const x = this.browserDimensions.x  * ratio
-      // const width = this.browserDimensions.width * ratio
-      // const height = this.browserDimensions.height * ratio
-
-      //     // Override the values
-      // this.browserDimensions = {
-      //     x, y, width, height
-      // }
-
-      // console.log(ratio)
+      console.log(this.browserDimensions);
 
       console.log("browser", mediaStream);
 
@@ -133,15 +164,18 @@ export default class extends Controller {
   }
 
   private computeFrame() {
-    this.debugCanvasContext.drawImage(this.webcamVideoElement, 0, 800);
+    this.debugCanvasContext.rect(0, 0, 1280, 1280);
+    this.debugCanvasContext.fillStyle = "green";
+    this.debugCanvasContext.fill();
+    this.debugCanvasContext.drawImage(this.webcamVideoElementTarget, 0, 800);
 
     if (this.browserDimensions) {
       this.debugCanvasContext.drawImage(
         this.browserVideoElement,
-        this.browserDimensions.x + 10,
-        this.browserDimensions.y + this.workArea.y + 30,
-        this.browserDimensions.width + 250,
-        this.browserDimensions.height + 160,
+        this.browserDimensions.x,
+        this.browserDimensions.y,
+        this.browserDimensions.width,
+        this.browserDimensions.height,
         0,
         0,
         1280,

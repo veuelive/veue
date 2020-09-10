@@ -1,0 +1,105 @@
+// This is the broadcast layout... which is different than the main website!
+
+@use "../utils/color";
+
+body {
+  margin: 0;
+  height: 100vh;
+  width: 100%;
+}
+
+#broadcast {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+
+  .content--left {
+    width: 1300px;
+    height: 100%;
+
+    .video-bar {
+      margin: 0 auto;
+      height: 4.375rem;
+      background-color: color.$white;
+      box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
+      display: flex;
+      align-items: center;
+      padding-left: 1em;
+
+      justify-content: space-between;
+      border-top-left-radius: 0.625rem;
+      border-top-right-radius: 0.625rem;
+      &__address {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        height: 2.375rem;
+        padding-right: 1em;
+        border: 1px solid color.$gray-light;
+        border-radius: 0.625rem;
+        position: relative;
+        input {
+          border: none;
+          outline: none;
+          width: 100%;
+          padding-left: 1.2rem;
+          font-size: 1rem;
+          background-color: color.$white;
+          color: color.$gray-dark-2;
+        }
+      }
+      &__button {
+      }
+    }
+    .time-area {
+      padding: 0.6875rem 1.125rem;
+      border: none;
+      border-radius: 0.9375rem;
+      margin-right: 0.4375rem;
+      font-weight: 600;
+    }
+    .time-red {
+      background-color: color.$red-light;
+      color: color.$red-medium;
+      .dot {
+        background-color: color.$red-medium;
+      }
+    }
+    .time-gray {
+      background-color: color.$gray-light;
+      color: color.$gray-dark-1;
+      .dot {
+        background-color: color.$gray-dark-1;
+      }
+    }
+    .time-dot {
+      width: 0.4375rem;
+      height: 0.4375rem;
+      display: inline-block;
+      border-radius: 0.4375rem;
+      vertical-align: middle;
+    }
+  }
+  .content--right {
+    width: 400px;
+    padding: 5px;
+
+    #webcam_preview {
+      width: 400px;
+      height: 300px;
+    }
+
+    .debug-area {
+      width: 100%;
+      #debug_canvas {
+        width: 400px;
+        height: 400px;
+      }
+
+      video {
+        width: 100%;
+      }
+    }
+  }
+}
