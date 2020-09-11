@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 
 class BroadcastsController < ApplicationController
   before_action :authenticate_user!
@@ -8,10 +8,6 @@ class BroadcastsController < ApplicationController
   end
 
   def blank
-    render(html: %|<html><body style='background: blue; border: 2px solid red; margin: 0'>
-<img src='https://upload.wikimedia.org/wikipedia/commons/c/c4/PM5544_with_non-PAL_signals.png'
-style="width: 100%; height: 100%;"/>
-</body></html>
-|.html_safe)
+    render(layout: false)
   end
 end

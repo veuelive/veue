@@ -1,4 +1,5 @@
 import { Controller } from "stimulus";
+import { IPCRenderer } from "util/ipc_renderer";
 
 type BroadcastState = "loading" | "ready" | "live" | "failed";
 
@@ -191,10 +192,6 @@ interface Rectangle {
   width: number;
   height: number;
 }
-
-type IPCRenderer = {
-  send(channel: string, ...args);
-};
 
 interface CaptureStreamCanvas extends HTMLCanvasElement {
   captureStream(fps: number): MediaStream;
