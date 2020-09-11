@@ -1,9 +1,10 @@
 import { Controller } from "stimulus";
+import { IPCRenderer } from "util/ipc_renderer";
 
 export default class extends Controller {
   static targets = ["addressBar"];
   private addressBarTarget!: HTMLInputElement;
-  private ipcRenderer: any;
+  private ipcRenderer: IPCRenderer;
   private browserViewListener: (name, event, second) => void;
 
   connect(): void {
