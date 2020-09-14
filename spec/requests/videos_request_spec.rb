@@ -2,9 +2,7 @@
 
 require "rails_helper"
 
-describe VideosController do
-  render_views
-
+describe "Videos" do
   before :example do
     @videos = create_list(:video, 5, {state: :finished})
     @video = @videos.first
@@ -14,7 +12,7 @@ describe VideosController do
 
   describe "index" do
     it "render links to the videos" do
-      get :index
+      get videos_path
       expect(response.body).to include(video_path(@video))
       expect(response.body).to include(video_path(@live_video))
 
@@ -27,7 +25,7 @@ describe VideosController do
 
   describe "show by id" do
     it "should render the video by id" do
-      get :show, params: {id: @video}
+      get video_path(@video)
 
       expect(response).to have_http_status(:ok)
     end
@@ -37,14 +35,14 @@ describe VideosController do
     let(:video_obj) { create(:video) }
 
     it "should render the video by slug" do
-      get :show, params: {id: @video}
+      get video_path(@video)
 
       expect(response).to have_http_status(:ok)
     end
 
     it "should render video even if slug not present" do
       video_obj.update!(slug: "")
-      get :show, params: {id: video_obj}
+      get video_path(video_obj)
 
       expect(response).to have_http_status(:ok)
     end

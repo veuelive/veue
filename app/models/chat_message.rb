@@ -16,7 +16,7 @@ class ChatMessage < ApplicationRecord
       {
         text: body,
         user_id: user.id,
-        user_name: user.username.capitalize,
+        user_name: user.display_name,
       },
     )
   end

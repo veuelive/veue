@@ -23,8 +23,14 @@ gem "redis"
 # Background Job Running Library for ActiveJob
 gem "sidekiq"
 
-# Used for our user authentication stack
-gem "devise"
+# Used for encrypting our Active Record attributes
+gem "lockbox"
+
+# Allows for searching of encrypted fields
+gem "blind_index"
+
+# Used for parsing phone numbers
+gem "phone"
 
 # Powers our templates
 gem "haml-rails"

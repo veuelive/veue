@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_27_150154) do
+ActiveRecord::Schema.define(version: 2020_09_11_155206) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,32 +27,6 @@ ActiveRecord::Schema.define(version: 2020_08_27_150154) do
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
-  end
-
-  create_table "admins", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet "current_sign_in_ip"
-    t.inet "last_sign_in_ip"
-    t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string "unconfirmed_email"
-    t.integer "failed_attempts", default: 0, null: false
-    t.string "unlock_token"
-    t.datetime "locked_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["confirmation_token"], name: "index_admins_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_admins_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
-    t.index ["unlock_token"], name: "index_admins_on_unlock_token", unique: true
   end
 
   create_table "chat_messages", force: :cascade do |t|
@@ -114,36 +88,38 @@ ActiveRecord::Schema.define(version: 2020_08_27_150154) do
     t.index ["mux_target_type", "mux_target_id"], name: "index_mux_webhooks_on_mux_target_type_and_mux_target_id"
   end
 
+  create_table "user_login_attempts", force: :cascade do |t|
+    t.text "phone_number_ciphertext"
+    t.string "phone_number_bidx"
+    t.bigint "user_id"
+    t.text "secret_code_ciphertext"
+    t.text "session_uuid_ciphertext"
+    t.string "session_uuid_bidx"
+    t.string "state"
+    t.inet "ip_address"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ip_address"], name: "index_user_login_attempts_on_ip_address"
+    t.index ["phone_number_bidx"], name: "index_user_login_attempts_on_phone_number_bidx"
+    t.index ["session_uuid_bidx"], name: "index_user_login_attempts_on_session_uuid_bidx"
+    t.index ["state"], name: "index_user_login_attempts_on_state"
+    t.index ["user_id"], name: "index_user_login_attempts_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
-    t.string "username"
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
-    t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string "unconfirmed_email"
     t.integer "failed_attempts", default: 0, null: false
-    t.string "unlock_token"
-    t.datetime "locked_at"
     t.bigint "mux_live_stream_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "first_name"
-    t.string "last_name"
-    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.text "phone_number_ciphertext", null: false
+    t.string "phone_number_bidx"
+    t.string "phone_number_country", limit: 3
+    t.string "display_name"
+    t.string "state"
+    t.string "username"
     t.index ["mux_live_stream_id"], name: "index_users_on_mux_live_stream_id"
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
-    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
   create_table "videos", force: :cascade do |t|

@@ -40,6 +40,6 @@
   "lint-staged": {
     "*.{js,ts}": "eslint --cache --fix",
     "*.{js,css,md,ts,scss,sass,json}": "prettier --write",
-    "*.rb": "./bin/rubocop -A"
+    "{app,spec,config}/*.rb": "./bin/rubocop -A"
   }
 }

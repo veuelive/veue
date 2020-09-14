@@ -26,6 +26,8 @@ RSpec.describe MuxLiveStream, type: :model do
 
       expect(@mux_service).to receive(:create_live_stream).and_return(mux_response)
 
+      @user.username = Faker::Internet.username
+
       # Okay, let's do it!
       @user.setup_as_streamer!
 

@@ -5,7 +5,7 @@ FactoryBot.define do
     mux_id { Faker::Alphanumeric.unique.alphanumeric(number: 46) }
     mux_playback_id { Faker::Alphanumeric.unique.alphanumeric(number: 46) }
     stream_key { Faker::Alphanumeric.alphanumeric(number: 20) }
-    user { association :user }
+    user
     mux_status { "idle" }
   end
 end
