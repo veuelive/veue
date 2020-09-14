@@ -3,7 +3,7 @@
 module AuthenticationTestHelpers
   module RequestHelpers
     def login_as(user=nil)
-      phone_number = user ? user.phone_number : Faker::PhoneNumber.phone_number_with_country_code
+      phone_number = user ? user.phone_number : PhoneTestHelpers.generate_valid
       session_token = SessionToken.create!(phone_number: phone_number)
       expect(session_token).to be_valid
       session_token.sent_code!
