@@ -1,84 +1,72 @@
 import BaseController from "./base_controller";
+import * as IntlTelInput from "intl-tel-input";
+import "intl-tel-input/build/css/intlTelInput.min.css";
+import { postForm, secureFormFetch } from "util/fetch";
 
 export default class extends BaseController {
-  static targets = [
-    "listArea",
-    "modal",
-    "modalContent",
-    "modalLabel",
-    "errorArea",
-    "formArea",
-  ];
+  static targets = ["modal", "submitButton"];
 
-  readonly listAreaTarget!: HTMLElement;
   readonly modalTarget!: HTMLElement;
-  readonly modalContentTarget!: HTMLElement;
-  readonly modalLabelTarget!: HTMLElement;
-  readonly formAreaTarget!: HTMLElement;
-  readonly errorAreaTarget!: HTMLElement;
-  // boolean members for checking if targets present?
-  readonly hasModalTarget: boolean;
-  readonly hasModalLabelTarget: boolean;
-  readonly hasErrorAreaTarget: boolean;
-
-  private target: string;
-  private userSignedIn: boolean;
-  private videoId: number;
+  readonly submitButtonTarget!: HTMLButtonElement;
+  private iti: IntlTelInput.Plugin;
 
   connect(): void {
-    this.videoId = parseInt(this.data.get("videoId"));
+    this.attachPhoneNumberField();
   }
 
-  async getHtmlContent(event: Event): Promise<void> {
-    const eventTarget = event.target as HTMLElement;
-    this.target = eventTarget.dataset.authTarget;
-    const url =
-      this.target === "login" ? "/users/sign_in.js" : "/users/sign_up.js";
-    const response = await fetch(url);
-    this.createModal(response, this.target);
+  /**
+   * This takes the normal <input> field and makes it extra spicy and nice!
+   */
+  attachPhoneNumberField() {
+    const phoneInputElement = this.modalTarget.querySelector(
+      "input[type='tel']"
+    );
+    console.log(phoneInputElement);
+    if (phoneInputElement) {
+      this.iti = IntlTelInput(phoneInputElement, {
+        utilsScript:
+          "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.min.js",
+        hiddenInput: "phone_number",
+      });
+      this.validatePhone();
+    }
   }
 
-  createModal(response: Response, target: string): void {
-    this.modalLabelTarget.innerHTML =
-      target === "login" ? "Sign in to Veue" : "Create Account Veue";
-    document.body.style.overflowY = "hidden";
-
+  showModal(): void {
     this.modalTarget.style.display = "block";
-    this.modalContentTarget.classList.add(`${target}-modal`);
-    response.text().then((text) => (this.formAreaTarget.innerHTML = text));
+  }
+
+  validatePhone(): void {
+    if (this.iti.isValidNumber()) {
+      this.submitButtonTarget.disabled = false;
+    } else {
+      this.submitButtonTarget.disabled = true;
+    }
   }
 
   hideModal(event: Event): void {
-    if (event.target === this.modalTarget) {
-      event.preventDefault();
+    // This might be a click from any of the children of the modal
+    // and we want to only hit the full page direct modal area
+    const target = event.target as HTMLElement;
+    if (target && target.className && target.className === "modal-skirt") {
       this.modalTarget.style.display = "none";
-      document.body.style.overflowY = "auto";
-      this.errorAreaTarget.innerHTML = "";
-      this.modalContentTarget.classList.remove(`${this.target}-modal`);
     }
   }
 
-  formResponse(event: CustomEvent): void {
-    const response = event.detail;
-    console.log("response", response[0].includes("error-messages"));
-    document.body.style.overflowY = "auto";
-    if (response[0].includes("error-messages")) {
-      this.errorAreaTarget.innerHTML = response[0];
-    } else {
-      this.appendResponse(response[0], true);
+  async doSubmit(event: Event): Promise<void> {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const response = await secureFormFetch(
+      form.dataset.url,
+      form.dataset.method,
+      form
+    );
+    const html = await response.text();
+    if (response.status == 202) {
+      document.querySelector(".top-navbar").outerHTML = html;
+    } else if (response.status == 200) {
+      this.modalTarget.outerHTML = html;
+      this.attachPhoneNumberField();
     }
-  }
-
-  signoutUserHandler(event: CustomEvent): void {
-    const response = event.detail;
-    this.appendResponse(response[0], false);
-  }
-
-  appendResponse(response: Response, userSignedIn: boolean): void {
-    response.text().then((text) => {
-      this.listAreaTarget.innerHTML = text;
-      this.userSignedIn = userSignedIn;
-      this.emitAuthChange();
-    });
   }
 }

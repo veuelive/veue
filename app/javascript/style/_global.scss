@@ -1,5 +1,25 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto");
+@use "utils/color";
+@use "utils/font";
 
-body {
-  font-family: "Roboto", Helvetica, Sans-Serif, serif;
+body,
+* {
+  font-family: font.$nunito;
+}
+
+button {
+  background: color.$cornflower;
+  color: color.$white;
+  font-family: font.$roboto;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  font-size: 1rem;
+  border: 0px;
+  &:disabled {
+    color: color.$gray-bluish;
+  }
+}
+
+input[type="text"],
+input[type="tel"] {
+  font-size: 1.4rem;
 }

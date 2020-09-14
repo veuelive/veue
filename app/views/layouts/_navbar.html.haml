@@ -2,6 +2,5 @@
   .navbar-link
     .navbar-logo
       = image_tag 'main-logo', alt: 'Logo'
-  #authentication{ "data-controller": "authentication", "data-authentication-video-id": current_video_id }
-    .status-user{ "data-target": "authentication.listArea" }
-      = render partial: 'layouts/nav/user_area'
+  .status-user
+    = render partial: 'layouts/nav/user_area'

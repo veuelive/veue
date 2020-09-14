@@ -93,16 +93,16 @@ ActiveRecord::Schema.define(version: 2020_09_11_155206) do
     t.string "phone_number_bidx"
     t.bigint "user_id"
     t.text "secret_code_ciphertext"
-    t.text "session_uuid_ciphertext"
-    t.string "session_uuid_bidx"
+    t.text "ula_uuid_ciphertext"
+    t.string "ula_uuid_bidx"
     t.string "state"
     t.inet "ip_address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["ip_address"], name: "index_user_login_attempts_on_ip_address"
     t.index ["phone_number_bidx"], name: "index_user_login_attempts_on_phone_number_bidx"
-    t.index ["session_uuid_bidx"], name: "index_user_login_attempts_on_session_uuid_bidx"
     t.index ["state"], name: "index_user_login_attempts_on_state"
+    t.index ["ula_uuid_bidx"], name: "index_user_login_attempts_on_ula_uuid_bidx"
     t.index ["user_id"], name: "index_user_login_attempts_on_user_id"
   end
 

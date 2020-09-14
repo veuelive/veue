@@ -3,15 +3,16 @@
 class UserLoginAttempt < ApplicationRecord
   belongs_to :user, optional: true
 
-  validates :phone_number, phone_number: true
+  validates :phone_number, phone_number: true, presence: true
 
   encrypts :secret_code
   encrypts :phone_number
   blind_index :phone_number
-  encrypts :session_uuid
-  blind_index :session_uuid
+  encrypts :ula_uuid
+  blind_index :ula_uuid
 
   before_create :setup_secrets!
+  before_create :lookup_user!
   before_validation :copy_phone_if_user
   after_create :send_sms_message!
 
@@ -42,7 +43,7 @@ class UserLoginAttempt < ApplicationRecord
   def setup_secrets!
     # You might be wondering why the numbers below aren't 0..9999... well, check out the doc Authentication Strategy
     self.secret_code = SecureRandom.rand(1982..9820)
-    self.session_uuid = SecureRandom.uuid
+    self.ula_uuid = SecureRandom.uuid
   end
 
   def send_sms_message!
@@ -62,8 +63,9 @@ class UserLoginAttempt < ApplicationRecord
   def create_user(display_name)
     return if user
 
-    self.user = User.new(phone_number: phone_number, display_name: display_name)
-    save!
+    self.user = User.create(phone_number: phone_number, display_name: display_name)
+    self.save!
+    user
   end
 
   private
@@ -71,5 +73,9 @@ class UserLoginAttempt < ApplicationRecord
   # If we are just being created and have a USER, but no PHONE NUMBER, then use the users phone number!
   def copy_phone_if_user
     self.phone_number = user.phone_number if user && !phone_number
+  end
+
+  def lookup_user!
+    self.user = User.find_by(phone_number: phone_number)
   end
 end

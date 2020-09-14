@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get "users/create"
   resources :videos, only: %i[index show new] do
     collection do
       get "broadcast"
@@ -17,7 +18,13 @@ Rails.application.routes.draw do
 
   post "/mux/webhook", to: "mux_webhooks#index"
 
-  resource :authentication
+  resource :authentication do
+    member do
+      post :override
+    end
+  end
+
+  resources :users
 
   post "/mux/webhook", to: "mux_webhooks#index"
 

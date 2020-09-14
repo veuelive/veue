@@ -23,16 +23,16 @@
     }
   }
 
-  ul {
+  > ul {
     margin: 0;
     padding: 0.625rem 0 0.625rem 0;
     display: flex;
     align-items: center;
     cursor: pointer;
-    li {
+    > li {
       margin-right: 1rem;
       list-style-type: none;
-      a {
+      > a {
         box-shadow: 0rem 0rem 1rem 0.1rem #8e8e8e4a;
         display: inline;
         overflow: hidden;
@@ -77,17 +77,8 @@
       height: 0;
       border-left: 0.5rem solid transparent;
       border-right: 0.5rem solid transparent;
-      border-bottom: 0.5rem solid color.$purple;
+      border-bottom: 0.5rem solid color.$cornflower;
       right: 1.9375rem;
-    }
-
-    ul {
-      li {
-        list-style-type: none;
-        a {
-          color: color.$white;
-        }
-      }
     }
   }
 }
