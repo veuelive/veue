@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 
 module PhoneTestHelpers
   def self.generate_valid
