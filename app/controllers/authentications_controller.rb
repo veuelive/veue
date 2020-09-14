@@ -9,7 +9,7 @@ class AuthenticationsController < ApplicationController
   end
 
   def update
-    ula = SessionToken.find_by(session_uuid: params[:session_token_uuid])
+    ula = SessionToken.find_by(uuid: params[:session_token_uuid])
     render_modal and return unless ula&.process_secret_code!(params[:secret_code])
 
     session[:session_token_uuid] = ula.uuid
