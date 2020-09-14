@@ -2,17 +2,17 @@
 
 class AuthenticationsController < ApplicationController
   def create
-    session[:ula_uuid] = nil
-    @ula = UserLoginAttempt.new(phone_number: params[:phone_number])
+    session[:session_token_uuid] = nil
+    @ula = SessionToken.new(phone_number: params[:phone_number])
     @ula.state = "pending_confirmation" if @ula.save
     render_modal
   end
 
   def update
-    ula = UserLoginAttempt.find_by(ula_uuid: params[:ula_uuid])
+    ula = SessionToken.find_by(session_uuid: params[:session_token_uuid])
     render_modal and return unless ula&.process_secret_code!(params[:secret_code])
 
-    session[:ula_uuid] = ula.ula_uuid
+    session[:session_token_uuid] = ula.uuid
     render_modal and return if ula.user.nil?
 
     render_navbar
@@ -21,14 +21,14 @@ class AuthenticationsController < ApplicationController
   # This is used for when we've forgotten who we are, but we want ot use
   # a previously created UserLoginAttempt
   def override
-    return unless params[:ula_uuid]
+    return unless params[:session_token_uuid]
 
-    attempt = UserLoginAttempt.active.where(ula_uuid: params[:ula_uuid]).first
-    session[:ula_uuid] = attempt.ula_uuid
+    session_token = SessionToken.where(uuid: params[:session_token_uuid]).active.first
+    session[:session_token_uuid] = session_token.uuid
   end
 
   def destroy
-    session[:ula_uuid] = nil
+    session[:session_token_uuid] = nil
     redirect_to("/")
   end
 

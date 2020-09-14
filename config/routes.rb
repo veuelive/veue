@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get "users/create"
   resources :videos, only: %i[index show new] do
     collection do
       get "broadcast"

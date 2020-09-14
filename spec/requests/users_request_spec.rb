@@ -13,7 +13,7 @@ RSpec.describe "Users", type: :request do
       expect(response).to have_http_status(:success)
       user = User.last
       expect(user.display_name).to eq(name)
-      ula = UserLoginAttempt.last
+      ula = SessionToken.last
       expect(user.phone_number).to eq(ula.phone_number)
       expect(ula.user_id).to eq(user.id)
     end

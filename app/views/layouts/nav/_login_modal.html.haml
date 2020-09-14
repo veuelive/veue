@@ -6,7 +6,7 @@
     .modal-label
       Login With Phone Number
     .form-area
-      - @ula ||= (current_ula || UserLoginAttempt.new)
+      - @ula ||= (current_session_token || SessionToken.new)
       %form{data: { target: "authentication.form", method: (@ula.pending_confirmation? ? "PUT" : "POST"), url: (@ula.active? ? users_path : authentication_path)}}
         - if @ula.new?
           .form-row
@@ -18,7 +18,7 @@
           .form-row Enter the code we just texted you below!
           .form-row
             %input{type: "text", name: "secret_code"}
-            %input{type: 'hidden', name: "ula_uuid", value: @ula.ula_uuid}
+            %input{type: 'hidden', name: "session_token_uuid", value: @ula.uuid}
         - if @ula.active?
           .form-row Pick a Display name!
           %input{type: "text", name: "display_name"}

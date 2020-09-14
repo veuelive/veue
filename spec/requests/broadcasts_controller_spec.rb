@@ -3,15 +3,14 @@
 require "rails_helper"
 
 describe BroadcastsController do
-  render_views
 
   before :each do
     @streamer = create(:streamer)
-    sign_in @streamer
+    login_as @streamer
   end
 
   it "should include the stream key!" do
-    get :show
+    get broadcast_path
 
     expect(@streamer.stream_key).to have_attributes(size: (be > 2))
     expect(response.body).to include(@streamer.stream_key)
