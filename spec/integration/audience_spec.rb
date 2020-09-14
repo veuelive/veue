@@ -2,24 +2,23 @@
 
 require "rails_helper"
 
-describe "Videos", type: :feature do
+describe "Videos" do
   let(:user) { create(:user) }
   let(:video) { create(:video) }
 
-  describe "Get videos/:id with user logged in" do
-    before do
-      login_as(user)
-    end
+  describe "View videos/:id with user logged in" do
 
     it "should have chat form if user is logged in" do
       visit video_path(video)
+
+      assign :current_user, user
 
       expect(page).to have_selector(".message-write")
     end
   end
 
-  describe "Get videos/:id without logged in" do
-    it "should have chat form if user is logged in" do
+  describe "Get videos/:id without being logged in" do
+    it "should NOT have chat form if user is logged out" do
       visit video_path(video)
 
       expect(page).not_to(have_selector(".message-write"))

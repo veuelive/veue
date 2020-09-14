@@ -4,11 +4,18 @@ module AuthenticationConcern
   extend ActiveSupport::Concern
 
   included do
-    def current_user
-      session_uuid = session[:session_uuid]
-      return unless session_uuid
+    def current_ula
+      ula_uuid = session[:ula_uuid]
+      return unless ula_uuid
 
-      @current_user ||= UserLoginAttempt.where(session_uuid: session_uuid).active.includes(:user).first.user
+      @current_ula ||= UserLoginAttempt.where(ula_uuid: ula_uuid).active.includes(:user).first
+    end
+    helper_method :current_ula
+
+    def current_user
+      return unless current_ula
+
+      @current_user ||= current_ula.user
     end
 
     helper_method :current_user

@@ -11,7 +11,7 @@ RSpec.describe UserLoginAttempt, type: :model do
       ula = UserLoginAttempt.create!(phone_number: phone_number)
       expect(ula.user).to be_nil
       expect(ula.secret_code.length).to be(4)
-      expect(ula.session_uuid.length).to be(36)
+      expect(ula.ula_uuid.length).to be(36)
       expect(ula.id).to_not be_nil
     end
 

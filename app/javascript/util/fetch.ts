@@ -27,6 +27,13 @@ export function postJson(path: string, jsonObject: unknown): Promise<Response> {
 }
 
 /**
+ * If you want to POST a form straight from Javascript objects, use this!
+ */
+export function postForm(path: string, data?: unknown): Promise<Response> {
+  return secureFormFetch(path, "POST", data);
+}
+
+/**
  * If you want to AJAX POST to the server, but don't have a particular payload you want to deliver, this
  * one is what you want!
  *
@@ -56,6 +63,13 @@ export function putJson(
   jsonObject: Record<string, unknown>
 ): Promise<Response> {
   return secureJSONFetch(path, jsonObject, "PUT");
+}
+
+/**
+ * If you want to POST a form straight from Javascript objects, use this!
+ */
+export function putForm(path: string, data?: unknown): Promise<Response> {
+  return secureFormFetch(path, "PUT", data);
 }
 
 /**
@@ -114,6 +128,29 @@ function secureJSONFetch(
     headers: {
       "Content-Type": "application/json",
     },
+  });
+}
+
+/**
+ * This is the helper function for all form-post requests
+ */
+export function secureFormFetch(
+  path: string,
+  method: string,
+  data?: unknown
+): Promise<Response> {
+  let formData = new FormData();
+  if (data instanceof HTMLFormElement) {
+    formData = new FormData(data);
+  } else if (data instanceof Object) {
+    for (const key in data) {
+      formData.append(key, data[key]);
+    }
+  }
+
+  return secureFetch(path, {
+    method,
+    body: formData,
   });
 }
 
