@@ -1,4 +1,4 @@
-.modal.auth{ "data-target": "authentication.modal", "data-action": "click->authentication#hideModal" }
+.modal.auth{ "data-target": "authentication.modal", "data-action": "click->authentication#hideModal"}
   .modal-skirt
   .modal-content
     - if flash[:modal_error]
@@ -7,12 +7,13 @@
       Login With Phone Number
     .form-area
       - @ula ||= (current_ula || UserLoginAttempt.new)
-      %form{data: { action: "submit->authentication#doSubmit", method: (@ula.pending_confirmation? ? "PUT" : "POST"), url: (@ula.active? ? users_path : authentication_path)}}
+      %form{data: { target: "authentication.form", method: (@ula.pending_confirmation? ? "PUT" : "POST"), url: (@ula.active? ? users_path : authentication_path)}}
         - if @ula.new?
           .form-row
             Enter your mobile number, and we'll log you in with a quick code!
           .form-row
-            %input{type: "tel", disabled: !@ula.new?, value: @ula.phone_number, data: {target: "authentication.phoneInput", action: "input->authentication#validatePhone"}}
+            %input#phone_number_input{type: "tel", data: {target: "authentication.phoneInput", action: "input->authentication#validatePhone"}}
+            %input{type: 'hidden', name: "phone_number"}
         - if @ula.pending_confirmation?
           .form-row Enter the code we just texted you below!
           .form-row
@@ -22,7 +23,7 @@
           .form-row Pick a Display name!
           %input{type: "text", name: "display_name"}
         .form-row
-          %button{type: "submit", data: {target: "authentication.submitButton"}}
+          %button{data: {target: "authentication.submitButton", action: "click->authentication#doSubmit"}}
             - if @ula.new?
               Send Text
             - if @ula.pending_confirmation?

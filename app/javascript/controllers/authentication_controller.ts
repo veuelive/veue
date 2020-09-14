@@ -1,23 +1,25 @@
 import BaseController from "./base_controller";
 import * as IntlTelInput from "intl-tel-input";
 import "intl-tel-input/build/css/intlTelInput.min.css";
-import { postForm, secureFormFetch } from "util/fetch";
+import { secureFormFetch } from "util/fetch";
 
 export default class extends BaseController {
-  static targets = ["modal", "submitButton"];
+  static targets = ["modal", "submitButton", "form"];
 
   readonly modalTarget!: HTMLElement;
   readonly submitButtonTarget!: HTMLButtonElement;
+  readonly formTarget!: HTMLFormElement;
   private iti: IntlTelInput.Plugin;
 
   connect(): void {
+    this.modalTarget.hidden = true;
     this.attachPhoneNumberField();
   }
 
   /**
    * This takes the normal <input> field and makes it extra spicy and nice!
    */
-  attachPhoneNumberField() {
+  attachPhoneNumberField(): void {
     const phoneInputElement = this.modalTarget.querySelector(
       "input[type='tel']"
     );
@@ -26,7 +28,6 @@ export default class extends BaseController {
       this.iti = IntlTelInput(phoneInputElement, {
         utilsScript:
           "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.min.js",
-        hiddenInput: "phone_number",
       });
       this.validatePhone();
     }
@@ -34,11 +35,15 @@ export default class extends BaseController {
 
   showModal(): void {
     this.modalTarget.style.display = "block";
+    this.modalTarget.querySelector("input").focus();
   }
 
   validatePhone(): void {
     if (this.iti.isValidNumber()) {
       this.submitButtonTarget.disabled = false;
+      this.element
+        .querySelector("input[name='phone_number']")
+        .setAttribute("value", this.iti.getNumber());
     } else {
       this.submitButtonTarget.disabled = true;
     }
@@ -54,12 +59,12 @@ export default class extends BaseController {
   }
 
   async doSubmit(event: Event): Promise<void> {
+    console.log("Got click!");
     event.preventDefault();
-    const form = event.target as HTMLFormElement;
     const response = await secureFormFetch(
-      form.dataset.url,
-      form.dataset.method,
-      form
+      this.formTarget.dataset.url,
+      this.formTarget.dataset.method,
+      this.formTarget
     );
     const html = await response.text();
     if (response.status == 202) {

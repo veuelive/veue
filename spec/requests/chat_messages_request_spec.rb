@@ -53,7 +53,7 @@ describe "ChatMessages", type: :request do
   describe "create without authentication" do
     it "should not allow to create message" do
       post video_chat_messages_path(video), params: chat_message_params
-      expect(response).to be(401)
+      expect(response).to have_http_status(:unauthorized)
     end
   end
 end

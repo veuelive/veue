@@ -5,10 +5,12 @@
  * of the element above can change!
  */
 export function getCsrfToken(): string {
-  const csrfElement = document.getElementsByName(
-    "csrf-token"
-  )[0] as HTMLMetaElement;
-
+  const elements = document.getElementsByName("csrf-token");
+  if (elements.length === 0) {
+    console.log("No CSRF Token Found");
+    return "";
+  }
+  const csrfElement = elements[0] as HTMLMetaElement;
   return csrfElement.content;
 }
 
