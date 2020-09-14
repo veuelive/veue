@@ -3,7 +3,6 @@
 require "rails_helper"
 
 describe BroadcastsController do
-
   before :each do
     @streamer = create(:streamer)
     login_as @streamer
