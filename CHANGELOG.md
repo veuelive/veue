@@ -1,0 +1,24 @@
+- ##VEUE-66 - @hcatlin - 09-14-2020
+  - ###ADDED
+    - "System" tests that use chrome for testing and are now configured
+    - Created a new flow for user authentication via phone number
+    - `.eslintcache` is now in `.gitignore`
+    - New! Default font of Nunito! Mapped in SCSS to `font.$nunito`
+    - new helpers in the `SecureFetch API` that allow you to post `<form>` tags directly to data objects, OR you can pass in a Javascript object and it will get mapped to a FormData object automatically. See: `postForm`, `putForm`
+    - Created a `PhoneNumberValidator` for ActiveRecord
+  - ###CHANGED
+    - the `secureFetch()` API that we use internally only warns to console if there is no CSRF token in the `<head>`, instead of erroring, as this was causing Browser tests to fail
+    - our SCSS `color.$purple` is now it's proper name of `color.$cornflower`
+    - Wherever we were using `user.username.capitalize` please use `user.display_name`
+    - `User#has_many :mux_live_streams` is now nullify on destroy
+  - ###DEPENDENCIES
+    - REMOVED `devise` gem
+    - ADDED `lockbox` gem for easy field-level encryption where needed for User privacy
+    - ADDED `blind_index` gem for easy searching of encrypted fields
+    - ADDED `phone` gem for parsing of phone numbers
+    - ADDED `intl-tel-input` npm package for great Phone Number Input boxes
+    - UPGRADED `webpacker` gem to deal with some bugs
+  - ### REMOVED
+    - All traces of Devise
+    - All traces of WCS
+    - Unused Decorator stubs for controllers unlikely to use them
