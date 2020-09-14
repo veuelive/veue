@@ -1,43 +1,35 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  # This is used for email-or-username login functionality
-  attr_accessor :login
-
-  validates :username,
-            presence: true,
-            uniqueness: true
-
-  # Include default devise modules. Others available are:
-  # and :omniauthable
-  devise :database_authenticatable,
-         :registerable,
-         :recoverable,
-         :rememberable,
-         :validatable,
-         :confirmable,
-         :lockable,
-         :trackable
-
   has_many :videos, dependent: :destroy
-  has_many :mux_live_streams, dependent: :destroy
+  has_many :mux_live_streams, dependent: :nullify
   belongs_to :mux_live_stream, optional: true
   delegate :stream_key, to: :mux_live_stream
   has_many :chat_messages, dependent: :destroy
+  has_many :user_login_attempts, dependent: :nullify
 
-  # # This allows us to lookup users via either email OR username. Pretty cool, huh?
-  # def self.find_for_database_authentication(warden_condition)
-  #   conditions = warden_condition.dup
-  #   login = conditions.delete(:email)
-  #   find_by(conditions).find_by(
-  #     [
-  #       "lower(username) = :value OR lower(email) = :value",
-  #       {value: login.strip.downcase},
-  #     ],
-  #   )
-  # end
+  validates :display_name, length: {maximum: 40, minimum: 1}, presence: true
+  validates :phone_number, phone_number: true
+
+  encrypts :phone_number
+  blind_index :phone_number
+
+  aasm column: :state do
+    state :user, initial: true
+    state :streamer
+    state :admin
+
+    event :make_streamer do
+      transitions from: :user, to: :streamer, guard: :valid_username?
+    end
+  end
+
+  def valid_username?
+    username =~ /[A-z0-9_\\-]+/
+  end
 
   def setup_as_streamer!
+    make_streamer
     stream_object = MuxLiveStream.create!(user: self)
     update!({
               mux_live_stream: stream_object,

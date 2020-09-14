@@ -2,30 +2,30 @@
 
 require "rails_helper"
 
-describe ChatMessagesController, type: :controller do
+describe "ChatMessages", type: :request do
   let(:user) { create(:user) }
   let(:video) { create(:video) }
   let(:chat_message_params) {
     {
       body: Faker::Lorem.characters(number: 10),
-      video_id: video.to_param,
     }
   }
 
   describe "create with authenticated user" do
     before do
-      sign_in(user)
+      get "/"
+      login_as(user)
     end
 
     it "should create message for signed in user" do
-      post :create, params: chat_message_params
+      post video_chat_messages_path(video), params: chat_message_params
 
       expect(response).to have_http_status(200)
       expect(user.chat_messages).not_to(be_empty)
     end
 
     it "should not create message as 'body' is not present" do
-      post :create, params: {video_id: video.to_param}
+      post video_chat_messages_path(video), params: {video_id: video.to_param}
 
       body = JSON.parse(response.body)
       expect(response).to have_http_status(200)
@@ -35,16 +35,16 @@ describe ChatMessagesController, type: :controller do
 
   describe "create & broadcast" do
     before do
-      sign_in(user)
+      login_as(user)
       @action_cable = ActionCable.server
     end
 
     it "should broadcast message on channel" do
-      expect { post :create, params: chat_message_params }.to(
+      expect { post video_chat_messages_path(video), params: chat_message_params }.to(
         have_broadcasted_to("live_video_#{video.to_param}").with(
           text: chat_message_params[:body],
           user_id: user.id,
-          user_name: user.username.capitalize,
+          user_name: user.display_name,
         ),
       )
     end
@@ -52,8 +52,8 @@ describe ChatMessagesController, type: :controller do
 
   describe "create without authentication" do
     it "should not allow to create message" do
-      post :create, params: chat_message_params
-      expect(response).to redirect_to(new_user_session_path)
+      post video_chat_messages_path(video), params: chat_message_params
+      expect(response).to be(401)
     end
   end
 end

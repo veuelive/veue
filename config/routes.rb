@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       get "broadcast"
     end
 
-    resources :chat_messages, only: [:create, :index]
+    resources :chat_messages, only: %i[create index]
   end
 
   resource :broadcast do
@@ -17,9 +17,10 @@ Rails.application.routes.draw do
 
   post "/mux/webhook", to: "mux_webhooks#index"
 
-  devise_for :users, controllers: {sessions: "users/sessions", registrations: "users/registrations"}
+  resource :authentication
 
-  devise_for :admins, ActiveAdmin::Devise.config
+  post "/mux/webhook", to: "mux_webhooks#index"
+
   ActiveAdmin.routes(self)
 
   root "videos#index"
