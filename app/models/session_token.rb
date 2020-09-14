@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserLoginAttempt < ApplicationRecord
+class SessionToken < ApplicationRecord
   belongs_to :user, optional: true
 
   validates :phone_number, phone_number: true, presence: true
@@ -8,8 +8,6 @@ class UserLoginAttempt < ApplicationRecord
   encrypts :secret_code
   encrypts :phone_number
   blind_index :phone_number
-  encrypts :ula_uuid
-  blind_index :ula_uuid
 
   before_create :setup_secrets!
   before_create :lookup_user!
@@ -43,7 +41,7 @@ class UserLoginAttempt < ApplicationRecord
   def setup_secrets!
     # You might be wondering why the numbers below aren't 0..9999... well, check out the doc Authentication Strategy
     self.secret_code = SecureRandom.rand(1982..9820)
-    self.ula_uuid = SecureRandom.uuid
+    self.uuid = SecureRandom.uuid
   end
 
   def send_sms_message!

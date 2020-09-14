@@ -4,11 +4,11 @@ module AuthenticationTestHelpers
   module RequestHelpers
     def login_as(user=nil)
       phone_number = user ? user.phone_number : Faker::PhoneNumber.phone_number_with_country_code
-      ula = UserLoginAttempt.create!(phone_number: phone_number)
-      expect(ula).to be_valid
-      ula.sent_code!
-      ula.correct_code!
-      post override_authentication_path(ula_uuid: ula.ula_uuid)
+      session_token = SessionToken.create!(phone_number: phone_number)
+      expect(session_token).to be_valid
+      session_token.sent_code!
+      session_token.correct_code!
+      post override_authentication_path(session_token_uuid: session_token.uuid)
     end
   end
 
@@ -34,7 +34,7 @@ module AuthenticationTestHelpers
 
     def confirm_secret_code
       expect(page).to have_selector('input[name="secret_code"]')
-      fill_in("secret_code", with: UserLoginAttempt.last.secret_code)
+      fill_in("secret_code", with: SessionToken.last.secret_code)
       click_button("Enter Code")
     end
   end

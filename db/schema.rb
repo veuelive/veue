@@ -88,22 +88,21 @@ ActiveRecord::Schema.define(version: 2020_09_11_155206) do
     t.index ["mux_target_type", "mux_target_id"], name: "index_mux_webhooks_on_mux_target_type_and_mux_target_id"
   end
 
-  create_table "user_login_attempts", force: :cascade do |t|
+  create_table "session_tokens", force: :cascade do |t|
+    t.text "uuid", null: false
     t.text "phone_number_ciphertext"
     t.string "phone_number_bidx"
     t.bigint "user_id"
     t.text "secret_code_ciphertext"
-    t.text "ula_uuid_ciphertext"
-    t.string "ula_uuid_bidx"
     t.string "state"
     t.inet "ip_address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["ip_address"], name: "index_user_login_attempts_on_ip_address"
-    t.index ["phone_number_bidx"], name: "index_user_login_attempts_on_phone_number_bidx"
-    t.index ["state"], name: "index_user_login_attempts_on_state"
-    t.index ["ula_uuid_bidx"], name: "index_user_login_attempts_on_ula_uuid_bidx"
-    t.index ["user_id"], name: "index_user_login_attempts_on_user_id"
+    t.index ["ip_address"], name: "index_session_tokens_on_ip_address"
+    t.index ["phone_number_bidx"], name: "index_session_tokens_on_phone_number_bidx"
+    t.index ["state"], name: "index_session_tokens_on_state"
+    t.index ["user_id"], name: "index_session_tokens_on_user_id"
+    t.index ["uuid"], name: "index_session_tokens_on_uuid"
   end
 
   create_table "users", force: :cascade do |t|
@@ -115,10 +114,7 @@ ActiveRecord::Schema.define(version: 2020_09_11_155206) do
     t.datetime "updated_at", precision: 6, null: false
     t.text "phone_number_ciphertext", null: false
     t.string "phone_number_bidx"
-    t.string "phone_number_country", limit: 3
     t.string "display_name"
-    t.string "state"
-    t.string "username"
     t.index ["mux_live_stream_id"], name: "index_users_on_mux_live_stream_id"
   end
 

@@ -7,7 +7,6 @@ FactoryBot.define do
 
     factory :streamer do
       mux_live_stream
-      username { Faker::Internet.unique.username }
     end
   end
 end
