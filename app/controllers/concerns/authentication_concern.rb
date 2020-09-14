@@ -27,9 +27,9 @@ module AuthenticationConcern
     helper_method :user_signed_in?
 
     def authenticate_user!
-      return true unless user_signed_in?
+      return true if user_signed_in?
 
-      render(status: :not_found, content: "")
+      render(status: :unauthorized, html: "")
       false
     end
   end

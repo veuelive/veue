@@ -55,8 +55,10 @@ class UserLoginAttempt < ApplicationRecord
 
     if secret_code.to_s == possible_secret_code.to_s
       correct_code!
+      true
     else
       wrong_code!
+      false
     end
   end
 
@@ -64,7 +66,7 @@ class UserLoginAttempt < ApplicationRecord
     return if user
 
     self.user = User.create(phone_number: phone_number, display_name: display_name)
-    self.save!
+    save!
     user
   end
 
