@@ -1,3 +1,9 @@
+- ##VEUE-67 - @hcatlin - 09-15-2020
+
+  - ##DEPENDENCIES
+    - `node-fetch` upgraded to 2.6.1 to address [CVE-2020-15168](https://github.com/advisories/GHSA-w7rc-rwvf-8q5r)
+    - `rails` upgraded to 6.0.3.3 to address [ CVE-2020-15169](https://github.com/advisories/GHSA-cfjv-5498-mph5)
+
 - ##VEUE-66 - @hcatlin - 09-14-2020
   - ###ADDED
     - "System" tests that use chrome for testing and are now configured
