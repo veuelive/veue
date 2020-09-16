@@ -1,10 +1,12 @@
 import consumer from "../channels/consumer";
 import { post } from "util/fetch";
+import userSvg from "../images/user.svg";
 import BaseController from "./base_controller";
 
 export default class extends BaseController {
-  static targets = ["chatMessages", "chatForm", "messageInput"];
+  static targets = ["chatMessages", "lastMessage", "chatForm", "messageInput"];
 
+  readonly lastMessageTarget: HTMLElement;
   readonly chatMessagesTarget!: HTMLElement;
   readonly chatFormTarget!: HTMLFormElement;
   readonly messageInputTarget: HTMLInputElement;
@@ -20,9 +22,6 @@ export default class extends BaseController {
     this.userId = this.data.get("user");
     this.createChatSubscription();
     this.subscribeToAuthChange();
-    if (this.hasMessageInputTarget) {
-      this.submitFormEvent();
-    }
   }
 
   disconnect(): void {
@@ -35,6 +34,7 @@ export default class extends BaseController {
     const currentUserId = this.userId;
     const dataMap = this.data;
     const chatArea = this.chatMessagesTarget;
+    const lastMessage = this.lastMessageTarget;
 
     consumer.subscriptions.create(
       {
@@ -56,6 +56,7 @@ export default class extends BaseController {
               parseInt(data.user_id) === lastUser
             )
           );
+          lastMessage.scrollIntoView({ behavior: "smooth" });
           dataMap.set("last-user", data.user_id);
         },
       }
@@ -87,17 +88,6 @@ export default class extends BaseController {
     }
   }
 
-  submitFormEvent(): void {
-    // this.messageInputTarget.addEventListener("keydown", async (event) => {
-    //   if (!event.shiftKey && event.keyCode === 13) {
-    //     event.preventDefault();
-    //     const body = new FormData(this.chatFormTarget);
-    //     await post("/chat_messages", { body });
-    //     this.messageInputTarget.value = "";
-    //   }
-    // });
-  }
-
   createHtml(
     id: number,
     uid: string,
@@ -126,7 +116,7 @@ export default class extends BaseController {
       html = `
         <div class="message-left">
           <div class="user-avatar">
-            <img src="/assets/avatar-placeholder.png" class="rounded h-2 w-2"/>
+            <img src=${userSvg} class="rounded h-2 w-2"/>
           </div>
           <div class="message-content">
             <div class="message-content__name">

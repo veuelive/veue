@@ -33,6 +33,7 @@ default: &default
     - .ttf
     - .woff
     - .woff2
+    - .svg
 
   extensions:
     - .tsx
@@ -50,6 +51,7 @@ default: &default
     - .gif
     - .jpeg
     - .jpg
+    - .svg
 
 development:
   <<: *default

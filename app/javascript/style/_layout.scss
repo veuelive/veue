@@ -1,6 +1,7 @@
 body {
   margin: 0;
   background: #f5f6f8;
+  -webkit-font-smoothing: antialiased;
 }
 
 $rounded-corners: 20px;
@@ -13,7 +14,7 @@ $rounded-corners: 20px;
 
   #main-container {
     display: flex;
-    padding: 0 2rem 2rem 2rem;
+    padding: 0 1.875rem 1.875rem 1.875rem;
 
     .content-area {
       flex: 1;
@@ -21,15 +22,13 @@ $rounded-corners: 20px;
       flex-direction: row;
 
       .content-area__right__big {
-        flex: 9;
-        margin-right: 2rem;
-        border-radius: $rounded-corners;
-        box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
+        flex: 10.5;
+        margin-right: 1.875rem;
+        border-radius: 1rem;
       }
 
       .content-area__left__small {
-        flex: 3;
-        display: inline-block;
+        flex: 3.25;
         overflow: hidden;
         background: white;
         border-radius: 10px;

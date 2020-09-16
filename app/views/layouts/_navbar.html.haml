@@ -1,6 +1,7 @@
 .top-navbar
   .navbar-link
     .navbar-logo
-      = image_tag 'main-logo', alt: 'Logo'
+      = link_to root_path do
+        = svg_tag 'logo'
   .status-user
     = render partial: 'layouts/nav/user_area'

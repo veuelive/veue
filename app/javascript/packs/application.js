@@ -4,6 +4,9 @@ ujs.start();
 import Turbolinks from "turbolinks";
 Turbolinks.start();
 
+// including images from javascript folder
+require.context("../images", true);
+
 // import ActiveStorage from "@rails/activestorage";
 // ActiveStorage.start();
 
