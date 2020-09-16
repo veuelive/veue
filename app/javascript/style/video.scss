@@ -33,7 +33,7 @@
       input {
         border: none;
         width: 100%;
-        padding-left: 1.2rem;
+        padding-left: 1.5rem;
         font-size: 1rem;
         background-color: color.$white;
         color: color.$gray-dark-2;
@@ -41,6 +41,11 @@
     }
     &__button {
       display: flex;
+    }
+    svg {
+      fill: color.$gray-dark-2;
+      width: 18px;
+      height: 15px;
     }
   }
   .upload {
@@ -99,6 +104,10 @@
         width: 15px;
         height: 14px;
         color: color.$white;
+      }
+      img {
+        width: 15px;
+        height: 14px;
       }
     }
     .black-icon {

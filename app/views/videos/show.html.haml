@@ -5,7 +5,7 @@
         .video-bar__search
           %input.outline-none{ :placeholder => "https://www.nike.com/w/vapormax-shoes-220dzy7ok", :type => "text", "data-audience-view-address-value": current_video.slug, disabled: true }
           .upload
-            = image_tag 'file-upload-icon', class: 'upload__file', alt: 'File'
+            = svg_tag 'hyperlink'
         .video-bar__button
           %button.time-area.time-red
             %span.dot.time-dot
@@ -18,13 +18,6 @@
       .stream-area
         %canvas.streamer-webcam-view{"data-target": "audience-view.personVideoCanvas", width: 640, height: 480}
         %video.player__video.viewer{"data-action" => "canplay->audience-view#videoLoaded timeupdate->audience-view#progressUpdate", "data-target" => "audience-view.video", style: "display: none;"}
-        -#.player__controls
-        -#  .progress{"data-action" => "click->video-player#scrub mousedown->video-player#mousedown mouseup->video-player#mouseup mousemove->video-player#mousemove", "data-target" => "video-player.progress"}
-        -#    .progress__filled{"data-target" => "video-player.progressBar"}
-        -#  %input.player__slider{alt: "Volume", "data-action" => "change->video-player#rangeUpdate mousemove->video-player#rangeUpdate", :max => "1", :min => "0", :name => "volume", :step => "0.05", :type => "range", :value => "1"}/
-        -#  %input.player__slider{"data-action" => "change->video-player#rangeUpdate mousemove->video-player#rangeUpdate", :max => "2", :min => "0.5", :name => "playbackRate", :step => "0.1", :type => "range", :value => "1"}/
-        -#  %button.player__button{"data-action" => "click->video-player#skip", "data-skip" => "-10"} « 10s
-        -#  %button.player__button{"data-action" => "click->video-player#skip", "data-skip" => "25"} 25s »
       .p-1
         .streamer-profile
           .streamer-info

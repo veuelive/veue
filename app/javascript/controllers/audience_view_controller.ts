@@ -1,5 +1,7 @@
 import { Controller } from "stimulus";
 import Hls from "hls.js";
+import playSvg from "../images/play.svg";
+import pauseSvg from "../images/pause.svg";
 
 export default class extends Controller {
   static targets = [
@@ -63,8 +65,8 @@ export default class extends Controller {
     }
 
     this.isPaused = !this.isPaused;
-
-    this.toggleTarget.textContent = this.isPaused ? "►" : "❚ ❚";
+    const imagePath = this.isPaused ? playSvg : pauseSvg;
+    this.toggleTarget.innerHTML = `<img src=${imagePath} />`;
   }
 
   videoLoaded(): void {
