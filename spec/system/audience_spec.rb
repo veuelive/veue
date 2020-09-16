@@ -7,7 +7,7 @@ describe "Audience View" do
   let(:video) { create(:video) }
 
   before :example do
-    driven_by(:selenium_chrome)
+    driven_by(:selenium_chrome_headless)
   end
 
   describe "a user is logged in" do
