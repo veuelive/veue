@@ -63,7 +63,7 @@ gem "appsignal"
 gem "faraday"
 
 # Inline SVGs renderer
-gem 'inline_svg'
+gem "inline_svg"
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
