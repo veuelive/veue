@@ -34,6 +34,7 @@ RSpec.configure do |config|
       use-fake-ui-for-media-stream
       use-fake-device-for-media-stream
       test-type
+      headless
     ]
     Capybara::Selenium::Driver.new(app, browser: :chrome, switches: switches)
   end
