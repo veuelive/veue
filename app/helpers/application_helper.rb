@@ -5,7 +5,7 @@ module ApplicationHelper
     {id: "#{controller.controller_name}__#{controller.action_name}"}
   end
 
-  def svg_tag(filename, options = {})
+  def svg_tag(filename, options={})
     inline_svg_pack_tag("media/images/#{filename}.svg", options)
   end
 end
