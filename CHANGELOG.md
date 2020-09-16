@@ -1,3 +1,5 @@
+- 09-16-2020 - Bugfix [VEUE-81](https://app.clickup.com/t/8444384/VEUE-81) - @hcatlin
+
 - ##VEUE-77 - @hcatlin - 09-16-2020
 
   - ##ADDED
