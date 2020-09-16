@@ -1,3 +1,12 @@
+- ##VEUE-77 - @hcatlin - 09-16-2020
+
+  - ##ADDED
+    - New Capybara browser setting called `media_browser` that allows testing of things like webcams and captures
+    - `IpcMockConcern` exists in non-prod environments to see Broadcast working
+    - Created new `ipcRenderer` object that mocks the Electron IPCRenderer in non-node environments for testing and dev
+    - `User` objects now automatically are setup for streaming on attempt to stream
+    - Created a new System spec called `Broadcast` to help the rails side of testing the Broadcast system
+
 - ##VEUE-67 - @hcatlin - 09-15-2020
 
   - ##DEPENDENCIES

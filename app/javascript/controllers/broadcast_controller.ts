@@ -1,5 +1,5 @@
 import { Controller } from "stimulus";
-import { IPCRenderer } from "util/ipc_renderer";
+import { ipcRenderer } from "util/ipc_renderer";
 
 type BroadcastState = "loading" | "ready" | "live" | "failed";
 
@@ -13,15 +13,10 @@ export default class extends Controller {
   private debugCanvasContext: CanvasRenderingContext2D;
   private audioTrack: MediaStreamTrack;
   private mediaRecorder: MediaRecorder;
-  private ipcRenderer: IPCRenderer;
   private browserDimensions: Rectangle;
 
   connect(): void {
     this.state = "loading";
-
-    // This should only ever run in the Electron App!
-    const { ipcRenderer } = eval("require('electron')");
-    this.ipcRenderer = ipcRenderer;
 
     this.browserVideoElement = document.createElement("video");
 
@@ -108,16 +103,16 @@ export default class extends Controller {
       videoBitsPerSecond: 3000000,
     });
 
-    this.ipcRenderer.send("start", { streamKey: this.data.get("stream-key") });
+    ipcRenderer.send("start", { streamKey: this.data.get("stream-key") });
 
     this.mediaRecorder.addEventListener("dataavailable", async (e) => {
       const arrayBuffer = await e.data.arrayBuffer();
-      this.ipcRenderer.send("stream", { payload: new Uint8Array(arrayBuffer) });
+      ipcRenderer.send("stream", { payload: new Uint8Array(arrayBuffer) });
       console.log("Just sent data of size ", e.data.size, e.data.toString());
     });
 
     this.mediaRecorder.addEventListener("stop", () => {
-      this.ipcRenderer.send("stop");
+      ipcRenderer.send("stop");
     });
 
     this.mediaRecorder.start(1000);

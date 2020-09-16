@@ -23,6 +23,10 @@ Rails.application.routes.draw do
     end
   end
 
+  if Rails.env.test?
+    post "ipc_mock", to: "application#ipc_mock"
+  end
+
   resources :users
 
   post "/mux/webhook", to: "mux_webhooks#index"

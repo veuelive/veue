@@ -15,6 +15,8 @@ class User < ApplicationRecord
   blind_index :phone_number
 
   def setup_as_streamer!
+    return if mux_live_stream
+
     stream_object = MuxLiveStream.create!(user: self)
     update!({
               mux_live_stream: stream_object,
