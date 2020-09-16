@@ -9,7 +9,7 @@
           %option https://sonos.com
 
         .upload
-          = image_tag 'file-upload-icon', class: 'upload__file', alt: 'File'
+          = svg_tag 'hyperlink', class: 'upload__file', alt: 'File'
       .video-bar__button
         %button{data: {action: "click->broadcast#startStreaming", showOnState: "ready"}} Start Broadcast
         %button{data: {action: "click->broadcast#stopStreaming", showOnState: "live"}} Stop Broadcast
