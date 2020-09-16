@@ -6,6 +6,6 @@ module ApplicationHelper
   end
 
   def svg_tag(filename, svg_class: nil)
-    inline_svg_pack_tag "media/images/#{filename}.svg", class: svg_class
+    inline_svg_pack_tag("media/images/#{filename}.svg", class: svg_class)
   end
 end
