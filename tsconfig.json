@@ -13,6 +13,7 @@
     "sourceMap": true,
     "target": "es5"
   },
+  "include": ["app/javascript/util/custom.d.ts"],
   "exclude": ["**/*.spec.ts", "node_modules", "vendor", "public"],
   "compileOnSave": false
 }

@@ -8,14 +8,14 @@
 // Realtime chat section
 .chat-section {
   background-color: color.$white;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
   .account-header {
-    margin-bottom: 4rem;
+    max-height: 500px;
+    overflow-y: auto;
     .comment-section {
       .comment-grid {
-        display: flex;
-        flex-direction: column;
-        max-height: 350px;
-        overflow-y: auto;
         .message-right {
           display: flex;
           justify-content: flex-end;
@@ -78,12 +78,13 @@
 
   .message-write {
     border-top: 1px solid color.$gray-light-1;
+    width: 100%;
     .write-area {
       margin-top: 1rem;
       padding: 0rem 0.5rem;
       &__text {
+        font-size: 0.875rem;
         border: none;
-        font-size: 1rem;
         color: color.$light-black;
         font-family: font.$poppins;
         font-weight: 400;

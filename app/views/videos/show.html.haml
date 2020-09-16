@@ -1,40 +1,43 @@
 .content-area{"data-controller": "audience-view", "data-audience-view-playback-id": current_video.mux_playback_id, "data-audience-view-video-id": current_video.id}
   .content-area__right__big
-    .video-bar
-      .video-bar__search
-        %input.outline-none{ :placeholder => "https://www.nike.com/w/vapormax-shoes-220dzy7ok", :type => "text", "data-audience-view-address-value": current_video.slug, disabled: true }
-        .upload
-          = image_tag 'file-upload-icon', class: 'upload__file', alt: 'File'
-      .video-bar__button
-        %button.time-area.time-red
-          %span.dot.time-dot
-          1:36:24
-    %canvas.browser-video-area{"data-target": "audience-view.browserVideoCanvas", width: 1280, height: 800}
+    #video-area
+      .video-bar
+        .video-bar__search
+          %input.outline-none{ :placeholder => "https://www.nike.com/w/vapormax-shoes-220dzy7ok", :type => "text", "data-audience-view-address-value": current_video.slug, disabled: true }
+          .upload
+            = image_tag 'file-upload-icon', class: 'upload__file', alt: 'File'
+        .video-bar__button
+          %button.time-area.time-red
+            %span.dot.time-dot
+            1:36:24
+      %canvas.browser-video-area{"data-target": "audience-view.browserVideoCanvas", width: 1280, height: 800}
+      = render partial: 'videos/partials/player_buttons'
+    = render partial: 'videos/partials/products_area'
   .content-area__left__small
-    .stream-area
-      %canvas.streamer-webcam-view{"data-target": "audience-view.personVideoCanvas", width: 640, height: 480}
-      %video.player__video.viewer{"data-action" => "canplay->audience-view#videoLoaded timeupdate->audience-view#progressUpdate", "data-target" => "audience-view.video", style: "display: none;"}
-      -#.player__controls
-      -#  .progress{"data-action" => "click->video-player#scrub mousedown->video-player#mousedown mouseup->video-player#mouseup mousemove->video-player#mousemove", "data-target" => "video-player.progress"}
-      -#    .progress__filled{"data-target" => "video-player.progressBar"}
-      %button.player__button.play-button.outline-none.toggle{"data-action" => "click->audience-view#togglePlay", "data-target" => "audience-view.toggle", :title => "Toggle Play"} ►
-      -#  %input.player__slider{alt: "Volume", "data-action" => "change->video-player#rangeUpdate mousemove->video-player#rangeUpdate", :max => "1", :min => "0", :name => "volume", :step => "0.05", :type => "range", :value => "1"}/
-      -#  %input.player__slider{"data-action" => "change->video-player#rangeUpdate mousemove->video-player#rangeUpdate", :max => "2", :min => "0.5", :name => "playbackRate", :step => "0.1", :type => "range", :value => "1"}/
-      -#  %button.player__button{"data-action" => "click->video-player#skip", "data-skip" => "-10"} « 10s
-      -#  %button.player__button{"data-action" => "click->video-player#skip", "data-skip" => "25"} 25s »
-    .p-1
-      .streamer-profile
-        .streamer-info
-          .streamer-info__avatar
-            = image_tag 'avatar-placeholder', class: 'rounded h-2 w-2'
-            .streamer-name
-              = current_video.user.display_name
-          .follow-btn
-            follow
-        .stream-info
-          .stream-num
-            stream # 4
-          .stream-name
-            high‑performance wireless earphones
+    .user-stream-info
+      .stream-area
+        %canvas.streamer-webcam-view{"data-target": "audience-view.personVideoCanvas", width: 640, height: 480}
+        %video.player__video.viewer{"data-action" => "canplay->audience-view#videoLoaded timeupdate->audience-view#progressUpdate", "data-target" => "audience-view.video", style: "display: none;"}
+        -#.player__controls
+        -#  .progress{"data-action" => "click->video-player#scrub mousedown->video-player#mousedown mouseup->video-player#mouseup mousemove->video-player#mousemove", "data-target" => "video-player.progress"}
+        -#    .progress__filled{"data-target" => "video-player.progressBar"}
+        -#  %input.player__slider{alt: "Volume", "data-action" => "change->video-player#rangeUpdate mousemove->video-player#rangeUpdate", :max => "1", :min => "0", :name => "volume", :step => "0.05", :type => "range", :value => "1"}/
+        -#  %input.player__slider{"data-action" => "change->video-player#rangeUpdate mousemove->video-player#rangeUpdate", :max => "2", :min => "0.5", :name => "playbackRate", :step => "0.1", :type => "range", :value => "1"}/
+        -#  %button.player__button{"data-action" => "click->video-player#skip", "data-skip" => "-10"} « 10s
+        -#  %button.player__button{"data-action" => "click->video-player#skip", "data-skip" => "25"} 25s »
+      .p-1
+        .streamer-profile
+          .streamer-info
+            .streamer-info__avatar
+              = inline_svg_pack_tag 'media/images/user.svg'
+              .streamer-name
+                = current_video.user.display_name
+            .follow-btn
+              follow
+          .stream-info
+            .stream-num
+              stream # 4
+            .stream-name
+              high‑performance wireless earphones
     #live-chat
       = render partial: 'shared/chat', locals: { video: current_video }

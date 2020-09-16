@@ -62,6 +62,9 @@ gem "appsignal"
 # HTTP Client for building API calls
 gem "faraday"
 
+# Inline SVGs renderer
+gem 'inline_svg'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

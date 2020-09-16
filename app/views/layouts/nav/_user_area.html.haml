@@ -1,12 +1,12 @@
 - if user_signed_in?
   %ul
     %li
-      = image_tag 'avatar-placeholder', class: 'status-user__profile', alt: 'profile'
+      = svg_tag 'user', svg_class: 'status-user__profile'
     %li
       %p.status-user__text
         = current_user.display_name
     %li
-      = image_tag 'down-arrow', class: 'status-user__arrow', alt: 'Arrow'
+      = svg_tag 'arrow', svg_class: 'status-user__arrow'
   .status-dropdown
     %ul
       %li

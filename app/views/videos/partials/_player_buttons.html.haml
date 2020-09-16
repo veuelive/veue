@@ -1,0 +1,7 @@
+.player-actions
+  %a.black-icon
+    = svg_tag 'speaker'
+  %a.active-icon.toggle{"data-action" => "click->audience-view#togglePlay", "data-target" => "audience-view.toggle", :title => "Toggle Play"}
+    = svg_tag 'play'
+  %a.black-icon
+    = svg_tag 'settings'

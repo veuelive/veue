@@ -1,0 +1,100 @@
+@use "../utils/scale";
+@use "../utils/color";
+
+.products-box {
+  margin-top: 1.75rem;
+  display: flex;
+  width: 100%;
+  padding: 0;
+  justify-content: space-between;
+  .item {
+    position: relative;
+    width: 17.5rem;
+    height: 18.125rem;
+    cursor: pointer;
+    border-radius: 0.625rem;
+    box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
+    &__img {
+      width: 17.5rem;
+      height: 18.125rem;
+      transition: 0.5s;
+      border-radius: 0.625rem;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+    .overlay-text {
+      position: absolute;
+      top: 2.125rem;
+      background-color: color.$white;
+      left: 50%;
+      transform: translate(-50%);
+      width: 12rem;
+      margin: 0 auto;
+      padding: 1.25rem;
+      border-radius: 0.625rem;
+      transition: all 0.8s ease;
+      display: none;
+      > h3 {
+        font-size: 0.875rem;
+        margin: 0;
+        color: color.$gray-darker;
+        font-weight: 500;
+      }
+      > p {
+        color: color.$cornflower;
+        font-weight: 500;
+        padding: 0.8rem 0;
+        margin: 0;
+        font-size: 0.875rem;
+      }
+      .url-box {
+        background-color: color.$white;
+        border: 1px solid color.$gray-light;
+        color: color.$gray-dark-2;
+        height: 1.75rem;
+        width: 3.5rem;
+        border-radius: 0.625rem;
+        cursor: pointer;
+        outline: none;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0 0.5rem;
+        margin-top: 0.4rem;
+      }
+    }
+    &:hover {
+      .overlay-text {
+        display: block;
+      }
+      box-shadow: 0px 0.4375rem 1rem 0 rgba(187, 192, 200, 0.75);
+      transition: 100ms;
+    }
+    .button-area {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 48%;
+      transform: translate(-50%, 0);
+      display: flex;
+      .icon-box {
+        background-color: color.$white;
+        width: 2.75rem;
+        height: 2.75rem;
+        border: 0;
+        border-radius: 0.625rem;
+        margin-right: 0.5rem;
+        cursor: pointer;
+        outline: none;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+    }
+    svg {
+      fill: color.$gray-dark-1;
+      width: 18px;
+      height: 15px;
+    }
+  }
+}

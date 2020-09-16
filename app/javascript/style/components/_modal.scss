@@ -1,4 +1,5 @@
 @use '../utils/color';
+@use 'utils/keyframes';
 
 .modal {
   .modal-skirt {
@@ -23,8 +24,8 @@
     padding: 2rem 2.25rem;
     border: 1px solid #888;
     border-radius: 1rem;
+    animation: fadeIn ease-in-out 300ms both;
   }
-
   .modal-label {
     color: color.$cornflower;
     margin-bottom: 0.5rem;

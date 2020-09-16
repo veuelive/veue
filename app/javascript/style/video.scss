@@ -1,9 +1,13 @@
 @use 'utils/color';
 
 .content-area__right__big {
+  #video-area {
+    position: relative;
+  }
   canvas {
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
   }
 
   .video-bar {
@@ -74,24 +78,48 @@
     border-radius: 0.4375rem;
     vertical-align: middle;
   }
+
+  .player-actions {
+    padding: 0.5rem 0.75rem;
+    opacity: 0.8;
+    border-radius: 1rem;
+    background-color: #383838;
+    position: absolute;
+    bottom: 1rem;
+    left: 40%;
+    display: flex;
+    a {
+      margin: 0 0.25rem;
+      padding: 0.65rem 0.75rem;
+      border-radius: 0.65rem;
+      display: flex;
+      align-items: center;
+      svg {
+        fill: white;
+        width: 15px;
+        height: 14px;
+        color: color.$white;
+      }
+    }
+    .black-icon {
+      background-color: color.$black;
+      opacity: 1;
+    }
+    .active-icon {
+      background-color: color.$cornflower;
+      opacity: 1;
+    }
+  }
 }
 
 .content-area__left__small {
   border-top-left-radius: 0.625rem;
   border-top-right-radius: 0.625rem;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   .stream-area {
     position: relative;
-  }
-  .play-button {
-    position: absolute;
-    left: 5px;
-    bottom: 10px;
-    background: red;
-    color: white;
-    border: none;
-    padding: 0.35rem 0.65rem;
-    border-radius: 5px;
   }
 }
 #videos__show {
@@ -123,6 +151,7 @@
   border: 1px solid color.$gray-light;
   border-radius: 10px;
   padding: 1rem;
+  font-size: 0.875rem;
   text-transform: capitalize;
   .streamer-info {
     display: flex;
@@ -133,6 +162,11 @@
       display: flex;
       padding-right: 0.25rem;
       align-items: center;
+      svg {
+        border-radius: 50%;
+        height: 2rem;
+        width: 2rem;
+      }
       .streamer-name {
         font-size: 14px;
         font-weight: 500;
@@ -146,10 +180,9 @@
     }
     .follow-btn {
       border-radius: 10px;
-      padding: 0.5rem;
+      padding: 0.5rem 1rem;
       background-color: color.$gray-light;
       color: color.$gray-darker-1;
-      font-size: 1rem;
     }
   }
   .stream-info {
@@ -159,7 +192,6 @@
     }
     .stream-name {
       color: color.$gray-darker;
-      font-size: 1rem;
     }
   }
 }

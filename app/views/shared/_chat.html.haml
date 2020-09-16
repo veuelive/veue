@@ -1,26 +1,11 @@
 .chat-section{ "data-controller": "chat", "data-chat-user": current_user_id, "data-chat-video-id": video.to_param }
-  .account-header
+  .account-header.layout-container-scrollable
     .comment-section
       .comment-grid.p-1.layout-container-scrollable{ id: "live-chat", "data-target": "chat.chatMessages" }
         - video.chat_messages.each do |message|
-          - if user_signed_in? && current_user.id == message.user_id
-            .message-right
-              .message-display.message-right__text
-                = message.body
-          - elsif @last_user and message.user.id == @last_user.id
-            .message-grouped
-              .message-display.border-left.message-grouped__text
-                = message.body
-          - else
-            .message-left
-              .user-avatar
-                = image_tag 'avatar-placeholder', class: 'rounded h-2 w-2'
-              .message-content
-                .message-content__name
-                  = message.user.username.capitalize
-                .message-display.border-left.message-content__text
-                  = message.body
+          = render partial: 'shared/message', locals: { message: message, last_user: @last_user }
           - @last_user = message.user
+        .last-message-place{ "data-target": "chat.lastMessage" }
   - if user_signed_in?
     .message-write
       .write-area
