@@ -37,3 +37,11 @@
     - All traces of Devise
     - All traces of WCS
     - Unused Decorator stubs for controllers unlikely to use them
+- ##VEUE-32 - @Sirbuland - 09-16-2020
+  - ###ADDED
+    - SVG handling using inline_svg gem.
+    - Include svgs as icons in place of images.
+    - Created a custom type for including svg files in typescript using import e.g: `import userSVG from '../images/user.svg'`.
+    - Overall revamp of video page styling.
+    - Added products section.
+    - Added player buttons.
