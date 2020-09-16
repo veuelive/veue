@@ -27,6 +27,17 @@ RSpec.configure do |config|
   config.include WebhookHelpers
   config.include PhoneTestHelpers
 
+  Capybara.register_driver(:media_browser) do |app|
+    switches = %w[
+      disable-popup-blocking
+      disable-translate
+      use-fake-ui-for-media-stream
+      use-fake-device-for-media-stream
+      test-type
+    ]
+    Capybara::Selenium::Driver.new(app, browser: :chrome, switches: switches)
+  end
+
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
