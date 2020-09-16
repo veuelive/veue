@@ -9,9 +9,9 @@
 - else
   .message-left
     .user-avatar
-      = svg_tag "user", svg_class: "rounded h-2 w-2"
+      = svg_tag "user", class: "rounded h-2 w-2"
     .message-content
       .message-content__name
-        = message.user.display_name.capitalize
+        = message.user.display_name
       .message-display.border-left.message-content__text
         = message.body

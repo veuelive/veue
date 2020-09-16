@@ -1,12 +1,12 @@
 - if user_signed_in?
   %ul
     %li
-      = svg_tag 'user', svg_class: 'status-user__profile'
+      = svg_tag 'user', class: 'status-user__profile'
     %li
       %p.status-user__text
         = current_user.display_name
     %li
-      = svg_tag 'arrow', svg_class: 'status-user__arrow'
+      = svg_tag 'arrow', class: 'status-user__arrow'
   .status-dropdown
     %ul
       %li
