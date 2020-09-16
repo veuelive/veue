@@ -40,6 +40,7 @@ describe "Audience View" do
 
       page.refresh
 
+      # BUG: VEUE-81
       # We had a bug that was causing the following to break, so we refresh to
       # make sure that a visitor would see the content even if it's not coming
       # through the WS connection
