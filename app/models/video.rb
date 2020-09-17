@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class Video < ApplicationRecord
-  include Slugable
+  include Sluggable
 
   belongs_to :user
   belongs_to :mux_live_stream
-  has_many :mux_assets, dependent: :destroy
   has_many :chat_messages, dependent: :destroy
+  has_many :video_events, dependent: :destroy
+  has_many :mux_assets, dependent: :destroy
 
   aasm column: "state" do
     # We aren't totally live yet, but it'sa coming!

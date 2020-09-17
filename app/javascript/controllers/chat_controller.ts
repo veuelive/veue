@@ -1,5 +1,5 @@
 import consumer from "../channels/consumer";
-import { post } from "util/fetch";
+import { postForm } from "util/fetch";
 import userSvg from "../images/user.svg";
 import BaseController from "./base_controller";
 
@@ -46,14 +46,15 @@ export default class extends BaseController {
           // Called when there's incoming data on the websocket for this channel
           const lastUser = parseInt(dataMap.get("last-user"));
 
+          const payload = data.payload;
           chatArea.insertAdjacentHTML(
             "beforeend",
             messageHtml(
-              data.user_id,
+              payload.user_id,
               currentUserId,
-              data.user_name,
-              data.text,
-              parseInt(data.user_id) === lastUser
+              payload.name,
+              payload.message,
+              payload.user_id === lastUser
             )
           );
           lastMessage.scrollIntoView({ behavior: "smooth" });
@@ -75,13 +76,11 @@ export default class extends BaseController {
     if (!event.shiftKey && event.code === "Enter") {
       event.preventDefault();
       const textAreaElement = event.target as HTMLTextAreaElement;
-      const text = textAreaElement.value;
+      const message = textAreaElement.value;
       textAreaElement.value = "";
 
-      if (text.length > 0) {
-        const data = new FormData();
-        data.append("body", text);
-        post(this.chatMessagesUrl, { body: data }).then(() =>
+      if (message.length > 0) {
+        postForm(this.chatMessagesUrl, { message }).then(() =>
           console.log("Sent!")
         );
       }
@@ -89,14 +88,14 @@ export default class extends BaseController {
   }
 
   createHtml(
-    id: number,
-    uid: string,
+    user_id: string,
+    my_user_id: string,
     name: string,
     message: string,
     sameUser: boolean
   ): string {
     let html = "";
-    if (id === parseInt(uid)) {
+    if (user_id === my_user_id) {
       html = `
         <div class="message-right">
           <div class="message-display message-right__text">

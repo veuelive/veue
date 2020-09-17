@@ -1,23 +1,20 @@
 # frozen_string_literal: true
 
-class ChatMessage < ApplicationRecord
-  belongs_to :user
-  belongs_to :video
+class ChatMessage < VideoEvent
+  def input_to_payload
+    {
+      name: user.display_name,
+      message: input["message"],
+      user_id: user.to_param,
+    }
+  end
 
-  validates :body, presence: true
-
-  after_create :broadcast_message
-
-  private
-
-  def broadcast_message
-    ActionCable.server.broadcast(
-      "live_video_#{video.to_param}",
-      {
-        text: body,
-        user_id: user.id,
-        user_name: user.display_name,
+  def input_schema
+    {
+      properties: {
+        message: String,
       },
-    )
+      required: ["message"],
+    }
   end
 end

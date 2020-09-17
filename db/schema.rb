@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_11_155206) do
+ActiveRecord::Schema.define(version: 2020_09_17_142741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,16 +27,6 @@ ActiveRecord::Schema.define(version: 2020_09_11_155206) do
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
-  end
-
-  create_table "chat_messages", force: :cascade do |t|
-    t.text "body"
-    t.bigint "user_id", null: false
-    t.bigint "video_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_chat_messages_on_user_id"
-    t.index ["video_id"], name: "index_chat_messages_on_video_id"
   end
 
   create_table "mux_assets", force: :cascade do |t|
@@ -115,7 +105,25 @@ ActiveRecord::Schema.define(version: 2020_09_11_155206) do
     t.text "phone_number_ciphertext", null: false
     t.string "phone_number_bidx"
     t.string "display_name"
+    t.string "slug"
     t.index ["mux_live_stream_id"], name: "index_users_on_mux_live_stream_id"
+    t.index ["slug"], name: "index_users_on_slug", unique: true
+  end
+
+  create_table "video_events", force: :cascade do |t|
+    t.bigint "video_id"
+    t.bigint "timestamp_ms"
+    t.string "type"
+    t.jsonb "input"
+    t.jsonb "payload"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["type"], name: "index_video_events_on_type"
+    t.index ["user_id"], name: "index_video_events_on_user_id"
+    t.index ["video_id", "timestamp_ms"], name: "index_video_events_on_video_id_and_timestamp_ms"
+    t.index ["video_id", "type"], name: "index_video_events_on_video_id_and_type"
+    t.index ["video_id"], name: "index_video_events_on_video_id"
   end
 
   create_table "videos", force: :cascade do |t|
@@ -135,8 +143,6 @@ ActiveRecord::Schema.define(version: 2020_09_11_155206) do
     t.index ["user_id"], name: "index_videos_on_user_id"
   end
 
-  add_foreign_key "chat_messages", "users"
-  add_foreign_key "chat_messages", "videos"
   add_foreign_key "mux_assets", "videos"
   add_foreign_key "videos", "users"
 end
