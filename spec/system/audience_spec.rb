@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe "Audience View" do
   let(:user) { create(:user) }
-  let(:video) { create(:video) }
+  let(:video) { create(:live_video) }
 
   before :example do
     driven_by(:selenium_chrome_headless)
@@ -33,7 +33,7 @@ describe "Audience View" do
     it "should show messages from other users" do
       other_user = create(:user)
       message = "Pizza time!"
-      video.chat_messages.create!(user: other_user, body: message)
+      video.chat_messages.create!(user: other_user, input: {message: message})
 
       expect(page).to have_content(message)
       expect(page).to have_content(other_user.display_name)

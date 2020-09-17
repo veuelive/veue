@@ -30,8 +30,9 @@ class ChatMessagesController < ApplicationController
   private
 
   def build_chat_message
-    current_user.chat_messages.new(
-      body: params[:body],
+    ChatMessage.new(
+      user: current_user,
+      input: {message: params[:message]},
       video: @video,
     )
   end

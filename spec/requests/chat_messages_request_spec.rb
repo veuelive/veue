@@ -7,7 +7,7 @@ describe "ChatMessages", type: :request do
   let(:video) { create(:video) }
   let(:chat_message_params) {
     {
-      body: Faker::Lorem.characters(number: 10),
+      message: Faker::Lorem.characters(number: 10),
     }
   }
 
@@ -29,7 +29,7 @@ describe "ChatMessages", type: :request do
 
       body = JSON.parse(response.body)
       expect(response).to have_http_status(200)
-      expect(body["error_messages"][0]).to eq("Body can't be blank")
+      expect(body["error_messages"][0]).to match("message")
     end
   end
 
@@ -42,9 +42,12 @@ describe "ChatMessages", type: :request do
     it "should broadcast message on channel" do
       expect { post video_chat_messages_path(video), params: chat_message_params }.to(
         have_broadcasted_to("live_video_#{video.to_param}").with(
-          text: chat_message_params[:body],
-          user_id: user.id,
-          user_name: user.display_name,
+          payload: {
+            message: chat_message_params[:message],
+            user_id: user.to_param,
+            name: user.display_name,
+          },
+          timestamp_ms: nil,
         ),
       )
     end

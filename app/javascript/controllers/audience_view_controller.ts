@@ -77,6 +77,7 @@ export default class extends Controller {
     const percent =
       (this.videoTarget.currentTime / this.videoTarget.duration) * 100;
     console.log(`${percent}%`);
+    this.videoTarget.currentTime;
   }
 
   private computeFrame() {

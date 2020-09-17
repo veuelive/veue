@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  include Sluggable
+
   has_many :videos, dependent: :destroy
+  has_many :video_events, dependent: :destroy
   has_many :mux_live_streams, dependent: :nullify
   belongs_to :mux_live_stream, optional: true
   delegate :stream_key, to: :mux_live_stream

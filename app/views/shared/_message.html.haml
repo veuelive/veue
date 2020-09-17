@@ -1,17 +1,17 @@
 - if user_signed_in? && current_user.id == message.user_id
   .message-right
     .message-display.message-right__text
-      = message.body
+      = message.payload["message"]
 - elsif last_user and message.user.id == last_user.id
   .message-grouped
     .message-display.border-left.message-grouped__text
-      = message.body
+      = message.payload["message"]
 - else
   .message-left
     .user-avatar
       = svg_tag "user", class: "rounded h-2 w-2"
     .message-content
       .message-content__name
-        = message.user.display_name
+        = message.payload["name"]
       .message-display.border-left.message-content__text
-        = message.body
+        = message.payload["message"]

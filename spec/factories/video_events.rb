@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :chat_messages do
-    body
+  factory :video_event do
   end
 end
