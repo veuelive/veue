@@ -1,3 +1,4 @@
+import "util/custom";
 import consumer from "../channels/consumer";
 import { postForm } from "util/fetch";
 import userSvg from "../images/user.svg";

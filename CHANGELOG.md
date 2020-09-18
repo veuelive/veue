@@ -1,21 +1,43 @@
+- ##[VEUE-82](ttps://app.clickup.com/t/8444384/VEUE-82)
+  @hcatlin - 09-17-2020
+
+  - ###ADDED
+    - New `VideoEvent` model to capture different types of events in the browser that we can play back
+    - JsonValidator to help handle JSONB fields and their schemas
+  - ###CHANGED
+    - Users should no longer be able to chat into "non-live" videos
+
 - 09-16-2020 - Bugfix [VEUE-81](https://app.clickup.com/t/8444384/VEUE-81) - @hcatlin
 
-- ##VEUE-77 - @hcatlin - 09-16-2020
+- ##[VEUE-77](ttps://app.clickup.com/t/8444384/VEUE-77)
+  @hcatlin - 09-16-2020
 
-  - ##ADDED
+  - ###ADDED
     - New Capybara browser setting called `media_browser` that allows testing of things like webcams and captures
     - `IpcMockConcern` exists in non-prod environments to see Broadcast working
     - Created new `ipcRenderer` object that mocks the Electron IPCRenderer in non-node environments for testing and dev
     - `User` objects now automatically are setup for streaming on attempt to stream
     - Created a new System spec called `Broadcast` to help the rails side of testing the Broadcast system
 
-- ##VEUE-67 - @hcatlin - 09-15-2020
+- ##[VEUE-32](https://app.clickup.com/t/8444384/VEUE-32)
+  @Sirbuland - 09-16-2020
+  - ###ADDED
+    - SVG handling using inline_svg gem.
+    - Include svgs as icons in place of images.
+    - Created a custom type for including svg files in typescript using import e.g: `import userSVG from '../images/user.svg'`.
+    - Overall revamp of video page styling.
+    - Added products section.
+    - Added player buttons.
 
-  - ##DEPENDENCIES
+* [VEUE-67](https://app.clickup.com/t/8444384/VEUE-67)
+  @hcatlin - 09-15-2020
+
+  - ###DEPENDENCIES
     - `node-fetch` upgraded to 2.6.1 to address [CVE-2020-15168](https://github.com/advisories/GHSA-w7rc-rwvf-8q5r)
     - `rails` upgraded to 6.0.3.3 to address [ CVE-2020-15169](https://github.com/advisories/GHSA-cfjv-5498-mph5)
 
-- ##VEUE-66 - @hcatlin - 09-14-2020
+* ##[VEUE-66](https://app.clickup.com/t/8444384/VEUE-66)
+  @hcatlin - 09-14-2020
   - ###ADDED
     - "System" tests that use chrome for testing and are now configured
     - Created a new flow for user authentication via phone number
@@ -39,11 +61,3 @@
     - All traces of Devise
     - All traces of WCS
     - Unused Decorator stubs for controllers unlikely to use them
-- ##VEUE-32 - @Sirbuland - 09-16-2020
-  - ###ADDED
-    - SVG handling using inline_svg gem.
-    - Include svgs as icons in place of images.
-    - Created a custom type for including svg files in typescript using import e.g: `import userSVG from '../images/user.svg'`.
-    - Overall revamp of video page styling.
-    - Added products section.
-    - Added player buttons.

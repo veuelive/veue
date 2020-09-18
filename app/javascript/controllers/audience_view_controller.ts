@@ -1,5 +1,6 @@
 import { Controller } from "stimulus";
 import Hls from "hls.js";
+import "util/custom";
 import playSvg from "../images/play.svg";
 import pauseSvg from "../images/pause.svg";
 
