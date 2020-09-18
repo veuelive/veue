@@ -6,7 +6,7 @@
           = render partial: 'shared/message', locals: { message: message, last_user: @last_user }
           - @last_user = message.user
         .last-message-place{ "data-target": "chat.lastMessage" }
-  - if user_signed_in?
+  - if user_signed_in? && video.live?
     .message-write
       .write-area
         = text_area_tag :body, "", class: 'write-area__text w-full outline-none', placeholder: 'Write your message...', data: { action: "keydown->chat#chatBoxKeyDown" }
