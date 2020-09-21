@@ -12,7 +12,7 @@
   flex-direction: column;
   justify-content: end;
   .account-header {
-    max-height: 500px;
+    max-height: 74vh;
     overflow-y: auto;
     .comment-section {
       .comment-grid {
@@ -75,7 +75,11 @@
       }
     }
   }
-
+  @media only screen and (max-width: 1400px) {
+    .account-header {
+      max-height: 69vh;
+    }
+  }
   .message-write {
     border-top: 1px solid color.$gray-light-1;
     width: 100%;
