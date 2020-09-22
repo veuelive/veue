@@ -36,7 +36,7 @@ jobs:
       - name: eslint
         uses: reviewdog/action-eslint@v1
   jsLinters:
-    name: Prettier
+    name: runner / prettier
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -48,7 +48,7 @@ jobs:
       - name: Prettier
         run: npx prettier -c app spec
   rspec:
-    name: Rspec Tests
+    name: rspec
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -125,7 +125,7 @@ jobs:
           PGPORT: ${{ job.services.postgres.ports[5432] }}
         run: bundle exec rspec
   jest:
-    name: Jest Tests
+    name: jest
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
