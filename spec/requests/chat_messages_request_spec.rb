@@ -47,7 +47,7 @@ describe "ChatMessages", type: :request do
             user_id: user.to_param,
             name: user.display_name,
           },
-          timestamp_ms: nil,
+          timecode_ms: 0,
         ),
       )
     end

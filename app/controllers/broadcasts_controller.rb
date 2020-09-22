@@ -8,7 +8,24 @@ class BroadcastsController < ApplicationController
     render(layout: "broadcast")
   end
 
+  def page_visit
+    current_video.page_visits.create!(
+      input: {
+        url: params[:url],
+      },
+      user: current_user,
+      timecode_ms: params[:timecode_ms],
+    )
+    head(:no_content)
+  end
+
   def blank
     render(layout: false)
+  end
+
+  private
+
+  def current_video
+    current_user.videos.live.first
   end
 end
