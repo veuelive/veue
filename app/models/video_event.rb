@@ -19,7 +19,7 @@ class VideoEvent < ApplicationRecord
     ActionCable.server.broadcast(
       "live_video_#{video.to_param}",
       {
-        timestamp_ms: timestamp_ms,
+        timecode_ms: timecode_ms,
         payload: payload,
       },
     )

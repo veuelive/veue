@@ -6,6 +6,7 @@ class Video < ApplicationRecord
   belongs_to :user
   belongs_to :mux_live_stream
   has_many :chat_messages, dependent: :destroy
+  has_many :page_visits, dependent: :destroy
   has_many :video_events, dependent: :destroy
   has_many :mux_assets, dependent: :destroy
 

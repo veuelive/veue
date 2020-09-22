@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_17_142741) do
+ActiveRecord::Schema.define(version: 2020_09_22_142225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(version: 2020_09_17_142741) do
 
   create_table "video_events", force: :cascade do |t|
     t.bigint "video_id"
-    t.bigint "timestamp_ms"
+    t.bigint "timecode_ms"
     t.string "type"
     t.jsonb "input"
     t.jsonb "payload"
@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(version: 2020_09_17_142741) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["type"], name: "index_video_events_on_type"
     t.index ["user_id"], name: "index_video_events_on_user_id"
-    t.index ["video_id", "timestamp_ms"], name: "index_video_events_on_video_id_and_timestamp_ms"
+    t.index ["video_id", "timecode_ms"], name: "index_video_events_on_video_id_and_timecode_ms"
     t.index ["video_id", "type"], name: "index_video_events_on_video_id_and_type"
     t.index ["video_id"], name: "index_video_events_on_video_id"
   end

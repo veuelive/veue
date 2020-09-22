@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resource :broadcast do
     member do
       get "blank"
+      post "page_visit"
     end
   end
 

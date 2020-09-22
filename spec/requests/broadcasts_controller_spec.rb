@@ -3,15 +3,44 @@
 require "rails_helper"
 
 describe BroadcastsController do
-  before :each do
-    @streamer = create(:streamer)
-    login_as @streamer
+  describe "before broadcast" do
+
+    before :each do
+      @streamer = create(:streamer)
+      login_as @streamer
+    end
+
+    it "should include the stream key!" do
+      get broadcast_path
+
+      expect(@streamer.stream_key).to have_attributes(size: (be > 2))
+      expect(response.body).to include(@streamer.stream_key)
+    end
   end
 
-  it "should include the stream key!" do
-    get broadcast_path
+  describe "during broadcast" do
+    let(:video) { create(:live_video) }
+    before :each do
+      login_as video.user
+    end
 
-    expect(@streamer.stream_key).to have_attributes(size: (be > 2))
-    expect(response.body).to include(@streamer.stream_key)
+    it "should create page views" do
+      pdp_page = "https://abracadabranyc.com/collections/magic/products/fire-wallet-by-premium-magic"
+
+      post page_visit_broadcast_url,
+           params: {
+             url: pdp_page,
+             timecode_ms: 100,
+           }
+
+      # No content sent!
+      expect(response.status).to eq(204)
+
+      video.reload
+      expect(video.video_events).to_not be_empty
+      page_visit = video.page_visits.last
+      expect(page_visit.payload["url"]).to eq(pdp_page)
+      expect(page_visit.timecode_ms).to eq(100)
+    end
   end
 end

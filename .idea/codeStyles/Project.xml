@@ -7,5 +7,10 @@
         <option name="CONTINUATION_INDENT_SIZE" value="4" />
       </indentOptions>
     </codeStyleSettings>
+    <codeStyleSettings language="ruby">
+      <indentOptions>
+        <option name="CONTINUATION_INDENT_SIZE" value="2" />
+      </indentOptions>
+    </codeStyleSettings>
   </code_scheme>
 </component>
