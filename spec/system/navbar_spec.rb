@@ -20,12 +20,12 @@ RSpec.describe "Navbar State" do
 
     it "should have mobile menu visible" do
       resize_window_to_mobile
-      expect(page).to have_selector(".mobile-menu", visible: true)
+      expect(has_css?("#open-menu")).to be(true)
     end
 
     it "should have mobile menu invisible" do
       resize_window_default
-      expect(page).to have_selector(".mobile-menu", visible: false)
+      expect(has_css?("#open-menu")).to be(false)
     end
   end
 
@@ -40,7 +40,7 @@ RSpec.describe "Navbar State" do
 
     describe "login user" do
       before(:each) do
-        login_as(user, mobile: true)
+        login_as(user)
         visit root_path
       end
 
