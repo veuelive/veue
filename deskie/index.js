@@ -17,7 +17,7 @@ const config = require("./config");
 const menu = require("./menu");
 const packageJson = require("./package.json");
 const { session } = require("electron");
-var ffmpegStatic = require("ffmpeg-static-electron");
+const ffmpegStatic = require("ffmpeg-static");
 const child_process = require("child_process");
 const Buffer = require("buffer").Buffer;
 let ffmpeg;
@@ -145,7 +145,7 @@ ipcMain.on("start", (_, data) => {
 		"-preset",
 		"medium",
 		"-tune",
-		"animation",
+		"zerolatency",
 
 		// audio codec config: sampling frequency (11025, 22050, 44100), bitrate 64 kbits
 		"-c:a",
@@ -167,7 +167,8 @@ ipcMain.on("start", (_, data) => {
 		"1",
 
 		//'-filter_complex', 'aresample=44100', // resample audio to 44100Hz, needed if input is not 44100
-		//'-strict', 'experimental',
+		"-strict",
+		"experimental",
 		"-bufsize",
 		"1000",
 		"-f",
