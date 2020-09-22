@@ -71,9 +71,13 @@
       right: 0;
       padding: 0.9375rem 0;
       border-radius: 0.625rem;
-      top: 16.5rem;
+      top: 4rem;
       display: none;
       z-index: 1;
+      a {
+        color: color.$white;
+      }
+
       &:after {
         content: "";
         position: absolute;
@@ -104,6 +108,14 @@
     .user-auth-area {
       .mobile-menu {
         display: block;
+        .menu-button {
+          button {
+            border: none;
+            background: white;
+            padding: 0;
+            margin: 0;
+          }
+        }
         svg {
           fill: color.$cornflower;
           width: 20px;

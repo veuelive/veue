@@ -1,9 +1,9 @@
 .user-auth-area{ data: { controller: "authentication" }}
   .mobile-menu{  data: { controller: "sidebar" }}
     .menu-button
-      %a{ data: { action: "click->sidebar#openRightMenu" }}
+      %button#open-menu{ data: { action: "click->sidebar#openRightMenu" }}
         = svg_tag 'menu'
-    #right-menu.sidebar-area{ "style": "display:none;" }
+    #right-menu.sidebar-area{ "style": "display:none;", data: { target: "sidebar.rightMenu" }}
       #overlay-area.menu-skirt
       .sidebar
         .menu-content

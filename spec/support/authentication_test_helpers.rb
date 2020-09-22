@@ -13,17 +13,23 @@ module AuthenticationTestHelpers
   end
 
   module SystemTestHelpers
-    def login_as(user)
-      load_page
+    def login_as(user, mobile=false)
+      load_page(mobile)
       enter_phone_number(user)
       confirm_secret_code
+      open_nav_sidebar if mobile
       expect(page).to have_selector(".status-user__text")
     end
 
     private
 
-    def load_page
+    def load_page(mobile)
       visit("/")
+      open_nav_sidebar if mobile
+    end
+
+    def open_nav_sidebar
+      click_button("open-menu")
     end
 
     def enter_phone_number(user)
