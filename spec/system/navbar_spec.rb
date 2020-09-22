@@ -41,13 +41,13 @@ RSpec.describe "Navbar State" do
 
     describe "login user" do
       before(:each) do
-        login_as(user, true)
+        login_as(user, mobile: true)
         visit root_path
       end
 
       it "should display user name and signout link in sidebar" do
         click_button("open-menu")
-        
+
         expect(page).to have_selector(".status-user__text")
         expect(page).to have_selector(:link_or_button, "Sign Out")
       end

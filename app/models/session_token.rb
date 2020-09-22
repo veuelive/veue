@@ -9,9 +9,9 @@ class SessionToken < ApplicationRecord
   encrypts :phone_number
   blind_index :phone_number
 
+  before_validation :copy_phone_if_user
   before_create :setup_secrets!
   before_create :lookup_user!
-  before_validation :copy_phone_if_user
   after_create :send_sms_message!
 
   aasm column: "state" do
