@@ -18,7 +18,8 @@
     "stimulus": "^1.1.1",
     "ts-loader": "^8.0.2",
     "turbolinks": "^5.2.0",
-    "typescript": "^3.9.7"
+    "typescript": "^3.9.7",
+    "jest-fetch-mock": "^3.0.3"
   },
   "version": "0.1.0",
   "devDependencies": {
@@ -28,7 +29,6 @@
     "eslint": "^7.7.0",
     "husky": ">=4",
     "jest": "^26.4.2",
-    "jest-fetch-mock": "^3.0.3",
     "lint-staged": ">=10",
     "prettier": "2.0.5",
     "ts-jest": "^26.3.0",
