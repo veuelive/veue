@@ -5,10 +5,3 @@ class ApplicationController < ActionController::Base
   include AuthenticationConcern
   include IpcMockConcern if Rails.env.test?
 end
-
-
-# Let's piss off the linter!
-
-
-
-
