@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_22_142225) do
+ActiveRecord::Schema.define(version: 2020_09_22_181220) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,23 @@ ActiveRecord::Schema.define(version: 2020_09_22_142225) do
     t.index ["state"], name: "index_session_tokens_on_state"
     t.index ["user_id"], name: "index_session_tokens_on_user_id"
     t.index ["uuid"], name: "index_session_tokens_on_uuid"
+  end
+
+  create_table "sms_messages", force: :cascade do |t|
+    t.bigint "session_token_id"
+    t.text "text_ciphertext"
+    t.string "from"
+    t.text "to_ciphertext"
+    t.string "to_bidx"
+    t.integer "price_in_cents"
+    t.string "service"
+    t.string "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["service"], name: "index_sms_messages_on_service"
+    t.index ["session_token_id"], name: "index_sms_messages_on_session_token_id"
+    t.index ["status"], name: "index_sms_messages_on_status"
+    t.index ["to_bidx"], name: "index_sms_messages_on_to_bidx"
   end
 
   create_table "users", force: :cascade do |t|
