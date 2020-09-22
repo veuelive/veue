@@ -74,6 +74,9 @@ group :development, :test do
   # Rubocop for making sure that our code follows standards- like a comment for every gem!
   gem "rubocop-rails", require: false
 
+  # Security Auditing Linter
+  gem "brakeman"
+
   # Used for our main testing framework
   gem "rspec-rails"
 
