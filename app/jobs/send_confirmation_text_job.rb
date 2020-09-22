@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class SendConfirmationTextJob < ApplicationJob
+
   queue_as :default
 
-  def perform(user_login_attempt)
-    user_login_attempt.sent_code!
+  def perform(session_token)
+    SmsMessage.create_confirmation!(session_token)
   end
 end
