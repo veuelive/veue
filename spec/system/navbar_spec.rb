@@ -11,7 +11,6 @@ RSpec.describe "Navbar State" do
 
   describe "navbar view on different screens" do
     before do
-      resize_window_to_mobile
       visit root_path
     end
 
