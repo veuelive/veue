@@ -13,7 +13,7 @@ module AuthenticationTestHelpers
   end
 
   module SystemTestHelpers
-    def login_as(user, mobile=false)
+    def login_as(user, mobile: false)
       load_page(mobile)
       enter_phone_number(user)
       confirm_secret_code
