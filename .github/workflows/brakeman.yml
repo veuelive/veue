@@ -1,0 +1,15 @@
+name: brakeman
+on: [pull_request]
+jobs:
+  brakeman:
+    name: runner / brakeman
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v1
+      - name: brakeman
+        uses: reviewdog/action-brakeman@v1
+        with:
+          brakeman_version: gemfile
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-check
