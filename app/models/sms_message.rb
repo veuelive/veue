@@ -55,10 +55,9 @@ class SmsMessage < ApplicationRecord
   def call_twillio!
     client = Twilio::REST::Client.new
     client.messages
-          .create!(
-            body: text,
-            to: to,
-            from: from,
-          )
+          .__send__(:create,
+                    body: text,
+                    to: to,
+                    from: from)
   end
 end
