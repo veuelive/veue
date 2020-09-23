@@ -59,19 +59,24 @@ export default class extends Controller {
     this.state = "loading";
     this.streamCapturer
       .start(this.data.get("stream-key"))
-      .then(() => (this.state = "live"))
+      .then(() => {
+        this.state = "live";
+        this.data.set("started-at", Date.now().toString());
+      })
       .catch((e) => console.error(e));
   }
 
   stopStreaming(): void {
-    this.state = "finished"
-    this.streamCapturer.stop()
+    this.state = "finished";
+    this.streamCapturer.stop();
   }
 
   set state(state: BroadcastState) {
-    const broadcastElement = document.getElementById("broadcast");
-    broadcastElement.className = "";
-    broadcastElement.className = "state-" + state;
+    this.element.className = "";
+    this.element.className = "state-" + state;
+    this.data.set("state", state);
+
+    console.log("state transitions to " + state);
 
     // Hide all elements that shouldn't be visible in this state!
     document

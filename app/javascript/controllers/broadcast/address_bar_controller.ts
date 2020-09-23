@@ -1,6 +1,6 @@
 import { Controller } from "stimulus";
 import { ipcRenderer } from "util/ipc_renderer";
-import {postForm} from "util/fetch";
+import { isLive, logPageVisit } from "controllers/broadcast/broadcast_helpers";
 
 export default class extends Controller {
   static targets = ["addressBar"];
@@ -10,23 +10,23 @@ export default class extends Controller {
   connect(): void {
     this.browserViewListener = (_, eventName, url) => {
       this.addressBarTarget.value = url;
-      if(eventName === "did-navigate") {
-        postForm("./page_visit", {
-          url: url,
-          timecode_ms: 100
-        }).then()
+      if (eventName === "did-navigate") {
+        logPageVisit(url);
       }
     };
     ipcRenderer.on("browserView", this.browserViewListener);
+
+    this.navigateToAddress();
   }
 
   onKeypress(event: KeyboardEvent): void {
     if (event.code === "Enter") {
-      ipcRenderer.send("navigate", this.addressBarTarget.value);
+      this.navigateToAddress();
     }
   }
 
-  navigateTo(): void {
-    console.log("NAVIGATE TO! ");
+  private navigateToAddress() {
+    console.log("Sent navigate signal");
+    ipcRenderer.send("navigate", this.addressBarTarget.value);
   }
 }
