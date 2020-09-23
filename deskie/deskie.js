@@ -78,6 +78,7 @@ const createMainWindow = async () => {
       (eventName) => {
         console.log("Setup event monitoring for " + eventName);
         browserView.webContents.on(eventName, (event) => {
+          console.log("Got event ", eventName, event)
           browserWindow.webContents.send(
             "browserView",
             eventName,

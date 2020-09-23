@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resources :chat_messages, only: %i[create index]
   end
 
-  resource :broadcast do
+  resources :broadcasts, only: [:show, :index] do
     member do
       get "blank"
       post "page_visit"
@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     end
   end
 
-  if Rails.env.test?
+  unless Rails.env.production?
     post "ipc_mock", to: "application#ipc_mock"
   end
 
