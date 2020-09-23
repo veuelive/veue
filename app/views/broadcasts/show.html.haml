@@ -2,7 +2,7 @@
   .content--left
     .video-bar
       .video-bar__address
-        %input{type: "text", data: {controller: "broadcasts.address-bar", action: "keypress->broadcasts.address-bar#onKeypress", target: "broadcasts.address-bar.addressBar"}}
+        %input{type: "text", data: {controller: "broadcast--address-bar", action: "keypress->broadcast--address-bar#onKeypress", target: "broadcast--address-bar.addressBar"}}
       .video-bar__button
         %button{data: {action: "click->broadcast#startStreaming", showOnState: "ready"}} Start Broadcast
         %button{data: {action: "click->broadcast#stopStreaming", showOnState: "live"}} Stop Broadcast
@@ -12,4 +12,3 @@
   .content--right
     %video#webcam_preview{data: {target: "broadcast.webcamVideoElement"}}
     .debug-area
-      %canvas#debug_canvas{width: 1280, height: 1280, data: {target: "broadcast.debugCanvas"}}
