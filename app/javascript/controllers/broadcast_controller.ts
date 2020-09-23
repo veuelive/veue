@@ -3,6 +3,7 @@ import { ipcRenderer } from "util/ipc_renderer";
 import {Rectangle} from "util/rectangle";
 import VideoMixer from "controllers/broadcast/video_mixer";
 import StreamCapturer from "controllers/broadcast/stream_capturer";
+import {calculateBroadcastArea} from "controllers/broadcast/broadcast_helpers";
 
 type BroadcastState = "loading" | "ready" | "live" | "failed";
 
@@ -36,18 +37,9 @@ export default class extends Controller {
             windowSize: Rectangle,
             windowTitle: string
         ) => {
-          const yRatio = workArea.height / windowSize.height;
-          const xRatio = workArea.width / windowSize.width;
+          const broadcastArea = calculateBroadcastArea(dimensions, workArea, windowSize)
 
-          const browserDimensions = {
-            height: (dimensions.height - dimensions.x) * yRatio,
-            width: (dimensions.width - dimensions.x) * yRatio,
-            x: dimensions.x * xRatio,
-            y: (dimensions.y + workArea.y) * yRatio,
-          };
-
-          console.log("Window title is " + windowTitle);
-          this.mixer.startBrowserCapture(windowTitle, browserDimensions).then(() => {
+          this.mixer.startBrowserCapture(windowTitle, broadcastArea).then(() => {
             console.log("ready!");
             this.state = "ready";
           });
