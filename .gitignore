@@ -47,3 +47,5 @@ yarn-debug.log*
 
 .DS_Store
 .eslintcache
+/deskie/node_modules/
+/deskie/build/
