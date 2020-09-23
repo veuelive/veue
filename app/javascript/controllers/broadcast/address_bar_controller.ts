@@ -10,10 +10,12 @@ export default class extends Controller {
   connect(): void {
     this.browserViewListener = (_, eventName, url) => {
       this.addressBarTarget.value = url;
-      postForm("/broadcast/page_visit", {
-        url: url,
-        timecode_ms: 100
-      })
+      if(eventName === "did-navigate") {
+        postForm("./page_visit", {
+          url: url,
+          timecode_ms: 100
+        }).then()
+      }
     };
     ipcRenderer.on("browserView", this.browserViewListener);
   }

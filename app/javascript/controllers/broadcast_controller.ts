@@ -5,7 +5,7 @@ import VideoMixer from "controllers/broadcast/video_mixer";
 import StreamCapturer from "controllers/broadcast/stream_capturer";
 import { calculateBroadcastArea } from "controllers/broadcast/broadcast_helpers";
 
-type BroadcastState = "loading" | "ready" | "live" | "failed";
+type BroadcastState = "loading" | "ready" | "live" | "failed" | "finished";
 
 export default class extends Controller {
   static targets = ["webcamVideoElement"];
@@ -61,6 +61,11 @@ export default class extends Controller {
       .start(this.data.get("stream-key"))
       .then(() => (this.state = "live"))
       .catch((e) => console.error(e));
+  }
+
+  stopStreaming(): void {
+    this.state = "finished"
+    this.streamCapturer.stop()
   }
 
   set state(state: BroadcastState) {
