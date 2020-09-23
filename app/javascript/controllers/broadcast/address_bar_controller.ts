@@ -1,5 +1,6 @@
 import { Controller } from "stimulus";
 import { ipcRenderer } from "util/ipc_renderer";
+import {postForm} from "util/fetch";
 
 export default class extends Controller {
   static targets = ["addressBar"];
@@ -9,6 +10,10 @@ export default class extends Controller {
   connect(): void {
     this.browserViewListener = (_, eventName, url) => {
       this.addressBarTarget.value = url;
+      postForm("/broadcast/page_visit", {
+        url: url,
+        timecode_ms: 100
+      })
     };
     ipcRenderer.on("browserView", this.browserViewListener);
   }

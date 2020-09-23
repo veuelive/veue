@@ -1,15 +1,8 @@
-#broadcast{data: {controller: "broadcast", broadcast: {"stream-key": current_user.stream_key}}}
+#broadcast{data: {controller: "broadcast", broadcast: {"stream-key": current_user.stream_key, state: current_broadcast_video.state, "video-id": current_broadcast_video.to_param}}}
   .content--left
     .video-bar
       .video-bar__address
-        %input{type: "text", data: {controller: "address-bar", action: "keypress->address-bar#onKeypress", target: "address-bar.addressBar"}, list: "datalist-sites"}
-        %datalist#datalist-sites
-          %option https://apple.com
-          %option https://revolve.com
-          %option https://sonos.com
-
-        .upload
-          = svg_tag 'hyperlink', class: 'upload__file', alt: 'File'
+        %input{type: "text", data: {controller: "broadcasts.address-bar", action: "keypress->broadcasts.address-bar#onKeypress", target: "broadcasts.address-bar.addressBar"}}
       .video-bar__button
         %button{data: {action: "click->broadcast#startStreaming", showOnState: "ready"}} Start Broadcast
         %button{data: {action: "click->broadcast#stopStreaming", showOnState: "live"}} Stop Broadcast
