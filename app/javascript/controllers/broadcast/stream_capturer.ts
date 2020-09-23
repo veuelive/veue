@@ -37,4 +37,8 @@ export default class StreamCapturer {
 
         return Promise.resolve();
     }
+
+    stop(): void {
+        this.mediaRecorder.stop()
+    }
 }
