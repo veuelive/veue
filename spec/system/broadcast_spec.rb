@@ -15,7 +15,7 @@ describe "Broadcast View" do
     visit "/"
     login_as(user)
 
-    visit "/broadcast"
+    visit "/broadcasts"
 
     logs = page.driver.browser.manage.logs.get(:browser)
     expect(logs).to be_empty

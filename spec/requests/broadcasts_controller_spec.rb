@@ -10,7 +10,8 @@ describe BroadcastsController do
     end
 
     it "should include the stream key!" do
-      get broadcast_path
+      get broadcasts_path
+      follow_redirect!
 
       expect(@streamer.stream_key).to have_attributes(size: (be > 2))
       expect(response.body).to include(@streamer.stream_key)
@@ -26,7 +27,7 @@ describe BroadcastsController do
     it "should create page views" do
       pdp_page = "https://abracadabranyc.com/collections/magic/products/fire-wallet-by-premium-magic"
 
-      post page_visit_broadcast_url,
+      post page_visit_broadcast_url(id: video.to_param),
            params: {
              url: pdp_page,
              timecode_ms: 100,

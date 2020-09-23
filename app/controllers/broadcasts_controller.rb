@@ -14,7 +14,7 @@ class BroadcastsController < ApplicationController
   end
 
   def page_visit
-    current_video.page_visits.create!(
+    current_broadcast_video.page_visits.create!(
       input: {
         url: params[:url],
       },
