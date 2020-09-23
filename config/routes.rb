@@ -11,8 +11,11 @@ Rails.application.routes.draw do
 
   resources :broadcasts, only: [:show, :index] do
     member do
-      get "blank"
       post "page_visit"
+    end
+
+    collection do
+      get "blank"
     end
   end
 

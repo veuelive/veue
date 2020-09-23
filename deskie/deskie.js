@@ -62,7 +62,7 @@ const createMainWindow = async () => {
   });
 
   browserWindow
-    .loadURL("http://localhost:3000/broadcast")
+    .loadURL("http://localhost:3000/broadcasts")
     .then(() => console.log("loaded"));
 
   browserWindow.on("ready-to-show", () => {
@@ -70,7 +70,7 @@ const createMainWindow = async () => {
 
     browserView = new BrowserView();
     // browserView.webContents.loadFile("sample.html")
-    browserView.webContents.loadURL("http://localhost:3000/broadcast/blank");
+    browserView.webContents.loadURL("http://localhost:3000/broadcasts/blank");
     browserWindow.addBrowserView(browserView);
 
     // Now we want ot subscribe to the following events and send them to the main window
