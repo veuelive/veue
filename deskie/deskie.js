@@ -61,33 +61,33 @@ const createMainWindow = async () => {
     },
   });
 
+  browserView = new BrowserView();
+
+  // Now we want ot subscribe to the following events and send them to the main window
+  ["did-start-loading", "did-stop-loading", "did-navigate"].forEach(
+    (eventName) => {
+      console.log("Setup event monitoring for " + eventName);
+      browserView.webContents.on(eventName, (event) => {
+        console.log("Got event ", eventName, event);
+        browserWindow.webContents.send(
+          "browserView",
+          eventName,
+          browserView.webContents.getURL()
+        );
+      });
+    }
+  );
+
+  // browserView.webContents.loadFile("sample.html")
+  // browserView.webContents.loadURL("http://localhost:3000/broadcasts/blank");
+  browserWindow.addBrowserView(browserView);
+
   browserWindow
     .loadURL("http://localhost:3000/broadcasts")
     .then(() => console.log("loaded"));
 
   browserWindow.on("ready-to-show", () => {
     browserWindow.show();
-
-    browserView = new BrowserView();
-    // browserView.webContents.loadFile("sample.html")
-    browserView.webContents.loadURL("http://localhost:3000/broadcasts/blank");
-    browserWindow.addBrowserView(browserView);
-
-    // Now we want ot subscribe to the following events and send them to the main window
-    ["did-start-loading", "did-stop-loading", "did-navigate"].forEach(
-      (eventName) => {
-        console.log("Setup event monitoring for " + eventName);
-        browserView.webContents.on(eventName, (event) => {
-          console.log("Got event ", eventName, event)
-          browserWindow.webContents.send(
-            "browserView",
-            eventName,
-            browserView.webContents.getURL()
-          );
-        });
-      }
-    );
-
     browserView.setBounds(bounds);
   });
 
@@ -121,11 +121,11 @@ ipcMain.on("stream", (event, data) => {
     ffmpeg.stdin.write(data.payload);
   } else {
     console.log("Got data, but no good instance of ffmpeg");
-    event.sender.send("");
+    event.sender.send("ffmpeg-error");
   }
 });
 
-ipcMain.on("start", (_, data) => {
+ipcMain.handle("start", (_, data) => {
   const key = data.streamKey;
 
   const rtmpUrl = `rtmps://global-live.mux.com/app/${key}`;

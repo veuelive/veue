@@ -1,4 +1,4 @@
-import { postJson } from "util/fetch";
+import { post, postJson } from "util/fetch";
 
 export type IPCRenderer = {
   send(channel: string, ...args);
@@ -14,9 +14,13 @@ class IPCRendererMock implements IPCRenderer {
 
   send(channel: string, ...args) {
     console.log("Got Send on " + channel, args);
-    postJson("/ipc_mock", { channel, args: args }).then(() => {
+    this.invoke(channel, ...args).then(() => {
       console.log("Mock posted to " + channel);
     });
+  }
+
+  invoke(channel: string, ...args): Promise<Response> {
+    return postJson("/ipc_mock", { channel, args: args });
   }
 
   on(channel: string, listener: (event: Event, ...args) => void) {

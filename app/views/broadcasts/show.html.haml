@@ -2,7 +2,7 @@
   .content--left
     .video-bar
       .video-bar__address
-        %input{type: "text", data: {controller: "broadcast--address-bar", action: "keypress->broadcast--address-bar#onKeypress", target: "broadcast--address-bar.addressBar"}}
+        %input{type: "text", value: "https://apple.com", data: {controller: "broadcast--address-bar", action: "keypress->broadcast--address-bar#onKeypress", target: "broadcast--address-bar.addressBar"}}
       .video-bar__button
         %button{data: {action: "click->broadcast#startStreaming", showOnState: "ready"}} Start Broadcast
         %button{data: {action: "click->broadcast#stopStreaming", showOnState: "live"}} Stop Broadcast
