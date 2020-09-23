@@ -5,13 +5,13 @@
  * of the element above can change!
  */
 export function getCsrfToken(): string {
-    const elements = document.getElementsByName("csrf-token");
-    if (elements.length === 0) {
-        console.log("No CSRF Token Found");
-        return "";
-    }
-    const csrfElement = elements[0] as HTMLMetaElement;
-    return csrfElement.content;
+  const elements = document.getElementsByName("csrf-token");
+  if (elements.length === 0) {
+    console.log("No CSRF Token Found");
+    return "";
+  }
+  const csrfElement = elements[0] as HTMLMetaElement;
+  return csrfElement.content;
 }
 
 /**
@@ -25,14 +25,14 @@ export function getCsrfToken(): string {
  * @param jsonObject
  */
 export function postJson(path: string, jsonObject: unknown): Promise<Response> {
-    return secureJSONFetch(path, jsonObject, "POST");
+  return secureJSONFetch(path, jsonObject, "POST");
 }
 
 /**
  * If you want to POST a form straight from Javascript objects, use this!
  */
 export function postForm(path: string, data?: unknown): Promise<Response> {
-    return secureFormFetch(path, "POST", data);
+  return secureFormFetch(path, "POST", data);
 }
 
 /**
@@ -43,11 +43,11 @@ export function postForm(path: string, data?: unknown): Promise<Response> {
  * @param options
  */
 export function post(path: string, options?: RequestInit): Promise<Response> {
-    if (!options) {
-        options = {};
-    }
-    options.method = "POST";
-    return secureFetch(path, options);
+  if (!options) {
+    options = {};
+  }
+  options.method = "POST";
+  return secureFetch(path, options);
 }
 
 /**
@@ -61,17 +61,17 @@ export function post(path: string, options?: RequestInit): Promise<Response> {
  * @param jsonObject
  */
 export function putJson(
-    path: string,
-    jsonObject: Record<string, unknown>
+  path: string,
+  jsonObject: Record<string, unknown>
 ): Promise<Response> {
-    return secureJSONFetch(path, jsonObject, "PUT");
+  return secureJSONFetch(path, jsonObject, "PUT");
 }
 
 /**
  * If you want to POST a form straight from Javascript objects, use this!
  */
 export function putForm(path: string, data?: unknown): Promise<Response> {
-    return secureFormFetch(path, "PUT", data);
+  return secureFormFetch(path, "PUT", data);
 }
 
 /**
@@ -82,11 +82,11 @@ export function putForm(path: string, data?: unknown): Promise<Response> {
  * @param options
  */
 export function put(path: string, options?: RequestInit): Promise<Response> {
-    if (!options) {
-        options = {};
-    }
-    options.method = "PUT";
-    return secureFetch(path, options);
+  if (!options) {
+    options = {};
+  }
+  options.method = "PUT";
+  return secureFetch(path, options);
 }
 
 /**
@@ -98,14 +98,14 @@ export function put(path: string, options?: RequestInit): Promise<Response> {
  * @param options
  */
 export function destroy(
-    path: string,
-    options?: RequestInit
+  path: string,
+  options?: RequestInit
 ): Promise<Response> {
-    if (!options) {
-        options = {};
-    }
-    options.method = "DELETE";
-    return secureFetch(path, options);
+  if (!options) {
+    options = {};
+  }
+  options.method = "DELETE";
+  return secureFetch(path, options);
 }
 
 /**
@@ -118,42 +118,42 @@ export function destroy(
  * @param method
  */
 function secureJSONFetch(
-    path: string,
-    jsonObject: unknown,
-    method: "POST" | "PUT" | "DELETE"
+  path: string,
+  jsonObject: unknown,
+  method: "POST" | "PUT" | "DELETE"
 ): Promise<Response> {
-    const body = JSON.stringify(jsonObject);
+  const body = JSON.stringify(jsonObject);
 
-    return secureFetch(path, {
-        method,
-        body,
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
+  return secureFetch(path, {
+    method,
+    body,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 }
 
 /**
  * This is the helper function for all form-post requests
  */
 export function secureFormFetch(
-    path: string,
-    method: string,
-    data?: unknown
+  path: string,
+  method: string,
+  data?: unknown
 ): Promise<Response> {
-    let formData = new FormData();
-    if (data instanceof HTMLFormElement) {
-        formData = new FormData(data);
-    } else if (data instanceof Object) {
-        for (const key in data) {
-            formData.append(key, data[key]);
-        }
+  let formData = new FormData();
+  if (data instanceof HTMLFormElement) {
+    formData = new FormData(data);
+  } else if (data instanceof Object) {
+    for (const key in data) {
+      formData.append(key, data[key]);
     }
+  }
 
-    return secureFetch(path, {
-        method,
-        body: formData,
-    });
+  return secureFetch(path, {
+    method,
+    body: formData,
+  });
 }
 
 /**
@@ -167,26 +167,25 @@ export function secureFormFetch(
  * @param options
  */
 export function secureFetch(
-    path: string,
-    options?: RequestInit
+  path: string,
+  options?: RequestInit
 ): Promise<Response> {
-    if (!options) {
-        options = {};
-    }
-    if (!options.headers) {
-        options.headers = {};
-    }
-    options.headers["X-CSRF-Token"] = getCsrfToken();
-    return fetch(processPath(path), options);
+  if (!options) {
+    options = {};
+  }
+  if (!options.headers) {
+    options.headers = {};
+  }
+  options.headers["X-CSRF-Token"] = getCsrfToken();
+  return fetch(processPath(path), options);
 }
 
-
 function processPath(path: string): string {
-    if (!path.startsWith("./")) return path;
-    let fullPath = window.location.pathname;
-    if (!fullPath.endsWith("/")) {
-        fullPath += "/"
-    }
-    fullPath += path.substring(2)
-    return fullPath
+  if (!path.startsWith("./")) return path;
+  let fullPath = window.location.pathname;
+  if (!fullPath.endsWith("/")) {
+    fullPath += "/";
+  }
+  fullPath += path.substring(2);
+  return fullPath;
 }
