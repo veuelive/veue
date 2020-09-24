@@ -35,6 +35,8 @@ jobs:
       - uses: actions/checkout@v1
       - name: eslint
         uses: reviewdog/action-eslint@v1
+        with:
+          eslint_flags: 'app/ spec/'
   jsLinters:
     name: runner / prettier
     runs-on: ubuntu-latest
