@@ -1,4 +1,4 @@
-import { post, postJson } from "util/fetch";
+import { postJson } from "util/fetch";
 
 export type IPCRenderer = {
   send(channel: string, ...args);

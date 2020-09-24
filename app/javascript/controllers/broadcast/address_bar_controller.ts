@@ -1,6 +1,6 @@
 import { Controller } from "stimulus";
 import { ipcRenderer } from "util/ipc_renderer";
-import { isLive, logPageVisit } from "controllers/broadcast/broadcast_helpers";
+import { logPageVisit } from "controllers/broadcast/broadcast_helpers";
 
 export default class extends Controller {
   static targets = ["addressBar"];
