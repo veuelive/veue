@@ -1,4 +1,18 @@
-- ##[VEUE-82](ttps://app.clickup.com/t/8444384/VEUE-82)
+- ##[VEUE-83](https://app.clickup.com/t/8444384/VEUE-83)
+  @hcatlin - 9-25-2020
+
+  - ###ADDED
+    - Broadcast controller is now a plural resource, and streamers stream _to_ the broadcast/video_id
+    - New `VideoMixer` class to control painting / frame logic for broadcast
+    - New `StreamCapturer` JS class to control MediaRecorder and broadcast
+    - Added ability to stop() the stream
+  - ###CHANGED
+    - Video's are CREATED before the stream starts– Streamers can have 1 or 0 "pending" live videos
+    - AddressBar Stimulus Controller is now a submodule of "broadcast"
+    - `did-navigate` events send a `page_visit` POST to the broadcast controller
+    - Broke out most of the functionality of Broadcast Controller into `VideoMixer` and `StreamCapturer`
+
+- ##[VEUE-82](https://app.clickup.com/t/8444384/VEUE-82)
   @hcatlin - 09-17-2020
 
   - ###ADDED
@@ -9,7 +23,7 @@
 
 - 09-16-2020 - Bugfix [VEUE-81](https://app.clickup.com/t/8444384/VEUE-81) - @hcatlin
 
-- ##[VEUE-77](ttps://app.clickup.com/t/8444384/VEUE-77)
+- ##[VEUE-77](https://app.clickup.com/t/8444384/VEUE-77)
   @hcatlin - 09-16-2020
 
   - ###ADDED
