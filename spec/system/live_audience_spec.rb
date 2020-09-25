@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "Audience View" do
+describe "Live Audience View" do
   let(:user) { create(:user) }
   let(:video) { create(:live_video) }
 

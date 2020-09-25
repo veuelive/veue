@@ -4,14 +4,14 @@ class Video < ApplicationRecord
   include Sluggable
 
   belongs_to :user
-  belongs_to :mux_live_stream
+  belongs_to :mux_live_stream, optional: true
   has_many :chat_messages, dependent: :destroy
   has_many :page_visits, dependent: :destroy
   has_many :video_events, dependent: :destroy
   has_many :mux_assets, dependent: :destroy
 
   aasm column: "state" do
-    # We aren't totally live yet, but it'sa coming!
+    # We aren't live yet, but it'sa coming!
     state :pending, initial: true
 
     # The video is live! Things are happening!

@@ -17,6 +17,7 @@ class MuxAssetWebhook < MuxWebhook
   def process_live_stream_completed_event!
     video = mux_asset.video
     video.mux_playback_id = mux_target.mux_playback_id
+    video.hls_url = "https://stream.mux.com/#{mux_target.mux_playback_id}.m3u8"
     video.finish!
   end
 end

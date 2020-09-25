@@ -2,7 +2,7 @@
 
 class MuxLiveStream < ApplicationRecord
   belongs_to :user
-  has_many :mux_webhooks, as: :webhook_target, dependent: :restrict_with_exception
+  has_many :mux_webhooks, as: :mux_target, dependent: :restrict_with_exception
   has_many :videos, dependent: :nullify
 
   before_create :setup_with_mux
