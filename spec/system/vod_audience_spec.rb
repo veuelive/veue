@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe "Prerecorded Audience View" do
   before :example do
-    driven_by(:selenium_chrome)
+    driven_by(:selenium_chrome_headless)
   end
 
   let(:video) { create(:video, {hls_url: "/__test/vod/playback.m3u8"}) }
