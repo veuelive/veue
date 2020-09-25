@@ -1,23 +1,23 @@
-.content-area{"data-controller": "audience-view", "data-audience-view-playback-id": current_video.mux_playback_id, "data-audience-view-video-id": current_video.id}
+.content-area{data: {"controller" => "audience-view", "audience-view" => {"url" => current_video.hls_url, "state" => current_video.state}}}
   .content-area__right__big
     #video-area
       .video-bar
         .video-bar__search
-          %input.outline-none{ :placeholder => "https://www.nike.com/w/vapormax-shoes-220dzy7ok", :type => "text", "data-audience-view-address-value": current_video.slug, disabled: true }
+          %input.outline-none{placeholder: "https://www.nike.com/w/vapormax-shoes-220dzy7ok", type: "text", "data-audience-view-address-value": current_video.slug, disabled: true}
           .upload
             = svg_tag 'hyperlink'
         .video-bar__button
           %button.time-area.time-red
             %span.dot.time-dot
-            1:36:24
-      %canvas.browser-video-area{"data-target": "audience-view.browserVideoCanvas", width: 1280, height: 800}
+            %span{"data-target": "audience-view.timeDisplay"}
+      %canvas.browser-video-area{"data-target": "audience-view.primaryCanvas", width: 1280, height: 800}
       = render partial: 'videos/partials/player_buttons'
     = render partial: 'videos/partials/products_area'
   .content-area__left__small
     .user-stream-info
       .stream-area
-        %canvas.streamer-webcam-view{"data-target": "audience-view.personVideoCanvas", width: 640, height: 480}
-        %video.player__video.viewer{"data-action" => "canplay->audience-view#videoLoaded timeupdate->audience-view#progressUpdate", "data-target" => "audience-view.video", style: "display: none;"}
+        %canvas.streamer-webcam-view{"data-target": "audience-view.secondaryCanvas", width: 640, height: 480}
+        %video.player__video.viewer{"data-action" => "timeupdate->audience-view#progressUpdate", "data-target" => "audience-view.video", style: "display: none;"}
       .p-1
         .streamer-profile
           .streamer-info

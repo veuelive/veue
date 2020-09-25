@@ -2,37 +2,32 @@ import { Controller } from "stimulus";
 import Hls from "hls.js";
 import playSvg from "../images/play.svg";
 import pauseSvg from "../images/pause.svg";
+import {displayTime} from "util/time";
 
 export default class extends Controller {
   static targets = [
     "video",
-    "browserVideoCanvas",
-    "personVideoCanvas",
+    "primaryCanvas",
+    "secondaryCanvas",
     "toggle",
-    // "progressBar",
-    // "progress",
-    // "progressTarget"
+    "timeDisplay",
   ];
   readonly toggleTarget!: HTMLElement;
-  // readonly progressBarTarget!: HTMLElement;
   readonly videoTarget!: HTMLVideoElement;
-  readonly browserVideoCanvasTarget!: HTMLCanvasElement;
-  readonly personVideoCanvasTarget!: HTMLCanvasElement;
-  // readonly progressTarget!: HTMLElement;
-  private browserVideoCanvasContext: CanvasRenderingContext2D;
-  private personVideoCanvasContext: CanvasRenderingContext2D;
+  readonly primaryCanvasTarget!: HTMLCanvasElement;
+  readonly secondaryCanvasTarget!: HTMLCanvasElement;
+  readonly timeDisplayTarget!: HTMLElement;
+  private primaryCtx: CanvasRenderingContext2D;
+  private secondaryCtx: CanvasRenderingContext2D;
   private isPaused: boolean;
 
   connect(): void {
     this.isPaused = true;
 
-    const url = `https://stream.mux.com/${this.data.get("playback-id")}.m3u8`;
-    console.log(url);
-
-    this.browserVideoCanvasContext = this.browserVideoCanvasTarget.getContext(
+    this.primaryCtx = this.primaryCanvasTarget.getContext(
       "2d"
     );
-    this.personVideoCanvasContext = this.personVideoCanvasTarget.getContext(
+    this.secondaryCtx = this.secondaryCanvasTarget.getContext(
       "2d"
     );
 
@@ -41,25 +36,19 @@ export default class extends Controller {
     });
 
     const hls = new Hls({
-      liveMaxLatencyDurationCount: 10,
+      liveMaxLatencyDurationCount: 15,
     });
-    hls.loadSource(url);
+    hls.loadSource(this.data.get("url"));
     hls.attachMedia(this.videoTarget);
-  }
 
-  private timerCallback() {
-    if (this.videoTarget.paused || this.videoTarget.ended) {
-      return;
-    }
-    this.computeFrame();
-    setTimeout(() => {
-      this.timerCallback();
-    }, 16); // roughly 60 frames per second
+    this.drawFrame();
   }
 
   togglePlay(): void {
     if (this.isPaused) {
-      this.videoTarget.play().then(() => this.timerCallback());
+      this.videoTarget.play()
+          .then(() => this.videoTarget.setAttribute("data-status", "playing"))
+          .catch(() => this.videoTarget.setAttribute("data-status", "paused"));
     } else {
       this.videoTarget.pause();
     }
@@ -69,20 +58,16 @@ export default class extends Controller {
     this.toggleTarget.innerHTML = `<img src=${imagePath} />`;
   }
 
-  videoLoaded(): void {
-    this.computeFrame();
-  }
-
   progressUpdate(): void {
     const percent =
       (this.videoTarget.currentTime / this.videoTarget.duration) * 100;
     console.log(`${percent}%`);
-    this.videoTarget.currentTime;
+    this.timeDisplayTarget.innerHTML = displayTime(this.videoTarget.currentTime)
   }
 
-  private computeFrame() {
-    const browserCtx = this.browserVideoCanvasContext;
-    const personCtx = this.personVideoCanvasContext;
+  private drawFrame() {
+    const browserCtx = this.primaryCtx;
+    const personCtx = this.secondaryCtx;
     const fullVideoWidth = this.videoTarget.videoWidth;
     const fullVideoHeight = this.videoTarget.videoHeight;
 
@@ -113,6 +98,6 @@ export default class extends Controller {
       480
     );
 
-    return;
+    requestAnimationFrame(() => this.drawFrame());
   }
 }
