@@ -1,7 +1,6 @@
 @use "../utils/scale";
 @use "../utils/color";
 @use "../utils/keyframes";
-
 .products-box {
   margin-top: 1.5rem;
   display: flex;
@@ -10,8 +9,8 @@
   justify-content: space-between;
   .product {
     position: relative;
-    width: 23%;
     cursor: pointer;
+    width: 23%;
     border-radius: 0.625rem;
     transition: 0.3s ease-in-out;
     box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
@@ -34,6 +33,7 @@
       padding: 1rem;
       animation: fadeIn ease 0.6s;
       border-radius: 0.625rem;
+      z-index: 9;
       display: none;
       > h3 {
         font-size: 0.875rem;
@@ -66,8 +66,12 @@
     }
     &:hover {
       .overlay-text {
-        height: 90px;
+        height: auto;
         display: block;
+        width: 65%;
+        @media only screen and (min-width: 1281px) and (max-width: 1920px) {
+          width: 69%;
+        }
       }
       box-shadow: 0px 0.4375rem 1rem 0 rgba(187, 192, 200, 0.75);
       transition: 100ms;
@@ -90,29 +94,64 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
+        @media only screen and (min-width: 992px) and (max-width: 1366px) {
+          width: 1.5rem;
+          height: 1.5rem;
+          border-radius: 0.325rem;
+        }
+        @media only screen and (min-width: 1367px) and (max-width: 1920px) {
+          width: 2rem;
+          height: 2rem;
+          border-radius: 0.5rem;
+        }
       }
     }
     svg {
       fill: color.$gray-dark-1;
       width: 18px;
       height: 15px;
+      @media only screen and (min-width: 1024px) and (max-width: 1366px) {
+        width: 11px;
+        height: 9px;
+      }
     }
   }
-  @media only screen and (min-width: 1600px) {
+  @media only screen and (min-width: 992px) and (max-width: 1366px) {
     .product {
+      width: 31%;
+      &:last-child {
+        display: none;
+      }
       .overlay-text {
-        top: 1rem;
+        top: 0.5rem;
         width: 12rem;
-        padding: 1.5rem;
+        padding: 0.5rem 1rem;
         > p {
           color: color.$cornflower;
           font-weight: 500;
-          padding: 0.75rem 0;
+          padding: 0.3rem 0;
           margin: 0;
           font-size: 0.875rem;
         }
         .url-box {
           margin-top: 0.5rem;
+        }
+      }
+    }
+  }
+  @media only screen and (min-width: 1024px) and (max-width: 1280px) {
+    .product {
+      .overlay-text {
+        > h3 {
+          font-size: 0.5rem;
+        }
+        > p {
+          font-size: 0.5rem;
+        }
+        .url-box {
+          height: 1.5rem;
+          width: 2.5rem;
+          font-size: 0.6rem;
         }
       }
     }

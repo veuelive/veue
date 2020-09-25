@@ -2,14 +2,14 @@
 @use '../utils/keyframes';
 
 .top-navbar {
-  height: 4.5rem;
+  height: 7vh;
   box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
   display: flex;
   background-color: color.$white;
   align-items: center;
   padding: 0 2.1875rem;
   justify-content: space-between;
-  margin-bottom: 2rem;
+  margin-bottom: 3.5vh;
   .navbar-logo {
     width: 5.3125rem;
   }
@@ -183,6 +183,21 @@
             }
           }
         }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1300px) {
+  .top-navbar {
+    .navbar-logo {
+      svg {
+        width: 20px;
+      }
+    }
+    .status-user {
+      &__text {
+        font-size: 0.85rem;
       }
     }
   }

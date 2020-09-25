@@ -4,11 +4,10 @@ import userSvg from "../images/user.svg";
 import BaseController from "./base_controller";
 
 export default class extends BaseController {
-  static targets = ["chatMessages", "lastMessage", "chatForm", "messageInput"];
+  static targets = ["chatMessages", "lastMessage", "messageInput"];
 
   readonly lastMessageTarget: HTMLElement;
   readonly chatMessagesTarget!: HTMLElement;
-  readonly chatFormTarget!: HTMLFormElement;
   readonly messageInputTarget: HTMLInputElement;
   readonly hasMessageInputTarget: boolean;
   private chatMessagesUrl: string;
