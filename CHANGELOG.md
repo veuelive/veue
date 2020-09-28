@@ -1,3 +1,8 @@
+- ##[VEUE-99](https://app.clickup.com/t/8444384/VEUE-97)
+  @hcatlin - 9-28-2020
+  - Time now shows on the broadcasters screen
+
+
 - ##[VEUE-99](https://app.clickup.com/t/8444384/VEUE-99)
   @hcatlin - 9-28-2020
 

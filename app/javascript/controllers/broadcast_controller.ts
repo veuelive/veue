@@ -8,11 +8,10 @@ import { calculateBroadcastArea } from "controllers/broadcast/broadcast_helpers"
 type BroadcastState = "loading" | "ready" | "live" | "failed" | "finished";
 
 export default class extends Controller {
-  static targets = ["webcamVideoElement"];
+  static targets = ["webcamVideoElement", "timeDisplay"];
   private webcamVideoElementTarget!: HTMLVideoElement;
+  private timeDisplayTarget!: HTMLElement;
 
-  private audioTrack: MediaStreamTrack;
-  private mediaRecorder: MediaRecorder;
   private mixer: VideoMixer;
   private streamCapturer: StreamCapturer;
 
@@ -20,7 +19,7 @@ export default class extends Controller {
     this.state = "loading";
 
     this.mixer = new VideoMixer(this.webcamVideoElementTarget);
-    this.streamCapturer = new StreamCapturer(this.mixer.canvas);
+    this.streamCapturer = new StreamCapturer(this.mixer.canvas, this.timeDisplayTarget);
 
     this.mixer.startWebcamCapture().then((audioTrack) => {
       this.streamCapturer.audioTrack = audioTrack;
@@ -49,9 +48,9 @@ export default class extends Controller {
       }
     );
 
-    ipcRenderer.on("stop", () => {
+    ipcRenderer.on("ffmpeg-error", () => {
       this.state = "failed";
-      this.mediaRecorder.stop();
+      this.streamCapturer.stop();
     });
   }
 

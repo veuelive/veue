@@ -49,8 +49,6 @@ body {
           color: color.$gray-dark-2;
         }
       }
-      &__button {
-      }
     }
     .time-area {
       padding: 0.6875rem 1.125rem;
@@ -62,7 +60,7 @@ body {
     .time-red {
       background-color: color.$red-light;
       color: color.$red-medium;
-      .dot {
+      .time-dot {
         background-color: color.$red-medium;
       }
     }
