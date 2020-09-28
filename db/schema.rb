@@ -10,30 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_25_170522) do
+ActiveRecord::Schema.define(version: 2020_09_28_211233) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "active_admin_comments", force: :cascade do |t|
-    t.string "namespace"
-    t.text "body"
-    t.string "resource_type"
-    t.bigint "resource_id"
-    t.string "author_type"
-    t.bigint "author_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
-    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
-    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
-  end
-
-  create_table "mux_assets", force: :cascade do |t|
+  create_table "mux_assets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "mux_status"
     t.string "mux_id"
     t.string "mux_playback_id"
-    t.bigint "video_id"
+    t.uuid "video_id"
     t.float "duration"
     t.string "max_stored_resolution"
     t.float "max_stored_frame_rate"
@@ -48,8 +35,8 @@ ActiveRecord::Schema.define(version: 2020_09_25_170522) do
     t.index ["video_id"], name: "index_mux_assets_on_video_id"
   end
 
-  create_table "mux_live_streams", force: :cascade do |t|
-    t.bigint "user_id"
+  create_table "mux_live_streams", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
     t.string "mux_status"
     t.string "mux_id"
     t.string "stream_key"
@@ -61,9 +48,9 @@ ActiveRecord::Schema.define(version: 2020_09_25_170522) do
     t.index ["user_id", "mux_status"], name: "index_mux_live_streams_on_user_id_and_mux_status"
   end
 
-  create_table "mux_webhooks", force: :cascade do |t|
+  create_table "mux_webhooks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "mux_target_type"
-    t.bigint "mux_target_id"
+    t.uuid "mux_target_id"
     t.string "type"
     t.string "event"
     t.string "mux_id"
@@ -78,11 +65,11 @@ ActiveRecord::Schema.define(version: 2020_09_25_170522) do
     t.index ["mux_target_type", "mux_target_id"], name: "index_mux_webhooks_on_mux_target_type_and_mux_target_id"
   end
 
-  create_table "session_tokens", force: :cascade do |t|
+  create_table "session_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "uuid", null: false
     t.text "phone_number_ciphertext"
     t.string "phone_number_bidx"
-    t.bigint "user_id"
+    t.uuid "user_id"
     t.text "secret_code_ciphertext"
     t.string "state"
     t.inet "ip_address"
@@ -96,7 +83,7 @@ ActiveRecord::Schema.define(version: 2020_09_25_170522) do
   end
 
   create_table "sms_messages", force: :cascade do |t|
-    t.bigint "session_token_id"
+    t.uuid "session_token_id"
     t.text "text_ciphertext"
     t.string "from"
     t.text "to_ciphertext"
@@ -112,11 +99,11 @@ ActiveRecord::Schema.define(version: 2020_09_25_170522) do
     t.index ["to_bidx"], name: "index_sms_messages_on_to_bidx"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
     t.integer "failed_attempts", default: 0, null: false
-    t.bigint "mux_live_stream_id"
+    t.uuid "mux_live_stream_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "phone_number_ciphertext", null: false
@@ -127,13 +114,13 @@ ActiveRecord::Schema.define(version: 2020_09_25_170522) do
     t.index ["slug"], name: "index_users_on_slug", unique: true
   end
 
-  create_table "video_events", force: :cascade do |t|
-    t.bigint "video_id"
+  create_table "video_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "video_id"
     t.bigint "timecode_ms"
     t.string "type"
     t.jsonb "input"
     t.jsonb "payload"
-    t.bigint "user_id"
+    t.uuid "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["type"], name: "index_video_events_on_type"
@@ -143,13 +130,13 @@ ActiveRecord::Schema.define(version: 2020_09_25_170522) do
     t.index ["video_id"], name: "index_video_events_on_video_id"
   end
 
-  create_table "videos", force: :cascade do |t|
-    t.bigint "user_id", null: false
+  create_table "videos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
     t.string "slug"
     t.string "title"
     t.string "mux_playback_id"
     t.string "state"
-    t.bigint "mux_live_stream_id"
+    t.uuid "mux_live_stream_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
