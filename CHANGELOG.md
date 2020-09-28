@@ -9,6 +9,8 @@
   - ###CHANGED
     - We no longer use the mux_playback_id to figure out what video stream to select, and instead we have a
       column in the `videos` table called `hls_url` that has the HLS link.
+    - Created a better state handler for the `audience_view_controller.ts` to make the "video playing"
+      `system/vod_audience_spec.rb` tests more reliable.
 
 - ##[VEUE-83](https://app.clickup.com/t/8444384/VEUE-83)
   @hcatlin - 9-25-2020
