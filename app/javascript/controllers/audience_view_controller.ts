@@ -88,8 +88,8 @@ export default class extends Controller {
       280 * ratioToOriginal,
       0,
       0,
-        320,
-        280
+      320,
+      280
     );
 
     requestAnimationFrame(() => this.drawFrame());
