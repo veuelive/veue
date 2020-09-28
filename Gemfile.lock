@@ -203,7 +203,6 @@ GEM
     mux_ruby (1.5.1)
       json (~> 2.1, >= 2.1.0)
       typhoeus (~> 1.0, >= 1.0.1)
-    nanoid (2.0.0)
     nio4r (2.5.3)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
@@ -398,7 +397,6 @@ DEPENDENCIES
   listen (~> 3.2)
   lockbox
   mux_ruby
-  nanoid
   pg (>= 0.18, < 2.0)
   phone
   posix-spawn

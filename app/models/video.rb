@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Video < ApplicationRecord
-  include Sluggable
-
   belongs_to :user
   belongs_to :mux_live_stream, optional: true
   has_many :chat_messages, dependent: :destroy

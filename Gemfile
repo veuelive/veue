@@ -46,9 +46,6 @@ gem "figaro"
 # Ruby library for working with the video streaming network Mux
 gem "mux_ruby"
 
-# Generates short UUIDs that we use for slugs in some models like Video
-gem "nanoid"
-
 # Helps us build state machines
 gem "aasm"
 

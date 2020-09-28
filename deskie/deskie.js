@@ -230,7 +230,7 @@ app.on("activate", () => {
     url: "http://localhost:3000/",
     name: "_veue_session",
     value:
-      "C4%2B4VUPWOx6PwP1i9RfnzzLd8XKorwsySoLxq7G8mJLQDhjueTPk9nsBaRn%2BoFZzqBIJRWPsKg0%2BU08MtnLcYghIrxi%2FMQ2SeN3KZ9hfh51%2BZU2jM1BxuxaJAWs7on%2BxkIJoKvZEhumt0sG6c0jM8nh7AjeYamC%2FnAcmgijDfJa3euePjqAH6BAnaAJfxYzPEA3J3ZNp6Id2WeeZdn5ar6dswR1uEvE3xqXSK9yAABBa3cuiTwwy4EKFchrroukkkj8fvKq4hIWbZ9AfzC%2FbmHTyS6Fp2gWurRfeEWsrEYp5MhkaHtFP5KR%2FwVWPzbWPzkUujrPR7t25b48QEGQ0AIeANiingOGAW8BnGg4lG4mLS8RytZx0d%2FHEEPooihRh5drboy0%3D--n2ONGZ4pvduMKHz5--eVrY3JSNPvjijSGtF8knTQ%3D%3D",
+      "rl2mafSofHU%2BHgl0Nbw3k%2BiktkJg5TotHX98UoSrIadO8mP1r0wjEdWHZj0x7tJPwQTZbobXhhDKBAjh9oaVjADwIgeN9Da8aM4M4bBPO3qLV1XmOxyBhnRs7pVRcbVMj8nXlySnO3CGAD4Twf9pVAttxe1KdyHoN9aNh%2FFDyGswvpDyOJgI%2FZJUdhbGqeWwAMmzuH%2BNPJG3APn5MuXO4svxCeF1zoWq2%2BKGD6hTJBH4AIJcWycgUT6Iqh61QezGOPI%2BVPoLdR%2B8BgSE0A8pYAOQi135gnmnZ4SJZaQMey9LukxScwbeXnc9OWZtPsCQZiRVxwcfn%2FeFDCA9AKVy3q8RDdh8DNM6%2FGtFPCrHQnJ5V%2BKhNWay%2B3ZuCzpfNot1DDWp1tI%3D--SgVKw0WzrbTipK9o--rc6bhJFvgR7YPJ7hm%2Foo3A%3D%3D",
   });
 
   Menu.setApplicationMenu(menu);

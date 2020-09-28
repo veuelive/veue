@@ -31,7 +31,7 @@ class BroadcastsController < ApplicationController
   private
 
   def current_broadcast_video
-    @current_broadcast_video ||= current_user.videos.find_by(slug: params[:id])
+    @current_broadcast_video ||= current_user.videos.find(params[:id])
   end
   helper_method :current_broadcast_video
 

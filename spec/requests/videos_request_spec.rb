@@ -30,21 +30,4 @@ describe "Videos" do
       expect(response).to have_http_status(:ok)
     end
   end
-
-  describe "show by slug" do
-    let(:video_obj) { create(:video) }
-
-    it "should render the video by slug" do
-      get video_path(@video)
-
-      expect(response).to have_http_status(:ok)
-    end
-
-    it "should render video even if slug not present" do
-      video_obj.update!(slug: "")
-      get video_path(video_obj)
-
-      expect(response).to have_http_status(:ok)
-    end
-  end
 end
