@@ -82,19 +82,18 @@ body {
     }
   }
   .content--right {
-    width: 400px;
+    width: 320px;
     padding: 5px;
 
     #webcam_preview {
-      width: 400px;
-      height: 300px;
+      width: 320px;
+      height: 280px;
     }
 
     .debug-area {
       width: 100%;
       #debug_canvas {
-        width: 400px;
-        height: 400px;
+        width: 320px;
       }
 
       video {

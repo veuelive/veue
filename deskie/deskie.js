@@ -38,10 +38,10 @@ app.setAppUserModelId(packageJson.build.appId);
 
 // Prevent window from being garbage collected
 let mainWindow;
-let bounds = { x: 10, y: 80, width: 1280, height: 800 };
+let bounds = { x: 10, y: 80, width: 1080, height: 675 };
 let windowSize = {
-  width: 1700,
-  height: 1000,
+  width: 1630,
+  height: 900,
 };
 let randomName = Math.random().toString(36).substring(7);
 
@@ -230,7 +230,7 @@ app.on("activate", () => {
     url: "http://localhost:3000/",
     name: "_veue_session",
     value:
-      "3%2BfnOritDuSAanC1t13uJemoY%2BJE%2B%2Byxji8a8uUDNLWzy7KjAQDVR%2BOXGBjHJfdC7u4gJ9bkLPr0Vrn16onDW3SZsYNG1h07ERm85E8CToM1dJS8AsbySNSzNBEP1zZMLY6PlKNANN%2FwVTWInlgIZMX6cM7qn0UL7ZJjTwIrxLqInCPbi5WSoLhFd7%2FfvaUkPprXanJ2zEOGkM9vJOJJaoli%2BY2UWOvOXssvZfkw6wlomdB7Yznqvb2oB0d%2BBV%2BH66ZO82yXb9V%2FyLXXo3f0NTzPh3sJI41%2BuTJZ3rOUIpZ88jZW0ARCWQkZH28SLYMqz4M5yz1X0jDEYQPEJ1I82czRW2WpGa3%2B7KFRvKM6N4yEWgFX65xWxeUJLAsxREarCk7Lsiw%3D--WGAe06you1yGOy71--qeot4Se9%2BUUmcMiv%2FUSy%2FA%3D%3D",
+      "wQvLUU%2FlmsIRITVEBtlD8DpaD2umx61eZfKzFWu8gs8%2B3VTfTvNZhMFx17QwkTFJnMRmvxpttnApORknijgzow9ukNjXAAqc7%2B%2BLxs3NwvAP%2BXOpL%2FXKzCbbLiQh0wBcUGgkERl6UPeVJCG%2FVjdRnPD4mWL4WoaokZb64GbI4ogJGMxsVOfzpnajIMYdnKWgINQpQNC1wwLhR6Id0D3URWGWXt1fHV8HIylcmAcq5HvNNFZl8PIcNkP1bWLVCTrWsV80HlgWE9%2BdPw6mK4AqcIEmiVWGIoL5eEsvWFbhP3z74pa%2B7%2FAlb%2Bv8lIR%2B4NtngkJgpxjB2p58vHx8tjurdko05sX9svs105sgzkEJqDXpOmGK2AABIf4ylz7r90HKC%2Ft6s2E%3D--%2Be2sJgHoanwyXmR0--mitJVp57ZBFSd%2FpcIOv4JQ%3D%3D",
   });
 
   Menu.setApplicationMenu(menu);
