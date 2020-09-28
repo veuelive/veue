@@ -109,9 +109,7 @@ ActiveRecord::Schema.define(version: 2020_09_28_211233) do
     t.text "phone_number_ciphertext", null: false
     t.string "phone_number_bidx"
     t.string "display_name"
-    t.string "slug"
     t.index ["mux_live_stream_id"], name: "index_users_on_mux_live_stream_id"
-    t.index ["slug"], name: "index_users_on_slug", unique: true
   end
 
   create_table "video_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -132,7 +130,6 @@ ActiveRecord::Schema.define(version: 2020_09_28_211233) do
 
   create_table "videos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
-    t.string "slug"
     t.string "title"
     t.string "mux_playback_id"
     t.string "state"
@@ -143,7 +140,6 @@ ActiveRecord::Schema.define(version: 2020_09_28_211233) do
     t.text "description"
     t.string "hls_url"
     t.index ["mux_live_stream_id"], name: "index_videos_on_mux_live_stream_id"
-    t.index ["slug"], name: "index_videos_on_slug", unique: true
     t.index ["state"], name: "index_videos_on_state"
     t.index ["user_id"], name: "index_videos_on_user_id"
   end

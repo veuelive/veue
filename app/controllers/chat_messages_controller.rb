@@ -40,6 +40,6 @@ class ChatMessagesController < ApplicationController
   end
 
   def set_video
-    @video = Video.find_by(slug: params[:video_id])
+    @video = Video.find(params[:video_id])
   end
 end
