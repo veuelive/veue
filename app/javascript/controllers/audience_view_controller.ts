@@ -19,15 +19,13 @@ export default class extends Controller {
   readonly timeDisplayTarget!: HTMLElement;
   private primaryCtx: CanvasRenderingContext2D;
   private secondaryCtx: CanvasRenderingContext2D;
-  private isPaused: boolean;
 
   connect(): void {
-    this.isPaused = true;
-
     this.primaryCtx = this.primaryCanvasTarget.getContext("2d");
     this.secondaryCtx = this.secondaryCanvasTarget.getContext("2d");
 
     this.videoTarget.addEventListener("loadedmetadata", async () => {
+      this.state = "ready";
       await this.togglePlay();
     });
 
@@ -41,18 +39,15 @@ export default class extends Controller {
   }
 
   togglePlay(): void {
-    if (this.isPaused) {
+    if (this.state !== "playing") {
       this.videoTarget
         .play()
-        .then(() => this.videoTarget.setAttribute("data-status", "playing"))
-        .catch(() => this.videoTarget.setAttribute("data-status", "paused"));
+        .then(() => (this.state = "playing"))
+        .catch(() => (this.state = "paused"));
     } else {
       this.videoTarget.pause();
+      this.state = "paused";
     }
-
-    this.isPaused = !this.isPaused;
-    const imagePath = this.isPaused ? playSvg : pauseSvg;
-    this.toggleTarget.innerHTML = `<img src=${imagePath} />`;
   }
 
   progressUpdate(): void {
@@ -98,5 +93,16 @@ export default class extends Controller {
     );
 
     requestAnimationFrame(() => this.drawFrame());
+  }
+
+  set state(state: string) {
+    this.data.set("state", state);
+
+    const imagePath = this.state === "paused" ? playSvg : pauseSvg;
+    this.toggleTarget.innerHTML = `<img src=${imagePath} />`;
+  }
+
+  get state(): string {
+    return this.data.get("state");
   }
 }

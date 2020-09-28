@@ -10,7 +10,7 @@ describe "Prerecorded Audience View" do
   let(:video) { create(:video, {hls_url: "/__test/vod/playback.m3u8"}) }
 
   def is_video_playing?
-    find("video", visible: false)["data-status"] == "playing"
+    find("div[data-controller='audience-view']", visible: false)["data-audience-view-state"] == "playing"
   end
 
   describe "anonymous user" do
@@ -24,7 +24,7 @@ describe "Prerecorded Audience View" do
         play.click
       end
 
-      page.find("*[data-target=\"audience-view.timeDisplay\"]", text: "00:00:01")
+      page.find("*[data-target=\"audience-view.timeDisplay\"]", text: "00:00:01", wait: 5)
     end
   end
 end
