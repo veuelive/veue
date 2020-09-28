@@ -2,7 +2,7 @@ import { Controller } from "stimulus";
 import Hls from "hls.js";
 import playSvg from "../images/play.svg";
 import pauseSvg from "../images/pause.svg";
-import {displayTime} from "util/time";
+import { displayTime } from "util/time";
 
 export default class extends Controller {
   static targets = [
@@ -24,12 +24,8 @@ export default class extends Controller {
   connect(): void {
     this.isPaused = true;
 
-    this.primaryCtx = this.primaryCanvasTarget.getContext(
-      "2d"
-    );
-    this.secondaryCtx = this.secondaryCanvasTarget.getContext(
-      "2d"
-    );
+    this.primaryCtx = this.primaryCanvasTarget.getContext("2d");
+    this.secondaryCtx = this.secondaryCanvasTarget.getContext("2d");
 
     this.videoTarget.addEventListener("loadedmetadata", async () => {
       await this.togglePlay();
@@ -46,9 +42,10 @@ export default class extends Controller {
 
   togglePlay(): void {
     if (this.isPaused) {
-      this.videoTarget.play()
-          .then(() => this.videoTarget.setAttribute("data-status", "playing"))
-          .catch(() => this.videoTarget.setAttribute("data-status", "paused"));
+      this.videoTarget
+        .play()
+        .then(() => this.videoTarget.setAttribute("data-status", "playing"))
+        .catch(() => this.videoTarget.setAttribute("data-status", "paused"));
     } else {
       this.videoTarget.pause();
     }
@@ -62,7 +59,9 @@ export default class extends Controller {
     const percent =
       (this.videoTarget.currentTime / this.videoTarget.duration) * 100;
     console.log(`${percent}%`);
-    this.timeDisplayTarget.innerHTML = displayTime(this.videoTarget.currentTime)
+    this.timeDisplayTarget.innerHTML = displayTime(
+      this.videoTarget.currentTime
+    );
   }
 
   private drawFrame() {
