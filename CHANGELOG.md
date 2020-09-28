@@ -1,3 +1,12 @@
+- ##[VEUE-99](https://app.clickup.com/t/8444384/VEUE-99)
+  @hcatlin - 9-28-2020
+  
+  - ###ADDED
+    - Time Display helper functions like `displayTime(seconds)` to output to something like `01:32:45`
+    - Tests that ACTUALLY *play* a video, and embedded a simple video playlist into the `public/_tests` folder
+      for both live and not live streams
+    - The main element of this ticket... displaying the time counter when the audience is watching a VOD stream 
+
 - ##[VEUE-83](https://app.clickup.com/t/8444384/VEUE-83)
   @hcatlin - 9-25-2020
 
