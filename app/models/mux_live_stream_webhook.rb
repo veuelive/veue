@@ -2,7 +2,10 @@
 
 class MuxLiveStreamWebhook < MuxWebhook
   def process_recording_event!
-    mux_target.videos.pending.first.update(mux_playback_id: playback_id, hls_url: "https://stream.mux.com/#{playback_id}.m3u8")
+    mux_target.videos.pending.first.update(
+      mux_playback_id: playback_id,
+      hls_url: "https://stream.mux.com/#{playback_id}.m3u8"
+    )
   end
 
   def process_active_event!
