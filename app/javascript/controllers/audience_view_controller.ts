@@ -65,9 +65,9 @@ export default class extends Controller {
     const fullVideoWidth = this.videoTarget.videoWidth;
     const fullVideoHeight = this.videoTarget.videoHeight;
 
-    const sy = (800 / 1280) * fullVideoHeight;
+    const sy = (800 / 1080) * fullVideoHeight;
 
-    const ratioToOriginal = fullVideoHeight / 1280;
+    const ratioToOriginal = fullVideoHeight / 1080;
 
     browserCtx.drawImage(
       this.videoTarget,
@@ -78,18 +78,18 @@ export default class extends Controller {
       0,
       0,
       1280,
-      1280
+      1080
     );
     personCtx.drawImage(
       this.videoTarget,
       0,
       sy,
-      640 * ratioToOriginal,
-      480 * ratioToOriginal,
+      320 * ratioToOriginal,
+      280 * ratioToOriginal,
       0,
       0,
-      640,
-      480
+        320,
+        280
     );
 
     requestAnimationFrame(() => this.drawFrame());

@@ -19,7 +19,7 @@ export default class VideoMixer {
     this.canvas = document.createElement("canvas") as CaptureStreamCanvas;
     this.canvas.setAttribute("id", "debug_canvas");
     this.canvas.setAttribute("width", "1280");
-    this.canvas.setAttribute("height", "1280");
+    this.canvas.setAttribute("height", "1080");
     if (this.canvas) {
       this.canvasContext = this.canvas.getContext("2d");
     }
@@ -34,8 +34,8 @@ export default class VideoMixer {
       .getUserMedia({
         audio: true,
         video: {
-          width: 640,
-          height: 480,
+          width: 320,
+          height: 280,
         },
       })
       .then(async (mediaStream) => {
