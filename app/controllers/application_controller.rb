@@ -8,6 +8,6 @@ class ApplicationController < ActionController::Base
   protected
 
   def skip_navbar
-    @skip_nav = true    
+    @skip_nav = true
   end
 end
