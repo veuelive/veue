@@ -2,6 +2,7 @@
 
 class VideosController < ApplicationController
   before_action :current_video, only: %i[show]
+  before_action :skip_navbar, only: %i[show]
 
   # GET /videos
   def index

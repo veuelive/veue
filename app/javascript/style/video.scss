@@ -12,7 +12,7 @@
 
   .video-bar {
     margin: 0 auto;
-    height: 4.375rem;
+    height: 2.5rem;
     background-color: color.$white;
     box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
     display: flex;
@@ -25,11 +25,12 @@
       width: 79%;
       display: flex;
       align-items: center;
-      height: 2.375rem;
+      height: 1rem;
       padding: 0.25rem 0.9375rem;
       border: 1px solid color.$gray-light;
       border-radius: 0.625rem;
       position: relative;
+      background-color: color.$white;
       @media only screen and (min-width: 1024px) and (max-width: 1725px) {
         width: 69%;
       }
@@ -37,40 +38,44 @@
         border: none;
         width: 100%;
         padding-left: 1.5rem;
-        font-size: 1rem;
+        font-size: 0.75rem;
         background-color: color.$white;
         color: color.$gray-dark-2;
       }
     }
     svg {
       fill: color.$gray-dark-2;
-      width: 18px;
-      height: 15px;
+      width: 15px;
+      height: 12px;
     }
     @media only screen and (min-width: 992px) and (max-width: 1300px) {
-      height: 3rem;
+      height: 2rem;
       &__search {
         width: 77%;
-        height: 1.375rem;
+        height: 0.75rem;
       }
     }
   }
   .upload {
     position: absolute;
-    top: 0.85rem;
+    top: 0.25rem;
   }
   .time-area {
-    padding: 0.6875rem 1.125rem;
+    padding: 0.2rem 1.125rem;
     border: none;
     border-radius: 0.9375rem;
     margin-right: 0.4375rem;
     font-weight: 600;
+    font-size: 0.75rem;
   }
   .time-red {
     background-color: color.$red-light;
     color: color.$red-medium;
     .dot {
       background-color: color.$red-medium;
+    }
+    span {
+      vertical-align: middle;
     }
   }
   .time-gray {
@@ -88,7 +93,6 @@
     height: 0.4375rem;
     display: inline-block;
     border-radius: 0.4375rem;
-    vertical-align: middle;
   }
 
   .player-actions {
@@ -131,9 +135,10 @@
   @media only screen and (min-width: 992px) and (max-width: 1300px) {
     .time-area {
       display: flex;
-      padding: 0.25rem 0.5rem;
+      padding: 0.15rem 0.5rem;
       justify-content: center;
       align-items: center;
+      font-size: 0.75rem;
       margin-left: 0.5rem;
       .dot {
         margin-right: 0.5rem;
@@ -141,7 +146,7 @@
     }
     .upload {
       position: absolute;
-      top: 0.5rem;
+      top: 0.1rem;
     }
   }
 }

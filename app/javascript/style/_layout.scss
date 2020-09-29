@@ -26,15 +26,17 @@ button {
     display: flex;
     justify-content: center;
     padding: 0 1.875rem 1.875rem 1.875rem;
+    margin-top: 3.5vh;
 
     .content-area {
-      max-width: 60%;
-      height: 86vh;
+      max-width: 78%;
+      height: 92vh;
       flex: 1;
       display: flex;
       flex-direction: row;
       @media only screen and (min-width: 1024px) and (max-width: 1300px) {
-        height: 84vh;
+        max-width: 76%;
+        height: 91vh;
       }
       .content-area__right__big {
         flex: 70%;
