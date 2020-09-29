@@ -1,5 +1,5 @@
 import { Controller } from "stimulus";
-import { ipcRenderer } from "util/ipc_renderer";
+import { ipcRenderer } from "controllers/broadcast/electron/ipc_renderer";
 import { logPageVisit } from "controllers/broadcast/broadcast_helpers";
 
 export default class extends Controller {

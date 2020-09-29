@@ -19,5 +19,13 @@ describe "Broadcast View" do
 
     logs = page.driver.browser.manage.logs.get(:browser)
     expect(logs).to be_empty
+
+    expect(page).to have_css("div[data-broadcast-state='ready']")
+
+    click_button("Start Broadcast")
+
+    expect(page).to have_css("div[data-broadcast-state='live']")
+
+    expect(page).to have_content("00:00:01")
   end
 end

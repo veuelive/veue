@@ -1,5 +1,5 @@
 import { Controller } from "stimulus";
-import { ipcRenderer } from "util/ipc_renderer";
+import { ipcRenderer } from "controllers/broadcast/electron/ipc_renderer";
 import { Rectangle } from "util/rectangle";
 import VideoMixer from "controllers/broadcast/video_mixer";
 import StreamCapturer from "controllers/broadcast/stream_capturer";
@@ -19,11 +19,10 @@ export default class extends Controller {
     this.state = "loading";
 
     this.mixer = new VideoMixer(this.webcamVideoElementTarget);
-    this.streamCapturer = new StreamCapturer(this.mixer.canvas, this.timeDisplayTarget);
-
-    this.mixer.startWebcamCapture().then((audioTrack) => {
-      this.streamCapturer.audioTrack = audioTrack;
-    });
+    this.streamCapturer = new StreamCapturer(
+      this.mixer.canvas,
+      this.timeDisplayTarget
+    );
 
     ipcRenderer.send("wakeup");
 
@@ -42,8 +41,13 @@ export default class extends Controller {
           windowSize
         );
 
-        this.mixer.startBrowserCapture(windowTitle, broadcastArea).then(() => {
-          this.state = "ready";
+        this.mixer.startWebcamCapture().then((audioTrack) => {
+          this.streamCapturer.audioTrack = audioTrack;
+          this.mixer
+            .startBrowserCapture(windowTitle, broadcastArea)
+            .then(() => {
+              this.state = "ready";
+            });
         });
       }
     );
@@ -55,7 +59,6 @@ export default class extends Controller {
   }
 
   startStreaming(): void {
-    this.state = "loading";
     this.streamCapturer
       .start(this.data.get("stream-key"))
       .then(() => {
@@ -72,7 +75,6 @@ export default class extends Controller {
 
   set state(state: BroadcastState) {
     this.element.className = "";
-    this.element.className = "state-" + state;
     this.data.set("state", state);
 
     console.log("state transitions to " + state);

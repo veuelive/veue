@@ -1,8 +1,11 @@
 import { postJson } from "util/fetch";
 
+const IGNORE_CHANNEL_INVOCATIONS_FOR = ["stream"];
+
 export type IPCRenderer = {
   send(channel: string, ...args);
   on(channel: string, listener: (event: Event, ...args) => void);
+  invoke(channel: string, ...args): Promise<any>;
 };
 
 let ipcRenderer;
@@ -19,8 +22,14 @@ class IPCRendererMock implements IPCRenderer {
     });
   }
 
-  invoke(channel: string, ...args): Promise<Response> {
-    return postJson("/ipc_mock", { channel, args: args });
+  invoke(channel: string, ...args): Promise<any> {
+    if (IGNORE_CHANNEL_INVOCATIONS_FOR.indexOf(channel) >= 0) {
+      return Promise.resolve();
+    } else {
+      return postJson("/ipc_mock", { channel, args: args })
+        .then((response) => response.json())
+        .then((data) => this.simulateEvents(data));
+    }
   }
 
   on(channel: string, listener: (event: Event, ...args) => void) {
@@ -28,6 +37,17 @@ class IPCRendererMock implements IPCRenderer {
       this.channels[channel] = [];
     }
     this.channels[channel].push(listener);
+  }
+
+  simulateEvents(data) {
+    for (const eventDescription of data["events"]) {
+      const { channel, args } = eventDescription;
+      console.log("Simulating event " + channel);
+      const broadcastTo = this.channels[channel];
+      for (const listener of broadcastTo) {
+        listener(new Event(channel), ...(args || []));
+      }
+    }
   }
 }
 

@@ -1,4 +1,5 @@
 import { Rectangle } from "util/rectangle";
+import { desktopCapturer } from "controllers/broadcast/electron/desktop_capture";
 
 export default class VideoMixer {
   canvas: CaptureStreamCanvas;
@@ -53,6 +54,10 @@ export default class VideoMixer {
 
     const source = await this.getWindowSource(windowTitle);
 
+    if (source.id === "MOCK") {
+      return Promise.resolve();
+    }
+
     this.browserVideoElement.srcObject = await navigator.mediaDevices.getUserMedia(
       {
         audio: false,
@@ -65,17 +70,15 @@ export default class VideoMixer {
       }
     );
     this.browserVideoElement.addEventListener("loadedmetadata", () => {
-      console.log("loaded!");
       this.browserVideoElement.play();
     });
   }
 
   private async getWindowSource(windowTitle: string) {
-    const capturer = eval("require('electron').desktopCapturer");
     let source;
 
     while (!source) {
-      const sources = await capturer.getSources({ types: ["window"] });
+      const sources = await desktopCapturer.getSources({ types: ["window"] });
       source = sources.find((source) => source.name === windowTitle);
     }
     return source;
