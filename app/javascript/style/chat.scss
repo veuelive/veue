@@ -14,9 +14,9 @@
   .messages-section {
     overflow-y: auto;
     margin-bottom: 0.5rem;
-    max-height: 28vh;
+    max-height: 24vh;
     @media only screen and (min-width: 1024px) and (max-width: 1280px) {
-      max-height: 16vh;
+      max-height: 14vh;
     }
 
     .message-right {

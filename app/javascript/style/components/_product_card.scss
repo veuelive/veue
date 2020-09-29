@@ -11,6 +11,7 @@
     position: relative;
     cursor: pointer;
     width: 23%;
+    height: 115px;
     border-radius: 0.625rem;
     transition: 0.3s ease-in-out;
     box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
@@ -28,47 +29,52 @@
       background-color: #fff;
       left: 50%;
       transform: translate(-50%);
-      width: 10rem;
       margin: 0 auto;
-      padding: 1rem;
+      padding: 0.6rem;
       animation: fadeIn ease 0.6s;
       border-radius: 0.625rem;
       z-index: 9;
       display: none;
       > h3 {
-        font-size: 0.875rem;
+        font-size: 0.75rem;
         margin: 0;
         color: color.$gray-darker;
         font-weight: 500;
       }
-      > p {
-        color: color.$cornflower;
-        font-weight: 500;
-        padding: 0.25rem 0;
-        margin: 0;
-        font-size: 0.875rem;
-      }
-      .url-box {
-        background-color: color.$white;
-        border: 1px solid color.$gray-light;
-        color: color.$gray-dark-2;
-        height: 1.75rem;
-        width: 3.5rem;
-        border-radius: 0.625rem;
-        cursor: pointer;
-        outline: none;
+      .price-link {
         display: flex;
-        justify-content: space-around;
-        align-items: center;
-        padding: 0 0.5rem;
-        margin-top: 0.25rem;
+        justify-content: space-between;
+        vertical-align: center;
+        > span.price {
+          color: color.$cornflower;
+          font-weight: 500;
+          padding: 0.25rem 0;
+          margin: 0;
+          font-size: 0.75rem;
+        }
+        .url-box {
+          background-color: color.$white;
+          border: 1px solid color.$gray-light;
+          color: color.$gray-dark-2;
+          height: 1.5rem;
+          width: 3.5rem;
+          font-size: 0.75rem;
+          border-radius: 0.625rem;
+          cursor: pointer;
+          outline: none;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          padding: 0 0.5rem;
+          margin-top: 0.2rem;
+        }
       }
     }
     &:hover {
       .overlay-text {
         height: auto;
         display: block;
-        width: 65%;
+        width: 75%;
         @media only screen and (min-width: 1281px) and (max-width: 1920px) {
           width: 69%;
         }
@@ -78,14 +84,14 @@
     }
     .button-area {
       position: absolute;
-      bottom: 1.5rem;
+      bottom: 0.5rem;
       left: 50%;
       transform: translate(-50%, 0);
       display: flex;
       .icon-box {
         background-color: color.$white;
-        width: 2.75rem;
-        height: 2.75rem;
+        width: 2rem;
+        height: 2rem;
         border: 0;
         border-radius: 0.625rem;
         margin-right: 0.5rem;
@@ -119,39 +125,34 @@
   @media only screen and (min-width: 992px) and (max-width: 1366px) {
     .product {
       width: 31%;
+      height: 95px;
       &:last-child {
         display: none;
       }
       .overlay-text {
         top: 0.5rem;
         width: 12rem;
-        padding: 0.5rem 1rem;
-        > p {
-          color: color.$cornflower;
-          font-weight: 500;
-          padding: 0.3rem 0;
-          margin: 0;
-          font-size: 0.875rem;
-        }
-        .url-box {
-          margin-top: 0.5rem;
-        }
-      }
-    }
-  }
-  @media only screen and (min-width: 1024px) and (max-width: 1280px) {
-    .product {
-      .overlay-text {
+        padding: 0.35rem 0.5rem;
         > h3 {
           font-size: 0.5rem;
         }
-        > p {
-          font-size: 0.5rem;
-        }
-        .url-box {
-          height: 1.5rem;
-          width: 2.5rem;
-          font-size: 0.6rem;
+        .price-link {
+          display: flex;
+          justify-content: space-between;
+          vertical-align: center;
+          > span.price {
+            color: color.$cornflower;
+            font-weight: 500;
+            padding: 0.3rem 0;
+            margin: 0;
+            font-size: 0.5rem;
+          }
+          .url-box {
+            margin-top: 0.15rem;
+            height: 1rem;
+            width: 2.5rem;
+            font-size: 0.6rem;
+          }
         }
       }
     }
