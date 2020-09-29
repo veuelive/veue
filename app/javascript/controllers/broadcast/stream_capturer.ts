@@ -1,6 +1,6 @@
 import { CaptureStreamCanvas } from "./video_mixer";
-import { ipcRenderer } from "util/ipc_renderer";
-import {displayTime} from "util/time";
+import { ipcRenderer } from "controllers/broadcast/electron/ipc_renderer";
+import { displayTime } from "util/time";
 
 export default class StreamCapturer {
   canvas: CaptureStreamCanvas;
@@ -34,18 +34,17 @@ export default class StreamCapturer {
 
     this.mediaRecorder.addEventListener("stop", () => {
       ipcRenderer.send("stop");
-      clearInterval(this.timerCallback)
+      clearInterval(this.timerCallback);
     });
 
     ipcRenderer.on("ffmpeg-error", () => this.mediaRecorder.stop());
 
     this.mediaRecorder.start(500);
 
-    return ipcRenderer.invoke("start", { streamKey })
-        .then(() => {
-          this.startedAt = Date.now()
-          this.timerCallback = setInterval(() => this.tick(), 1000)
-        });
+    return ipcRenderer.invoke("start", { streamKey }).then(() => {
+      this.startedAt = Date.now();
+      this.timerCallback = setInterval(() => this.tick(), 1000);
+    });
   }
 
   stop(): void {
@@ -53,6 +52,8 @@ export default class StreamCapturer {
   }
 
   private tick() {
-    this.timeDisplayTarget.innerText = displayTime((Date.now() - this.startedAt) / 1000)
+    this.timeDisplayTarget.innerText = displayTime(
+      (Date.now() - this.startedAt) / 1000
+    );
   }
 }
