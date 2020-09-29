@@ -4,8 +4,8 @@ class VideoEvent < ApplicationRecord
   belongs_to :user
   belongs_to :video
 
-  after_create :broadcast_message
   before_save :set_payload
+  after_create :broadcast_message
 
   validates :video, presence: true
   validates :input, presence: true, json: {schema: -> { input_schema.to_json }}
