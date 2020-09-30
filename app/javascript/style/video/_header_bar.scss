@@ -1,0 +1,83 @@
+@use '../utils/color';
+
+body#videos__show {
+  .primary-video__header {
+    display: flex;
+    margin: 0;
+    height: 3rem;
+    background-color: color.$white;
+    box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
+    border-radius: 1rem 1rem 0 0;
+    align-items: center;
+    padding: 0 1.1875rem;
+    justify-content: space-between;
+
+    &__address_bar {
+      flex: 1;
+      display: flex;
+      padding: 0.25rem 0.9375rem;
+      border: 1px solid color.$gray-light;
+      border-radius: 2rem;
+      background-color: color.$white;
+      @media only screen and (min-width: 1024px) and (max-width: 1725px) {
+        width: 69%;
+      }
+
+      input {
+        border: none;
+        width: 100%;
+        font-size: 1rem;
+        padding-left: 1.5rem;
+        background-color: color.$white;
+        color: color.$gray-dark-2;
+      }
+    }
+  }
+
+  .upload {
+    position: absolute;
+    top: 0.25rem;
+  }
+
+  .time-area {
+    padding: 0.2rem 1.125rem;
+    border: none;
+    border-radius: 0.9375rem;
+    margin-right: 0.4375rem;
+    font-weight: 600;
+    font-size: 0.75rem;
+  }
+
+  .time-red {
+    background-color: color.$red-light;
+    color: color.$red-medium;
+
+    .dot {
+      background-color: color.$red-medium;
+    }
+
+    span {
+      vertical-align: middle;
+    }
+  }
+
+  .time-gray {
+    background-color: color.$gray-light;
+    color: color.$gray-dark-1;
+
+    .dot {
+      background-color: color.$gray-dark-1;
+    }
+  }
+
+  .view-img {
+    margin-right: 0.3125rem;
+  }
+
+  .time-dot {
+    width: 0.4375rem;
+    height: 0.4375rem;
+    display: inline-block;
+    border-radius: 0.4375rem;
+  }
+}

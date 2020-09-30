@@ -8,21 +8,26 @@ export default class extends Controller {
   static targets = [
     "video",
     "primaryCanvas",
-    "secondaryCanvas",
+    "fixedSecondaryCanvas",
+    "pipSecondaryCanvas",
     "toggle",
     "timeDisplay",
   ];
   readonly toggleTarget!: HTMLElement;
   readonly videoTarget!: HTMLVideoElement;
   readonly primaryCanvasTarget!: HTMLCanvasElement;
-  readonly secondaryCanvasTarget!: HTMLCanvasElement;
+  readonly fixedSecondaryCanvasTarget!: HTMLCanvasElement;
+  readonly pipSecondaryCanvasTarget!: HTMLCanvasElement;
   readonly timeDisplayTarget!: HTMLElement;
   private primaryCtx: CanvasRenderingContext2D;
-  private secondaryCtx: CanvasRenderingContext2D;
+  private secondaryCtxs: Array<CanvasRenderingContext2D>;
 
   connect(): void {
     this.primaryCtx = this.primaryCanvasTarget.getContext("2d");
-    this.secondaryCtx = this.secondaryCanvasTarget.getContext("2d");
+    this.secondaryCtxs = [
+      this.fixedSecondaryCanvasTarget.getContext("2d"),
+      this.pipSecondaryCanvasTarget.getContext("2d"),
+    ];
 
     this.videoTarget.addEventListener("loadedmetadata", async () => {
       this.state = "ready";
@@ -61,7 +66,6 @@ export default class extends Controller {
 
   private drawFrame() {
     const browserCtx = this.primaryCtx;
-    const personCtx = this.secondaryCtx;
     const fullVideoWidth = this.videoTarget.videoWidth;
     const fullVideoHeight = this.videoTarget.videoHeight;
 
@@ -80,19 +84,29 @@ export default class extends Controller {
       1280,
       1080
     );
-    personCtx.drawImage(
-      this.videoTarget,
-      0,
-      sy,
-      320 * ratioToOriginal,
-      280 * ratioToOriginal,
-      0,
-      0,
-      320,
-      280
-    );
+    for (const secondaryCtx of this.secondaryCtxs) {
+      secondaryCtx.drawImage(
+        this.videoTarget,
+        0,
+        sy,
+        320 * ratioToOriginal,
+        280 * ratioToOriginal,
+        0,
+        0,
+        320,
+        280
+      );
+    }
 
     requestAnimationFrame(() => this.drawFrame());
+  }
+
+  showChat(): void {
+    this.element.className += " show-chat";
+  }
+
+  hideChat(): void {
+    this.element.className = "content-area";
   }
 
   set state(state: string) {

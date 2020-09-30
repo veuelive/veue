@@ -2,7 +2,6 @@
 
 class VideosController < ApplicationController
   before_action :current_video, only: %i[show]
-  before_action :skip_navbar, only: %i[show]
 
   # GET /videos
   def index
@@ -12,10 +11,6 @@ class VideosController < ApplicationController
 
   # GET /videos/1
   def show; end
-
-  def broadcast
-    # @current_video = current_user.videos.where(id: params[:id]).decorate
-  end
 
   # Use callbacks to share common setup or constraints between actions.
   def current_video

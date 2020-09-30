@@ -1,0 +1,98 @@
+body#videos__show {
+  /**
+  Put any main responsive layout code for ONLY desktop here... this does not count elements that scale to their
+  surroundings
+   */
+  @media (min-width: 1079px) {
+    .content-area {
+      flex-direction: row;
+      display: flex;
+      justify-content: flex-end;
+
+      .content-area__primary {
+        flex: 1;
+        overflow: scroll;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
+        height: 100%;
+        max-width: 1280px;
+      }
+
+      > div {
+        border-radius: 0.75rem;
+      }
+
+      .content-area__secondary {
+        margin: 0 1vw 0 1vw;
+        background: white;
+        max-width: 20vw;
+        display: flex;
+        flex-direction: column;
+      }
+
+      canvas.pip-secondary-canvas {
+        display: none;
+      }
+
+      // Only show the show chat toggle button in desktop mode
+      .chat-btn,
+      .close-btn {
+        display: none;
+      }
+
+      .primary-video-area {
+        max-height: 90vh;
+      }
+    }
+  }
+
+  /**
+    This is the primary Video layout for mobile views
+     */
+  @media (max-width: 1078px) {
+    .content-area {
+      flex-direction: column;
+      align-items: center;
+      height: 93vh;
+    }
+    .content-area__primary,
+    .primary-video-area,
+    .content-area__secondary {
+      width: 95vw;
+    }
+
+    canvas.fixed-secondary-canvas {
+      // We don't want to show the fixed canvas when we are in a small view
+      display: none;
+    }
+
+    // Most of the code for PIP is inside of a separate file
+    .pip-component canvas {
+      width: 18vw;
+    }
+
+    // This code here is how the audience-view-controller
+    // shows and hides the chat when in mobile view
+    .content-area.show-chat {
+      .content-area__primary {
+        display: none;
+      }
+    }
+    .content-area:not(.show-chat) {
+      .content-area__secondary {
+        display: none;
+      }
+    }
+
+    .content-area__secondary {
+      display: flex;
+
+      .chat-section {
+        height: 93vh;
+      }
+    }
+  }
+}

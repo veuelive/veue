@@ -1,0 +1,45 @@
+@use '../utils/color';
+
+#videos__show {
+  .player-actions {
+    padding: 0.5rem 0.75rem;
+    opacity: 0.8;
+    border-radius: 1rem;
+    background-color: #383838;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    display: flex;
+    transform: translate(-50%, -50%);
+
+    a {
+      margin: 0 0.25rem;
+      padding: 0.65rem 0.75rem;
+      border-radius: 0.65rem;
+      display: flex;
+      align-items: center;
+
+      svg {
+        fill: white;
+        width: 15px;
+        height: 14px;
+        color: color.$white;
+      }
+
+      img {
+        width: 15px;
+        height: 14px;
+      }
+    }
+
+    .black-icon {
+      background-color: color.$black;
+      opacity: 1;
+    }
+
+    .active-icon {
+      background-color: color.$cornflower;
+      opacity: 1;
+    }
+  }
+}
