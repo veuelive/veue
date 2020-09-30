@@ -1,0 +1,15 @@
+#videos__show {
+  .primary-video-area {
+    // This is required to ensure that the controls can be shown over this area
+    position: relative;
+  }
+
+  canvas.primary-canvas {
+    width: 100%;
+  }
+
+  canvas.fixed-secondary-canvas {
+    border-radius: 0.75rem;
+    max-width: 20vw;
+  }
+}

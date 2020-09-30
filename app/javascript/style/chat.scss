@@ -7,88 +7,88 @@
 
 // Realtime chat section
 .chat-section {
+  flex: 1;
   background-color: color.$white;
   display: flex;
   flex-direction: column;
-  justify-content: end;
-  .messages-section {
-    overflow-y: auto;
-    margin-bottom: 0.5rem;
-    max-height: 24vh;
-    @media only screen and (min-width: 1024px) and (max-width: 1280px) {
-      max-height: 14vh;
-    }
+  .messages-overflow-container {
+    flex: 1 1 auto;
+    overflow-y: scroll;
+    height: 0;
+    .messages {
+      margin-bottom: 0.5rem;
 
-    .message-right {
-      display: flex;
-      justify-content: flex-end;
-      width: 100%;
-      &__text {
-        border: 2px solid color.$gray-light-blue;
-        color: color.$gray-bluish;
-        border-top-left-radius: 1rem;
-        border-bottom-left-radius: 1rem;
-        border-top-right-radius: 1rem;
-        border-bottom-right-radius: 0.5rem;
-      }
-    }
-    .message-left {
-      margin-top: 1rem;
-      display: flex;
-      .message-content {
-        margin-left: 0.5rem;
-        &__name {
-          color: color.$gray;
-          margin-bottom: 0.25rem;
-          margin-top: 0.25rem;
-          font-size: 0.75rem;
+      .message-right {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+
+        &__text {
+          border: 2px solid color.$gray-light-blue;
+          color: color.$gray-bluish;
+          border-radius: 1rem 1rem 0.5rem 1rem;
         }
+      }
+
+      .message-left {
+        margin-top: 1rem;
+        display: flex;
+
+        .message-content {
+          margin-left: 0.5rem;
+
+          &__name {
+            color: color.$gray;
+            margin-bottom: 0.25rem;
+            margin-top: 0.25rem;
+            font-size: 0.75rem;
+          }
+
+          &__text {
+            background-color: color.$gray-lighter;
+            color: color.$gray-darker-2;
+          }
+        }
+
+        .user-avatar {
+          image {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+          }
+        }
+      }
+
+      .message-grouped {
         &__text {
           background-color: color.$gray-lighter;
           color: color.$gray-darker-2;
         }
+
+        margin-left: 2.5rem;
       }
-      .user-avatar {
-        image {
-          width: 1.5rem;
-          height: 1.5rem;
-          border-radius: 50%;
-        }
+
+      .border-left {
+        border-radius: 0.5rem 1rem 1rem 1rem;
       }
-    }
-    .message-grouped {
-      &__text {
-        background-color: color.$gray-lighter;
-        color: color.$gray-darker-2;
+
+      .message-display {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+        display: inline-block;
+        margin-bottom: 0.25rem;
       }
-      margin-left: 2.5rem;
-    }
-    .border-left {
-      border-top-left-radius: 0.5rem;
-      border-bottom-left-radius: 1rem;
-      border-top-right-radius: 1rem;
-      border-bottom-right-radius: 1rem;
-    }
-    .message-display {
-      padding: 0.5rem 1rem;
-      font-size: 0.75rem;
-      display: inline-block;
-      margin-bottom: 0.25rem;
-    }
-  }
-  @media only screen and (max-width: 1400px) {
-    .account-header {
-      max-height: 69vh;
     }
   }
   .message-write {
     border-top: 1px solid color.$gray-light-1;
     width: 100%;
+    height: 6rem;
     .write-area {
       margin-top: 1rem;
       padding: 0rem 0.5rem;
       &__text {
-        font-size: 0.875rem;
+        font-size: 1rem;
         border: none;
         color: color.$light-black;
         font-family: font.$poppins;

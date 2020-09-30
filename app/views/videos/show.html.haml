@@ -1,35 +1,36 @@
 .content-area{data: {"controller" => "audience-view", "audience-view" => {"url" => current_video.hls_url, "state" => current_video.state}}}
-  .content-area__right__big
-    #video-area
-      .video-bar
-        .video-bar__search
+  .content-area__primary
+    .primary-video-area
+      .primary-video__header
+        .primary-video__header__address_bar
           %input.outline-none{placeholder: "https://www.nike.com/w/vapormax-shoes-220dzy7ok", type: "text", disabled: true}
-          .upload
+          .link
             = svg_tag 'hyperlink'
-        .video-bar__button
+        .primary-video__header__button
           %button.time-area.time-red
             %span.dot.time-dot
             %span{"data-target": "audience-view.timeDisplay"}
-      %canvas.browser-video-area{"data-target": "audience-view.primaryCanvas", width: 1280, height: 800}
+      %canvas.primary-canvas{"data-target": "audience-view.primaryCanvas", width: 1280, height: 800}
+      .pip-component{data: {controller: "pip"}, draggable: "true"}
+        %canvas.pip-secondary-canvas{"data-target": "audience-view.pipSecondaryCanvas pip.canvas", width: 320, height: 280}
       = render partial: 'videos/partials/player_buttons'
+    .p-1
+      .streamer-profile
+        .streamer-info
+          .streamer-info__avatar
+            = inline_svg_pack_tag 'media/images/user.svg'
+            .streamer-name
+              = current_video.user.display_name
+          .follow-btn
+            follow
+        .stream-info
+          .stream-num
+            stream # 4
+          .stream-name
+            high‑performance wireless earphones
+    %button.chat-btn{data: {action: "click->audience-view#showChat"}} Open Chat
     = render partial: 'videos/partials/products_area'
-  .content-area__left__small
-    .user-stream-info
-      .stream-area
-        %canvas.streamer-webcam-view{"data-target": "audience-view.secondaryCanvas", width: 320, height: 280}
-        %video.player__video.viewer{"data-action" => "timeupdate->audience-view#progressUpdate", "data-target" => "audience-view.video", style: "display: none;"}
-      .p-1
-        .streamer-profile
-          .streamer-info
-            .streamer-info__avatar
-              = inline_svg_pack_tag 'media/images/user.svg'
-              .streamer-name
-                = current_video.user.display_name
-            .follow-btn
-              follow
-          .stream-info
-            .stream-num
-              stream # 4
-            .stream-name
-              high‑performance wireless earphones
+  .content-area__secondary
+    %canvas.fixed-secondary-canvas{"data-target": "audience-view.fixedSecondaryCanvas", width: 320, height: 280}
+    %video.player__video.viewer{"data-action" => "timeupdate->audience-view#progressUpdate", "data-target" => "audience-view.video", style: "display: none;"}
     = render partial: 'shared/chat', locals: { video: current_video }
