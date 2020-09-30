@@ -4,10 +4,9 @@ import userSvg from "../images/user.svg";
 import BaseController from "./base_controller";
 
 export default class extends BaseController {
-  static targets = ["chatMessages", "lastMessage", "messageInput"];
+  static targets = ["lastMessage", "messageInput"];
 
   readonly lastMessageTarget: HTMLElement;
-  readonly chatMessagesTarget!: HTMLElement;
   readonly messageInputTarget: HTMLInputElement;
   readonly hasMessageInputTarget: boolean;
   private chatMessagesUrl: string;
@@ -32,7 +31,6 @@ export default class extends BaseController {
     const messageHtml = this.createHtml;
     const currentUserId = this.userId;
     const dataMap = this.data;
-    const chatArea = this.chatMessagesTarget;
     const lastMessage = this.lastMessageTarget;
 
     consumer.subscriptions.create(
@@ -46,8 +44,8 @@ export default class extends BaseController {
           const lastUser = parseInt(dataMap.get("last-user"));
 
           const payload = data.payload;
-          chatArea.insertAdjacentHTML(
-            "beforeend",
+          lastMessage.insertAdjacentHTML(
+            "beforebegin",
             messageHtml(
               payload.user_id,
               currentUserId,
