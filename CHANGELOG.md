@@ -1,10 +1,19 @@
-- ##[VEUE-97](https://app.clickup.com/t/8444384/VEUE-97)
+- ##[VEUE-105](https://app.clickup.com/t/8444384/VEUE-105)
+  @hcatlin - 10-01-2020
+  - ###CHANGED
+    - Broke up the video.scss file
+    - Built mobile sized views
+    - Built hide/show chat in Mobile size
+    - Moved "StreamerProfile" to be below the video
+    - The secondary panel now disappears when in mobile size
+
+* ##[VEUE-97](https://app.clickup.com/t/8444384/VEUE-97)
   @hcatlin - 9-28-2020
   - ###ADDED
     - Time now shows on the broadcasters screen
     - Got the "Broadcast" system test mocked a lot more so that it actually thinks it's broadcasting
 
-* ##[VEUE-99](https://app.clickup.com/t/8444384/VEUE-99)
+- ##[VEUE-99](https://app.clickup.com/t/8444384/VEUE-99)
   @hcatlin - 9-28-2020
 
   - ###ADDED
@@ -18,7 +27,7 @@
     - Created a better state handler for the `audience_view_controller.ts` to make the "video playing"
       `system/vod_audience_spec.rb` tests more reliable.
 
-* ##[VEUE-83](https://app.clickup.com/t/8444384/VEUE-83)
+- ##[VEUE-83](https://app.clickup.com/t/8444384/VEUE-83)
   @hcatlin - 9-25-2020
 
   - ###ADDED
@@ -32,7 +41,7 @@
     - `did-navigate` events send a `page_visit` POST to the broadcast controller
     - Broke out most of the functionality of Broadcast Controller into `VideoMixer` and `StreamCapturer`
 
-* ##[VEUE-82](https://app.clickup.com/t/8444384/VEUE-82)
+- ##[VEUE-82](https://app.clickup.com/t/8444384/VEUE-82)
   @hcatlin - 09-17-2020
 
   - ###ADDED
@@ -41,9 +50,9 @@
   - ###CHANGED
     - Users should no longer be able to chat into "non-live" videos
 
-* 09-16-2020 - Bugfix [VEUE-81](https://app.clickup.com/t/8444384/VEUE-81) - @hcatlin
+- 09-16-2020 - Bugfix [VEUE-81](https://app.clickup.com/t/8444384/VEUE-81) - @hcatlin
 
-* ##[VEUE-77](https://app.clickup.com/t/8444384/VEUE-77)
+- ##[VEUE-77](https://app.clickup.com/t/8444384/VEUE-77)
   @hcatlin - 09-16-2020
 
   - ###ADDED
@@ -53,7 +62,7 @@
     - `User` objects now automatically are setup for streaming on attempt to stream
     - Created a new System spec called `Broadcast` to help the rails side of testing the Broadcast system
 
-* ##[VEUE-32](https://app.clickup.com/t/8444384/VEUE-32)
+- ##[VEUE-32](https://app.clickup.com/t/8444384/VEUE-32)
   @Sirbuland - 09-16-2020
   - ###ADDED
     - SVG handling using inline_svg gem.
@@ -63,14 +72,14 @@
     - Added products section.
     - Added player buttons.
 
-- [VEUE-67](https://app.clickup.com/t/8444384/VEUE-67)
+* [VEUE-67](https://app.clickup.com/t/8444384/VEUE-67)
   @hcatlin - 09-15-2020
 
   - ###DEPENDENCIES
     - `node-fetch` upgraded to 2.6.1 to address [CVE-2020-15168](https://github.com/advisories/GHSA-w7rc-rwvf-8q5r)
     - `rails` upgraded to 6.0.3.3 to address [ CVE-2020-15169](https://github.com/advisories/GHSA-cfjv-5498-mph5)
 
-- ##[VEUE-66](https://app.clickup.com/t/8444384/VEUE-66)
+* ##[VEUE-66](https://app.clickup.com/t/8444384/VEUE-66)
   @hcatlin - 09-14-2020
   - ###ADDED
     - "System" tests that use chrome for testing and are now configured
