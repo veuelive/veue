@@ -6,10 +6,9 @@
           %input.outline-none{placeholder: "https://www.nike.com/w/vapormax-shoes-220dzy7ok", type: "text", disabled: true}
           .link
             = svg_tag 'hyperlink'
-        .primary-video__header__button
-          %button.time-area.time-red
-            %span.dot.time-dot
-            %span{"data-target": "audience-view.timeDisplay"}
+        .time-area.time-red
+          %span.dot.time-dot
+          %span{"data-target": "audience-view.timeDisplay"}
       %canvas.primary-canvas{"data-target": "audience-view.primaryCanvas", width: 1280, height: 800}
       .pip-component{data: {controller: "pip"}, draggable: "true"}
         %canvas.pip-secondary-canvas{"data-target": "audience-view.pipSecondaryCanvas pip.canvas", width: 320, height: 280}
