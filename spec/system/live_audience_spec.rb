@@ -8,6 +8,7 @@ describe "Live Audience View" do
 
   before :example do
     driven_by(:selenium_chrome_headless)
+    resize_window_desktop
   end
 
   describe "a user is logged in" do
