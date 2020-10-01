@@ -15,7 +15,7 @@ RSpec.describe "Navbar State" do
     end
 
     after do
-      resize_window_default
+      resize_window_desktop
     end
 
     it "should have mobile menu visible" do
@@ -24,7 +24,7 @@ RSpec.describe "Navbar State" do
     end
 
     it "should have mobile menu invisible" do
-      resize_window_default
+      resize_window_desktop
       expect(has_css?("#open-menu")).to be(false)
     end
   end
@@ -35,7 +35,7 @@ RSpec.describe "Navbar State" do
     end
 
     after do
-      resize_window_default
+      resize_window_desktop
     end
 
     describe "login user" do

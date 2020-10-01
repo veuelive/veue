@@ -5,8 +5,8 @@ module ResponsiveHelpers
     resize_window_by({width: 640, height: 480})
   end
 
-  def resize_window_default
-    resize_window_by({width: 1024, height: 768})
+  def resize_window_desktop
+    resize_window_by({width: 1104, height: 768})
   end
 
   private
