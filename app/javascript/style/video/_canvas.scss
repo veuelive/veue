@@ -6,10 +6,15 @@
 
   canvas.primary-canvas {
     width: 100%;
+    border-radius: 0 0 1rem 1rem;
   }
 
   canvas.fixed-secondary-canvas {
     border-radius: 0.75rem;
     max-width: 20vw;
+  }
+
+  canvas.pip-secondary-canvas {
+    border-radius: 1rem;
   }
 }

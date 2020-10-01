@@ -20,6 +20,7 @@ export default class extends BaseController {
     this.userId = this.data.get("user");
     this.createChatSubscription();
     this.subscribeToAuthChange();
+    this.lastMessageTarget.scrollIntoView({ behavior: "smooth" });
   }
 
   disconnect(): void {

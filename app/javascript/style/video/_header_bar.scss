@@ -11,6 +11,7 @@ body#videos__show {
     align-items: center;
     padding: 0 1.1875rem;
     justify-content: space-between;
+    border-bottom: 1px solid color.$gray-light;
 
     &__address_bar {
       flex: 1;
@@ -40,12 +41,13 @@ body#videos__show {
   }
 
   .time-area {
-    padding: 0.2rem 1.125rem;
+    padding: 0.2rem 1.125rem 0.2rem 1.125rem;
+    margin-left: 0.2rem;
     border: none;
     border-radius: 0.9375rem;
     margin-right: 0.4375rem;
     font-weight: 600;
-    font-size: 0.75rem;
+    font-size: 1rem;
   }
 
   .time-red {
