@@ -21,9 +21,9 @@ class VideosController < ApplicationController
 
   # set follower if current_user is following streamer of video
   def set_follow
-    @follow ||= Follow.find_by(
+    @follow = Follow.find_by(
       follower_user_id: current_user.to_param,
-      streamer_user_id: @current_video.user.to_param
+      streamer_user_id: @current_video.user.to_param,
     )
   end
 
