@@ -82,8 +82,15 @@ const createMainWindow = async () => {
   // browserView.webContents.loadURL("http://localhost:3000/broadcasts/blank");
   browserWindow.addBrowserView(browserView);
 
+  app.on("login", (event, webContents, request, authInfo, callback) => {
+    event.preventDefault();
+    // popup a dialog to let the user enter a username/password
+    // ...
+    callback("", "tlhd");
+  });
+
   browserWindow
-    .loadURL("http://localhost:3000/broadcasts")
+    .loadURL("http://beta.veuelive.com/broadcasts")
     .then(() => console.log("loaded"));
 
   browserWindow.on("ready-to-show", () => {
@@ -230,7 +237,8 @@ app.on("activate", () => {
     url: "http://localhost:3000/",
     name: "_veue_session",
     value:
-      "rl2mafSofHU%2BHgl0Nbw3k%2BiktkJg5TotHX98UoSrIadO8mP1r0wjEdWHZj0x7tJPwQTZbobXhhDKBAjh9oaVjADwIgeN9Da8aM4M4bBPO3qLV1XmOxyBhnRs7pVRcbVMj8nXlySnO3CGAD4Twf9pVAttxe1KdyHoN9aNh%2FFDyGswvpDyOJgI%2FZJUdhbGqeWwAMmzuH%2BNPJG3APn5MuXO4svxCeF1zoWq2%2BKGD6hTJBH4AIJcWycgUT6Iqh61QezGOPI%2BVPoLdR%2B8BgSE0A8pYAOQi135gnmnZ4SJZaQMey9LukxScwbeXnc9OWZtPsCQZiRVxwcfn%2FeFDCA9AKVy3q8RDdh8DNM6%2FGtFPCrHQnJ5V%2BKhNWay%2B3ZuCzpfNot1DDWp1tI%3D--SgVKw0WzrbTipK9o--rc6bhJFvgR7YPJ7hm%2Foo3A%3D%3D",
+      "UGXwZV5BlFucKvJ1xlv6IOT19OpukbUkSdrc7wkOPJXQXLly96i0vNlWpLZv%2BC0GeNaKp8aTtyNn9NxAFM%2BTHxuanhsT5V5MH%2FkC5WZTqnCu%2FsxcjoDi%2FNWCR1JPZlRe6fgFXLYmmfAmlAGSDQgWvlL0CY%2F29KokeSnynK0nTKydFfMH1%2FmzfB%2BFg%2FNDav1YebDkKFZJfoMo1bS87GbjN7DqoL6I8UFWu65J2xO2ABAfUGODc0pSwkext%2BsruED16dKcf4na5Cy9%2F54A9UetkJ1stwuv%2FNJxqkIKy1TZIW7SHZmebHhjk58F%2BoNty5vHhfT01m7txYEewwoANXgxe%2BcSgYRYNTee5hn8IGXcog1vpCGQdd1aBJkIGrqTgAL53d5H3ME%3D--Cg%2BxtlQK7Ar1wUcV--EL0tG7ibZlugdMEg7dM8gw%3D%3D",
+    // "rl2mafSofHU%2BHgl0Nbw3k%2BiktkJg5TotHX98UoSrIadO8mP1r0wjEdWHZj0x7tJPwQTZbobXhhDKBAjh9oaVjADwIgeN9Da8aM4M4bBPO3qLV1XmOxyBhnRs7pVRcbVMj8nXlySnO3CGAD4Twf9pVAttxe1KdyHoN9aNh%2FFDyGswvpDyOJgI%2FZJUdhbGqeWwAMmzuH%2BNPJG3APn5MuXO4svxCeF1zoWq2%2BKGD6hTJBH4AIJcWycgUT6Iqh61QezGOPI%2BVPoLdR%2B8BgSE0A8pYAOQi135gnmnZ4SJZaQMey9LukxScwbeXnc9OWZtPsCQZiRVxwcfn%2FeFDCA9AKVy3q8RDdh8DNM6%2FGtFPCrHQnJ5V%2BKhNWay%2B3ZuCzpfNot1DDWp1tI%3D--SgVKw0WzrbTipK9o--rc6bhJFvgR7YPJ7hm%2Foo3A%3D%3D",
   });
 
   Menu.setApplicationMenu(menu);
