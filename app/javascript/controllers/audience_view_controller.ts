@@ -79,10 +79,8 @@ export default class extends Controller {
     const browserCtx = this.primaryCtx;
     const fullVideoWidth = this.videoTarget.videoWidth;
     const fullVideoHeight = this.videoTarget.videoHeight;
-
     const sy =
       (Sizes.primaryView.height / Sizes.fullCanvas.height) * fullVideoHeight;
-
     const ratioToOriginal = fullVideoHeight / Sizes.fullCanvas.height;
 
     browserCtx.drawImage(

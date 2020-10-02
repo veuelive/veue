@@ -2,6 +2,7 @@
 
 class VideosController < ApplicationController
   before_action :current_video, only: %i[show]
+  before_action :set_follow, only: %i[show]
 
   # GET /videos
   def index
@@ -17,6 +18,14 @@ class VideosController < ApplicationController
     @current_video ||= Video.find(params[:id]).decorate
   end
   helper_method :current_video
+
+  # set follower if current_user is following streamer of video
+  def set_follow
+    @follow ||= Follow.find_by(
+      follower_user_id: current_user.to_param,
+      streamer_user_id: @current_video.user.to_param
+    )
+  end
 
   # Only allow a list of trusted parameters through.
   def video_params

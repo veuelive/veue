@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class ChatMessagesController < ApplicationController
-  before_action :set_video
   before_action :authenticate_user!, only: [:create]
+  before_action :set_video
 
   def create
     message = build_chat_message
