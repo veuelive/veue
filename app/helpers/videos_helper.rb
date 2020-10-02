@@ -6,4 +6,8 @@ module VideosHelper
 
     nil
   end
+
+  def follow_streamer
+    @follow.present? && @follow.unfollowed_at.blank?
+  end
 end
