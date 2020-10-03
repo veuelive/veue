@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :follow do
-    follower_user_id { "MyString" }
-    streamer_user_id { "MyString" }
-    unfollowed_at { "2020-09-30 16:15:38" }
+    follower_user_id { user.to_param }
+    streamer_user_id { user.to_param }
+    unfollowed_at { nil }
   end
 end
