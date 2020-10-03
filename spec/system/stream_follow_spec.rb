@@ -29,8 +29,8 @@ RSpec.describe "Follow live streamer" do
 
     it "should create a follow record in db" do
       find(".follow-btn").click
-      page.refresh
-      expect(Follow.count).to eq(1)
+
+      expect(page).to have_content("Following")
     end
   end
 
@@ -46,9 +46,8 @@ RSpec.describe "Follow live streamer" do
     it "should update the unfollowed_at time in follow record" do
       visit video_path(video)
       find(".follow-btn").click
-      page.refresh
-      @follow.reload
-      expect(@follow.unfollowed_at).to_not eq(nil)
+
+      expect(page).to have_content("Follow")
     end
 
     it "should set the unfollowed_at time to nil" do
@@ -57,9 +56,8 @@ RSpec.describe "Follow live streamer" do
       )
       visit video_path(video)
       find(".follow-btn").click
-      page.refresh
-      @follow.reload
-      expect(@follow.unfollowed_at).to eq(nil)
+
+      expect(page).to have_content("Following")
     end
   end
 end
