@@ -6,8 +6,10 @@ class User < ApplicationRecord
   has_many :chat_messages, dependent: :destroy
   has_many :session_tokens, dependent: :nullify
   has_many :mux_webhooks, dependent: :destroy
-  has_many :streamers, class_name: :Follow, foreign_key: :streamer_user_id, dependent: :destroy, inverse_of: :streamer
-  has_many :followers, class_name: :Follow, foreign_key: :follower_user_id, dependent: :destroy, inverse_of: :follower
+  has_many :streamers, class_name: :Follow, foreign_key: :streamer_user_id, inverse_of: :streamer, dependent: :destroy
+  has_many :followers, class_name: :Follow, foreign_key: :follower_user_id, inverse_of: :follower, dependent: :destroy
+
+  delegate :stream_key, to: :mux_live_stream
 
   validates :display_name, length: {maximum: 40, minimum: 1}, presence: true
   validates :phone_number, phone_number: true
