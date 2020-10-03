@@ -3,19 +3,22 @@
 class FollowsController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
   before_action :set_video, only: %i[create destroy]
-  before_action :set_follow, only: %i[destroy]
+  before_action :current_follow, only: %i[destroy]
 
   def create
-    @follow = set_follow_by_user || build_follow
-    @follow.persisted? ? @follow.update!(unfollowed_at: nil) : @follow.save!
-    return render(json: {success: false, error_messages: @follow.errors.full_messages}) unless @follow.valid?
+    @current_follow = follow_by_user || build_follow
+    @current_follow.persisted? ? @current_follow.update!(unfollowed_at: nil) : @current_follow.save!
+    unless @current_follow.valid?
+      render(json: {success: false, error_messages: @current_follow.errors.full_messages})
+      return
+    end
 
     render_streamer_profile
   end
 
   def destroy
-    unless @follow.update(unfollowed_at: Time.current)
-      return render(json: {success: false, error_messages: follow.errors.full_messages})
+    unless @current_follow.update(unfollowed_at: Time.current)
+      return render(json: {success: false, error_messages: @current_follow.errors.full_messages})
     end
 
     render_streamer_profile
@@ -23,12 +26,12 @@ class FollowsController < ApplicationController
 
   private
 
-  def set_follow
-    @follow = Follow.find(params[:id])
+  def current_follow
+    @current_follow ||= Follow.find(params[:id])
   end
 
-  def set_follow_by_user
-    @follow = Follow.find_by(
+  def follow_by_user
+    @follow_by_user ||= Follow.find_by(
       streamer_user_id: @video.user.to_param,
       follower_user_id: current_user.to_param,
     )

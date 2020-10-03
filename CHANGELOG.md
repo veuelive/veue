@@ -1,3 +1,10 @@
+- ##[VEUE-57](https://app.clickup.com/t/8444384/VEUE-57)
+  @Sirbuland - 2020-10-06
+
+  - ###ADDED
+    - Functionality for follow streamer on live video
+    - Separated streamer profile view in new partial
+
 - ##[VEUE-126](https://app.clickup.com/t/8444384/VEUE-126)
   @hcatlin - 2020-10-04
 
