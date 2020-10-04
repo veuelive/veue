@@ -2,11 +2,11 @@ import Timecode from "util/timecode";
 
 export default class {
   private readonly canvas: HTMLCanvasElement;
-  private readonly timecodeUpdatedCallback: (timecode: number) => void;
+  private readonly timecodeUpdatedCallback: () => void;
   private canvasCtx: CanvasRenderingContext2D;
   private _timecodeMs: number;
 
-  constructor(timecodeUpdatedCallback: (timecode: number) => void) {
+  constructor(timecodeUpdatedCallback: () => void) {
     this.timecodeUpdatedCallback = timecodeUpdatedCallback;
     this.canvas = document.createElement("canvas");
     this.canvas.setAttribute(
@@ -56,7 +56,7 @@ export default class {
   set timecode(timecodeMs: number) {
     if (timecodeMs != this._timecodeMs) {
       this._timecodeMs = timecodeMs;
-      this.timecodeUpdatedCallback(timecodeMs);
+      this.timecodeUpdatedCallback();
     }
   }
 

@@ -32,8 +32,8 @@ export default class extends Controller {
       this.pipSecondaryCanvasTarget.getContext("2d"),
     ];
 
-    this.timecodeSynchronizer = new TimecodeSynchronizer((timecodeMs) => {
-      this.progressUpdate();
+    this.timecodeSynchronizer = new TimecodeSynchronizer(() => {
+      this.timecodeChanged();
     });
 
     this.videoTarget.addEventListener("loadedmetadata", async () => {
@@ -65,7 +65,7 @@ export default class extends Controller {
     }
   }
 
-  progressUpdate(): void {
+  timecodeChanged(): void {
     const percent = Math.round(
       (this.videoTarget.currentTime / this.videoTarget.duration) * 100
     );

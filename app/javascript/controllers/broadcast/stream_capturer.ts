@@ -1,6 +1,5 @@
 import { CaptureStreamCanvas } from "./video_mixer";
 import { ipcRenderer } from "controllers/broadcast/electron/ipc_renderer";
-import { displayTime } from "util/time";
 
 export default class StreamCapturer {
   canvas: CaptureStreamCanvas;
