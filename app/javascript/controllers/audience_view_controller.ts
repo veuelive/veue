@@ -43,12 +43,6 @@ export default class extends Controller {
       hls.attachMedia(this.videoTarget);
     }
 
-    // const hls = new Hls({
-    //   liveMaxLatencyDurationCount: 15,
-    // });
-    // hls.loadSource(this.data.get("url"));
-    // hls.attachMedia(this.videoTarget);
-
     this.drawFrame();
   }
 
