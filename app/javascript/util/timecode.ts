@@ -5,11 +5,6 @@ export default class Timecode {
   public static codeCount = 12;
   public static digitHeight = 10;
   public static digitWidth = 30;
-  public static ratioToMs = 10;
-
-  public static timeToColors(ms: number): string[] {
-    return this.numberToColors(ms / this.ratioToMs);
-  }
 
   public static numberToColors(number: number): string[] {
     const encodedDigits = this.numberToEncodedDigits(number);
@@ -53,6 +48,6 @@ export default class Timecode {
       .join(""); // ["4", "8"] => "48"
 
     // "47" => 390
-    return parseInt(encodedString, 8) * Timecode.ratioToMs;
+    return parseInt(encodedString, 8);
   }
 }

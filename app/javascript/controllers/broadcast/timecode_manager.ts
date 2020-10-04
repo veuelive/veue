@@ -30,8 +30,7 @@ export default class {
   }
 
   private drawTimecode(msSinceStart: number) {
-    const centiecondSinceStart = Math.floor(msSinceStart / 10);
-    const colorSequence = Timecode.numberToColors(centiecondSinceStart);
+    const colorSequence = Timecode.numberToColors(msSinceStart);
 
     colorSequence.forEach((color, index) => {
       this.canvasContext.fillStyle = color;
