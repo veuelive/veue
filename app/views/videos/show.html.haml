@@ -31,5 +31,5 @@
     = render partial: 'videos/partials/products_area'
   .content-area__secondary
     %canvas.fixed-secondary-canvas{"data-target": "audience-view.fixedSecondaryCanvas", width: 320, height: 280}
-    %video.player__video.viewer{"data-action" => "timeupdate->audience-view#progressUpdate", "data-target" => "audience-view.video", style: "display: none;"}
+    %video.player__video.viewer{"data-action" => "timeupdate->audience-view#progressUpdate", "data-target" => "audience-view.video", style: "display: none;", playsinline: "playsinline"}
     = render partial: 'shared/chat', locals: { video: current_video }
