@@ -1,5 +1,7 @@
 - 10-02-2020 - Video Height Bugfix [VEUE-121](https://app.clickup.com/t/8444384/VEUE-121) - @hcatlin
 
+- 10-02-2020 - Bugfix [VEUE-118](https://app.clickup.com/t/8444384/VEUE-118) - Use native HLS with Safari to have streaming work
+
 - ##[VEUE-105](https://app.clickup.com/t/8444384/VEUE-105)
   @hcatlin - 10-01-2020
   - ###CHANGED
