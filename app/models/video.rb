@@ -8,7 +8,7 @@ class Video < ApplicationRecord
   has_many :video_events, dependent: :destroy
 
   has_many :mux_webhooks, dependent: :nullify
-  scope :active, -> { where state: %w[pending live] }
+  scope :active, -> { where(state: %w[pending live]) }
 
   aasm column: "state" do
     # We aren't live yet, but it'sa coming!
