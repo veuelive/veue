@@ -20,7 +20,7 @@
     "stimulus": "^1.1.1",
     "ts-loader": "^8.0.2",
     "turbolinks": "^5.2.0",
-    "typescript": "^3.9.7"
+    "typescript": "^4.0.3"
   },
   "version": "0.1.0",
   "devDependencies": {
