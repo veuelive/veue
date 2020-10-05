@@ -3,6 +3,7 @@
     <words>
       <w>aasm</w>
       <w>activeadmin</w>
+      <w>afterend</w>
       <w>appsignal</w>
       <w>authenticatable</w>
       <w>bootsnap</w>
@@ -30,6 +31,7 @@
       <w>sluggable</w>
       <w>solargraph</w>
       <w>technodrome</w>
+      <w>timecode</w>
       <w>toxoplasmosis</w>
       <w>trackable</w>
       <w>turbolinks</w>

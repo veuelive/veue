@@ -3,6 +3,8 @@ import Hls from "hls.js";
 import playSvg from "../images/play.svg";
 import pauseSvg from "../images/pause.svg";
 import { displayTime } from "util/time";
+import TimecodeSynchronizer from "controllers/audience/timecode_synchronizer";
+import Sizes from "util/sizes";
 
 export default class extends Controller {
   static targets = [
@@ -21,6 +23,7 @@ export default class extends Controller {
   readonly timeDisplayTarget!: HTMLElement;
   private primaryCtx: CanvasRenderingContext2D;
   private secondaryCtxs: Array<CanvasRenderingContext2D>;
+  private timecodeSynchronizer: TimecodeSynchronizer;
 
   connect(): void {
     this.primaryCtx = this.primaryCanvasTarget.getContext("2d");
@@ -28,6 +31,10 @@ export default class extends Controller {
       this.fixedSecondaryCanvasTarget.getContext("2d"),
       this.pipSecondaryCanvasTarget.getContext("2d"),
     ];
+
+    this.timecodeSynchronizer = new TimecodeSynchronizer((timecodeMs) => {
+      this.progressUpdate();
+    });
 
     this.videoTarget.addEventListener("loadedmetadata", async () => {
       this.state = "ready";
@@ -59,11 +66,12 @@ export default class extends Controller {
   }
 
   progressUpdate(): void {
-    const percent =
-      (this.videoTarget.currentTime / this.videoTarget.duration) * 100;
+    const percent = Math.round(
+      (this.videoTarget.currentTime / this.videoTarget.duration) * 100
+    );
     console.log(`${percent}%`);
     this.timeDisplayTarget.innerHTML = displayTime(
-      this.videoTarget.currentTime
+      this.timecodeSynchronizer.timecodeSeconds
     );
   }
 
@@ -72,9 +80,10 @@ export default class extends Controller {
     const fullVideoWidth = this.videoTarget.videoWidth;
     const fullVideoHeight = this.videoTarget.videoHeight;
 
-    const sy = (800 / 1080) * fullVideoHeight;
+    const sy =
+      (Sizes.primaryView.height / Sizes.fullCanvas.height) * fullVideoHeight;
 
-    const ratioToOriginal = fullVideoHeight / 1080;
+    const ratioToOriginal = fullVideoHeight / Sizes.fullCanvas.height;
 
     browserCtx.drawImage(
       this.videoTarget,
@@ -84,22 +93,24 @@ export default class extends Controller {
       fullVideoHeight,
       0,
       0,
-      1280,
-      1080
+      Sizes.fullCanvas.width,
+      Sizes.fullCanvas.height
     );
     for (const secondaryCtx of this.secondaryCtxs) {
       secondaryCtx.drawImage(
         this.videoTarget,
         0,
         sy,
-        320 * ratioToOriginal,
-        280 * ratioToOriginal,
+        Sizes.secondaryView.width * ratioToOriginal,
+        Sizes.secondaryView.height * ratioToOriginal,
         0,
         0,
-        320,
-        280
+        Sizes.secondaryView.width,
+        Sizes.secondaryView.height
       );
     }
+
+    this.timecodeSynchronizer.drawCanvas(this.videoTarget, ratioToOriginal);
 
     requestAnimationFrame(() => this.drawFrame());
   }

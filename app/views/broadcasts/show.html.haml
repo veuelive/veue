@@ -8,7 +8,7 @@
         %button{data: {action: "click->broadcast#stopStreaming", showOnState: "live"}} Stop Broadcast
         %button.time-area{data: {showOnState: "live"}}
           %span.dot.time-dot
-          %span{data: {target: "broadcast.timeDisplay"}}
+          %span#timecodeDisplay
             \-:-:-
   .content--right
     %video#webcam_preview{data: {target: "broadcast.webcamVideoElement"}}
