@@ -4,6 +4,7 @@ import { Rectangle } from "util/rectangle";
 import VideoMixer from "controllers/broadcast/video_mixer";
 import StreamCapturer from "controllers/broadcast/stream_capturer";
 import { calculateBroadcastArea } from "controllers/broadcast/broadcast_helpers";
+import TimecodeManager from "controllers/broadcast/timecode_manager";
 
 type BroadcastState = "loading" | "ready" | "live" | "failed" | "finished";
 
@@ -14,15 +15,15 @@ export default class extends Controller {
 
   private mixer: VideoMixer;
   private streamCapturer: StreamCapturer;
+  private timecodeManager: TimecodeManager;
 
   connect(): void {
     this.state = "loading";
 
     this.mixer = new VideoMixer(this.webcamVideoElementTarget);
-    this.streamCapturer = new StreamCapturer(
-      this.mixer.canvas,
-      this.timeDisplayTarget
-    );
+    this.streamCapturer = new StreamCapturer(this.mixer.canvas);
+
+    this.timecodeManager = new TimecodeManager(this.mixer.canvas);
 
     ipcRenderer.send("wakeup");
 
@@ -64,6 +65,7 @@ export default class extends Controller {
       .then(() => {
         this.state = "live";
         this.data.set("started-at", Date.now().toString());
+        this.timecodeManager.start();
       })
       .catch((e) => console.error(e));
   }

@@ -1,5 +1,6 @@
 import { Rectangle } from "util/rectangle";
 import { desktopCapturer } from "controllers/broadcast/electron/desktop_capture";
+import Sizes from "util/sizes";
 
 export default class VideoMixer {
   canvas: CaptureStreamCanvas;
@@ -19,8 +20,8 @@ export default class VideoMixer {
 
     this.canvas = document.createElement("canvas") as CaptureStreamCanvas;
     this.canvas.setAttribute("id", "debug_canvas");
-    this.canvas.setAttribute("width", "1280");
-    this.canvas.setAttribute("height", "1080");
+    this.canvas.setAttribute("width", Sizes.fullCanvas.width.toString());
+    this.canvas.setAttribute("height", Sizes.fullCanvas.height.toString());
     if (this.canvas) {
       this.canvasContext = this.canvas.getContext("2d");
     }
@@ -35,8 +36,8 @@ export default class VideoMixer {
       .getUserMedia({
         audio: true,
         video: {
-          width: 320,
-          height: 280,
+          width: Sizes.secondaryView.width,
+          height: Sizes.secondaryView.height,
         },
       })
       .then(async (mediaStream) => {
@@ -85,7 +86,11 @@ export default class VideoMixer {
   }
 
   private computeFrame() {
-    this.canvasContext.drawImage(this.webcamVideoElement, 0, 800);
+    this.canvasContext.drawImage(
+      this.webcamVideoElement,
+      0,
+      Sizes.primaryView.height
+    );
 
     if (this.browserDimensions) {
       this.canvasContext.drawImage(
@@ -96,11 +101,10 @@ export default class VideoMixer {
         this.browserDimensions.height,
         0,
         0,
-        1280,
-        800
+        Sizes.primaryView.width,
+        Sizes.primaryView.height
       );
     }
-
     requestAnimationFrame(() => this.computeFrame());
   }
 }

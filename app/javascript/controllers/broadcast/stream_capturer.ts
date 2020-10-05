@@ -6,13 +6,10 @@ export default class StreamCapturer {
   canvas: CaptureStreamCanvas;
   mediaRecorder: MediaRecorder;
   audioTrack?: MediaStreamTrack;
-  private startedAt: number;
-  private timeDisplayTarget: HTMLElement;
   private timerCallback;
 
-  constructor(canvas: CaptureStreamCanvas, timeDisplayTarget: HTMLElement) {
+  constructor(canvas: CaptureStreamCanvas) {
     this.canvas = canvas;
-    this.timeDisplayTarget = timeDisplayTarget;
   }
 
   start(streamKey: string): Promise<void> {
@@ -41,19 +38,10 @@ export default class StreamCapturer {
 
     this.mediaRecorder.start(500);
 
-    return ipcRenderer.invoke("start", { streamKey }).then(() => {
-      this.startedAt = Date.now();
-      this.timerCallback = setInterval(() => this.tick(), 1000);
-    });
+    return ipcRenderer.invoke("start", { streamKey });
   }
 
   stop(): void {
     this.mediaRecorder.stop();
-  }
-
-  private tick() {
-    this.timeDisplayTarget.innerText = displayTime(
-      (Date.now() - this.startedAt) / 1000
-    );
   }
 }
