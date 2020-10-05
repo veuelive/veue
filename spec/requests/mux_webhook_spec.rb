@@ -11,7 +11,11 @@ RSpec.describe "MuxWebhooks" do
   before :example do
     @webhook_idx = 0
     @live_stream_id = mux_webhooks[0]["data"]["id"]
-    @mux_live_stream = create(:mux_live_stream, mux_id: @live_stream_id)
+
+    @user = create(:streamer, {mux_live_stream_id: @live_stream_id})
+
+    # Videos are created BEFORE Mux gets involved
+    @video = @user.active_video!
   end
 
   def skip_ahead_to_next!(event_name)
@@ -33,49 +37,37 @@ RSpec.describe "MuxWebhooks" do
   end
 
   it "should update some fields on every webhook" do
-    mux_live_stream = MuxLiveStream.first
-    expect(mux_live_stream.latest_mux_webhook_at).to eq(nil)
     next_webhook!("video.live_stream.created")
-    mux_live_stream.reload
-    expect(mux_live_stream.latest_mux_webhook_at).to eq(Time.zone.parse(@last_webhook["created_at"]))
-    expect(MuxLiveStreamWebhook.count).to eq(1)
+    expect(MuxWebhook.count).to eq(1)
   end
 
   it "should never process webhooks twice!" do
-    expect(MuxLiveStreamWebhook.count).to eq(0)
+    expect(MuxWebhook.count).to eq(0)
     next_webhook!("video.live_stream.created")
-    expect(MuxLiveStreamWebhook.count).to eq(1)
+    expect(MuxWebhook.count).to eq(1)
     @webhook_idx -= 1
     perform_enqueued_jobs do
-      MuxWebhookJob.perform_now MuxLiveStreamWebhook.first
+      MuxWebhookJob.perform_now MuxWebhook.first
     end
   end
 
   context "start a stream!" do
-    it "should create a new video" do
-      expect(Video.count).to eq(0)
+    it "should connect to video" do
+      expect(Video.count).to eq(1)
       skip_ahead_to_next!("video.live_stream.active")
+      webhook = MuxWebhook.last
       expect(Video.count).to eq(1)
       video = Video.first
-      expect(video.mux_live_stream).to be_valid
+      expect(video.mux_playback_id).to eq(webhook.playback_id)
       expect(video).to be_live
-      expect(video.mux_live_stream.mux_playback_id).to_not be_blank
-    end
-
-    it "should generate an asset" do
-      skip_ahead_to_next!("video.live_stream.active")
-      video = Video.first
-      expect(video.mux_assets.count).to eq(1)
+      webhook.reload
+      expect(webhook.user).to eq(@user)
+      expect(webhook.video).to eq(video)
     end
 
     it "should use the live playback_id while live" do
       skip_ahead_to_next!("video.live_stream.active")
       expect(Video.first.mux_playback_id).to eq("gnpT00lBULFoSVZ7almAtgEr5KWDkoMVm7Wmud01yZd02Q")
-    end
-
-    it "should have a mux_live_stream status of active!" do
-      skip_ahead_to_next!("video.live_stream.active")
-      expect(MuxLiveStream.first.mux_status).to eq("active")
     end
   end
 
@@ -86,14 +78,11 @@ RSpec.describe "MuxWebhooks" do
 
     it "should transition the video" do
       expect(Video.first).to be_finished
+      expect(Video.count).to eq(1)
     end
 
     it "should use the asset playback_id" do
       expect(Video.first.mux_playback_id).to eq("rqNernfGonhdV9nLpBmyn100ynaoQoBTUzAOxUDNtHUo")
-    end
-
-    it "should transition the mux_live_stream to idle" do
-      expect(MuxLiveStream.first.mux_status).to eq("idle")
     end
   end
 
