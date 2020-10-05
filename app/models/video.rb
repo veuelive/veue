@@ -2,11 +2,13 @@
 
 class Video < ApplicationRecord
   belongs_to :user
-  belongs_to :mux_live_stream, optional: true
+
   has_many :chat_messages, dependent: :destroy
   has_many :page_visits, dependent: :destroy
   has_many :video_events, dependent: :destroy
-  has_many :mux_assets, dependent: :destroy
+
+  has_many :mux_webhooks, dependent: :nullify
+  scope :active, -> { where state: %w[pending live] }
 
   aasm column: "state" do
     # We aren't live yet, but it'sa coming!
@@ -34,5 +36,10 @@ class Video < ApplicationRecord
     event :finish do
       transitions from: %i[live paused pending], to: :finished
     end
+  end
+
+  def change_playback_id(new_playback_id)
+    self.mux_playback_id = new_playback_id
+    self.hls_url = "https://stream.mux.com/#{new_playback_id}.m3u8"
   end
 end

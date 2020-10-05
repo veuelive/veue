@@ -10,49 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_28_211233) do
+ActiveRecord::Schema.define(version: 2020_10_05_164748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "mux_assets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "mux_status"
-    t.string "mux_id"
-    t.string "mux_playback_id"
-    t.uuid "video_id"
-    t.float "duration"
-    t.string "max_stored_resolution"
-    t.float "max_stored_frame_rate"
-    t.string "aspect_ratio"
-    t.boolean "per_title_encode"
-    t.boolean "is_live"
-    t.datetime "latest_mux_webhook_at"
-    t.datetime "deleted_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["mux_id"], name: "index_mux_assets_on_mux_id", unique: true
-    t.index ["video_id"], name: "index_mux_assets_on_video_id"
-  end
-
-  create_table "mux_live_streams", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id"
-    t.string "mux_status"
-    t.string "mux_id"
-    t.string "stream_key"
-    t.string "mux_playback_id"
-    t.datetime "latest_mux_webhook_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["mux_id"], name: "index_mux_live_streams_on_mux_id", unique: true
-    t.index ["user_id", "mux_status"], name: "index_mux_live_streams_on_user_id_and_mux_status"
-  end
-
   create_table "mux_webhooks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "mux_target_type"
-    t.uuid "mux_target_id"
-    t.string "type"
-    t.string "event"
     t.string "mux_id"
     t.datetime "event_received_at"
     t.datetime "finished_processing_at"
@@ -61,8 +25,12 @@ ActiveRecord::Schema.define(version: 2020_09_28_211233) do
     t.json "payload"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.uuid "user_id"
+    t.uuid "video_id"
+    t.string "event_type"
     t.index ["mux_id"], name: "index_mux_webhooks_on_mux_id", unique: true
-    t.index ["mux_target_type", "mux_target_id"], name: "index_mux_webhooks_on_mux_target_type_and_mux_target_id"
+    t.index ["user_id"], name: "index_mux_webhooks_on_user_id"
+    t.index ["video_id"], name: "index_mux_webhooks_on_video_id"
   end
 
   create_table "session_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -103,12 +71,13 @@ ActiveRecord::Schema.define(version: 2020_09_28_211233) do
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
     t.integer "failed_attempts", default: 0, null: false
-    t.uuid "mux_live_stream_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "phone_number_ciphertext", null: false
     t.string "phone_number_bidx"
     t.string "display_name"
+    t.string "mux_live_stream_id"
+    t.text "mux_stream_key_ciphertext"
     t.index ["mux_live_stream_id"], name: "index_users_on_mux_live_stream_id"
   end
 
@@ -139,11 +108,13 @@ ActiveRecord::Schema.define(version: 2020_09_28_211233) do
     t.string "name"
     t.text "description"
     t.string "hls_url"
+    t.string "mux_asset_id"
+    t.string "mux_asset_playback_id"
+    t.index ["mux_asset_id"], name: "index_videos_on_mux_asset_id"
     t.index ["mux_live_stream_id"], name: "index_videos_on_mux_live_stream_id"
     t.index ["state"], name: "index_videos_on_state"
     t.index ["user_id"], name: "index_videos_on_user_id"
   end
 
-  add_foreign_key "mux_assets", "videos"
   add_foreign_key "videos", "users"
 end

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe MuxLiveStream, type: :model do
+RSpec.describe MuxRuby::LiveStream, type: :model do
   context "talking with Mux service" do
     before do
       @mux_service = double(MUX_SERVICE)
@@ -11,7 +11,7 @@ RSpec.describe MuxLiveStream, type: :model do
     end
 
     it "should be able to #setup_as_streamer!" do
-      expect(@user.mux_live_streams.count).to eq(0)
+      expect(@user.mux_live_stream_id).to be_nil
 
       # Grab the first webhook... we'll use this to pass the right data into
       # mocking the service for creating
@@ -28,13 +28,7 @@ RSpec.describe MuxLiveStream, type: :model do
       # Okay, let's do it!
       @user.setup_as_streamer!
 
-      expect(@user.mux_live_streams.count).to eq(1)
-
-      live_stream = @user.mux_live_streams.first
-
-      # This is actually the only thing that REALLY matters when we create
-      # the new MuxLiveStream model... we _have_ to have the right Mux id!
-      expect(live_stream.mux_id).to eq(create_webhook["data"]["id"])
+      expect(@user.mux_live_stream_id).to eq(mux_ruby_live_stream.id)
     end
   end
 end

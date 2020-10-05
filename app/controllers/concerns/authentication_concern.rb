@@ -17,13 +17,11 @@ module AuthenticationConcern
 
       @current_user ||= current_session_token.user
     end
-
     helper_method :current_user
 
     def user_signed_in?
       current_user != nil
     end
-
     helper_method :user_signed_in?
 
     def authenticate_user!

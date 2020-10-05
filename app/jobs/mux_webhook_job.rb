@@ -4,56 +4,52 @@ class MuxWebhookJob < ApplicationJob
   queue_as :default
 
   def perform(webhook)
-    check_preconditions(webhook) do
-      logger.info "Processing event #{webhook.event}"
-      process_webhook(webhook)
-      process_target(webhook)
-    end
+    logger.info "Processing event #{webhook.event_type}"
+    process_webhook(webhook)
   end
 
   private
 
-  def check_preconditions(webhook, &block)
-    return if webhook.finished_processing_at
-
-    if (webhook.mux_target&.latest_mux_webhook_at || Time.zone.at(0)) > webhook.event_received_at
-      logger.warn "Processed webhook too late #{webhook.id} / #{webhook.mux_id}"
+  def process_live_stream_active(webhook)
+    if webhook.video.may_go_live?
+      webhook.video.change_playback_id(webhook.playback_id)
+      webhook.video.go_live!
     else
-      block.call
+      webhook.log_webhook_error("video cannot transition to live")
     end
   end
 
-  def process_webhook(webhook)
-    method_name = "process_#{webhook.event_name}_event!"
+  def process_live_stream_completed(webhook)
+    # When the asset tells us the live stream is over, we need to change our
+    # playback ID to not be the livestream version anymore
+    webhook.video.change_playback_id(webhook.video.mux_asset_playback_id)
+    webhook.video.finish!
+  end
 
-    if webhook.respond_to?(method_name)
-      webhook.__send__(method_name)
+  def process_asset_ready(webhook)
+    # We get this relatively early in the process and will need to save it later.
+    webhook.video.update(
+      mux_asset_playback_id: webhook.playback_id,
+      mux_asset_id: webhook.payload["object"]["id"],
+    )
+  end
+
+  def process_webhook(webhook)
+    _, type, event_name = webhook.event_type.split(".")
+
+    case type
+    when "live_stream"
+      process_live_stream_active(webhook) if event_name == "active"
+    when "asset"
+      process_asset_ready(webhook) if event_name == "ready"
+      process_live_stream_completed(webhook) if event_name == "live_stream_completed"
     else
-      logger.debug("nothing to do for webhook of event #{webhook.event_name} / #{webhook.mux_id}")
+      webhook.log_webhook_error("Unknown webhook type")
     end
 
     webhook.finished_processing_at = Time.now.utc
 
     # No need to save inside of the MuxWebhook#process! function because we do it here!
     webhook.save!
-  end
-
-  def process_target(webhook)
-    target = webhook.mux_target
-
-    if target.blank?
-      logger.debug("No playback information")
-    else
-      target.latest_mux_webhook_at = webhook.event_received_at
-      public_playback(target, webhook)
-      target.mux_status = webhook.payload["status"]
-
-      target.save!
-    end
-  end
-
-  def public_playback(target, webhook)
-    playback = webhook.payload["playback_ids"]&.find { |playback| playback["policy"] == "public" }
-    target.mux_playback_id = playback["id"] if playback
   end
 end
