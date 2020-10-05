@@ -18,6 +18,8 @@ export default class {
     document
       .getElementsByClassName("fixed-secondary-canvas")[0]
       .insertAdjacentElement("afterend", this.canvas);
+
+    setInterval(() => this.sync(), 500);
   }
 
   sync(): void {
@@ -49,8 +51,6 @@ export default class {
       Timecode.digitWidth * Timecode.codeCount,
       Timecode.digitHeight
     );
-
-    this.sync();
   }
 
   set timecode(timecodeMs: number) {
