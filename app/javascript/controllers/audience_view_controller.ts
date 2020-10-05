@@ -34,12 +34,20 @@ export default class extends Controller {
       await this.togglePlay();
     });
 
-    const hls = new Hls({
-      liveSyncDuration: 5,
-    });
-    hls.loadSource(this.data.get("url"));
-    hls.attachMedia(this.videoTarget);
-    console.log(hls);
+    if (this.videoTarget.canPlayType("application/vnd.apple.mpegurl")) {
+      this.videoTarget.src = this.data.get("url");
+    } else if (Hls.isSupported()) {
+      // HLS.js-specific setup code
+      const hls = new Hls();
+      hls.loadSource(this.data.get("url"));
+      hls.attachMedia(this.videoTarget);
+    }
+
+    // const hls = new Hls({
+    //   liveMaxLatencyDurationCount: 15,
+    // });
+    // hls.loadSource(this.data.get("url"));
+    // hls.attachMedia(this.videoTarget);
 
     this.drawFrame();
   }
