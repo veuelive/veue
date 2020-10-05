@@ -55,6 +55,7 @@ export default class extends Controller {
 
   togglePlay(): void {
     if (this.state !== "playing") {
+      // this.videoTarget.fastSeek(this.videoTarget.duration);
       this.videoTarget
         .play()
         .then(() => (this.state = "playing"))
