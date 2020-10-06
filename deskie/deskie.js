@@ -80,19 +80,22 @@ const createMainWindow = async () => {
   browserView = new BrowserView();
 
   // Now we want ot subscribe to the following events and send them to the main window
-  ["did-start-loading", "did-stop-loading", "did-navigate"].forEach(
-    (eventName) => {
-      console.log("Setup event monitoring for " + eventName);
-      browserView.webContents.on(eventName, (event) => {
-        console.log("Got event ", eventName, event);
-        browserWindow.webContents.send(
-          "browserView",
-          eventName,
-          browserView.webContents.getURL()
-        );
-      });
-    }
-  );
+  [
+    "did-start-loading",
+    "did-stop-loading",
+    "did-navigate",
+    "will-navigate",
+  ].forEach((eventName) => {
+    console.log("Setup event monitoring for " + eventName);
+    browserView.webContents.on(eventName, (event) => {
+      console.log("Got event ", eventName, event);
+      browserWindow.webContents.send(
+        "browserView",
+        eventName,
+        browserView.webContents.getURL()
+      );
+    });
+  });
 
   browserWindow.addBrowserView(browserView);
 
