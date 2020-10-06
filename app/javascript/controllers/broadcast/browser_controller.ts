@@ -3,16 +3,25 @@ import { ipcRenderer } from "controllers/broadcast/electron/ipc_renderer";
 import { logPageVisit } from "controllers/broadcast/broadcast_helpers";
 
 export default class extends Controller {
-  static targets = ["addressBar"];
+  static targets = [
+    "addressBar",
+    "backButton",
+    "forwardButton",
+    "reloadButton",
+    "stopButton",
+  ];
   private addressBarTarget!: HTMLInputElement;
+  private backButtonTarget!: HTMLButtonElement;
+  private forwardButtonTarget!: HTMLButtonElement;
+  private reloadButtonTarget!: HTMLButtonElement;
+  private stopButtonTarget!: HTMLButtonElement;
+
   private browserViewListener: (name, event, second) => void;
 
   connect(): void {
     this.browserViewListener = (_, eventName, url) => {
       this.addressBarTarget.value = url;
-      if (eventName === "did-navigate") {
-        logPageVisit(url);
-      }
+      logPageVisit(url, eventName);
     };
     ipcRenderer.on("browserView", this.browserViewListener);
 
