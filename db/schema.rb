@@ -17,45 +17,12 @@ ActiveRecord::Schema.define(version: 2020_10_05_164748) do
   enable_extension "plpgsql"
 
   create_table "follows", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "follower_user_id", null: false
-    t.uuid "streamer_user_id", null: false
+    t.uuid "follower_id", null: false
+    t.uuid "streamer_id", null: false
     t.datetime "unfollowed_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["follower_user_id"], name: "index_follows_on_follower_user_id"
-    t.index ["streamer_user_id"], name: "index_follows_on_streamer_user_id"
-  end
-
-  create_table "mux_assets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "mux_status"
-    t.string "mux_id"
-    t.string "mux_playback_id"
-    t.uuid "video_id"
-    t.float "duration"
-    t.string "max_stored_resolution"
-    t.float "max_stored_frame_rate"
-    t.string "aspect_ratio"
-    t.boolean "per_title_encode"
-    t.boolean "is_live"
-    t.datetime "latest_mux_webhook_at"
-    t.datetime "deleted_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["mux_id"], name: "index_mux_assets_on_mux_id", unique: true
-    t.index ["video_id"], name: "index_mux_assets_on_video_id"
-  end
-
-  create_table "mux_live_streams", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id"
-    t.string "mux_status"
-    t.string "mux_id"
-    t.string "stream_key"
-    t.string "mux_playback_id"
-    t.datetime "latest_mux_webhook_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["mux_id"], name: "index_mux_live_streams_on_mux_id", unique: true
-    t.index ["user_id", "mux_status"], name: "index_mux_live_streams_on_user_id_and_mux_status"
+    t.index ["follower_id", "streamer_id", "unfollowed_at"], name: "index_follows_on_follower_id_and_streamer_id_and_unfollowed_at", unique: true
   end
 
   create_table "mux_webhooks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

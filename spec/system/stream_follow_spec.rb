@@ -21,43 +21,27 @@ RSpec.describe "Follow live streamer" do
     end
   end
 
-  describe "user logged in and follow record is not present" do
+  describe "user logged in" do
     before do
       login_as(follower)
       visit video_path(video)
     end
 
-    it "should create a follow record in db" do
+    it "should make user following the streamer" do
       find(".follow-btn").click
 
       expect(page).to have_content("Following")
     end
-  end
 
-  describe "user logged in and follow record present already" do
-    before do
-      login_as(follower)
+    it "should make user unfollowed streamer" do
       @follow = Follow.create!(
-        streamer_user_id: streamer.to_param,
-        follower_user_id: follower.to_param,
+        streamer_id: streamer.to_param,
+        follower_id: follower.to_param,
       )
-    end
-
-    it "should update the unfollowed_at time in follow record" do
       visit video_path(video)
       find(".follow-btn").click
 
       expect(page).to have_content("Follow")
-    end
-
-    it "should set the unfollowed_at time to nil" do
-      @follow.update!(
-        unfollowed_at: Time.current,
-      )
-      visit video_path(video)
-      find(".follow-btn").click
-
-      expect(page).to have_content("Following")
     end
   end
 end
