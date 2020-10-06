@@ -2,7 +2,7 @@
 
 class ChatMessagesController < ApplicationController
   before_action :authenticate_user!, only: [:create]
-  before_action :set_video
+  before_action :current_video
 
   def create
     message = build_chat_message
@@ -33,13 +33,14 @@ class ChatMessagesController < ApplicationController
     ChatMessage.new(
       user: current_user,
       input: {message: params[:message]},
-      video: @video,
+      video: current_video,
       timecode_ms: 0,
       # ^^^ This needs to get replaced!
     )
   end
 
-  def set_video
-    @video = Video.find(params[:video_id])
+  def current_video
+    @current_video ||= Video.find(params[:video_id])
   end
+  helper_method :current_video
 end

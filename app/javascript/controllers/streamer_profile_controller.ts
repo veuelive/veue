@@ -2,19 +2,17 @@ import { Controller } from "stimulus";
 import { post, destroy } from "util/fetch";
 
 export default class extends Controller {
-  private videoId: string;
-
-  connect(): void {
-    this.videoId = this.data.get("video-id");
+  async follow(): Promise<void> {
+    const response = await post("./follow");
+    this.insertHTML(response);
   }
 
-  async followStreamer(): Promise<void> {
-    const followStreamer = this.data.get("follow-streamer");
-    const url = `/videos/${this.videoId}/follows`;
-    const response =
-      followStreamer === "true"
-        ? await destroy(`${url}/${this.data.get("followId")}`)
-        : await post(url);
+  async unfollow(): Promise<void> {
+    const response = await destroy("./follow");
+    this.insertHTML(response);
+  }
+
+  private async insertHTML(response): Promise<void> {
     const html = await response.text();
     document.getElementById("streamer-profile-area").innerHTML = html;
   }
