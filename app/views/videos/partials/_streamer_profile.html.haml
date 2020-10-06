@@ -6,11 +6,12 @@
         .streamer-name
           = current_video.user.display_name
       - if user_signed_in?
-        .follow-btn{data: {action: current_video.user.followers.include?(current_user) ? "click->streamer-profile#unfollow" : "click->streamer-profile#follow"}}
-          - if current_video.user.followers.include?(current_user)
-            following
-          - else
-            follow
+        - if current_user.follows(current_video.user)
+           .follow-btn{action: "click->streamer-profile#unfollow"} unfollow
+        - else
+            .follow-btn{action: "click->streamer-profile#follow"} follow
+      - else
+        .follow-btn{action: "click->authentication#login"} follow
     .stream-info
       .stream-num
         stream # 4
