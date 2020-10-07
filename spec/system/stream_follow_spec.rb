@@ -13,24 +13,21 @@ RSpec.describe "Follow live streamer" do
   end
 
   describe "an anonymous user" do
-    before(:each) do
-    end
-
-    it "doesn't show follow button" do
-      expect(has_css?(".follow-btn")).to be(false)
+    it "will display login modal" do
+      find(".follow-btn").click
+      expect(page).to have_selector("#phone_number_input")
     end
   end
 
   describe "user logged in" do
     before do
       login_as(follower)
-      visit video_path(video)
     end
 
     it "should make user following the streamer" do
+      visit video_path(video)
       find(".follow-btn").click
-
-      expect(page).to have_content("Following")
+      expect(page).to have_content("Unfollow")
     end
 
     it "should make user unfollowed streamer" do

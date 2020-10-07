@@ -40,6 +40,6 @@ class AuthenticationsController < ApplicationController
   end
 
   def render_modal
-    render(template: "layouts/nav/_login_modal", layout: false)
+    render(template: "shared/_login_modal", layout: false)
   end
 end
