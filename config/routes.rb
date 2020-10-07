@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     end
 
     resources :chat_messages, only: %i[create index]
-    resource :follow, only: %i[create destroy]
+    resource :follow, only: %i[show create destroy]
   end
 
   resources :broadcasts, only: [:show, :index] do

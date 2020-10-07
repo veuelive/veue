@@ -1,4 +1,4 @@
-import { post, destroy } from "util/fetch";
+import { post, destroy, secureFetch } from "util/fetch";
 import BaseController from "./base_controller";
 
 export default class extends BaseController {
@@ -17,7 +17,7 @@ export default class extends BaseController {
   }
 
   authChanged(): void {
-    post("./follow").then((response) => this.insertHTML(response));
+    secureFetch("./follow").then((response) => this.insertHTML(response));
   }
 
   private async insertHTML(response): Promise<void> {

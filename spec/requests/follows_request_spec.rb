@@ -17,6 +17,11 @@ RSpec.describe "Follows", type: :request do
       delete video_follow_path(video_id: video.to_param)
       expect(response).to have_http_status(401)
     end
+
+    it "should render streamer profile template" do
+      get video_follow_path(video_id: video.to_param)
+      expect(response).to render_template(partial: "_streamer_profile")
+    end
   end
 
   describe "user is logged in" do
