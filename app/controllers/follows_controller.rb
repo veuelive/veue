@@ -3,6 +3,10 @@
 class FollowsController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
 
+  def show
+    render_streamer_profile
+  end
+
   def create
     return render_streamer_profile if current_video.user.followers.include?(current_user)
 
