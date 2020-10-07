@@ -11,13 +11,16 @@ class BroadcastsController < ApplicationController
     render(layout: "broadcast")
   end
 
-  def page_visit
-    current_broadcast_video.page_visits.create!(
+  def navigation_update
+    current_broadcast_video.browser_navigations.create!(
       input: {
-        url: params[:url],
+        url: params["url"],
+        canGoBack: params["canGoBack"],
+        canGoForward: params["canGoForward"],
+        isLoading: params["isLoading"],
       },
       user: current_user,
-      timecode_ms: params[:timecode_ms],
+      timecode_ms: params["timecodeMs"],
     )
     head(:no_content)
   end

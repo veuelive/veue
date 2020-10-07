@@ -78,6 +78,7 @@ const createMainWindow = async () => {
   });
 
   browserView = new BrowserView();
+  const webContents = browserView.webContents;
 
   // Now we want ot subscribe to the following events and send them to the main window
   [
@@ -87,13 +88,14 @@ const createMainWindow = async () => {
     "will-navigate",
   ].forEach((eventName) => {
     console.log("Setup event monitoring for " + eventName);
-    browserView.webContents.on(eventName, (event) => {
-      console.log("Got event ", eventName, event);
-      browserWindow.webContents.send(
-        "browserView",
+    webContents.on(eventName, () => {
+      mainWindow.webContents.send("browserView", {
         eventName,
-        browserView.webContents.getURL()
-      );
+        url: webContents.getURL(),
+        canGoBack: webContents.canGoBack(),
+        canGoForward: webContents.canGoForward(),
+        isLoading: webContents.isLoading(),
+      });
     });
   });
 
@@ -225,6 +227,32 @@ ipcMain.on("navigate", async (event, data) => {
   console.log(data);
   await browserView.webContents.loadURL(data);
   event.reply("DONE!");
+});
+
+ipcMain.on("browser", (event, data) => {
+  const webContents = browserView.webContents;
+  switch (data) {
+    case "reload": {
+      webContents.reload();
+      break;
+    }
+    case "back": {
+      webContents.goBack();
+      break;
+    }
+    case "forward": {
+      webContents.goForward();
+      break;
+    }
+    case "stop": {
+      webContents.stop();
+      break;
+    }
+    case "clear": {
+      webContents.clearHistory();
+      break;
+    }
+  }
 });
 
 app.on("second-instance", () => {

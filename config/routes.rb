@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :broadcasts, only: [:show, :index] do
     member do
-      post "page_visit"
+      post "navigation_update"
     end
 
     collection do
