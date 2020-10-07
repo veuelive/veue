@@ -1,5 +1,5 @@
 import consumer from "../channels/consumer";
-import { postForm } from "util/fetch";
+import { postForm, secureFetch } from "util/fetch";
 import userSvg from "../images/user.svg";
 import BaseController from "./base_controller";
 
@@ -9,14 +9,12 @@ export default class extends BaseController {
   readonly lastMessageTarget: HTMLElement;
   readonly messageInputTarget: HTMLInputElement;
   readonly hasMessageInputTarget: boolean;
-  private chatMessagesUrl: string;
   private userId: string;
   private lastUserId: string;
   private videoId: string;
 
   connect(): void {
     this.videoId = this.data.get("videoId");
-    this.chatMessagesUrl = `/videos/${this.videoId}/chat_messages`;
     this.userId = this.data.get("user");
     this.createChatSubscription();
     this.subscribeToAuthChange();
@@ -63,7 +61,7 @@ export default class extends BaseController {
   }
 
   authChanged(): void {
-    fetch(this.chatMessagesUrl).then((response) =>
+    secureFetch("./chat_messages").then((response) =>
       response
         .text()
         .then((html) => (document.getElementById("live-chat").innerHTML = html))
@@ -78,7 +76,7 @@ export default class extends BaseController {
       textAreaElement.value = "";
 
       if (message.length > 0) {
-        postForm(this.chatMessagesUrl, { message }).then(() =>
+        postForm("./chat_messages", { message }).then(() =>
           console.log("Sent!")
         );
       }

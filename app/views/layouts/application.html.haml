@@ -11,7 +11,7 @@
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = yield :header if content_for?(:header)
   %body{body_attributes}
-    #layout-container
+    #layout-container{ data: { controller: "authentication" }}
       = render partial: 'layouts/navbar'
       #main-container
         - if flash[:notice]
@@ -20,3 +20,4 @@
         - if flash[:alert]
           .flash_error= flash[:alert]
         = yield
+      = render partial: "shared/login_modal"

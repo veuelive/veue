@@ -48,4 +48,8 @@ class User < ApplicationRecord
     setup_as_streamer!
     videos.create!
   end
+
+  def follows?(streamer)
+    streamers.include?(streamer)
+  end
 end

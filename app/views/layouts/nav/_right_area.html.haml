@@ -1,4 +1,4 @@
-.user-auth-area{ data: { controller: "authentication" }}
+.user-auth-area
   .mobile-menu{  data: { controller: "sidebar" }}
     .menu-button
       %button#open-menu{ data: { action: "click->sidebar#openRightMenu" }}
@@ -28,4 +28,3 @@
     - else
       %button.list-item{data: { action: "click->authentication#showModal"}}
         Login
-  = render :partial => "layouts/nav/login_modal"

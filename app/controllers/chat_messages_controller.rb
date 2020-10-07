@@ -20,7 +20,6 @@ class ChatMessagesController < ApplicationController
       format.js {
         render(
           partial: "shared/chat",
-          locals: {video: @video},
           content_type: "html",
         )
       }

@@ -23,7 +23,6 @@ export default class extends BaseController {
     const phoneInputElement = this.modalTarget.querySelector(
       "input[type='tel']"
     );
-    console.log(phoneInputElement);
     if (phoneInputElement) {
       this.iti = IntlTelInput(phoneInputElement, {
         utilsScript:
@@ -69,6 +68,8 @@ export default class extends BaseController {
     const html = await response.text();
     if (response.status == 202) {
       document.querySelector(".top-navbar").outerHTML = html;
+      this.emitAuthChange();
+      this.modalTarget.style.display = "none";
     } else if (response.status == 200) {
       this.modalTarget.outerHTML = html;
       this.attachPhoneNumberField();
