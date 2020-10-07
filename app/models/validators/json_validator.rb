@@ -25,11 +25,22 @@ class JsonValidator < ActiveModel::EachValidator
 
   def validate_key_types(record, attribute, schema_properties, json)
     schema_properties.each do |key, type|
-      next unless json.has_key?(key)
-      next if json[key]&.is_a?(type)
+      next unless invalid_field_type(key, type, json)
 
       record.errors.add(attribute, :json_wrong_type, message: "#{attribute}.#{key} should be a #{type}")
     end
+  end
+
+  def invalid_field_type(key, type, json)
+    return unless json.has_key?(key)
+    return if valid_boolean?(key, type, json)
+    return if type.is_a?(Class) && json[key]&.is_a?(type)
+
+    true
+  end
+
+  def valid_boolean?(key, type, json)
+    type == :boolean && (json[key] == true || json[key] == false)
   end
 
   def validate_only_allowed_keys(record, attribute, schema_properties, json)

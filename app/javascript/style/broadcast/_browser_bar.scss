@@ -1,0 +1,88 @@
+@use "../utils/color";
+
+#broadcast {
+  .browser-bar {
+    margin: 0 auto;
+    height: 4.375rem;
+    background-color: color.$white;
+    box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
+    display: flex;
+    align-items: center;
+    padding-left: 1em;
+
+    justify-content: space-between;
+    border-top-left-radius: 0.625rem;
+    border-top-right-radius: 0.625rem;
+
+    &__controls {
+      button {
+        font-size: 25px;
+        height: 35px;
+        width: 35px;
+        background: color.$white;
+        border: 0;
+        &:disabled * {
+          fill: #eee;
+        }
+        &:active {
+          transform: scale(0.98);
+          /* Scaling button to 0.98 to its original size */
+          box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+          /* Lowering the shadow */
+        }
+        &:focus {
+          border: 0;
+          outline: none;
+        }
+      }
+    }
+
+    &__address {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      height: 2.375rem;
+      padding-right: 1em;
+      border: 1px solid color.$gray-light;
+      border-radius: 0.625rem;
+      position: relative;
+      input {
+        border: none;
+        outline: none;
+        width: 100%;
+        padding-left: 1.2rem;
+        font-size: 1rem;
+        background-color: color.$white;
+        color: color.$gray-dark-2;
+      }
+    }
+  }
+  .time-area {
+    padding: 0.6875rem 1.125rem;
+    border: none;
+    border-radius: 0.9375rem;
+    margin-right: 0.4375rem;
+    font-weight: 600;
+  }
+  .time-red {
+    background-color: color.$red-light;
+    color: color.$red-medium;
+    .time-dot {
+      background-color: color.$red-medium;
+    }
+  }
+  .time-gray {
+    background-color: color.$gray-light;
+    color: color.$gray-dark-1;
+    .dot {
+      background-color: color.$gray-dark-1;
+    }
+  }
+  .time-dot {
+    width: 0.4375rem;
+    height: 0.4375rem;
+    display: inline-block;
+    border-radius: 0.4375rem;
+    vertical-align: middle;
+  }
+}

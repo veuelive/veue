@@ -27,10 +27,14 @@ describe BroadcastsController do
     it "should create page views" do
       pdp_page = "https://abracadabranyc.com/collections/magic/products/fire-wallet-by-premium-magic"
 
-      post page_visit_broadcast_url(id: video.to_param),
+      post navigation_update_broadcast_path(id: video.to_param),
+           as: :json,
            params: {
              url: pdp_page,
-             timecode_ms: 100,
+             canGoBack: false,
+             canGoForward: true,
+             isLoading: false,
+             timecodeMs: 100,
            }
 
       # No content sent!
@@ -38,7 +42,7 @@ describe BroadcastsController do
 
       video.reload
       expect(video.video_events).to_not be_empty
-      page_visit = video.page_visits.last
+      page_visit = video.browser_navigations.last
       expect(page_visit.payload["url"]).to eq(pdp_page)
       expect(page_visit.timecode_ms).to eq(100)
     end

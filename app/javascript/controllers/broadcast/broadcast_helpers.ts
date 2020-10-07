@@ -1,5 +1,6 @@
 import { Rectangle } from "util/rectangle";
-import { postForm } from "util/fetch";
+import { postJson } from "util/fetch";
+import { NavigationUpdate } from "controllers/broadcast/browser_controller";
 
 export function getBroadcastElement(): HTMLElement {
   return document.getElementById("broadcast");
@@ -37,12 +38,9 @@ export function getTimecodeMs(): number {
   return timecode;
 }
 
-export function logPageVisit(url: string, event_name: string): void {
-  postForm("./page_visit", {
-    url,
-    event_name,
-    timecode_ms: getTimecodeMs(),
-  }).then();
+export function sendNavigationUpdate(navigationUpdate: NavigationUpdate): void {
+  navigationUpdate["timecodeMs"] = getTimecodeMs();
+  postJson("./navigation_update", navigationUpdate).then();
 }
 //
 // export function getStreamingState() {

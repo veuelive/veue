@@ -4,7 +4,7 @@ class Video < ApplicationRecord
   belongs_to :user
 
   has_many :chat_messages, dependent: :destroy
-  has_many :page_visits, dependent: :destroy
+  has_many :browser_navigations, dependent: :destroy
   has_many :video_events, dependent: :destroy
 
   has_many :mux_webhooks, dependent: :nullify
