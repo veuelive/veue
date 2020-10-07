@@ -9,12 +9,14 @@
   align-items: center;
   padding: 0 2.1875rem;
   justify-content: space-between;
-  .navbar-logo {
-    width: 5.3125rem;
-  }
   .user-auth-area {
     .mobile-menu {
       display: none;
+    }
+  }
+  .navbar-logo {
+    svg {
+      height: 6vh;
     }
   }
   .desktop-area {
@@ -99,11 +101,6 @@
     .desktop-area {
       display: none;
     }
-    .navbar-logo {
-      svg {
-        width: 20px;
-      }
-    }
     .user-auth-area {
       .mobile-menu {
         display: block;
@@ -114,10 +111,6 @@
             padding: 0;
             margin: 0;
           }
-        }
-        svg {
-          fill: color.$cornflower;
-          width: 20px;
         }
         .sidebar-area {
           position: fixed !important;
@@ -189,11 +182,6 @@
 
 @media only screen and (min-width: 769px) and (max-width: 1300px) {
   .top-navbar {
-    .navbar-logo {
-      svg {
-        width: 20px;
-      }
-    }
     .status-user {
       &__text {
         font-size: 0.85rem;

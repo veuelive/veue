@@ -18,7 +18,7 @@ body {
     width: 1300px;
     height: 100%;
 
-    .video-bar {
+    .browser-bar {
       margin: 0 auto;
       height: 4.375rem;
       background-color: color.$white;
@@ -30,6 +30,26 @@ body {
       justify-content: space-between;
       border-top-left-radius: 0.625rem;
       border-top-right-radius: 0.625rem;
+      &__controls {
+        button {
+          font-size: 25px;
+          height: 35px;
+          width: 35px;
+          background: color.$white;
+          border: 0;
+          &:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+            /* Lowering the shadow */
+          }
+          &:focus {
+            border: 0;
+            outline: none;
+          }
+        }
+      }
+
       &__address {
         flex: 1;
         display: flex;

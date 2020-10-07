@@ -37,9 +37,10 @@ export function getTimecodeMs(): number {
   return timecode;
 }
 
-export function logPageVisit(url: string): void {
+export function logPageVisit(url: string, event_name: string): void {
   postForm("./page_visit", {
     url,
+    event_name,
     timecode_ms: getTimecodeMs(),
   }).then();
 }
