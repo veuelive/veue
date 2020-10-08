@@ -23,6 +23,7 @@ class MuxWebhookJob < ApplicationJob
     # When the asset tells us the live stream is over, we need to change our
     # playback ID to not be the livestream version anymore
     webhook.video.change_playback_id(webhook.video.mux_asset_playback_id)
+    webhook.video.duration = webhook.payload["data"]["duration"].ceil
     webhook.video.finish!
   end
 
