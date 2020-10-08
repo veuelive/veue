@@ -22,9 +22,17 @@ class MuxWebhookJob < ApplicationJob
   def process_live_stream_completed(webhook)
     # When the asset tells us the live stream is over, we need to change our
     # playback ID to not be the livestream version anymore
+    video_duration(webhook)
     webhook.video.change_playback_id(webhook.video.mux_asset_playback_id)
-    webhook.video.duration = webhook.payload["data"]["duration"].ceil
     webhook.video.finish!
+  end
+
+  def video_duration(webhook)
+    if webhook.payload["data"] && webhook.payload["data"]["duration"]
+      webhook.video.duration = webhook.payload["data"]["duration"].ceil
+    else
+      webhook.log_webhook_error("duration not exists when live_stream completes.")
+    end
   end
 
   def process_asset_ready(webhook)
