@@ -11,7 +11,6 @@ RSpec.describe "MuxWebhooks" do
   before :example do
     @webhook_idx = 0
     @live_stream_id = mux_webhooks[0]["data"]["id"]
-
     @user = create(:streamer, {mux_live_stream_id: @live_stream_id})
 
     # Videos are created BEFORE Mux gets involved
@@ -78,6 +77,7 @@ RSpec.describe "MuxWebhooks" do
 
     it "should transition the video" do
       expect(Video.first).to be_finished
+      expect(Video.first.duration).to_not eq(nil)
       expect(Video.count).to eq(1)
     end
 
