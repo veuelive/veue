@@ -76,3 +76,12 @@ export default class extends BaseController {
     }
   }
 }
+
+export function currentUserId(): string | null {
+  const element = document.querySelector("*[data-user-id]");
+  if (element) {
+    return element.getAttribute("data-user-id");
+  } else {
+    return null;
+  }
+}

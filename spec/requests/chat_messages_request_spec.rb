@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe "ChatMessages", type: :request do
   let(:user) { create(:user) }
-  let(:video) { create(:video) }
+  let(:video) { create(:live_video) }
   let(:chat_message_params) {
     {
       message: Faker::Lorem.characters(number: 10),
@@ -41,12 +41,13 @@ describe "ChatMessages", type: :request do
     it "should broadcast message on channel" do
       expect { post video_chat_messages_path(video), params: chat_message_params }.to(
         have_broadcasted_to("live_video_#{video.to_param}").with(
-          payload: {
-            message: chat_message_params[:message],
-            user_id: user.to_param,
-            name: user.display_name,
-          },
-          timecode_ms: 0,
+          hash_including(
+            payload: {
+              message: chat_message_params[:message],
+              userId: user.id,
+              name: user.display_name,
+            },
+          ),
         ),
       )
     end

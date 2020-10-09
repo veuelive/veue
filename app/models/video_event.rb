@@ -30,10 +30,19 @@ class VideoEvent < ApplicationRecord
   def broadcast_message
     ActionCable.server.broadcast(
       "live_video_#{video.to_param}",
-      {
-        timecode_ms: timecode_ms,
-        payload: payload,
-      },
+      to_json(channel_timecode_ms),
     )
+  end
+
+  def to_json(override_timecode=nil)
+    {
+      type: type,
+      timecodeMs: override_timecode || timecode_ms,
+      data: payload,
+    }
+  end
+
+  def channel_timecode_ms
+    timecode_ms
   end
 end

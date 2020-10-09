@@ -1,5 +1,6 @@
 import { displayTime } from "util/time";
 import Timecode from "util/timecode";
+import { post } from "util/fetch";
 
 export default class {
   private timecodeDisplayElement;
@@ -16,6 +17,7 @@ export default class {
 
   start(): void {
     this.startedAt = Date.now();
+    post("./start").then();
     this.tickInterval = setInterval(() => {
       this.timecodeDisplayElement.innerText = displayTime(
         (Date.now() - this.startedAt) / 1000

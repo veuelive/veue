@@ -5,7 +5,7 @@ class ChatMessage < VideoEvent
     {
       name: user.display_name,
       message: input["message"],
-      user_id: user.to_param,
+      userId: user.to_param,
     }
   end
 
@@ -16,5 +16,10 @@ class ChatMessage < VideoEvent
       },
       required: ["message"],
     }
+  end
+
+  # Immediately deliver via channel
+  def channel_timecode_ms
+    0
   end
 end

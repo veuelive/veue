@@ -9,6 +9,7 @@ FactoryBot.define do
 
     factory :live_video do
       state { :live }
+      started_at_ms { Time.now.utc.to_ms }
     end
   end
 end

@@ -18,6 +18,10 @@ export default class extends Controller {
   private timecodeManager: TimecodeManager;
 
   connect(): void {
+    if (this.data.get("video-state") == "finished") {
+      document.location.href = "/broadcasts";
+    }
+
     this.state = "loading";
 
     this.mixer = new VideoMixer(this.webcamVideoElementTarget);
