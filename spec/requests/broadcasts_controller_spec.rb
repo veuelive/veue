@@ -46,5 +46,11 @@ describe BroadcastsController do
       expect(page_visit.payload["url"]).to eq(pdp_page)
       expect(page_visit.timecode_ms).to eq(100)
     end
+
+    it "should start" do
+      post start_broadcast_path(video)
+
+      expect(Video.last.started_at_ms).to_not be_nil
+    end
   end
 end

@@ -6,4 +6,8 @@ class VideoDecorator < Draper::Decorator
   def thumbnail_url
     "https://image.mux.com/#{object.mux_playback_id}/thumbnail.png"
   end
+
+  def stream_type
+    state == "live" ? "live" : "vod"
+  end
 end

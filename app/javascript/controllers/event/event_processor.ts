@@ -1,50 +1,52 @@
 interface VideoEvent {
   type: string;
-  payload: Record<string, unknown>;
-  timestampMs: bigint;
+  data: Record<string, unknown>;
+  timecodeMs: bigint;
 }
 
-const ClearVideoEvents = new CustomEvent("clear");
+const ClearVideoEvent = new CustomEvent("clear");
 
 export const VideoEventProcessor = new (class VideoEventProcessor {
-  public immediateDispatcher: HTMLDivElement;
-  public syncDispatcher: HTMLDivElement;
+  public dispatcher: HTMLDivElement;
   private events: VideoEvent[] = [];
-  private lastTimecode: bigint;
+  private lastTimecode: number;
 
   constructor() {
-    this.syncDispatcher = document.createElement("div");
-    this.immediateDispatcher = document.createElement("div");
+    this.dispatcher = document.createElement("div");
+  }
+
+  syncTime(timecodeMs: number) {
+    while (this.events[0] && this.events[0].timecodeMs < timecodeMs) {
+      this.dispatch(this.events.shift());
+    }
+    this.lastTimecode = timecodeMs;
   }
 
   clear() {
-    this.immediateDispatcher.dispatchEvent(ClearVideoEvents);
+    this.dispatcher.dispatchEvent(ClearVideoEvent);
     this.events = [];
   }
 
   addEvent(videoEvent: VideoEvent) {
+    console.log("Adding event ", videoEvent);
     this.events.push(videoEvent);
-    this.dispatchImmediateEvent(videoEvent);
+    this.syncTime(this.lastTimecode);
   }
 
   addEvents(videoEvents: VideoEvent[]) {
     this.events = this.events.concat(videoEvents);
-    videoEvents.forEach((e) => this.dispatchImmediateEvent(e));
   }
 
-  subscribeToImmediate(videoEventType: string, callback: (ve) => void): void {
-    this.immediateDispatcher.addEventListener(videoEventType, callback);
+  subscribeTo(videoEventType: string, callback: (ve) => void): void {
+    this.dispatcher.addEventListener(videoEventType, callback);
   }
-
-  subscribeToSyncDispatch(videoEventType: string, callback: ve);
-
-  syncTo(lastTimecode: number) {}
 
   private;
 
-  dispatchImmediateEvent(videoEvent: VideoEvent): void {
-    this.immediateDispatcher.dispatchEvent(
-      new CustomEvent(videoEvent.type, { detail: videoEvent })
+  dispatch(videoEvent: VideoEvent): void {
+    console.log("dispatching", videoEvent);
+    this.dispatcher.dispatchEvent(
+      new CustomEvent(videoEvent.type, { detail: videoEvent.data })
     );
   }
 })();

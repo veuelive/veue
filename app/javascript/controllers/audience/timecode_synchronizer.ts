@@ -19,7 +19,7 @@ export default class {
       .getElementsByClassName("fixed-secondary-canvas")[0]
       .insertAdjacentElement("afterend", this.canvas);
 
-    setInterval(() => this.sync(), 500);
+    setInterval(() => this.sync(), 100);
   }
 
   sync(): void {
@@ -38,6 +38,7 @@ export default class {
     this.timecode = Timecode.decodeColorSequence(colorSequence.reverse());
   }
 
+  // This is just for debugging
   drawCanvas(videoTarget: HTMLVideoElement, ratioToOriginal: number): void {
     this.canvasCtx.drawImage(
       videoTarget,

@@ -6,12 +6,14 @@
       <w>afterend</w>
       <w>appsignal</w>
       <w>authenticatable</w>
+      <w>beforeend</w>
       <w>bootsnap</w>
       <w>byebug</w>
       <w>cancancan</w>
       <w>capturer</w>
       <w>capybara</w>
       <w>confirmable</w>
+      <w>demixer</w>
       <w>deskie</w>
       <w>flashphoner</w>
       <w>hcatlin</w>

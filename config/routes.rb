@@ -6,6 +6,12 @@ Rails.application.routes.draw do
       get "broadcast"
     end
 
+    resources :events, only: %i[show index] do
+      collection do
+        get "recent"
+      end
+    end
+
     resources :chat_messages, only: %i[create index]
     resource :follow, only: %i[show create destroy]
   end
@@ -13,6 +19,7 @@ Rails.application.routes.draw do
   resources :broadcasts, only: [:show, :index] do
     member do
       post "navigation_update"
+      post "start"
     end
 
     collection do

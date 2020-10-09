@@ -11,6 +11,10 @@ class BroadcastsController < ApplicationController
     render(layout: "broadcast")
   end
 
+  def start
+    current_broadcast_video.start!
+  end
+
   def navigation_update
     current_broadcast_video.browser_navigations.create!(
       input: {

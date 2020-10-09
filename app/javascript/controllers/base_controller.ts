@@ -20,7 +20,7 @@ export default class extends Controller {
   // userId is null when we are NOT logged in anymore
   authChanged(): void {
     console.warn(
-      `You are subscribed to auth change, and need to implement authChange().`
+      `You are subscribed to auth change, and need to implement authChanged().`
     );
   }
 }

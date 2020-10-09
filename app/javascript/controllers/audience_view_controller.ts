@@ -4,8 +4,13 @@ import playSvg from "../images/play.svg";
 import pauseSvg from "../images/pause.svg";
 import { displayTime } from "util/time";
 import TimecodeSynchronizer from "controllers/audience/timecode_synchronizer";
-import Sizes from "util/sizes";
+import VideoDemixer from "controllers/audience/video_demixer";
+import { VideoEventProcessor } from "controllers/event/event_processor";
+import EventManagerInterface from "controllers/event/event_manager_interface";
+import VodEventManager from "controllers/event/vod_event_manager";
+import LiveEventManager from "controllers/event/live_event_manager";
 
+type StreamType = "live" | "vod";
 export default class extends Controller {
   static targets = [
     "video",
@@ -21,20 +26,31 @@ export default class extends Controller {
   readonly fixedSecondaryCanvasTarget!: HTMLCanvasElement;
   readonly pipSecondaryCanvasTarget!: HTMLCanvasElement;
   readonly timeDisplayTarget!: HTMLElement;
-  private primaryCtx: CanvasRenderingContext2D;
-  private secondaryCtxs: Array<CanvasRenderingContext2D>;
+
   private timecodeSynchronizer: TimecodeSynchronizer;
+  private streamType: StreamType;
+  private videoDemixer: VideoDemixer;
+  private eventManager: EventManagerInterface;
 
   connect(): void {
-    this.primaryCtx = this.primaryCanvasTarget.getContext("2d");
-    this.secondaryCtxs = [
-      this.fixedSecondaryCanvasTarget.getContext("2d"),
-      this.pipSecondaryCanvasTarget.getContext("2d"),
-    ];
+    this.streamType = this.data.get("stream-type") as StreamType;
 
     this.timecodeSynchronizer = new TimecodeSynchronizer(() => {
       this.timecodeChanged();
     });
+
+    this.videoDemixer = new VideoDemixer(
+      this.videoTarget,
+      this.primaryCanvasTarget,
+      [this.pipSecondaryCanvasTarget, this.fixedSecondaryCanvasTarget],
+      this.timecodeSynchronizer
+    );
+
+    if (this.streamType === "vod") {
+      this.eventManager = new VodEventManager(0);
+    } else {
+      this.eventManager = new LiveEventManager();
+    }
 
     this.videoTarget.addEventListener("loadedmetadata", async () => {
       this.state = "ready";
@@ -49,8 +65,6 @@ export default class extends Controller {
       hls.loadSource(this.data.get("url"));
       hls.attachMedia(this.videoTarget);
     }
-
-    this.drawFrame();
   }
 
   togglePlay(): void {
@@ -66,51 +80,10 @@ export default class extends Controller {
   }
 
   timecodeChanged(): void {
-    const percent = Math.round(
-      (this.videoTarget.currentTime / this.videoTarget.duration) * 100
-    );
-    console.log(`${percent}%`);
+    VideoEventProcessor.syncTime(this.timecodeSynchronizer.timecodeMs);
     this.timeDisplayTarget.innerHTML = displayTime(
       this.timecodeSynchronizer.timecodeSeconds
     );
-  }
-
-  private drawFrame() {
-    const browserCtx = this.primaryCtx;
-    const fullVideoWidth = this.videoTarget.videoWidth;
-    const fullVideoHeight = this.videoTarget.videoHeight;
-    const sy =
-      (Sizes.primaryView.height / Sizes.fullCanvas.height) * fullVideoHeight;
-    const ratioToOriginal = fullVideoHeight / Sizes.fullCanvas.height;
-
-    browserCtx.drawImage(
-      this.videoTarget,
-      0,
-      0,
-      fullVideoWidth,
-      fullVideoHeight,
-      0,
-      0,
-      Sizes.fullCanvas.width,
-      Sizes.fullCanvas.height
-    );
-    for (const secondaryCtx of this.secondaryCtxs) {
-      secondaryCtx.drawImage(
-        this.videoTarget,
-        0,
-        sy,
-        Sizes.secondaryView.width * ratioToOriginal,
-        Sizes.secondaryView.height * ratioToOriginal,
-        0,
-        0,
-        Sizes.secondaryView.width,
-        Sizes.secondaryView.height
-      );
-    }
-
-    this.timecodeSynchronizer.drawCanvas(this.videoTarget, ratioToOriginal);
-
-    requestAnimationFrame(() => this.drawFrame());
   }
 
   showChat(): void {

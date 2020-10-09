@@ -27,5 +27,7 @@ describe "Broadcast View" do
     expect(page).to have_css("div[data-broadcast-state='live']")
 
     expect(page).to have_content("00:00:01")
+
+    expect(Video.last.started_at_ms).to_not be_nil
   end
 end

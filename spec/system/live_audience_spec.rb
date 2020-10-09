@@ -7,7 +7,7 @@ describe "Live Audience View" do
   include AudienceSpecHelpers
 
   let(:user) { create(:user) }
-  let(:video) { create(:video, {hls_url: "/__test/live/playback.m3u8"}) }
+  let(:video) { create(:live_video, {hls_url: "/__test/live/playback.m3u8"}) }
 
   before :example do
     driven_by(:selenium_chrome_headless)
@@ -37,12 +37,17 @@ describe "Live Audience View" do
     it "should show messages from other users" do
       other_user = create(:user)
       message = "Pizza time!"
+
+      ensure_video_starts_playing
+
       video.chat_messages.create!(user: other_user, input: {message: message})
 
       expect(page).to have_content(message)
       expect(page).to have_content(other_user.display_name)
 
       page.refresh
+
+      ensure_video_starts_playing
 
       # BUG: VEUE-81
       # We had a bug that was causing the following to break, so we refresh to

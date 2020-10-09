@@ -8,13 +8,16 @@ class Video < ApplicationRecord
   has_many :video_events, dependent: :destroy
 
   has_many :mux_webhooks, dependent: :nullify
-  scope :active, -> { where(state: %w[pending live]) }
+  scope :active, -> { where(state: %w[pending live starting]) }
 
   after_save :broadcast_active_viewers, if: -> { saved_change_to_active_viewers? }
 
   aasm column: "state" do
     # We aren't live yet, but it'sa coming!
     state :pending, initial: true
+
+    # The streamer has started, but MUX isn't yet fully live via RTMP. Their clock has started though
+    state :starting
 
     # The video is live! Things are happening!
     # Despite the name, normally this comes from a "recording" event coming from Mux
@@ -23,12 +26,18 @@ class Video < ApplicationRecord
     # The stream is over, but we might not be ready to do replay yet
     state :finished
 
-    event :go_live do
+    event :start do
       before do
         self.started_at_ms = Time.now.utc.to_ms
       end
 
+      transitions from: :pending, to: :starting
+      transitions from: :live, to: :live
+    end
+
+    event :go_live do
       transitions from: :pending, to: :live
+      transitions from: :starting, to: :live
     end
 
     event :finish do
