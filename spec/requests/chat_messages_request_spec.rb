@@ -42,7 +42,7 @@ describe "ChatMessages", type: :request do
       expect { post video_chat_messages_path(video), params: chat_message_params }.to(
         have_broadcasted_to("live_video_#{video.to_param}").with(
           hash_including(
-            payload: {
+            data: {
               message: chat_message_params[:message],
               userId: user.id,
               name: user.display_name,
