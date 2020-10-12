@@ -6,7 +6,10 @@
           %input.outline-none{placeholder: "https://www.nike.com/w/vapormax-shoes-220dzy7ok", type: "text", disabled: true}
           .link
             = svg_tag 'hyperlink'
-        .time-area.time-red
+        - if current_video.live?
+          .widget.time-gray#active-viewers
+            = current_video.active_viewers
+        .widget.time-red
           %span.dot.time-dot
           %span{"data-target": "audience-view.timeDisplay"}
       %canvas.primary-canvas{"data-target": "audience-view.primaryCanvas", width: 1280, height: 800}

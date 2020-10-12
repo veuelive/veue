@@ -40,7 +40,11 @@ body#videos__show {
     top: 0.25rem;
   }
 
-  .time-area {
+  #active-viewers {
+    display: flex;
+  }
+
+  .widget {
     padding: 0.2rem 1.125rem 0.2rem 1.125rem;
     margin-left: 0.2rem;
     border: none;
