@@ -76,11 +76,7 @@ export default class extends BaseController {
   }
 }
 
-export function currentUserId(): string | null {
+export function currentUserId(): string | undefined {
   const element = document.querySelector("*[data-user-id]");
-  if (element) {
-    return element.getAttribute("data-user-id");
-  } else {
-    return null;
-  }
+  return element?.getAttribute("data-user-id");
 }
