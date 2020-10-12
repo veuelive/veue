@@ -39,6 +39,9 @@ Layout/SpaceAroundEqualsInParameterDefault:
 Style/Copyright:
   Enabled: false
 
+Style/Lambda:
+  EnforcedStyle: literal
+
 Style/MethodCallWithArgsParentheses:
   IgnoredMethods:
     - require

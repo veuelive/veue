@@ -33,8 +33,6 @@ class ChatMessagesController < ApplicationController
       user: current_user,
       input: {message: params[:message]},
       video: current_video,
-      timecode_ms: 0,
-      # ^^^ This needs to get replaced!
     )
   end
 

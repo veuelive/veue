@@ -58,6 +58,7 @@ RSpec.describe "MuxWebhooks" do
       expect(Video.count).to eq(1)
       video = Video.first
       expect(video.mux_playback_id).to eq(webhook.playback_id)
+      expect(video.started_at_ms).to_not be_nil
       expect(video).to be_live
       webhook.reload
       expect(webhook.user).to eq(@user)
