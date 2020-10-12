@@ -19,10 +19,13 @@ export default class LiveEventManager implements EventManagerInterface {
       .then((response) => response.json())
       .then((results) => {
         VideoEventProcessor.addEvents(results);
+        // Do all events from a fraction from where we started, just in
+        // case we are starting paused
+        VideoEventProcessor.syncTime(100);
       });
   }
 
-  received(data) {
+  received(data: never): void {
     VideoEventProcessor.addEvent(data);
   }
 

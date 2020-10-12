@@ -16,12 +16,27 @@ describe "Live Audience View" do
 
   describe "a user is logged in" do
     before :each do
+      visit videos_path
       login_as user
       visit video_path(video)
     end
 
-    it "should allow for chat messages to be sent" do
+    it "should allow for live chat messages to be sent" do
       expect(page).to have_selector(".message-write")
+      fill_in("message-input", with: "Cowabunga!")
+      find(".write-area textarea").native.send_keys(:return)
+      expect(page).to have_content("Cowabunga!")
+      expect(video.chat_messages.count).to be(1)
+      page.refresh
+      expect(page).to have_content("Cowabunga!")
+    end
+
+    it "should allow you to follow the streamer" do
+      find(".follow-btn").click
+
+      expect(page).to have_content("Unfollow")
+
+      expect(video.user.followers).to include(user)
     end
   end
 
@@ -36,25 +51,38 @@ describe "Live Audience View" do
 
     it "should show messages from other users" do
       other_user = create(:user)
-      message = "Pizza time!"
+      first_message = "Pizza time!"
+      second_message = "Who wants pepperoni?"
+      video.chat_messages.create!(user: other_user, input: {message: first_message})
 
-      ensure_video_starts_playing
+      expect(page).to have_content(first_message)
+      expect(page).to_not have_content(second_message)
+      expect(page).to have_content(other_user.display_name)
 
-      video.chat_messages.create!(user: other_user, input: {message: message})
+      video.chat_messages.create!(user: other_user, input: {message: second_message})
 
-      expect(page).to have_content(message)
+      expect(page).to have_content(first_message)
+      expect(page).to have_content(second_message)
       expect(page).to have_content(other_user.display_name)
 
       page.refresh
-
-      ensure_video_starts_playing
 
       # BUG: VEUE-81
       # We had a bug that was causing the following to break, so we refresh to
       # make sure that a visitor would see the content even if it's not coming
       # through the WS connection
-      expect(page).to have_content(message)
+      expect(page).to have_content(first_message)
+      expect(page).to have_content(second_message)
       expect(page).to have_content(other_user.display_name)
+    end
+
+    it "should allow you to login without refreshing" do
+      page.evaluate_script("window.not_reloaded = 'not reloaded';")
+      expect(page).to have_content("Login")
+      new_user = create(:user)
+      login_as(new_user)
+      expect(page.evaluate_script("window.not_reloaded")).to eq("not reloaded")
+      expect(page).to have_content(new_user.display_name)
     end
   end
 

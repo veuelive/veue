@@ -58,4 +58,13 @@ class Video < ApplicationRecord
       },
     )
   end
+
+  def chat_messages_for_live(limit=50)
+    chat_messages.order("timecode_ms DESC")
+                 .limit(limit)
+                 .reverse
+                 .map do |message|
+      message.to_json(0)
+    end
+  end
 end

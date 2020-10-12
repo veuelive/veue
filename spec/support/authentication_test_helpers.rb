@@ -14,19 +14,13 @@ module AuthenticationTestHelpers
 
   module SystemTestHelpers
     def login_as(user)
-      load_page
       open_nav_sidebar
       enter_phone_number(user)
       confirm_secret_code
-      open_nav_sidebar
-      expect(page).to have_selector(".status-user__text")
+      expect(page.find("*[data-user-id]")["data-user-id"]).to eq(user.id)
     end
 
     private
-
-    def load_page
-      visit("/")
-    end
 
     def open_nav_sidebar
       return unless has_css?("#open-menu")

@@ -25,8 +25,7 @@ export default class extends BaseController {
     );
     if (phoneInputElement) {
       this.iti = IntlTelInput(phoneInputElement, {
-        utilsScript:
-          "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.min.js",
+        utilsScript: "/static/intl-tel-utils.js",
       });
       this.validatePhone();
     }

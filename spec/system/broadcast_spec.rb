@@ -12,7 +12,7 @@ describe "Broadcast View" do
   end
 
   it "should load for a setup streamer" do
-    visit "/"
+    visit videos_path
     login_as(user)
 
     visit "/broadcasts"
