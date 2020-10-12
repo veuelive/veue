@@ -16,6 +16,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require "rspec/json_expectations"
+require_relative("../lib/extensions/time")
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

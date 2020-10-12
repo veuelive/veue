@@ -20,19 +20,15 @@ class Video < ApplicationRecord
     # Despite the name, normally this comes from a "recording" event coming from Mux
     state :live
 
-    # The stream isn't officially over yet, but we're not longer getting a live feed for whatever reason
-    state :paused
-
     # The stream is over, but we might not be ready to do replay yet
     state :finished
 
     event :go_live do
-      transitions from: :pending, to: :live
-      transitions from: :paused, to: :live
-    end
+      before do
+        self.started_at_ms = Time.now.utc.to_ms
+      end
 
-    event :pause do
-      transitions from: :live, to: :paused
+      transitions from: :pending, to: :live
     end
 
     event :finish do

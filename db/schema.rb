@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(version: 2020_10_09_142659) do
     t.string "mux_asset_playback_id"
     t.integer "duration"
     t.integer "active_viewers", default: 0
+    t.bigint "started_at_ms"
     t.index ["mux_asset_id"], name: "index_videos_on_mux_asset_id"
     t.index ["mux_live_stream_id"], name: "index_videos_on_mux_live_stream_id"
     t.index ["state"], name: "index_videos_on_state"

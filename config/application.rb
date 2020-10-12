@@ -22,6 +22,7 @@ module Veue
     config.load_defaults(6.0)
 
     config.autoload_paths << "app/models/validators"
+    config.autoload_paths << "lib/extensions"
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
