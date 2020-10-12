@@ -45,4 +45,11 @@ class VideoEvent < ApplicationRecord
   def channel_timecode_ms
     timecode_ms
   end
+
+  def input_schema
+    {
+      properties: {},
+      required: [],
+    }
+  end
 end
