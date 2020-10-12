@@ -15,7 +15,7 @@ export default class extends BaseController {
   }
 
   private showOrHideBasedOnLogin() {
-    if (currentUserId() === null) {
+    if (currentUserId() === undefined) {
       this.element.setAttribute("style", "display: none;");
     } else {
       this.element.setAttribute("style", "display: block;");
