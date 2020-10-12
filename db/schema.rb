@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_09_142659) do
+ActiveRecord::Schema.define(version: 2020_10_12_151857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -40,6 +40,16 @@ ActiveRecord::Schema.define(version: 2020_10_09_142659) do
     t.index ["mux_id"], name: "index_mux_webhooks_on_mux_id", unique: true
     t.index ["user_id"], name: "index_mux_webhooks_on_user_id"
     t.index ["video_id"], name: "index_mux_webhooks_on_video_id"
+  end
+
+  create_table "pins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "url"
+    t.string "name"
+    t.uuid "video_id"
+    t.uuid "pin_event_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["pin_event_id"], name: "index_pins_on_pin_event_id"
   end
 
   create_table "session_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -120,8 +130,8 @@ ActiveRecord::Schema.define(version: 2020_10_09_142659) do
     t.string "mux_asset_id"
     t.string "mux_asset_playback_id"
     t.integer "duration"
-    t.integer "active_viewers", default: 0
     t.bigint "started_at_ms"
+    t.integer "active_viewers", default: 0
     t.index ["mux_asset_id"], name: "index_videos_on_mux_asset_id"
     t.index ["mux_live_stream_id"], name: "index_videos_on_mux_live_stream_id"
     t.index ["state"], name: "index_videos_on_state"
