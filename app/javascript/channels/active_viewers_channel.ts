@@ -4,7 +4,11 @@ function viewersChannel() {
   const chatSection = document.getElementsByClassName(
     "chat-section"
   )[0] as HTMLElement;
-  const videoId = chatSection.dataset.chatVideoId;
+
+  let videoId = null;
+  if (chatSection) {
+    videoId = chatSection.dataset.chatVideoId;
+  }
 
   consumer.subscriptions.create(
     {
