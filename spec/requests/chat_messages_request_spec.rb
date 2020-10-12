@@ -36,7 +36,6 @@ describe "ChatMessages", type: :request do
   describe "create & broadcast" do
     before do
       login_as(user)
-      @action_cable = ActionCable.server
     end
 
     it "should broadcast message on channel" do
