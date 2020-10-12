@@ -11,7 +11,7 @@ RSpec.describe "Navbar State" do
 
   describe "navbar view on different screens" do
     before do
-      visit root_path
+      visit videos_path
     end
 
     after do
@@ -40,8 +40,8 @@ RSpec.describe "Navbar State" do
 
     describe "login user" do
       before(:each) do
-        login_as(user)
         visit root_path
+        login_as(user)
       end
 
       it "should display user name and signout link in sidebar" do

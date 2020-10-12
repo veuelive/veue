@@ -12,9 +12,10 @@ class EventsController < ApplicationController
 
   def recent
     video = Video.find(params[:video_id])
-    navigations = video.browser_navigations.last(5)
-    chat_messages = video.chat_messages.order("timecode_ms DESC").limit(50).to_a
-    events = (navigations + chat_messages).sort_by(&:timecode_ms).map(&:to_json)
+    navigations = video.browser_navigations.where("created_at > ?", 2.minutes.ago).map(&:to_json)
+
+    # Chat messages are all set to 0, so they can go first.
+    events = (video.chat_messages_for_live + navigations)
     render(json: events)
   end
 

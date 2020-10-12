@@ -10,7 +10,7 @@ export default class extends BaseController {
     this.subscribeToAuthChange();
   }
 
-  authChanged() {
+  authChanged(): void {
     this.showOrHideBasedOnLogin();
   }
 

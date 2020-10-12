@@ -16,7 +16,7 @@ export const VideoEventProcessor = new (class VideoEventProcessor {
   }
 
   syncTime(timecodeMs: number) {
-    while (this.events[0] && this.events[0].timecodeMs < timecodeMs) {
+    while (this.events[0] && this.events[0].timecodeMs <= timecodeMs) {
       this.dispatch(this.events.shift());
     }
     this.lastTimecode = timecodeMs;

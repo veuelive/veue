@@ -72,7 +72,11 @@ export default class extends Controller {
       this.videoTarget
         .play()
         .then(() => (this.state = "playing"))
-        .catch(() => (this.state = "paused"));
+        .catch(() => {
+          this.state = "paused";
+          this.videoTarget.muted = true;
+          this.videoTarget.play().then(() => (this.state = "playing"));
+        });
     } else {
       this.videoTarget.pause();
       this.state = "paused";
