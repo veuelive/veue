@@ -5,8 +5,11 @@ class Video < ApplicationRecord
 
   has_many :chat_messages, dependent: :destroy
   has_many :browser_navigations, dependent: :destroy
+  has_many :pin_events, dependent: :destroy
   has_many :video_events, dependent: :destroy
   has_many :video_views, dependent: :destroy
+
+  has_many :pins, dependent: :destroy
 
   has_many :mux_webhooks, dependent: :nullify
   scope :active, -> { where(state: %w[pending live starting]) }

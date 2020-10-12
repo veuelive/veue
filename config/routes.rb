@@ -25,6 +25,8 @@ Rails.application.routes.draw do
     collection do
       get "blank"
     end
+
+    resources :pins
   end
 
   post "/mux/webhook", to: "mux_webhooks#index"
