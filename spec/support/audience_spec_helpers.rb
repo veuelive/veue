@@ -2,15 +2,17 @@
 
 module AudienceSpecHelpers
   def is_video_playing?
-    find("div[data-controller='audience-view']", visible: false)["data-audience-view-state"] == "playing"
+    find("div[data-controller='audience-view']")["data-audience-view-state"] == "playing"
   end
 
-  def ensure_video_starts_playing
-    loop do
-      break if is_video_playing?
+  def assert_video_is_playing
+    find("*[data-audience-view-state='playing']")
+    page.assert_no_selector("*[data-audience-view-timecode='-1']")
+    page.assert_no_selector("*[data-audience-view-timecode='0']")
+    puts find("*[data-audience-view-timecode]")["data-audience-view-timecode"].inspect
+  end
 
-      play = find("a[title='Toggle Play']")
-      play.click
-    end
+  def current_timecode
+    Integer(find("*[data-audience-view-timecode]")["data-audience-view-timecode"], 10)
   end
 end
