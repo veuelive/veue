@@ -25,7 +25,7 @@
     #streamer-profile-area
       = render partial: "videos/partials/streamer_profile"
     %button.chat-btn{data: {action: "click->audience-view#showChat"}} Open Chat
-    = render partial: 'videos/partials/products_area'
+    = render partial: 'videos/partials/pins_area'
   .content-area__secondary
     %canvas.fixed-secondary-canvas{"data-target": "audience-view.fixedSecondaryCanvas", width: 360, height: 280}
     %video.player__video.viewer{"data-target" => "audience-view.video", style: "display: none;", playsinline: "playsinline"}

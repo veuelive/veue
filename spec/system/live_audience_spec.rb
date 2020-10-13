@@ -87,10 +87,10 @@ describe "Live Audience View" do
   end
 
   describe "live watching" do
-    it "should show the timestamp" do
+    it "should update the timecode" do
       visit(video_path(video))
-      ensure_video_starts_playing
-      page.find("*[data-target=\"audience-view.timeDisplay\"]", text: "00:00:01", wait: 5)
+      assert_video_is_playing
+      expect(current_timecode).to be > 0
     end
   end
 end

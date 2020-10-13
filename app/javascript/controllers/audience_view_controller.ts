@@ -35,6 +35,8 @@ export default class extends Controller {
   connect(): void {
     this.streamType = this.data.get("stream-type") as StreamType;
 
+    this.data.set("timecode", "-1");
+
     this.timecodeSynchronizer = new TimecodeSynchronizer(() => {
       this.timecodeChanged();
     });
@@ -84,6 +86,7 @@ export default class extends Controller {
   }
 
   timecodeChanged(): void {
+    this.data.set("timecode", this.timecodeSynchronizer.timecodeMs.toString());
     VideoEventProcessor.syncTime(this.timecodeSynchronizer.timecodeMs);
     this.timeDisplayTarget.innerHTML = displayTime(
       this.timecodeSynchronizer.timecodeSeconds
@@ -102,7 +105,7 @@ export default class extends Controller {
     this.data.set("state", state);
 
     const imagePath = this.state === "paused" ? playSvg : pauseSvg;
-    this.toggleTarget.innerHTML = `<img src=${imagePath} />`;
+    this.toggleTarget.innerHTML = `<img src="${imagePath}"  alt="${this.state}"/>`;
   }
 
   get state(): string {

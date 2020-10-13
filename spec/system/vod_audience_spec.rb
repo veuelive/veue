@@ -14,11 +14,13 @@ describe "Prerecorded Audience View" do
 
   describe "anonymous user" do
     it "should have a video to play!" do
-      visit video_path(video.to_param)
+      visit video_path(video)
 
-      ensure_video_starts_playing
+      assert_video_is_playing
 
-      page.find("*[data-target=\"audience-view.timeDisplay\"]", text: "00:00:01", wait: 5)
+      expect(is_video_playing?).to eq(true)
+
+      expect(current_timecode).to be > 0
     end
   end
 end
