@@ -27,7 +27,9 @@ describe "Videos" do
     it "should render the video by id" do
       get video_path(@video)
 
+      @video.reload
       expect(response).to have_http_status(:ok)
+      expect(@video.video_views.size).to eq(1)
     end
   end
 end

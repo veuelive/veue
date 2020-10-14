@@ -3,7 +3,6 @@ import Hls from "hls.js";
 import playSvg from "../images/play.svg";
 import pauseSvg from "../images/pause.svg";
 import { displayTime } from "util/time";
-import { post } from "util/fetch";
 import TimecodeSynchronizer from "controllers/audience/timecode_synchronizer";
 import VideoDemixer from "controllers/audience/video_demixer";
 import { VideoEventProcessor } from "controllers/event/event_processor";
@@ -66,8 +65,6 @@ export default class extends Controller {
       hls.loadSource(this.data.get("url"));
       hls.attachMedia(this.videoTarget);
     }
-
-    this.incrementVideoViews();
   }
 
   togglePlay(): void {
@@ -91,11 +88,6 @@ export default class extends Controller {
     this.timeDisplayTarget.innerHTML = displayTime(
       this.timecodeSynchronizer.timecodeSeconds
     );
-  }
-
-  incrementVideoViews(): void {
-    console.log(this.streamType);
-    if (this.streamType !== "live") post("./video_views");
   }
 
   showChat(): void {
