@@ -1,6 +1,6 @@
 .pin-box#pin-area{data: {controller: "audience--pins"}}
-  - current_video.pins.each do |pin|
-    .pin{data: {"pin_id": pin.id, "timecode": pin.timecode_ms}}
+  - current_video.pins.reverse.each do |pin|
+    .pin{invisible: true, data: {"pin_id": pin.id, "timecode": pin.timecode_ms}}
       = image_tag pin.thumbnail, alt: pin.name, class: 'pin__img'
       .button-area
         .icon-box

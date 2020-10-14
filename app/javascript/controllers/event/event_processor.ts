@@ -44,9 +44,14 @@ export const VideoEventProcessor = new (class VideoEventProcessor {
   private;
 
   dispatch(videoEvent: VideoEvent): void {
-    console.log("dispatching", videoEvent);
+    console.log(
+      "dispatching",
+      videoEvent.type,
+      videoEvent.timecodeMs,
+      videoEvent.data
+    );
     this.dispatcher.dispatchEvent(
-      new CustomEvent(videoEvent.type, { detail: videoEvent.data })
+      new CustomEvent(videoEvent.type, { detail: videoEvent })
     );
   }
 })();

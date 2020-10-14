@@ -9,7 +9,7 @@ class VideoEvent < ApplicationRecord
   after_create :broadcast_message
 
   validates :video, presence: true
-  validates :input, presence: true, json: {schema: -> { input_schema.to_json }}
+  validates :input, json: {schema: -> { input_schema.to_json }}
   validates :payload, presence: true, unless: :new_record?
 
   def set_payload

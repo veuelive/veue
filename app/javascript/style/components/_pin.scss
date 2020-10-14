@@ -4,21 +4,34 @@
 .pin-box {
   margin-top: 1.5rem;
   display: flex;
+  flex-direction: row;
   padding: 0;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   .pin {
     position: relative;
+    transition: width 0.5s ease-in-out, opacity 0.2s linear 0.5s;
     cursor: pointer;
-    height: 115px;
+    width: 180px;
     border-radius: 0.625rem;
     box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
     margin: 2vw;
+    &[invisible] {
+      opacity: 0;
+      width: 0;
+      margin: 0;
+    }
     &__img {
       width: 100%;
       border-radius: 0.625rem;
       object-fit: cover;
     }
+    &:hover .button-area {
+      opacity: 1;
+    }
     .button-area {
+      opacity: 0;
+      transition: 300ms opacity;
       position: absolute;
       bottom: 0.5rem;
       left: 50%;
@@ -26,8 +39,8 @@
       display: flex;
       .icon-box {
         background-color: color.$white;
-        width: 2rem;
-        height: 2rem;
+        width: 3rem;
+        height: 3rem;
         border: 0;
         border-radius: 0.625rem;
         margin-right: 0.5rem;
@@ -36,26 +49,17 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
-        @media only screen and (min-width: 992px) and (max-width: 1366px) {
-          width: 1.5rem;
-          height: 1.5rem;
-          border-radius: 0.325rem;
-        }
-        @media only screen and (min-width: 1367px) and (max-width: 1920px) {
-          width: 2rem;
-          height: 2rem;
-          border-radius: 0.5rem;
+        &:hover {
+          transform: scale(1.2);
+          transition-duration: 200ms;
+          box-shadow: color.$box-shadow;
         }
       }
     }
     svg {
       fill: color.$gray-dark-1;
-      width: 18px;
-      height: 15px;
-      @media only screen and (min-width: 1024px) and (max-width: 1366px) {
-        width: 11px;
-        height: 9px;
-      }
+      width: 25px;
+      height: 25px;
     }
   }
 }
