@@ -42,6 +42,16 @@ ActiveRecord::Schema.define(version: 2020_10_14_140500) do
     t.index ["video_id"], name: "index_mux_webhooks_on_video_id"
   end
 
+  create_table "pins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "url"
+    t.string "name"
+    t.uuid "video_id"
+    t.uuid "pin_event_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["pin_event_id"], name: "index_pins_on_pin_event_id"
+  end
+
   create_table "session_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "uuid", null: false
     t.text "phone_number_ciphertext"
@@ -128,8 +138,8 @@ ActiveRecord::Schema.define(version: 2020_10_14_140500) do
     t.string "mux_asset_id"
     t.string "mux_asset_playback_id"
     t.integer "duration"
-    t.integer "active_viewers", default: 0
     t.bigint "started_at_ms"
+    t.integer "active_viewers", default: 0
     t.integer "video_views_count"
     t.index ["mux_asset_id"], name: "index_videos_on_mux_asset_id"
     t.index ["mux_live_stream_id"], name: "index_videos_on_mux_live_stream_id"
