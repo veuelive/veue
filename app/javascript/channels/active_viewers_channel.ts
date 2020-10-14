@@ -1,29 +1,28 @@
 import consumer from "./consumer";
 
 function viewersChannel() {
-  const chatSection = document.getElementsByClassName(
-    "chat-section"
-  )[0] as HTMLElement;
+  const videoDisplayElement = document.getElementById(
+    "video-show"
+  ) as HTMLElement;
 
-  let videoId = null;
-  if (chatSection) {
-    videoId = chatSection.dataset.chatVideoId;
-  }
+  if (videoDisplayElement) {
+    const videoId = videoDisplayElement.dataset.audienceViewVideoId;
 
-  consumer.subscriptions.create(
-    {
-      channel: "ActiveViewersChannel",
-      videoId: videoId,
-    },
-    {
-      received(data) {
-        const activeViews = document.getElementById(
-          "active-viewers"
-        ) as HTMLElement;
-        activeViews.textContent = data.viewers;
+    consumer.subscriptions.create(
+      {
+        channel: "ActiveViewersChannel",
+        videoId,
       },
-    }
-  );
+      {
+        received(data) {
+          const activeViews = document.getElementById(
+            "active-viewers"
+          ) as HTMLElement;
+          activeViews.textContent = data.viewers;
+        },
+      }
+    );
+  }
 }
 
 window.onload = viewersChannel;

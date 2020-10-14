@@ -23,7 +23,7 @@ export default class ChatMessagesController extends BaseController {
 
   private displayMessage(message) {
     const sameUser = message.userId === this.lastMessageFromUserId;
-    console.log(message);
+
     let html = "";
     if (message.userId === this.myUserId) {
       html = `

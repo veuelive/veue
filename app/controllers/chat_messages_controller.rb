@@ -2,7 +2,6 @@
 
 class ChatMessagesController < ApplicationController
   before_action :authenticate_user!, only: [:create]
-  before_action :current_video
 
   def create
     message = build_chat_message
