@@ -14,6 +14,7 @@ export default class {
       (Timecode.codeCount * Timecode.digitWidth).toString()
     );
     this.canvas.setAttribute("height", Timecode.digitHeight.toString());
+    this.canvas.setAttribute("style", "display: none;");
     this.canvasCtx = this.canvas.getContext("2d");
     document
       .getElementsByClassName("fixed-secondary-canvas")[0]
@@ -68,4 +69,13 @@ export default class {
   get timecodeSeconds(): number {
     return this._timecodeMs / 1000.0;
   }
+}
+
+export function getTimecodeMs(): number {
+  return parseInt(
+    document
+      .querySelector("*[data-audience-view-timecode]")
+      .getAttribute("data-audience-view-timecode"),
+    10
+  );
 }

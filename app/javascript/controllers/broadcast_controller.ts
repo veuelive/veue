@@ -85,11 +85,11 @@ export default class extends Controller {
       .querySelector("input[data-target='broadcast--browser.addressBar']")
       .getAttribute("value");
     this.mixer.getScreenshot().then((image) => {
-      console.log(image);
       return postForm("./pins", {
         name: "Card",
         url,
         thumbnail: image,
+        timecode_ms: this.timecodeManager.timecodeMs,
       });
     });
   }

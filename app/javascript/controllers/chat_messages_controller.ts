@@ -9,7 +9,7 @@ export default class ChatMessagesController extends BaseController {
 
   connect(): void {
     VideoEventProcessor.subscribeTo("ChatMessage", (event) => {
-      this.displayMessage(event.detail);
+      this.displayMessage(event.detail.data);
     });
 
     // After we scrub, we will call this in the future

@@ -12,15 +12,15 @@
         .widget.time-red
           %span.dot.time-dot
           %span{"data-target": "audience-view.timeDisplay"}
-      %canvas.primary-canvas{"data-target": "audience-view.primaryCanvas", width: 1280, height: 800}
+      %canvas.primary-canvas{"data-target": "audience-view.primaryCanvas", width: 1200, height: 740}
       .pip-component{data: {controller: "pip"}, draggable: "true"}
-        %canvas.pip-secondary-canvas{"data-target": "audience-view.pipSecondaryCanvas pip.canvas", width: 360, height: 280}
+        %canvas.pip-secondary-canvas{"data-target": "audience-view.pipSecondaryCanvas pip.canvas", width: 420, height: 340}
       = render partial: 'videos/partials/player_buttons'
     #streamer-profile-area
       = render partial: "videos/partials/streamer_profile"
     %button.chat-btn{data: {action: "click->audience-view#showChat"}} Open Chat
     = render partial: 'videos/partials/pins_area'
   .content-area__secondary
-    %canvas.fixed-secondary-canvas{"data-target": "audience-view.fixedSecondaryCanvas", width: 360, height: 280}
+    %canvas.fixed-secondary-canvas{"data-target": "audience-view.fixedSecondaryCanvas", width: 420, height: 340}
     %video.player__video.viewer{"data-target" => "audience-view.video", style: "display: none;", playsinline: "playsinline"}
     = render partial: "shared/chat"

@@ -3,6 +3,7 @@ import Timecode from "util/timecode";
 import { post } from "util/fetch";
 
 export default class {
+  public timecodeMs: number;
   private timecodeDisplayElement;
   private canvasContext;
   private canvas;
@@ -19,10 +20,8 @@ export default class {
     this.startedAt = Date.now();
     post("./start").then();
     this.tickInterval = setInterval(() => {
-      this.timecodeDisplayElement.innerText = displayTime(
-        (Date.now() - this.startedAt) / 1000
-      );
-      this.drawTimecode(Date.now() - this.startedAt);
+      this.timecodeMs = Date.now() - this.startedAt;
+      this.drawTimecode();
     }, 10);
   }
 
@@ -31,8 +30,8 @@ export default class {
     this.tickInterval = null;
   }
 
-  private drawTimecode(msSinceStart: number) {
-    const colorSequence = Timecode.numberToColors(msSinceStart);
+  private drawTimecode() {
+    const colorSequence = Timecode.numberToColors(this.timecodeMs);
 
     colorSequence.forEach((color, index) => {
       this.canvasContext.fillStyle = color;

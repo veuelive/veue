@@ -12,8 +12,9 @@ class Pin < ApplicationRecord
       timecode_ms: timecode_ms,
       thumbnail: thumbnail,
     )
-    pin.build_pin_event(video: video, timecode_ms: timecode_ms, input: {})
+    pin.build_pin_event(video: video, timecode_ms: timecode_ms, input: {}, user: video.user)
     pin.save!
+    pin.pin_event.save!
     pin
   end
 end
