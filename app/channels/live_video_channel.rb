@@ -2,12 +2,12 @@
 
 class LiveVideoChannel < ApplicationCable::Channel
   def subscribed
-    current_video.update!(active_viewers: current_video.active_viewers + 1)
+    current_video.increment_viewers!
     stream_from(stream_name)
   end
 
   def unsubscribed
-    current_video.update!(active_viewers: current_video.active_viewers - 1) if current_video.active_viewers
+    current_video.decrement_viewers! if current_video.active_viewers
     stop_all_streams
   end
 

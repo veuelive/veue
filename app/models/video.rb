@@ -6,6 +6,7 @@ class Video < ApplicationRecord
   has_many :chat_messages, dependent: :destroy
   has_many :browser_navigations, dependent: :destroy
   has_many :video_events, dependent: :destroy
+  has_many :video_views, dependent: :destroy
 
   has_many :mux_webhooks, dependent: :nullify
   scope :active, -> { where(state: %w[pending live starting]) }
@@ -48,6 +49,14 @@ class Video < ApplicationRecord
   def change_playback_id(new_playback_id)
     self.mux_playback_id = new_playback_id
     self.hls_url = "https://stream.mux.com/#{new_playback_id}.m3u8"
+  end
+
+  def increment_viewers!
+    update!(active_viewers: active_viewers + 1) if live?
+  end
+
+  def decrement_viewers!
+    update!(active_viewers: active_viewers - 1) if live?
   end
 
   def broadcast_active_viewers
