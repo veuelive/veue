@@ -5,6 +5,7 @@ import VideoMixer from "controllers/broadcast/video_mixer";
 import StreamCapturer from "controllers/broadcast/stream_capturer";
 import { calculateBroadcastArea } from "controllers/broadcast/broadcast_helpers";
 import TimecodeManager from "controllers/broadcast/timecode_manager";
+import { postForm } from "util/fetch";
 
 type BroadcastState = "loading" | "ready" | "live" | "failed" | "finished";
 
@@ -77,6 +78,20 @@ export default class extends Controller {
   stopStreaming(): void {
     this.state = "finished";
     this.streamCapturer.stop();
+  }
+
+  pinPage(): void {
+    const url = document
+      .querySelector("input[data-target='broadcast--browser.addressBar']")
+      .getAttribute("value");
+    this.mixer.getScreenshot().then((image) => {
+      console.log(image);
+      return postForm("./pins", {
+        name: "Card",
+        url,
+        thumbnail: image,
+      });
+    });
   }
 
   set state(state: BroadcastState) {

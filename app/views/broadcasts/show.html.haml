@@ -1,5 +1,10 @@
 #broadcast{data: {controller: "broadcast", broadcast: {"stream-key": current_user.mux_stream_key, "video-state": current_broadcast_video.state}}}
-  .content--left= render partial: "browser_bar"
+  .content--left
+    = render partial: "browser_bar"
+    - unless Rails.env.production?
+      = image_tag "/__test/thumbnail.jpg"
   .content--right
     %video#webcam_preview{data: {target: "broadcast.webcamVideoElement"}}
+    .broadcast-commands
+      .btn-add{data: {action: "click->broadcast#pinPage"}}= svg_tag "add"
     .debug-area

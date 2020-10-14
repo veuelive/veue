@@ -27,6 +27,7 @@ RSpec.configure do |config|
   config.include WebhookHelpers
   config.include PhoneTestHelpers
   config.include ResponsiveHelpers
+  config.include UploadSpecHelper
 
   Capybara.register_driver(:media_browser) do |app|
     switches = %w[

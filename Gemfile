@@ -70,6 +70,9 @@ gem "inline_svg"
 # Twilio for SMS sending
 gem "twilio-ruby"
 
+# For image processing and resizing with Active Storage
+gem "image_processing"
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.2", require: false
 

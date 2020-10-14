@@ -47,9 +47,6 @@ class VideoEvent < ApplicationRecord
   end
 
   def input_schema
-    {
-      properties: {},
-      required: [],
-    }
+    {properties: {}}
   end
 end
