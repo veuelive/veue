@@ -47,6 +47,38 @@ export default class VideoMixer {
       });
   }
 
+  public getScreenshot(): Promise<void | Blob> {
+    const tempCanvas = document.createElement("canvas");
+    const ctx = tempCanvas.getContext("2d");
+    let videoElement = this.browserVideoElement;
+    if (videoElement.videoHeight === 0) {
+      videoElement = this.webcamVideoElement;
+    }
+    tempCanvas.width = Sizes.primaryView.width;
+    tempCanvas.height = Sizes.primaryView.height;
+    ctx.drawImage(
+      videoElement,
+      this.browserDimensions.x,
+      this.browserDimensions.y,
+      this.browserDimensions.width,
+      this.browserDimensions.height,
+      0,
+      0,
+      Sizes.primaryView.width,
+      Sizes.primaryView.height
+    );
+    return new Promise((resolve, reject) => {
+      tempCanvas.toBlob((data) => {
+        if (data == null) {
+          reject("Couldn't take screenshot");
+        } else {
+          resolve(data);
+          tempCanvas.remove();
+        }
+      });
+    });
+  }
+
   async startBrowserCapture(
     windowTitle: string,
     browserDimensions: Rectangle
