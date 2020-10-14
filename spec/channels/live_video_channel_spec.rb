@@ -20,6 +20,10 @@ describe LiveVideoChannel, type: :channel do
   end
 
   describe "broadcast to active_viewers" do
+    before do
+      video.go_live!
+    end
+
     it "should broadcast incremented active_viewers count" do
       expect { subscribe(videoId: video.to_param) }.to(
         have_broadcasted_to("active_viewers_#{video.to_param}").with(
