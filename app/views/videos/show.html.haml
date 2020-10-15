@@ -7,8 +7,14 @@
           .link
             = svg_tag 'hyperlink'
         - if current_video.live?
-          .widget.time-gray#active-viewers
-            = current_video.active_viewers
+          .widget.time-gray
+            %span.icon
+              = svg_tag "user-icon"
+            %span#active-viewers
+              = current_video.active_viewers_count
+          .widget.red
+            %span
+              = current_video.state
         .widget.time-red
           %span.dot.time-dot
           %span{"data-target": "audience-view.timeDisplay"}

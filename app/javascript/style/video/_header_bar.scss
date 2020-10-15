@@ -40,18 +40,26 @@ body#videos__show {
     top: 0.25rem;
   }
 
-  #active-viewers {
-    display: flex;
-  }
-
   .widget {
-    padding: 0.2rem 1.125rem 0.2rem 1.125rem;
+    display: flex;
+    align-items: center;
+    padding: 0.6rem 1.125rem;
     margin-left: 0.2rem;
     border: none;
     border-radius: 0.9375rem;
     margin-right: 0.4375rem;
     font-weight: 600;
     font-size: 1rem;
+    span.icon {
+      padding-right: 0.6rem;
+      width: 13px;
+      height: 14px;
+    }
+    &.red {
+      background-color: color.$red-medium;
+      color: color.$white;
+      text-transform: uppercase;
+    }
   }
 
   .time-red {
@@ -60,6 +68,7 @@ body#videos__show {
 
     .dot {
       background-color: color.$red-medium;
+      margin-right: 0.25rem;
     }
 
     span {
