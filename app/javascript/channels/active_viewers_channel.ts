@@ -1,4 +1,5 @@
 import consumer from "./consumer";
+import formatNumber from "util/formatNumber";
 
 function viewersChannel() {
   const videoDisplayElement = document.getElementById(
@@ -18,7 +19,7 @@ function viewersChannel() {
           const activeViews = document.getElementById(
             "active-viewers"
           ) as HTMLElement;
-          activeViews.textContent = data.viewers;
+          activeViews.textContent = formatNumber(data.viewers);
         },
       }
     );

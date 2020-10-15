@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class VideoDecorator < Draper::Decorator
+  include ActionView::Helpers::NumberHelper
+
   delegate_all
 
   def thumbnail_url
@@ -9,5 +11,9 @@ class VideoDecorator < Draper::Decorator
 
   def stream_type
     state == "live" ? "live" : "vod"
+  end
+
+  def active_viewers_count
+    number_to_human(active_viewers, format: "%n%u", units: {thousand: "K", million: "M", billion: "B"})
   end
 end

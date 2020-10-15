@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class VideosController < ApplicationController
-  before_action :increment_video_views, only: %i[show]
+  before_action :increment_video_views, only: %i[show], unless: -> { current_video.live? }
 
   # GET /videos
   def index
