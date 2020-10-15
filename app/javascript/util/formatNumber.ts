@@ -5,10 +5,11 @@ const ranges = [
   { divider: 1e3, suffix: "K" },
 ];
 
-export default function formatNumber(n: string): string {
+export default function formatNumber(n: number): string {
   for (let i = 0; i < ranges.length; i++) {
     if (n >= ranges[i].divider) {
-      return (n / ranges[i].divider).toString() + ranges[i].suffix;
+      const value: number = Math.floor(n / ranges[i].divider);
+      return value.toString() + ranges[i].suffix;
     }
   }
   return n.toString();
