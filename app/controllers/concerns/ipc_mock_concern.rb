@@ -27,19 +27,6 @@ module IpcMockConcern
       channel: "browserView",
       args: [
         {
-          eventName: "will-navigate",
-          url: params["args"][0],
-          canGoBack: true,
-          canGoForward: false,
-          isLoading: true,
-        },
-      ],
-    }
-
-    @events << {
-      channel: "browserView",
-      args: [
-        {
           eventName: "did-navigate",
           url: params["args"][0],
           canGoBack: true,
@@ -48,9 +35,6 @@ module IpcMockConcern
         },
       ],
     }
-
-
-
   end
 
   def process_wakeup_event
