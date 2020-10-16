@@ -5,7 +5,7 @@ import VideoMixer from "controllers/broadcast/video_mixer";
 import StreamCapturer from "controllers/broadcast/stream_capturer";
 import { calculateBroadcastArea } from "controllers/broadcast/broadcast_helpers";
 import TimecodeManager from "controllers/broadcast/timecode_manager";
-import { post, postForm } from "util/fetch";
+import { postForm } from "util/fetch";
 import { getCurrentUrl } from "controllers/broadcast/browser_controller";
 
 type BroadcastState =
