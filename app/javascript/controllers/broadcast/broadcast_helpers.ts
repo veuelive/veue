@@ -16,7 +16,7 @@ export function calculateBroadcastArea(
 
   return {
     height: (dimensions.height - dimensions.x) * yRatio,
-    width: (dimensions.width - dimensions.x) * yRatio,
+    width: (dimensions.width - dimensions.x) * xRatio,
     x: dimensions.x * xRatio,
     y: (dimensions.y + workArea.y) * yRatio,
   };
@@ -39,10 +39,8 @@ export function getTimecodeMs(): number {
 }
 
 export function sendNavigationUpdate(navigationUpdate: NavigationUpdate): void {
-  navigationUpdate["timecodeMs"] = getTimecodeMs();
-  postJson("./navigation_update", navigationUpdate).then();
+  if (isLive()) {
+    navigationUpdate["timecodeMs"] = getTimecodeMs();
+    postJson("./navigation_update", navigationUpdate).then();
+  }
 }
-//
-// export function getStreamingState() {
-//
-// }

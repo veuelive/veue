@@ -51,13 +51,12 @@ export default class extends BaseController {
     // This might be a click from any of the children of the modal
     // and we want to only hit the full page direct modal area
     const target = event.target as HTMLElement;
-    if (target && target.className && target.className === "modal-skirt") {
+    if (target?.className === "modal-skirt") {
       this.modalTarget.style.display = "none";
     }
   }
 
   async doSubmit(event: Event): Promise<void> {
-    console.log("Got click!");
     event.preventDefault();
     const response = await secureFormFetch(
       this.formTarget.dataset.url,

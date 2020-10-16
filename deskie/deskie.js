@@ -56,8 +56,8 @@ app.setAppUserModelId(packageJson.build.appId);
 let mainWindow;
 let bounds = { x: 10, y: 80, width: 1200, height: 740 };
 let windowSize = {
-  width: 1630,
-  height: 900,
+  width: 1541,
+  height: 823,
 };
 let randomName = Math.random().toString(36).substring(7);
 

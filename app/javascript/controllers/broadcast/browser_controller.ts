@@ -25,6 +25,7 @@ export default class extends Controller {
   private stopButtonTarget!: HTMLButtonElement;
 
   private browserViewListener: (name, event, second) => void;
+  private _url: string;
 
   connect(): void {
     this.browserViewListener = (_, navigationUpdate: NavigationUpdate) => {
@@ -42,11 +43,13 @@ export default class extends Controller {
   }
 
   private navigateToAddress() {
-    ipcRenderer.send("navigate", this.addressBarTarget.value);
+    this.url = this.addressBarTarget.value;
+
+    ipcRenderer.send("navigate", this.url);
   }
 
   updateState(navigationUpdate: NavigationUpdate): void {
-    this.addressBarTarget.value = navigationUpdate.url;
+    this.addressBarTarget.value = this.url = navigationUpdate.url;
     this.backButtonTarget.disabled = !navigationUpdate.canGoBack;
     this.forwardButtonTarget.disabled = !navigationUpdate.canGoForward;
     if (navigationUpdate.isLoading) {
@@ -79,4 +82,19 @@ export default class extends Controller {
   private sendToBrowser(event: string) {
     ipcRenderer.send("browser", event);
   }
+
+  set url(url: string) {
+    this._url = url;
+    this.data.set("url", url);
+  }
+
+  get url(): string {
+    return this._url;
+  }
+}
+
+export function getCurrentUrl(): string {
+  return document
+    .querySelector("*[data-broadcast--browser-url]")
+    .getAttribute("data-broadcast--browser-url");
 }

@@ -48,7 +48,7 @@ describe BroadcastsController do
     end
 
     it "should start" do
-      post start_broadcast_path(video)
+      post(start_broadcast_path(video), params: {url: "http://hamptoncatlin.com"})
 
       expect(Video.last.started_at_ms).to_not be_nil
     end

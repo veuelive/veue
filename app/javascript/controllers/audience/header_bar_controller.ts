@@ -4,7 +4,7 @@ import { VideoEventProcessor } from "controllers/event/event_processor";
 
 export default class HeaderBarController extends Controller {
   static targets = ["addressInput"];
-  private addressInputTarget!: HTMLInputElement;
+  private addressInputTarget!: HTMLElement;
 
   connect(): void {
     VideoEventProcessor.subscribeTo("BrowserNavigation", (event) => {
@@ -13,6 +13,6 @@ export default class HeaderBarController extends Controller {
   }
 
   private processNavigationEvent(navigationUpdate: NavigationUpdate) {
-    this.addressInputTarget.value = navigationUpdate.url;
+    this.addressInputTarget.innerText = navigationUpdate.url;
   }
 }

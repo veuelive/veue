@@ -18,7 +18,6 @@ export default class {
 
   start(): void {
     this.startedAt = Date.now();
-    post("./start").then();
     this.tickInterval = setInterval(() => {
       this.timecodeMs = Date.now() - this.startedAt;
       this.drawTimecode();
@@ -31,6 +30,7 @@ export default class {
   }
 
   private drawTimecode() {
+    this.timecodeDisplayElement.innerText = displayTime(this.timecodeMs / 1000);
     const colorSequence = Timecode.numberToColors(this.timecodeMs);
 
     colorSequence.forEach((color, index) => {

@@ -5,9 +5,16 @@ import VideoMixer from "controllers/broadcast/video_mixer";
 import StreamCapturer from "controllers/broadcast/stream_capturer";
 import { calculateBroadcastArea } from "controllers/broadcast/broadcast_helpers";
 import TimecodeManager from "controllers/broadcast/timecode_manager";
-import { postForm } from "util/fetch";
+import { post, postForm } from "util/fetch";
+import { getCurrentUrl } from "controllers/broadcast/browser_controller";
 
-type BroadcastState = "loading" | "ready" | "live" | "failed" | "finished";
+type BroadcastState =
+  | "loading"
+  | "ready"
+  | "starting"
+  | "live"
+  | "failed"
+  | "finished";
 
 export default class extends Controller {
   static targets = ["webcamVideoElement", "timeDisplay"];
@@ -68,8 +75,11 @@ export default class extends Controller {
     this.streamCapturer
       .start(this.data.get("stream-key"))
       .then(() => {
-        this.state = "live";
+        this.state = "starting";
         this.data.set("started-at", Date.now().toString());
+        postForm("./start", { url: getCurrentUrl() }).then(
+          () => (this.state = "live")
+        );
         this.timecodeManager.start();
       })
       .catch((e) => console.error(e));

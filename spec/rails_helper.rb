@@ -24,6 +24,7 @@ end
 RSpec.configure do |config|
   config.include AuthenticationTestHelpers::SystemTestHelpers, type: :system
   config.include AuthenticationTestHelpers::RequestHelpers, type: :request
+  config.include SystemSpecHelpers, type: :system
   config.include WebhookHelpers
   config.include PhoneTestHelpers
   config.include ResponsiveHelpers

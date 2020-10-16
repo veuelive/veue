@@ -16,9 +16,8 @@ class IPCRendererMock implements IPCRenderer {
   } = {};
 
   send(channel: string, ...args) {
-    console.log("Got Send on " + channel, args);
     this.invoke(channel, ...args).then(() => {
-      console.log("Mock posted to " + channel);
+      console.log("IPC Mock Send: " + channel);
     });
   }
 
