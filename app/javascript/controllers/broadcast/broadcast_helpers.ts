@@ -16,7 +16,7 @@ export function calculateBroadcastArea(
 
   return {
     height: (dimensions.height - dimensions.x) * yRatio,
-    width: (dimensions.width - dimensions.x) * xRatio,
+    width: (dimensions.width - dimensions.x) * yRatio,
     x: dimensions.x * xRatio,
     y: (dimensions.y + workArea.y) * yRatio,
   };
