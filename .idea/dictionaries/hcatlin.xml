@@ -5,6 +5,7 @@
       <w>activeadmin</w>
       <w>afterend</w>
       <w>appsignal</w>
+      <w>audioinput</w>
       <w>authenticatable</w>
       <w>beforeend</w>
       <w>bootsnap</w>
@@ -39,6 +40,7 @@
       <w>turbolinks</w>
       <w>twillio</w>
       <w>veue</w>
+      <w>videoinput</w>
       <w>videojs</w>
       <w>webdrivers</w>
       <w>webhook</w>

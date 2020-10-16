@@ -31,6 +31,9 @@ RSpec.configure do |config|
   config.include UploadSpecHelper
 
   Capybara.register_driver(:media_browser) do |app|
+    chrome_options = Selenium::WebDriver::Chrome::Options.new
+    chrome_options.add_preference("media.block_autoplay", false)
+    chrome_options.add_preference("media.allow_autoplay", true)
     switches = %w[
       disable-popup-blocking
       disable-translate
@@ -39,7 +42,8 @@ RSpec.configure do |config|
       test-type
       headless
     ]
-    Capybara::Selenium::Driver.new(app, browser: :chrome, switches: switches)
+
+    Capybara::Selenium::Driver.new(app, browser: :chrome, switches: switches, options: chrome_options)
   end
 
   config.before(:each) do

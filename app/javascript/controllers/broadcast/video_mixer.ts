@@ -1,6 +1,7 @@
 import { Rectangle } from "util/rectangle";
 import { desktopCapturer } from "controllers/broadcast/electron/desktop_capture";
 import Sizes from "util/sizes";
+import { MediaDeviceChangeEvent } from "controllers/broadcast/media_manager_controller";
 
 export default class VideoMixer {
   canvas: CaptureStreamCanvas;
@@ -27,24 +28,37 @@ export default class VideoMixer {
     }
 
     document.getElementsByClassName("debug-area")[0].appendChild(this.canvas);
+    document.addEventListener(
+      MediaDeviceChangeEvent,
+      (ev: CustomEvent<MediaDeviceInfo>) => {
+        if (ev.detail.kind === "videoinput") {
+          this.startWebcamCapture(ev.detail).then();
+        }
+      }
+    );
 
     this.computeFrame();
   }
 
-  public startWebcamCapture(): Promise<MediaStreamTrack> {
-    return navigator.mediaDevices
-      .getUserMedia({
-        audio: true,
-        video: {
-          width: Sizes.secondaryView.width,
-          height: Sizes.secondaryView.height,
-        },
-      })
-      .then(async (mediaStream) => {
-        this.webcamVideoElement.srcObject = mediaStream;
-        await this.webcamVideoElement.play();
-        return mediaStream.getAudioTracks()[0];
-      });
+  public async startWebcamCapture(
+    mediaDevice?: MediaDeviceInfo
+  ): Promise<void> {
+    const constraints = {
+      width: Sizes.secondaryView.width,
+      height: Sizes.secondaryView.height,
+      deviceId: null,
+    };
+    if (mediaDevice) {
+      constraints.deviceId = mediaDevice.deviceId;
+    }
+    const mediaStream = await navigator.mediaDevices.getUserMedia({
+      video: constraints,
+    });
+    this.deviceId = mediaStream.getVideoTracks()[0].getSettings().deviceId;
+    this.webcamVideoElement.srcObject = mediaStream;
+    this.webcamVideoElement.load();
+    this.webcamVideoElement.muted = true;
+    return this.webcamVideoElement.play();
   }
 
   public getScreenshot(): Promise<void | Blob> {
@@ -138,6 +152,10 @@ export default class VideoMixer {
       );
     }
     requestAnimationFrame(() => this.computeFrame());
+  }
+
+  set deviceId(deviceId: string) {
+    document.body.setAttribute("data-video-device-id", deviceId);
   }
 }
 
