@@ -6,19 +6,25 @@ import userSvg from "images/user.svg";
 export default class ChatMessagesController extends BaseController {
   private myUserId: string;
   private lastMessageFromUserId: string;
+  private chatMessageCallbackHandler: (event) => void;
 
   connect(): void {
-    VideoEventProcessor.subscribeTo("ChatMessage", (event) => {
+    this.chatMessageCallbackHandler = (event) => {
       this.displayMessage(event.detail.data);
-    });
-
-    // After we scrub, we will call this in the future
+    };
     VideoEventProcessor.subscribeTo(
-      "clear",
-      () => (this.element.innerHTML = "")
+      "ChatMessage",
+      this.chatMessageCallbackHandler
     );
 
     this.myUserId = currentUserId();
+  }
+
+  disconnect(): void {
+    VideoEventProcessor.unsubscribeFrom(
+      "ChatMessage",
+      this.chatMessageCallbackHandler
+    );
   }
 
   private displayMessage(message) {

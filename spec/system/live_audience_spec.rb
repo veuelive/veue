@@ -22,13 +22,27 @@ describe "Live Audience View" do
     end
 
     it "should allow for live chat messages to be sent" do
-      expect(page).to have_selector(".message-write")
-      fill_in("message-input", with: "Cowabunga!")
-      find(".write-area textarea").native.send_keys(:return)
-      expect(page).to have_content("Cowabunga!")
+      write_chat_message "Cowabunga!"
+      expect(page).to have_content("Cowabunga!").once
       expect(video.chat_messages.count).to be(1)
-      page.refresh
-      expect(page).to have_content("Cowabunga!")
+
+      # This seems odd, I know, but it's the main way to repo VEUE-144
+      # as Turbolinks with the page transitions was doubling the number
+      # of event handlers and this was causing multiple websockets to get
+      # connected and caused repeated messages to appear
+      3.times do
+        find(".navbar-logo").click
+        expect(current_path).to_not eq(video_path(video))
+        find(".video-card").click
+        expect(current_path).to eq(video_path(video))
+
+        expect(page).to have_content("Cowabunga!").once
+      end
+
+      # And now that we've done some turbolinks transitions
+      # let's verify our ActionCable connections are still functioning properly.
+      write_chat_message "Cowabunga!"
+      expect(page).to have_content("Cowabunga!").twice
     end
 
     it "should allow you to follow the streamer" do
@@ -37,6 +51,12 @@ describe "Live Audience View" do
       expect(page).to have_content("Unfollow")
 
       expect(video.user.followers).to include(user)
+    end
+
+    def write_chat_message(text)
+      expect(page).to have_selector(".message-write")
+      fill_in("message-input", with: text)
+      find(".write-area textarea").native.send_keys(:return)
     end
   end
 
