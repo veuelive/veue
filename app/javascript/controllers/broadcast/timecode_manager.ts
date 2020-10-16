@@ -1,6 +1,5 @@
 import { displayTime } from "util/time";
 import Timecode from "util/timecode";
-import { post } from "util/fetch";
 
 export default class {
   public timecodeMs: number;
