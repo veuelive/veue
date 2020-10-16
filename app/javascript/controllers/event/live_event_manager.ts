@@ -4,8 +4,10 @@ import { VideoEventProcessor } from "controllers/event/event_processor";
 import { secureFetch } from "util/fetch";
 
 export default class LiveEventManager implements EventManagerInterface {
+  private subscription;
+
   constructor() {
-    consumer.subscriptions.create(
+    this.subscription = consumer.subscriptions.create(
       {
         channel: "LiveVideoChannel",
         videoId: document
@@ -23,6 +25,10 @@ export default class LiveEventManager implements EventManagerInterface {
         // case we are starting paused
         VideoEventProcessor.syncTime(100);
       });
+  }
+
+  disconnect(): void {
+    this.subscription.unsubscribe();
   }
 
   received(data: never): void {

@@ -8,12 +8,12 @@ export default class extends BaseController {
 
   async follow(): Promise<void> {
     const response = await post("./follow");
-    this.insertHTML(response);
+    return this.insertHTML(response);
   }
 
   async unfollow(): Promise<void> {
     const response = await destroy("./follow");
-    this.insertHTML(response);
+    return this.insertHTML(response);
   }
 
   authChanged(): void {

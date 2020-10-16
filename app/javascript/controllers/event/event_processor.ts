@@ -54,4 +54,8 @@ export const VideoEventProcessor = new (class VideoEventProcessor {
       new CustomEvent(videoEvent.type, { detail: videoEvent })
     );
   }
+
+  unsubscribeFrom(channel: string, callback: (ve) => void): void {
+    this.dispatcher.removeEventListener(channel, callback);
+  }
 })();

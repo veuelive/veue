@@ -26,6 +26,10 @@ export default class VodEventManager implements EventManagerInterface {
     return this.loadEventSet(nextEntry);
   }
 
+  disconnect(): void {
+    return;
+  }
+
   loadEventSet(entry: EventIndexEntry): Promise<void> {
     return secureFetch(entry.url)
       .then((response) => response.json())
