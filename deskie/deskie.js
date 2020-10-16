@@ -54,9 +54,9 @@ app.setAppUserModelId(packageJson.build.appId);
 
 // Prevent window from being garbage collected
 let mainWindow;
-let bounds = { x: 10, y: 80, width: 1200, height: 740 };
+let bounds = { x: 10, y: 80, width: 900, height: 570 };
 let windowSize = {
-  width: 1541,
+  width: 1241,
   height: 823,
 };
 let randomName = Math.random().toString(36).substring(7);

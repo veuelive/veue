@@ -16,7 +16,7 @@ body {
   flex-direction: row;
 
   .content--left {
-    width: 1300px;
+    width: 910px;
     height: 100%;
   }
   .content--right {
@@ -25,11 +25,10 @@ body {
 
     #webcam_preview {
       width: 320px;
-      height: 280px;
+      height: 180px;
     }
 
     .debug-area {
-      display: none;
       width: 100%;
       #debug_canvas {
         width: 320px;
@@ -37,7 +36,6 @@ body {
 
       video {
         width: 100%;
-        display: none;
       }
     }
   }
