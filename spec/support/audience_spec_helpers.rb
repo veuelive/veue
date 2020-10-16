@@ -9,7 +9,6 @@ module AudienceSpecHelpers
     find("*[data-audience-view-state='playing']")
     page.assert_no_selector("*[data-audience-view-timecode='-1']")
     page.assert_no_selector("*[data-audience-view-timecode='0']")
-    puts find("*[data-audience-view-timecode]")["data-audience-view-timecode"].inspect
   end
 
   def current_timecode

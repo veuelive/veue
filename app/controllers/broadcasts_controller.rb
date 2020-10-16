@@ -12,6 +12,16 @@ class BroadcastsController < ApplicationController
   end
 
   def start
+    current_broadcast_video.browser_navigations.create!(
+      timecode_ms: 0,
+      user: current_broadcast_video.user,
+      input: {
+        url: params[:url],
+        canGoBack: false,
+        canGoForward: false,
+        isLoading: false,
+      },
+    )
     current_broadcast_video.start!
   end
 

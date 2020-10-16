@@ -29,6 +29,7 @@ body {
     }
 
     .debug-area {
+      display: none;
       width: 100%;
       #debug_canvas {
         width: 320px;
