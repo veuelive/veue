@@ -17,6 +17,7 @@ describe "Broadcast View" do
     login_as(user)
 
     visit "/broadcasts"
+    find("body").click
   end
 
   it "should load for a setup streamer" do

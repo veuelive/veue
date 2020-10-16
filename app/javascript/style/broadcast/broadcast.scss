@@ -1,12 +1,21 @@
 // This is the broadcast layout... which is different than the main website!
 
 @use "../utils/color";
+@use "../utils/font";
 @use "browser_bar";
 
 body {
   margin: 0;
   height: 100vh;
   width: 100%;
+  font-family: font.$nunito;
+  font-weight: 400;
+}
+
+input,
+button,
+textarea {
+  font-family: font.$nunito;
 }
 
 #broadcast {
@@ -26,6 +35,39 @@ body {
     #webcam_preview {
       width: 320px;
       height: 280px;
+    }
+
+    .broadcast-commands {
+      display: flex;
+      flex-direction: row;
+      .btn {
+        padding: 0.25rem;
+        position: relative;
+        svg {
+          fill: #2e2f30;
+          width: 25px;
+          height: 25px;
+        }
+
+        .select-menu {
+          position: absolute;
+          top: 25px;
+          left: 5px;
+          background: white;
+          margin: 0.25rem;
+          border: 1px solid darkgrey;
+          display: flex;
+          cursor: pointer;
+          width: 200px;
+          flex-direction: column;
+          > div {
+            padding: 5px;
+            &:hover {
+              background: #eee;
+            }
+          }
+        }
+      }
     }
 
     .debug-area {

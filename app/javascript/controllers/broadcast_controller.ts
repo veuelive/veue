@@ -7,6 +7,7 @@ import { calculateBroadcastArea } from "controllers/broadcast/broadcast_helpers"
 import TimecodeManager from "controllers/broadcast/timecode_manager";
 import { postForm } from "util/fetch";
 import { getCurrentUrl } from "controllers/broadcast/browser_controller";
+import AudioCapturer from "controllers/broadcast/audio_capturer";
 
 type BroadcastState =
   | "loading"
@@ -24,6 +25,7 @@ export default class extends Controller {
   private mixer: VideoMixer;
   private streamCapturer: StreamCapturer;
   private timecodeManager: TimecodeManager;
+  private audioCapturer: AudioCapturer;
 
   connect(): void {
     if (this.data.get("video-state") == "finished") {
@@ -34,7 +36,7 @@ export default class extends Controller {
 
     this.mixer = new VideoMixer(this.webcamVideoElementTarget);
     this.streamCapturer = new StreamCapturer(this.mixer.canvas);
-
+    this.audioCapturer = new AudioCapturer(this.streamCapturer);
     this.timecodeManager = new TimecodeManager(this.mixer.canvas);
 
     ipcRenderer.send("wakeup");
@@ -54,13 +56,9 @@ export default class extends Controller {
           windowSize
         );
 
-        this.mixer.startWebcamCapture().then((audioTrack) => {
-          this.streamCapturer.audioTrack = audioTrack;
-          this.mixer
-            .startBrowserCapture(windowTitle, broadcastArea)
-            .then(() => {
-              this.state = "ready";
-            });
+        await this.mixer.startWebcamCapture();
+        this.mixer.startBrowserCapture(windowTitle, broadcastArea).then(() => {
+          this.state = "ready";
         });
       }
     );

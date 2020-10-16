@@ -4,21 +4,29 @@ import { ipcRenderer } from "controllers/broadcast/electron/ipc_renderer";
 export default class StreamCapturer {
   canvas: CaptureStreamCanvas;
   mediaRecorder: MediaRecorder;
-  audioTrack?: MediaStreamTrack;
   private timerCallback;
+  private _audioTrack: MediaStreamTrack;
+  mediaStream: MediaStream;
 
   constructor(canvas: CaptureStreamCanvas) {
     this.canvas = canvas;
+    navigator.mediaDevices
+      .getUserMedia({
+        audio: true,
+      })
+      .then((mediaStream) => {
+        this.audioTrack = mediaStream.getAudioTracks()[0];
+      });
   }
 
   start(streamKey: string): Promise<void> {
-    if (!this.audioTrack) {
+    if (!this._audioTrack) {
       return Promise.reject("No Audio Track");
     }
-    const mediaStream = this.canvas.captureStream(30);
-    mediaStream.addTrack(this.audioTrack);
+    this.mediaStream = this.canvas.captureStream(30);
+    this.mediaStream.addTrack(this._audioTrack);
 
-    this.mediaRecorder = new MediaRecorder(mediaStream, {
+    this.mediaRecorder = new MediaRecorder(this.mediaStream, {
       mimeType: "video/webm",
     });
 
@@ -38,6 +46,14 @@ export default class StreamCapturer {
     this.mediaRecorder.start(500);
 
     return ipcRenderer.invoke("start", { streamKey });
+  }
+
+  set audioTrack(audioTrack: MediaStreamTrack) {
+    if (this._audioTrack) {
+      this.mediaStream?.removeTrack(this._audioTrack);
+    }
+    this._audioTrack = audioTrack;
+    this.mediaStream?.addTrack(audioTrack);
   }
 
   stop(): void {
