@@ -99,7 +99,7 @@ jobs:
       runs-on: ubuntu-latest
       strategy:
         matrix:
-          browser: ["chrome", "firefox"]
+          browser: ["chrome"]#, "firefox"]
       steps:
         - name: Checkout code
           uses: actions/checkout@v2
@@ -156,6 +156,7 @@ jobs:
             name: logs ${{matrix.browser}}
             path: log
   rspecSafari:
+    if: ${{never()}}
     name: rspec safari
     runs-on: macos-latest
     steps:
