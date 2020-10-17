@@ -1,9 +1,14 @@
 @use '../utils/color';
 
 #videos__show {
+  .primary-video-area:hover .player-actions {
+    opacity: 0.8;
+  }
+
   .player-actions {
     padding: 0.5rem 0.75rem;
-    opacity: 0.8;
+    opacity: 0;
+    transition: 100ms opacity;
     border-radius: 1rem;
     background-color: #383838;
     position: absolute;
@@ -11,6 +16,7 @@
     left: 50%;
     display: flex;
     transform: translate(-50%, -50%);
+    align-items: center;
 
     a {
       margin: 0 0.25rem;
@@ -30,6 +36,11 @@
         width: 15px;
         height: 14px;
       }
+    }
+
+    .time-display {
+      color: white;
+      padding-left: 0.5rem;
     }
 
     .black-icon {
