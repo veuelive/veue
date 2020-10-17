@@ -89,7 +89,7 @@ jobs:
           yarn install --pure-lockfile
       - name: Setup test database
         run: |
-          sudo createuser -s -d -l runner
+          sudo -u postgres createuser -s -d -l runner
           bundle exec rake db:setup
       - name: Run tests
         run: bundle exec rspec --exclude-pattern "spec/system/*"
@@ -103,7 +103,7 @@ jobs:
         - name: Checkout code
           uses: actions/checkout@v2
         - name: Startup Postgres
-          run: systemctl start postgresql.service
+          run: sudo systemctl start postgresql.service
         - name: Setup Ruby
           uses: ruby/setup-ruby@v1
         - name: Ruby gem cache
@@ -136,7 +136,7 @@ jobs:
             yarn install --pure-lockfile
         - name: Setup test database
           run: |
-            sudo createuser -s -d -l runner
+            sudo -u postgres createuser -s -d -l runner
             bundle exec rake db:setup
         - name: Run tests
           env:
