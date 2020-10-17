@@ -93,16 +93,7 @@ jobs:
           bundle exec rake db:setup
       - name: Run tests
         run: bundle exec rspec --exclude-pattern "spec/system/*"
-      - name: Archive Tmp Folder
-        uses: actions/upload-artifact@v2
-        with:
-          name: tmp
-          path: tmp
-      - name: Archive Log Folder
-        uses: actions/upload-artifact@v2
-        with:
-          name: logs
-          path: log
+
   rspecSystem:
       name: rspec system
       runs-on: ubuntu-latest
@@ -152,6 +143,16 @@ jobs:
           env:
             SPEC_BROWSER: headless_${{matrix.browser}}
           run: bundle exec rspec spec/system
+        - name: Archive Tmp Folder
+          uses: actions/upload-artifact@v2
+          with:
+            name: tmp
+            path: tmp
+        - name: Archive Log Folder
+          uses: actions/upload-artifact@v2
+          with:
+            name: logs
+            path: log
   rspecSafari:
     name: rspec safari
     runs-on: macos-latest
@@ -200,6 +201,16 @@ jobs:
         env:
           SPEC_BROWSER: safari
         run: bundle exec rspec spec/system
+      - name: Archive Tmp Folder
+        uses: actions/upload-artifact@v2
+        with:
+          name: tmp
+          path: tmp
+      - name: Archive Log Folder
+        uses: actions/upload-artifact@v2
+        with:
+          name: logs
+          path: log
   jest:
     name: jest
     runs-on: ubuntu-latest
