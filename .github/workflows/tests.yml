@@ -145,11 +145,13 @@ jobs:
           run: bundle exec rspec spec/system
         - name: Archive Tmp Folder
           uses: actions/upload-artifact@v2
+          if: ${{ failure() }}
           with:
             name: tmp ${{matrix.browser}}
             path: tmp
         - name: Archive Log Folder
           uses: actions/upload-artifact@v2
+          if: ${{ failure() }}
           with:
             name: logs ${{matrix.browser}}
             path: log
@@ -203,11 +205,13 @@ jobs:
         run: bundle exec rspec spec/system
       - name: Archive Tmp Folder
         uses: actions/upload-artifact@v2
+        if: ${{ failure() }}
         with:
           name: safari tmp
           path: tmp
       - name: Archive Log Folder
         uses: actions/upload-artifact@v2
+        if: ${{ failure() }}
         with:
           name: safari logs
           path: log
