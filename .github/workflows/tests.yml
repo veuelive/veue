@@ -147,8 +147,8 @@ jobs:
           uses: actions/upload-artifact@v2
           if: ${{ failure() }}
           with:
-            name: tmp ${{matrix.browser}}
-            path: tmp
+            name: ${{matrix.browser}} screenshots
+            path: tmp/screenshots
         - name: Archive Log Folder
           uses: actions/upload-artifact@v2
           if: ${{ failure() }}
@@ -207,8 +207,8 @@ jobs:
         uses: actions/upload-artifact@v2
         if: ${{ failure() }}
         with:
-          name: safari tmp
-          path: tmp
+          name: safari screenshots
+          path: tmp/screenshots
       - name: Archive Log Folder
         uses: actions/upload-artifact@v2
         if: ${{ failure() }}
