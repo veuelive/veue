@@ -52,28 +52,11 @@ jobs:
   rspec:
     name: rspec basic
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:12
-        env:
-          POSTGRES_USER: rails_github_actions
-          POSTGRES_DB: rails_github_actions_test
-          POSTGRES_PASSWORD: postgres
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-      redis:
-        image: redis
-        ports:
-          - 6379:6379
-        options: --entrypoint redis-server
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Startup Postgres
+        run: systemctl start postgresql.service
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
       - name: Ruby gem cache
@@ -105,54 +88,21 @@ jobs:
         run: |
           yarn install --pure-lockfile
       - name: Setup test database
-        env:
-          RAILS_ENV: test
-          PGHOST: localhost
-          POSTGRES_DB: rails_github_actions_test
-          POSTGRES_USER: rails_github_actions
-          POSTGRES_PASSWORD: postgres
-          PGPORT: ${{ job.services.postgres.ports[5432] }}
         run: |
-          cp config/database.ci.yml config/database.yml
-          bundle exec rake db:create db:migrate
-
+          bundle exec rake db:setup
       - name: Run tests
-        env:
-          RAILS_ENV: test
-          PGHOST: localhost
-          POSTGRES_DB: rails_github_actions_test
-          POSTGRES_USER: rails_github_actions
-          POSTGRES_PASSWORD: postgres
-          PGPORT: ${{ job.services.postgres.ports[5432] }}
-        run: bundle exec rspec
+        run: bundle exec rspec --exclude-pattern "spec/system/*"
   rspecSystem:
       name: rspec system
       runs-on: ubuntu-latest
       strategy:
         matrix:
           browser: ["chrome", "firefox"]
-      services:
-        postgres:
-          image: postgres:12
-          env:
-            POSTGRES_USER: rails_github_actions
-            POSTGRES_DB: rails_github_actions_test
-            POSTGRES_PASSWORD: postgres
-          ports: [ "5432:5432" ]
-          options: >-
-            --health-cmd pg_isready
-            --health-interval 10s
-            --health-timeout 5s
-            --health-retries 5
-        redis:
-          image: redis
-          ports:
-            - 6379:6379
-          options: --entrypoint redis-server
-
       steps:
         - name: Checkout code
           uses: actions/checkout@v2
+        - name: Startup Postgres
+          run: systemctl start postgresql.service
         - name: Setup Ruby
           uses: ruby/setup-ruby@v1
         - name: Ruby gem cache
@@ -184,25 +134,10 @@ jobs:
           run: |
             yarn install --pure-lockfile
         - name: Setup test database
-          env:
-            RAILS_ENV: test
-            PGHOST: localhost
-            POSTGRES_DB: rails_github_actions_test
-            POSTGRES_USER: rails_github_actions
-            POSTGRES_PASSWORD: postgres
-            PGPORT: ${{ job.services.postgres.ports[5432] }}
           run: |
-            cp config/database.ci.yml config/database.yml
-            bundle exec rake db:create db:migrate
-
+            bundle exec rake db:setup
         - name: Run tests
           env:
-            RAILS_ENV: test
-            PGHOST: localhost
-            POSTGRES_DB: rails_github_actions_test
-            POSTGRES_USER: rails_github_actions
-            POSTGRES_PASSWORD: postgres
-            PGPORT: ${{ job.services.postgres.ports[5432] }}
             SPEC_BROWSER: headless_${{matrix.browser}}
           run: bundle exec rspec spec/system
   rspecSafari:
@@ -211,6 +146,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Start Postgres
+        run: brew services start postgresql
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
       - name: Ruby gem cache
