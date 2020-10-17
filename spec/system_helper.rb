@@ -20,6 +20,6 @@ RSpec.configure do |config|
   end
 
   config.before(:example, type: :system) do
-    driven_by :selenium, using: ENV["SPEC_BROWSER"] || :headless_chrome
+    driven_by :selenium, using: (ENV["SPEC_BROWSER"] || :headless_chrome).to_sym
   end
 end
