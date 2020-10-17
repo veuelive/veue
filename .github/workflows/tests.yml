@@ -56,7 +56,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Startup Postgres
-        run: systemctl start postgresql.service
+        run: sudo systemctl start postgresql.service
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
       - name: Ruby gem cache
