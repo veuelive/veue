@@ -4,6 +4,8 @@
       .primary-video__header{data: {controller: "audience--header-bar"}}
         .primary-video__header__address_bar
           #address-input.outline-none{type: "text", disabled: true, data: {target: "audience--header-bar.addressInput"}}
+          .link
+            = svg_tag 'hyperlink'
         - if current_video.live?
           .widget.time-gray
             %span.icon
@@ -13,6 +15,9 @@
           .widget.red
             %span
               = current_video.state
+        .widget.time-red
+          %span.dot.time-dot
+          %span{"data-target": "audience-view.timeDisplay"}
       %canvas.primary-canvas{"data-target": "audience-view.primaryCanvas", width: 1200, height: 740}
       .pip-component{data: {controller: "pip"}, draggable: "true"}
         %canvas.pip-secondary-canvas{"data-target": "audience-view.pipSecondaryCanvas pip.canvas", width: 420, height: 340}
