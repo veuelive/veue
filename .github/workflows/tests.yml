@@ -146,12 +146,12 @@ jobs:
         - name: Archive Tmp Folder
           uses: actions/upload-artifact@v2
           with:
-            name: tmp
+            name: tmp ${{matrix.browser}}
             path: tmp
         - name: Archive Log Folder
           uses: actions/upload-artifact@v2
           with:
-            name: logs
+            name: logs ${{matrix.browser}}
             path: log
   rspecSafari:
     name: rspec safari
@@ -204,12 +204,12 @@ jobs:
       - name: Archive Tmp Folder
         uses: actions/upload-artifact@v2
         with:
-          name: tmp
+          name: safari tmp
           path: tmp
       - name: Archive Log Folder
         uses: actions/upload-artifact@v2
         with:
-          name: logs
+          name: safari logs
           path: log
   jest:
     name: jest
