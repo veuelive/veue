@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require "system_helper"
 
 RSpec.describe "Follow live streamer" do
   let(:streamer) { create(:streamer) }
@@ -8,7 +8,6 @@ RSpec.describe "Follow live streamer" do
   let(:video) { create(:video, user: streamer) }
 
   before :example do
-    driven_by(:selenium_chrome_headless)
     visit video_path(video)
   end
 

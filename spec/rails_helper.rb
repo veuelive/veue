@@ -22,29 +22,11 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 RSpec.configure do |config|
-  config.include AuthenticationTestHelpers::SystemTestHelpers, type: :system
   config.include AuthenticationTestHelpers::RequestHelpers, type: :request
-  config.include SystemSpecHelpers, type: :system
   config.include WebhookHelpers
   config.include PhoneTestHelpers
   config.include ResponsiveHelpers
   config.include UploadSpecHelper
-
-  Capybara.register_driver(:media_browser) do |app|
-    chrome_options = Selenium::WebDriver::Chrome::Options.new
-    chrome_options.add_preference("media.block_autoplay", false)
-    chrome_options.add_preference("media.allow_autoplay", true)
-    switches = %w[
-      disable-popup-blocking
-      disable-translate
-      use-fake-ui-for-media-stream
-      use-fake-device-for-media-stream
-      test-type
-      headless
-    ]
-
-    Capybara::Selenium::Driver.new(app, browser: :chrome, switches: switches, options: chrome_options)
-  end
 
   config.before(:each) do
     stub_const("Twilio::REST::Client", FakeTwilio)

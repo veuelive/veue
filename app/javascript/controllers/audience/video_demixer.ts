@@ -32,32 +32,33 @@ export default class VideoDemixer {
       (Sizes.primaryView.height / Sizes.fullCanvas.height) * fullVideoHeight;
     const ratioToOriginal = fullVideoHeight / Sizes.fullCanvas.height;
 
-    browserCtx.drawImage(
-      this.videoElement,
-      0,
-      0,
-      fullVideoWidth,
-      fullVideoHeight,
-      0,
-      0,
-      Sizes.fullCanvas.width,
-      Sizes.fullCanvas.height
-    );
-    for (const secondaryCtx of this.secondaryCtxs) {
-      secondaryCtx.drawImage(
+    if (this.videoElement.videoHeight > 0) {
+      browserCtx.drawImage(
         this.videoElement,
         0,
-        sy,
-        Sizes.secondaryView.width * ratioToOriginal,
-        Sizes.secondaryView.height * ratioToOriginal,
+        0,
+        fullVideoWidth,
+        fullVideoHeight,
         0,
         0,
-        Sizes.secondaryView.width,
-        Sizes.secondaryView.height
+        Sizes.fullCanvas.width,
+        Sizes.fullCanvas.height
       );
+      for (const secondaryCtx of this.secondaryCtxs) {
+        secondaryCtx.drawImage(
+          this.videoElement,
+          0,
+          sy,
+          Sizes.secondaryView.width * ratioToOriginal,
+          Sizes.secondaryView.height * ratioToOriginal,
+          0,
+          0,
+          Sizes.secondaryView.width,
+          Sizes.secondaryView.height
+        );
+      }
+      this.timecodeSynchronizer.drawCanvas(this.videoElement, ratioToOriginal);
     }
-
-    this.timecodeSynchronizer.drawCanvas(this.videoElement, ratioToOriginal);
 
     requestAnimationFrame(() => this.drawFrame());
   }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require "system_helper"
 require_relative("../support/audience_spec_helpers")
 
 describe "Live Audience View" do
@@ -10,7 +10,6 @@ describe "Live Audience View" do
   let(:video) { create(:live_video, {hls_url: "/__test/live/playback.m3u8"}) }
 
   before :example do
-    driven_by(:selenium_chrome_headless)
     resize_window_desktop
   end
 

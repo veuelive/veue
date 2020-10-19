@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require "system_helper"
 
 RSpec.describe "Navbar State" do
   let(:user) { create(:user) }
-
-  before do
-    driven_by(:selenium_chrome_headless)
-  end
 
   describe "navbar view on different screens" do
     before do
