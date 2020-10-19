@@ -50,7 +50,7 @@ jobs:
       - name: Prettier
         run: npx prettier -c app spec
   rspec:
-    name: rspec
+    name: rspec basic
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -87,7 +87,6 @@ jobs:
         run: |
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
-
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -126,6 +125,163 @@ jobs:
           POSTGRES_PASSWORD: postgres
           PGPORT: ${{ job.services.postgres.ports[5432] }}
         run: bundle exec rspec
+  rspecSystem:
+      name: rspec system
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          browser: ["chrome", "firefox"]
+      services:
+        postgres:
+          image: postgres:12
+          env:
+            POSTGRES_USER: rails_github_actions
+            POSTGRES_DB: rails_github_actions_test
+            POSTGRES_PASSWORD: postgres
+          ports: [ "5432:5432" ]
+          options: >-
+            --health-cmd pg_isready
+            --health-interval 10s
+            --health-timeout 5s
+            --health-retries 5
+        redis:
+          image: redis
+          ports:
+            - 6379:6379
+          options: --entrypoint redis-server
+
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - name: Setup Ruby
+          uses: ruby/setup-ruby@v1
+        - name: Ruby gem cache
+          uses: actions/cache@v1
+          with:
+            path: vendor/bundle
+            key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+            restore-keys: |
+              ${{ runner.os }}-gems-
+        - name: Install gems
+          run: |
+            bundle config path vendor/bundle
+            bundle install --jobs 4 --retry 3
+        - name: Setup Node
+          uses: actions/setup-node@v1
+          with:
+            node-version: 14.10.0
+        - name: Find yarn cache location
+          id: yarn-cache
+          run: echo "::set-output name=dir::$(yarn cache dir)"
+        - name: JS package cache
+          uses: actions/cache@v1
+          with:
+            path: ${{ steps.yarn-cache.outputs.dir }}
+            key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+            restore-keys: |
+              ${{ runner.os }}-yarn-
+        - name: Install packages
+          run: |
+            yarn install --pure-lockfile
+        - name: Setup test database
+          env:
+            RAILS_ENV: test
+            PGHOST: localhost
+            POSTGRES_DB: rails_github_actions_test
+            POSTGRES_USER: rails_github_actions
+            POSTGRES_PASSWORD: postgres
+            PGPORT: ${{ job.services.postgres.ports[5432] }}
+          run: |
+            cp config/database.ci.yml config/database.yml
+            bundle exec rake db:create db:migrate
+
+        - name: Run tests
+          env:
+            RAILS_ENV: test
+            PGHOST: localhost
+            POSTGRES_DB: rails_github_actions_test
+            POSTGRES_USER: rails_github_actions
+            POSTGRES_PASSWORD: postgres
+            PGPORT: ${{ job.services.postgres.ports[5432] }}
+            SPEC_BROWSER: headless_${{matrix.browser}}
+          run: bundle exec rspec spec/system
+  rspecSafari:
+    name: rspec safari
+    runs-on: macos-latest
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_USER: rails_github_actions
+          POSTGRES_DB: rails_github_actions_test
+          POSTGRES_PASSWORD: postgres
+        ports: [ "5432:5432" ]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: --entrypoint redis-server
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+      - name: Ruby gem cache
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - name: Install gems
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.10.0
+      - name: Find yarn cache location
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: JS package cache
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install packages
+        run: |
+          yarn install --pure-lockfile
+      - name: Setup test database
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          POSTGRES_DB: rails_github_actions_test
+          POSTGRES_USER: rails_github_actions
+          POSTGRES_PASSWORD: postgres
+          PGPORT: ${{ job.services.postgres.ports[5432] }}
+        run: |
+          cp config/database.ci.yml config/database.yml
+          bundle exec rake db:create db:migrate
+
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          POSTGRES_DB: rails_github_actions_test
+          POSTGRES_USER: rails_github_actions
+          POSTGRES_PASSWORD: postgres
+          PGPORT: ${{ job.services.postgres.ports[5432] }}
+          SPEC_BROWSER: safari
+        run: bundle exec rspec spec/system
   jest:
     name: jest
     runs-on: ubuntu-latest

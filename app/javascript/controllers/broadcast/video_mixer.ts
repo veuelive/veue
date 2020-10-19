@@ -135,7 +135,9 @@ export default class VideoMixer {
     this.canvasContext.drawImage(
       this.webcamVideoElement,
       0,
-      Sizes.primaryView.height
+      Sizes.primaryView.height,
+      Sizes.secondaryView.width,
+      Sizes.secondaryView.height
     );
 
     if (this.browserDimensions) {
