@@ -1,4 +1,4 @@
-.content-area#video-show{data: {"controller" => "audience-view", "audience-view" => {"url" => current_video.hls_url, "stream-type" => current_video.stream_type, "video-id": current_video.id}}}
+.content-area#video-show{data: {"controller" => "audience-view", "audience-view" => { "stream-type" => current_video.stream_type, "video-id": current_video.id}}}
   .content-area__primary
     .primary-video-area
       .primary-video__header{data: {controller: "audience--header-bar"}}
@@ -28,5 +28,5 @@
     = render partial: 'videos/partials/pins_area'
   .content-area__secondary
     %canvas.fixed-secondary-canvas{"data-target": "audience-view.fixedSecondaryCanvas", width: 420, height: 340}
-    %video.player__video.viewer{"data-target" => "audience-view.video", crossorigin: "anonymous", style: "display: none;", playsinline: "playsinline"}
+    %video.player__video.viewer{"data-target" => "audience-view.video", crossorigin: "anonymous", src: current_video.hls_url, style: "display: none;", playsinline: "playsinline"}
     = render partial: "shared/chat"

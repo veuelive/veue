@@ -5,9 +5,9 @@ require "system_helper"
 RSpec.describe "Follow live streamer" do
   let(:streamer) { create(:streamer) }
   let(:follower) { create(:user) }
-  let(:video) { create(:video, user: streamer) }
+  let(:video) { create(:vod_video, user: streamer) }
 
-  before :example do
+  before :each do
     visit video_path(video)
   end
 
