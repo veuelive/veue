@@ -113,4 +113,12 @@ describe "Live Audience View" do
       expect(current_timecode).to be > 0
     end
   end
+
+  describe "mute video button" do
+    it "should mute currently playing video" do
+      visit(video_path(video))
+      find(".toggle-audio").click
+      expect(page.find(".toggle-audio img")["alt"]).to have_content("muted")
+    end
+  end
 end

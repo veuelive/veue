@@ -2,6 +2,8 @@ import { Controller } from "stimulus";
 import Hls from "hls.js";
 import playSvg from "../images/play.svg";
 import pauseSvg from "../images/pause.svg";
+import mutedSvg from "../images/muted.svg";
+import unmutedSvg from "../images/speaker.svg";
 import { displayTime } from "util/time";
 import TimecodeSynchronizer from "controllers/audience/timecode_synchronizer";
 import VideoDemixer from "controllers/audience/video_demixer";
@@ -18,9 +20,11 @@ export default class extends Controller {
     "fixedSecondaryCanvas",
     "pipSecondaryCanvas",
     "toggle",
+    "audio",
     "timeDisplay",
   ];
   readonly toggleTarget!: HTMLElement;
+  readonly audioTarget!: HTMLElement;
   readonly videoTarget!: HTMLVideoElement;
   readonly primaryCanvasTarget!: HTMLCanvasElement;
   readonly fixedSecondaryCanvasTarget!: HTMLCanvasElement;
@@ -86,7 +90,7 @@ export default class extends Controller {
         .then(() => (this.state = "playing"))
         .catch(() => {
           this.state = "paused";
-          this.videoTarget.muted = true;
+          this.audio = "muted";
           this.videoTarget
             .play()
             .then(() => (this.state = "playing"))
@@ -98,6 +102,10 @@ export default class extends Controller {
       this.videoTarget.pause();
       this.state = "paused";
     }
+  }
+
+  toggleAudio(): void {
+    this.audio = this.audio === "muted" ? "unmuted" : "muted";
   }
 
   timecodeChanged(): void {
@@ -125,5 +133,17 @@ export default class extends Controller {
 
   get state(): string {
     return this.data.get("state");
+  }
+
+  set audio(audioState: string) {
+    this.data.set("audio", audioState);
+    this.videoTarget.muted = this.audio === "muted";
+
+    const imagePath = this.audio === "muted" ? mutedSvg : unmutedSvg;
+    this.audioTarget.innerHTML = `<img src="${imagePath}"  alt="${this.audio}"/>`;
+  }
+
+  get audio(): string {
+    return this.data.get("audio");
   }
 }
