@@ -15,6 +15,14 @@ jobs:
           brakeman_version: gemfile
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-check
+  woke:
+    name: woke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: get-woke/woke-action-reviewdog@v0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
   rubocop:
     name: runner / rubocop
     runs-on: ubuntu-latest
