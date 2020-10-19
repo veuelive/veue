@@ -4,3 +4,4 @@
 #EXT-X-PLAYLIST-TYPE:VOD
 #EXTINF:2,
 /__test/0.ts
+#EXT-X-ENDLIST

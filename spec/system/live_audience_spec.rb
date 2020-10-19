@@ -7,7 +7,7 @@ describe "Live Audience View" do
   include AudienceSpecHelpers
 
   let(:user) { create(:user) }
-  let(:video) { create(:live_video, {hls_url: "/__test/live/playback.m3u8"}) }
+  let(:video) { create(:live_video) }
 
   before :example do
     resize_window_desktop
@@ -55,7 +55,7 @@ describe "Live Audience View" do
     def write_chat_message(text)
       expect(page).to have_selector(".message-write")
       fill_in("message-input", with: text)
-      find(".write-area textarea").native.send_keys(:return)
+      find(".write-area textarea").native.send_keys(:enter)
     end
   end
 

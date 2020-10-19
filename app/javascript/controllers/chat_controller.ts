@@ -23,7 +23,7 @@ export default class extends BaseController {
   }
 
   chatBoxKeyDown(event: KeyboardEvent): void {
-    if (!event.shiftKey && event.code === "Enter") {
+    if (!event.shiftKey && event.key === "Enter") {
       event.preventDefault();
       const textAreaElement = event.target as HTMLTextAreaElement;
       const message = textAreaElement.value;

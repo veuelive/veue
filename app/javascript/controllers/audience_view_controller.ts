@@ -66,12 +66,11 @@ export default class extends Controller {
       await this.togglePlay();
     });
 
-    if (this.videoTarget.canPlayType("application/vnd.apple.mpegurl")) {
-      this.videoTarget.src = this.data.get("url");
-    } else if (Hls.isSupported()) {
+    if (!this.videoTarget.canPlayType("application/vnd.apple.mpegurl")) {
+      // } else if (Hls.isSupported()) {
       // HLS.js-specific setup code
       const hls = new Hls();
-      hls.loadSource(this.data.get("url"));
+      hls.loadSource(this.videoTarget.getAttribute("src"));
       hls.attachMedia(this.videoTarget);
     }
   }
@@ -88,7 +87,12 @@ export default class extends Controller {
         .catch(() => {
           this.state = "paused";
           this.videoTarget.muted = true;
-          this.videoTarget.play().then(() => (this.state = "playing"));
+          this.videoTarget
+            .play()
+            .then(() => (this.state = "playing"))
+            .catch((e) => {
+              console.error(e);
+            });
         });
     } else {
       this.videoTarget.pause();
