@@ -33,6 +33,7 @@ describe "Live Audience View" do
         find(".navbar-logo").click
         expect(current_path).to_not eq(video_path(video))
         find(".video-card").click
+        expect(page).to have_content("Follow")
         expect(current_path).to eq(video_path(video))
 
         expect(page).to have_content("Cowabunga!").once
