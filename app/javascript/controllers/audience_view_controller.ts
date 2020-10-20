@@ -90,7 +90,7 @@ export default class extends Controller {
         .then(() => (this.state = "playing"))
         .catch(() => {
           this.state = "paused";
-          this.audio = "muted";
+          this.audioState = "muted";
           this.videoTarget
             .play()
             .then(() => (this.state = "playing"))
@@ -105,7 +105,7 @@ export default class extends Controller {
   }
 
   toggleAudio(): void {
-    this.audio = this.audio === "muted" ? "unmuted" : "muted";
+    this.audioState = this.audioState === "muted" ? "unmuted" : "muted";
   }
 
   timecodeChanged(): void {
@@ -135,15 +135,15 @@ export default class extends Controller {
     return this.data.get("state");
   }
 
-  set audio(audioState: string) {
-    this.data.set("audio", audioState);
-    this.videoTarget.muted = this.audio === "muted";
+  set audioState(audioState: string) {
+    this.data.set("audioState", audioState);
+    this.videoTarget.muted = this.audioState === "muted";
 
-    const imagePath = this.audio === "muted" ? mutedSvg : unmutedSvg;
-    this.audioTarget.innerHTML = `<img src="${imagePath}"  alt="${this.audio}"/>`;
+    const imagePath = this.audioState === "muted" ? mutedSvg : unmutedSvg;
+    this.audioTarget.innerHTML = `<img src="${imagePath}"  alt="${this.audioState}"/>`;
   }
 
-  get audio(): string {
-    return this.data.get("audio");
+  get audioState(): string {
+    return this.data.get("audioState");
   }
 }
