@@ -1,98 +1,42 @@
-@use '../utils/color';
+@use "../utils/color";
 
 body#videos__show {
   .primary-video__header {
     display: flex;
-    margin: 0;
     height: 3rem;
-    background-color: color.$white;
-    box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
-    border-radius: 1rem 1rem 0 0;
-    align-items: center;
-    padding: 0 1.1875rem;
-    justify-content: space-between;
-    border-bottom: 1px solid color.$gray-light;
-
+    background: color.$white;
+    font-size: 0.8rem;
     &__address_bar {
+      color: color.$gray-dark;
       flex: 1;
-      display: flex;
-      padding: 0.25rem 0.9375rem;
+      font-size: 1rem;
       border: 1px solid color.$gray-light;
-      border-radius: 2rem;
-      background-color: color.$white;
-      @media only screen and (min-width: 1024px) and (max-width: 1725px) {
-        width: 69%;
+    }
+
+    > * {
+      border-radius: 0.99rem;
+      margin: 0.4rem;
+      padding: 0 1rem 0 1rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .widget {
+      background: color.$gray-light;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .icon {
+        height: 14px;
+        margin-right: 0.5rem;
       }
 
-      input {
-        border: none;
-        width: 100%;
-        font-size: 1rem;
-        padding-left: 1.5rem;
-        background-color: color.$white;
-        color: color.$gray-dark-2;
+      &.red {
+        background: color.$red-highlight;
+        color: color.$white;
       }
     }
-  }
-
-  .upload {
-    position: absolute;
-    top: 0.25rem;
-  }
-
-  .widget {
-    display: flex;
-    align-items: center;
-    padding: 0.6rem 1.125rem;
-    margin-left: 0.2rem;
-    border: none;
-    border-radius: 0.9375rem;
-    margin-right: 0.4375rem;
-    font-weight: 600;
-    font-size: 1rem;
-    span.icon {
-      padding-right: 0.6rem;
-      width: 13px;
-      height: 14px;
-    }
-    &.red {
-      background-color: color.$red-medium;
-      color: color.$white;
-      text-transform: uppercase;
-    }
-  }
-
-  .time-red {
-    background-color: color.$red-light;
-    color: color.$red-medium;
-
-    .dot {
-      background-color: color.$red-medium;
-      margin-right: 0.25rem;
-    }
-
-    span {
-      vertical-align: middle;
-    }
-  }
-
-  .time-gray {
-    background-color: color.$gray-light;
-    color: color.$gray-dark-1;
-
-    .dot {
-      background-color: color.$gray-dark-1;
-    }
-  }
-
-  .view-img {
-    margin-right: 0.3125rem;
-  }
-
-  .time-dot {
-    width: 0.4375rem;
-    height: 0.4375rem;
-    display: inline-block;
-    border-radius: 0.4375rem;
   }
 }
