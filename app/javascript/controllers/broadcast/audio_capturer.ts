@@ -25,7 +25,9 @@ export default class AudioCapturer {
 
     navigator.mediaDevices
       .getUserMedia({
-        audio: true,
+        audio: {
+          volume: 0,
+        },
       })
       .then((mediaStream) => {
         this.useMediaStream(mediaStream);
@@ -39,6 +41,7 @@ export default class AudioCapturer {
             .getUserMedia({
               audio: {
                 deviceId: ev.detail.deviceId,
+                volume: 0,
               },
             })
             .then((mediaStream) => {
@@ -82,7 +85,6 @@ export default class AudioCapturer {
     this.analyser.fftSize = 1024;
     const mediaSource = this.audioCtx.createMediaStreamSource(mediaStream);
     mediaSource.connect(this.analyser);
-    this.analyser.connect(this.audioCtx.destination);
     this.audioTrack = mediaStream.getAudioTracks()[0];
   }
 }

@@ -17,6 +17,7 @@
   .modal-content {
     z-index: 1;
     position: fixed;
+    width: 350px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -37,7 +38,21 @@
     flex-direction: column;
     .form-row {
       flex: 1;
-      padding-top: 2rem;
+      padding-top: 0.1rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      width: 100%;
+      .form-item {
+        flex: 1;
+      }
+      button,
+      input,
+      .iti {
+        width: 100%;
+        margin-top: 0.5rem;
+      }
     }
   }
 }

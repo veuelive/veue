@@ -10,12 +10,13 @@ button {
   background: color.$cornflower;
   color: color.$white;
   font-family: font.$roboto;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 0.5rem 1rem 0.5rem 1rem;
   font-size: 1rem;
-  border: 0px;
+  border: 0;
   &:disabled {
-    color: color.$gray-bluish;
+    color: color.$gray-lighter;
+    background: color.$gray-light-blue;
   }
 }
 
