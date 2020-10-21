@@ -4,15 +4,41 @@
 body,
 * {
   font-family: font.$nunito;
+  font-weight: font.$normal-weight;
+}
+
+body {
+  margin: 0;
+  background: #f5f6f8;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: content-box;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  outline: none;
+}
+
+button {
+  &:active,
+  &:hover,
+  &:focus {
+    outline: none;
+  }
 }
 
 button {
   background: color.$cornflower;
   color: color.$white;
-  font-family: font.$roboto;
-  border-radius: 0.5rem;
+  font-family: font.$nunito;
+  border-radius: 0.9375rem;
   padding: 0.5rem 1rem 0.5rem 1rem;
   font-size: 1rem;
+  font-weight: font.$heavy-weight;
   border: 0;
   &:disabled {
     color: color.$gray-lighter;

@@ -1,8 +1,10 @@
 @use '../utils/color';
 @use '../utils/keyframes';
 
+$height: 45px;
+
 .top-navbar {
-  height: 45px;
+  height: $height;
   box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
   display: flex;
   background-color: color.$white;

@@ -3,7 +3,7 @@ body#videos__show {
   Put any main responsive layout code for ONLY desktop here... this does not count elements that scale to their
   surroundings
    */
-  @media (min-width: 1079px) {
+  @media (min-width: 1020px) {
     .content-area {
       flex-direction: row;
       display: flex;
@@ -49,7 +49,7 @@ body#videos__show {
   /**
     This is the primary Video layout for mobile views
      */
-  @media (max-width: 1078px) {
+  @media (max-width: 1020px) {
     .content-area {
       flex-direction: column;
       align-items: center;

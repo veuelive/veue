@@ -37,10 +37,8 @@
         height: 20px;
         border-radius: 0.5rem;
         padding: 0.5rem;
-        border: solid 1px #e3e3e3;
-        background-color: #f5f6f8;
-        border: solid 1px color.$gray-medium-1;
-        background-color: color.$gray-light-1;
+        border: solid 1px color.$gray-medium;
+        background-color: color.$gray-light;
         &:focus {
           outline: none;
         }
