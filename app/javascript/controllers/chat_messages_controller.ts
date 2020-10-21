@@ -66,6 +66,7 @@ export default class ChatMessagesController extends BaseController {
     }
 
     this.element.insertAdjacentHTML("beforeend", html);
+    this.element.lastElementChild.scrollIntoView();
     this.lastMessageFromUserId = message.userId;
   }
 }
