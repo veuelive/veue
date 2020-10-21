@@ -33,7 +33,7 @@ export default class extends BaseController {
 
   showModal(): void {
     this.modalTarget.style.display = "block";
-    this.modalTarget.querySelector("input").focus();
+    this.scrollToFocus();
   }
 
   validatePhone(): void {
@@ -45,6 +45,10 @@ export default class extends BaseController {
     } else {
       this.submitButtonTarget.disabled = true;
     }
+  }
+
+  scrollToFocus(): void {
+    setTimeout(() => this.modalTarget.querySelector("input").focus(), 500);
   }
 
   hideModal(event: Event): void {
@@ -71,6 +75,7 @@ export default class extends BaseController {
     } else if (response.status == 200) {
       this.modalTarget.outerHTML = html;
       this.attachPhoneNumberField();
+      this.scrollToFocus();
     }
   }
 }

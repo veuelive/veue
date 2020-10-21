@@ -2,7 +2,7 @@
 @use '../utils/keyframes';
 
 .top-navbar {
-  height: 7vh;
+  height: 45px;
   box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
   display: flex;
   background-color: color.$white;
@@ -16,7 +16,11 @@
   }
   .navbar-logo {
     svg {
-      height: 6vh;
+      height: 25px;
+    }
+    span.logo_name {
+      color: black;
+      font-size: 30px;
     }
   }
   .desktop-area {

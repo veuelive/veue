@@ -12,21 +12,28 @@
           .form-row
             Enter your mobile number, and we'll log you in with a quick code!
           .form-row
-            %input#phone_number_input{type: "tel", data: {target: "authentication.phoneInput", action: "input->authentication#validatePhone"}}
-            %input{type: 'hidden', name: "phone_number"}
-        - if @ula.pending_confirmation?
+            .form-item
+              %input#phone_number_input{type: "tel", data: {target: "authentication.phoneInput", action: "input->authentication#validatePhone"}}
+              %input{type: 'hidden', name: "phone_number"}
+          .form-row
+            %button.form-button{data: {target: "authentication.submitButton", action: "click->authentication#doSubmit"}}
+              Send Text
+        - elsif @ula.pending_confirmation?
           .form-row Enter the code we just texted you below!
           .form-row
             %input{type: "text", name: "secret_code"}
-            %input{type: 'hidden', name: "session_token_uuid", value: @ula.uuid}
-        - if @ula.active?
-          .form-row Pick a Display name!
-          %input{type: "text", name: "display_name"}
-        .form-row
-          %button{data: {target: "authentication.submitButton", action: "click->authentication#doSubmit"}}
-            - if @ula.new?
-              Send Text
-            - if @ula.pending_confirmation?
-              Enter Code
-            - if @ula.active?
-              Submit
+            .form-item
+              %input{type: 'hidden', name: "session_token_uuid", value: @ula.uuid}
+          .form-row
+            %button.form-button{data: {target: "authentication.submitButton", action: "click->authentication#doSubmit"}}
+              Validate
+        - elsif @ula.active?
+          .form-row
+            Pick a Display name!
+          .form-row
+            .form-item
+              %input{type: "text", name: "display_name"}
+          .form-row
+            %button.form-button{data: {target: "authentication.submitButton", action: "click->authentication#doSubmit"}}
+              Save
+
