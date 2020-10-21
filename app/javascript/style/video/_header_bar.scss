@@ -7,6 +7,9 @@ body#videos__show {
     height: 3rem;
     background: color.$white;
     font-size: 0.8rem;
+    border-radius: 0.95rem 0.95rem 0 0;
+    border-bottom: 1px solid color.$gray-light;
+
     &__address_bar {
       color: color.$gray-dark;
       flex: 1;
@@ -15,7 +18,7 @@ body#videos__show {
     }
 
     > * {
-      border-radius: 0.99rem;
+      border-radius: 0.95rem;
       margin: 0.4rem;
       padding: 0 1rem 0 1rem;
       display: flex;
