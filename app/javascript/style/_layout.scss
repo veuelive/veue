@@ -6,7 +6,6 @@
 
   #main-container {
     height: calc(100vh - #{nav.$height});
-    height: -webkit-fill-available;
     display: flex;
     justify-content: center;
     padding: 0;

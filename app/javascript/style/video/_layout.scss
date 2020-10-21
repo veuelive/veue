@@ -90,9 +90,10 @@ body#videos__show {
 
     .content-area__secondary {
       display: flex;
+      height: 100%;
 
       .chat-section {
-        height: 20vh;
+        height: --webkit-fill-available;
       }
     }
   }
