@@ -1,4 +1,5 @@
 @use "../utils/color";
+@use "../utils/font";
 
 body#videos__show {
   .primary-video__header {
@@ -36,6 +37,7 @@ body#videos__show {
       &.red {
         background: color.$red-highlight;
         color: color.$white;
+        font-weight: font.$heavy-weight;
       }
     }
   }
