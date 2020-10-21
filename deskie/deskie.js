@@ -24,7 +24,7 @@ const environments = {
     hostname: "https://beta.veuelive.com",
     auth: "tlhd",
     session:
-      "UTpGYFyg7921SjqqiGh4hShIeAiwnUs0d2onQP9YKDRe0fkS9TBH4iMOxHKF0okwH3dRoPRsi%2FKIyCLPxfepcTxnHY72ViP4TjxRtpmUB27NLJvZoSeEt%2FBGP%2FQNrezYiIdxLdQb6h59j76mW%2B%2BQu3HqPaUZG1YuulE9LKot7VoGnlbk4cCrZmpx16GM9wNu4QHG3s15w6SEjr9%2FfAGDdPxSKoMZyWhvZ9tM%2FGoyzHG2z4h4wfmP2k6HBEPrSXK2F1SX3ZwCVq1gg0fymYbCJw7Yr87t6crLKScNuocFsDfLYbETPg4LtPovQl0lEww9a%2F7KORprwuiSGUkUPf9Iw2Q8m4VvQAKR3tOVRvlxZlCtCyFLWfCiaGLNPgCZxVdX6yCVpdQ%3D--zaNdIhc1HULemYDZ--E3axLN%2F8KoptIHwAGtdQuQ%3D%3D",
+      "oPh6vV7flChT0XlZc5R%2F6e5nF%2FN2IgPJLMEZ%2BXMy3HrB96B0iAhQdSxn8gs%2Bn6w0CyydDbzTpMZqsCt99hMGy6s077xs1pRryVdsC3gfO%2BasggMFQT8njm3J9gpVydrCPQCTE6963CbktfKZbuSrWcNb7Ozg%2BoWzeDnz7z6gHdvwg24y8FK64YPUrLbvbhYQ7rFQLNNlpJKMP07supTzZYBYwHf1UuZL99z6nbMTc5FmggvrtL5pbM6V9Nlp3iUbkGju6tK7Sbj3BTzMrfcEo%2FVXzYMyBvvMfvZBwBSr57oxMfHyoYrpFEnF%2BlqNVw%2FfCflnqvvnrHYzKzH8z405WOmnHVfNaeWYNlQFxU8c8g%2FglEgt2Q07b2xktH0a4pNx0exUZn8%3D--P1BJZ6jQOwz9l0fi--A%2B28Gy%2FYedXl6EzvsQlA5w%3D%3D",
   },
   localhost: {
     hostname: "http://localhost:3000",
@@ -33,7 +33,7 @@ const environments = {
   },
 };
 
-const ENVIRONMENT = environments["localhost"];
+const ENVIRONMENT = environments["stage"];
 
 unhandled();
 debug();
