@@ -8,6 +8,7 @@
   .player-actions {
     padding: 0.5rem 0.75rem;
     opacity: 0;
+    color: white;
     transition: 100ms opacity;
     border-radius: 1rem;
     background-color: #383838;
@@ -43,14 +44,13 @@
       padding-left: 0.5rem;
     }
 
-    .black-icon {
-      background-color: color.$black;
-      opacity: 1;
-    }
-
     .active-icon {
       background-color: color.$cornflower;
       opacity: 1;
+    }
+
+    .time-display {
+      margin-left: 10px;
     }
   }
 }
