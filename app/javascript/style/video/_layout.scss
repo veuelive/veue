@@ -73,27 +73,26 @@ body#videos__show {
 
     // This code here is how the audience-view-controller
     // shows and hides the chat when in mobile view
-    .content-area.show-chat {
-      .content-area__primary {
-        display: none;
-      }
-    }
-    .content-area:not(.show-chat) {
-      .content-area__secondary {
-        display: none;
-      }
-    }
-
-    .chat-btn {
-      display: block;
-      width: 100%;
+    //.content-area.show-chat {
+    //  .content-area__primary {
+    //    display: none;
+    //  }
+    //}
+    //.content-area:not(.show-chat) {
+    //  .content-area__secondary {
+    //    display: none;
+    //  }
+    //}
+    .chat-btn,
+    .close-btn {
+      display: none;
     }
 
     .content-area__secondary {
       display: flex;
 
       .chat-section {
-        height: 93vh;
+        height: 20vh;
       }
     }
   }
