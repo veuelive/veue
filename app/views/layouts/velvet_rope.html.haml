@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    %meta{content: "text/html; charset=UTF-8", "http-equiv": "Content-Type"}/
+    %meta{name: "viewport", content:"width=device-width, initial-scale=1"}/
+    %title Veue
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_pack_tag 'velvet_rope', media: 'all'
+    = javascript_pack_tag 'velvet_rope'
+    = yield :header if content_for?(:header)
+  %body{body_attributes}
+    = yield
