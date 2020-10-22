@@ -37,7 +37,7 @@ module AuthenticationTestHelpers
     def confirm_secret_code
       expect(page).to have_selector('input[name="secret_code"]')
       fill_in("secret_code", with: SessionToken.last.secret_code)
-      click_button("Enter Code")
+      click_button("Validate")
     end
   end
 end
