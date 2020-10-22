@@ -1,9 +1,11 @@
-
-%section.section
-  .content.u-text-center
-    %h1.title VEUE
-    %h3 discover products– together
-    .divider
-    %p Enter Your Email Below To Get Launch Updates
-  .content-no-padding
-    = render partial: "mailchimp_form"
+.container
+  .top
+    .logo
+      = svg_tag "logo"
+      .text VEUE
+    .email= mail_to("hello@veuelive.com", "hello@veuelive.com")
+  .content
+    = svg_tag "logo-clip"
+    %video.logo{src: "https://veue-production.s3.amazonaws.com/loop.mp4", muted: true, autoplay: true, controls: false, loop: true, alt: "Video of two women talking to their computers."}
+  .bottom
+    STAY TUNED.

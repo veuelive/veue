@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  root "velvet_rope#index"
+
   resources :videos, only: %i[index show new] do
     collection do
       get "broadcast"
@@ -46,6 +48,4 @@ Rails.application.routes.draw do
   post "/mux/webhook", to: "mux_webhooks#index"
 
   ActiveAdmin.routes(self)
-
-  root "videos#index"
 end
