@@ -3,12 +3,15 @@
     .logo
       = svg_tag "logo"
       .text VEUE
-    .email= mail_to("hello@veuelive.com", "hello@veuelive.com")
+    .email
+      = mail_to("hello@veuelive.com") do
+        = svg_tag "email"
   .content
     .video
       %video{muted: true, autoplay: true, playsinline: true, controls: false, loop: true, alt: "Video of two women talking to their computers."}
-        %source{src: "https://veue-production.s3.amazonaws.com/loop.mp4", type: "video/mp4"}
         %source{src: "https://veue-production.s3.amazonaws.com/loop.webm", type: "video/webm"}
+        %source{src: "https://veue-production.s3.amazonaws.com/loop.mp4", type: "video/mp4"}
+
   .bottom
     STAY TUNED.
     = svg_tag "logo-clip"

@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  if Rails.env.production?
     root "velvet_rope#index"
-  else
-    root "videos#index"
-  end
 
   resources :videos, only: %i[index show new] do
     collection do
