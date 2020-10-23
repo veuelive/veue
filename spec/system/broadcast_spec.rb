@@ -43,7 +43,7 @@ describe "Broadcast View" do
       expect(find("*[data-broadcast--browser-url]")["data-broadcast--browser-url"]).to eq(url)
       find("*[data-broadcast-state='ready']")
       click_button("Start Broadcast")
-      find("*[data-broadcast-state='starting']")
+      find("*[data-broadcast-started-at]")
 
       expect(video).to be_live
       find("*[data-broadcast-state='live']")
