@@ -33,7 +33,7 @@ const environments = {
   },
 };
 
-const ENVIRONMENT = environments["stage"];
+const ENVIRONMENT = environments["localhost"];
 
 unhandled();
 debug();

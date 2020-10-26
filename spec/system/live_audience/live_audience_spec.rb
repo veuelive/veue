@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "system_helper"
-require_relative("../support/audience_spec_helpers")
+require_relative("../../support/audience_spec_helpers")
 
 describe "Live Audience View" do
   include AudienceSpecHelpers
@@ -70,20 +70,18 @@ describe "Live Audience View" do
     end
 
     it "should show messages from other users" do
-      other_user = create(:user)
-      first_message = "Pizza time!"
-      second_message = "Who wants pepperoni?"
-      video.chat_messages.create!(user: other_user, input: {message: first_message})
+      first_message = someone_chatted
+      second_message_text = "Cowabunga!"
 
-      expect(page).to have_content(first_message)
-      expect(page).to_not have_content(second_message)
-      expect(page).to have_content(other_user.display_name)
+      expect(page).to have_content(first_message.text)
+      expect(page).to_not have_content(second_message_text)
+      expect(page).to have_content(first_message.user.display_name)
 
-      video.chat_messages.create!(user: other_user, input: {message: second_message})
+      someone_chatted(second_message_text)
 
-      expect(page).to have_content(first_message)
-      expect(page).to have_content(second_message)
-      expect(page).to have_content(other_user.display_name)
+      expect(page).to have_content(first_message.text)
+      expect(page).to have_content(second_message_text)
+      expect(page).to have_content(first_message.user.display_name)
 
       page.refresh
 
@@ -91,9 +89,9 @@ describe "Live Audience View" do
       # We had a bug that was causing the following to break, so we refresh to
       # make sure that a visitor would see the content even if it's not coming
       # through the WS connection
-      expect(page).to have_content(first_message)
-      expect(page).to have_content(second_message)
-      expect(page).to have_content(other_user.display_name)
+      expect(page).to have_content(first_message.text)
+      expect(page).to have_content(second_message_text)
+      expect(page).to have_content(first_message.user.display_name)
     end
 
     it "should allow you to login without refreshing" do
@@ -104,19 +102,13 @@ describe "Live Audience View" do
       expect(page.evaluate_script("window.not_reloaded")).to eq("not reloaded")
       expect(page).to have_content(new_user.display_name)
     end
-  end
 
-  describe "live watching" do
     it "should update the timecode" do
-      visit(video_path(video))
       assert_video_is_playing
       expect(current_timecode).to be > 0
     end
-  end
 
-  describe "mute video button" do
     it "should mute currently playing video" do
-      visit(video_path(video))
       find(".primary-canvas").hover
       find(".toggle-audio").click
       expect(page.find(".toggle-audio img")["alt"]).to have_content("muted")

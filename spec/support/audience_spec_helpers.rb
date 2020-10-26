@@ -14,4 +14,21 @@ module AudienceSpecHelpers
   def current_timecode
     Integer(find("*[data-audience-view-timecode]")["data-audience-view-timecode"], 10)
   end
+
+  def someone_chatted(message=Faker::Quote.most_interesting_man_in_the_world, timecode_ms=0)
+    video.chat_messages.create!(user: create(:user), input: {message: message}, timecode_ms: timecode_ms)
+  end
+
+  def streamer_visited(url, timecode_ms)
+    video.browser_navigations.create!({
+                                        user: video.user,
+                                        input: {
+                                          url: url,
+                                          canGoBack: false,
+                                          isLoading: false,
+                                          canGoForward: false,
+                                        },
+                                        timecode_ms: timecode_ms,
+                                      })
+  end
 end

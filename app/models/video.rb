@@ -71,12 +71,18 @@ class Video < ApplicationRecord
     )
   end
 
+  def recent_events_for_live
+    navigations = browser_navigations.order("created_at DESC").limit(100)
+
+    (chat_messages_for_live + navigations + pin_events)
+      .sort_by(&:timecode_ms)
+      .map(&:to_json)
+  end
+
   def chat_messages_for_live(limit=50)
     chat_messages.order("timecode_ms DESC")
                  .limit(limit)
                  .reverse
-                 .map do |message|
-      message.to_json(0)
-    end
+                 .map { |cm| cm.timecode_ms = 0; cm }
   end
 end
