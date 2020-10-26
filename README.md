@@ -47,8 +47,8 @@ video streaming. To do this we will need to setup all of the following:
 
 ### Setup Mux Account
 
-You should get an invite to Mux, and if you haven't, ask someone for one! Once you are signed up, go to the
-[Environments page](https://dashboard.mux.com/environments) and create an Environment for yourself.
+You should get an invite to Mux for the production environment. If you haven't, ask someone for one! ~~Once you are signed up, go to the
+[Environments page](https://dashboard.mux.com/environments) and create an Environment for yourself.~~ [TODO: how to create a new development environment]
 
 Put in your full name and select it as a "Development" environment. Once you have created it, go to settings
 and create an API Token.
@@ -100,3 +100,23 @@ Start up your Rails development server as you normally would!
 
 You should be able to load the site on `localhost:3000` or alternately, you should be able to see it
 if you load your ngrok hostname.
+
+
+### Troubleshooting
+
+#### `bundle install` issues
+If you get a crash when running `gem install puma -v '4.3.5' --source 'https://rubygems.org/'`, this strange Puma build error has been reported on macOS Catalina and Big Sur
+
+```
+puma_http11.c:203:22: error: implicitly declaring library function 'isspace' with type 'int (int)' [-Werror,-Wimplicit-function-declaration]
+```
+
+to fix run
+
+```
+gem install puma:4.3.5 -- --with-cflags="-Wno-error=implicit-function-declaration"
+```
+
+Then re-run `bundle install` and it should run through cleanly now.
+
+for more info see https://thoughtfulapps.com/articles/rails/puma-implicitly-declaring-library-function-error
