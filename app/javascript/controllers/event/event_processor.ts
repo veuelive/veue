@@ -1,7 +1,7 @@
 interface VideoEvent {
   type: string;
   data: Record<string, unknown>;
-  timecodeMs: bigint;
+  timecodeMs: number;
 }
 
 const ClearVideoEvent = new CustomEvent("clear");

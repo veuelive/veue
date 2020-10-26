@@ -18,6 +18,10 @@ class ChatMessage < VideoEvent
     }
   end
 
+  def text
+    payload["message"]
+  end
+
   # Immediately deliver via channel
   def channel_timecode_ms
     0
