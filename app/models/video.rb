@@ -83,6 +83,9 @@ class Video < ApplicationRecord
     chat_messages.order("timecode_ms DESC")
                  .limit(limit)
                  .reverse
-                 .map { |cm| cm.timecode_ms = 0; cm }
+                 .map do |cm|
+      cm.timecode_ms = 0
+      cm
+    end
   end
 end
