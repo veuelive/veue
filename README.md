@@ -38,8 +38,9 @@ streamers client is responsible for compositing the images this way.
 
 ### 1. Setup Mux Account
 
-You should get an invite to Mux for the production environment. If you haven't, ask someone for one! ~~Once you are signed up, go to the
-[Environments page](https://dashboard.mux.com/environments) and create an Environment for yourself.~~ [TODO: how to create a new development environment]
+You should get an invite to Mux. If you haven't, ask someone for one!
+
+Once there, you should be able to "Add Environment" on the "Environments" page
 
 Put in your full name and select it as a "Development" environment. Once you have created it, go to settings
 and create an API Token.
