@@ -5,7 +5,6 @@ import { MediaDeviceChangeEvent } from "controllers/broadcast/media_manager_cont
 
 export default class VideoMixer {
   canvas: CaptureStreamCanvas;
-  audioTrack: MediaStreamTrack;
 
   private readonly webcamVideoElement: HTMLVideoElement;
   private readonly browserVideoElement: HTMLVideoElement;
@@ -61,26 +60,42 @@ export default class VideoMixer {
     return this.webcamVideoElement.play();
   }
 
+  public getWebcamShot(): Promise<void | Blob> {
+    return this.getScreenshotFromVideo((canvas, ctx) => {
+      const video = this.webcamVideoElement;
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+    });
+  }
+
   public getScreenshot(): Promise<void | Blob> {
+    return this.getScreenshotFromVideo((canvas, ctx) => {
+      canvas.width = Sizes.primaryView.width;
+      canvas.height = Sizes.primaryView.height;
+      ctx.drawImage(
+        this.browserVideoElement,
+        this.browserDimensions.x,
+        this.browserDimensions.y,
+        this.browserDimensions.width,
+        this.browserDimensions.height,
+        0,
+        0,
+        Sizes.primaryView.width,
+        Sizes.primaryView.height
+      );
+    });
+  }
+
+  private getScreenshotFromVideo(
+    drawFunction: (
+      canvas: HTMLCanvasElement,
+      ctx: CanvasRenderingContext2D
+    ) => void
+  ): Promise<void | Blob> {
     const tempCanvas = document.createElement("canvas");
     const ctx = tempCanvas.getContext("2d");
-    let videoElement = this.browserVideoElement;
-    if (videoElement.videoHeight === 0) {
-      videoElement = this.webcamVideoElement;
-    }
-    tempCanvas.width = Sizes.primaryView.width;
-    tempCanvas.height = Sizes.primaryView.height;
-    ctx.drawImage(
-      videoElement,
-      this.browserDimensions.x,
-      this.browserDimensions.y,
-      this.browserDimensions.width,
-      this.browserDimensions.height,
-      0,
-      0,
-      Sizes.primaryView.width,
-      Sizes.primaryView.height
-    );
+    drawFunction(tempCanvas, ctx);
     return new Promise((resolve, reject) => {
       tempCanvas.toBlob((data) => {
         if (data == null) {

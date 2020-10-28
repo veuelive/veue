@@ -12,6 +12,10 @@ class BroadcastsController < ApplicationController
   end
 
   def start
+    current_broadcast_video.update!(
+      primary_shot: params[:primary_shot],
+      secondary_shot: params[:secondary_shot],
+    )
     current_broadcast_video.browser_navigations.create!(
       timecode_ms: 0,
       user: current_broadcast_video.user,

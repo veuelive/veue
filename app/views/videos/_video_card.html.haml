@@ -1,8 +1,11 @@
 - video = video_card
 .video-card{class: video.state}
   = link_to video_path(video) do
-    .video-card__screenshot
-      = image_tag video.thumbnail_url
+    .video-card__image
+      = image_tag video_card_image_url(video)
+      .video-card__image__secondary
+        - if video.secondary_shot.attached?
+          = image_tag video.secondary_shot.variant(resize_to_limit: [100, 100])
   .video-card__below
     .video-card__below__info
       = video.user.display_name
