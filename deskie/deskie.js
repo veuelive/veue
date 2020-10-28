@@ -14,12 +14,15 @@ const debug = require("electron-debug");
 const contextMenu = require("electron-context-menu");
 const menu = require("./menu");
 const packageJson = require("./package.json");
-const { session } = require("electron");
+const { session, systemPreferences } = require("electron");
 const child_process = require("child_process");
 let ffmpeg;
 let browserView;
 
 const environments = {
+  production: {
+    hostname: "https://www.veuelive.com",
+  },
   stage: {
     hostname: "https://beta.veuelive.com",
     auth: "tlhd",
@@ -33,13 +36,15 @@ const environments = {
   },
 };
 
-const ENVIRONMENT = environments["localhost"];
+// systemPreferences.askForMediaAccess("microphone");
+
+const ENVIRONMENT = environments[process.env.ENVIRONMENT || "production"];
 
 unhandled();
 debug();
 contextMenu();
 
-app.setAppUserModelId(packageJson.build.appId);
+app.setAppUserModelId("com.veue.deskie");
 
 // Uncomment this before publishing your first version.
 // It's commented out as it throws an error if there are no published versions.

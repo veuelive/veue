@@ -1,6 +1,6 @@
 {
   "name": "deskie",
-  "productName": "Veue Deskie",
+  "productName": "Veue Broadcaster",
   "version": "0.0.0",
   "description": "My praiseworthy app",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "postinstall": "electron-builder install-app-deps",
     "lint": "xo",
     "test": "npm run lint",
-    "start": "electron .",
+    "start": "ENVIRONMENT=localhost electron .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder --macos --linux --windows",
     "release": "np"
@@ -45,10 +45,15 @@
     "releaseDraft": false
   },
   "build": {
-    "appId": "com.hcatlin.",
+    "appId": "com.hamptoncatlin.veue",
     "mac": {
       "category": "public.app-category.social-networking",
-      "darkModeSupport": true
+      "darkModeSupport": false,
+      "entitlements": "entitlements.mac.plist",
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "Please give us access to your microphone",
+        "NSCameraUsageDescription": "Please give access to your webcam"
+      }
     },
     "dmg": {
       "iconSize": 160,
