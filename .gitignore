@@ -47,5 +47,5 @@ yarn-debug.log*
 
 .DS_Store
 .eslintcache
-/deskie/node_modules/
-/deskie/dist/
+/broadcaster/node_modules/
+/broadcaster/dist/
