@@ -72,12 +72,19 @@ export default class extends Controller {
   startStreaming(): void {
     this.streamCapturer
       .start(this.data.get("stream-key"))
-      .then(() => {
+      .then(async () => {
         this.state = "starting";
         this.data.set("started-at", Date.now().toString());
-        postForm("./start", { url: getCurrentUrl() }).then(
-          () => (this.state = "live")
-        );
+
+        const screenshot = await this.mixer.getScreenshot();
+        const streamer = await this.mixer.getWebcamShot();
+
+        await postForm("./start", {
+          url: getCurrentUrl(),
+          primary_shot: screenshot,
+          secondary_shot: streamer,
+        });
+        this.state = "live";
         this.timecodeManager.start();
       })
       .catch((e) => console.error(e));

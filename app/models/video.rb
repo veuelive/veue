@@ -16,6 +16,9 @@ class Video < ApplicationRecord
 
   after_save :broadcast_active_viewers, if: -> { saved_change_to_active_viewers? }
 
+  has_one_attached :secondary_shot
+  has_one_attached :primary_shot
+
   aasm column: "state" do
     # We aren't live yet, but it'sa coming!
     state :pending, initial: true
