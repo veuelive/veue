@@ -43,8 +43,6 @@ video streaming. To do this we will need to setup all of the following:
 2. an ngrok tunnel
 3. Configure Mux Webhook
 
-\*\* The last one is only until we get Deskie up and running....
-
 ### Setup Mux Account
 
 You should get an invite to Mux, and if you haven't, ask someone for one! Once you are signed up, go to the
@@ -87,10 +85,10 @@ Go to Mux.com and go into your settings. Click on Webhooks. Create a new webhook
 set the webhook url to be something _like_ `https://edbd2cc7d2fc.ngrok.io/mux/webhook` by adding `/mux/webhook` to the
 end of your ngrok tunnel.
 
-### Setup Deskie
+### Setup Broadcaster
 
-"Deskie" is the adorable name we give to the Electron.js app that we have for streamers. It's in the folder
-`deskie` (duh) and you can start it up with a quick `yarn start`.
+"Broadcaster" is the name we give to the Electron.js app that we have for streamers. It's in the folder
+`broadcaster` (duh) and you can start it up with a quick `yarn start`.
 
 ### Putting it all together...
 
