@@ -8,7 +8,7 @@ RSpec.configure do |config|
 
   # This is for our tests as a Broadcaster
   Capybara.register_driver(:media_browser) do |app|
-    switches = %w[
+    options = %w[
       disable-popup-blocking
       disable-translate
       use-fake-ui-for-media-stream
@@ -16,7 +16,11 @@ RSpec.configure do |config|
       test-type
       headless
     ]
-    Capybara::Selenium::Driver.new(app, browser: :chrome, switches: switches)
+    Capybara::Selenium::Driver.new(
+      app,
+      browser: :chrome,
+      options: Selenium::WebDriver::Chrome::Options.new(args: options),
+    )
   end
 
   config.before(:example, type: :system) do
