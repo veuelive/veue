@@ -1,23 +1,25 @@
 import EventManagerInterface from "controllers/event/event_manager_interface";
 import consumer from "../../channels/consumer";
 import { VideoEventProcessor } from "controllers/event/event_processor";
+import subscribeViewersChannel from "channels/active_viewers_channel";
 import { secureFetch } from "util/fetch";
 
 export default class LiveEventManager implements EventManagerInterface {
   private subscription;
 
   constructor() {
+    subscribeViewersChannel();
+
+    const videoId = getCurrentVideoId();
     this.subscription = consumer.subscriptions.create(
       {
         channel: "LiveVideoChannel",
-        videoId: document
-          .querySelector("*[data-audience-view-video-id]")
-          .getAttribute("data-audience-view-video-id"),
+        videoId,
       },
       this
     );
 
-    secureFetch("./events/recent")
+    secureFetch(`/videos/${videoId}/events/recent`)
       .then((response) => response.json())
       .then((results) => {
         VideoEventProcessor.addEvents(results);
@@ -38,4 +40,10 @@ export default class LiveEventManager implements EventManagerInterface {
   seekTo(): Promise<void> {
     return Promise.resolve();
   }
+}
+
+export function getCurrentVideoId(): string {
+  return document
+    .querySelector("*[data-video-id]")
+    .getAttribute("data-video-id");
 }
