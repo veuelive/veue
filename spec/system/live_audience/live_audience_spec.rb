@@ -52,12 +52,6 @@ describe "Live Audience View" do
 
       expect(video.user.followers).to include(user)
     end
-
-    def write_chat_message(text)
-      expect(page).to have_selector(".message-write")
-      fill_in("message-input", with: text)
-      find(".write-area textarea").native.send_keys(:enter)
-    end
   end
 
   describe "an anonymous user" do

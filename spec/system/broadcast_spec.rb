@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "system_helper"
+require_relative("../support/audience_spec_helpers")
 
 # Note: These tests are trying to test a sequence that doesn't NORMALLY happen just
 # within the rails app. This has to be combined with the real Electron App to get full / perfect results.
@@ -66,6 +67,31 @@ describe "Broadcast View" do
 
         visit video_path(video)
         expect(find("#address-input").text).to start_with("http")
+      end
+    end
+
+    describe "chat message events" do
+      include AudienceSpecHelpers
+
+      it "should display live messages on broadcaster view" do
+        first_message = someone_chatted
+        second_message_text = "Cowabunga!"
+
+        expect(page).to have_content(first_message.text)
+        expect(page).to_not have_content(second_message_text)
+        expect(page).to have_content(first_message.user.display_name)
+
+        someone_chatted(second_message_text)
+
+        expect(page).to have_content(first_message.text)
+        expect(page).to have_content(second_message_text)
+        expect(page).to have_content(first_message.user.display_name)
+      end
+
+      it "should allow for live chat messages to be sent" do
+        write_chat_message "Cowabunga!"
+        expect(page).to have_content("Cowabunga!").once
+        expect(video.chat_messages.count).to be(1)
       end
     end
   end
