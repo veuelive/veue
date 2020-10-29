@@ -31,4 +31,10 @@ module AudienceSpecHelpers
                                         timecode_ms: timecode_ms,
                                       })
   end
+
+  def write_chat_message(text)
+    expect(page).to have_selector(".message-write")
+    fill_in("message-input", with: text)
+    find(".write-area textarea").native.send_keys(:enter)
+  end
 end
