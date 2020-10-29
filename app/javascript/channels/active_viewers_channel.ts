@@ -2,7 +2,7 @@ import consumer from "./consumer";
 import formatNumber from "util/formatNumber";
 import { getCurrentVideoId } from "controllers/event/live_event_manager";
 
-export default function subscribeViewersChannel() {
+export default function subscribeViewersChannel(): void {
   const videoId = getCurrentVideoId();
 
   consumer.subscriptions.create(
