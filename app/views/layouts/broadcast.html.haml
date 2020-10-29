@@ -9,7 +9,7 @@
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'broadcast', 'data-turbolinks-track': 'reload'
     = yield :header if content_for?(:header)
-  %body{body_attributes}
+  %body{body_attributes, "data-user-id": current_user&.id}
     #layout-container
       #main-container
         = yield

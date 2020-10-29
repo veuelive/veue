@@ -7,7 +7,9 @@ import { calculateBroadcastArea } from "controllers/broadcast/broadcast_helpers"
 import TimecodeManager from "controllers/broadcast/timecode_manager";
 import { postForm } from "util/fetch";
 import { getCurrentUrl } from "controllers/broadcast/browser_controller";
+import EventManagerInterface from "controllers/event/event_manager_interface";
 import AudioCapturer from "controllers/broadcast/audio_capturer";
+import LiveEventManager from "controllers/event/live_event_manager";
 
 type BroadcastState =
   | "loading"
@@ -26,6 +28,7 @@ export default class extends Controller {
   private streamCapturer: StreamCapturer;
   private timecodeManager: TimecodeManager;
   private audioCapturer: AudioCapturer;
+  private eventManager: EventManagerInterface;
 
   connect(): void {
     if (this.data.get("video-state") == "finished") {
@@ -67,6 +70,12 @@ export default class extends Controller {
       this.state = "failed";
       this.streamCapturer.stop();
     });
+
+    this.eventManager = new LiveEventManager();
+  }
+
+  disconnect(): void {
+    this.eventManager?.disconnect();
   }
 
   startStreaming(): void {

@@ -1,6 +1,7 @@
 import { postForm } from "util/fetch";
 import BaseController from "./base_controller";
 import { currentUserId } from "controllers/authentication_controller";
+import { getCurrentVideoId } from "./event/live_event_manager";
 
 export default class extends BaseController {
   static targets = ["lastMessage", "messageInput"];
@@ -28,9 +29,9 @@ export default class extends BaseController {
       const textAreaElement = event.target as HTMLTextAreaElement;
       const message = textAreaElement.value;
       textAreaElement.value = "";
-
+      const videoId = getCurrentVideoId();
       if (message.length > 0) {
-        postForm("./chat_messages", { message }).then(() =>
+        postForm(`/videos/${videoId}/chat_messages`, { message }).then(() =>
           console.log("Sent!")
         );
       }

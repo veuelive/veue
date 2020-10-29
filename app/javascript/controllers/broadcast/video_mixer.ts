@@ -26,7 +26,6 @@ export default class VideoMixer {
       this.canvasContext = this.canvas.getContext("2d");
     }
 
-    document.getElementsByClassName("debug-area")[0].appendChild(this.canvas);
     document.addEventListener(
       MediaDeviceChangeEvent,
       (ev: CustomEvent<MediaDeviceInfo>) => {

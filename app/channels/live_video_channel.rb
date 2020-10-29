@@ -2,8 +2,8 @@
 
 class LiveVideoChannel < ApplicationCable::Channel
   def subscribed
-    current_video.increment_viewers!
     stream_from(stream_name)
+    current_video.increment_viewers!
   end
 
   def unsubscribed
