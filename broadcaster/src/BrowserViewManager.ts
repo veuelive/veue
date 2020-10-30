@@ -1,32 +1,33 @@
-import { BrowserView, BrowserWindow, ipcMain, Rectangle } from "electron";
+import {
+  BrowserView,
+  BrowserWindow,
+  ipcMain,
+  Rectangle,
+  WebContents,
+} from "electron";
 
 export default class BrowserViewManager {
+  window: BrowserWindow;
   browserView: BrowserView;
+  get webContents(): WebContents {
+    return this.browserView.webContents;
+  }
 
-  constructor(mainWindow: BrowserWindow, bounds: Rectangle) {
+  constructor(window: BrowserWindow, bounds: Rectangle) {
+    this.window = window;
     this.browserView = new BrowserView();
-    const { webContents } = this.browserView;
+    const { webContents } = this;
 
     // Now we want ot subscribe to the following events and send them to the main window
-    [
-      "did-start-loading",
-      "did-stop-loading",
-      "did-navigate",
-      "will-navigate",
-    ].forEach((eventName) => {
-      console.log("Setup event monitoring for event " + eventName);
-      webContents.on(eventName as "did-stop-loading", () => {
-        mainWindow.webContents.send("browserView", {
-          eventName,
-          url: webContents.getURL(),
-          canGoBack: webContents.canGoBack(),
-          canGoForward: webContents.canGoForward(),
-          isLoading: webContents.isLoading(),
-        });
-      });
-    });
+    webContents.on("did-stop-loading", () =>
+      this.browserEvent("did-stop-loading")
+    );
+    webContents.on("did-start-loading", () =>
+      this.browserEvent("did-start-loading")
+    );
+    webContents.on("did-navigate", () => this.browserEvent("did-navigate"));
 
-    mainWindow.addBrowserView(this.browserView);
+    this.window.addBrowserView(this.browserView);
 
     ipcMain.on("navigate", async (event, data) => {
       console.log(data);
@@ -59,6 +60,16 @@ export default class BrowserViewManager {
           break;
         }
       }
+    });
+  }
+
+  browserEvent(eventName: string): void {
+    this.window.webContents.send("browserView", {
+      eventName,
+      url: this.webContents.getURL(),
+      canGoBack: this.webContents.canGoBack(),
+      canGoForward: this.webContents.canGoForward(),
+      isLoading: this.webContents.isLoading(),
     });
   }
 }
