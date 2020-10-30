@@ -15,7 +15,11 @@ class MuxService
     create_live_stream_request.playback_policy = [MuxRuby::PlaybackPolicy::PUBLIC]
     create_live_stream_request.reduced_latency = true
 
-    @live_api.create_live_stream(create_live_stream_request)
+    begin
+      @live_api.create_live_stream(create_live_stream_request)
+    rescue MuxRuby::UnauthorizedError => e
+      throw("#{e} —— TODO: double the MUX ID and SECRET in application.yml; if that doesn't work, revoke & re-issue on Mux, change config & restart your app")
+    end
   end
 
   def destroy_live_stream(live_stream_id)
