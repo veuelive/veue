@@ -1,1 +1,1 @@
-require("./deskie.js")
+require("./dist/main.js");

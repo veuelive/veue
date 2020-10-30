@@ -1,20 +1,14 @@
 "use strict";
-const {
-  app,
-  BrowserWindow,
-  Menu,
-  BrowserView,
-  ipcMain,
-  screen,
-} = require("electron");
+import BrowserViewManager from "./BrowserViewManager.ts";
+
+const { app, BrowserWindow, Menu, ipcMain, screen } = require("electron");
 /// const {autoUpdater} = require('electron-updater');
 const { is } = require("electron-util");
 const unhandled = require("electron-unhandled");
 const debug = require("electron-debug");
 const contextMenu = require("electron-context-menu");
 const menu = require("./menu");
-const packageJson = require("./package.json");
-const { session, systemPreferences } = require("electron");
+const { session } = require("electron");
 const child_process = require("child_process");
 let ffmpeg;
 let browserView;
@@ -67,7 +61,7 @@ let windowSize = {
 let randomName = Math.random().toString(36).substring(7);
 
 const createMainWindow = async () => {
-  const browserWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     title: randomName,
     show: false,
     width: windowSize.width,
@@ -82,30 +76,6 @@ const createMainWindow = async () => {
     },
   });
 
-  browserView = new BrowserView();
-  const webContents = browserView.webContents;
-
-  // Now we want ot subscribe to the following events and send them to the main window
-  [
-    "did-start-loading",
-    "did-stop-loading",
-    "did-navigate",
-    "will-navigate",
-  ].forEach((eventName) => {
-    console.log("Setup event monitoring for " + eventName);
-    webContents.on(eventName, () => {
-      mainWindow.webContents.send("browserView", {
-        eventName,
-        url: webContents.getURL(),
-        canGoBack: webContents.canGoBack(),
-        canGoForward: webContents.canGoForward(),
-        isLoading: webContents.isLoading(),
-      });
-    });
-  });
-
-  browserWindow.addBrowserView(browserView);
-
   app.on("login", (event, webContents, request, authInfo, callback) => {
     event.preventDefault();
     // popup a dialog to let the user enter a username/password
@@ -115,22 +85,21 @@ const createMainWindow = async () => {
     }
   });
 
-  browserWindow
+  mainWindow
     .loadURL(ENVIRONMENT["hostname"] + "/broadcasts")
     .then(() => console.log("loaded"));
 
-  browserWindow.on("ready-to-show", () => {
-    browserWindow.show();
-    browserView.setBounds(bounds);
+  mainWindow.on("ready-to-show", () => {
+    mainWindow.show();
   });
 
-  browserWindow.on("closed", () => {
+  mainWindow.on("closed", () => {
     // Dereference the window
     // For multiple windows store them in an array
     app.quit();
   });
 
-  return browserWindow;
+  return mainWindow;
 };
 
 // Prevent multiple instances of the app
@@ -146,6 +115,10 @@ ipcMain.on("wakeup", (event, data) => {
     windowSize,
     randomName
   );
+});
+
+ipcMain.on("load_browser_view", () => {
+  new BrowserViewManager(mainWindow, bounds);
 });
 
 ipcMain.on("stream", (event, data) => {
@@ -228,38 +201,6 @@ ipcMain.handle("start", (_, data) => {
   });
 });
 
-ipcMain.on("navigate", async (event, data) => {
-  console.log(data);
-  await browserView.webContents.loadURL(data);
-  event.reply("DONE!");
-});
-
-ipcMain.on("browser", (event, data) => {
-  const webContents = browserView.webContents;
-  switch (data) {
-    case "reload": {
-      webContents.reload();
-      break;
-    }
-    case "back": {
-      webContents.goBack();
-      break;
-    }
-    case "forward": {
-      webContents.goForward();
-      break;
-    }
-    case "stop": {
-      webContents.stop();
-      break;
-    }
-    case "clear": {
-      webContents.clearHistory();
-      break;
-    }
-  }
-});
-
 app.on("second-instance", () => {
   if (mainWindow) {
     if (mainWindow.isMinimized()) {
@@ -293,8 +234,4 @@ app.on("activate", () => {
 
   Menu.setApplicationMenu(menu);
   mainWindow = await createMainWindow();
-
-  // const favoriteAnimal = config.get('favoriteAnimal');
-
-  // mainWindow.webContents.executeJavaScript(`document.querySelector('header p').textContent = 'Your favorite animal is ${favoriteAnimal}'`);
 })();
