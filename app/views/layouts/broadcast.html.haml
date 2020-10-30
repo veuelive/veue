@@ -5,9 +5,9 @@
     %meta{name: "viewport", content:"width=device-width, initial-scale=1"}/
     = csrf_meta_tags
     = csp_meta_tag
-    = stylesheet_pack_tag 'broadcast', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-    = javascript_pack_tag 'broadcast', 'data-turbolinks-track': 'reload'
+    = stylesheet_pack_tag 'broadcast', media: 'all'
+    = javascript_pack_tag 'application'
+    = javascript_pack_tag 'broadcast'
     = yield :header if content_for?(:header)
   %body{body_attributes, "data-user-id": current_user&.id}
     #layout-container
