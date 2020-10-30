@@ -18,7 +18,7 @@ class MuxService
     begin
       @live_api.create_live_stream(create_live_stream_request)
     rescue MuxRuby::UnauthorizedError => e
-      throw("#{e} —— TODO: double the MUX ID and SECRET in application.yml; if that doesn't work, revoke & re-issue on Mux, change config & restart your app")
+      throw("#{e} Double check the MUX ID and SECRET in application.yml; if that doesn't work, revoke & re-issue on Mux, change config & restart your app")
     end
   end
 
