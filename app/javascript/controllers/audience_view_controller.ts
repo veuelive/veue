@@ -69,7 +69,7 @@ export default class extends Controller {
       this.state = "ready";
       const params = new URLSearchParams(window.location.search);
       if (params.has("t")) {
-        this.videoTarget.currentTime = params.get("t");
+        this.videoTarget.currentTime = parseInt(params.get("t"));
       }
       await this.togglePlay();
     });
