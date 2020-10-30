@@ -37,13 +37,6 @@ export default class extends Controller {
   private eventManager: EventManagerInterface;
 
   connect(): void {
-    /*
-      Due to the complexity of this page, do NOT try and setup anything until turbolinks is done.
-     */
-    if (document.documentElement.hasAttribute("data-turbolinks-preview")) {
-      return;
-    }
-
     this.streamType = this.data.get("stream-type") as StreamType;
 
     this.data.set("timecode", "-1");
@@ -67,6 +60,10 @@ export default class extends Controller {
 
     this.videoTarget.addEventListener("loadedmetadata", async () => {
       this.state = "ready";
+      const params = new URLSearchParams(window.location.search);
+      if (params.has("t")) {
+        this.videoTarget.currentTime = params.get("t");
+      }
       await this.togglePlay();
     });
 

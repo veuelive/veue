@@ -23,4 +23,10 @@ describe "Live Audience View - URL Bar" do
     expect(page).to have_content(video.browser_navigations.first.payload["url"])
     expect(page).to have_content(video.browser_navigations.second.payload["url"])
   end
+
+  it "start with content at one second" do
+    visit(video_path(video, t: 1))
+    expect(page).to_not have_content(video.browser_navigations.first.payload["url"])
+    expect(page).to have_content(video.browser_navigations.second.payload["url"])
+  end
 end
