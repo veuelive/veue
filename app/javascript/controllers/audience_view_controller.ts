@@ -37,6 +37,13 @@ export default class extends Controller {
   private eventManager: EventManagerInterface;
 
   connect(): void {
+    /*
+      Due to the complexity of this page, do NOT try and setup anything until turbolinks is done.
+   */
+    if (document.documentElement.hasAttribute("data-turbolinks-preview")) {
+      return;
+    }
+
     this.streamType = this.data.get("stream-type") as StreamType;
 
     this.data.set("timecode", "-1");
