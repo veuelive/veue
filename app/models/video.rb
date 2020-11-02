@@ -18,9 +18,15 @@ class Video < ApplicationRecord
 
   has_one_attached :secondary_shot
   has_one_attached :primary_shot
+  include PGEnum(visibility: %w[public protected private], _prefix: "visibility")
+
+  scope :public_or_protected,
+        -> {
+          where('"Videos"."visibility" = "public" OR "Videos"."visibility" = "protected" ')
+        }
 
   aasm column: "state" do
-    # We aren't live yet, but it'sa coming!
+    # We aren"t live yet, but it'sa coming!
     state :pending, initial: true
 
     # The streamer has started, but MUX isn't yet fully live via RTMP. Their clock has started though
