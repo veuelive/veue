@@ -6,10 +6,10 @@
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_pack_tag 'broadcast', media: 'all'
-    = javascript_pack_tag 'application'
     = javascript_pack_tag 'broadcast'
     = yield :header if content_for?(:header)
-  %body{body_attributes, "data-user-id": current_user&.id}
+  %body{data: {"user-id": current_user&.id, controller: "authentication"}}
     #layout-container
       #main-container
         = yield
+      = render partial: "shared/login_modal"

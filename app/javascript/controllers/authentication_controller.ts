@@ -69,7 +69,10 @@ export default class extends BaseController {
     );
     const html = await response.text();
     if (response.status == 202) {
-      document.querySelector(".top-navbar").outerHTML = html;
+      const topNav = document.querySelector(".top-navbar");
+      if (topNav) {
+        topNav.outerHTML = html;
+      }
       this.emitAuthChange();
       this.modalTarget.style.display = "none";
     } else if (response.status == 200) {
