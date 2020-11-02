@@ -1,5 +1,5 @@
 import BaseController from "./base_controller";
-import { VideoEventProcessor } from "controllers/event/event_processor";
+import { VideoEventProcessor } from "helpers/event/event_processor";
 import { currentUserId } from "controllers/authentication_controller";
 import userSvg from "images/user.svg";
 

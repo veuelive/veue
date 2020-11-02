@@ -5,12 +5,12 @@ import pauseSvg from "../images/pause.svg";
 import mutedSvg from "../images/muted.svg";
 import unmutedSvg from "../images/speaker.svg";
 import { displayTime } from "util/time";
-import TimecodeSynchronizer from "controllers/audience/timecode_synchronizer";
-import VideoDemixer from "controllers/audience/video_demixer";
-import { VideoEventProcessor } from "controllers/event/event_processor";
-import EventManagerInterface from "controllers/event/event_manager_interface";
-import VodEventManager from "controllers/event/vod_event_manager";
-import LiveEventManager from "controllers/event/live_event_manager";
+import TimecodeSynchronizer from "../helpers/audience/timecode_synchronizer";
+import VideoDemixer from "../helpers/audience/video_demixer";
+import { VideoEventProcessor } from "helpers/event/event_processor";
+import EventManagerInterface from "types/event_manager_interface";
+import VodEventManager from "helpers/event/vod_event_manager";
+import LiveEventManager from "helpers/event/live_event_manager";
 
 type StreamType = "live" | "vod";
 export default class extends Controller {

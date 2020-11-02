@@ -1,6 +1,6 @@
-import { Rectangle } from "util/rectangle";
-import { desktopCapturer } from "controllers/broadcast/electron/desktop_capture";
-import Sizes from "util/sizes";
+import { Rectangle } from "types/rectangle";
+import { desktopCapturer } from "helpers/electron/desktop_capture";
+import Sizes from "types/sizes";
 import { MediaDeviceChangeEvent } from "controllers/broadcast/media_manager_controller";
 
 export default class VideoMixer {

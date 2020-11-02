@@ -1,6 +1,6 @@
 import { secureFetch } from "../../util/fetch";
-import { VideoEventProcessor } from "controllers/event/event_processor";
-import EventManagerInterface from "controllers/event/event_manager_interface";
+import { VideoEventProcessor } from "helpers/event/event_processor";
+import EventManagerInterface from "types/event_manager_interface";
 
 interface EventIndexEntry {
   url: string;

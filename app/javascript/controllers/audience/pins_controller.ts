@@ -1,6 +1,6 @@
 import { Controller } from "stimulus";
-import { getTimecodeMs } from "controllers/audience/timecode_synchronizer";
-import { VideoEventProcessor } from "controllers/event/event_processor";
+import { getTimecodeMs } from "../../helpers/audience/timecode_synchronizer";
+import { VideoEventProcessor } from "helpers/event/event_processor";
 
 export default class PinsController extends Controller {
   connect(): void {

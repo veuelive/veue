@@ -1,5 +1,5 @@
 import { CaptureStreamCanvas } from "./video_mixer";
-import { ipcRenderer } from "controllers/broadcast/electron/ipc_renderer";
+import { ipcRenderer } from "helpers/electron/ipc_renderer";
 
 export default class StreamCapturer {
   canvas: CaptureStreamCanvas;

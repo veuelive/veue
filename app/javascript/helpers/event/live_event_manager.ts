@@ -1,6 +1,6 @@
-import EventManagerInterface from "controllers/event/event_manager_interface";
+import EventManagerInterface from "types/event_manager_interface";
 import consumer from "../../channels/consumer";
-import { VideoEventProcessor } from "controllers/event/event_processor";
+import { VideoEventProcessor } from "helpers/event/event_processor";
 import subscribeViewersChannel from "channels/active_viewers_channel";
 import { secureFetch } from "util/fetch";
 

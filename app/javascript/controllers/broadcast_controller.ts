@@ -1,15 +1,15 @@
 import { Controller } from "stimulus";
-import { ipcRenderer } from "controllers/broadcast/electron/ipc_renderer";
-import { Rectangle } from "util/rectangle";
-import VideoMixer from "controllers/broadcast/video_mixer";
-import StreamCapturer from "controllers/broadcast/stream_capturer";
-import { calculateBroadcastArea } from "controllers/broadcast/broadcast_helpers";
-import TimecodeManager from "controllers/broadcast/timecode_manager";
+import { ipcRenderer } from "helpers/electron/ipc_renderer";
+import { Rectangle } from "types/rectangle";
+import VideoMixer from "helpers/broadcast/video_mixer";
+import StreamCapturer from "helpers/broadcast/stream_capturer";
+import { calculateBroadcastArea } from "helpers/broadcast_helpers";
+import TimecodeManager from "helpers/broadcast/timecode_manager";
 import { postForm } from "util/fetch";
 import { getCurrentUrl } from "controllers/broadcast/browser_controller";
-import EventManagerInterface from "controllers/event/event_manager_interface";
-import AudioCapturer from "controllers/broadcast/audio_capturer";
-import LiveEventManager from "controllers/event/live_event_manager";
+import EventManagerInterface from "types/event_manager_interface";
+import AudioCapturer from "helpers/broadcast/audio_capturer";
+import LiveEventManager from "helpers/event/live_event_manager";
 
 type BroadcastState =
   | "loading"

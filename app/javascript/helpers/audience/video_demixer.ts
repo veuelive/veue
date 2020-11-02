@@ -1,5 +1,5 @@
-import Sizes from "util/sizes";
-import TimecodeSynchronizer from "controllers/audience/timecode_synchronizer";
+import Sizes from "types/sizes";
+import TimecodeSynchronizer from "./timecode_synchronizer";
 
 export default class VideoDemixer {
   private primaryCtx: CanvasRenderingContext2D;
