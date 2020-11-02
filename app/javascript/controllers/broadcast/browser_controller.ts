@@ -1,6 +1,6 @@
 import { Controller } from "stimulus";
-import { ipcRenderer } from "controllers/broadcast/electron/ipc_renderer";
-import { sendNavigationUpdate } from "controllers/broadcast/broadcast_helpers";
+import { ipcRenderer } from "helpers/electron/ipc_renderer";
+import { sendNavigationUpdate } from "helpers/broadcast_helpers";
 
 export type NavigationUpdate = {
   eventName: string;

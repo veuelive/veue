@@ -1,7 +1,7 @@
 import { postForm } from "util/fetch";
 import BaseController from "./base_controller";
 import { currentUserId } from "controllers/authentication_controller";
-import { getCurrentVideoId } from "./event/live_event_manager";
+import { getCurrentVideoId } from "../helpers/event/live_event_manager";
 
 export default class extends BaseController {
   static targets = ["lastMessage", "messageInput"];

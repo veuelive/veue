@@ -1,4 +1,4 @@
-import { Rectangle } from "util/rectangle";
+import { Rectangle } from "types/rectangle";
 import { postJson } from "util/fetch";
 import { NavigationUpdate } from "controllers/broadcast/browser_controller";
 

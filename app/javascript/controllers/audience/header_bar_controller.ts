@@ -1,6 +1,6 @@
 import { Controller } from "stimulus";
 import { NavigationUpdate } from "controllers/broadcast/browser_controller";
-import { VideoEventProcessor } from "controllers/event/event_processor";
+import { VideoEventProcessor } from "helpers/event/event_processor";
 
 export default class HeaderBarController extends Controller {
   static targets = ["addressInput"];

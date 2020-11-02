@@ -1,4 +1,4 @@
-import StreamCapturer from "controllers/broadcast/stream_capturer";
+import StreamCapturer from "helpers/broadcast/stream_capturer";
 import { MediaDeviceChangeEvent } from "controllers/broadcast/media_manager_controller";
 
 export default class AudioCapturer {

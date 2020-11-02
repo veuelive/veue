@@ -1,4 +1,4 @@
-import { Size } from "util/rectangle";
+import { Size } from "types/rectangle";
 
 export default class Sizes {
   public static fullCanvas: Size = { width: 1280, height: 1080 };
