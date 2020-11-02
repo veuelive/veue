@@ -1,16 +1,20 @@
 # frozen_string_literal: true
 
 class VideosController < ApplicationController
-  before_action :increment_video_views, only: %i[show], unless: -> { current_video.live? }
-
   # GET /videos
   def index
-    @live_videos = Video.live.all.decorate
-    @recent_videos = Video.finished.all.decorate
+    @live_videos = Video.live.visibility_public.all.decorate
+    @recent_videos = Video.finished.visibility_public.all.decorate
   end
 
   # GET /videos/1
-  def show; end
+  def show
+    if current_video.visibility.eql?("private") && (current_video.user != current_user)
+      render("not_found", status: :not_found)
+    else
+      increment_video_views unless current_video.live?
+    end
+  end
 
   private
 
