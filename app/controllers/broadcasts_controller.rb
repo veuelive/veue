@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 class BroadcastsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: :startup
 
   def index
     redirect_to(broadcast_path(current_user.active_video!))
   end
 
   def show
-    render(layout: "broadcast")
+    render
   end
 
   def start
@@ -45,6 +45,10 @@ class BroadcastsController < ApplicationController
 
   def blank
     render(layout: false)
+  end
+
+  def startup
+    # code here
   end
 
   private

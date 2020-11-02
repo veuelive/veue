@@ -26,13 +26,13 @@ const environments = {
   localhost: {
     hostname: "http://localhost:3000",
     session:
-      "EobUTr8vuNso4qRymi3CezxUKyEeCWojsBI6OncLQ%2BZB98mVsO4e3dPPEyiDS68DXK24iwD5n%2FhKUQcilkXvJXIqQIMchbjjDG0KjlOZpHASVzcL63kkXA2mUlAwSBrYoNxIsjRvUBIn8M7ubDe%2FSPl0V1LYYgOm%2FGxy%2F9ALAyQsDcGNnFmZQapAhe%2FcYHoCO1KnO5C8zXhOmb1I6ZAeSfjnG2%2Biiub8POduwBmW%2FIIqUki6gfCHlF9YrU8Lpcd2TNdXRGqu0D4ObjDlLx46LTkJRByic54k6jU%2FjGQvk8U4oT2YPDLWXsCXw38f5W8UdlKQ8%2BFtKIu%2BznwDXleKNL00Kq4yzNt3YTnkg8qwke5wnDc2iWye5iqhyjImgiH29Q2dz2w%3D--RcDaYEZzKsmhnyDN--%2BjdjkG74LR9la4zbkM4bJA%3D%3D",
+      "EobUTr8vuNsoncLQ%2BZB98mVsO4e3dPPEyiDS68DXK24iwD5n%2FhKUQcilkXvJXIqQIMchbjjDG0KjlOZpHASVzcL63kkXA2mUlAwSBrYoNxIsjRvUBIn8M7ubDe%2FSPl0V1LYYgOm%2FGxy%2F9ALAyQsDcGNnFmZQapAhe%2FcYHoCO1KnO5C8zXhOmb1I6ZAeSfjnG2%2Biiub8POduwBmW%2FIIqUki6gfCHlF9YrU8Lpcd2TNdXRGqu0D4ObjDlLx46LTkJRByic54k6jU%2FjGQvk8U4oT2YPDLWXsCXw38f5W8UdlKQ8%2BFtKIu%2BznwDXleKNL00Kq4yzNt3YTnkg8qwke5wnDc2iWye5iqhyjImgiH29Q2dz2w%3D--RcDaYEZzKsmhnyDN--%2BjdjkG74LR9la4zbkM4bJA%3D%3D",
   },
 };
 
-// systemPreferences.askForMediaAccess("microphone");
 
-const ENVIRONMENT = environments[process.env.ENVIRONMENT || "production"];
+
+const ENVIRONMENT = environments[process.env.ENVIRONMENT || "localhost"];
 
 unhandled();
 debug();
@@ -86,7 +86,7 @@ const createMainWindow = async () => {
   });
 
   mainWindow
-    .loadURL(ENVIRONMENT["hostname"] + "/broadcasts")
+    .loadURL(ENVIRONMENT["hostname"] + "/broadcasts/startup")
     .then(() => console.log("loaded"));
 
   mainWindow.on("ready-to-show", () => {

@@ -17,7 +17,7 @@
     "build": "webpack --config ./webpack.config.js",
     "start": "yarn build && ENVIRONMENT=localhost electron .",
     "pack": "yarn build && electron-builder --dir",
-    "dist": "yarn build && electron-builder --macos --linux --windows",
+    "dist": "yarn build && electron-builder --macos",
     "release": "np"
   },
   "dependencies": {

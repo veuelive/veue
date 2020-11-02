@@ -22,7 +22,6 @@ type BroadcastState =
 export default class extends Controller {
   static targets = ["webcamVideoElement", "timeDisplay"];
   private webcamVideoElementTarget!: HTMLVideoElement;
-  private timeDisplayTarget!: HTMLElement;
 
   private mixer: VideoMixer;
   private streamCapturer: StreamCapturer;
