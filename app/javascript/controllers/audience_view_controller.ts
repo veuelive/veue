@@ -1,12 +1,12 @@
 import { Controller } from "stimulus";
 import Hls from "hls.js";
-import playSvg from "../images/play.svg";
-import pauseSvg from "../images/pause.svg";
-import mutedSvg from "../images/muted.svg";
-import unmutedSvg from "../images/speaker.svg";
+import playSvg from "images/play.svg";
+import pauseSvg from "images/pause.svg";
+import mutedSvg from "images/muted.svg";
+import unmutedSvg from "images/speaker.svg";
 import { displayTime } from "util/time";
-import TimecodeSynchronizer from "../helpers/audience/timecode_synchronizer";
-import VideoDemixer from "../helpers/audience/video_demixer";
+import TimecodeSynchronizer from "helpers/audience/timecode_synchronizer";
+import VideoDemixer from "helpers/audience/video_demixer";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import EventManagerInterface from "types/event_manager_interface";
 import VodEventManager from "helpers/event/vod_event_manager";
