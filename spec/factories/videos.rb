@@ -5,6 +5,7 @@ FactoryBot.define do
     user factory: :streamer
     state { :pending }
     title { Faker::Company.bs }
+    visibility {  }
     mux_asset_id { Faker::Alphanumeric.alphanumeric }
     mux_playback_id { Faker::Alphanumeric.alphanumeric }
 

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require './spec/support/phone_test_helpers'
+
 FactoryBot.define do
   factory :user do
     display_name { Faker::Name.name }
