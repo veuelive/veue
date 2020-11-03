@@ -10,11 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_14_140500) do
+ActiveRecord::Schema.define(version: 2020_11_02_232222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  # These are custom enum types that must be created before they can be used in the schema definition
+  create_enum "visibility_setting", ["public", "protected", "private"]
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -163,6 +166,7 @@ ActiveRecord::Schema.define(version: 2020_10_14_140500) do
     t.bigint "started_at_ms"
     t.integer "active_viewers", default: 0
     t.integer "video_views_count"
+    t.enum "visibility", as: "visibility_setting"
     t.index ["mux_asset_id"], name: "index_videos_on_mux_asset_id"
     t.index ["mux_live_stream_id"], name: "index_videos_on_mux_live_stream_id"
     t.index ["state"], name: "index_videos_on_state"

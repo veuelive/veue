@@ -18,11 +18,7 @@ class Video < ApplicationRecord
 
   has_one_attached :secondary_shot
   has_one_attached :primary_shot
-
-  enum visibility:
-           {video_public: 'video_public',
-            video_protected: 'video_protected',
-            video_private: 'video_private'}
+  include PGEnum(status: %w[public protected private], _prefix: 'video', _suffix: true)
 
   aasm column: "state" do
     # We aren't live yet, but it'sa coming!
