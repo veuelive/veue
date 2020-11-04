@@ -3,7 +3,7 @@
     .primary-video-area
       .primary-video__header{data: {controller: "audience--header-bar"}}
         .primary-video__header__address_bar
-          #address-input{type: "text", disabled: true, data: {target: "audience--header-bar.addressInput"}}
+          #address-input{data: {target: "audience--header-bar.addressInput"}}
         - if current_video.live?
           .widget
             .icon
