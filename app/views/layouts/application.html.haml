@@ -4,12 +4,14 @@
     %meta{content: "text/html; charset=UTF-8", "http-equiv": "Content-Type"}/
     %meta{name: "viewport", content:"width=device-width, initial-scale=1"}/
     %title Veue
+    = render partial: 'layouts/gtm'
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_pack_tag 'application', media: 'all'
     = javascript_pack_tag 'application'
     = yield :header if content_for?(:header)
   %body{body_attributes}
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K4PCNR3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     #layout-container{ data: { controller: "authentication" }}
       = render partial: 'layouts/navbar'
       #main-container
