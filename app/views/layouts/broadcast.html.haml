@@ -7,10 +7,11 @@
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_pack_tag 'broadcast', media: 'all'
+    = javascript_pack_tag 'application'
     = javascript_pack_tag 'broadcast'
     = yield :header if content_for?(:header)
-  %body{data: {"user-id": current_user&.id, controller: "authentication"}}
+  %body{body_attributes, "data-user-id": current_user&.id}
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K4PCNR3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     #layout-container
       #main-container
         = yield
-      = render partial: "shared/login_modal"
