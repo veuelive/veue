@@ -42,31 +42,45 @@ describe "Videos" do
   end
 
   describe "show by id" do
-    describe "for a random person" do
+    describe "for a publc viewer" do
       before(:each) do
-        # TODO: sign in as someone who does not own the video
+        @viewer = create(:viewer)
+        login_as @viewer
+      end
+      describe "for anyone" do
+        it "should render the public video by id " do
+          get video_path(@video)
+          expect(response).to have_http_status(:ok)
+          expect(@video.reload.video_views.size).to eq(1)
+        end
       end
 
-      it "should render the video by id for anyone of it is public" do
-        get video_path(@video)
+      describe "for someone who has the full id of the video" do
+        it "should render the protected video by id for anyone" do
+          get video_path(@protected_video)
+          expect(response).to have_http_status(:ok)
+          expect(@protected_video.reload.video_views.size).to eq(1)
+        end
 
-        @video.reload
-        expect(response).to have_http_status(:ok)
-        expect(@video.video_views.size).to eq(1)
+        it "should NOT allow me to see someone else's private video" do
+          get video_path(@private_video)
+          expect(response).to have_http_status(:not_found)
+          expect(@private_video.reload.video_views.size).to eq(1)
+        end
       end
-
-      it "should NOT allow me to see someone else's private video" do
-
-      end
-    end
-
-    describe "for someone who has the URL" do
-
     end
 
     describe "for the owner of the video" do
-      it "should allow me to see my own private video" do
+      before(:each) do
+        @streamer = @private_video.user
+        login_as @streamer
+      end
 
+      it "should allow me to see my own private video" do
+        get video_path(@private_video)
+
+        expect(response).to have_http_status(:ok)
+        expect(@private_video.reload.video_views.size).to eq(1)
       end
     end
   end

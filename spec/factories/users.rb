@@ -11,5 +11,9 @@ FactoryBot.define do
       mux_stream_key { Faker::Alphanumeric.alphanumeric }
       mux_live_stream_id { Faker::Alphanumeric.alphanumeric }
     end
+
+    factory :viewer do
+
+    end
   end
 end
