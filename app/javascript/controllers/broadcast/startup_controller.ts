@@ -1,4 +1,3 @@
-import { Controller } from "stimulus";
 import MediaAccess from "helpers/media_access";
 import BaseController from "controllers/base_controller";
 
