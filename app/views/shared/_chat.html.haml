@@ -1,8 +1,11 @@
 .chat-section
-  %button.close-btn{data: {action: "click->audience-view#hideChat"}} Close Chat
   .messages-overflow-container{"data-simplebar": true}
     .messages{data: {controller: "chat-messages"}}
-  - unless video.finished?
-    .message-write{data: { "controller": "chat" }}
-      .write-area
-        = text_area_tag :body, "", class: 'write-area__text w-full outline-none', name: "message-input", placeholder: 'Write your message...', data: { action: "keydown->chat#chatBoxKeyDown" }
+  - unless false
+    - if current_user
+      .message-write{data: { "controller": "chat" }}
+        .write-area
+          = text_area_tag :body, "", class: 'write-area__text w-full outline-none', name: "message-input", placeholder: 'Write your message...', data: { action: "keydown->chat#chatBoxKeyDown" }
+    - else
+      .message-login-prompt
+        %button{data: {action: "authentication#showModal"}} Login To Chat

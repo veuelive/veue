@@ -2,7 +2,16 @@
   .navbar-link
     .navbar-logo
       = link_to root_path do
-        = svg_tag 'logo'
-        %span.logo_name VEUE
+        = svg_tag 'logo-full'
   .status-user
-    = render partial: 'layouts/nav/right_area'
+    .user-auth-area
+      - if user_signed_in?
+        = render partial: "layouts/nav/user_info_list", locals: { show_arrow: true}
+        .status-dropdown
+          %ul
+            %li
+              = link_to 'Sign Out', authentication_path, method: :delete, class: 'list-item'
+      - else
+        %button.list-item{data: { action: "click->authentication#showModal"}}
+          Login
+

@@ -1,3 +1,5 @@
+@use "../utils/breakpoints" as *;
+
 body#videos__show {
   /**
   Put any main responsive layout code for ONLY desktop here... this does not count elements that scale to their
@@ -37,12 +39,6 @@ body#videos__show {
       canvas.pip-secondary-canvas {
         display: none;
       }
-
-      // Only show the show chat toggle button in desktop mode
-      .chat-btn,
-      .close-btn {
-        display: none;
-      }
     }
   }
 
@@ -55,37 +51,20 @@ body#videos__show {
       align-items: center;
       height: 93vh;
     }
+
     .content-area__primary,
     .primary-video-area,
     .content-area__secondary {
       width: 95vw;
     }
-
     canvas.fixed-secondary-canvas {
       // We don't want to show the fixed canvas when we are in a small view
       display: none;
     }
-
     // Most of the code for PIP is inside of a separate file
-    .pip-component canvas {
-      width: 18vw;
-    }
 
-    // This code here is how the audience-view-controller
-    // shows and hides the chat when in mobile view
-    //.content-area.show-chat {
-    //  .content-area__primary {
-    //    display: none;
-    //  }
-    //}
-    //.content-area:not(.show-chat) {
-    //  .content-area__secondary {
-    //    display: none;
-    //  }
-    //}
-    .chat-btn,
-    .close-btn {
-      display: none;
+    .pip-component canvas {
+      width: 25vw;
     }
 
     .content-area__secondary {
@@ -96,5 +75,11 @@ body#videos__show {
         height: --webkit-fill-available;
       }
     }
+  }
+}
+
+@include mobile() {
+  #streamer-profile-area {
+    height: 50px;
   }
 }
