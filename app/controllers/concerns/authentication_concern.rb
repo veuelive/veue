@@ -5,7 +5,7 @@ module AuthenticationConcern
 
   included do
     def current_session_token
-      session_token_uuid = session[:session_token_uuid]
+      session_token_uuid = (session[:session_token_uuid] ||= request.headers["X-Bearer-Token"])
       return unless session_token_uuid
 
       @current_session_token ||= SessionToken.where(uuid: session_token_uuid).active.includes(:user).first

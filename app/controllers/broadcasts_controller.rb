@@ -48,7 +48,7 @@ class BroadcastsController < ApplicationController
   end
 
   def startup
-    # code here
+    index if current_user
   end
 
   private
