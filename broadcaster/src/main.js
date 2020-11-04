@@ -5,6 +5,7 @@ const { app, BrowserWindow, Menu, ipcMain, screen } = require("electron");
 /// const {autoUpdater} = require('electron-updater');
 const { is } = require("electron-util");
 const unhandled = require("electron-unhandled");
+const config = require("./config");
 const debug = require("electron-debug");
 const contextMenu = require("electron-context-menu");
 const menu = require("./menu");
@@ -20,13 +21,9 @@ const environments = {
   stage: {
     hostname: "https://beta.veuelive.com",
     auth: "tlhd",
-    session:
-      "oPh6vV7flChT0XlZc5R%2F6e5nF%2FN2IgPJLMEZ%2BXMy3HrB96B0iAhQdSxn8gs%2Bn6w0CyydDbzTpMZqsCt99hMGy6s077xs1pRryVdsC3gfO%2BasggMFQT8njm3J9gpVydrCPQCTE6963CbktfKZbuSrWcNb7Ozg%2BoWzeDnz7z6gHdvwg24y8FK64YPUrLbvbhYQ7rFQLNNlpJKMP07supTzZYBYwHf1UuZL99z6nbMTc5FmggvrtL5pbM6V9Nlp3iUbkGju6tK7Sbj3BTzMrfcEo%2FVXzYMyBvvMfvZBwBSr57oxMfHyoYrpFEnF%2BlqNVw%2FfCflnqvvnrHYzKzH8z405WOmnHVfNaeWYNlQFxU8c8g%2FglEgt2Q07b2xktH0a4pNx0exUZn8%3D--P1BJZ6jQOwz9l0fi--A%2B28Gy%2FYedXl6EzvsQlA5w%3D%3D",
-  },
+    },
   localhost: {
     hostname: "http://localhost:3000",
-    session:
-      "EobUTr8vuNsoncLQ%2BZB98mVsO4e3dPPEyiDS68DXK24iwD5n%2FhKUQcilkXvJXIqQIMchbjjDG0KjlOZpHASVzcL63kkXA2mUlAwSBrYoNxIsjRvUBIn8M7ubDe%2FSPl0V1LYYgOm%2FGxy%2F9ALAyQsDcGNnFmZQapAhe%2FcYHoCO1KnO5C8zXhOmb1I6ZAeSfjnG2%2Biiub8POduwBmW%2FIIqUki6gfCHlF9YrU8Lpcd2TNdXRGqu0D4ObjDlLx46LTkJRByic54k6jU%2FjGQvk8U4oT2YPDLWXsCXw38f5W8UdlKQ8%2BFtKIu%2BznwDXleKNL00Kq4yzNt3YTnkg8qwke5wnDc2iWye5iqhyjImgiH29Q2dz2w%3D--RcDaYEZzKsmhnyDN--%2BjdjkG74LR9la4zbkM4bJA%3D%3D",
   },
 };
 
@@ -86,7 +83,9 @@ const createMainWindow = async () => {
   });
 
   mainWindow
-    .loadURL(ENVIRONMENT["hostname"] + "/broadcasts/startup")
+    .loadURL(ENVIRONMENT["hostname"] + "/broadcasts/startup", {
+      extraHeaders: "X-Bearer-Token: " + (config.get("sessionToken") || "")
+    })
     .then(() => console.log("loaded"));
 
   mainWindow.on("ready-to-show", () => {
@@ -117,8 +116,9 @@ ipcMain.on("wakeup", (event, data) => {
   );
 });
 
-ipcMain.on("load_browser_view", () => {
+ipcMain.on("load_browser_view", (event, sessionToken) => {
   new BrowserViewManager(mainWindow, bounds);
+  config.set("sessionToken", sessionToken)
 });
 
 ipcMain.on("stream", (event, data) => {

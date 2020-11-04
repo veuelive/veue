@@ -42,7 +42,7 @@ export default class extends Controller {
     this.timecodeManager = new TimecodeManager(this.mixer.canvas);
 
     ipcRenderer.send("wakeup");
-    ipcRenderer.send("load_browser_view");
+    ipcRenderer.send("load_browser_view", this.data.get("session-token"));
 
     ipcRenderer.on(
       "visible",
