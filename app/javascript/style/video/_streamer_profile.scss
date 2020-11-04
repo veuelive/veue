@@ -2,25 +2,33 @@
 
 #videos__show {
   .streamer-profile {
+    flex: 1;
     border: 1px solid color.$gray-light;
     border-radius: 10px;
     padding: 1rem;
     font-size: 0.875rem;
     text-transform: capitalize;
+    display: flex;
+    flex-direction: column;
+
     .streamer-info {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+
       &__avatar {
         display: flex;
         padding-right: 0.25rem;
         align-items: center;
+
         svg {
           border-radius: 50%;
           height: 2rem;
           width: 2rem;
         }
+
         .streamer-name {
           font-size: 14px;
           font-weight: 500;
@@ -32,19 +40,14 @@
           padding-left: 0.5rem;
         }
       }
-      .follow-btn {
-        border-radius: 10px;
-        padding: 0.5rem 1rem;
-        background-color: color.$cornflower;
-        color: color.$white;
-        cursor: pointer;
-      }
     }
+
     .stream-info {
       .stream-num {
         color: color.$gray-dark;
         margin-bottom: 0.5rem;
       }
+
       .stream-name {
         color: color.$gray-darker;
       }

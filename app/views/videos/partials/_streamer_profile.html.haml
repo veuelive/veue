@@ -1,19 +1,19 @@
-.p-1
-  .streamer-profile{ data: {controller: "streamer-profile", "streamer-profile" => { "video-id" => current_video.to_param }}}
-    .streamer-info
-      .streamer-info__avatar
-        = inline_svg_pack_tag 'media/images/user.svg'
-        .streamer-name
-          = current_video.user.display_name
-      - if user_signed_in?
-        - if current_user.follows?(current_video.user)
-          .follow-btn{data: { action: "click->streamer-profile#unfollow" }} unfollow
-        - else
-          .follow-btn{data: { action: "click->streamer-profile#follow" }} follow
+
+.streamer-profile{ data: {controller: "streamer-profile", "streamer-profile" => { "video-id" => current_video.to_param }}}
+  .streamer-info
+    .streamer-info__avatar
+      = inline_svg_pack_tag 'media/images/user.svg'
+      .streamer-name
+        = current_video.user.display_name
+    - if user_signed_in?
+      - if current_user.follows?(current_video.user)
+        %button{data: { action: "click->streamer-profile#unfollow" }} Unfollow
       - else
-        .follow-btn{data: { action: "click->authentication#showModal" }} follow
-    .stream-info
-      .stream-num
-        stream # 4
-      .stream-name
-        high‑performance wireless earphones
+        %button{data: { action: "click->streamer-profile#follow" }} Follow
+    - else
+      %button{data: { action: "click->authentication#showModal" }} Follow
+  .stream-info
+    .stream-num
+      stream # 4
+    .stream-name
+      high‑performance wireless earphones
