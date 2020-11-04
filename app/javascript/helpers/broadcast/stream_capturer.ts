@@ -27,7 +27,7 @@ export default class StreamCapturer {
     this.mediaStream.addTrack(this._audioTrack);
 
     this.mediaRecorder = new MediaRecorder(this.mediaStream, {
-      mimeType: "video/webm",
+      mimeType: "video/webm;codecs=H264",
     });
 
     this.mediaRecorder.addEventListener("dataavailable", async (e) => {
