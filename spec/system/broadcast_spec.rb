@@ -76,8 +76,8 @@ describe "Broadcast View" do
       it "should display live messages on broadcaster view" do
         first_message = someone_chatted
         second_message_text = "Cowabunga!"
-
-        expect(page).to have_content(first_message.text)
+        
+        expect(find(".message-left")).to have_content(first_message.text)
         expect(page).to_not have_content(second_message_text)
         expect(page).to have_content(first_message.user.display_name)
 
