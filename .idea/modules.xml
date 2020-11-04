@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../deskie/.idea/deskie.iml" filepath="$PROJECT_DIR$/../deskie/.idea/deskie.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/veue.iml" filepath="$PROJECT_DIR$/.idea/veue.iml" />
     </modules>
   </component>
