@@ -30,6 +30,7 @@ RSpec.configure do |config|
 
   config.before(:each) do
     stub_const("Twilio::REST::Client", FakeTwilio)
+    stub_const("MUX_SERVICE", FakeMuxService.new)
   end
 
   config.after(:each) do
