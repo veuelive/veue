@@ -15,6 +15,13 @@ body#videos__show {
       flex: 1;
       font-size: 1rem;
       border: 1px solid color.$gray-light;
+
+      #address-input {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-overflow-ellipsis: color.$gray-light;
+      }
     }
 
     > * {

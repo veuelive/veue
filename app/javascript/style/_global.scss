@@ -5,6 +5,7 @@ body,
 * {
   font-family: font.$nunito;
   font-weight: font.$normal-weight;
+  min-width: 0;
 }
 
 body {
