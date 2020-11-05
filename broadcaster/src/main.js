@@ -1,5 +1,6 @@
 "use strict";
 import BrowserViewManager from "./BrowserViewManager.ts";
+import ffmpegPath from "../util/ffmpegPath";
 
 const { app, BrowserWindow, Menu, ipcMain, screen } = require("electron");
 /// const {autoUpdater} = require('electron-updater');
@@ -135,10 +136,7 @@ ipcMain.handle("start", (_, data) => {
   const key = data.streamKey;
 
   const rtmpUrl = `rtmps://global-live.mux.com/app/${key}`;
-
-  console.log("Streaming to ", rtmpUrl);
-
-  ffmpeg = child_process.spawn("ffmpeg", [
+  ffmpeg = child_process.spawn(ffmpegPath, [
     "-i",
     "-",
 
