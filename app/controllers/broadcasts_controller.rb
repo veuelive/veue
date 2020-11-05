@@ -8,7 +8,7 @@ class BroadcastsController < ApplicationController
   end
 
   def show
-    render(layout: "broadcast")
+    render
   end
 
   def start
