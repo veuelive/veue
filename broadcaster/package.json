@@ -27,7 +27,6 @@
     "electron-unhandled": "^3.0.0",
     "electron-updater": "^4.0.6",
     "electron-util": "^0.13.0",
-    "ffmpeg-static": "^4",
     "ts-loader": "^8.0.7",
     "webpack": "^5.3.2",
     "webpack-cli": "^4.1.0"
@@ -58,7 +57,10 @@
       "extendInfo": {
         "NSMicrophoneUsageDescription": "Please give us access to your microphone",
         "NSCameraUsageDescription": "Please give access to your webcam"
-      }
+      },
+      "files": [
+        "!bin/win${/*}"
+      ]
     },
     "dmg": {
       "iconSize": 160,
