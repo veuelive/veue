@@ -22,8 +22,7 @@ class Video < ApplicationRecord
 
   scope :public_or_protected,
         -> {
-          where("\"#{table_name}\".\"visibility\" = 'public' OR" \
-                    "\"#{table_name}\".\"visibility\" = 'protected'")
+          where('"Videos"."visibility" = "public" OR "Videos"."visibility" = "protected" ')
         }
 
   aasm column: "state" do
