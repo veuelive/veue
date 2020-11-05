@@ -32,33 +32,22 @@ class VideosController < ApplicationController
   end
 
   # Use callbacks to share common setup or constraints between actions.
-
-
   def current_video
-    # 1) Videos show by id for a publc viewer for someone who has the full id of the video should NOT allow me to see someone else's private video
-    #  Failure/Error: .content-area#video-show{data: {"controller" => "audience-view", "audience-view" => { "stream-type" => current_video.stream_type}, "video-id": current_video.id}}
-    #
-    #  ActionView::Template::Error:
-    #    undefined method `stream_type' for nil:NilClass
-    # # ./app/views/videos/show.html.haml:1:in `_app_views_videos_show_html_haml___2498435342598989589_37760'
-    #
-    #
     @current_video
   end
   helper_method :current_video
 
 
   def load_video
-    if video = Video.public_or_protected.where(id: params[:id]).first&.decorate
-    elsif video = current_user.videos.where(id: params[:id]).first&.decorate
+    if video = Video.public_or_protected.where(id: params[:id]).first
+    elsif video = current_user.videos.where(id: params[:id]).first
     else
-      render status: :not_found and return
+      render 'not_found', status: :not_found
+      return
     end
-    @current_video = video
+    @current_video = video.decorate
   end
-
-
-
+  
   # Only allow a list of trusted parameters through.
   def video_params
     params.require(:video).permit(:title)
