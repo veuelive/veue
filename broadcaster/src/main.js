@@ -142,11 +142,7 @@ ipcMain.handle("start", (_, data) => {
 
     // video codec config: low latency, adaptive bitrate
     "-c:v",
-    "libx264",
-    "-preset",
-    "medium",
-    "-tune",
-    "zerolatency",
+    "copy",
 
     // audio codec config: sampling frequency (11025, 22050, 44100), bitrate 64 kbits
     "-c:a",
