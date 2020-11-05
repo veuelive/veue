@@ -77,7 +77,7 @@ gem "bootsnap", ">= 1.4.2", require: false
 gem "aws-sdk-s3", require: false
 
 # for native Enum support in postgres
-gem 'activerecord-pg_enum'
+gem "activerecord-pg_enum"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

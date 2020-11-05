@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './spec/support/phone_test_helpers'
+require "./spec/support/phone_test_helpers"
 
 FactoryBot.define do
   factory :user do
@@ -13,7 +13,6 @@ FactoryBot.define do
     end
 
     factory :viewer do
-
     end
   end
 end

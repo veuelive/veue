@@ -18,12 +18,13 @@ class Video < ApplicationRecord
 
   has_one_attached :secondary_shot
   has_one_attached :primary_shot
-  include PGEnum(visibility: %w[public protected private], _prefix: 'visibility')
+  include PGEnum(visibility: %w[public protected private], _prefix: "visibility")
 
-  scope :public_or_protected,  -> {where("\"#{self.table_name}\".\"visibility\" = 'public' OR" +
-                                            "\"#{self.table_name}\".\"visibility\" = 'protected'")}
-
-
+  scope :public_or_protected,
+        -> {
+          where("\"#{table_name}\".\"visibility\" = 'public' OR" \
+                    "\"#{table_name}\".\"visibility\" = 'protected'")
+        }
 
   aasm column: "state" do
     # We aren"t live yet, but it'sa coming!

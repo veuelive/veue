@@ -7,7 +7,6 @@ describe "Videos" do
     @public_videos = create_list(:video, 5, {state: :finished})
     @video = @public_videos.first
 
-
     @protected_videos = create_list(:protected_video, 3)
     @private_videos = create_list(:private_video, 3)
     @private_video = @private_videos.first
@@ -30,7 +29,6 @@ describe "Videos" do
 
     it "should not show videos in non-visible states" do
       expect(response.body).to_not include(video_path(@pending_video))
-
     end
 
     it "should not render with links to the protected videos" do

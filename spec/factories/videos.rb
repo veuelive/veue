@@ -5,7 +5,7 @@ FactoryBot.define do
     user factory: :streamer
     state { :pending }
     title { Faker::Company.bs }
-    visibility { 'public' }
+    visibility { "public" }
     mux_asset_id { Faker::Alphanumeric.alphanumeric }
     mux_playback_id { Faker::Alphanumeric.alphanumeric }
 
@@ -15,18 +15,17 @@ FactoryBot.define do
     end
 
     factory :protected_video do
-      visibility {'protected'}
+      visibility { "protected" }
     end
 
     factory :private_video do
-      visibility { 'private' }
+      visibility { "private" }
     end
 
     factory :live_video do
       state { :live }
       hls_url { "/__test/live/playback.m3u8" }
       started_at_ms { Time.now.utc.to_ms }
-
     end
   end
 end
