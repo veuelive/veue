@@ -47,7 +47,7 @@ class VideosController < ApplicationController
     end
     @current_video = video.decorate
   end
-  
+
   # Only allow a list of trusted parameters through.
   def video_params
     params.require(:video).permit(:title)

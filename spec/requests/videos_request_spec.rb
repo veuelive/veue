@@ -7,8 +7,9 @@ describe "Videos" do
     @public_videos = create_list(:video, 5, {state: :finished})
     @video = @public_videos.first
 
-    @protected_videos = create_list(:live_protected_video, 3)
-    @private_videos = create_list(:live_private_video, 3)
+
+    @protected_videos = create_list(:protected_video, 3)
+    @private_videos = create_list(:private_video, 3)
     @private_video = @private_videos.first
     @protected_video = @protected_videos.first
 
@@ -42,7 +43,7 @@ describe "Videos" do
   end
 
   describe "show by id" do
-    describe "for a publc viewer" do
+    describe "for a public viewer" do
       before(:each) do
         @viewer = create(:viewer)
         login_as @viewer
@@ -59,16 +60,16 @@ describe "Videos" do
         it "should render the protected video by id for anyone" do
           get video_path(@protected_video)
           expect(response).to have_http_status(:ok)
-          # see VideosController line 4 unless: -> { current_video.live? }
-          # expect(@protected_video.reload.video_views.size).to eq(1)
+          expect(@protected_video.reload.video_views.size).to eq(1)
         end
 
         it "should NOT allow me to see someone else's private video" do
           get video_path(@private_video)
           expect(response).to have_http_status(:not_found)
-          # see VideosController line 4 unless: -> { current_video.live? }
-          # expect(@private_video.reload.video_views.size).to eq(1)
+          expect(@private_video.reload.video_views.size).to eq(0)
         end
+
+
       end
     end
 
@@ -81,9 +82,7 @@ describe "Videos" do
       it "should allow me to see my own private video" do
         get video_path(@private_video)
         expect(response).to have_http_status(:ok)
-
-        # see VideosController line 4 unless: -> { current_video.live? }
-        # expect(@private_video.reload.video_views.size).to eq(1)
+        expect(@private_video.reload.video_views.size).to eq(1)
       end
     end
   end

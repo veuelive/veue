@@ -14,17 +14,19 @@ FactoryBot.define do
       hls_url { "/__test/vod/playback.m3u8" }
     end
 
+    factory :protected_video do
+      visibility {'protected'}
+    end
+
+    factory :private_video do
+      visibility { 'private' }
+    end
+
     factory :live_video do
       state { :live }
       hls_url { "/__test/live/playback.m3u8" }
       started_at_ms { Time.now.utc.to_ms }
-      factory :live_protected_video do
-        visibility {'protected'}
-      end
 
-      factory :live_private_video do
-        visibility {'private'}
-      end
     end
   end
 end
