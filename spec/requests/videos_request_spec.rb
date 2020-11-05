@@ -68,8 +68,6 @@ describe "Videos" do
           expect(response).to have_http_status(:not_found)
           expect(@private_video.reload.video_views.size).to eq(0)
         end
-
-
       end
     end
 

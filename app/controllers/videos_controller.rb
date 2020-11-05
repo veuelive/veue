@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class VideosController < ApplicationController
-  before_action :load_video, only: %i[show]
-  before_action :increment_video_views, only: %i[show], unless: -> { current_video.live? }
 
   # GET /videos
   def index
@@ -12,7 +10,11 @@ class VideosController < ApplicationController
 
   # GET /videos/1
   def show
-
+    if current_video.visibility.eql?('private') && (current_video.user != current_user)
+      render 'not_found', status: :not_found
+    else
+      increment_video_views unless current_video.live?
+    end
   end
 
   private
@@ -33,20 +35,9 @@ class VideosController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def current_video
-    @current_video
+    @current_video ||= Video.find(params[:id]).decorate
   end
   helper_method :current_video
-
-
-  def load_video
-    if video = Video.public_or_protected.where(id: params[:id]).first
-    elsif video = current_user.videos.where(id: params[:id]).first
-    else
-      render 'not_found', status: :not_found
-      return
-    end
-    @current_video = video.decorate
-  end
 
   # Only allow a list of trusted parameters through.
   def video_params
