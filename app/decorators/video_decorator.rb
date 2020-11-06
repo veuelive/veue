@@ -16,4 +16,15 @@ class VideoDecorator < Draper::Decorator
   def active_viewers_count
     number_to_human(active_viewers, format: "%n%u", units: {thousand: "K", million: "M", billion: "B"})
   end
+
+  def display_state
+    case state
+    when "live"
+      "LIVE"
+    when "finished"
+      "REPLAY"
+    else
+      "UPCOMING"
+    end
+  end
 end

@@ -11,7 +11,12 @@
             #active-viewers
               = current_video.active_viewers_count
           .widget.red
-            = current_video.state.upcase
+            = current_video.display_state
+        - if current_video.finished?
+          .widget
+            = current_video.video_views.count
+            VIEWS
+
       %canvas.primary-canvas{"data-target": "audience-view.primaryCanvas", width: 1200, height: 740}
       .pip-component{data: {controller: "audience--pip"}, draggable: "true"}
         %canvas.pip-secondary-canvas{"data-target": "audience-view.pipSecondaryCanvas audience--pip.canvas", width: 420, height: 340}
