@@ -11,6 +11,8 @@ import { VideoEventProcessor } from "helpers/event/event_processor";
 import EventManagerInterface from "types/event_manager_interface";
 import VodEventManager from "helpers/event/vod_event_manager";
 import LiveEventManager from "helpers/event/live_event_manager";
+import { startMuxData } from "controllers/audience/mux_integration";
+import { isProduction } from "util/environment";
 
 type StreamType = "live" | "vod";
 export default class extends Controller {
@@ -40,6 +42,10 @@ export default class extends Controller {
     this.streamType = this.data.get("stream-type") as StreamType;
 
     this.data.set("timecode", "-1");
+
+    if (isProduction()) {
+      startMuxData();
+    }
 
     this.timecodeSynchronizer = new TimecodeSynchronizer(() => {
       this.timecodeChanged();

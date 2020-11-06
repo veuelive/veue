@@ -1,6 +1,5 @@
 import {
   destroy,
-  getCsrfToken,
   post,
   postJson,
   put,
@@ -9,16 +8,12 @@ import {
 } from "../../../app/javascript/util/fetch";
 import fetch from "jest-fetch-mock";
 
-const SOME_TOKEN = "SOME_TOKEN";
+import { SOME_TOKEN } from "./environment.spec";
 const SOME_PATH = "/api/test";
 
 beforeEach(() => {
   document.head.innerHTML = `<meta name='csrf-token' content='${SOME_TOKEN}'>`;
   fetch.resetMocks();
-});
-
-it("should have working getCsrfToken", () => {
-  expect(getCsrfToken()).toBe(SOME_TOKEN);
 });
 
 const expectFetchLike = (path, info: RequestInit): RequestInit => {
