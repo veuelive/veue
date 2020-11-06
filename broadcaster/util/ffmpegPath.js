@@ -29,7 +29,7 @@ if (platform === "mac" && arch !== "x64") {
 }
 
 const ffmpegPath = path.join(
-  path.resolve("."),
+  __dirname,
   "bin",
   platform,
   arch,
