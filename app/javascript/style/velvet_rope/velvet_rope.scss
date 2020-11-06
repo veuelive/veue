@@ -45,9 +45,8 @@ body,
       display: flex;
       flex-direction: row;
       align-items: center;
-
-      .text {
-        margin-left: 0.5rem;
+      svg {
+        width: calc(1vw + 130px);
       }
     }
 

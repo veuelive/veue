@@ -46,6 +46,7 @@ Rails.application.routes.draw do
 
   unless Rails.env.production?
     post "ipc_mock", to: "application#ipc_mock"
+    get "velvet_rope", to: "velvet_rope#index"
   end
 
   resources :users
