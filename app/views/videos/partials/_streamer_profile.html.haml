@@ -7,8 +7,8 @@
         = current_video.user.display_name
     - if user_signed_in?
       - if current_user.follows?(current_video.user)
-        %button{data: { action: "click->streamer-profile#unfollow" }} Unfollow
+        %button.follow-btn{data: { action: "click->streamer-profile#unfollow" }} Unfollow
       - else
-        %button{data: { action: "click->streamer-profile#follow" }} Follow
+        %button.follow-btn{data: { action: "click->streamer-profile#follow" }} Follow
     - else
-      %button{data: { action: "click->authentication#showModal" }} Follow
+      %button.follow-btn{data: { action: "click->authentication#showModal" }} Follow
