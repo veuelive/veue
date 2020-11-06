@@ -28,8 +28,20 @@ if (platform === "mac" && arch !== "x64") {
   process.exit(1);
 }
 
+let searchPath = __dirname
+console.error(searchPath)
+
+/**
+ * If we are in a packaged app, then the path is more complicated and we need to actually
+ * change directories.
+ */
+if(searchPath.endsWith("app.asar")) {
+  console.error(searchPath)
+  searchPath = path.resolve(searchPath, "..")
+}
+
 const ffmpegPath = path.join(
-  __dirname,
+  searchPath,
   "bin",
   platform,
   arch,

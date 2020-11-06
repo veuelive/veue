@@ -2,7 +2,7 @@
 import BrowserViewManager from "./BrowserViewManager.ts";
 import ffmpegPath from "../util/ffmpegPath";
 
-const { app, BrowserWindow, Menu, ipcMain, screen } = require("electron");
+const { app, BrowserWindow, Menu, ipcMain, screen, dialog } = require("electron");
 /// const {autoUpdater} = require('electron-updater');
 const { is } = require("electron-util");
 const unhandled = require("electron-unhandled");
@@ -10,6 +10,7 @@ const config = require("./config");
 const debug = require("electron-debug");
 const contextMenu = require("electron-context-menu");
 const menu = require("./menu");
+const logger = require('electron-timber');
 const { session } = require("electron");
 const child_process = require("child_process");
 let ffmpeg;
@@ -28,11 +29,11 @@ const environments = {
   },
 };
 
+const ENVIRONMENT = environments[process.env.ENVIRONMENT || "production"];
 
-
-const ENVIRONMENT = environments[process.env.ENVIRONMENT || "localhost"];
-
-unhandled();
+unhandled({
+  showDialog: true
+});
 debug();
 contextMenu();
 
@@ -134,6 +135,8 @@ ipcMain.on("stream", (event, data) => {
 
 ipcMain.handle("start", (_, data) => {
   const key = data.streamKey;
+
+  dialog.showErrorBox("Hello", ffmpegPath)
 
   const rtmpUrl = `rtmps://global-live.mux.com/app/${key}`;
   ffmpeg = child_process.spawn(ffmpegPath, [
