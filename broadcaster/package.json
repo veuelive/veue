@@ -24,7 +24,7 @@
     "electron-context-menu": "^0.15.0",
     "electron-debug": "^3.0.0",
     "electron-store": "^5.1.0",
-    "electron-unhandled": "^3.0.0",
+    "electron-unhandled": "^3.0.2",
     "electron-updater": "^4.0.6",
     "electron-util": "^0.13.0",
     "ts-loader": "^8.0.7",
@@ -50,6 +50,9 @@
   },
   "build": {
     "appId": "com.hamptoncatlin.veue",
+    "files": [
+      "!bin"
+    ],
     "mac": {
       "category": "public.app-category.social-networking",
       "darkModeSupport": false,
@@ -58,8 +61,8 @@
         "NSMicrophoneUsageDescription": "Please give us access to your microphone",
         "NSCameraUsageDescription": "Please give access to your webcam"
       },
-      "files": [
-        "!bin/win${/*}"
+      "extraResources": [
+        "bin/mac/**"
       ]
     },
     "dmg": {
