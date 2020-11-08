@@ -43,8 +43,11 @@ You should get an invite to Mux, and if you haven't, ask someone for one! Once y
 
 Once there, you should be able to "Add Environment" on the "Environments" page
 
-Put in your full name and select it as a "Development" environment. Once you have created it, go to settings
-and create an API Token.
+Put in your full name and select it as a "Development" environment. It
+will also ask you about `Video` and `Data`. Give yourself `Full Access`
+for Video, and leave the `Read` access for `Data` unchecked.
+
+Once you have created the Environment, go to settings and create an API Token.
 
 In your local copy of this repo, generate a file `config/application.yml` with the following properties:
 
@@ -57,18 +60,30 @@ This file will be ignored by git... and leave it that way. Take this secret to y
 
 ### 2. Postgres
 
+For Postgres installation, visit this page: https://www.postgresql.org/download/
+
 ### 3. Redis
+
+For Redis installation, visit this page: https://redis.io/topics/quickstart
 
 ### 4. Ruby, Rails & Database Setup
 
-Great, now let's setup the app & database. You will need
+First, lets pull in our dependencies:
+
+```bash
+bundle install && yarn install --check-files
+```
+
+Great, now let's setup the app & database. Run the following in your
+terminal:
 
 ```
 rake db:setup
 ```
 
-This will seed the database for you with a couple users. However, these users aren't streamers yet... we need
-to set them up to be streamers!
+This will create the database, migrate the database, and seed the
+database for you with a couple users. However, these users aren't
+streamers yet... we need to set them up to be streamers!
 
 Run the Rails server
 (from root of the project in a new shell)
@@ -122,7 +137,18 @@ NAME:
 as well as the basic `ngrok` help page.
 
 If you've got this you are now free to run `ngrok` anywhere while in your shell.
-(END OF ASIDE)
+
+Alternatively, you can install Ngrok as a global NPM package:
+
+```bash
+npm install -g ngrok --unsafe-perm
+
+# OR
+
+yarn global add ngrok
+```
+
+** END OF ASIDE **
 
 Back to development workflow, **after you have your local Rails server running**, open a terminal and do the following:
 
@@ -145,14 +171,25 @@ end of your ngrok tunnel.
 "Broadcaster" is the adorable name we give to the Electron.js app that we have for streamers. It's in the folder
 `broadcaster` (duh) and you can start it up with a quick `yarn start`.
 
-Look in `broadcaster/conig/main.js` for configuration.
+Look in `broadcaster/src/main.js` for environment configuration.
+
 Change the session key for 'localhost' to the same key that your browser generates for `_veue_session`. Do not edit the 'stage' setting.
+
+To find the key for `_veue_session`, open up your browser to the app
+`localhost:3000`, then go into the DevTools, navigate to `Storage`, and
+navigate to `cookies`. Here you will find the `_veue_session` cookie key
+/ value pair.
+
+@TODO: needs clarifying
+Look in broadcaster/conig/main.js for configuration. Change the session key for 'localhost' to the same key that your browser generates for \_veue_session. Do not edit the 'stage' setting. Node will pick up the stage from the session key established in your browser.
+@ENDTODO
+
 Node will pick up the stage from the session key established in your browser.
 
 Then, from root of the project in a new shell
 
 ```
-cd braodcaster/
+cd broadcaster/
 yarn install
 yarn start
 ```
@@ -179,7 +216,8 @@ sidekiq
 ```
 
 Sidekiq is using Redis. In case your Redis instance might be clogged up with Sidekiq jobs from other Rails apps (that you may perhaps also be developing at localhost), use `redis-cli FLUSHALL` to clear out the contents of your Redis cache.
->>>>>>> small fixes to README for new dev
+
+> > > > > > > small fixes to README for new dev
 
 ### Putting it all together...
 
