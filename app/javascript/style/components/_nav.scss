@@ -90,7 +90,7 @@
     }
   }
 
-  @include mobile() {
+  @include mobilePortrait() {
     .user-auth-area {
       display: none;
     }

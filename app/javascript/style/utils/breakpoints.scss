@@ -1,5 +1,19 @@
-@mixin mobile {
-  @media only screen and (max-width: 650px) {
+$mobile-max-width: 650px;
+
+@mixin mobilePortrait {
+  @media only screen and (max-width: $mobile-max-width) and (orientation: portrait) {
+    @content;
+  }
+}
+
+@mixin mobileLandscape {
+  @media only screen and (max-height: $mobile-max-width) and (orientation: landscape) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media only screen and (min-width: $mobile-max-width) {
     @content;
   }
 }

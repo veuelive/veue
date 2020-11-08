@@ -5,7 +5,7 @@ body#videos__show {
   Put any main responsive layout code for ONLY desktop here... this does not count elements that scale to their
   surroundings
    */
-  @media (min-width: 1020px) {
+  @include desktop() {
     .content-area {
       flex-direction: row;
       display: flex;
@@ -43,9 +43,9 @@ body#videos__show {
   }
 
   /**
-    This is the primary Video layout for mobile views
+    This is the primary Video layout for portrait mobile views
      */
-  @media (max-width: 1020px) {
+  @include mobilePortrait() {
     #layout-container {
       height: -webkit-fill-available;
     }
@@ -79,10 +79,56 @@ body#videos__show {
       }
     }
   }
-}
 
-@include mobile() {
-  #streamer-profile-area {
-    height: 50px;
+  @include mobileLandscape() {
+    width: 100vw;
+
+    .content-area {
+      flex-direction: row;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .content-area,
+    #layout-container {
+      height: -webkit-fill-available;
+      width: 100vw;
+    }
+
+    .content-area__primary {
+      padding-left: env(safe-area-inset-left);
+      flex: 1;
+
+      .primary-video-area,
+      canvas {
+        height: -webkit-fill-available;
+      }
+    }
+
+    .content-area__secondary {
+      padding: env(safe-area-inset-top) calc(env(safe-area-inset-right) * 0.75)
+        0 1vw;
+      background: white;
+      max-width: 20vw;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top-navbar,
+    .primary-video__header {
+      display: none;
+    }
+
+    .message-display {
+      font-size: 0.75rem;
+    }
+
+    .streamer-profile {
+      display: none;
+    }
+
+    canvas.pip-secondary-canvas {
+      display: none;
+    }
   }
 }

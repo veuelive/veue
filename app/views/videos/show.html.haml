@@ -23,7 +23,6 @@
       = render partial: 'videos/partials/player_buttons'
     #streamer-profile-area
       = render partial: "videos/partials/streamer_profile"
-    = render partial: 'videos/partials/pins_area'
   .content-area__secondary
     %canvas.fixed-secondary-canvas{"data-target": "audience-view.fixedSecondaryCanvas", width: 420, height: 340}
     %video.player__video.viewer{"data-target" => "audience-view.video", crossorigin: "anonymous", src: current_video.hls_url, style: "width: 0px;", playsinline: "playsinline"}
