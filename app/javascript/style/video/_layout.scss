@@ -46,10 +46,13 @@ body#videos__show {
     This is the primary Video layout for mobile views
      */
   @media (max-width: 1020px) {
+    #layout-container {
+      height: -webkit-fill-available;
+    }
+
     .content-area {
       flex-direction: column;
       align-items: center;
-      height: 93vh;
     }
 
     .content-area__primary,
