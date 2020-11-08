@@ -1,26 +1,13 @@
 import { postForm } from "util/fetch";
-import BaseController from "./base_controller";
+import { Controller } from "stimulus";
 import { currentUserId } from "controllers/authentication_controller";
 import { getCurrentVideoId } from "helpers/event/live_event_manager";
 
-export default class extends BaseController {
+export default class extends Controller {
   static targets = ["lastMessage", "messageInput"];
 
-  connect(): void {
-    this.showOrHideBasedOnLogin();
-    this.subscribeToAuthChange();
-  }
-
-  authChanged(): void {
-    this.showOrHideBasedOnLogin();
-  }
-
   private showOrHideBasedOnLogin() {
-    if (currentUserId() === undefined) {
-      this.element.setAttribute("style", "display: none;");
-    } else {
-      this.element.setAttribute("style", "display: block;");
-    }
+    (this.element as HTMLElement).hidden = currentUserId() === undefined;
   }
 
   chatBoxKeyDown(event: KeyboardEvent): void {

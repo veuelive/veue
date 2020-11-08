@@ -59,8 +59,11 @@ describe "Live Audience View" do
       visit video_path(video)
     end
 
-    it "should not allow you to chat" do
+    it "should not allow you to chat until you login" do
       expect(page).not_to(have_selector(".message-write"))
+      login_as user
+      write_chat_message "Who ordered a pizza?"
+      expect(page).to have_content("Who ordered a pizza?")
     end
 
     it "should show messages from other users" do
