@@ -2,10 +2,8 @@
   .messages-overflow-container{"data-simplebar": true}
     .messages{data: {controller: "chat-messages"}}
   - unless video.finished?
-    - if current_user
-      .message-write{data: { "controller": "chat" }}
-        .write-area
-          = text_area_tag :body, "", class: 'write-area__text w-full outline-none', name: "message-input", placeholder: 'Write your message...', data: { action: "keydown->chat#chatBoxKeyDown" }
-    - else
-      .message-login-prompt
-        %button{data: {action: "authentication#showModal"}} Login To Chat
+    .message-write{data: { "controller": "chat", "show-when-logged-in": true }}
+      .write-area
+        = text_area_tag :body, "", class: 'write-area__text w-full outline-none', name: "message-input", placeholder: 'Write your message...', data: { action: "keydown->chat#chatBoxKeyDown" }
+    .message-login-prompt{data: { "show-when-logged-in": false }}
+      %button{data: {action: "authentication#showModal"}} Login To Chat
