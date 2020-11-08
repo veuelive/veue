@@ -2,7 +2,14 @@
 import BrowserViewManager from "./BrowserViewManager.ts";
 import ffmpegPath from "../util/ffmpegPath";
 
-const { app, BrowserWindow, Menu, ipcMain, screen, dialog } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  Menu,
+  ipcMain,
+  screen,
+  dialog,
+} = require("electron");
 /// const {autoUpdater} = require('electron-updater');
 const { is } = require("electron-util");
 const unhandled = require("electron-unhandled");
@@ -10,7 +17,6 @@ const config = require("./config");
 const debug = require("electron-debug");
 const contextMenu = require("electron-context-menu");
 const menu = require("./menu");
-const logger = require('electron-timber');
 const { session } = require("electron");
 const child_process = require("child_process");
 let ffmpeg;
@@ -23,7 +29,7 @@ const environments = {
   stage: {
     hostname: "https://beta.veuelive.com",
     auth: "tlhd",
-    },
+  },
   localhost: {
     hostname: "http://localhost:3000",
   },
@@ -32,7 +38,7 @@ const environments = {
 const ENVIRONMENT = environments[process.env.ENVIRONMENT || "production"];
 
 unhandled({
-  showDialog: true
+  showDialog: true,
 });
 debug();
 contextMenu();
@@ -86,7 +92,7 @@ const createMainWindow = async () => {
 
   mainWindow
     .loadURL(ENVIRONMENT["hostname"] + "/broadcasts/startup", {
-      extraHeaders: "X-Bearer-Token: " + (config.get("sessionToken") || "")
+      extraHeaders: "X-Bearer-Token: " + (config.get("sessionToken") || ""),
     })
     .then(() => console.log("loaded"));
 
@@ -120,7 +126,7 @@ ipcMain.on("wakeup", (event, data) => {
 
 ipcMain.on("load_browser_view", (event, sessionToken) => {
   new BrowserViewManager(mainWindow, bounds);
-  config.set("sessionToken", sessionToken)
+  config.set("sessionToken", sessionToken);
 });
 
 ipcMain.on("stream", (event, data) => {
@@ -136,7 +142,7 @@ ipcMain.on("stream", (event, data) => {
 ipcMain.handle("start", (_, data) => {
   const key = data.streamKey;
 
-  dialog.showErrorBox("Hello", ffmpegPath)
+  // dialog.showErrorBox("Hello", ffmpegPath);
 
   const rtmpUrl = `rtmps://global-live.mux.com/app/${key}`;
   ffmpeg = child_process.spawn(ffmpegPath, [
