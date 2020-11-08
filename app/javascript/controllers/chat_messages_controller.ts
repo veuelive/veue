@@ -51,7 +51,7 @@ export default class ChatMessagesController extends BaseController {
       html = `
         <div class="message-left">
           <div class="user-avatar">
-            <img src=${userSvg} class="rounded h-2 w-2"/>
+            <img src=${userSvg} class="rounded"/>
           </div>
           <div class="message-content">
             <div class="message-content__name">
@@ -66,7 +66,11 @@ export default class ChatMessagesController extends BaseController {
     }
 
     this.element.insertAdjacentHTML("beforeend", html);
-    this.element.lastElementChild.scrollIntoView();
+    this.element.lastElementChild.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "start",
+    });
     this.lastMessageFromUserId = message.userId;
   }
 }
