@@ -180,8 +180,10 @@ To find the key for `_veue_session`, open up your browser to the app
 navigate to `cookies`. Here you will find the `_veue_session` cookie key
 / value pair.
 
-@TODO: needs clarifying
+@TODO: needs clarifying, `broadcast/config/main.js` does not exist.
+
 Look in broadcaster/conig/main.js for configuration. Change the session key for 'localhost' to the same key that your browser generates for \_veue_session. Do not edit the 'stage' setting. Node will pick up the stage from the session key established in your browser.
+
 @ENDTODO
 
 Node will pick up the stage from the session key established in your browser.
