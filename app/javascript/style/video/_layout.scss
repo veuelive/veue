@@ -89,12 +89,6 @@ body#videos__show {
       justify-content: flex-end;
     }
 
-    .content-area,
-    #layout-container {
-      height: -webkit-fill-available;
-      width: 100vw;
-    }
-
     .content-area__primary {
       padding-left: env(safe-area-inset-left);
       flex: 1;
