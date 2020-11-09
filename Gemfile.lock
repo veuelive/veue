@@ -230,7 +230,7 @@ GEM
     mux_ruby (1.5.1)
       json (~> 2.1, >= 2.1.0)
       typhoeus (~> 1.0, >= 1.0.1)
-    nio4r (2.5.3)
+    nio4r (2.5.4)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
     nokogiri (1.10.10-x64-mingw32)
@@ -245,7 +245,7 @@ GEM
       activerecord (>= 5.2.1)
     posix-spawn (0.3.15)
     public_suffix (4.0.5)
-    puma (4.3.5)
+    puma (4.3.6)
       nio4r (~> 2.0)
     rack (2.2.3)
     rack-proxy (0.6.5)
@@ -438,7 +438,7 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   phone
   posix-spawn
-  puma (~> 4.1)
+  puma (~> 4.3)
   rails (~> 6.0.3, >= 6.0.3.2)
   rails-controller-testing
   redis
