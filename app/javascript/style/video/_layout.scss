@@ -102,6 +102,7 @@ body#videos__show {
       .primary-video-area,
       canvas {
         height: -webkit-fill-available;
+        width: unset;
       }
     }
 
