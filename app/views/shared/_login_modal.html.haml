@@ -21,7 +21,7 @@
         - elsif @ula.pending_confirmation?
           .form-row Enter the code we just texted you below!
           .form-row
-            %input{type: "text", name: "secret_code"}
+            %input{type: "text", name: "secret_code", autocomplete: "one-time-code"}
             .form-item
               %input{type: 'hidden', name: "session_token_uuid", value: @ula.uuid}
           .form-row
