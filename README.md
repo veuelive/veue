@@ -52,6 +52,8 @@ Once you have created the Environment, go to settings and create an API Token.
 In your local copy of this repo, generate a file `config/application.yml` with the following properties:
 
 ```yaml
+# config/application.yml
+
 MUX_TOKEN_ID: #{YOURTOKEN}
 MUX_TOKEN_SECRET: #{YOURSECRET}
 ```
