@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-ruby "2.7.1"
+ruby "2.7.2"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "rails", "~> 6.0.3", ">= 6.0.3.2"
@@ -79,6 +79,9 @@ gem "aws-sdk-s3", require: false
 # for native Enum support in postgres
 gem "activerecord-pg_enum"
 
+# For Windows users, this is required
+gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw]
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
@@ -100,6 +103,9 @@ group :development, :test do
 
   # Used for integrating with FFMPEG for RTMP test feeds
   gem "posix-spawn"
+
+  # Recommended for development and test in Windows.
+  gem "wdm", ">= 0.1.0", platforms: %i[mingw mswin x64_mingw]
 end
 
 group :development do
