@@ -29,7 +29,9 @@ describe "Broadcast View" do
 
     expect(page).to have_css("div[data-broadcast-state='live']")
 
-    expect(page).to have_content("00:00:01")
+    expect(page).to have_content("Stop Broadcast")
+
+    find("div[data-broadcast-started-at]")
 
     expect(Video.last.started_at_ms).to_not be_nil
 
@@ -59,11 +61,13 @@ describe "Broadcast View" do
   describe "while live streaming" do
     before :each do
       click_button("Start Broadcast")
+      # For most of these, it's important we wait until we are actually "live"
+      # and things like the WS connection are open
+      find("*[data-broadcast-state='live']")
     end
 
     describe "navigation events" do
       it "should have an initial navigation event" do
-        find("*[data-broadcast-state='live']")
         expect(video.browser_navigations).to be_any
 
         visit video_path(video)
