@@ -14,7 +14,7 @@ export default class extends BaseController {
   connect(): void {
     this.modalTarget.hidden = true;
     this.attachPhoneNumberField();
-    this.showOrHideBasedOnLogin();
+    this.showOrHideElementsBasedOnLogin();
   }
 
   /**
@@ -76,7 +76,7 @@ export default class extends BaseController {
         topNav.outerHTML = html;
       }
       this.emitAuthChange();
-      this.showOrHideBasedOnLogin(true);
+      this.showOrHideElementsBasedOnLogin();
       this.modalTarget.style.display = "none";
     } else if (response.status == 200) {
       // Need to show the modal again
@@ -86,7 +86,8 @@ export default class extends BaseController {
     }
   }
 
-  private showOrHideBasedOnLogin(loggedIn = !!currentUserId()): void {
+  private showOrHideElementsBasedOnLogin(): void {
+    const loggedIn = !!currentUserId();
     document
       .querySelectorAll("*[data-show-when-logged-in]")
       .forEach((element: HTMLElement) => {
