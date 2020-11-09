@@ -51,7 +51,7 @@ Once you have created the Environment, go to settings and create an API Token.
 
 In your local copy of this repo, generate a file `config/application.yml` with the following properties:
 
-```
+```yaml
 MUX_TOKEN_ID: #{YOURTOKEN}
 MUX_TOKEN_SECRET: #{YOURSECRET}
 ```
@@ -77,7 +77,7 @@ bundle install && yarn install --check-files
 Great, now let's setup the app & database. Run the following in your
 terminal:
 
-```
+```bash
 rake db:setup
 ```
 
@@ -87,6 +87,7 @@ streamers yet... we need to set them up to be streamers!
 
 Run the Rails server
 (from root of the project in a new shell)
+
 `rails s`
 
 ### 5. Webhook With Ngrok Setup
@@ -114,20 +115,20 @@ If you use either Bash or Zsh for your shell -- and you should know which you us
 
 Replace 'jason' with your account name. Or wherever you'd to store the `ngrok` file. Reload the shell and test with
 
-```
+```bash
 $ which ngrok
 ```
 
 If NOT successful, you will see NO OUTPUT.
 If successful, you should see the path to the ngrok file.
 
-```
+```bash
 /Users/jason/.bin/ngrok
 ```
 
 As well, when you run `ngrok` on its own you will see
 
-```
+```bash
 $ ngrok
 NAME:
    ngrok - tunnel local ports to public URLs and inspect traffic
@@ -152,7 +153,7 @@ yarn global add ngrok
 
 Back to development workflow, **after you have your local Rails server running**, open a terminal and do the following:
 
-```
+```bash
 $> ngrok http 3000
 ```
 
@@ -171,26 +172,9 @@ end of your ngrok tunnel.
 "Broadcaster" is the adorable name we give to the Electron.js app that we have for streamers. It's in the folder
 `broadcaster` (duh) and you can start it up with a quick `yarn start`.
 
-Look in `broadcaster/src/main.js` for environment configuration.
+From root of the project in a new shell
 
-Change the session key for 'localhost' to the same key that your browser generates for `_veue_session`. Do not edit the 'stage' setting.
-
-To find the key for `_veue_session`, open up your browser to the app
-`localhost:3000`, then go into the DevTools, navigate to `Storage`, and
-navigate to `cookies`. Here you will find the `_veue_session` cookie key
-/ value pair.
-
-@TODO: needs clarifying, `broadcast/config/main.js` does not exist.
-
-Look in broadcaster/conig/main.js for configuration. Change the session key for 'localhost' to the same key that your browser generates for \_veue_session. Do not edit the 'stage' setting. Node will pick up the stage from the session key established in your browser.
-
-@ENDTODO
-
-Node will pick up the stage from the session key established in your browser.
-
-Then, from root of the project in a new shell
-
-```
+```bash
 cd broadcaster/
 yarn install
 yarn start
@@ -203,7 +187,7 @@ An Electron app will launch. By default, the app opens with the Chrome debugging
 To speed up development of TS files
 (from root of the project in a new shell)
 
-```
+```bash
 ./bin/webpack-dev-server
 ```
 
@@ -213,13 +197,11 @@ To run background jobs
 (from root of the project in a new shell)
 run
 
-```
+```bash
 sidekiq
 ```
 
 Sidekiq is using Redis. In case your Redis instance might be clogged up with Sidekiq jobs from other Rails apps (that you may perhaps also be developing at localhost), use `redis-cli FLUSHALL` to clear out the contents of your Redis cache.
-
-> > > > > > > small fixes to README for new dev
 
 ### Putting it all together...
 
@@ -244,13 +226,13 @@ http://localhost:3000/videos
 
 If you get a crash when running `gem install puma -v '4.3.5' --source 'https://rubygems.org/'`, this strange Puma build error has been reported on macOS Catalina and Big Sur
 
-```
+```bash
 puma_http11.c:203:22: error: implicitly declaring library function 'isspace' with type 'int (int)' [-Werror,-Wimplicit-function-declaration]
 ```
 
 to fix run
 
-```
+```bash
 gem install puma:4.3.5 -- --with-cflags="-Wno-error=implicit-function-declaration"
 ```
 
