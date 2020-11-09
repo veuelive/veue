@@ -270,6 +270,10 @@ MuxRuby::UnauthorizedError in BroadcastsController
 
 ### TEST SUITE
 
+To run the test suite simply run:
+
+`rails spec`
+
 Decorator Specs
 
 Factories with FactoryBot
