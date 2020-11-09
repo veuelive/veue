@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_02_232222) do
+ActiveRecord::Schema.define(version: 2020_11_09_154733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -166,7 +166,7 @@ ActiveRecord::Schema.define(version: 2020_11_02_232222) do
     t.bigint "started_at_ms"
     t.integer "active_viewers", default: 0
     t.integer "video_views_count"
-    t.enum "visibility", as: "visibility_setting"
+    t.enum "visibility", default: "public", as: "visibility_setting"
     t.index ["mux_asset_id"], name: "index_videos_on_mux_asset_id"
     t.index ["mux_live_stream_id"], name: "index_videos_on_mux_live_stream_id"
     t.index ["state"], name: "index_videos_on_state"
