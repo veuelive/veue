@@ -6,7 +6,7 @@ require_relative("../support/audience_spec_helpers")
 # Note: These tests are trying to test a sequence that doesn't NORMALLY happen just
 # within the rails app. This has to be combined with the real Electron App to get full / perfect results.
 describe "Broadcast View" do
-  let(:user) { create(:streamer) }
+  let(:user) { create(:user) }
   let(:video) { user.videos.active.first }
 
   before :example do
