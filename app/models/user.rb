@@ -41,7 +41,9 @@ class User < ApplicationRecord
   end
 
   def active_video!
-    videos.active.first || create_new_broadcast!
+    return create_new_broadcast! if active_video.blank? || active_video.live?
+
+    active_video
   end
 
   def create_new_broadcast!
