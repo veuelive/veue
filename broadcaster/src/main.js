@@ -38,12 +38,11 @@ const environments = {
 };
 
 const ENVIRONMENT = environments[process.env.ENVIRONMENT || "production"];
-debug();
 
 unhandled({
   showDialog: true,
 });
-
+debug();
 contextMenu();
 
 app.setAppUserModelId("com.veue.deskie");
