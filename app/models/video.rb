@@ -36,6 +36,9 @@ class Video < ApplicationRecord
     # Despite the name, normally this comes from a "recording" event coming from Mux
     state :live
 
+    # The stream is ending but playback Id is not changed yet!
+    state :ended
+
     # The stream is over, but we might not be ready to do replay yet
     state :finished
 
@@ -53,8 +56,12 @@ class Video < ApplicationRecord
       transitions from: :starting, to: :live
     end
 
+    event :end do
+      transitions from: :live, to: :ended
+    end
+
     event :finish do
-      transitions from: %i[live paused pending], to: :finished
+      transitions from: %i[live paused pending ended], to: :finished
     end
   end
 
