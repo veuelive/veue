@@ -174,6 +174,23 @@ end of your ngrok tunnel.
 "Broadcaster" is the adorable name we give to the Electron.js app that we have for streamers. It's in the folder
 `broadcaster` (duh) and you can start it up with a quick `yarn start`.
 
+Start a Rails instance, launch Chrome. Go to Chrome dev tools > Application > Cookies
+
+Choose either 127.0.0.1:3000 or localhost:3000 (depending on how you access your app in your browser).
+
+Look for a cookie named `_veue_session`
+
+Copy & paste the VALUE of this cookie into main.js file; inside of the `const environment` variable you will find:
+
+```
+localhost: {
+    hostname: "http://localhost:3000",
+    auth: "", // your _veue_session here
+  },
+```
+
+Paste the value from your browser here.
+
 From root of the project in a new shell
 
 ```bash
@@ -250,7 +267,7 @@ If when running `yarn start`, you see this error, you are booting into the Produ
 
 TO FIX: You must reverse engineer the session from your browser.
 
-see deskie.js line 22 environments
+see main.js auth
 be sure to change the session key for localhost (not 'stage') to the one you retrieve from your browser (see step #6).
 
 ```

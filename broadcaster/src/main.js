@@ -33,7 +33,7 @@ const environments = {
   },
   localhost: {
     hostname: "http://localhost:3000",
-    auth: "", // your _veue_session_id here
+    auth: "", // your _veue_session here
   },
 };
 
