@@ -4,6 +4,7 @@ class BroadcastsController < ApplicationController
   before_action :authenticate_user!, except: :startup
 
   def index
+    current_user.setup_as_streamer!
     redirect_to(broadcast_path(current_user.active_video!))
   end
 
