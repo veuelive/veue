@@ -27,7 +27,7 @@ const environments = {
   production: {
     hostname: "https://www.veuelive.com",
   },
-  age: {
+  stage: {
     hostname: "https://beta.veuelive.com",
     auth: "tlhd",
   },
