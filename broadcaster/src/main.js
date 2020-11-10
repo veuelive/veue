@@ -9,6 +9,7 @@ const {
   ipcMain,
   screen,
   dialog,
+  powerSaveBlocker,
 } = require("electron");
 /// const {autoUpdater} = require('electron-updater');
 const { is } = require("electron-util");
@@ -65,6 +66,12 @@ let windowSize = {
 };
 let randomName = Math.random().toString(36).substring(7);
 
+// power-save-blocker
+// for more info see https://www.electronjs.org/docs/api/power-save-blocker
+const psb_id = powerSaveBlocker.start("prevent-app-suspension");
+console.log(`POWER SAVE BLOCKER ${powerSaveBlocker.isStarted(psb_id)}`); // interestingly this logs to STDOUT in the running Node (electron) app
+
+// Create the Main window
 const createMainWindow = async () => {
   mainWindow = new BrowserWindow({
     title: randomName,

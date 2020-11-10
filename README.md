@@ -250,7 +250,7 @@ If when running `yarn start`, you see this error, you are booting into the Produ
 
 TO FIX: You must reverse engineer the session from your browser.
 
-see deskie.js line 22 environments
+see main.js auth
 be sure to change the session key for localhost (not 'stage') to the one you retrieve from your browser (see step #6).
 
 ```
