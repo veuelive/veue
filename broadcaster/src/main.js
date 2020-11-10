@@ -33,12 +33,12 @@ const environments = {
   },
   localhost: {
     hostname: "http://localhost:3000",
-    auth:
-      "rMOYXFjJbiEVDg%2BiY4d490MlM6vGaYilFpyYJuVsgB3dm4M%2B%2Fns45zbyL4h3E54Ajcq8Xpm0jmHeZKjgX6e6EwQ%2Byz%2FgEeLMJySuNE5bSL%2BFlKw7P57CAL35tyM2xnnWEGZPEEIs5e2kUpMsyZmPb1E%2FW7XoPL6YK9zSJOb2o9Jpt7NpLZu5qmqLCuFrzwI%2Fdh%2Fthz1%2FjxMAIfCjDcQan9wfzbBSVwerlPheFlZjhlCt7ezHDS4EtjyEV2OO3KSCE3UkaizLSrLaEXCPPei0VU%2BKulUtfIyPa6MLStkwVtisThNx3h2sYNCuevjIpZYg0SYCIX2XOzEGguNvx2UZHfxjUOarhdO%2BKCOLEYHJRDNh3bldxVSki9EkHIZLPpznqKH1Cnk%3D--XcnaJJl3j9ikFJk%2B--mHnfD6RU2yKfEaCJKJNvWQ%3D%3D",
+    auth: "", // your _veue_session_id here
   },
 };
 
 const ENVIRONMENT = environments[process.env.ENVIRONMENT || "production"];
+debug();
 
 unhandled({
   showDialog: true,
