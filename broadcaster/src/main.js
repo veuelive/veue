@@ -9,6 +9,7 @@ const {
   ipcMain,
   screen,
   dialog,
+  powerSaveBlocker,
 } = require("electron");
 /// const {autoUpdater} = require('electron-updater');
 const { is } = require("electron-util");
@@ -26,12 +27,14 @@ const environments = {
   production: {
     hostname: "https://www.veuelive.com",
   },
-  stage: {
+  age: {
     hostname: "https://beta.veuelive.com",
     auth: "tlhd",
   },
   localhost: {
     hostname: "http://localhost:3000",
+    auth:
+      "rMOYXFjJbiEVDg%2BiY4d490MlM6vGaYilFpyYJuVsgB3dm4M%2B%2Fns45zbyL4h3E54Ajcq8Xpm0jmHeZKjgX6e6EwQ%2Byz%2FgEeLMJySuNE5bSL%2BFlKw7P57CAL35tyM2xnnWEGZPEEIs5e2kUpMsyZmPb1E%2FW7XoPL6YK9zSJOb2o9Jpt7NpLZu5qmqLCuFrzwI%2Fdh%2Fthz1%2FjxMAIfCjDcQan9wfzbBSVwerlPheFlZjhlCt7ezHDS4EtjyEV2OO3KSCE3UkaizLSrLaEXCPPei0VU%2BKulUtfIyPa6MLStkwVtisThNx3h2sYNCuevjIpZYg0SYCIX2XOzEGguNvx2UZHfxjUOarhdO%2BKCOLEYHJRDNh3bldxVSki9EkHIZLPpznqKH1Cnk%3D--XcnaJJl3j9ikFJk%2B--mHnfD6RU2yKfEaCJKJNvWQ%3D%3D",
   },
 };
 
@@ -40,7 +43,7 @@ const ENVIRONMENT = environments[process.env.ENVIRONMENT || "production"];
 unhandled({
   showDialog: true,
 });
-debug();
+
 contextMenu();
 
 app.setAppUserModelId("com.veue.deskie");
@@ -65,6 +68,12 @@ let windowSize = {
 };
 let randomName = Math.random().toString(36).substring(7);
 
+// power-save-blocker
+// for more info see https://www.electronjs.org/docs/api/power-save-blocker
+const psb_id = powerSaveBlocker.start("prevent-app-suspension");
+console.log(`POWER SAVE BLOCKER ${powerSaveBlocker.isStarted(psb_id)}`); // interestingly this logs to STDOUT in the running Node (electron) app
+
+// Create the Main window
 const createMainWindow = async () => {
   mainWindow = new BrowserWindow({
     title: randomName,
