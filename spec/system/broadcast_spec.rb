@@ -60,6 +60,14 @@ describe "Broadcast View" do
       click_button("Start Broadcast")
     end
 
+    describe "reload page" do
+      it "should load with new video" do
+        # Refreshing view while broadcasting live video
+        page.refresh
+        expect(find("#broadcast")["data-broadcast-video-state"]).to eq("pending")
+      end
+    end
+
     describe "navigation events" do
       it "should have an initial navigation event" do
         find("*[data-broadcast-state='live']")

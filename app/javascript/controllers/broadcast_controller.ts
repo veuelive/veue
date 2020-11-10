@@ -30,7 +30,9 @@ export default class extends Controller {
   private eventManager: EventManagerInterface;
 
   connect(): void {
-    if (this.data.get("video-state") == "finished") {
+    const currentVideoState = this.data.get("video-state");
+
+    if (["live", "finished"].includes(currentVideoState)) {
       document.location.href = "/broadcasts";
     }
 
