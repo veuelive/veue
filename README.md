@@ -283,3 +283,30 @@ Factories with FactoryBot
 Unit specs (see `models/`)
 
 System specs
+
+### Adding data to the Database in development
+
+In order to add data to the database, you must have a `.sql` or `.psql`
+text file. You may even receive a file in `.sql.gz` or `.psql.gz` format
+which just means its gzipped. If your on Mac or Linux here are the
+following steps you need to take, assuming your database is all setup
+and migrated.
+
+1. Download the file to your local system.
+
+2. Copy the file into the `tmp` directory, IE:
+
+`cp ~/Downloads/database_stuff.sql.gz tmp/database_info.sql.gz`
+
+3. Ungzip the file, this will strip the `.gz` extension.
+
+`gzip -d tmp/database_info.sql.gz`
+
+4. Restore via `psql` in the terminal.
+
+```bash
+        # DB name            DB_FILE
+psql veue_development < tmp/database_info.sql
+```
+
+And you should be setup and ready to go!
