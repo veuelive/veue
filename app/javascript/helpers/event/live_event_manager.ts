@@ -11,6 +11,7 @@ export default class LiveEventManager implements EventManagerInterface {
     subscribeViewersChannel();
 
     const videoId = getCurrentVideoId();
+    console.log("subscribing", videoId);
     this.subscription = consumer.subscriptions.create(
       {
         channel: "LiveVideoChannel",

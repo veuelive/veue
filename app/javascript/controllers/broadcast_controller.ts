@@ -53,18 +53,18 @@ export default class extends Controller {
         dimensions: Rectangle,
         workArea: Rectangle,
         windowSize: Rectangle,
-        windowTitle: string
+        windowTitle: string,
+        scaleFactor: number
       ) => {
         const broadcastArea = calculateBroadcastArea(
           dimensions,
           workArea,
-          windowSize
+          scaleFactor
         );
 
-        await this.mixer.startWebcamCapture();
-        this.mixer.startBrowserCapture(windowTitle, broadcastArea).then(() => {
-          this.state = "ready";
-        });
+        await this.mixer.startBrowserCapture(windowTitle, broadcastArea);
+
+        this.state = "ready";
       }
     );
 

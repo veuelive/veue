@@ -22,6 +22,7 @@ export default class VideoMixer {
     this.canvas.setAttribute("id", "debug_canvas");
     this.canvas.setAttribute("width", Sizes.fullCanvas.width.toString());
     this.canvas.setAttribute("height", Sizes.fullCanvas.height.toString());
+    document.querySelector(".debug-area").appendChild(this.canvas);
     if (this.canvas) {
       this.canvasContext = this.canvas.getContext("2d");
     }
@@ -35,7 +36,9 @@ export default class VideoMixer {
       }
     );
 
-    this.computeFrame();
+    this.startWebcamCapture().then(() => {
+      this.computeFrame();
+    });
   }
 
   public async startWebcamCapture(
@@ -54,7 +57,7 @@ export default class VideoMixer {
     });
     this.deviceId = mediaStream.getVideoTracks()[0].getSettings().deviceId;
     this.webcamVideoElement.srcObject = mediaStream;
-    this.webcamVideoElement.load();
+    // this.webcamVideoElement.load();
     this.webcamVideoElement.muted = true;
     return this.webcamVideoElement.play();
   }
@@ -155,6 +158,7 @@ export default class VideoMixer {
     );
 
     if (this.browserDimensions) {
+      // console.log(this.browserDimensions);
       this.canvasContext.drawImage(
         this.browserVideoElement,
         this.browserDimensions.x,
