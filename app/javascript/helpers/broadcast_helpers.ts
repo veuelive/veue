@@ -9,16 +9,13 @@ export function getBroadcastElement(): HTMLElement {
 export function calculateBroadcastArea(
   dimensions: Rectangle,
   workArea: Rectangle,
-  windowSize: Rectangle
+  scaleFactor: number
 ): Rectangle {
-  const yRatio = workArea.height / windowSize.height;
-  const xRatio = workArea.width / windowSize.width;
-
   return {
-    height: (dimensions.height - dimensions.x) * yRatio,
-    width: (dimensions.width - dimensions.x) * yRatio,
-    x: dimensions.x * xRatio,
-    y: (dimensions.y + workArea.y) * yRatio,
+    height: (dimensions.height - dimensions.x) * scaleFactor,
+    width: (dimensions.width - dimensions.x) * scaleFactor,
+    x: dimensions.x * scaleFactor,
+    y: (dimensions.y + workArea.y) * scaleFactor,
   };
 }
 

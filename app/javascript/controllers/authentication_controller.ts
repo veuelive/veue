@@ -88,10 +88,25 @@ export default class extends BaseController {
 
   private showOrHideElementsBasedOnLogin(): void {
     const loggedIn = !!currentUserId();
+    console.log("logged in ", loggedIn);
+    // For some reason, in Electron specifically, the element.hidden property was having no effect
     document
       .querySelectorAll("*[data-show-when-logged-in]")
       .forEach((element: HTMLElement) => {
-        element.hidden = !loggedIn;
+        if (!loggedIn) {
+          element.setAttribute("style", "display: none;");
+        } else {
+          element.setAttribute("style", "display: block;");
+        }
+      });
+    document
+      .querySelectorAll("*[data-show-when-logged-out]")
+      .forEach((element: HTMLElement) => {
+        if (loggedIn) {
+          element.setAttribute("style", "display: none;");
+        } else {
+          element.setAttribute("style", "display: block;");
+        }
       });
   }
 }

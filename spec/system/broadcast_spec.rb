@@ -97,6 +97,9 @@ describe "Broadcast View" do
         write_chat_message "Cowabunga!"
         expect(page).to have_content("Cowabunga!").once
         expect(video.chat_messages.count).to be(1)
+
+        write_chat_message "Pizza time!"
+        expect(page).to have_content("Pizza time!").once
       end
     end
   end

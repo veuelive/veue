@@ -44,6 +44,16 @@ textarea {
         height: 180px;
       }
 
+      .debug-area {
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        canvas {
+          width: 99%;
+          border: 1px solid red;
+        }
+      }
+
       .broadcast-commands {
         display: flex;
         flex-direction: row;
@@ -57,6 +67,7 @@ textarea {
           }
 
           .select-menu {
+            z-index: 2;
             position: absolute;
             top: 25px;
             left: 5px;

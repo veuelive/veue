@@ -1,6 +1,7 @@
 "use strict";
 import BrowserViewManager from "./BrowserViewManager.ts";
 import ffmpegPath from "../util/ffmpegPath";
+import logger from "./logger";
 
 const {
   app,
@@ -21,6 +22,12 @@ const { session } = require("electron");
 const child_process = require("child_process");
 let ffmpeg;
 let browserView;
+
+app.getAppPath();
+
+function log(log) {
+  console.log(log);
+}
 
 const environments = {
   production: {
@@ -61,7 +68,7 @@ let mainWindow;
 let bounds = { x: 10, y: 80, width: 900, height: 570 };
 let windowSize = {
   width: 1241,
-  height: 823,
+  height: 660,
 };
 let randomName = Math.random().toString(36).substring(7);
 
@@ -79,15 +86,6 @@ const createMainWindow = async () => {
     webPreferences: {
       nodeIntegration: true,
     },
-  });
-
-  app.on("login", (event, webContents, request, authInfo, callback) => {
-    event.preventDefault();
-    // popup a dialog to let the user enter a username/password
-    // ...
-    if (ENVIRONMENT["auth"]) {
-      callback("", ENVIRONMENT["auth"]);
-    }
   });
 
   mainWindow
@@ -120,7 +118,8 @@ ipcMain.on("wakeup", (event, data) => {
     bounds,
     screen.getPrimaryDisplay().workArea,
     windowSize,
-    randomName
+    randomName,
+    screen.getPrimaryDisplay().scaleFactor
   );
 });
 
@@ -131,10 +130,10 @@ ipcMain.on("load_browser_view", (event, sessionToken) => {
 
 ipcMain.on("stream", (event, data) => {
   if (ffmpeg) {
-    console.log("Sending data to ffmpeg ", data.payload.length);
+    logger.info("Sending data to ffmpeg " + data.payload.length);
     ffmpeg.stdin.write(data.payload);
   } else {
-    console.log("Got data, but no good instance of ffmpeg");
+    logger.info("Got data, but no good instance of ffmpeg");
     event.sender.send("ffmpeg-error");
   }
 });
@@ -145,6 +144,7 @@ ipcMain.handle("start", (_, data) => {
   // dialog.showErrorBox("Hello", ffmpegPath);
 
   const rtmpUrl = `rtmps://global-live.mux.com/app/${key}`;
+  logger.info("RTMP: " + rtmpUrl);
   ffmpeg = child_process.spawn(ffmpegPath, [
     "-i",
     "-",
@@ -185,7 +185,7 @@ ipcMain.handle("start", (_, data) => {
 
   // Kill the WebSocket connection if ffmpeg dies.
   ffmpeg.on("close", (code, signal) => {
-    console.log(
+    logger.info(
       "FFmpeg child process closed, code " + code + ", signal " + signal
     );
     ffmpeg = null;
@@ -195,12 +195,19 @@ ipcMain.handle("start", (_, data) => {
   // These errors most commonly occur when FFmpeg closes and there is still
   // data to write.f If left unhandled, the server will crash.
   ffmpeg.stdin.on("error", (e) => {
-    console.log("FFmpeg STDIN Error", e);
+    logger.log({
+      level: "info",
+      message: "FFmpeg STDIN Error",
+      data: e,
+    });
   });
 
   // FFmpeg outputs all of its messages to STDERR. Let's log them to the console.
   ffmpeg.stderr.on("data", (data) => {
-    console.log("FFmpeg STDERR:", data.toString());
+    logger.log({
+      level: "info",
+      message: "FFmpeg STDERR Error: " + data.toString(),
+    });
   });
 });
 

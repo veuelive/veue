@@ -5,5 +5,5 @@
     .message-write{data: { "controller": "chat", "show-when-logged-in": true }}
       .write-area
         = text_area_tag :body, "", class: 'write-area__text w-full outline-none', name: "message-input", placeholder: 'Write your message...', data: { action: "keydown->chat#chatBoxKeyDown" }
-    .message-login-prompt{data: { "show-when-logged-in": false }}
+    .message-login-prompt{data: { "show-when-logged-out": true }}
       %button{data: {action: "authentication#showModal"}} Login To Chat
