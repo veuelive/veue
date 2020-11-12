@@ -288,7 +288,7 @@ System specs
 
 In order to add data to the database, you must have a `.sql` or `.psql`
 text file. You may even receive a file in `.sql.gz` or `.psql.gz` format
-which just means its gzipped. If your on Mac or Linux here are the
+which just means its gzipped. If you're on a Mac or Linux here are the
 following steps you need to take, assuming your database is all setup
 and migrated.
 
