@@ -91,3 +91,12 @@ textarea {
     }
   }
 }
+
+.btn.copy-to-clipboard {
+  &:hover {
+    cursor: default;
+  }
+  &:active {
+    background-color: color.$red-highlight;
+  }
+}
