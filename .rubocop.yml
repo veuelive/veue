@@ -11,7 +11,7 @@ AllCops:
     - "db/**/*"
     - "config/**/*"
     - "script/**/*"
-    - "bin/{rails,rake}"
+    - "bin/**/*"
     - !ruby/regexp /old_and_unused\.rb$/
 
 # Commonly used screens these days easily fit more than 80 characters.
