@@ -41,8 +41,6 @@ export default class StreamCapturer {
       clearInterval(this.timerCallback);
     });
 
-    ipcRenderer.on("ffmpeg-error", () => this.mediaRecorder.stop());
-
     this.mediaRecorder.start(500);
 
     return ipcRenderer.invoke("start", { streamKey });

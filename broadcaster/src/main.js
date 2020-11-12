@@ -185,7 +185,6 @@ ipcMain.handle("start", (_, data) => {
     rtmpUrl,
   ]);
 
-  // Kill the WebSocket connection if ffmpeg dies.
   ffmpeg.on("close", (code, signal) => {
     logger.info(
       "FFmpeg child process closed, code " + code + ", signal " + signal
