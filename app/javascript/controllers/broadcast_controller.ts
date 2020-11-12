@@ -56,11 +56,18 @@ export default class extends Controller {
         windowTitle: string,
         scaleFactor: number
       ) => {
+        console.log("dimensions", dimensions);
+        console.log("workArea", workArea);
+        console.log("windowSize", windowSize);
+        console.log("scaleFactor", scaleFactor);
+
         const broadcastArea = calculateBroadcastArea(
           dimensions,
           workArea,
           scaleFactor
         );
+
+        console.log("broadcastArea", broadcastArea);
 
         await this.mixer.startBrowserCapture(windowTitle, broadcastArea);
 

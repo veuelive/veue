@@ -50,6 +50,7 @@ textarea {
         overflow: hidden;
         canvas {
           width: 99%;
+          min-width: 1px;
           border: 1px solid red;
         }
       }

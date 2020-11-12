@@ -12,8 +12,8 @@ export function calculateBroadcastArea(
   scaleFactor: number
 ): Rectangle {
   return {
-    height: (dimensions.height - dimensions.x) * scaleFactor,
-    width: (dimensions.width - dimensions.x) * scaleFactor,
+    height: dimensions.height * scaleFactor,
+    width: dimensions.width * scaleFactor,
     x: dimensions.x * scaleFactor,
     y: (dimensions.y + workArea.y) * scaleFactor,
   };

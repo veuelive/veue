@@ -49,4 +49,5 @@ yarn-debug.log*
 .eslintcache
 /broadcaster/node_modules/
 /broadcaster/dist/
+/broadcaster/*.log
 /broadcaster/index.js
