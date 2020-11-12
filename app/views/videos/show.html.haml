@@ -13,8 +13,9 @@
           .widget.red
             = current_video.display_state
         - if current_video.finished?
-          .widget
-            = current_video.video_views.count
+          - video_views = current_video.video_views.count
+          .widget{"data-views": video_views}
+            = video_views
             VIEWS
 
       %canvas.primary-canvas{"data-target": "audience-view.primaryCanvas", width: 1200, height: 740}
