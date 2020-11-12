@@ -18,5 +18,25 @@ describe "Prerecorded Audience View" do
 
       expect(current_timecode).to be > 0
     end
+
+    it "does not update view count on refresh" do
+      visit video_path(video)
+
+      view_count =
+        proc {
+          Integer(find(".widget")["data-views"], 10)
+        }
+
+      initial_view_count = view_count.call
+
+      visit video_path(video)
+
+      refreshed_view_count = view_count.call
+
+      puts initial_view_count
+      puts refreshed_view_count
+      expect(initial_view_count).to eq(refreshed_view_count)
+    end
   end
+
 end
