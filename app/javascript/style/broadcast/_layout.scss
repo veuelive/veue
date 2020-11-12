@@ -91,3 +91,12 @@ textarea {
     }
   }
 }
+
+.btn[data-action="click->broadcast#copyToClipboard"] {
+  &:hover {
+    cursor: default;
+  }
+  &:active {
+    background-color: color.$veue-lilac;
+  }
+}
