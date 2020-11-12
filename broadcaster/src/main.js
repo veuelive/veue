@@ -26,10 +26,6 @@ let browserView;
 
 app.getAppPath();
 
-function log(log) {
-  console.log(log);
-}
-
 const environments = {
   production: {
     hostname: "https://www.veuelive.com",
@@ -69,7 +65,7 @@ let mainWindow;
 let bounds = { x: 10, y: 80, width: 900, height: 570 };
 let windowSize = {
   width: 1241,
-  height: 660,
+  height: 680,
 };
 let randomName = Math.random().toString(36).substring(7);
 
@@ -88,7 +84,6 @@ const createMainWindow = async () => {
     maximizable: false,
     closable: true,
     resizable: false,
-    useContentSize: true,
     minimizable: false,
     webPreferences: {
       nodeIntegration: true,

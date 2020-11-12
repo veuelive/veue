@@ -112,7 +112,8 @@ export default class VideoMixer {
 
   async startBrowserCapture(
     windowTitle: string,
-    browserDimensions: Rectangle
+    browserDimensions: Rectangle,
+    videoSize: Rectangle
   ): Promise<void> {
     this.browserDimensions = browserDimensions;
 
@@ -129,11 +130,17 @@ export default class VideoMixer {
           mandatory: {
             chromeMediaSource: "desktop",
             chromeMediaSourceId: source.id,
+            minWidth: videoSize.width,
+            maxWidth: videoSize.width,
+            minHeight: videoSize.height,
+            maxHeight: videoSize.height,
           },
         } as Record<string, unknown>,
       }
     );
     this.browserVideoElement.addEventListener("loadedmetadata", () => {
+      console.log("videoHeight", this.browserVideoElement.videoHeight);
+      console.log("videoWidth", this.browserVideoElement.videoWidth);
       this.browserVideoElement.play();
     });
   }

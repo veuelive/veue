@@ -3,7 +3,10 @@ import { ipcRenderer } from "helpers/electron/ipc_renderer";
 import { Rectangle } from "types/rectangle";
 import VideoMixer from "helpers/broadcast/video_mixer";
 import StreamCapturer from "helpers/broadcast/stream_capturer";
-import { calculateBroadcastArea } from "helpers/broadcast_helpers";
+import {
+  calculateBroadcastArea,
+  calculateFullVideoSize,
+} from "helpers/broadcast_helpers";
 import TimecodeManager from "helpers/broadcast/timecode_manager";
 import { postForm } from "util/fetch";
 import { getCurrentUrl } from "controllers/broadcast/browser_controller";
@@ -69,7 +72,11 @@ export default class extends Controller {
 
         console.log("broadcastArea", broadcastArea);
 
-        await this.mixer.startBrowserCapture(windowTitle, broadcastArea);
+        await this.mixer.startBrowserCapture(
+          windowTitle,
+          broadcastArea,
+          calculateFullVideoSize(windowSize, scaleFactor)
+        );
 
         this.state = "ready";
       }

@@ -11,11 +11,17 @@ export function calculateBroadcastArea(
   workArea: Rectangle,
   scaleFactor: number
 ): Rectangle {
+  const rect = calculateFullVideoSize(dimensions, scaleFactor);
+  rect.y = (dimensions.y + workArea.y) * scaleFactor;
+  return rect;
+}
+
+export function calculateFullVideoSize(rect, scaleFactor): Rectangle {
   return {
-    height: dimensions.height * scaleFactor,
-    width: dimensions.width * scaleFactor,
-    x: dimensions.x * scaleFactor,
-    y: (dimensions.y + workArea.y) * scaleFactor,
+    width: rect.width * scaleFactor,
+    height: rect.height * scaleFactor,
+    x: rect.x * scaleFactor,
+    y: rect.y * scaleFactor,
   };
 }
 
