@@ -112,6 +112,7 @@ export default class extends Controller {
     this.state = "finished";
     this.streamCapturer.stop();
   }
+
   copyToClipboard(): void {
     const vid_path = window.location.href.replace("broadcasts/", "videos/");
     const copy_el = document.createElement("textarea");
@@ -124,6 +125,7 @@ export default class extends Controller {
     document.execCommand("copy");
     document.body.removeChild(copy_el);
   }
+
   pinPage(): void {
     const url = document
       .querySelector("input[data-target='broadcast--browser.addressBar']")

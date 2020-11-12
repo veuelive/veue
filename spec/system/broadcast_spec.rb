@@ -113,10 +113,15 @@ describe "Broadcast View" do
 
     describe "copy to clipboard feature" do
       it "can copy the stream URL to the clipboard while streaming" do
-        page.driver.browser.execute_cdp('Browser.grantPermissions', origin: page.server_url, permissions: ['clipboardReadWrite'])
+        page.driver.browser.execute_cdp(
+          "Browser.grantPermissions",
+          origin: page.server_url,
+          permissions: ["clipboardReadWrite"],
+        )
         click_button("Copy")
-        clip_text = page.evaluate_async_script('navigator.clipboard.readText().then(arguments[0])')
-        expect(clip_text).to eq("http://#{Capybara.current_session.server.host}:#{Capybara.current_session.server.port}/videos/#{video.id}")
+        clip_text = page.evaluate_async_script("navigator.clipboard.readText().then(arguments[0])")
+        server = Capybara.current_session.server
+        expect(clip_text).to eq(video_url(video, host: server.host, port: server.port))
       end
     end
   end
