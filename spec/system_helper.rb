@@ -16,10 +16,18 @@ RSpec.configure do |config|
       test-type
       headless
     ]
+
+    options_obj = Selenium::WebDriver::Chrome::Options.new(args: options)
+    options_obj.add_preference(
+      "profile.content_settings.exceptions.clipboard",
+      {
+        '*': {'setting': 1},
+      },
+    )
     Capybara::Selenium::Driver.new(
       app,
       browser: :chrome,
-      options: Selenium::WebDriver::Chrome::Options.new(args: options),
+      options: options_obj,
     )
   end
 

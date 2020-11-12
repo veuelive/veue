@@ -12,5 +12,8 @@
           = svg_tag "cam"
         .btn{data: {action: "click->broadcast--debug#showHideAction"}}
           = svg_tag "toolbox"
+        %button.btn.copy-to-clipboard{data: {action: "click->broadcast#copyCurrentURLToClipboard"}}
+          Copy
+
       .debug-area{data: {target: "broadcast--debug.debugArea"}}
       = render partial: "shared/chat", locals: { video: current_broadcast_video}
