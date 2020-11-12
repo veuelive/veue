@@ -13,6 +13,7 @@
   .browser-bar__button
     %button{data: {action: "click->broadcast#startStreaming", showOnState: "ready"}} Start Broadcast
     %button{data: {action: "click->broadcast#stopStreaming", showOnState: "live"}} Stop Broadcast
+    %button{data: {action: "click->broadcast#copyToClipboard", showOnState: "ready"}} Copy To Clipboard
     %button.time-area{data: {showOnState: "live"}}
       %span.dot.time-dot
       %span#timecodeDisplay
