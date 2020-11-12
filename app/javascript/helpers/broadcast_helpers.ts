@@ -6,6 +6,18 @@ export function getBroadcastElement(): HTMLElement {
   return document.getElementById("broadcast");
 }
 
+export function copyToClipboard(copy_string: string): void {
+  const copy_el = document.createElement("textarea");
+  copy_el.value = copy_string;
+  copy_el.setAttribute("readonly", "");
+  copy_el.style.position = "absolute";
+  copy_el.style.left = "-9999px";
+  document.body.appendChild(copy_el);
+  copy_el.select();
+  document.execCommand("copy");
+  document.body.removeChild(copy_el);
+}
+
 export function calculateBroadcastArea(
   dimensions: Rectangle,
   workArea: Rectangle,
