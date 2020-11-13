@@ -4,7 +4,9 @@ import { Rectangle } from "types/rectangle";
 import VideoMixer from "helpers/broadcast/video_mixer";
 import StreamCapturer from "helpers/broadcast/stream_capturer";
 import {
-  calculateBroadcastArea, calculateFullVideoSize,copyToClipboard
+  calculateBroadcastArea,
+  calculateFullVideoSize,
+  copyToClipboard,
 } from "helpers/broadcast_helpers";
 import TimecodeManager from "helpers/broadcast/timecode_manager";
 import { postForm } from "util/fetch";
