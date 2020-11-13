@@ -9,7 +9,7 @@ class VideosController < ApplicationController
 
   # GET /videos/1
   def show
-    render("not_found", status: :not_found) unless current_video.can_be_accessed_by(current_user)
+    render("not_found", status: :not_found) && return unless current_video.can_be_accessed_by(current_user)
 
     viewed
   end
