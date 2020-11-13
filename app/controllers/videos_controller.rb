@@ -19,7 +19,7 @@ class VideosController < ApplicationController
   private
 
   def increment_video_views
-    current_video.video_views.create!(
+    current_video.video_views.create(
       user: current_user,
       details: request_details,
     )
