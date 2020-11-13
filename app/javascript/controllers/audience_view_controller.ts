@@ -1,4 +1,3 @@
-import { Controller } from "stimulus";
 import Hls from "hls.js";
 import playSvg from "images/play.svg";
 import pauseSvg from "images/pause.svg";
@@ -11,11 +10,13 @@ import { VideoEventProcessor } from "helpers/event/event_processor";
 import EventManagerInterface from "types/event_manager_interface";
 import VodEventManager from "helpers/event/vod_event_manager";
 import LiveEventManager from "helpers/event/live_event_manager";
+import BaseController from "controllers/base_controller";
 import { startMuxData } from "controllers/audience/mux_integration";
 import { isProduction } from "util/environment";
+import { post } from "util/fetch";
 
 type StreamType = "live" | "vod";
-export default class extends Controller {
+export default class extends BaseController {
   static targets = [
     "video",
     "primaryCanvas",
@@ -73,13 +74,22 @@ export default class extends Controller {
       await this.togglePlay();
     });
 
+    this.subscribeToAuthChange();
+
     if (!this.videoTarget.canPlayType("application/vnd.apple.mpegurl")) {
       // } else if (Hls.isSupported()) {
-      // HLS.js-specific setup code
-      const hls = new Hls();
-      hls.loadSource(this.videoTarget.getAttribute("src"));
-      hls.attachMedia(this.videoTarget);
+      const hlsSource = this.videoTarget.getAttribute("src");
+      if (hlsSource) {
+        // HLS.js-specific setup code
+        const hls = new Hls();
+        hls.loadSource(hlsSource);
+        hls.attachMedia(this.videoTarget);
+      }
     }
+  }
+
+  authChanged(): void {
+    post("./viewed").then(() => console.log("Updated Viewer Count"));
   }
 
   disconnect(): void {

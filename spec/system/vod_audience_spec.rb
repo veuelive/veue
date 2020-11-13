@@ -47,7 +47,7 @@ describe "Prerecorded Audience View" do
       expect(logged_in_view_count).to eq(refreshed_view_count)
 
       # Log out and refresh page to ensure were still not updating view count
-      visit logout_path
+      logout_user
 
       visit video_path(video)
       refreshed_view_count = view_count.call

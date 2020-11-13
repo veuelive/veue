@@ -5,6 +5,7 @@ class Video < ApplicationRecord
 
   has_many :chat_messages, dependent: :destroy
   has_many :browser_navigations, dependent: :destroy
+  has_many :user_joined_events, dependent: :destroy
   has_many :pin_events, dependent: :destroy
   has_many :video_events, dependent: :destroy
   has_many :video_views, dependent: :destroy
@@ -88,20 +89,31 @@ class Video < ApplicationRecord
   end
 
   def recent_events_for_live
-    navigations = browser_navigations.order("created_at DESC").limit(100)
-
-    (chat_messages_for_live + navigations + pin_events)
-      .sort_by(&:timecode_ms)
+    (recent_created_at_sorted_events + recent_timecode_sorted_events)
       .map(&:to_json)
   end
 
+  def recent_timecode_sorted_events
+    navigations = browser_navigations.order("created_at DESC").limit(100)
+    (navigations + pin_events)
+      .sort_by(&:timecode_ms)
+  end
+
+  def recent_created_at_sorted_events
+    user_joins = user_joined_events.order("created_at DESC").limit(10)
+    (chat_messages_for_live + user_joins)
+      .sort_by(&:created_at)
+      .map { |event|
+        event.timecode_ms = 0
+        event
+      }
+  end
+
   def chat_messages_for_live(limit=50)
-    chat_messages.order("timecode_ms DESC")
-                 .limit(limit)
-                 .reverse
-                 .map do |cm|
-      cm.timecode_ms = 0
-      cm
-    end
+    chat_messages.limit(limit).order("created_at DESC")
+  end
+
+  def can_be_accessed_by(user)
+    !(visibility.eql?("private") && (self.user != user))
   end
 end
