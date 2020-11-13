@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   end
 
   resources :videos, only: %i[index show new] do
-    collection do
-      get "broadcast"
+    member do
+      post "viewed"
     end
 
     resources :events, only: %i[show index] do

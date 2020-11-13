@@ -20,6 +20,11 @@ module AuthenticationTestHelpers
       expect(page.find("*[data-user-id]")["data-user-id"]).to eq(user.id)
     end
 
+    def logout_user
+      find(".user-auth-area").hover
+      click_on("Sign Out")
+    end
+
     private
 
     def open_nav_sidebar

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_13_013045) do
+ActiveRecord::Schema.define(version: 2020_11_13_163353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -147,6 +147,10 @@ ActiveRecord::Schema.define(version: 2020_11_13_013045) do
     t.jsonb "details"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.uuid "user_joined_event_id"
+    t.index ["user_joined_event_id"], name: "index_video_views_on_user_joined_event_id"
+    t.index ["video_id", "details"], name: "index_video_views_on_video_id_and_details", unique: true, where: "(user_id IS NULL)"
+    t.index ["video_id", "user_id"], name: "index_video_views_on_video_id_and_user_id", unique: true, where: "(user_id IS NOT NULL)"
   end
 
   create_table "videos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

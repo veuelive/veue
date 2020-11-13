@@ -9,28 +9,16 @@ class VideosController < ApplicationController
 
   # GET /videos/1
   def show
-    if current_video.visibility.eql?("private") && (current_video.user != current_user)
-      render("not_found", status: :not_found)
-    else
-      increment_video_views unless current_video.live?
-    end
+    render("not_found", status: :not_found) unless current_video.can_be_accessed_by(current_user)
+
+    viewed
+  end
+
+  def viewed
+    VideoView.process_view!(current_video, current_user, request)
   end
 
   private
-
-  def increment_video_views
-    current_video.video_views.create(
-      user: current_user,
-      details: request_details,
-    )
-  end
-
-  def request_details
-    {
-      ip_address: request.remote_ip,
-      browser: request.user_agent,
-    }
-  end
 
   # Use callbacks to share common setup or constraints between actions.
   def current_video

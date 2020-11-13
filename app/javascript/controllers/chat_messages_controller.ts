@@ -1,20 +1,29 @@
 import BaseController from "./base_controller";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import { currentUserId } from "controllers/authentication_controller";
-import userSvg from "images/user.svg";
+import userSvg from "images/user-icon.svg";
 
 export default class ChatMessagesController extends BaseController {
   private myUserId: string;
   private lastMessageFromUserId: string;
   private chatMessageCallbackHandler: (event) => void;
+  private userJoinedCallbackHandler: (event) => void;
 
   connect(): void {
     this.chatMessageCallbackHandler = (event) => {
-      this.displayMessage(event.detail.data);
+      this.displayChatMessage(event.detail.data);
     };
     VideoEventProcessor.subscribeTo(
       "ChatMessage",
       this.chatMessageCallbackHandler
+    );
+
+    this.userJoinedCallbackHandler = (event) => {
+      this.displayUserJoinedNotice(event.detail.data);
+    };
+    VideoEventProcessor.subscribeTo(
+      "UserJoinedEvent",
+      this.userJoinedCallbackHandler
     );
 
     this.myUserId = currentUserId();
@@ -25,9 +34,23 @@ export default class ChatMessagesController extends BaseController {
       "ChatMessage",
       this.chatMessageCallbackHandler
     );
+    VideoEventProcessor.unsubscribeFrom(
+      "UserJoinedEvent",
+      this.userJoinedCallbackHandler
+    );
   }
 
-  private displayMessage(message) {
+  private displayUserJoinedNotice(user) {
+    this.lastMessageFromUserId = null;
+
+    this.appendHtml(`
+      <div class="user-joined">
+        <img src=${userSvg} alt="user-icon"/>
+        <div>${user.name} joined the chat</div>
+      </div>`);
+  }
+
+  private displayChatMessage(message) {
     const sameUser = message.userId === this.lastMessageFromUserId;
 
     let html = "";
@@ -50,9 +73,6 @@ export default class ChatMessagesController extends BaseController {
     } else {
       html = `
         <div class="message-left">
-          <div class="user-avatar">
-            <img src=${userSvg} class="rounded"/>
-          </div>
           <div class="message-content">
             <div class="message-content__name">
               ${message.name}
@@ -65,12 +85,16 @@ export default class ChatMessagesController extends BaseController {
       `;
     }
 
+    this.appendHtml(html);
+    this.lastMessageFromUserId = message.userId;
+  }
+
+  private appendHtml(html: string) {
     this.element.insertAdjacentHTML("beforeend", html);
     this.element.lastElementChild.scrollIntoView({
       behavior: "smooth",
       block: "nearest",
       inline: "start",
     });
-    this.lastMessageFromUserId = message.userId;
   }
 }
