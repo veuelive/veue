@@ -32,7 +32,6 @@ export default class extends Controller {
       this.updateState(navigationUpdate);
     };
     ipcRenderer.on("browserView", this.browserViewListener);
-
     this.navigateToAddress();
   }
 

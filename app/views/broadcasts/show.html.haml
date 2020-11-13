@@ -12,7 +12,7 @@
           = svg_tag "cam"
         .btn{data: {action: "click->broadcast--debug#showHideAction"}}
           = svg_tag "toolbox"
-        %button.btn{data: {controller: "broadcast--media-manager", action: "click->broadcast#copyToClipboard"}}
+        %button.btn.copy-to-clipboard{data: {action: "click->broadcast#copyCurrentURLToClipboard"}}
           Copy
 
       .debug-area{data: {target: "broadcast--debug.debugArea"}}

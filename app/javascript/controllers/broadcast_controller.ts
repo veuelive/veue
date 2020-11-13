@@ -3,7 +3,10 @@ import { ipcRenderer } from "helpers/electron/ipc_renderer";
 import { Rectangle } from "types/rectangle";
 import VideoMixer from "helpers/broadcast/video_mixer";
 import StreamCapturer from "helpers/broadcast/stream_capturer";
-import { calculateBroadcastArea } from "helpers/broadcast_helpers";
+import {
+  calculateBroadcastArea,
+  copyToClipboard,
+} from "helpers/broadcast_helpers";
 import TimecodeManager from "helpers/broadcast/timecode_manager";
 import { postForm } from "util/fetch";
 import { getCurrentUrl } from "controllers/broadcast/browser_controller";
@@ -112,20 +115,10 @@ export default class extends Controller {
     this.state = "finished";
     this.streamCapturer.stop();
   }
-
-  copyToClipboard(): void {
-    const vid_path = window.location.href.replace("broadcasts/", "videos/");
-    const copy_el = document.createElement("textarea");
-    copy_el.value = vid_path;
-    copy_el.setAttribute("readonly", "");
-    copy_el.style.position = "absolute";
-    copy_el.style.left = "-9999px";
-    document.body.appendChild(copy_el);
-    copy_el.select();
-    document.execCommand("copy");
-    document.body.removeChild(copy_el);
+  copyCurrentURLToClipboard(): void {
+    const video_path = window.location.href.replace("broadcasts/", "videos/");
+    copyToClipboard(video_path);
   }
-
   pinPage(): void {
     const url = document
       .querySelector("input[data-target='broadcast--browser.addressBar']")

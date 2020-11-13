@@ -92,7 +92,7 @@ textarea {
   }
 }
 
-.btn[data-action="click->broadcast#copyToClipboard"] {
+.btn.copy-to-clipboard {
   &:hover {
     cursor: default;
   }
