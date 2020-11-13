@@ -22,7 +22,7 @@ class VideoEvent < ApplicationRecord
   # the video started and use that as our timecode
   def set_timecode
     return if timecode_ms
-    return unless video.started_at_ms
+    (self.timecode_ms = 0) && return unless video.started_at_ms
 
     self.timecode_ms = Time.now.utc.to_ms - video.started_at_ms
   end
