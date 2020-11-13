@@ -6,6 +6,7 @@ require_relative("../support/audience_spec_helpers")
 describe "Prerecorded Audience View" do
   include AudienceSpecHelpers
 
+  let(:user) { create(:user) }
   let(:video) { create(:vod_video) }
 
   describe "anonymous user" do
@@ -20,23 +21,37 @@ describe "Prerecorded Audience View" do
     end
 
     it "does not update view count on refresh" do
-      visit video_path(video)
-
       view_count =
         proc {
           Integer(find(".widget")["data-views"], 10)
         }
 
+      visit video_path(video)
       initial_view_count = view_count.call
 
+      # Refresh the page
       visit video_path(video)
-
       refreshed_view_count = view_count.call
 
-      puts initial_view_count
-      puts refreshed_view_count
       expect(initial_view_count).to eq(refreshed_view_count)
+
+      # Log in to increase the view count
+      login_as user
+      visit video_path(video)
+
+      logged_in_view_count = view_count.call
+      expect(initial_view_count + 1).to eq(logged_in_view_count)
+
+      visit video_path(video)
+      refreshed_view_count = view_count.call
+      expect(logged_in_view_count).to eq(refreshed_view_count)
+
+      # Log out and refresh page to ensure were still not updating view count
+      visit logout_path
+
+      visit video_path(video)
+      refreshed_view_count = view_count.call
+      expect(logged_in_view_count).to eq(refreshed_view_count)
     end
   end
-
 end
