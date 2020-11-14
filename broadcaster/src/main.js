@@ -65,7 +65,7 @@ let mainWindow;
 let bounds = { x: 10, y: 80, width: 900, height: 570 };
 let windowSize = {
   width: 1241,
-  height: 680,
+  height: 823,
 };
 let randomName = Math.random().toString(36).substring(7);
 

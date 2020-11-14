@@ -14,6 +14,14 @@ class VideosController < ApplicationController
     viewed
   end
 
+  # GET /vides/1/live
+  def live
+    render(
+      template: "videos/show",
+      layout: false,
+    )
+  end
+
   def viewed
     VideoView.process_view!(current_video, current_user, request)
   end

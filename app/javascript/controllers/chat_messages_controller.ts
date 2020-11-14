@@ -1,6 +1,6 @@
 import BaseController from "./base_controller";
 import { VideoEventProcessor } from "helpers/event/event_processor";
-import { currentUserId } from "controllers/authentication_controller";
+import { currentUserId } from "helpers/authentication_helpers";
 import userSvg from "images/user-icon.svg";
 
 export default class ChatMessagesController extends BaseController {

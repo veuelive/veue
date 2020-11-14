@@ -2,6 +2,10 @@ import BaseController from "./base_controller";
 import * as IntlTelInput from "intl-tel-input";
 import "intl-tel-input/build/css/intlTelInput.min.css";
 import { secureFormFetch } from "util/fetch";
+import {
+  showLoginElements,
+  hideLoginElements,
+} from "helpers/authentication_helpers";
 
 export default class extends BaseController {
   static targets = ["modal", "submitButton", "form"];
@@ -87,31 +91,8 @@ export default class extends BaseController {
   }
 
   private showOrHideElementsBasedOnLogin(): void {
-    const loggedIn = !!currentUserId();
-    console.log("logged in ", loggedIn);
     // For some reason, in Electron specifically, the element.hidden property was having no effect
-    document
-      .querySelectorAll("*[data-show-when-logged-in]")
-      .forEach((element: HTMLElement) => {
-        if (!loggedIn) {
-          element.setAttribute("style", "display: none;");
-        } else {
-          element.setAttribute("style", "display: block;");
-        }
-      });
-    document
-      .querySelectorAll("*[data-show-when-logged-out]")
-      .forEach((element: HTMLElement) => {
-        if (loggedIn) {
-          element.setAttribute("style", "display: none;");
-        } else {
-          element.setAttribute("style", "display: block;");
-        }
-      });
+    showLoginElements();
+    hideLoginElements();
   }
-}
-
-export function currentUserId(): string | undefined {
-  const element = document.querySelector("*[data-user-id]");
-  return element?.getAttribute("data-user-id");
 }

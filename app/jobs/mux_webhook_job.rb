@@ -13,6 +13,7 @@ class MuxWebhookJob < ApplicationJob
   def process_live_stream_active(webhook)
     if webhook.video.may_go_live?
       webhook.video.change_playback_id(webhook.playback_id)
+      puts "golive\n"*8
       webhook.video.go_live!
     else
       webhook.log_webhook_error("video cannot transition to live")
