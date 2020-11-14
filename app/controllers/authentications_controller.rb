@@ -5,7 +5,6 @@ class AuthenticationsController < ApplicationController
     session[:session_token_uuid] = nil
     @ula = SessionToken.new(phone_number: params[:phone_number])
     @ula.state = "pending_confirmation" if @ula.save
-    flash[:modal_error] = @ula.secret_code if Rails.env.development?
     render_modal
   end
 
