@@ -8,10 +8,10 @@ export default class LiveEventManager implements EventManagerInterface {
   private subscription;
 
   constructor() {
+    console.log("hello world from LiveEventManager");
     subscribeViewersChannel();
 
     const videoId = getCurrentVideoId();
-    console.log("subscribing", videoId);
     this.subscription = consumer.subscriptions.create(
       {
         channel: "LiveVideoChannel",

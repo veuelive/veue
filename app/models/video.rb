@@ -53,6 +53,10 @@ class Video < ApplicationRecord
     end
 
     event :go_live do
+      after do
+        transition_audience_to_live
+      end
+
       transitions from: :pending, to: :live
       transitions from: :starting, to: :live
     end
@@ -76,7 +80,7 @@ class Video < ApplicationRecord
   end
 
   def decrement_viewers!
-    update!(active_viewers: active_viewers - 1) if live?
+    update!(active_viewers: active_viewers - 1) if live? && active_viewers > 0
   end
 
   def broadcast_active_viewers
@@ -84,6 +88,15 @@ class Video < ApplicationRecord
       "active_viewers_#{id}",
       {
         viewers: active_viewers,
+      },
+    )
+  end
+
+  def transition_audience_to_live
+    ActionCable.server.broadcast(
+      "live_audience_#{id}",
+      {
+        state: state,
       },
     )
   end

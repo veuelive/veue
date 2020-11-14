@@ -7,8 +7,7 @@ class LiveVideoChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
-    current_video.decrement_viewers! if current_video.active_viewers
-    stop_all_streams
+    current_video.decrement_viewers!
   end
 
   private

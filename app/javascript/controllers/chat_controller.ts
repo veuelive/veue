@@ -1,6 +1,6 @@
 import { postForm } from "util/fetch";
 import { Controller } from "stimulus";
-import { currentUserId } from "controllers/authentication_controller";
+import { currentUserId } from "helpers/authentication_helpers";
 import { getCurrentVideoId } from "helpers/event/live_event_manager";
 
 export default class extends Controller {

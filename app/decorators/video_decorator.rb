@@ -10,7 +10,14 @@ class VideoDecorator < Draper::Decorator
   end
 
   def stream_type
-    state == "finished" ? "vod" : "live"
+    case state
+    when "live"
+      "live"
+    when "pending", "starting"
+      "initialised"
+    else
+      "vod"
+    end
   end
 
   def active_viewers_count

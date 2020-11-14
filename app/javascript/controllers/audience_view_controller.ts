@@ -14,8 +14,9 @@ import BaseController from "controllers/base_controller";
 import { startMuxData } from "controllers/audience/mux_integration";
 import { isProduction } from "util/environment";
 import { post } from "util/fetch";
+import subscribeLiveAudienceChannel from "channels/live_audience_channel";
 
-type StreamType = "live" | "vod";
+type StreamType = "initialised" | "live" | "vod";
 export default class extends BaseController {
   static targets = [
     "video",
@@ -40,6 +41,8 @@ export default class extends BaseController {
   private eventManager: EventManagerInterface;
 
   connect(): void {
+    subscribeLiveAudienceChannel();
+
     this.streamType = this.data.get("stream-type") as StreamType;
 
     this.data.set("timecode", "-1");
