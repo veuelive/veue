@@ -12,13 +12,15 @@ export default class LiveEventManager implements EventManagerInterface {
     subscribeViewersChannel();
 
     const videoId = getCurrentVideoId();
-    this.subscription = consumer.subscriptions.create(
-      {
-        channel: "LiveVideoChannel",
-        videoId,
-      },
-      this
-    );
+    setTimeout(() => {
+      this.subscription = consumer.subscriptions.create(
+        {
+          channel: "LiveVideoChannel",
+          videoId,
+        },
+        this
+      );
+    }, 100);
 
     secureFetch(`/videos/${videoId}/events/recent`)
       .then((response) => response.json())
