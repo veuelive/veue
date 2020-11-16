@@ -68,6 +68,8 @@ describe "chat" do
     end
 
     it "should show messages from other users" do
+      sleep 1
+
       first_message = someone_chatted
       second_message_text = "Cowabunga!"
 
