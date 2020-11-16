@@ -15,6 +15,8 @@
     flex: 1 1 auto;
     overflow-y: auto;
     height: 0;
+    word-break: break-word;
+    overflow-wrap: break-word;
     &::-webkit-scrollbar-track {
       background: color.$white;
     }
@@ -42,7 +44,7 @@
         display: flex;
 
         .message-content {
-          margin-left: 0.5rem;
+          // margin-left: 0.5rem;
 
           &__name {
             color: color.$neutral-middle;
@@ -72,7 +74,7 @@
           color: color.$gray-darker-2;
         }
 
-        margin-left: 2.5rem;
+        // margin-left: 2.5rem;
       }
 
       .user-joined {
