@@ -1,5 +1,4 @@
 import consumer from "./consumer";
-import formatNumber from "util/formatNumber";
 import { getCurrentVideoId } from "helpers/event/live_event_manager";
 import { secureFetch } from "util/fetch";
 import {
@@ -7,7 +6,7 @@ import {
   hideLoginElements,
 } from "helpers/authentication_helpers";
 
-export default function subscribeLiveAudienceChannel() {
+export default function subscribeLiveAudienceChannel(): void {
   const videoId = getCurrentVideoId();
 
   consumer.subscriptions.create(

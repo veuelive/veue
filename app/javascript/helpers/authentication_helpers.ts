@@ -1,4 +1,4 @@
-export function showLoginElements() {
+export function showLoginElements(): void {
   const loggedIn = !!currentUserId();
 
   document
@@ -12,7 +12,7 @@ export function showLoginElements() {
     });
 }
 
-export function hideLoginElements() {
+export function hideLoginElements(): void {
   const loggedIn = !!currentUserId();
 
   document

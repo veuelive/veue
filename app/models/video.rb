@@ -80,7 +80,7 @@ class Video < ApplicationRecord
   end
 
   def decrement_viewers!
-    update!(active_viewers: active_viewers - 1) if live? && active_viewers > 0
+    update!(active_viewers: active_viewers - 1) if live? && active_viewers.positive?
   end
 
   def broadcast_active_viewers
