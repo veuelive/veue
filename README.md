@@ -343,6 +343,6 @@ In this app the check is run with this command, so it is run against all JS/TS f
 
 Make sure any Ruby code you add or modify passes Rubocop.
 
-You do this by running `rubocop` on your console.
+You do this by running `rubocop` on your console. To tell Rubocop to correct your syntax for you use `rubocop -A`
 
 The full docs are here: https://docs.rubocop.org/rubocop/1.3/index.html
