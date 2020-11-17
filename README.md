@@ -310,3 +310,33 @@ psql veue_development < tmp/database_info.sql
 ```
 
 And you should be setup and ready to go!
+
+#### Checks (your PR will fail without these)
+
+## Rspec
+
+## Prettier — FOR TYPESCRIPT/JAVASCRIPT
+
+Install with npm or yarn: https://prettier.io/docs/en/install.html
+
+(Ignore the instructions about creating `.prettierrc.json` which already exists in the repo. Take a look at it but don't edit it.)
+
+To run on the entire codebase, run
+`yarn prettier .`
+
+To run on only one file, run
+
+`yarn prettier app/javascript/controllers/my_controller.ts`
+
+However, running prettier this way _doesn't actually change or prettify your files_. All it does is give you warnings.
+
+To have prettier actually re-write your files, you'll want to run it with the `--write` flag.
+
+`yarn prettier --write app/javascript/controllers/my_controller.ts`
+
+You'll want to do this for any Typescript file or spec you add or modify.
+
+In this app the check is run with this command, so it is run against all JS/TS files in `app/` and also `spec/`
+`yarn prettier -c app spec`
+
+## Rubocop — For Ruby
