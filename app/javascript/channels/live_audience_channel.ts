@@ -1,10 +1,7 @@
 import consumer from "./consumer";
 import { getCurrentVideoId } from "helpers/event/live_event_manager";
 import { secureFetch } from "util/fetch";
-import {
-  showLoginElements,
-  hideLoginElements,
-} from "helpers/authentication_helpers";
+import { showHideByLogin } from "helpers/authentication_helpers";
 
 export default function subscribeLiveAudienceChannel(): void {
   const videoId = getCurrentVideoId();
@@ -21,8 +18,7 @@ export default function subscribeLiveAudienceChannel(): void {
           const htmlResponse = await response.text();
           const currentView = document.getElementById("main-container");
           currentView.innerHTML = htmlResponse;
-          showLoginElements();
-          hideLoginElements();
+          showHideByLogin();
         }
       },
     }

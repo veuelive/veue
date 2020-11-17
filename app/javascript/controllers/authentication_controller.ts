@@ -2,10 +2,7 @@ import BaseController from "./base_controller";
 import * as IntlTelInput from "intl-tel-input";
 import "intl-tel-input/build/css/intlTelInput.min.css";
 import { secureFormFetch } from "util/fetch";
-import {
-  showLoginElements,
-  hideLoginElements,
-} from "helpers/authentication_helpers";
+import { showHideByLogin } from "helpers/authentication_helpers";
 
 export default class extends BaseController {
   static targets = ["modal", "submitButton", "form"];
@@ -18,7 +15,7 @@ export default class extends BaseController {
   connect(): void {
     this.modalTarget.hidden = true;
     this.attachPhoneNumberField();
-    this.showOrHideElementsBasedOnLogin();
+    showHideByLogin();
   }
 
   /**
@@ -80,7 +77,7 @@ export default class extends BaseController {
         topNav.outerHTML = html;
       }
       this.emitAuthChange();
-      this.showOrHideElementsBasedOnLogin();
+      showHideByLogin();
       this.modalTarget.style.display = "none";
     } else if (response.status == 200) {
       // Need to show the modal again
@@ -88,11 +85,5 @@ export default class extends BaseController {
       this.attachPhoneNumberField();
       this.scrollToFocus();
     }
-  }
-
-  private showOrHideElementsBasedOnLogin(): void {
-    // For some reason, in Electron specifically, the element.hidden property was having no effect
-    showLoginElements();
-    hideLoginElements();
   }
 }

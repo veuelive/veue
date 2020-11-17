@@ -8,7 +8,6 @@ export default class LiveEventManager implements EventManagerInterface {
   private subscription;
 
   constructor() {
-    console.log("hello world from LiveEventManager");
     subscribeViewersChannel();
 
     const videoId = getCurrentVideoId();
@@ -20,7 +19,7 @@ export default class LiveEventManager implements EventManagerInterface {
         },
         this
       );
-    }, 100);
+    }, 500);
 
     secureFetch(`/videos/${videoId}/events/recent`)
       .then((response) => response.json())
