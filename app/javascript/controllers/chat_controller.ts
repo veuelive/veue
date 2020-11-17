@@ -18,9 +18,16 @@ export default class extends Controller {
       textAreaElement.value = "";
       const videoId = getCurrentVideoId();
       if (message.length > 0) {
-        postForm(`/videos/${videoId}/chat_messages`, { message }).then(() =>
-          console.log("Sent!")
-        );
+        postForm(`/videos/${videoId}/chat_messages`, { message }).then(() => {
+          console.log("CHAT Sent!");
+          const body_input = document.getElementById("body");
+          if (body_input) (body_input as HTMLFormElement).blur();
+          const msg_overflow_container = document.getElementsByClassName(
+            "messages-overflow-container"
+          )[0] as HTMLFormElement;
+          msg_overflow_container.style.height = "100vh";
+          msg_overflow_container.style.height = "0";
+        });
       }
     }
   }
