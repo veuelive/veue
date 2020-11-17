@@ -14,3 +14,6 @@ class UsersController < ApplicationController
     end
   end
 end
+
+
+# Changes will be here
