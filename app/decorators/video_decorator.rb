@@ -14,7 +14,7 @@ class VideoDecorator < Draper::Decorator
     when "live"
       "live"
     when "pending", "starting"
-      "initialised"
+      "upcoming"
     else
       "vod"
     end

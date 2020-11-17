@@ -22,6 +22,10 @@ FactoryBot.define do
       visibility { "private" }
     end
 
+    factory :upcoming_video do
+      state { :pending }
+    end
+
     factory :live_video do
       state { :live }
       hls_url { "/__test/live/playback.m3u8" }

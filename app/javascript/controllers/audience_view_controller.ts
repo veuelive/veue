@@ -16,7 +16,7 @@ import { isProduction } from "util/environment";
 import { post } from "util/fetch";
 import subscribeLiveAudienceChannel from "channels/live_audience_channel";
 
-type StreamType = "initialised" | "live" | "vod";
+type StreamType = "upcoming" | "live" | "vod";
 export default class extends BaseController {
   static targets = [
     "video",
@@ -55,12 +55,14 @@ export default class extends BaseController {
       this.timecodeChanged();
     });
 
-    this.videoDemixer = new VideoDemixer(
-      this.videoTarget,
-      this.primaryCanvasTarget,
-      [this.pipSecondaryCanvasTarget, this.fixedSecondaryCanvasTarget],
-      this.timecodeSynchronizer
-    );
+    if (this.streamType !== "upcoming") {
+      this.videoDemixer = new VideoDemixer(
+        this.videoTarget,
+        this.primaryCanvasTarget,
+        [this.pipSecondaryCanvasTarget, this.fixedSecondaryCanvasTarget],
+        this.timecodeSynchronizer
+      );
+    }
 
     if (this.streamType === "vod") {
       this.eventManager = new VodEventManager(0);
@@ -125,11 +127,16 @@ export default class extends BaseController {
   }
 
   timecodeChanged(): void {
-    this.data.set("timecode", this.timecodeSynchronizer.timecodeMs.toString());
-    VideoEventProcessor.syncTime(this.timecodeSynchronizer.timecodeMs);
-    this.timeDisplayTarget.innerHTML = displayTime(
-      this.timecodeSynchronizer.timecodeSeconds
-    );
+    if (this.streamType !== "upcoming") {
+      this.data.set(
+        "timecode",
+        this.timecodeSynchronizer.timecodeMs.toString()
+      );
+      VideoEventProcessor.syncTime(this.timecodeSynchronizer.timecodeMs);
+      this.timeDisplayTarget.innerHTML = displayTime(
+        this.timecodeSynchronizer.timecodeSeconds
+      );
+    }
   }
 
   showChat(): void {
