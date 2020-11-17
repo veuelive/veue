@@ -44,8 +44,6 @@
         display: flex;
 
         .message-content {
-          // margin-left: 0.5rem;
-
           &__name {
             color: color.$neutral-middle;
             margin-bottom: 0.25rem;
@@ -73,8 +71,6 @@
           background-color: color.$gray-lighter;
           color: color.$gray-darker-2;
         }
-
-        // margin-left: 2.5rem;
       }
 
       .user-joined {
