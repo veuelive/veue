@@ -24,6 +24,7 @@ const expectFetchLike = (path, info: RequestInit): RequestInit => {
   }
   // Assert that every call to this is secured
   info.headers["X-CSRF-Token"] = SOME_TOKEN;
+  info.headers["X-Requested-With"] = "XMLHttpRequest";
   expect(requestInit).toEqual(info);
   return requestInit;
 };
