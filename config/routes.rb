@@ -12,10 +12,6 @@ Rails.application.routes.draw do
       post "viewed"
     end
 
-    member do
-      get "live"
-    end
-
     resources :events, only: %i[show index] do
       collection do
         get "recent"
