@@ -49,10 +49,6 @@ class SessionToken < ApplicationRecord
   end
 
   def process_secret_code!(possible_secret_code)
-    # if pending_confirmation? == false
-    #   raise "some race condition causes these to go into 'new' state"
-    # end
-
     return unless pending_confirmation?
 
     if secret_code.to_s == possible_secret_code.to_s
