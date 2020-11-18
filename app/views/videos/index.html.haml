@@ -3,8 +3,8 @@
   - if @live_videos.any?
     %h2 Live Videos!
     .live-videos
-      = render collection: @live_videos, partial: "videos/video_card"
+      = render collection: @live_videos, partial: "shared/video_card"
 
   %h2 Recent Videos
   .videos
-    = render collection: @recent_videos, partial: "videos/video_card"
+    = render collection: @recent_videos, partial: "shared/video_card"
