@@ -163,6 +163,7 @@ export function secureFetch(
     options.headers = {};
   }
   options.headers["X-CSRF-Token"] = getCsrfToken();
+  options.headers["X-Requested-With"] = "XMLHttpRequest";
   return fetch(processPath(path), options);
 }
 
