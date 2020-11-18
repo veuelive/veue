@@ -11,15 +11,9 @@ class VideosController < ApplicationController
   def show
     render("not_found", status: :not_found) && return unless current_video.can_be_accessed_by(current_user)
 
-    viewed
-  end
+    render(layout: false) && return if is_xhr_request?
 
-  # GET /vides/1/live
-  def live
-    render(
-      template: "videos/show",
-      layout: false,
-    )
+    viewed
   end
 
   def viewed

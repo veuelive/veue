@@ -1,4 +1,4 @@
-export function showHideByLogin() {
+export function showHideByLogin(): void {
   showLoginElements();
   hideLoginElements();
 }
