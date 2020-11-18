@@ -33,8 +33,6 @@ class SmsMessage < ApplicationRecord
   end
 
   def send_message!
-    success!(session_token) && return if Rails.env.development?
-
     response = call_twillio!
 
     self.status = response.status
@@ -53,11 +51,15 @@ class SmsMessage < ApplicationRecord
   end
 
   def call_twillio!
-    client = Twilio::REST::Client.new
-    client.messages
+    if Rails.env.development?
+      return OpenStruct.new() # the calling code appears to not need this afterall
+    else
+      client = Twilio::REST::Client.new
+      client.messages
           .__send__(:create,
                     body: text,
                     to: to,
                     from: from)
+    end
   end
 end

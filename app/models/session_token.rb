@@ -45,14 +45,14 @@ class SessionToken < ApplicationRecord
   end
 
   def send_sms_message!
-    SendConfirmationTextJob.perform_later self
+    if Rails.env.development? || Rails.env.test?
+      SendConfirmationTextJob.perform_now(self)
+    else
+      SendConfirmationTextJob.perform_later(self)
+    end
   end
 
   def process_secret_code!(possible_secret_code)
-    # if pending_confirmation? == false
-    #   raise "some race condition causes these to go into 'new' state"
-    # end
-
     return unless pending_confirmation?
 
     if secret_code.to_s == possible_secret_code.to_s
