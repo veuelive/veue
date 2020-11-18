@@ -87,6 +87,7 @@ describe "Broadcast View" do
       include AudienceSpecHelpers
 
       it "should display live messages on broadcaster view" do
+        set_timeout_wait
         first_message = someone_chatted
         second_message_text = "Cowabunga!"
 

@@ -7,8 +7,8 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def is_xhr_request?
-    request.xhr? == 0
+  def xhr_request?
+    request.xhr?&.zero?
   end
-  helper_method :is_xhr_request?
+  helper_method :xhr_request?
 end

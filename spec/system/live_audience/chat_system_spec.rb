@@ -17,6 +17,7 @@ describe "chat" do
       visit videos_path
       login_as user
       visit video_path(video)
+      set_timeout_wait
     end
 
     it "should allow for live chat messages to be sent" do
@@ -52,6 +53,7 @@ describe "chat" do
   describe "logged out user" do
     before :each do
       visit video_path(video)
+      set_timeout_wait
     end
 
     it "should show you joined after you logged in" do
@@ -68,8 +70,6 @@ describe "chat" do
     end
 
     it "should show messages from other users" do
-      sleep 1
-
       first_message = someone_chatted
       second_message_text = "Cowabunga!"
 

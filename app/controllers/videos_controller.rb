@@ -11,7 +11,7 @@ class VideosController < ApplicationController
   def show
     render("not_found", status: :not_found) && return unless current_video.can_be_accessed_by(current_user)
 
-    render(layout: false) && return if is_xhr_request?
+    render(layout: false) && return if xhr_request?
 
     viewed
   end
