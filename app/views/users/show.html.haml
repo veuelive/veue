@@ -1,0 +1,4 @@
+.content-area
+  %h2= @user.display_name
+  .user-videos
+    = render partial: "shared/video_card", collection: @videos

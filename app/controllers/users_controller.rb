@@ -13,7 +13,11 @@ class UsersController < ApplicationController
       render(status: :bad_request, text: "")
     end
   end
+
+  def show
+    @user = User.find(params[:id])
+    @videos = @user.videos
+                   .visibility_public
+                   .decorate
+  end
 end
-
-
-# Changes will be here
