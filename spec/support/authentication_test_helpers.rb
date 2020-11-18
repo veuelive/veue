@@ -6,7 +6,6 @@ module AuthenticationTestHelpers
       phone_number = user ? user.phone_number : PhoneTestHelpers.generate_valid
       session_token = SessionToken.create!(phone_number: phone_number)
       expect(session_token).to be_valid
-      session_token.sent_code!
       session_token.correct_code!
       post override_authentication_path(session_token_uuid: session_token.uuid)
     end
