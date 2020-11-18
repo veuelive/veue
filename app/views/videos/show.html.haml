@@ -1,27 +1,26 @@
 .content-area#video-show{data: {"controller" => "audience-view", "audience-view" => { "stream-type" => current_video.stream_type}, "video-id": current_video.id}}
   .content-area__primary
-    - if current_video.hls_url?
-      .primary-video-area
-        .primary-video__header{data: {controller: "audience--header-bar"}}
-          .primary-video__header__address_bar
-            #address-input{data: {target: "audience--header-bar.addressInput"}}
-          - if current_video.live?
-            .widget
-              .icon
-                = svg_tag "user-icon"
-              #active-viewers
-                = current_video.active_viewers_count
-            .widget.red
-              = current_video.display_state
-          - if current_video.finished?
-            - video_views = current_video.video_views.count
-            .widget{"data-views": video_views}
-              = video_views
-              VIEWS
-        %canvas.primary-canvas{"data-target": "audience-view.primaryCanvas", width: 1200, height: 740}
-        .pip-component{data: {controller: "audience--pip"}, draggable: "true"}
-          %canvas.pip-secondary-canvas{"data-target": "audience-view.pipSecondaryCanvas audience--pip.canvas", width: 420, height: 340}
-        = render partial: 'videos/partials/player_buttons'
+    .primary-video-area
+      .primary-video__header{data: {controller: "audience--header-bar"}}
+        .primary-video__header__address_bar
+          #address-input{data: {target: "audience--header-bar.addressInput"}}
+        - if current_video.live?
+          .widget
+            .icon
+              = svg_tag "user-icon"
+            #active-viewers
+              = current_video.active_viewers_count
+          .widget.red
+            = current_video.display_state
+        - if current_video.finished?
+          - video_views = current_video.video_views.count
+          .widget{"data-views": video_views}
+            = video_views
+            VIEWS
+      %canvas.primary-canvas{"data-target": "audience-view.primaryCanvas", width: 1200, height: 740}
+      .pip-component{data: {controller: "audience--pip"}, draggable: "true"}
+        %canvas.pip-secondary-canvas{"data-target": "audience-view.pipSecondaryCanvas audience--pip.canvas", width: 420, height: 340}
+      = render partial: 'videos/partials/player_buttons'
     #streamer-profile-area
       = render partial: "videos/partials/streamer_profile"
   .content-area__secondary

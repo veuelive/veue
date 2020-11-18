@@ -37,4 +37,8 @@ module AudienceSpecHelpers
     fill_in("message-input", with: text)
     find(".write-area textarea").native.send_keys(:enter)
   end
+
+  def set_timeout_wait
+    loop until page.find(".chat-section")["data-live-channel-subscription"] == "done"
+  end
 end

@@ -19,6 +19,8 @@ export default class LiveEventManager implements EventManagerInterface {
         },
         this
       );
+      const chatArea = document.getElementsByClassName("chat-section");
+      chatArea[0].setAttribute("data-live-channel-subscription", "done");
     }, 500);
 
     secureFetch(`/videos/${videoId}/events/recent`)
