@@ -8,7 +8,7 @@
     .form-area
       - @ula ||= (current_session_token || SessionToken.new)
       %form{data: { target: "authentication.form", method: (@ula.pending_confirmation? ? "PUT" : "POST"), url: (@ula.active? ? users_path : authentication_path)}}
-        - if @ula.new?
+        - if !@ula.id
           .form-row
             Enter your mobile number, and we'll log you in with a quick code!
           .form-row
@@ -18,7 +18,7 @@
           .form-row
             %button.form-button{data: {target: "authentication.submitButton", action: "click->authentication#doSubmit"}}
               Send Text
-        - elsif @ula.pending_confirmation?
+        - elsif @ula.new? || @ula.pending_confirmation?
           .form-row Enter the code we just texted you below!
           .form-row
             %input{type: "text", name: "secret_code", autocomplete: "one-time-code", value: (Rails.env.development? ? @ula.secret_code : '') }
