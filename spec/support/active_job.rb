@@ -10,6 +10,7 @@ RSpec.configure do |config|
     Sidekiq::Testing.fake!
   end
   config.before(:each) do
+    clear_enqueued_jobs
     Sidekiq::Worker.clear_all
   end
 end

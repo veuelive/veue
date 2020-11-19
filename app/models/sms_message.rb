@@ -3,13 +3,26 @@
 require "twilio-ruby"
 
 class SmsMessage < ApplicationRecord
-  belongs_to :session_token
-
-  before_create :send_message!
+  belongs_to :user, optional: true
+  belongs_to :session_token, optional: true
 
   encrypts :to
   blind_index :to
   encrypts :text
+
+  validates :to, presence: true
+  validates :text, presence: true
+
+  def self.notify_broadcast_start!(streamer:, video_url:, follower:)
+    message = "#{streamer.display_name} is now live on Veue! #{video_url}"
+
+    SmsMessage.create!(
+      to: follower.phone_number,
+      from: ENV["TWILIO_PHONE_NUMBER"],
+      text: message,
+      service: "Twilio",
+    ).send_message!
+  end
 
   def self.create_confirmation!(session_token)
     SmsMessage.create!(
@@ -18,7 +31,11 @@ class SmsMessage < ApplicationRecord
       from: ENV["TWILIO_PHONE_NUMBER"],
       text: SmsMessage.build_text(session_token.secret_code),
       service: "Twilio",
-    )
+    ).send_auth_message!
+
+    # Mimics the previous before_create :send_message!
+    # sms_message.send_message!
+    # sms_message.save!
   end
 
   def self.build_text(secret_code)
@@ -34,23 +51,35 @@ class SmsMessage < ApplicationRecord
 
   def send_message!
     response = call_twillio!
-
     self.status = response.status
 
-    if response.error_code
-      failure!(response.error_code, response.error_message)
-    else
-      success!(session_token)
-    end
+    failure!(response.code, response.message) if response.error_code
   rescue Twilio::REST::TwilioError => e
     failure!(e.code, e.message)
   end
 
-  def success!(session_token)
+  def send_auth_message!
+    response = call_twillio!
+    self.status = response.status
+
+    if response.error_code
+      auth_failure!(response.code, response.message)
+    else
+      auth_success!(session_token)
+    end
+  rescue Twilio::REST::TwilioError => e
+    auth_failure!(e.code, e.message)
+  end
+
+  def auth_success!(session_token)
     session_token.sent_code!
   end
 
   def failure!(error_code, error_message)
+    Rails.logger.error("Unable to send SMS with Twilio error code #{error_code}: #{error_message}")
+  end
+
+  def auth_failure!(error_code, error_message)
     Rails.logger.error(
       "Unable to send SMS for token #{session_token.id} with Twilio error code #{error_code}: #{error_message}",
     )
