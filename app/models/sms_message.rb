@@ -52,14 +52,14 @@ class SmsMessage < ApplicationRecord
 
   def call_twillio!
     if Rails.env.development?
-      return OpenStruct.new() # the calling code appears to not need this afterall
+      OpenStruct.new # the calling code appears to not need this afterall
     else
       client = Twilio::REST::Client.new
       client.messages
-          .__send__(:create,
-                    body: text,
-                    to: to,
-                    from: from)
+            .__send__(:create,
+                      body: text,
+                      to: to,
+                      from: from)
     end
   end
 end
