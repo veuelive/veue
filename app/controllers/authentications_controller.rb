@@ -4,15 +4,17 @@ class AuthenticationsController < ApplicationController
   def create
     session[:session_token_uuid] = nil
     @ula = SessionToken.new(phone_number: params[:phone_number])
-    @ula.save
+    @ula.save!
     render_modal
   end
 
   def update
     ula = SessionToken.find_by(uuid: params[:session_token_uuid])
     render_modal and return unless ula&.process_secret_code!(params[:secret_code])
+
     session[:session_token_uuid] = ula.uuid
     render_modal and return if ula.user.nil?
+
     render_navbar
   end
 
