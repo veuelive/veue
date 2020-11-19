@@ -28,8 +28,8 @@ class VideoEvent < ApplicationRecord
   end
 
   def broadcast_message
-    ActionCable.server.broadcast(
-      "live_video_#{video.to_param}",
+    SseBroadcaster.broadcast(
+      "videos/#{video_id}",
       to_json(channel_timecode_ms),
     )
   end
