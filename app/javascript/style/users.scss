@@ -1,0 +1,16 @@
+#users__show {
+  .content-area {
+    flex-direction: column;
+    h2 {
+      display: block;
+      font-size: 1.5em;
+      text-align: center;
+    }
+    .user-videos {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+}
