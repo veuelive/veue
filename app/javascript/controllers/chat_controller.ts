@@ -20,8 +20,6 @@ export default class extends Controller {
       if (message.length > 0) {
         postForm(`/videos/${videoId}/chat_messages`, { message }).then(() => {
           console.log("CHAT Sent!");
-          const body_input = document.getElementById("body");
-          if (body_input) (body_input as HTMLFormElement).blur();
           const msg_overflow_container = document.getElementsByClassName(
             "messages-overflow-container"
           )[0] as HTMLFormElement;
