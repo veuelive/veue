@@ -48,4 +48,8 @@ Rails.application.configure do
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
   config.action_mailer.default_url_options = {host: "test.localhost", port: 3000}
+
+  # Sets a default host for url_helpers, also no idea why this isnt config.*
+  # https://github.com/excid3/noticed/issues/49
+  routes.default_url_options[:host] = 'localhost:3000'
 end

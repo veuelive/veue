@@ -28,6 +28,8 @@ class BroadcastsController < ApplicationController
       },
     )
     current_broadcast_video.start!
+
+    send_broadcast_start_text!
   end
 
   def navigation_update
@@ -58,4 +60,11 @@ class BroadcastsController < ApplicationController
     @current_broadcast_video ||= current_user.videos.find(params[:id])
   end
   helper_method :current_broadcast_video
+
+  def send_broadcast_start_text!
+    SendBroadcastStartTextJob.perform_later(
+      streamer: current_user,
+      video_url: video_url(current_broadcast_video),
+    )
+  end
 end

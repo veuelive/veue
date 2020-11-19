@@ -7,17 +7,21 @@ require "system_helper"
 describe "Broadcast View" do
   include BroadcastSystemHelpers
 
-  let(:user) { create(:user) }
-  let(:video) { user.videos.active.first }
+  let(:streamer) { create(:streamer) }
+  let(:follower) { create(:user) }
+  let(:other_follower) { create(:user) }
+  let(:video) { streamer.videos.active.first }
 
   before :example do
     driven_by :media_browser
     resize_window_desktop
+    Follow.create!(streamer_follow: follower, user_follow: streamer)
+    Follow.create!(streamer_follow: other_follower, user_follow: streamer)
   end
 
   before :each do
     visit videos_path
-    login_as(user)
+    login_as(streamer)
 
     visit "/broadcasts"
     find("body").click
@@ -53,6 +57,32 @@ describe "Broadcast View" do
 
       visit video_path(video)
       expect(find("#address-input").text).to eq(url)
+    end
+  end
+
+  describe "start the broadcast" do
+    it "should queue a SendBroadcastStartTextJob" do
+      # Just in case, lets clear out our jobs
+      clear_enqueued_jobs
+
+      click_button("Start Broadcast")
+      find("*[data-broadcast-state='live']")
+
+      server = Capybara.current_session.server
+      current_video_url = video_url(video, host: server.host, port: server.port)
+
+      perform_enqueued_jobs(only: SendBroadcastStartTextJob)
+
+      message1 = FakeTwilio.messages.first
+      message2 = FakeTwilio.messages.last
+
+      # Verify it sends to different phone numbers
+      expect(message1.to).to_not eq(message2.to)
+
+      expect(message1.body).to match(/#{streamer.display_name}/)
+      expect(message1.body).to match("live")
+
+      expect(message1.body).to match(current_video_url)
     end
   end
 

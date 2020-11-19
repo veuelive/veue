@@ -22,6 +22,8 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 RSpec.configure do |config|
+  # Allows you to do things like *_url(<model>)
+  config.include Rails.application.routes.url_helpers
   config.include AuthenticationTestHelpers::RequestHelpers, type: :request
   config.include WebhookHelpers
   config.include PhoneTestHelpers

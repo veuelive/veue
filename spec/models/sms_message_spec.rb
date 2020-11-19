@@ -3,6 +3,10 @@
 require "rails_helper"
 
 RSpec.describe SmsMessage, type: :model do
+  let(:streamer) { create(:streamer) }
+  let(:follower) { create(:user) }
+  let(:video) { create(:video) }
+
   describe ".build_text" do
     it "should generate a message with the code" do
       expect(SmsMessage.build_text(1982)).to match("1982")
@@ -29,6 +33,25 @@ RSpec.describe SmsMessage, type: :model do
       expect(twilio_message[:body]).to eq(sms_message.text)
       expect(twilio_message[:to]).to eq(sms_message.to)
       expect(twilio_message[:from]).to eq(sms_message.from)
+    end
+  end
+
+  describe ".notify_broadcast_start!" do
+    it "should try and message twillio" do
+      Follow.create!(streamer_follow: follower, user_follow: streamer)
+
+      SmsMessage.notify_broadcast_start!(streamer: streamer,
+                                         follower: follower,
+                                         video_url: video_url(video))
+
+      expect(FakeTwilio.messages.size).to eq(1)
+
+      message = FakeTwilio.messages.first
+
+      expect(message.body).to match(/http/)
+      expect(message.body).to match(/live/)
+      expect(message.body).to match(video_url(video))
+      expect(message.to).to eq(follower.phone_number)
     end
   end
 end
