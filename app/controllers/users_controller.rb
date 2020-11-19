@@ -18,6 +18,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @videos = @user.videos
                    .visibility_public
+                   .order("created_at DESC")
                    .decorate
   end
 end
