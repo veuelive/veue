@@ -11,6 +11,7 @@ RSpec.configure do |config|
     options = %w[
       disable-popup-blocking
       disable-translate
+      disable-web-security
       use-fake-ui-for-media-stream
       use-fake-device-for-media-stream
       test-type

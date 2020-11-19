@@ -6,22 +6,18 @@ import { secureFetch } from "util/fetch";
 
 export default class LiveEventManager implements EventManagerInterface {
   private subscription;
+  private eventSource: EventSource;
 
   constructor() {
     subscribeViewersChannel();
 
     const videoId = getCurrentVideoId();
-    setTimeout(() => {
-      this.subscription = consumer.subscriptions.create(
-        {
-          channel: "LiveVideoChannel",
-          videoId,
-        },
-        this
-      );
-      const chatArea = document.getElementsByClassName("chat-section");
-      chatArea[0].setAttribute("data-live-channel-subscription", "done");
-    }, 500);
+
+    this.eventSource = new EventSource(
+      "https://leghorn.onrender.com/videos/" + getCurrentVideoId()
+    );
+
+    this.eventSource.onmessage = (event) => this.received(event);
 
     secureFetch(`/videos/${videoId}/events/recent`)
       .then((response) => response.json())
@@ -37,8 +33,8 @@ export default class LiveEventManager implements EventManagerInterface {
     this.subscription.unsubscribe();
   }
 
-  received(data: never): void {
-    VideoEventProcessor.addEvent(data);
+  received(event: MessageEvent): void {
+    VideoEventProcessor.addEvent(JSON.parse(event.data));
   }
 
   seekTo(): Promise<void> {
