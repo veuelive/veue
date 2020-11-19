@@ -15,7 +15,7 @@ export default function subscribeLiveAudienceChannel(): void {
       async received(data): Promise<void> {
         if (data.state === "live") {
           const response = await secureFetch("./");
-          const htmlResponse = await response.json();
+          const htmlResponse = await response.text();
           const currentView = document.getElementById("main-container");
           currentView.innerHTML = htmlResponse;
           showHideByLogin();

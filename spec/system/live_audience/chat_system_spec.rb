@@ -41,6 +41,7 @@ describe "chat" do
 
       # And now that we've done some turbolinks transitions
       # let's verify our ActionCable connections are still functioning properly.
+      set_timeout_wait
       write_chat_message "Cowabunga!"
       expect(page).to have_content("Cowabunga!").twice
     end

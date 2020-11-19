@@ -25,5 +25,19 @@ describe "Stream Waiting Room" do
       write_chat_message "Cowabunga!"
       expect(page).to have_content("Cowabunga!").twice
     end
+
+    it "should reload the view after video go live" do
+      set_timeout_wait
+      write_chat_message "Cowabunga!"
+      expect(page).to have_content("Cowabunga!").once
+
+      video.go_live!
+      set_timeout_wait
+      expect(page).to have_selector("#active-viewers")
+
+      set_timeout_wait
+      write_chat_message "Cowabunga!"
+      expect(page).to have_content("Cowabunga!").twice
+    end
   end
 end
