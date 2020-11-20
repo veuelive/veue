@@ -4,7 +4,20 @@ import { currentUserId } from "helpers/authentication_helpers";
 import { getCurrentVideoId } from "helpers/event/live_event_manager";
 
 export default class extends Controller {
-  static targets = ["lastMessage", "messageInput"];
+  static targets = ["messageInput"];
+  private messageInputTarget!: HTMLTextAreaElement;
+
+  connect(): void {
+    const bodyDataset = document.body.dataset;
+    this.messageInputTarget.addEventListener(
+      "focusin",
+      () => (bodyDataset["keyboard"] = "visible")
+    );
+    this.messageInputTarget.addEventListener(
+      "focusout",
+      () => (bodyDataset["keyboard"] = "hidden")
+    );
+  }
 
   private showOrHideBasedOnLogin() {
     (this.element as HTMLElement).hidden = currentUserId() === undefined;
@@ -19,12 +32,7 @@ export default class extends Controller {
       const videoId = getCurrentVideoId();
       if (message.length > 0) {
         postForm(`/videos/${videoId}/chat_messages`, { message }).then(() => {
-          console.log("CHAT Sent!");
-          const msg_overflow_container = document.getElementsByClassName(
-            "messages-overflow-container"
-          )[0] as HTMLFormElement;
-          msg_overflow_container.style.height = "100vh";
-          msg_overflow_container.style.height = "0";
+          console.log("Chat Sent!");
         });
       }
     }
