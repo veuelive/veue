@@ -1,16 +1,15 @@
 import EventManagerInterface from "types/event_manager_interface";
-import consumer from "../../channels/consumer";
 import { VideoEventProcessor } from "helpers/event/event_processor";
-import subscribeViewersChannel from "channels/active_viewers_channel";
 import { secureFetch } from "util/fetch";
+import { showHideByLogin } from "helpers/authentication_helpers";
+
+export const ViewerCountUpdateEvent = "ViewerCountUpdate";
 
 export default class LiveEventManager implements EventManagerInterface {
   private subscription;
   private eventSource: EventSource;
 
   constructor() {
-    subscribeViewersChannel();
-
     const videoId = getCurrentVideoId();
 
     this.eventSource = new EventSource(
@@ -33,8 +32,25 @@ export default class LiveEventManager implements EventManagerInterface {
     this.subscription.unsubscribe();
   }
 
-  received(event: MessageEvent): void {
-    VideoEventProcessor.addEvent(JSON.parse(event.data));
+  async received(event: MessageEvent): Promise<void> {
+    const data = JSON.parse(event.data);
+    if (data?.state === "live") {
+      await this.reload();
+    }
+    VideoEventProcessor.addEvent(data);
+    if (data.viewers) {
+      document.dispatchEvent(
+        new CustomEvent(ViewerCountUpdateEvent, { detail: data.viewers })
+      );
+    }
+  }
+
+  async reload(): Promise<void> {
+    const response = await secureFetch("./");
+    const htmlResponse = await response.text();
+    const currentView = document.getElementById("main-container");
+    currentView.innerHTML = htmlResponse;
+    showHideByLogin();
   }
 
   seekTo(): Promise<void> {

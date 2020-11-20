@@ -10,7 +10,6 @@ require.context("../images", true);
 // Load our SCSS
 import "../style/broadcast/broadcast.scss";
 
-import "channels";
 import "controllers";
 import "simplebar";
 import "simplebar/dist/simplebar.css";

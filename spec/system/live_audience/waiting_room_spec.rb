@@ -17,7 +17,6 @@ describe "Stream Waiting Room" do
     end
 
     it "should allow for live chat messages to be sent" do
-      set_timeout_wait
       write_chat_message "Cowabunga!"
       expect(page).to have_content("Cowabunga!").once
       expect(video.chat_messages.count).to be(1)
@@ -27,15 +26,12 @@ describe "Stream Waiting Room" do
     end
 
     it "should reload the view after video go live" do
-      set_timeout_wait
       write_chat_message "Cowabunga!"
       expect(page).to have_content("Cowabunga!").once
 
       video.go_live!
-      set_timeout_wait
       expect(page).to have_selector("#active-viewers")
 
-      set_timeout_wait
       write_chat_message "Cowabunga!"
       expect(page).to have_content("Cowabunga!").twice
     end

@@ -83,27 +83,12 @@ class Video < ApplicationRecord
     update!(active_viewers: active_viewers - 1) if live? && active_viewers.positive?
   end
 
-  def broadcast_active_viewers
-    ActionCable.server.broadcast(
-      "active_viewers_#{id}",
-      {
-        viewers: active_viewers,
-      },
-    )
-  end
-
   def transition_audience_to_live
-    ActionCable.server.broadcast(
-      "live_audience_#{id}",
-      {
-        state: state,
-      },
-    )
+    SseBroadcaster.broadcast("/videos/#{id}", {state: state})
   end
 
   def recent_events_for_live
-    (recent_created_at_sorted_events + recent_timecode_sorted_events)
-      .map(&:to_json)
+    recent_instant_events + recent_timecode_sorted_events
   end
 
   def recent_timecode_sorted_events
@@ -112,7 +97,7 @@ class Video < ApplicationRecord
       .sort_by(&:timecode_ms)
   end
 
-  def recent_created_at_sorted_events
+  def recent_instant_events
     user_joins = user_joined_events.order("created_at DESC").limit(10)
     (chat_messages_for_live + user_joins)
       .sort_by(&:created_at)

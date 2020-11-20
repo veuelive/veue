@@ -21,7 +21,7 @@ class VideoDecorator < Draper::Decorator
   end
 
   def active_viewers_count
-    number_to_human(active_viewers, format: "%n%u", units: {thousand: "K", million: "M", billion: "B"})
+    number_to_human(video.video_views.connected.count, format: "%n%u", units: {thousand: "K", million: "M", billion: "B"})
   end
 
   def display_state
