@@ -70,18 +70,35 @@ body#videos__show {
       width: 25vw;
     }
 
+    // Hide some stuff on the page when we're mobile and writing a chat
+    &[data-keyboard="visible"] {
+      #streamer-profile-area,
+      .top-navbar,
+      .primary-video__header {
+        display: none;
+      }
+      #main-container {
+        height: 100vh;
+      }
+    }
+
     .content-area__secondary {
       display: flex;
       height: 100%;
 
       .chat-section {
-        height: --webkit-fill-available;
+        div,
+        textarea {
+          font-size: 1rem;
+        }
       }
     }
   }
 
   @include mobileLandscape() {
-    width: 100vw;
+    #main-container {
+      height: -webkit-fill-available;
+    }
 
     .content-area {
       flex-direction: row;
@@ -93,10 +110,8 @@ body#videos__show {
       padding-left: env(safe-area-inset-left);
       flex: 1;
 
-      .primary-video-area,
-      canvas {
-        height: -webkit-fill-available;
-        width: unset;
+      .primary-video-area {
+        max-height: calc(min(100vh, -webkit-fill-available));
       }
     }
 
@@ -114,8 +129,8 @@ body#videos__show {
       display: none;
     }
 
-    .message-display {
-      font-size: 0.75rem;
+    .chat-section {
+      font-size: calc(min(0.65rem, 5vh));
     }
 
     .streamer-profile {
