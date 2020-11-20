@@ -17,7 +17,6 @@ describe "chat" do
       visit videos_path
       login_as user
       visit video_path(video)
-      set_timeout_wait
     end
 
     it "should allow for live chat messages to be sent" do
@@ -40,8 +39,7 @@ describe "chat" do
       end
 
       # And now that we've done some turbolinks transitions
-      # let's verify our ActionCable connections are still functioning properly.
-      set_timeout_wait
+      # let's verify our SSE connections are still functioning properly.
       write_chat_message "Cowabunga!"
       expect(page).to have_content("Cowabunga!").twice
     end
@@ -54,7 +52,6 @@ describe "chat" do
   describe "logged out user" do
     before :each do
       visit video_path(video)
-      set_timeout_wait
     end
 
     it "should show you joined after you logged in" do

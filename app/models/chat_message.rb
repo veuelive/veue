@@ -23,7 +23,7 @@ class ChatMessage < VideoEvent
   end
 
   # Immediately deliver via channel
-  def channel_timecode_ms
-    0
+  def instant_broadcast_processing
+    true
   end
 end

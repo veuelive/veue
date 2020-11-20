@@ -6,7 +6,7 @@ class VideoEvent < ApplicationRecord
 
   before_save :set_payload
   before_create :set_timecode
-  after_create :broadcast_message
+  after_create :broadcast_message!
 
   validates :video, presence: true
   validates :input, json: {schema: -> { input_schema.to_json }}
@@ -27,23 +27,28 @@ class VideoEvent < ApplicationRecord
     self.timecode_ms = Time.now.utc.to_ms - video.started_at_ms
   end
 
-  def broadcast_message
+  def broadcast_message!
+    message = to_hash
+    message[:timecodeMs] = 0 if instant_broadcast_processing
+    message[:viewers] = video.video_views.connected.count
     SseBroadcaster.broadcast(
       "videos/#{video_id}",
-      to_json(channel_timecode_ms),
+      message,
     )
   end
 
-  def to_json(override_timecode=nil)
+  def to_hash
     {
       type: type,
-      timecodeMs: override_timecode || timecode_ms,
+      timecodeMs: timecode_ms,
       data: payload,
     }
   end
 
-  def channel_timecode_ms
-    timecode_ms
+  # This should be overridden if the message
+  # should be immediately processed on the client
+  def instant_broadcast_processing
+    false
   end
 
   def input_schema

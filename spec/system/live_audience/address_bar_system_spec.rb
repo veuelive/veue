@@ -20,7 +20,6 @@ describe "Live Audience View - URL Bar" do
   end
 
   it "should show the urls in sequence" do
-    set_timeout_wait
     expect(page).to have_content(video.browser_navigations.first.payload["url"])
     expect(page).to have_content(video.browser_navigations.second.payload["url"])
   end
