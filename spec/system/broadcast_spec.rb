@@ -103,6 +103,7 @@ describe "Broadcast View" do
       end
 
       it "should allow for live chat messages to be sent" do
+        set_timeout_wait
         write_chat_message "Cowabunga!"
         expect(page).to have_content("Cowabunga!").once
         expect(video.chat_messages.count).to be(1)
