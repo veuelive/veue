@@ -30,7 +30,7 @@ class SessionToken < ApplicationRecord
     end
 
     event :correct_code do
-      transitions from: :pending_confirmation, to: :active
+      transitions from: %i[pending_confirmation new], to: :active
     end
 
     event :logout do
@@ -45,15 +45,11 @@ class SessionToken < ApplicationRecord
   end
 
   def send_sms_message!
-    if Rails.env.development? || Rails.env.test?
-      SendConfirmationTextJob.perform_now(self)
-    else
-      SendConfirmationTextJob.perform_later(self)
-    end
+    SendConfirmationTextJob.perform_later(self)
   end
 
   def process_secret_code!(possible_secret_code)
-    return unless pending_confirmation?
+    return unless pending_confirmation? || new?
 
     if secret_code.to_s == possible_secret_code.to_s
       correct_code!
