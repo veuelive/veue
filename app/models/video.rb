@@ -14,6 +14,7 @@ class Video < ApplicationRecord
 
   has_many :mux_webhooks, dependent: :nullify
   scope :active, -> { where(state: %w[pending live starting]) }
+  scope :done, -> { where(state: %w[finished failed ended]) }
 
   after_save :broadcast_active_viewers, if: -> { saved_change_to_active_viewers? }
 
@@ -75,16 +76,8 @@ class Video < ApplicationRecord
     self.hls_url = "https://stream.mux.com/#{new_playback_id}.m3u8"
   end
 
-  def increment_viewers!
-    update!(active_viewers: active_viewers + 1) if live?
-  end
-
-  def decrement_viewers!
-    update!(active_viewers: active_viewers - 1) if live? && active_viewers.positive?
-  end
-
   def transition_audience_to_live
-    SseBroadcaster.broadcast("/videos/#{id}", {state: state})
+    SseBroadcaster.broadcast("videos/#{id}", {state: state, type: "StateChange", timecodeMs: 0})
   end
 
   def recent_events_for_live

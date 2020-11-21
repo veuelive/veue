@@ -29,7 +29,7 @@ class VideoEvent < ApplicationRecord
 
   def broadcast_message!
     message = to_hash
-    message[:timecodeMs] = 0 if instant_broadcast_processing
+    message[:timecodeMs] = 0 if instant_broadcast_processing?
     message[:viewers] = video.video_views.connected.count
     SseBroadcaster.broadcast(
       "videos/#{video_id}",
@@ -47,7 +47,7 @@ class VideoEvent < ApplicationRecord
 
   # This should be overridden if the message
   # should be immediately processed on the client
-  def instant_broadcast_processing
+  def instant_broadcast_processing?
     false
   end
 

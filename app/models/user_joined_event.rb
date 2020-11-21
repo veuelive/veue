@@ -10,7 +10,7 @@ class UserJoinedEvent < VideoEvent
   end
 
   # Immediately deliver via channel
-  def instant_broadcast_processing
+  def instant_broadcast_processing?
     true
   end
 end

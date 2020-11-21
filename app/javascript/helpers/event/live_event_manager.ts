@@ -1,15 +1,16 @@
 import EventManagerInterface from "types/event_manager_interface";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import { secureFetch } from "util/fetch";
-import { showHideByLogin } from "helpers/authentication_helpers";
 
 export const ViewerCountUpdateEvent = "ViewerCountUpdate";
 
 export default class LiveEventManager implements EventManagerInterface {
   private subscription;
   private eventSource: EventSource;
+  private allowRemoteReload: boolean;
 
-  constructor() {
+  constructor(allowRemoteReload: boolean) {
+    this.allowRemoteReload = allowRemoteReload;
     const videoId = getCurrentVideoId();
 
     this.eventSource = new EventSource(
@@ -34,7 +35,7 @@ export default class LiveEventManager implements EventManagerInterface {
 
   async received(event: MessageEvent): Promise<void> {
     const data = JSON.parse(event.data);
-    if (data?.state === "live") {
+    if (this.allowRemoteReload && data?.state === "live") {
       await this.reload();
     }
     VideoEventProcessor.addEvent(data);
@@ -46,11 +47,7 @@ export default class LiveEventManager implements EventManagerInterface {
   }
 
   async reload(): Promise<void> {
-    const response = await secureFetch("./");
-    const htmlResponse = await response.text();
-    const currentView = document.getElementById("main-container");
-    currentView.innerHTML = htmlResponse;
-    showHideByLogin();
+    document.location.reload();
   }
 
   seekTo(): Promise<void> {
