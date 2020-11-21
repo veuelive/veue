@@ -30,7 +30,7 @@ class VideoView < ApplicationRecord
     )
     video_view.last_seen_at = Time.zone.now
     video_view.user = user
-    video_view.save!
+    video_view.save! if video_view.valid?
     video_view
   end
 

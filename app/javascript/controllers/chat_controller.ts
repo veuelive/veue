@@ -9,12 +9,14 @@ export default class extends Controller {
 
   connect(): void {
     const bodyDataset = document.body.dataset;
+    this.messageInputTarget.addEventListener("focus", () => {
+      bodyDataset["keyboard"] = "visible";
+      setTimeout(function () {
+        window.scrollTo(0, 0);
+      }, 200);
+    });
     this.messageInputTarget.addEventListener(
-      "focusin",
-      () => (bodyDataset["keyboard"] = "visible")
-    );
-    this.messageInputTarget.addEventListener(
-      "focusout",
+      "blur",
       () => (bodyDataset["keyboard"] = "hidden")
     );
   }
@@ -32,7 +34,7 @@ export default class extends Controller {
       const videoId = getCurrentVideoId();
       if (message.length > 0) {
         postForm(`/videos/${videoId}/chat_messages`, { message }).then(() => {
-          console.log("Chat Sent!");
+          console.log("CHAT Sent!");
         });
       }
     }

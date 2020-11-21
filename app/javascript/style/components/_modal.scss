@@ -18,11 +18,12 @@
     z-index: 1;
     position: fixed;
     width: 350px;
+    max-width: 90vw;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fefefe;
-    padding: 2rem 2.25rem;
+    padding: 1.75rem 2rem;
     border: 1px solid #888;
     border-radius: 1rem;
     animation: fadeIn ease-in-out 300ms both;
@@ -42,16 +43,20 @@
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+      text-align: center;
       flex-wrap: wrap;
       width: 100%;
       .form-item {
         flex: 1;
+        text-align: center;
+        display: flex;
       }
       button,
       input,
       .iti {
-        width: 100%;
         margin-top: 0.5rem;
+        flex: 1;
+        flex-grow: 1;
       }
     }
   }
