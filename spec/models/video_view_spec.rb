@@ -18,9 +18,9 @@ RSpec.describe VideoView, type: :model do
       video_view = VideoView.process_view!(video, first_user, SOME_REQUEST)
       expect(video_view.user).to eq(first_user)
       expect(video_view.details).to eq({
-                                         ip_address: SOME_REQUEST.remote_ip,
-                                         browser: SOME_REQUEST.user_agent,
-                                       })
+        ip_address: SOME_REQUEST.remote_ip,
+        browser: SOME_REQUEST.user_agent,
+      }.stringify_keys)
 
       expect(video.user_joined_events.last.user).to eq(first_user)
 

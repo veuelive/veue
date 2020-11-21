@@ -4,7 +4,7 @@ class VideoView < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :video, counter_cache: true
   belongs_to :user_joined_event, optional: true, dependent: :destroy
-  after_create :process_user_joined_event
+  after_save :process_user_joined_event
 
   scope :connected, -> { where("updated_at > (current_timestamp - interval '2 minute')") }
 
@@ -43,6 +43,6 @@ class VideoView < ApplicationRecord
   end
 
   def process_user_joined_event
-    create_user_joined_event(video: video, user: user) if user
+    create_user_joined_event(video: video, user: user) if user && !user_joined_event_id
   end
 end

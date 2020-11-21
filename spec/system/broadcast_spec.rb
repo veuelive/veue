@@ -10,7 +10,7 @@ describe "Broadcast View" do
   let(:video) { user.videos.active.first }
 
   before :example do
-    driven_by(:media_browser)
+    driven_by :media_browser
     resize_window_desktop
   end
 
@@ -89,6 +89,8 @@ describe "Broadcast View" do
       it "should display live messages on broadcaster view" do
         first_message = someone_chatted
         second_message_text = "Cowabunga!"
+
+        expect(video.chat_messages.count).to eq(1)
 
         expect(find(".message-left")).to have_content(first_message.text)
         expect(page).to_not have_content(second_message_text)

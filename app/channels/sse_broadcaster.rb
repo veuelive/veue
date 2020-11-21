@@ -2,6 +2,8 @@
 
 class SseBroadcaster
   def self.broadcast(path, payload)
-    Faraday.post("https://leghorn.onrender.com/#{path}", data: payload.to_json)
+    url = "https://leghorn.onrender.com/#{path}"
+    Rails.logger.debug("POSTING MESSAGE TO #{url} " + payload.keys.inspect)
+    Faraday.post(url, data: payload.to_json)
   end
 end

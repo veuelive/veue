@@ -64,7 +64,7 @@ export default class extends BaseController {
     if (this.streamType === "vod") {
       this.eventManager = new VodEventManager(0);
     } else {
-      this.eventManager = new LiveEventManager();
+      this.eventManager = new LiveEventManager(true);
 
       setInterval(() => {
         this.sendViewedMessage();
