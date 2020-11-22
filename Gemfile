@@ -55,9 +55,6 @@ gem "cancancan"
 # A decorator pattern for our models
 gem "draper"
 
-# Our APM and alerting provider
-gem "appsignal"
-
 # HTTP Client for building API calls
 gem "faraday"
 
@@ -81,6 +78,14 @@ gem "activerecord-pg_enum"
 
 # For Windows users, this is required
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw]
+
+group :production do
+  # Gem for sending production logs to LogDNA
+  gem "logdna"
+
+  # Our APM and alerting provider
+  gem "appsignal"
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
