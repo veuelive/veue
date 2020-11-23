@@ -28,8 +28,7 @@ Metrics/ClassLength:
   Max: 1500
 
 Metrics/BlockLength:
-  Exclude:
-    - "spec/**/*"
+  Enabled: false
 
 # No space makes the method definition shorter and differentiates
 # from a regular assignment.

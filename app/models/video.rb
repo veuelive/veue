@@ -28,7 +28,6 @@ class Video < ApplicationRecord
         }
 
   aasm column: "state" do
-    # We aren"t live yet, but it'sa coming!
     state :pending, initial: true
 
     # The streamer has started, but MUX isn't yet fully live via RTMP. Their clock has started though
@@ -55,8 +54,7 @@ class Video < ApplicationRecord
 
     event :go_live do
       after do
-        transition_audience_to_live
-        send_ifttt! "#{user.display_name} went live!"
+        after_go_live
       end
 
       transitions from: :pending, to: :live
@@ -113,8 +111,15 @@ class Video < ApplicationRecord
     !(visibility.eql?("private") && (self.user != user))
   end
 
+  private
+
+  def after_go_live
+    transition_audience_to_live
+    send_ifttt!("#{user.display_name} went live!")
+  end
+
   def send_ifttt!(message)
-    url = "https://www.veuelive.com/videos/#{self.id}"
+    url = "https://www.veuelive.com/videos/#{id}"
     IfThisThenThatJob.perform_later(message: message, url: url)
   end
 end
