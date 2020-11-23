@@ -59,6 +59,9 @@ class User < ApplicationRecord
   end
 
   def trigger_user_created_events
-    IfThisThenThatJob.perform_later(message: "'#{display_name}' new user registered", url: "https://www.veuelive.com/users/#{self.id}")
+    IfThisThenThatJob.perform_later(
+      message: "'#{display_name}' new user registered",
+      url: "https://www.veuelive.com/users/#{id}",
+    )
   end
 end
