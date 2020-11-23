@@ -56,6 +56,7 @@ class Video < ApplicationRecord
     event :go_live do
       after do
         transition_audience_to_live
+        send_ifttt! "#{user.display_name} went live!"
       end
 
       transitions from: :pending, to: :live
@@ -67,6 +68,10 @@ class Video < ApplicationRecord
     end
 
     event :finish do
+      after do
+        send_ifttt! "#{user.display_name} stopped streaming"
+      end
+
       transitions from: %i[live paused pending ended], to: :finished
     end
   end
@@ -106,5 +111,10 @@ class Video < ApplicationRecord
 
   def can_be_accessed_by(user)
     !(visibility.eql?("private") && (self.user != user))
+  end
+
+  def send_ifttt!(message)
+    url = "https://www.veuelive.com/videos/#{self.id}"
+    IfThisThenThatJob.perform_later(message: message, url: url)
   end
 end
