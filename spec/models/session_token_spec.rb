@@ -3,8 +3,6 @@
 require "rails_helper"
 
 RSpec.describe SessionToken, type: :model do
-  include ActiveJob::TestHelper
-
   context "creation" do
     it "should generate a secret code" do
       phone_number = "+19043840459"
