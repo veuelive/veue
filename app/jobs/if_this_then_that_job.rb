@@ -3,6 +3,9 @@
 class IfThisThenThatJob < ApplicationJob
   queue_as :default
 
+  IFTTT_URL = "https://maker.ifttt.com/trigger/site_event/with/key"
+  public_constant(:IFTTT_URL)
+
   def perform(message:, url: nil)
     return if ENV["IFTTT_PUSH_KEY"].blank?
 
@@ -10,7 +13,7 @@ class IfThisThenThatJob < ApplicationJob
   end
 
   def self.process!(message:, url:)
-    post_url = "https://maker.ifttt.com/trigger/site_event/with/key/#{ENV['IFTTT_PUSH_KEY']}"
+    post_url = "#{IFTTT_URL}/#{ENV['IFTTT_PUSH_KEY']}"
     payload = {
       value1: message,
       value2: url,
