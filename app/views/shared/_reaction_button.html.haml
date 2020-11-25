@@ -1,3 +1,4 @@
-.like-button-area{data: {controller: "user-reaction", "hide-on-broadcast-view": true}}
-  .button-holder{data: {action: "click->user-reaction#reactionEvent"}}
-    = svg_tag "heart"
+- if videos_controller?
+  .reaction-button-area{data: {controller: "user-reaction"}}
+    .button-holder{data: {action: "click->user-reaction#sendReaction"}}
+      = svg_tag "heart"

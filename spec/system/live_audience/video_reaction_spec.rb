@@ -12,6 +12,7 @@ describe "Video Reaction Event" do
   before :example do
     resize_window_desktop
   end
+
   describe "user reaction" do
     before do
       visit videos_path

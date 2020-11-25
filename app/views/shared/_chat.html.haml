@@ -2,9 +2,9 @@
   .messages-overflow-container{"data-simplebar": true}
     .messages{data: {controller: "chat-messages"}}
   .like-notification{data: {controller: "reaction-notification"}}
-  
-  .message-write{data: { "controller": "chat", "show-when-logged-in": true }}
-    .write-area{placeholder: 'Send a message', contenteditable: true, role: "textbox", data: {action: "keydown->chat#chatBoxKeyDown", target: "chat.messageInput"}}
-    = render "shared/reaction_button"
-  .message-login-prompt{data: { "show-when-logged-out": true }}
-    %button{data: {action: "authentication#showModal"}} Login To Chat
+  - unless video.finished?
+    .message-write{data: { "controller": "chat", "show-when-logged-in": true }}
+      .write-area{placeholder: 'Send a message', contenteditable: true, role: "textbox", data: {action: "keydown->chat#chatBoxKeyDown", target: "chat.messageInput"}}
+      = render "shared/reaction_button"
+    .message-login-prompt{data: { "show-when-logged-out": true }}
+      %button{data: {action: "authentication#showModal"}} Login To Chat

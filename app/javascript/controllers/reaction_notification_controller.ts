@@ -2,6 +2,9 @@ import { Controller } from "stimulus";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import heartSvg from "images/heart.svg";
 
+export const UserReactionMessageEvent = "UserReactionMessage";
+export const VideoReactionEvent = "VideoReactionEvent";
+
 export default class extends Controller {
   static targets = ["notification"];
 
@@ -13,14 +16,14 @@ export default class extends Controller {
       this.displayUserReactiontNotification(event.detail.data.name);
     };
     VideoEventProcessor.subscribeTo(
-      "VideoReactionEvent",
+      VideoReactionEvent,
       this.userReactionCallbackHandler
     );
   }
 
   disconnect(): void {
     VideoEventProcessor.unsubscribeFrom(
-      "VideoReactionEvent",
+      VideoReactionEvent,
       this.userReactionCallbackHandler
     );
   }
@@ -30,7 +33,7 @@ export default class extends Controller {
     setTimeout(() => {
       this.element.innerHTML = "";
       document.dispatchEvent(
-        new CustomEvent("UserReactionMessage", { detail: { name: name } })
+        new CustomEvent(UserReactionMessageEvent, { detail: { name: name } })
       );
     }, 3000);
   }
