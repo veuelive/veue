@@ -5,11 +5,19 @@ import { secureFormFetch } from "util/fetch";
 import { showHideByLogin } from "helpers/authentication_helpers";
 
 export default class extends BaseController {
-  static targets = ["modal", "submitButton", "form"];
+  static targets = [
+    "modal",
+    "submitButton",
+    "form",
+    "secretCodeInput",
+    "nameInput",
+  ];
 
   readonly modalTarget!: HTMLElement;
   readonly submitButtonTarget!: HTMLButtonElement;
   readonly formTarget!: HTMLFormElement;
+  readonly secretCodeInputTarget!: HTMLInputElement;
+  readonly nameInputTarget!: HTMLInputElement;
   private iti: IntlTelInput.Plugin;
 
   connect(): void {
@@ -46,6 +54,22 @@ export default class extends BaseController {
         .setAttribute("value", this.iti.getNumber());
     } else {
       this.submitButtonTarget.disabled = true;
+    }
+  }
+
+  validateCode(): void {
+    if (this.secretCodeInputTarget.value.length !== 4) {
+      this.submitButtonTarget.disabled = true;
+    } else {
+      this.submitButtonTarget.disabled = false;
+    }
+  }
+
+  validateName(): void {
+    if (this.nameInputTarget.value.length === 0) {
+      this.submitButtonTarget.disabled = true;
+    } else {
+      this.submitButtonTarget.disabled = false;
     }
   }
 

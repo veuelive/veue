@@ -34,14 +34,14 @@ module AuthenticationTestHelpers
 
     def enter_phone_number(user)
       click_button("Login")
-      fill_in("phone_number_input", with: user.phone_number)
-      click_button("Send Text")
+      find("#phone_number_input").fill_in(with: user.phone_number)
+      click_button("Continue")
     end
 
     def confirm_secret_code
       expect(page).to have_selector('input[name="secret_code"]')
       fill_in("secret_code", with: SessionToken.last.secret_code)
-      click_button("Validate")
+      click_button("Verify")
     end
   end
 end
