@@ -3,14 +3,16 @@
   .modal-content
     - if flash[:modal_error]
       .error= flash[:modal_error]
-    .modal-label
-      Login With Phone Number
+    .modal-image
+      = svg_tag 'logo'
     .form-area
       - @ula ||= (current_session_token || SessionToken.new)
       %form{data: { target: "authentication.form", method: (@ula.pending_confirmation? ? "PUT" : "POST"), url: (@ula.active? ? users_path : authentication_path)}}
         - if @ula.new?
-          .form-row
-            Enter your mobile number, and we'll log you in with a quick code!
+          .modal-label
+            Join the Conversation
+          .form-row__title
+            Enter your mobile number, and we'll log you in with a quick code.
           .form-row
             .form-item
               .form-item__wrapper
@@ -18,22 +20,61 @@
                 %input{type: 'hidden', name: "phone_number"}
           .form-row
             %button.form-button{data: {target: "authentication.submitButton", action: "click->authentication#doSubmit"}}
-              Send Text
+              Continue
+          .form-row
+            .form-privacy
+              %p
+                By clicking Continue, you agree to our
+                %a{href: "#"}Terms of Use
+                and you have read our
+                %a{href: "#"}Privacy Policy
+                and
+                %a{href:"#"}Cookie Use.
+          .footer
+            .footer__title
+              Your personal information is always yours
+            .footer__body
+              We only use your phone number to verify that you are here and you are a real person.
+
         - elsif @ula.pending_confirmation?
-          .form-row Enter the code we just texted you below!
+          .modal-label
+            Join the Conversation
+          .form-row__title
+            Enter below the code we just texted you to
+            = @phone_number
+          %p{data: {target: "input->authentication#iti"}}
           .form-row
             .form-item
-              %input{type: "text", name: "secret_code", autocomplete: "one-time-code", value: (Rails.env.development? ? @ula.secret_code : '') }
+              .form-code-div
+                .form-code
+                  %input#input{type: "number", name: "secret_code", maxlength: "4", autocomplete: "one-time-code", value: (Rails.env.development? ? @ula.secret_code : ''), oninput: "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", data:{action: "input->authentication#validateCode", target: "authentication.secretCodeInput"} }
+
               %input{type: 'hidden', name: "session_token_uuid", value: @ula.uuid}
           .form-row
             %button.form-button{data: {target: "authentication.submitButton", action: "click->authentication#doSubmit"}}
-              Validate
+              Verify
+          .footer
+            .footer__title
+              Your personal information is always yours
+            .footer__body
+              We only use your phone number to verify that you are here and you are a real person.
         - elsif @ula.active?
-          .form-row
-            Pick a Display name!
-          .form-row
-            .form-item
-              %input{type: "text", name: "display_name"}
-          .form-row
-            %button.form-button{data: {target: "authentication.submitButton", action: "click->authentication#doSubmit"}}
-              Save
+          .modal-label
+            Welcome Aboard!
+            .form-row__title
+              Pick a name that represents you to be displayed on the streaming chat.
+            .form-row
+              .form-item
+                %input#display-name-input{type: "text", name: "display_name", data:{action:"input->authentication#validateName", target:"authentication.nameInput"}}
+            .form-row
+              %button.form-button{disabled: true, data: {target: "authentication.submitButton", action: "click->authentication#doSubmit"}}
+                Save and Continue
+            .form-cancel
+              %a{href: "#"}Cancel
+            .footer
+              .footer__title
+                Have fun and make new friends
+              .footer__body
+                Be kind and always respect others. By continuing you accept the
+                %a{href:"#"}VEUE Community Guidelines.
+

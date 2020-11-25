@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 class AuthenticationsController < ApplicationController
+  include AuthenticationsHelper
+
   def create
     session[:session_token_uuid] = nil
     @ula = SessionToken.new(phone_number: params[:phone_number])
     @ula.save!
+    @phone_number = mask_phone_number(params[:phone_number])
     # We temporarily set this state to render the next partial correctly
     @ula.state = "pending_confirmation"
     render_modal
