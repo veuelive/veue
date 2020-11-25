@@ -1,4 +1,3 @@
-import { post } from "util/fetch";
 import { Controller } from "stimulus";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import heartSvg from "images/heart.svg";
@@ -11,7 +10,7 @@ export default class extends Controller {
 
   connect(): void {
     this.userReactionCallbackHandler = (event) => {
-      this.displayUserReactiontNotification(event.detail.data);
+      this.displayUserReactiontNotification(event.detail.data.name);
     };
     VideoEventProcessor.subscribeTo(
       "VideoReactionEvent",
@@ -26,22 +25,22 @@ export default class extends Controller {
     );
   }
 
-  private displayUserReactiontNotification(user: any): void {
-    this.element.innerHTML = renderLikeMarkup(user);
+  private displayUserReactiontNotification(name: string): void {
+    this.element.innerHTML = renderLikeMarkup(name);
     setTimeout(() => {
       this.element.innerHTML = "";
       document.dispatchEvent(
-        new CustomEvent("UserReactionMessage", { detail: user })
+        new CustomEvent("UserReactionMessage", { detail: { name: name } })
       );
     }, 3000);
   }
 }
 
-export function renderLikeMarkup(user): string {
+export function renderLikeMarkup(name: string): string {
   return `
     <div class="user-reaction">
       <img src=${heartSvg} alt="reaction-icon"/>
-      <span>${user.name}</span>
+      <span>${name}</span>
     </div>
   `;
 }
