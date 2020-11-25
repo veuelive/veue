@@ -54,6 +54,24 @@ describe "Broadcast View" do
       visit video_path(video)
       expect(find("#address-input").text).to eq(url)
     end
+
+    it "properly updates the title of the broadcast" do
+      title_input = "input[name='title']"
+      expect(video.title).to be_nil
+      new_title = "Look at my fancy title"
+
+      find(title_input).fill_in(with: new_title).native.send_keys(:enter)
+
+      # Makes us wait to know the title was updated
+      expect(page).to have_css("input[data-db-value='#{new_title}'")
+      expect(page).to have_field("title", with: new_title)
+      video.reload
+      expect(video.title).to eq(new_title)
+
+      # Survives page refresh
+      page.refresh
+      expect(page).to have_field("title", with: new_title)
+    end
   end
 
   describe "while live streaming" do
@@ -129,14 +147,64 @@ describe "Broadcast View" do
     end
 
     describe "update title feature" do
-      it "properly updates the title of the broadcast" do
-        expect(video.title).to be_nil
-        new_title = "Look at my fancy title"
+      title_input = "input[name='title']"
+      title_submit = "button[data-target='broadcast--title.submit']"
 
-        find("input[name='title']").base.send_keys(new_title, :enter)
+      it "updates the broadcast on button click" do
+        new_title = "super cool new title"
 
+        find(title_input).fill_in(with: new_title)
+
+        find(title_submit).click
+
+        expect(page).to have_css("input[data-db-value='#{new_title}'")
         video.reload
         expect(video.title).to eq(new_title)
+
+        # does NOT survive page refresh
+        page.refresh
+        expect(page).to have_field("title", with: "")
+      end
+
+      it "updates the broadcast on enter key" do
+        new_title = "this is my title"
+
+        find(title_input).fill_in(with: new_title)
+
+        find(title_submit).native.send_keys(:enter)
+
+        expect(page).to have_css("input[data-db-value='#{new_title}'")
+        video.reload
+        expect(video.title).to eq(new_title)
+      end
+
+      it "should not persist through page load after broadcast start" do
+        new_title = "this is my title"
+
+        find(title_input).fill_in(with: new_title).native.send_keys(:enter)
+        expect(page).to have_field("title", with: new_title)
+
+        page.refresh
+        expect(page).to have_field("title", with: "")
+      end
+
+      it "should reset the title on blur" do
+        new_title = "im typing a title"
+
+        find(title_input).click
+        find(title_input).fill_in(with: new_title)
+
+        expect(page).to have_field("title", with: new_title)
+
+        # simulates element.blur()
+        find("body").click
+
+        # Blur set timeout is 2 seconds.
+        using_wait_time(5) do
+          expect(page).to have_field("title", with: "")
+        end
+
+        expect(video.title).to eq(nil)
       end
     end
   end

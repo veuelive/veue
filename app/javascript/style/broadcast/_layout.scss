@@ -59,6 +59,9 @@ textarea {
         display: flex;
         flex-direction: row;
         .btn {
+          &:hover {
+            cursor: pointer;
+          }
           padding: 0.25rem;
           position: relative;
           svg {
@@ -88,6 +91,19 @@ textarea {
           }
         }
       }
+    }
+  }
+
+  .title-area {
+    display: flex;
+    justify-content: center;
+
+    > .title-input {
+      width: 70%;
+    }
+
+    > .title-submit {
+      width: 25%;
     }
   }
 }
