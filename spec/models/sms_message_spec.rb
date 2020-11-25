@@ -10,8 +10,6 @@ RSpec.describe SmsMessage, type: :model do
   end
 
   describe ".create_confirmation!" do
-    include ActiveJob::TestHelper
-
     it "should try and message twillio" do
       session_token = create(:login_attempt)
 

@@ -12,12 +12,12 @@ class EventsController < ApplicationController
 
   def recent
     video = Video.find(params[:video_id])
-    render(json: video.recent_events_for_live)
+    render(json: video.recent_events_for_live.map(&:to_hash))
   end
 
   def show
     video = Video.find(params[:video_id])
-    events = video.video_events.order("timecode_ms").map(&:to_json)
-    render(json: events)
+    events = video.video_events.order("timecode_ms")
+    render(json: events.map(&:to_hash))
   end
 end

@@ -8,10 +8,10 @@
           .widget
             .icon
               = svg_tag "user-icon"
-            #active-viewers
+            #active-viewers{data: {controller: "live-viewer-count", target: "live-viewer-count.counter"}}
               = current_video.active_viewers_count
-          .widget.red
-            = current_video.display_state
+          .widget.live
+            LIVE
         - if current_video.finished?
           - video_views = current_video.video_views.count
           .widget{"data-views": video_views}

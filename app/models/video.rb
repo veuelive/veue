@@ -14,6 +14,7 @@ class Video < ApplicationRecord
 
   has_many :mux_webhooks, dependent: :nullify
   scope :active, -> { where(state: %w[pending live starting]) }
+  scope :done, -> { where(state: %w[finished failed ended]) }
 
   after_save :broadcast_active_viewers, if: -> { saved_change_to_active_viewers? }
 
@@ -27,7 +28,6 @@ class Video < ApplicationRecord
         }
 
   aasm column: "state" do
-    # We aren"t live yet, but it'sa coming!
     state :pending, initial: true
 
     # The streamer has started, but MUX isn't yet fully live via RTMP. Their clock has started though
@@ -54,7 +54,7 @@ class Video < ApplicationRecord
 
     event :go_live do
       after do
-        transition_audience_to_live
+        after_go_live
       end
 
       transitions from: :pending, to: :live
@@ -66,6 +66,10 @@ class Video < ApplicationRecord
     end
 
     event :finish do
+      after do
+        send_ifttt! "#{user.display_name} stopped streaming"
+      end
+
       transitions from: %i[live paused pending ended], to: :finished
     end
   end
@@ -75,35 +79,12 @@ class Video < ApplicationRecord
     self.hls_url = "https://stream.mux.com/#{new_playback_id}.m3u8"
   end
 
-  def increment_viewers!
-    update!(active_viewers: active_viewers + 1) if live?
-  end
-
-  def decrement_viewers!
-    update!(active_viewers: active_viewers - 1) if live? && active_viewers.positive?
-  end
-
-  def broadcast_active_viewers
-    ActionCable.server.broadcast(
-      "active_viewers_#{id}",
-      {
-        viewers: active_viewers,
-      },
-    )
-  end
-
   def transition_audience_to_live
-    ActionCable.server.broadcast(
-      "live_audience_#{id}",
-      {
-        state: state,
-      },
-    )
+    SseBroadcaster.broadcast("videos/#{id}", {state: state, type: "StateChange", timecodeMs: 0})
   end
 
   def recent_events_for_live
-    (recent_created_at_sorted_events + recent_timecode_sorted_events)
-      .map(&:to_json)
+    recent_instant_events + recent_timecode_sorted_events
   end
 
   def recent_timecode_sorted_events
@@ -112,7 +93,7 @@ class Video < ApplicationRecord
       .sort_by(&:timecode_ms)
   end
 
-  def recent_created_at_sorted_events
+  def recent_instant_events
     user_joins = user_joined_events.order("created_at DESC").limit(10)
     (chat_messages_for_live + user_joins)
       .sort_by(&:created_at)
@@ -128,5 +109,17 @@ class Video < ApplicationRecord
 
   def can_be_accessed_by(user)
     !(visibility.eql?("private") && (self.user != user))
+  end
+
+  private
+
+  def after_go_live
+    transition_audience_to_live
+    send_ifttt!("#{user.display_name} went live!")
+  end
+
+  def send_ifttt!(message)
+    url = "https://www.veuelive.com/videos/#{id}"
+    IfThisThenThatJob.perform_later(message: message, url: url)
   end
 end

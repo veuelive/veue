@@ -1,5 +1,6 @@
 import { displayTime } from "util/time";
 import Timecode from "util/timecode";
+import { VideoEventProcessor } from "helpers/event/event_processor";
 
 export default class {
   public timecodeMs: number;
@@ -20,6 +21,7 @@ export default class {
     this.tickInterval = setInterval(() => {
       this.timecodeMs = Date.now() - this.startedAt;
       this.drawTimecode();
+      VideoEventProcessor.syncTime(this.timecodeMs);
     }, 10);
   }
 

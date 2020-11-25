@@ -9,6 +9,10 @@ describe "Prerecorded Audience View" do
   let(:user) { create(:user) }
   let(:video) { create(:vod_video) }
 
+  before :each do
+    resize_window_desktop
+  end
+
   describe "anonymous user" do
     it "should have a video to play!" do
       visit video_path(video)
@@ -31,27 +35,28 @@ describe "Prerecorded Audience View" do
 
       # Refresh the page
       visit video_path(video)
-      refreshed_view_count = view_count.call
+      expect(view_count.call).to eq(initial_view_count)
 
-      expect(initial_view_count).to eq(refreshed_view_count)
-
-      # Log in to increase the view count
+      # Log in should keep the view count the same
       login_as user
       visit video_path(video)
 
-      logged_in_view_count = view_count.call
-      expect(initial_view_count + 1).to eq(logged_in_view_count)
+      expect(view_count.call).to eq(initial_view_count)
 
-      visit video_path(video)
-      refreshed_view_count = view_count.call
-      expect(logged_in_view_count).to eq(refreshed_view_count)
-
-      # Log out and refresh page to ensure were still not updating view count
       logout_user
 
+      login_as create(:user)
       visit video_path(video)
-      refreshed_view_count = view_count.call
-      expect(logged_in_view_count).to eq(refreshed_view_count)
+
+      expect(view_count.call).to eq(initial_view_count + 1)
+
+      # Log out and refresh page
+      logout_user
+
+      # Because the last "anonymous" session got associated with the second
+      # user, we are willing to take a new "anonymous" view from this UA+IP
+      visit video_path(video)
+      expect(view_count.call).to eq(initial_view_count + 2)
     end
   end
 end

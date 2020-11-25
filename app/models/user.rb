@@ -22,6 +22,8 @@ class User < ApplicationRecord
   validates :display_name, length: {maximum: 40, minimum: 1}, presence: true
   validates :phone_number, phone_number: true
 
+  after_create :trigger_user_created_events
+
   encrypts :mux_stream_key
   encrypts :phone_number
   blind_index :phone_number
@@ -54,5 +56,12 @@ class User < ApplicationRecord
 
   def follows?(streamer)
     streamers.include?(streamer)
+  end
+
+  def trigger_user_created_events
+    IfThisThenThatJob.perform_later(
+      message: "'#{display_name}' new user registered",
+      url: "https://www.veuelive.com/users/#{id}",
+    )
   end
 end

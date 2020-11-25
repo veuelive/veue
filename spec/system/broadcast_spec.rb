@@ -1,16 +1,17 @@
 # frozen_string_literal: true
 
 require "system_helper"
-require_relative("../support/audience_spec_helpers")
 
 # Note: These tests are trying to test a sequence that doesn't NORMALLY happen just
 # within the rails app. This has to be combined with the real Electron App to get full / perfect results.
 describe "Broadcast View" do
+  include BroadcastSystemHelpers
+
   let(:user) { create(:user) }
   let(:video) { user.videos.active.first }
 
   before :example do
-    driven_by(:media_browser)
+    driven_by :media_browser
     resize_window_desktop
   end
 
@@ -40,11 +41,8 @@ describe "Broadcast View" do
 
   describe "before live streaming" do
     it "should allow me to change my URL" do
-      bar = find("input[data-target='broadcast--browser.addressBar']")
-      url = "https://1982.com"
-      bar.set(url)
-      bar.native.send_keys(:return)
-      expect(find("*[data-broadcast--browser-url]")["data-broadcast--browser-url"]).to eq(url)
+      navigate_to(url = "https://1982.com")
+
       find("*[data-broadcast-state='ready']")
       click_button("Start Broadcast")
       find("*[data-broadcast-started-at]")
@@ -87,9 +85,13 @@ describe "Broadcast View" do
       include AudienceSpecHelpers
 
       it "should display live messages on broadcaster view" do
-        set_timeout_wait
         first_message = someone_chatted
         second_message_text = "Cowabunga!"
+
+        expect(video.chat_messages.count).to eq(1)
+
+        # VEUE-257 - Navigation events can throw off processing after being live
+        navigate_to("https://1982.com")
 
         expect(find(".message-left")).to have_content(first_message.text)
         expect(page).to_not have_content(second_message_text)

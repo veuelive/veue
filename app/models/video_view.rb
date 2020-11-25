@@ -4,7 +4,9 @@ class VideoView < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :video, counter_cache: true
   belongs_to :user_joined_event, optional: true, dependent: :destroy
-  after_create :process_user_joined_event
+  after_save :process_user_joined_event
+
+  scope :connected, -> { where("updated_at > (current_timestamp - interval '2 minute')") }
 
   # Only 1 user allowed to view per video
   validates :user_id,
@@ -15,21 +17,32 @@ class VideoView < ApplicationRecord
 
   # # If its a "NULL" user, only 1 set of unique details allowed.
   validates :details,
-            if: -> { user_id.nil? },
-            uniqueness: {scope: :video_id}
+            uniqueness: {scope: %i[video_id user_id]}
 
   def self.process_view!(video, user, request)
-    video_view = video.video_views.build(
-      user: user,
-      details: {
-        ip_address: request.remote_ip,
-        browser: request.user_agent,
-      },
+    details = {
+      ip_address: request.remote_ip,
+      browser: request.user_agent,
+    }
+    video_view = find_existing(video, user, details)
+    video_view ||= video.video_views.build(
+      details: details,
     )
+    video_view.last_seen_at = Time.zone.now
+    video_view.user = user
     video_view.save! if video_view.valid?
+    video_view
+  end
+
+  def self.find_existing(video, user, details)
+    video_view ||= video.video_views.find_by(user: user) if user
+    return video_view if video_view
+
+    video_view = video.video_views.find_by(details: details)
+    return video_view if video_view && (video_view.user.nil? || video_view.user == user)
   end
 
   def process_user_joined_event
-    create_user_joined_event(video: video, user: user) if user
+    create_user_joined_event(video: video, user: user) if user && !user_joined_event_id
   end
 end

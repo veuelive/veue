@@ -14,7 +14,6 @@ import BaseController from "controllers/base_controller";
 import { startMuxData } from "controllers/audience/mux_integration";
 import { isProduction } from "util/environment";
 import { post } from "util/fetch";
-import subscribeLiveAudienceChannel from "channels/live_audience_channel";
 
 type StreamType = "upcoming" | "live" | "vod";
 export default class extends BaseController {
@@ -41,8 +40,6 @@ export default class extends BaseController {
   private eventManager: EventManagerInterface;
 
   connect(): void {
-    subscribeLiveAudienceChannel();
-
     this.streamType = this.data.get("stream-type") as StreamType;
 
     this.data.set("timecode", "-1");
@@ -67,7 +64,11 @@ export default class extends BaseController {
     if (this.streamType === "vod") {
       this.eventManager = new VodEventManager(0);
     } else {
-      this.eventManager = new LiveEventManager();
+      this.eventManager = new LiveEventManager(true);
+
+      setInterval(() => {
+        this.sendViewedMessage();
+      }, 60 * 1000);
     }
 
     this.videoTarget.addEventListener("loadedmetadata", async () => {
@@ -94,6 +95,10 @@ export default class extends BaseController {
   }
 
   authChanged(): void {
+    this.sendViewedMessage();
+  }
+
+  sendViewedMessage(): void {
     post("./viewed").then(() => console.log("Updated Viewer Count"));
   }
 

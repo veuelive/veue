@@ -47,8 +47,14 @@ body#videos__show {
      */
   @include mobilePortrait() {
     #layout-container {
-      height: -webkit-fill-available;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
     }
+
+    height: 100%;
 
     .content-area {
       flex-direction: column;
@@ -58,7 +64,7 @@ body#videos__show {
     .content-area__primary,
     .primary-video-area,
     .content-area__secondary {
-      width: 95vw;
+      width: 100vw;
     }
     canvas.fixed-secondary-canvas {
       // We don't want to show the fixed canvas when we are in a small view
@@ -70,18 +76,41 @@ body#videos__show {
       width: 25vw;
     }
 
+    // Hide some stuff on the page when we're mobile and writing a chat
+    &[data-keyboard="visible"] {
+      .content-area__primary,
+      .top-navbar {
+        display: none;
+      }
+
+      #layout-container {
+        //  height: 100%;
+        bottom: 270px;
+      }
+    }
+
+    .streamer-profile {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+
     .content-area__secondary {
       display: flex;
       height: 100%;
 
       .chat-section {
-        height: --webkit-fill-available;
+        div,
+        textarea {
+          font-size: 1rem;
+        }
       }
     }
   }
 
   @include mobileLandscape() {
-    width: 100vw;
+    #main-container {
+      height: -webkit-fill-available;
+    }
 
     .content-area {
       flex-direction: row;
@@ -93,10 +122,8 @@ body#videos__show {
       padding-left: env(safe-area-inset-left);
       flex: 1;
 
-      .primary-video-area,
-      canvas {
-        height: -webkit-fill-available;
-        width: unset;
+      .primary-video-area {
+        max-height: calc(min(100vh, -webkit-fill-available));
       }
     }
 
@@ -114,8 +141,8 @@ body#videos__show {
       display: none;
     }
 
-    .message-display {
-      font-size: 0.75rem;
+    .chat-section {
+      font-size: calc(min(0.65rem, 5vh));
     }
 
     .streamer-profile {

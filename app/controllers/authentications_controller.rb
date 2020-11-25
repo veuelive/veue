@@ -5,6 +5,8 @@ class AuthenticationsController < ApplicationController
     session[:session_token_uuid] = nil
     @ula = SessionToken.new(phone_number: params[:phone_number])
     @ula.save!
+    # We temporarily set this state to render the next partial correctly
+    @ula.state = "pending_confirmation"
     render_modal
   end
 

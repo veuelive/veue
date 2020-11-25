@@ -28,7 +28,10 @@ export function calculateBroadcastArea(
   return rect;
 }
 
-export function calculateFullVideoSize(rect, scaleFactor): Rectangle {
+export function calculateFullVideoSize(
+  rect: Rectangle,
+  scaleFactor: number
+): Rectangle {
   return {
     width: rect.width * scaleFactor,
     height: rect.height * scaleFactor,

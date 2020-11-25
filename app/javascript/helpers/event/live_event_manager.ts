@@ -1,27 +1,23 @@
 import EventManagerInterface from "types/event_manager_interface";
-import consumer from "../../channels/consumer";
 import { VideoEventProcessor } from "helpers/event/event_processor";
-import subscribeViewersChannel from "channels/active_viewers_channel";
 import { secureFetch } from "util/fetch";
+
+export const ViewerCountUpdateEvent = "ViewerCountUpdate";
 
 export default class LiveEventManager implements EventManagerInterface {
   private subscription;
+  private eventSource: EventSource;
+  private allowRemoteReload: boolean;
 
-  constructor() {
-    subscribeViewersChannel();
-
+  constructor(allowRemoteReload: boolean) {
+    this.allowRemoteReload = allowRemoteReload;
     const videoId = getCurrentVideoId();
-    setTimeout(() => {
-      this.subscription = consumer.subscriptions.create(
-        {
-          channel: "LiveVideoChannel",
-          videoId,
-        },
-        this
-      );
-      const chatArea = document.getElementsByClassName("chat-section");
-      chatArea[0].setAttribute("data-live-channel-subscription", "done");
-    }, 500);
+
+    this.eventSource = new EventSource(
+      "https://leghorn.onrender.com/videos/" + getCurrentVideoId()
+    );
+
+    this.eventSource.onmessage = (event) => this.received(event);
 
     secureFetch(`/videos/${videoId}/events/recent`)
       .then((response) => response.json())
@@ -37,8 +33,21 @@ export default class LiveEventManager implements EventManagerInterface {
     this.subscription.unsubscribe();
   }
 
-  received(data: never): void {
+  async received(event: MessageEvent): Promise<void> {
+    const data = JSON.parse(event.data);
+    if (this.allowRemoteReload && data?.state === "live") {
+      await this.reload();
+    }
     VideoEventProcessor.addEvent(data);
+    if (data.viewers) {
+      document.dispatchEvent(
+        new CustomEvent(ViewerCountUpdateEvent, { detail: data.viewers })
+      );
+    }
+  }
+
+  async reload(): Promise<void> {
+    document.location.reload();
   }
 
   seekTo(): Promise<void> {

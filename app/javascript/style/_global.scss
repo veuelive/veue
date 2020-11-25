@@ -2,10 +2,15 @@
 @use "utils/font";
 
 body,
-* {
+*,
+textarea {
   font-family: font.$nunito;
   font-weight: font.$normal-weight;
   min-width: 0;
+}
+
+h2 {
+  font-size: 2rem;
 }
 
 body {

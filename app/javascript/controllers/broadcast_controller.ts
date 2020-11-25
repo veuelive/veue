@@ -89,7 +89,7 @@ export default class extends Controller {
       this.streamCapturer.stop();
     });
 
-    this.eventManager = new LiveEventManager();
+    this.eventManager = new LiveEventManager(false);
   }
 
   disconnect(): void {
@@ -121,10 +121,12 @@ export default class extends Controller {
     this.state = "finished";
     this.streamCapturer.stop();
   }
+
   copyCurrentURLToClipboard(): void {
     const video_path = window.location.href.replace("broadcasts/", "videos/");
     copyToClipboard(video_path);
   }
+
   pinPage(): void {
     const url = document
       .querySelector("input[data-target='broadcast--browser.addressBar']")

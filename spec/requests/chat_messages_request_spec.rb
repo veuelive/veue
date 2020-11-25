@@ -33,26 +33,6 @@ describe "ChatMessages", type: :request do
     end
   end
 
-  describe "create & broadcast" do
-    before do
-      login_as(user)
-    end
-
-    it "should broadcast message on channel" do
-      expect { post video_chat_messages_path(video), params: chat_message_params }.to(
-        have_broadcasted_to("live_video_#{video.to_param}").with(
-          hash_including(
-            data: {
-              message: chat_message_params[:message],
-              userId: user.id,
-              name: user.display_name,
-            },
-          ),
-        ),
-      )
-    end
-  end
-
   describe "create without authentication" do
     it "should not allow to create message" do
       post video_chat_messages_path(video), params: chat_message_params

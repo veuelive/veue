@@ -6,8 +6,6 @@ require "rails_helper"
 # talking to our service
 
 RSpec.describe "MuxWebhooks" do
-  include ActiveJob::TestHelper
-
   before :example do
     @webhook_idx = 0
     @live_stream_id = mux_webhooks[0]["data"]["id"]
