@@ -1,0 +1,7 @@
+= form_with model: @current_video do |form|
+  = form.label :video, :title
+  = form.text_field :title, size: 80, maxlength: 240, placeholder: "Title your broadcast!"
+  = form.submit "Update"
+
+
+

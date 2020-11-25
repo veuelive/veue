@@ -2,6 +2,7 @@
   .content-area
     .content--left
       = render partial: "browser_bar"
+      = render partial: "title"
     .content--right
       %video#webcam_preview{data: {target: "broadcast.webcamVideoElement"}}
       .broadcast-commands
