@@ -20,7 +20,19 @@ class VideosController < ApplicationController
     VideoView.process_view!(current_video, current_user, request)
   end
 
+  def reaction
+    like_event = build_user_like_event
+    like_event.save!
+  end
+
   private
+
+  def build_user_like_event
+    VideoReactionEvent.new(
+      video: current_video,
+      user: current_user,
+    )
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def current_video

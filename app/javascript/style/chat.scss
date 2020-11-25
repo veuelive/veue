@@ -81,6 +81,7 @@
         }
       }
 
+      .user-reaction,
       .user-joined {
         background: color.$neutral-regular;
         display: flex;
@@ -132,6 +133,22 @@
       min-height: 27px;
       border-radius: 10px;
       outline: none;
+    }
+    .reaction-button-area {
+      display: inline;
+      width: 5%;
+      margin-top: 1rem;
+      border: 1px solid color.$veue-corporate;
+      border-radius: 1rem;
+      padding: 1rem;
+      cursor: pointer;
+      float: left;
+      .button-holder {
+        display: inline;
+        path {
+          fill: color.$veue-corporate;
+        }
+      }
     }
   }
 
