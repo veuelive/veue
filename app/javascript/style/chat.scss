@@ -11,7 +11,8 @@
   display: flex;
   flex-direction: column;
   background-color: color.$white;
-  border-radius: 1rem;
+  font-size: 1rem;
+  border-radius: 10px;
   .messages-overflow-container {
     flex: 1 1 auto;
     overflow-y: auto;
@@ -28,33 +29,23 @@
       flex-direction: column;
       justify-content: flex-end;
 
-      .message-right {
-        display: flex;
-        justify-content: flex-end;
-        width: 100%;
-
-        &__text {
-          border: 2px solid color.$neutral-accents;
-          color: color.$gray-bluish;
-          border-radius: 0px 10px 10px 10px;
-        }
-      }
-
       .message-left {
         margin-top: 1rem;
         display: flex;
+        justify-content: flex-start;
+        margin-bottom: 5px;
 
         .message-content {
           &__name {
             color: color.$neutral-middle;
             margin-bottom: 0.25rem;
             margin-top: 0.25rem;
-            font-size: 0.75rem;
           }
 
           &__text {
-            background-color: color.$gray-lighter;
-            color: color.$gray-darker-2;
+            background-color: color.$white;
+            color: color.$neutral-dark;
+            border: 1px solid color.$neutral-accents;
           }
         }
 
@@ -67,10 +58,25 @@
         }
       }
 
+      .message-right {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        margin-bottom: 5px;
+
+        &__text {
+          border: 2px solid color.$neutral-accents;
+          color: color.$gray-bluish;
+          border-radius: 10px 0px 10px 10px;
+        }
+      }
+
       .message-grouped {
         &__text {
-          background-color: color.$gray-lighter;
-          color: color.$gray-darker-2;
+          background-color: color.$white;
+          color: color.$neutral-dark;
+          border: 1px solid color.$neutral-accents;
+          margin-bottom: 20px;
         }
       }
 
@@ -79,57 +85,52 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        margin: 5px 0 5px 0;
-        border-radius: 10px;
+        margin: 5px 0px;
+        border-radius: 15px;
         padding: 5px 10px;
         color: white;
+        min-height: 28px;
+        max-width: 220px;
+
+        div {
+          margin: 5px 0px 5px 10px;
+          align-items: center;
+        }
 
         img {
-          width: 14px;
           color: white;
-          margin-right: 5px;
+          width: 15px;
+          margin-left: 5px;
         }
       }
 
       .border-left {
-        border-radius: 0.5rem 1rem 1rem 1rem;
+        border-radius: 0px 10px 10px 10px;
       }
 
       .message-display {
         padding: 0.5rem 1rem;
-        font-size: 1rem;
         display: inline-block;
-        margin-bottom: 0.25rem;
       }
     }
   }
   .message-write {
-    border-top: 1px solid color.$gray-light-1;
+    border-top: 1px solid color.$neutral-accents;
     width: 100%;
-    height: 4.5rem;
-    border-radius: 1rem;
+    min-height: 55px;
+    background: color.$white;
+    border-radius: 0px 0px 10px 10px;
+
+    > * {
+      margin: 12px;
+    }
+
     .write-area {
-      margin: 1rem;
-      border-radius: 1rem;
-      height: 2.5rem;
+      padding: 0.5rem 1rem;
       background: color.$neutral-background;
-      &__text {
-        font-size: 1rem;  
-        border-radius: 0.5rem;
-        color: color.$light-black;
-        font-weight: font.$normal-weight;
-        font-family: font.$nunito;
-        resize: none;
-        border: none;
-        background: color.$neutral-background;
-        min-height: 1.8rem;
-        max-height: 50vh;
-        // height: 1.8rem;
-        // height: auto;
-        vertical-align: 1rem;
-        padding-top: 0.6rem;
-         box-sizing: padding-box;
-      }
+      min-height: 27px;
+      border-radius: 10px;
+      outline: none;
     }
   }
 
@@ -138,5 +139,9 @@
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
+    button {
+      width: 100%;
+      background: color.$neutral-soft;
+    }
   }
 }
