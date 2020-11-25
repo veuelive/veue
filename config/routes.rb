@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     root "videos#index"
   end
 
-  resources :videos, only: %i[index show new] do
+  resources :videos, only: %i[index show new update] do
     member do
       post "viewed"
       post "reaction"
@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     resource :follow, only: %i[show create destroy]
   end
 
-  resources :broadcasts, only: [:show, :index, :update] do
+  resources :broadcasts, only: [:show, :index] do
     member do
       post "navigation_update"
       post "start"

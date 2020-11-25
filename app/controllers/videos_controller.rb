@@ -17,6 +17,10 @@ class VideosController < ApplicationController
   end
 
   def update
+    current_video.update!(video_params)
+    respond_to do |format|
+      format.all { render(nothing: true) }
+    end
   end
 
   def viewed
