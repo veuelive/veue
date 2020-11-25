@@ -39,7 +39,7 @@ export default class extends Controller {
 
 export function renderLikeMarkup(user): string {
   return `
-    <div id="notification" class="user-reaction">
+    <div class="user-reaction">
       <img src=${heartSvg} alt="reaction-icon"/>
       <span>${user.name}</span>
     </div>
