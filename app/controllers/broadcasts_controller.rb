@@ -12,6 +12,10 @@ class BroadcastsController < ApplicationController
     render
   end
 
+  def update
+    current_broadcast_video.update!(video_params)
+  end
+
   def start
     current_broadcast_video.update!(
       primary_shot: params[:primary_shot],
@@ -58,4 +62,8 @@ class BroadcastsController < ApplicationController
     @current_broadcast_video ||= current_user.videos.find(params[:id])
   end
   helper_method :current_broadcast_video
+
+  def video_params
+    params.permit(:video).require(:title)
+  end
 end
