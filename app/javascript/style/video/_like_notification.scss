@@ -1,0 +1,15 @@
+@use '../utils/color';
+
+.like-notification {
+  display: flex;
+  #notification {
+    padding: 0.5rem;
+    height: 23px;
+    border-radius: 1rem;
+    color: color.$white;
+    background-color: color.$veue-corporate;
+    span {
+      margin-left: 0.25rem;
+    }
+  }
+}
