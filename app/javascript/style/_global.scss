@@ -1,5 +1,6 @@
 @use "utils/color";
 @use "utils/font";
+@use "utils/accessibility";
 
 body,
 *,
@@ -30,6 +31,10 @@ a {
 }
 
 button {
+  &:hover {
+    cursor: pointer;
+  }
+
   &:active,
   &:hover,
   &:focus {

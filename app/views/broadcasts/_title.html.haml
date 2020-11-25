@@ -1,10 +1,20 @@
 .title-area{data: { controller: "broadcast--title" }}
-  %label.visually-hidden{ for: "title" }
+  %label.visuallyhidden{ for: "title" } Title
 
-  - values = { type: "text", name: "title", value: "", placeholder: "Title your broadcast!" }
-  - size = { maxlength: 240, size: "60" }
-  - data = { data: { action: "keydown->broadcast--title#doSubmit" }}
-  %input{ values.merge(size).merge(data) }
+  %input.title-input{
+    type: "text", name: "title", id: "title", value: current_broadcast_video.title,
+    placeholder: "Title your broadcast!", maxlength: 240, size: "80",
+    data: {
+      action: "keydown->broadcast--title#doSubmit
+               blur->broadcast--title#handleBlur focus->broadcast--title#handleFocus",
+      target: "broadcast--title.input"
+    }
+  }
 
-
-
+  %button.btn.title-btn{
+    data: {
+      action: "keydown->broadcast--title#doSubmit click->broadcast--title#doSubmit
+               blur->broadcast--title#handleBlur focus->broadcast--title#handleFocus",
+      target: "broadcast--title.submit"
+    }
+  } Update Title
