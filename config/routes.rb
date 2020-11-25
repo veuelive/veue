@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     resource :follow, only: %i[show create destroy]
   end
 
-  resources :broadcasts, only: [:show, :index] do
+  resources :broadcasts, only: [:show, :index, :update] do
     member do
       post "navigation_update"
       post "start"

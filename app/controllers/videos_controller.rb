@@ -16,6 +16,9 @@ class VideosController < ApplicationController
     viewed
   end
 
+  def update
+  end
+
   def viewed
     VideoView.process_view!(current_video, current_user, request)
   end
