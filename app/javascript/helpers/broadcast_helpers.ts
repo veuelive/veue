@@ -62,11 +62,3 @@ export function sendNavigationUpdate(navigationUpdate: NavigationUpdate): void {
     postJson("./navigation_update", navigationUpdate).then();
   }
 }
-
-export function hideOnBroadcastView(): void {
-  document
-    .querySelectorAll("*[data-hide-on-broadcast-view]")
-    .forEach((element: HTMLElement) => {
-      element.setAttribute("style", "display: none;");
-    });
-}

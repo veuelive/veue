@@ -1,15 +1,18 @@
 import BaseController from "./base_controller";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import { currentUserId } from "helpers/authentication_helpers";
-import { renderLikeMarkup } from "./reaction_notification_controller";
 import userSvg from "images/user-icon.svg";
+import {
+  renderLikeMarkup,
+  UserReactionMessageEvent,
+} from "./reaction_notification_controller";
 
 export default class ChatMessagesController extends BaseController {
   private myUserId: string;
   private lastMessageFromUserId: string;
   private chatMessageCallbackHandler: (event) => void;
   private userJoinedCallbackHandler: (event) => void;
-  private userReactionListner: (event) => void;
+  private userReactionListener: (event) => void;
 
   connect(): void {
     this.chatMessageCallbackHandler = (event) => {
@@ -28,7 +31,7 @@ export default class ChatMessagesController extends BaseController {
       this.userJoinedCallbackHandler
     );
 
-    this.userReactionSubscription();
+    this.subscribeToUserReactions();
 
     this.myUserId = currentUserId();
   }
@@ -43,16 +46,19 @@ export default class ChatMessagesController extends BaseController {
       this.userJoinedCallbackHandler
     );
     document.removeEventListener(
-      "UserReactionMessage",
-      this.userReactionListner
+      UserReactionMessageEvent,
+      this.userReactionListener
     );
   }
 
-  private userReactionSubscription() {
-    this.userReactionListner = (event: CustomEvent) => {
+  private subscribeToUserReactions() {
+    this.userReactionListener = (event: CustomEvent) => {
       this.displayVideoReactionNotice(event.detail.name);
     };
-    document.addEventListener("UserReactionMessage", this.userReactionListner);
+    document.addEventListener(
+      UserReactionMessageEvent,
+      this.userReactionListener
+    );
   }
 
   private displayVideoReactionNotice(user) {

@@ -21,14 +21,13 @@ class VideosController < ApplicationController
   end
 
   def reaction
-    like_event = build_user_like_event
-    like_event.save!
+    build_user_like_event
   end
 
   private
 
   def build_user_like_event
-    VideoReactionEvent.new(
+    VideoReactionEvent.create!(
       video: current_video,
       user: current_user,
     )
