@@ -1,4 +1,5 @@
-= form_with model: current_broadcast_video, method: "PUT", data: { controller: "broadcast--title" }, local: true do |form|
+= form_with model: current_broadcast_video, method: "PUT", local: true,
+  data: { controller: "broadcast--title", action: "broadcast--title#doSubmit" } do |form|
   = form.label :title, nil, style: "display: none;"
   = form.text_field :title, size: 60, maxlength: 240, placeholder: "Title your broadcast!"
   = form.submit "Update"
