@@ -22,6 +22,8 @@ class Video < ApplicationRecord
   has_one_attached :primary_shot
   include PGEnum(visibility: %w[public protected private], _prefix: "visibility")
 
+  validates :title, allow_nil: true, length: {maximum: 240}
+
   scope :public_or_protected,
         -> {
           where('"Videos"."visibility" = "public" OR "Videos"."visibility" = "protected" ')
