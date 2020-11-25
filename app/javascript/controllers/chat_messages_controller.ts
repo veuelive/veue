@@ -50,7 +50,7 @@ export default class ChatMessagesController extends BaseController {
 
   private userReactionSubscription() {
     this.userReactionListner = (event: CustomEvent) => {
-      this.displayVideoReactionNotice(event.detail);
+      this.displayVideoReactionNotice(event.detail.name);
     };
     document.addEventListener("UserReactionMessage", this.userReactionListner);
   }
