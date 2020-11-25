@@ -7,6 +7,7 @@ import {
   calculateBroadcastArea,
   calculateFullVideoSize,
   copyToClipboard,
+  hideOnBroadcastView,
 } from "helpers/broadcast_helpers";
 import TimecodeManager from "helpers/broadcast/timecode_manager";
 import { postForm } from "util/fetch";
@@ -40,6 +41,7 @@ export default class extends Controller {
       document.location.href = "/broadcasts";
     }
 
+    hideOnBroadcastView();
     this.state = "loading";
 
     this.mixer = new VideoMixer(this.webcamVideoElementTarget);
