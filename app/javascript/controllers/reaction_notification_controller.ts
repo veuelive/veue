@@ -43,7 +43,7 @@ export function renderLikeMarkup(name: string): string {
   return `
     <div class="user-reaction">
       <img src=${heartSvg} alt="reaction-icon"/>
-      <span>${name}</span>
+      <div>${name}</div>
     </div>
   `;
 }

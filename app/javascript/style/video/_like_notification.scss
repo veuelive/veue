@@ -3,12 +3,14 @@
 .like-notification {
   display: flex;
   .user-reaction {
+    display: flex;
     padding: 0.5rem;
     height: 23px;
-    border-radius: 1rem;
+    border-radius: 0.75rem;
     color: color.$white;
     background-color: color.$veue-corporate;
-    span {
+    align-items: center;
+    div {
       margin-left: 0.25rem;
     }
   }
