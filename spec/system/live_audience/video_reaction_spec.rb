@@ -21,7 +21,7 @@ describe "Video Reaction Event" do
     end
 
     it "should display a video heart notification" do
-      find(".button-holder").click
+      find(".reaction-button-area").click
       expect(page).to have_css(".user-reaction")
       expect(page).to have_css("div.messages > .user-reaction", wait: 4)
     end
