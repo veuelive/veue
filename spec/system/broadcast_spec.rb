@@ -127,5 +127,17 @@ describe "Broadcast View" do
         expect(clip_text).to eq(video_url(video, host: server.host, port: server.port))
       end
     end
+
+    describe "update title feature" do
+      it "properly updates the title of the broadcast" do
+        new_title = "Look at my fancy title"
+
+        find("#video_title").fill_in(with: new_title)
+        click_button "video-title__submit"
+
+        # Check that the video title was updated in the database
+        expect(video.title).to eq(new_title)
+      end
+    end
   end
 end
