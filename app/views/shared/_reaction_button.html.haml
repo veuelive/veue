@@ -1,4 +1,4 @@
 - if videos_controller?
-  .reaction-button-area{data: {controller: "user-reaction"}}
-    .button-holder{data: {action: "click->user-reaction#sendReaction"}}
+  .reaction-button-area{data: {controller: "user-reaction", action: "click->user-reaction#sendReaction"}}
+    .reaction-button
       = svg_tag "heart"
