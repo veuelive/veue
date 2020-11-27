@@ -1,7 +1,8 @@
-= form_with model: current_broadcast_video, method: "PUT", local: true, id: "video-title__form",
-  data: { controller: "broadcast--title", action: "broadcast--title#doSubmit" } do |form|
-  = form.label :title, nil, style: "display: none;"
-  = form.text_field :title, size: 60, maxlength: 240, placeholder: "Title your broadcast!"
-  = form.submit "Update", id: "video-title__submit"
+.title-area{data: { controller: "broadcast--title" }}
+  %label.visually-hidden{ for: "title" }
+  %input{ type: "text", name: "title", value: "", size: "60", maxlength: 240, placeholder: "Title your broadcast!",
+          data: { target: "broadcast--title.input" }}
+
+  %input{ type: "submit", value: "Update", data: { action: "broadcast--title#doSubmit keydown->broadcast--title#doSubmit" }}
 
 

@@ -17,7 +17,7 @@ class VideosController < ApplicationController
   end
 
   def update
-    current_video.update!(video_params)
+    current_user.videos.find(params[:id]).update!(video_params)
     render(json: :success)
   end
 
