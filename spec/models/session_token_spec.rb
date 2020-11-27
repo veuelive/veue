@@ -46,11 +46,11 @@ RSpec.describe SessionToken, type: :model do
       expect(ula.state).to eq("pending_confirmation")
 
       ula.process_secret_code!("1000")
-      expect(ula.state).to eq("failed")
+      expect(ula.state).to eq("incorrect")
 
       # But, it's too late!!!
       ula.process_secret_code!(ula.secret_code)
-      expect(ula.state).to eq("failed")
+      expect(ula.state).to eq("incorrect")
     end
 
     it "can create successful session without a user" do

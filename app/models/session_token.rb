@@ -18,6 +18,7 @@ class SessionToken < ApplicationRecord
     state :new, initial: true
     state :pending_confirmation
     state :failed
+    state :incorrect
     state :active
     state :revoked
 
@@ -25,8 +26,12 @@ class SessionToken < ApplicationRecord
       transitions from: :new, to: :pending_confirmation
     end
 
+    event :send_failed do
+      transitions from: :new, to: :failed
+    end
+
     event :wrong_code do
-      transitions from: %i[pending_confirmation new], to: :failed
+      transitions from: %i[pending_confirmation new], to: :incorrect
     end
 
     event :correct_code do

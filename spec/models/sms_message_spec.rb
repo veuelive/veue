@@ -11,7 +11,7 @@ RSpec.describe SmsMessage, type: :model do
 
   describe ".create_confirmation!" do
     it "should try and message twillio" do
-      session_token = create(:login_attempt)
+      session_token = create(:session_token)
 
       perform_enqueued_jobs
 
