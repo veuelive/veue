@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :videos, only: %i[index show new update] do
     member do
       post "viewed"
+      post "reaction"
     end
 
     resources :events, only: %i[show index] do

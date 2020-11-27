@@ -81,6 +81,7 @@
         }
       }
 
+      .user-reaction,
       .user-joined {
         background: color.$neutral-regular;
         display: flex;
@@ -126,12 +127,29 @@
       margin: 12px;
     }
 
-    .write-area {
-      padding: 0.5rem 1rem;
-      background: color.$neutral-background;
-      min-height: 27px;
-      border-radius: 10px;
-      outline: none;
+    .chat-controls {
+      display: flex;
+      .write-area {
+        padding: 0.5rem 1rem;
+        background: color.$neutral-background;
+        min-height: 27px;
+        border-radius: 10px;
+        outline: none;
+        flex-grow: 1;
+        margin-right: 0.5rem;
+      }
+      .reaction-button-area {
+        border: 1px solid color.$veue-corporate;
+        border-radius: 1rem;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        .button-holder {
+          display: inline;
+          path {
+            fill: color.$veue-corporate;
+          }
+        }
+      }
     }
   }
 

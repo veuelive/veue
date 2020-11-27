@@ -2,12 +2,17 @@ import BaseController from "./base_controller";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import { currentUserId } from "helpers/authentication_helpers";
 import userSvg from "images/user-icon.svg";
+import {
+  renderLikeMarkup,
+  UserReactionMessageEvent,
+} from "./reaction_notification_controller";
 
 export default class ChatMessagesController extends BaseController {
   private myUserId: string;
   private lastMessageFromUserId: string;
   private chatMessageCallbackHandler: (event) => void;
   private userJoinedCallbackHandler: (event) => void;
+  private userReactionListener: (event) => void;
 
   connect(): void {
     this.chatMessageCallbackHandler = (event) => {
@@ -26,6 +31,8 @@ export default class ChatMessagesController extends BaseController {
       this.userJoinedCallbackHandler
     );
 
+    this.subscribeToUserReactions();
+
     this.myUserId = currentUserId();
   }
 
@@ -38,6 +45,24 @@ export default class ChatMessagesController extends BaseController {
       "UserJoinedEvent",
       this.userJoinedCallbackHandler
     );
+    document.removeEventListener(
+      UserReactionMessageEvent,
+      this.userReactionListener
+    );
+  }
+
+  private subscribeToUserReactions() {
+    this.userReactionListener = (event: CustomEvent) => {
+      this.displayVideoReactionNotice(event.detail.name);
+    };
+    document.addEventListener(
+      UserReactionMessageEvent,
+      this.userReactionListener
+    );
+  }
+
+  private displayVideoReactionNotice(user) {
+    this.appendHtml(renderLikeMarkup(user));
   }
 
   private displayUserJoinedNotice(user) {
