@@ -30,11 +30,8 @@ RSpec.configure do |config|
 
   config.before(:each) do
     stub_const("Twilio::REST::Client", FakeTwilio)
+    FakeTwilio.reset!
     stub_const("MUX_SERVICE", FakeMuxService.new)
-  end
-
-  config.after(:each) do
-    FakeTwilio.messages = []
   end
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your

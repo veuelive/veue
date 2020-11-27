@@ -2,9 +2,7 @@
 
 FactoryBot.define do
   factory :session_token do
-    factory :login_attempt do
-      phone_number { PhoneTestHelpers.generate_valid }
-    end
+    phone_number { PhoneTestHelpers.generate_valid }
 
     factory :active_login do
       state { :active }
