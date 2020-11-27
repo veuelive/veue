@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe IfThisThenThatJob do
+RSpec.describe IfThisThenThatJob, type: :job do
   let(:video) { create(:video) }
 
   it "should run without error" do
