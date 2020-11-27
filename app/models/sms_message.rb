@@ -62,10 +62,15 @@ class SmsMessage < ApplicationRecord
       OpenStruct.new
     else
       client = Twilio::REST::Client.new
+      # Unfortunately, we must use "__send__" here because
+      # RuboCop will not consider that maybe this is NOT an ActiveRecord
+      # model and so will always try and change `#create` to `#create!` unless
+      # we do this. THANKS A LOT, RUBOCOP.
       client.messages
-            .create!(body: text,
-                     to: to,
-                     from: from)
+            .__send__(:create,
+                      body: text,
+                      to: to,
+                      from: from)
     end
   end
 end
