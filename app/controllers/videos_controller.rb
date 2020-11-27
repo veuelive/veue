@@ -17,7 +17,7 @@ class VideosController < ApplicationController
   end
 
   def update
-    current_user.videos.find(params[:id]).update!(video_params)
+    current_user.videos.find(params[:id]).update!(title: params[:title])
     render(json: :success)
   end
 
@@ -43,9 +43,4 @@ class VideosController < ApplicationController
     @current_video ||= Video.find(params[:id]).decorate
   end
   helper_method :current_video
-
-  # Only allow a list of trusted parameters through.
-  def video_params
-    params.require(:video).permit(:title)
-  end
 end

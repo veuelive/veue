@@ -1,8 +1,9 @@
 .title-area{data: { controller: "broadcast--title" }}
   %label.visually-hidden{ for: "title" }
-  %input{ type: "text", name: "title", value: "", size: "60", maxlength: 240, placeholder: "Title your broadcast!",
-          data: { target: "broadcast--title.input" }}
 
-  %input{ type: "submit", value: "Update", data: { action: "broadcast--title#doSubmit keydown->broadcast--title#doSubmit" }}
+  %input{ type: "text", name: "title", value: "", size: "60",
+          maxlength: 240, placeholder: "Title your broadcast!",
+          data: { action: "keydown->broadcast--title#doSubmit" }}
+
 
 
