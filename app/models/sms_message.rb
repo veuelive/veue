@@ -53,7 +53,7 @@ class SmsMessage < ApplicationRecord
   def failure!(error_code, error_message)
     Rails.logger.error(
       "Unable to send SMS for token #{session_token.id} with Twilio error code #{error_code}: #{error_message}",
-      )
+    )
     session_token.send_failed!
   end
 
@@ -63,9 +63,9 @@ class SmsMessage < ApplicationRecord
     else
       client = Twilio::REST::Client.new
       client.messages
-            .create(body: text,
-                      to: to,
-                      from: from)
+            .create!(body: text,
+                     to: to,
+                     from: from)
     end
   end
 end
