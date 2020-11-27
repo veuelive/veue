@@ -130,12 +130,12 @@ describe "Broadcast View" do
 
     describe "update title feature" do
       it "properly updates the title of the broadcast" do
+        expect(video.title).to be_nil
         new_title = "Look at my fancy title"
 
-        find("#video_title").fill_in(with: new_title)
-        click_button "video-title__submit"
+        find("input[name='title']").base.send_keys(new_title, :enter)
 
-        # Check that the video title was updated in the database
+        video.reload
         expect(video.title).to eq(new_title)
       end
     end
