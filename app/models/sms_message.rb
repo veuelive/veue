@@ -38,16 +38,23 @@ class SmsMessage < ApplicationRecord
     self.status = response.status
 
     if response.error_code
-      Rails.logger.error(
-        "Unable to send SMS for token #{session_token.id} with Twilio error code #{response.error_code}",
-      )
+      failure!(response.error_code, response.error_message)
     else
       success!(session_token)
     end
+  rescue Twilio::REST::TwilioError => e
+    failure!(e.code, e.message)
   end
 
   def success!(session_token)
     session_token.sent_code!
+  end
+
+  def failure!(error_code, error_message)
+    Rails.logger.error(
+      "Unable to send SMS for token #{session_token.id} with Twilio error code #{error_code}: #{error_message}",
+    )
+    session_token.send_failed!
   end
 
   def call_twillio!
@@ -55,6 +62,10 @@ class SmsMessage < ApplicationRecord
       OpenStruct.new
     else
       client = Twilio::REST::Client.new
+      # Unfortunately, we must use "__send__" here because
+      # RuboCop will not consider that maybe this is NOT an ActiveRecord
+      # model and so will always try and change `#create` to `#create!` unless
+      # we do this. THANKS A LOT, RUBOCOP.
       client.messages
             .__send__(:create,
                       body: text,
