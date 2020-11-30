@@ -1,13 +1,17 @@
 import { Controller } from "stimulus";
 
-export default class extends Controller {
+export default class PipController extends Controller {
   static targets = ["canvas"];
-
   connect(): void {
+    this.element.classList.add("bottom-right");
+    this.element.draggable = true;
+    this.element.ondragstart = this.onDragStart.bind(this);
+
     super.connect();
-    this.element.setAttribute(
-      "style",
-      "position: absolute; bottom: 2vw; right: 2vw;"
-    );
+  }
+
+  onDragStart(event): void {
+    event.effectAllowed = "move";
+    event.dropEffect = "none";
   }
 }
