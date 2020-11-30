@@ -4,6 +4,7 @@
 @use 'utils/spacing';
 @use 'utils/scroll';
 @use 'utils/text';
+@use '/utils/heartbeat';
 
 // Realtime chat section
 .chat-section {
@@ -72,6 +73,21 @@
         }
       }
 
+      .user-reaction {
+        margin: 5px 0px;
+        color: #9595a5;
+        min-height: 28px;
+        .content {
+          border: 2px solid #f0f0f6;
+          border-radius: 1rem;
+          display: inline-flex;
+          padding: 0 0.75rem;
+          div {
+            margin: 5px 0px 5px 10px;
+          }
+        }
+      }
+
       .message-grouped {
         &__text {
           background-color: color.$white;
@@ -81,7 +97,6 @@
         }
       }
 
-      .user-reaction,
       .user-joined {
         background: color.$neutral-regular;
         display: flex;
@@ -122,6 +137,7 @@
     min-height: 55px;
     background: color.$white;
     border-radius: 0px 0px 10px 10px;
+    z-index: 1;
 
     > * {
       margin: 12px;
@@ -139,14 +155,27 @@
         margin-right: 0.5rem;
       }
       .reaction-button-area {
-        border: 1px solid color.$veue-corporate;
-        border-radius: 1rem;
-        padding: 0.5rem 1rem;
+        border: 1px solid color.$neutral-middle;
+        display: flex;
+        align-items: center;
+        border-radius: 0.85rem;
+        padding: 0.5rem 0.85rem;
         cursor: pointer;
-        .reaction-button {
-          display: inline;
+        svg {
+          width: 14px;
+          height: 12px;
           path {
-            fill: color.$veue-corporate;
+            fill: color.$neutral-middle;
+          }
+        }
+        &.active {
+          cursor: default;
+          border: 1px solid color.$veue-corporate;
+          svg {
+            animation: beating 5s infinite;
+            path {
+              fill: color.$veue-corporate;
+            }
           }
         }
       }

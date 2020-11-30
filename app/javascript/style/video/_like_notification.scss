@@ -1,17 +1,35 @@
 @use '../utils/color';
+@use '../utils/heartbeat';
 
 .like-notification {
-  display: flex;
+  position: relative;
   .user-reaction {
-    display: flex;
+    top: 0;
+    position: absolute;
+    left: 1rem;
     padding: 0.5rem;
     height: 23px;
     border-radius: 0.75rem;
     color: color.$white;
     background-color: color.$veue-corporate;
     align-items: center;
-    div {
-      margin-left: 0.25rem;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    transition: all 1s ease;
+    .content {
+      display: flex;
     }
+    &__text {
+      margin-left: 0.5rem;
+    }
+  }
+  .move-up {
+    top: -70px;
+    img {
+      animation: beating 5s infinite;
+    }
+  }
+  .move-down {
+    top: 0;
   }
 }

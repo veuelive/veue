@@ -62,7 +62,7 @@ export default class ChatMessagesController extends BaseController {
   }
 
   private displayVideoReactionNotice(user) {
-    this.appendHtml(renderLikeMarkup(user));
+    this.appendHtml(renderLikeMarkup(user, true));
   }
 
   private displayUserJoinedNotice(user) {
