@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .content-area#video-show{
   "data": {
     "controller": "audience-view",
@@ -7,6 +8,11 @@
     "video-id": current_video.id
   }
 }
+=======
+
+
+.content-area#video-show{data: {"controller" => "audience-view", "audience-view" => { "stream-type" => current_video.stream_type}, "video-id": current_video.id}}
+>>>>>>> [VEUE-239]
   .content-area__primary
     .primary-video-area
       .primary-video__header{
@@ -44,13 +50,20 @@
         data: {
           controller: "audience--pip"
         },
-        draggable: "true"
+        draggable: "true",
+        target: "audience-view.pipComponent",
+        'corner-position': 'bottom-right'
       }
         %canvas.pip-secondary-canvas{
           "data-target": "audience-view.pipSecondaryCanvas audience--pip.canvas",
           width: 420,
           height: 340
         }
+        .pip-drop-quadrants
+          .quadrant.top-left{data: {target: 'audience-view.topLeft', controller: "audience--pip-quadrants"}}
+          .quadrant.top-right{data: {target: 'audience-view.topRight', controller: "audience--pip-quadrants"}}
+          .quadrant.bottom-left{data: {target: 'audience-view.bottomLeft', controller: "audience--pip-quadrants"}}
+          .quadrant.bottom-right{data: {target: 'audience-view.bottomRight', controller: "audience--pip-quadrants"}}
       = render partial: 'videos/partials/player_buttons'
     #streamer-profile-area
       = render partial: "videos/partials/streamer_profile"
