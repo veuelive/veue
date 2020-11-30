@@ -136,10 +136,7 @@ describe "Broadcast View" do
         find("input[name='title']").base.send_keys(new_title, :enter)
 
         video.reload
-
-        using_wait_time(5) do
-          expect(video.title).to eq(new_title)
-        end
+        expect(video.title).to eq(new_title)
       end
     end
   end
