@@ -1,9 +1,10 @@
 .title-area{data: { controller: "broadcast--title" }}
   %label.visually-hidden{ for: "title" }
 
-  %input{ type: "text", name: "title", value: "", size: "60",
-          maxlength: 240, placeholder: "Title your broadcast!",
-          data: { action: "keydown->broadcast--title#doSubmit" }}
+  - values = { type: "text", name: "title", value: "", placeholder: "Title your broadcast!" }
+  - size = { maxlength: 240, size: "60" }
+  - data = { data: { action: "keydown->broadcast--title#doSubmit" }}
+  %input{ values.merge(size).merge(data) }
 
 
 
