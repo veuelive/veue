@@ -14,6 +14,13 @@
     = yield :header if content_for?(:header)
   %body{body_attributes}
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K4PCNR3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    -#.example-parent{ style: "height: 100px; width: 100%; position: relative; border: solid 1px red;"}
+    -#  .example-origin
+    -#    #draggable-1{class: "example-draggable", ondragstart: "console.log(event)", draggable: "true", style:"float: left;  margin: 10px; width: 40px; height: 40px; background-color: black;"}
+    -#    #droppable-1{class: "example-dropable",  ondragenter: "console.log('ondragenter 1')", ondragleave: "console.log('ondragleave 1')", ondragover: "event.preventDefault()",  ondrop: "console.log(event); alert('dropped on 1')",  style:"float: left;   margin: 10px; width: 80px; height: 40px; background-color: white; border: solid 2px blue;"}
+    -#    #droppable-2{class: "example-dropable",  ondragenter: "console.log('ondragenter 1')", ondragleave: "console.log('ondragleave 1')", ondragover: "event.preventDefault()",  ondrop: "console.log(event); alert('dropped on 2')",  style:"float: left;   margin: 10px; width: 60px; height: 60px; background-color: light-green; border: solid 1px green;"}
+
     #layout-container{ data: { controller: "authentication" }}
       = render partial: 'layouts/navbar'
       #main-container
