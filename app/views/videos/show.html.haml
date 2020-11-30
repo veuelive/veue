@@ -1,15 +1,33 @@
-.content-area#video-show{data: {"controller" => "audience-view", "audience-view" => { "stream-type" => current_video.stream_type}, "video-id": current_video.id}}
+.content-area#video-show{
+  "data": {
+    "controller": "audience-view",
+    "audience-view": {
+      "stream-type": current_video.stream_type
+    },
+    "video-id": current_video.id
+  }
+}
   .content-area__primary
     .primary-video-area
-      .primary-video__header{data: {controller: "audience--header-bar"}}
+      .primary-video__header{
+        "data": { "controller": "audience--header-bar" }
+      }
         .primary-video__header__address_bar
-          #address-input{data: {target: "audience--header-bar.addressInput"}}
+          #address-input{
+            "data": {
+              "target": "audience--header-bar.addressInput"
+            }
+          }
         - if current_video.live?
           .widget
             .icon
               = svg_tag "user-icon"
-            #active-viewers{data: {controller: "live-viewer-count", target: "live-viewer-count.counter"}}
-              = current_video.active_viewers_count
+            #active-viewers{
+              "data": {
+                "controller": "live-viewer-count",
+                "target": "live-viewer-count.counter"
+              }
+            }= current_video.active_viewers_count
           .widget.live
             LIVE
         - if current_video.finished?
@@ -17,13 +35,36 @@
           .widget{"data-views": video_views}
             = video_views
             VIEWS
-      %canvas.primary-canvas{"data-target": "audience-view.primaryCanvas", width: 1200, height: 740}
-      .pip-component{data: {controller: "audience--pip"}, draggable: "true"}
-        %canvas.pip-secondary-canvas{"data-target": "audience-view.pipSecondaryCanvas audience--pip.canvas", width: 420, height: 340}
+      %canvas.primary-canvas{
+        "data-target": "audience-view.primaryCanvas",
+        width: 1200,
+        height: 740
+      }
+      .pip-component{
+        data: {
+          controller: "audience--pip"
+        },
+        draggable: "true"
+      }
+        %canvas.pip-secondary-canvas{
+          "data-target": "audience-view.pipSecondaryCanvas audience--pip.canvas",
+          width: 420,
+          height: 340
+        }
       = render partial: 'videos/partials/player_buttons'
     #streamer-profile-area
       = render partial: "videos/partials/streamer_profile"
   .content-area__secondary
-    %canvas.fixed-secondary-canvas{"data-target": "audience-view.fixedSecondaryCanvas", width: 420, height: 340}
-    %video.player__video.viewer{"data-target" => "audience-view.video", crossorigin: "anonymous", src: current_video.hls_url, style: "width: 0px;", playsinline: "playsinline"}
+    %canvas.fixed-secondary-canvas{
+      "data-target": "audience-view.fixedSecondaryCanvas",
+      width: 420,
+      height: 340
+    }
+    %video.player__video.viewer{
+      "data-target": "audience-view.video",
+      crossorigin: "anonymous",
+      src: current_video.hls_url,
+      style: "width: 0px;",
+      playsinline: "playsinline"
+    }
     = render partial: "shared/chat", locals: { video: current_video }
