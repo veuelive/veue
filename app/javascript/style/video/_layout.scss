@@ -75,6 +75,60 @@ body#videos__show {
     .pip-component canvas {
       width: 25vw;
     }
+    .pip-component {
+      position: absolute;
+      z-index: 2;
+      transition-property: top, left;
+      transition-duration: 1s;
+
+      &[data-corner-position="bottom-right"] {
+        top: 51vw;
+        left: 72vw;
+      }
+
+      &[data-corner-position="bottom-left"] {
+        top: 51vw;
+        left: 2vw;
+      }
+
+      &[data-corner-position="top-left"] {
+        top: 2vw;
+        left: 2vw;
+      }
+
+      &[data-corner-position="top-right"] {
+        top: 2vw;
+        left: 72vw;
+      }
+    }
+
+    .pip-drop-quadrants {
+      z-index: 1;
+      .quadrant {
+        width: 49%;
+        height: 49%;
+        position: absolute;
+        &.bottom-left {
+          bottom: 0;
+          left: 0;
+        }
+
+        &.top-left {
+          top: 0;
+          left: 0;
+        }
+
+        &.top-right {
+          top: 0;
+          right: 0;
+        }
+
+        &.bottom-right {
+          bottom: 0;
+          right: 0;
+        }
+      }
+    }
 
     // Hide some stuff on the page when we're mobile and writing a chat
     &[data-keyboard="visible"] {
