@@ -18,8 +18,15 @@
             = video_views
             VIEWS
       %canvas.primary-canvas{"data-target": "audience-view.primaryCanvas", width: 1200, height: 740}
-      .pip-component{data: {controller: "audience--pip"}, draggable: "true"}
+      .pip-drop-quadrants
+        .quadrant.top-left{data: {controller: "audience--pip-quadrants"}}
+        .quadrant.top-right{data: {controller: "audience--pip-quadrants"}}
+        .quadrant.bottom-left{data: {controller: "audience--pip-quadrants"}}
+        .quadrant.bottom-right{data: {controller: "audience--pip-quadrants"}}
+
+      .pip-component{data: {controller: "audience--pip"}}
         %canvas.pip-secondary-canvas{"data-target": "audience-view.pipSecondaryCanvas audience--pip.canvas", width: 420, height: 340}
+
       = render partial: 'videos/partials/player_buttons'
     #streamer-profile-area
       = render partial: "videos/partials/streamer_profile"
