@@ -17,8 +17,13 @@ export default class extends Controller {
 
   set state(state: string) {
     this.data.set("state", state);
-    if (this.state === "disabled")
-      setTimeout(() => (this.state = "enabled"), 5000);
+    if (this.state === "disabled") {
+      this.element.classList.add("active");
+      setTimeout(() => {
+        this.element.classList.remove("active");
+        this.state = "enabled";
+      }, 5000);
+    }
   }
 
   get state(): string {
