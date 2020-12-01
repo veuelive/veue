@@ -47,10 +47,7 @@ export default class extends Controller {
   }
 }
 
-export function renderLikeMarkup(
-  name: string,
-  isMessageArea: boolean = false
-): string {
+export function renderLikeMarkup(name: string, isMessageArea = false): string {
   const heartSvg = isMessageArea ? grayHeartSvg : whiteHeartSvg;
   return `
     <div class="user-reaction">
