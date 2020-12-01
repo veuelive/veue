@@ -82,6 +82,10 @@ RSpec.describe VideoEvent, type: :model do
       expect(input_error).to match("isLivingLegend")
     end
 
+    it "should consider nil a bad type" do
+      expect_invalid_input({foo: nil}, error_contains: "foo")
+    end
+
     describe "integer properties" do
       it "should allow integers" do
         expect_valid_input({foo: "hi", count: 1})

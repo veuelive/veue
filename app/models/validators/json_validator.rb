@@ -6,13 +6,12 @@ class JsonValidator < ActiveModel::EachValidator
     @attribute = attribute
     schema = record.public_send("#{attribute}_schema") || {}
     schema.deep_stringify_keys!
-    json.deep_stringify_keys!
     validate_required_keys(schema, json) if schema["required"]
     if schema["properties"]
-      properties = schema["properties"].stringify_keys
+      properties = schema["properties"]
 
       validate_object_properties(properties, json)
-      validate_known_properties(properties, json)
+      validate_known_properties(properties, json) if json
     else
       Rails.logger.warn("Should specify properties in a JSON schema")
     end
@@ -39,8 +38,6 @@ class JsonValidator < ActiveModel::EachValidator
   end
 
   def validate_property(type, value, key)
-    return if value.nil?
-
     case type
     when :boolean
       unless (value == true) || (value == false)
