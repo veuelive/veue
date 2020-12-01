@@ -2,52 +2,82 @@
 
 class JsonValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, json)
+    @record = record
+    @attribute = attribute
     schema = record.public_send("#{attribute}_schema") || {}
-    schema.stringify_keys!
-    validate_required_keys(record, attribute, schema, json) if schema["required"]
+    schema.deep_stringify_keys!
+    json.deep_stringify_keys!
+    validate_required_keys(schema, json) if schema["required"]
     if schema["properties"]
       properties = schema["properties"].stringify_keys
 
-      validate_key_types(record, attribute, properties, json)
-      validate_only_allowed_keys(record, attribute, properties, json)
+      validate_object_properties(properties, json)
+      validate_known_properties(properties, json)
     else
       Rails.logger.warn("Should specify properties in a JSON schema")
     end
   end
 
+  def add_error(name, message)
+    @record.errors.add(@attribute, name, message: message)
+  end
+
   private
 
-  def validate_required_keys(record, attribute, schema, json)
+  def validate_required_keys(schema, json)
     (schema["required"] - json.keys).each do |key|
-      record.errors.add(attribute, :json_missing_required_property, message: "Missing property #{key}")
+      add_error(:json_missing_required_property, "Missing property #{key}")
     end
   end
 
-  def validate_key_types(record, attribute, schema_properties, json)
+  def validate_object_properties(schema_properties, data, prefix="")
     schema_properties.each do |key, type|
-      next unless invalid_field_type(key, type, json)
+      next unless data.has_key?(key)
 
-      record.errors.add(attribute, :json_wrong_type, message: "#{attribute}.#{key} should be a #{type}")
+      validate_property(type, data[key], prefix + "." + key)
     end
   end
 
-  def invalid_field_type(key, type, json)
-    return unless json.has_key?(key)
-    return if valid_boolean?(key, type, json)
-    return if type.is_a?(Class) && json[key]&.is_a?(type)
+  def validate_property(type, value, key)
+    return if value.nil?
 
-    true
+    case type
+    when :boolean
+      unless (value == true) || (value == false)
+        add_error(:json_wrong_property_type, "Wrong type for #{key}– expected boolean")
+      end
+    when Array
+      validate_array_property(type, value, key)
+    else
+      add_error(:json_wrong_property_type, "Wrong type for #{key}– expected #{type}") unless value.is_a?(type)
+    end
   end
 
-  def valid_boolean?(key, type, json)
-    type == :boolean && (json[key] == true || json[key] == false)
+  def validate_array_property(type, value, prefix)
+    array_type = type[0]
+    return true if value.empty?
+
+    value.each_with_index do |element, index|
+      key = prefix + "[#{index}]"
+      if array_type.is_a?(Hash)
+        validate_object_properties(array_type, element, key)
+      else
+        validate_property(array_type, element, key)
+      end
+    end
   end
 
-  def validate_only_allowed_keys(record, attribute, schema_properties, json)
-    return unless json&.keys && schema_properties&.keys
+  def validate_known_properties(schema, data, prefix="")
+    data.each do |key, value|
+      add_error(:json_unknown_property, "Unknown property #{prefix}#{key}") && next unless schema.has_key?(key)
+      next unless value.is_a?(Array)
 
-    (json.keys - schema_properties.keys).each do |unallowed_key|
-      record.errors.add(attribute, :json_unknown_property, message: "Unknown property #{unallowed_key}")
+      array_type = schema[key][0]
+      next unless array_type.is_a?(Hash)
+
+      value.each_with_index do |object, index|
+        validate_known_properties(array_type, object.stringify_keys, prefix + "#{key}[#{index}].")
+      end
     end
   end
 end
