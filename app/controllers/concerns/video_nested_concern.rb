@@ -5,7 +5,7 @@ module VideoNestedConcern
 
   included do
     def current_video
-      @current_video ||= Video.find(params[:video_id] || params[:broadcast_id])
+      @current_video ||= Video.find(params[:video_id])
     end
     helper_method :current_video
   end

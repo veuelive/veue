@@ -33,6 +33,9 @@ class JsonValidator < ActiveModel::EachValidator
     schema_properties.each do |key, type|
       next unless data.has_key?(key)
 
+      # If we are expecting an integer, let's coalesce any String inputs into a number
+      data[key] = Integer(data[key], 10) if type == Integer && data[key].is_a?(String)
+
       validate_property(type, data[key], prefix + "." + key)
     end
   end
@@ -46,7 +49,8 @@ class JsonValidator < ActiveModel::EachValidator
     when Array
       validate_array_property(type, value, key)
     else
-      add_error(:json_wrong_property_type, "Wrong type for #{key}– expected #{type}") unless value.is_a?(type)
+      message = "Wrong type for #{key}– expected #{type} but got #{value.class}"
+      add_error(:json_wrong_property_type, message) unless value.is_a?(type)
     end
   end
 

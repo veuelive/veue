@@ -24,6 +24,12 @@ Rails.application.routes.draw do
   end
 
   resources :broadcasts, only: [:show, :index] do
+    scope module: "broadcasts" do
+      controller "event" do
+        post "layout"
+      end
+    end
+
     member do
       post "navigation_update"
       post "start"
