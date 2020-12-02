@@ -1,7 +1,8 @@
 .player-actions
-  %a.icon.toggle-audio{data: {action: "click->audience-view#toggleAudio", target: "audience-view.audio"}}
-    = svg_tag 'speaker'
   %a.active-icon.toggle-play{"data-action" => "click->audience-view#togglePlay", "data-target" => "audience-view.toggle", :title => "Toggle Play"}
     = svg_tag 'play'
   .time-display
     %span{"data-target": "audience-view.timeDisplay"}
+  %progress{ style: "background: red; width: 100px; color: yellow; margin-left: 1rem; margin-right: auto;", value: "0", min: "0", data: { target: "audience-view.progress" }}
+  %a.icon.toggle-audio{data: {action: "click->audience-view#toggleAudio", target: "audience-view.audio"}}
+    = svg_tag 'speaker'
