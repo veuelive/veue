@@ -43,6 +43,7 @@ RSpec.describe VideoEvent, type: :model do
     raise(event.errors.inspect) unless event.valid?
 
     expect(event).to be_valid
+    event
   end
 
   def expect_invalid_input(input, error_contains:)
@@ -92,7 +93,12 @@ RSpec.describe VideoEvent, type: :model do
       end
 
       it "should block non-integers" do
-        expect_invalid_input({foo: "hi", count: "1"}, error_contains: "Integer")
+        expect_invalid_input({foo: "hi", count: false}, error_contains: "Integer")
+      end
+
+      it "should coerce strings into integers" do
+        event = expect_valid_input({foo: "hi", count: "1"})
+        expect(event.input["count"]).to eq(1)
       end
     end
 
