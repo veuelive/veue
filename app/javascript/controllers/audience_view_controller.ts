@@ -27,6 +27,7 @@ export default class extends BaseController {
     "toggle",
     "audio",
     "timeDisplay",
+    "progress",
   ];
   readonly toggleTarget!: HTMLElement;
   readonly audioTarget!: HTMLElement;
@@ -35,6 +36,7 @@ export default class extends BaseController {
   readonly fixedSecondaryCanvasTarget!: HTMLCanvasElement;
   readonly pipSecondaryCanvasTarget!: HTMLCanvasElement;
   readonly timeDisplayTarget!: HTMLElement;
+  readonly progressTarget!: HTMLProgressElement;
 
   private broadcastLayout: BroadcastVideoLayout;
   private timecodeSynchronizer: TimecodeSynchronizer;
@@ -87,7 +89,12 @@ export default class extends BaseController {
       if (params.has("t")) {
         this.videoTarget.currentTime = parseInt(params.get("t"));
       }
-      await this.togglePlay();
+
+      this.progressTarget.setAttribute(
+        "max",
+        this.videoTarget.duration.toString()
+      );
+      this.togglePlay();
     });
 
     this.subscribeToAuthChange();
@@ -102,6 +109,8 @@ export default class extends BaseController {
         hls.attachMedia(this.videoTarget);
       }
     }
+
+    this.addProgressBarListeners();
   }
 
   authChanged(): void {
@@ -114,6 +123,7 @@ export default class extends BaseController {
 
   disconnect(): void {
     this.eventManager?.disconnect();
+    this.removeProgressBarListeners();
   }
 
   togglePlay(): void {
@@ -160,6 +170,38 @@ export default class extends BaseController {
 
   hideChat(): void {
     this.element.className = "content-area";
+  }
+
+  addProgressBarListeners() {
+    this.videoTarget.addEventListener(
+      "timeupdate",
+      this.handleTimeUpdate.bind(this)
+    );
+  }
+
+  removeProgressBarListeners() {
+    this.videoTarget.removeEventListener(
+      "timeupdate",
+      this.handleTimeUpdate.bind(this)
+    );
+  }
+
+  handleTimeUpdate() {
+    const progress = this.progressTarget;
+    const video = this.videoTarget;
+
+    if (!progress.getAttribute("max")) {
+      progress.setAttribute("max", video.duration.toString());
+    }
+
+    progress.value = this.timecodeSynchronizer.timecodeSeconds;
+  }
+
+  handleProgressBarClick(event: MouseEvent) {
+    const pos =
+      (event.pageX - this.progressTarget.offsetLeft) /
+      this.progressTarget.offsetWidth;
+    this.videoTarget.currentTime = pos * this.videoTarget.duration;
   }
 
   set state(state: string) {
