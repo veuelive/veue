@@ -4,7 +4,7 @@
 @use 'utils/spacing';
 @use 'utils/scroll';
 @use 'utils/text';
-@use '/utils/heartbeat';
+@use 'utils/reactions';
 
 // Realtime chat section
 .chat-section {
@@ -75,10 +75,10 @@
 
       .user-reaction {
         margin: 5px 0px;
-        color: #9595a5;
+        color: color.$gray-dark;
         min-height: 28px;
         .content {
-          border: 2px solid #f0f0f6;
+          border: 2px solid color.$neutral-accents;
           border-radius: 1rem;
           display: inline-flex;
           padding: 0 0.75rem;

@@ -2,8 +2,9 @@ import BaseController from "./base_controller";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import { currentUserId } from "helpers/authentication_helpers";
 import userSvg from "images/user-icon.svg";
+import heartSvg from "images/heart-gray.svg";
 import {
-  renderLikeMarkup,
+  renderReactionMarkup,
   UserReactionMessageEvent,
 } from "./reaction_notification_controller";
 
@@ -62,7 +63,7 @@ export default class ChatMessagesController extends BaseController {
   }
 
   private displayVideoReactionNotice(user) {
-    this.appendHtml(renderLikeMarkup(user, true));
+    this.appendHtml(renderReactionMarkup(user, heartSvg));
   }
 
   private displayUserJoinedNotice(user) {
