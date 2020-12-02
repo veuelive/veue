@@ -23,7 +23,9 @@ describe "Video Reaction Event" do
     it "should display a video heart notification" do
       find(".reaction-button-area").click
       expect(page).to have_css(".user-reaction")
-      expect(page).to have_css("div.messages > .user-reaction", wait: 5)
+      # Wait for 6 sec until the reaction notification dissappears (after
+      # timeout) and appears as a chat message event inside messages area.
+      expect(page).to have_css("div.messages > .user-reaction", wait: 6)
     end
   end
 end

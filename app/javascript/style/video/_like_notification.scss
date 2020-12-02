@@ -1,5 +1,5 @@
 @use '../utils/color';
-@use '../utils/heartbeat';
+@use '../utils/reactions';
 
 .like-notification {
   position: relative;
@@ -13,23 +13,15 @@
     color: color.$white;
     background-color: color.$veue-corporate;
     align-items: center;
-    -webkit-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    transition: all 1s ease;
+    animation: top 6s ease;
     .content {
       display: flex;
+    }
+    img {
+      animation: beating 5s;
     }
     &__text {
       margin-left: 0.5rem;
     }
-  }
-  .move-up {
-    top: -70px;
-    img {
-      animation: beating 5s infinite;
-    }
-  }
-  .move-down {
-    top: 0;
   }
 }
