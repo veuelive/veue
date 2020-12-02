@@ -8,6 +8,7 @@ class Video < ApplicationRecord
   has_many :user_joined_events, dependent: :destroy
   has_many :pin_events, dependent: :destroy
   has_many :video_events, dependent: :destroy
+  has_many :video_layout_events, dependent: :destroy
   has_many :video_views, dependent: :destroy
 
   has_many :pins, dependent: :destroy

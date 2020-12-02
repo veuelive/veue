@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 class VideoLayoutEvent < VideoEvent
-  # We should pass through all the data we get!
   def input_to_payload
-    input
+    {
+      width: input["width"],
+      height: input["height"],
+      sections: input["sections"],
+    }
   end
 
   def input_schema
