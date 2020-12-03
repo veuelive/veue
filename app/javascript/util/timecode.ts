@@ -5,6 +5,8 @@ export default class Timecode {
   public static codeCount = 12;
   public static digitHeight = 10;
   public static digitWidth = 30;
+  public static codeWidth = Timecode.codeCount * Timecode.digitWidth;
+  public static codeHeight = Timecode.digitHeight;
 
   public static numberToColors(number: number): string[] {
     const encodedDigits = this.numberToEncodedDigits(number);

@@ -40,9 +40,11 @@ RSpec.describe SmsMessage, type: :model do
     it "should try and message twillio" do
       Follow.create!(streamer_follow: follower, user_follow: streamer)
 
-      SmsMessage.notify_broadcast_start!(streamer: streamer,
-                                         follower: follower,
-                                         video_url: video_url(video))
+      SmsMessage.notify_broadcast_start!(
+        streamer: streamer,
+        follower: follower,
+        video_url: video_url(video),
+      )
 
       expect(FakeTwilio.messages.size).to eq(1)
 
