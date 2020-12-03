@@ -561,6 +561,7 @@
             <subtasks>
               <RakeTaskImpl description="Run the code examples in spec/decorators" fullCommand="spec:decorators" id="decorators" />
               <RakeTaskImpl description="Run the code examples in spec/extensions" fullCommand="spec:extensions" id="extensions" />
+              <RakeTaskImpl description="Run the code examples in spec/jobs" fullCommand="spec:jobs" id="jobs" />
               <RakeTaskImpl description="Run the code examples in spec/models" fullCommand="spec:models" id="models" />
               <RakeTaskImpl description="Run the code examples in spec/requests" fullCommand="spec:requests" id="requests" />
               <RakeTaskImpl description="Run the code examples in spec/system" fullCommand="spec:system" id="system" />

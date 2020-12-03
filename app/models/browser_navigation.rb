@@ -32,6 +32,6 @@ class BrowserNavigation < VideoEvent
         canGoForward: false,
         isLoading: false,
       },
-      )
+    )
   end
 end
