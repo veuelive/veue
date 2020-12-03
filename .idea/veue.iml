@@ -120,7 +120,6 @@
     <orderEntry type="library" scope="PROVIDED" name="image_processing (v1.12.0, RVM: ruby-2.7.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="inherited_resources (v1.11.0, RVM: ruby-2.7.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="inline_svg (v1.7.1, RVM: ruby-2.7.2) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="jbuilder (v2.10.0, RVM: ruby-2.7.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="jmespath (v1.4.0, RVM: ruby-2.7.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="jquery-rails (v4.4.0, RVM: ruby-2.7.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="json (v2.3.1, RVM: ruby-2.7.2) [gem]" level="application" />
@@ -247,7 +246,6 @@
         <option value="helper" />
         <option value="inherited_resources_controller" />
         <option value="integration_test" />
-        <option value="jbuilder" />
         <option value="job" />
         <option value="kaminari:config" />
         <option value="kaminari:views" />
@@ -327,7 +325,6 @@
         <option value="helper" />
         <option value="inherited_resources_controller" />
         <option value="integration_test" />
-        <option value="jbuilder" />
         <option value="job" />
         <option value="kaminari:config" />
         <option value="kaminari:views" />
