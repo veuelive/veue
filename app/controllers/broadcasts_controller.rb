@@ -17,15 +17,9 @@ class BroadcastsController < ApplicationController
       primary_shot: params[:primary_shot],
       secondary_shot: params[:secondary_shot],
     )
-    current_broadcast_video.browser_navigations.create!(
-      timecode_ms: 0,
-      user: current_broadcast_video.user,
-      input: {
-        url: params[:url],
-        canGoBack: false,
-        canGoForward: false,
-        isLoading: false,
-      },
+    BrowserNavigation.create_first_navigation!(
+      current_broadcast_video,
+      params[:url],
     )
     current_broadcast_video.start!
 

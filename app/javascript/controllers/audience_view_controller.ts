@@ -55,8 +55,10 @@ export default class extends BaseController {
     if (this.streamType !== "upcoming") {
       this.videoDemixer = new VideoDemixer(
         this.videoTarget,
-        this.primaryCanvasTarget,
-        [this.pipSecondaryCanvasTarget, this.fixedSecondaryCanvasTarget],
+        [
+          [this.primaryCanvasTarget],
+          [this.pipSecondaryCanvasTarget, this.fixedSecondaryCanvasTarget],
+        ],
         this.timecodeSynchronizer
       );
     }

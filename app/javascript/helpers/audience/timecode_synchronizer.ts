@@ -3,7 +3,7 @@ import Timecode from "util/timecode";
 export default class {
   private readonly canvas: HTMLCanvasElement;
   private readonly timecodeUpdatedCallback: () => void;
-  private canvasCtx: CanvasRenderingContext2D;
+  public readonly canvasCtx: CanvasRenderingContext2D;
   private _timecodeMs: number;
 
   constructor(timecodeUpdatedCallback: () => void) {
@@ -37,22 +37,6 @@ export default class {
       colorSequence.push(imageData.data.slice(dataStart, dataStart + 3));
     }
     this.timecode = Timecode.decodeColorSequence(colorSequence.reverse());
-  }
-
-  // This is just for debugging
-  drawCanvas(videoTarget: HTMLVideoElement, ratioToOriginal: number): void {
-    this.canvasCtx.drawImage(
-      videoTarget,
-      videoTarget.videoWidth -
-        Timecode.codeCount * Timecode.digitWidth * ratioToOriginal,
-      videoTarget.videoHeight - Timecode.digitHeight * ratioToOriginal,
-      Timecode.digitWidth * Timecode.codeCount * ratioToOriginal,
-      Timecode.digitHeight * ratioToOriginal,
-      0,
-      0,
-      Timecode.digitWidth * Timecode.codeCount,
-      Timecode.digitHeight
-    );
   }
 
   set timecode(timecodeMs: number) {
