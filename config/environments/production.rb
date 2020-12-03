@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'socket'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -77,7 +78,22 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
   if ENV["LOG_DNA_KEY"].present?
-    config.logger = Logdna::Ruby.new(ENV["LOG_DNA_KEY"])
+    ip = Socket.ip_address_list.detect{|intf| intf.ipv4_private?}
+
+    config.logger = Logdna::Ruby.new(
+      ENV["LOG_DNA_KEY"],
+      hostname: ENV["HOSTNAME"],
+      ip: ip.ip_address,
+      app: "Veue",
+      env: ENV["VEUE_ENV"],
+      meta: {
+        hostname: Socket.gethostname,
+        service: ENV['RENDER_SERVICE_NAME'],
+        git: {
+          commit: ENV['RENDER_GIT_COMMIT']
+        }
+      }
+    )
   elsif ENV["RAILS_LOG_TO_STDOUT"].present?
     logger = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
@@ -107,5 +123,5 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
-  routes.default_url_options[:host] = "veuelive.com"
+  routes.default_url_options[:host] = ENV["HOSTNAME"]
 end
