@@ -19,8 +19,10 @@ gem "webpacker"
 # Use Redis adapter to run Action Cable in production
 gem "redis"
 
-# Background Job Running Library for ActiveJob
-gem "sidekiq"
+source "https://gems.contribsys.com/" do
+  # Background Job Running Library for ActiveJob
+  gem "sidekiq-pro"
+end
 
 # Used for encrypting our Active Record attributes
 gem "lockbox"

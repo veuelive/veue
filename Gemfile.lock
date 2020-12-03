@@ -1,5 +1,6 @@
 GEM
   remote: https://rubygems.org/
+  remote: https://gems.contribsys.com/
   specs:
     aasm (5.0.8)
       concurrent-ruby (~> 1.0)
@@ -357,10 +358,13 @@ GEM
       rubyzip (>= 1.2.2)
     semantic_range (2.3.0)
     sexp_processor (4.15.0)
-    sidekiq (6.1.0)
+    sidekiq (6.1.2)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
+    sidekiq-pro (5.2.0)
+      connection_pool (>= 2.2.3)
+      sidekiq (>= 6.1.0)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -449,7 +453,7 @@ DEPENDENCIES
   rspec-rails
   rubocop-rails
   selenium-webdriver
-  sidekiq
+  sidekiq-pro!
   spring
   spring-watcher-listen (~> 2.0.0)
   twilio-ruby

@@ -1,5 +1,24 @@
 # Veue
 
+### Quick Links
+
+- Production:
+
+  - [Site](https://www.veuelive.com)
+  - [SideKiq UI](https://www.veuelive.com/_/sidekiq)
+  - [Render Service](https://dashboard.render.com/web/srv-bukoj3m9ph1hqurcua20)
+  - [APM](https://appsignal.com/veue/sites/5f1b3af314ad66221c331630/dashboard)
+  - [Logs](https://app.logdna.com/e4202f546b/logs/view/560b2cfe31)
+
+- Stage
+  - [Site](https://stage.veuelive.com)
+  - [SideKiq UI](https://stage.veuelive.com/_/sidekiq)
+  - [Render Service](https://dashboard.render.com/web/srv-bv4jnvgn4r071o276gbg)
+  - [APM](https://appsignal.com/veue/sites/5f9c4d5c7478205001c50b2a/dashboard)
+  - [Logs](https://app.logdna.com/e4202f546b/logs/view/9603e9e850)
+
+## Introduction
+
 This is the primary Rails application for Veue. It's designed to be as standard of a Rails app as is possible,
 using the best practices of the Rails community and the included tooling around the ecosystem.
 
@@ -194,6 +213,15 @@ To speed up development of TS files
 ```
 
 ### 8. sidekiq
+
+You must install the License on any machine that you want
+to install gems on. Just run this command once:
+
+```bash
+bundle config gems.contribsys.com ab21b078:c8a6ea8f
+```
+
+During development, you do not need to run a full redis+sidekiq instance, but if you are doing advanced development, it might be useful!
 
 To run background jobs
 (from root of the project in a new shell)
