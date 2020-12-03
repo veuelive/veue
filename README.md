@@ -214,13 +214,6 @@ To speed up development of TS files
 
 ### 8. sidekiq
 
-You must install the License on any machine that you want
-to install gems on. Just run this command once:
-
-```bash
-bundle config gems.contribsys.com ab21b078:c8a6ea8f
-```
-
 During development, you do not need to run a full redis+sidekiq instance, but if you are doing advanced development, it might be useful!
 
 To run background jobs
