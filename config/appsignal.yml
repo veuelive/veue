@@ -1,0 +1,4 @@
+production:
+  ignore_errors:
+    - ActionController::RoutingError
+    - ActiveRecord::RecordNotFound
