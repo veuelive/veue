@@ -25,7 +25,10 @@ export default class extends BaseController {
     "toggle",
     "audio",
     "timeDisplay",
-    "progress",
+    "timeDuration",
+    "progressBar",
+    "progressBarBackground",
+    "progressBarButton",
   ];
   readonly toggleTarget!: HTMLElement;
   readonly audioTarget!: HTMLElement;
@@ -34,12 +37,16 @@ export default class extends BaseController {
   readonly fixedSecondaryCanvasTarget!: HTMLCanvasElement;
   readonly pipSecondaryCanvasTarget!: HTMLCanvasElement;
   readonly timeDisplayTarget!: HTMLElement;
-  readonly progressTarget!: HTMLProgressElement;
+  readonly progressBarTarget!: HTMLSpanElement;
+  readonly progressBarBackgroundTarget!: HTMLSpanElement;
+  readonly progressBarButtonTarget!: HTMLButtonElement;
+  readonly timeDurationTarget!: HTMLElement;
 
   private timecodeSynchronizer: TimecodeSynchronizer;
   private streamType: StreamType;
   private videoDemixer: VideoDemixer;
   private eventManager: EventManagerInterface;
+  private mouseIsDown: boolean;
 
   connect(): void {
     this.streamType = this.data.get("stream-type") as StreamType;
@@ -82,9 +89,9 @@ export default class extends BaseController {
         this.videoTarget.currentTime = parseInt(params.get("t"));
       }
 
-      this.progressTarget.setAttribute(
-        "max",
-        this.videoTarget.duration.toString()
+      this.progressBarTarget.dataset.duration = this.videoTarget.duration.toString();
+      this.timeDurationTarget.innerHTML = displayTime(
+        this.videoTarget.duration
       );
       this.togglePlay();
     });
@@ -92,7 +99,6 @@ export default class extends BaseController {
     this.subscribeToAuthChange();
 
     if (!this.videoTarget.canPlayType("application/vnd.apple.mpegurl")) {
-      // } else if (Hls.isSupported()) {
       const hlsSource = this.videoTarget.getAttribute("src");
       if (hlsSource) {
         // HLS.js-specific setup code
@@ -164,36 +170,106 @@ export default class extends BaseController {
     this.element.className = "content-area";
   }
 
-  addProgressBarListeners() {
+  addProgressBarListeners(): void {
     this.videoTarget.addEventListener(
       "timeupdate",
       this.handleTimeUpdate.bind(this)
     );
+
+    this.progressBarBackgroundTarget.addEventListener(
+      "mousedown",
+      this.handleProgressBarMouseDown.bind(this),
+      false
+    );
+    this.progressBarBackgroundTarget.addEventListener(
+      "mouseup",
+      this.handleProgressBarMouseUp.bind(this),
+      false
+    );
+    this.progressBarBackgroundTarget.addEventListener(
+      "mousemove",
+      this.handleProgressBarMouseMove.bind(this),
+      false
+    );
   }
 
-  removeProgressBarListeners() {
+  removeProgressBarListeners(): void {
     this.videoTarget.removeEventListener(
       "timeupdate",
       this.handleTimeUpdate.bind(this)
     );
+
+    this.progressBarBackgroundTarget.addEventListener(
+      "mousedown",
+      this.handleProgressBarMouseDown.bind(this),
+      false
+    );
+    this.progressBarBackgroundTarget.addEventListener(
+      "mouseup",
+      this.handleProgressBarMouseUp.bind(this),
+      false
+    );
+    this.progressBarBackgroundTarget.addEventListener(
+      "mousemove",
+      this.handleProgressBarMouseMove.bind(this),
+      false
+    );
   }
 
-  handleTimeUpdate() {
-    const progress = this.progressTarget;
+  handleTimeUpdate(): void {
+    const progress = this.progressBarTarget;
     const video = this.videoTarget;
 
-    if (!progress.getAttribute("max")) {
-      progress.setAttribute("max", video.duration.toString());
+    if (!progress.dataset.duration) {
+      progress.dataset.duration = video.duration.toString();
     }
 
-    progress.value = this.timecodeSynchronizer.timecodeSeconds;
+    if (!this.timeDurationTarget.dataset.duration) {
+      this.timeDurationTarget.innerHTML = displayTime(video.duration);
+    }
+
+    if (this.timecodeSynchronizer.timecodeSeconds >= 0) {
+      progress.dataset.currentTime = this.timecodeSynchronizer.timecodeSeconds.toString();
+    }
+
+    const width = Math.floor((video.currentTime / video.duration) * 100);
+    this.progressBarButtonTarget.style.width = `${width + 3}%`;
+    progress.style.width = `${width}%`;
   }
 
-  handleProgressBarClick(event: MouseEvent) {
-    const pos =
-      (event.pageX - this.progressTarget.offsetLeft) /
-      this.progressTarget.offsetWidth;
+  handleProgressBarMouseDown(event: MouseEvent): void {
+    event.preventDefault();
+    this.mouseIsDown = true;
+
+    if (this.state != "paused") {
+      this.state = "paused";
+      this.videoTarget.pause();
+      return;
+    }
+  }
+
+  handleProgressBarMouseMove(event: MouseEvent): void {
+    event.preventDefault();
+    if (this.mouseIsDown !== true) {
+      return;
+    }
+
+    console.log("mouseMoving");
+    const frameRect = this.progressBarBackgroundTarget.getBoundingClientRect();
+    const x = event.clientX - frameRect.left;
+    const pos = x / frameRect.width;
+    console.log(pos);
     this.videoTarget.currentTime = pos * this.videoTarget.duration;
+    this.progressBarTarget.dataset.currentTime = (
+      pos * this.videoTarget.duration
+    ).toString();
+    this.handleTimeUpdate();
+  }
+
+  handleProgressBarMouseUp(event: MouseEvent): void {
+    this.mouseIsDown = false;
+    this.state = "playing";
+    this.videoTarget.play();
   }
 
   set state(state: string) {
