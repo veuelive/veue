@@ -1,6 +1,6 @@
 .content-area#video-show{
   "data": {
-    "controller": "audience-view",
+    "controller": "audience-view audience--video-controls",
     "audience-view": {
       "stream-type": current_video.stream_type
     },
@@ -61,7 +61,7 @@
       height: 340
     }
     %video.player__video.viewer{
-      "data-target": "audience-view.video",
+      "data-target": "audience-view.video audience--video-controls.video",
       crossorigin: "anonymous",
       src: current_video.hls_url,
       style: "width: 0px;",
