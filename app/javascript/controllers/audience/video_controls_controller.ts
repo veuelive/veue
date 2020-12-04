@@ -24,9 +24,9 @@ export default class extends BaseController {
 
   connect(): void {
     this.videoTarget.addEventListener("loadedmetadata", async () => {
-      // Accounts for offsets
-      const duration = Math.floor(this.videoTarget.duration - 2);
-      this.timeDurationTarget.innerHTML = displayTime(duration);
+      this.timeDurationTarget.innerHTML = displayTime(
+        this.videoTarget.duration
+      );
     });
 
     this.videoTarget.addEventListener(
@@ -82,9 +82,7 @@ export default class extends BaseController {
 
     const currentTime = pos * this.videoTarget.duration;
     this.videoTarget.currentTime = currentTime;
-
-    // Account for offset
-    this.timeDisplayTarget.innerHTML = displayTime(Math.floor(currentTime - 2));
+    this.timeDisplayTarget.innerHTML = displayTime(currentTime);
   }
 
   handleMouseUp(): void {
