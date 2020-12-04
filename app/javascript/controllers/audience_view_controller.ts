@@ -26,9 +26,6 @@ export default class extends BaseController {
     "audio",
     "timeDisplay",
     "timeDuration",
-    "progressBar",
-    "progressBarBackground",
-    "progressBarButton",
   ];
   readonly toggleTarget!: HTMLElement;
   readonly audioTarget!: HTMLElement;
@@ -37,16 +34,12 @@ export default class extends BaseController {
   readonly fixedSecondaryCanvasTarget!: HTMLCanvasElement;
   readonly pipSecondaryCanvasTarget!: HTMLCanvasElement;
   readonly timeDisplayTarget!: HTMLElement;
-  readonly progressBarTarget!: HTMLSpanElement;
-  readonly progressBarBackgroundTarget!: HTMLSpanElement;
-  readonly progressBarButtonTarget!: HTMLButtonElement;
   readonly timeDurationTarget!: HTMLElement;
 
   private timecodeSynchronizer: TimecodeSynchronizer;
   private streamType: StreamType;
   private videoDemixer: VideoDemixer;
   private eventManager: EventManagerInterface;
-  private mouseIsDown: boolean;
 
   connect(): void {
     this.streamType = this.data.get("stream-type") as StreamType;
@@ -89,7 +82,6 @@ export default class extends BaseController {
         this.videoTarget.currentTime = parseInt(params.get("t"));
       }
 
-      this.progressBarTarget.dataset.duration = this.videoTarget.duration.toString();
       this.timeDurationTarget.innerHTML = displayTime(
         this.videoTarget.duration
       );
@@ -107,8 +99,6 @@ export default class extends BaseController {
         hls.attachMedia(this.videoTarget);
       }
     }
-
-    this.addProgressBarListeners();
   }
 
   authChanged(): void {
@@ -121,7 +111,6 @@ export default class extends BaseController {
 
   disconnect(): void {
     this.eventManager?.disconnect();
-    this.removeProgressBarListeners();
   }
 
   togglePlay(): void {
@@ -168,108 +157,6 @@ export default class extends BaseController {
 
   hideChat(): void {
     this.element.className = "content-area";
-  }
-
-  addProgressBarListeners(): void {
-    this.videoTarget.addEventListener(
-      "timeupdate",
-      this.handleTimeUpdate.bind(this)
-    );
-
-    this.progressBarBackgroundTarget.addEventListener(
-      "mousedown",
-      this.handleProgressBarMouseDown.bind(this),
-      false
-    );
-    this.progressBarBackgroundTarget.addEventListener(
-      "mouseup",
-      this.handleProgressBarMouseUp.bind(this),
-      false
-    );
-    this.progressBarBackgroundTarget.addEventListener(
-      "mousemove",
-      this.handleProgressBarMouseMove.bind(this),
-      false
-    );
-  }
-
-  removeProgressBarListeners(): void {
-    this.videoTarget.removeEventListener(
-      "timeupdate",
-      this.handleTimeUpdate.bind(this)
-    );
-
-    this.progressBarBackgroundTarget.addEventListener(
-      "mousedown",
-      this.handleProgressBarMouseDown.bind(this),
-      false
-    );
-    this.progressBarBackgroundTarget.addEventListener(
-      "mouseup",
-      this.handleProgressBarMouseUp.bind(this),
-      false
-    );
-    this.progressBarBackgroundTarget.addEventListener(
-      "mousemove",
-      this.handleProgressBarMouseMove.bind(this),
-      false
-    );
-  }
-
-  handleTimeUpdate(): void {
-    const progress = this.progressBarTarget;
-    const video = this.videoTarget;
-
-    if (!progress.dataset.duration) {
-      progress.dataset.duration = video.duration.toString();
-    }
-
-    if (!this.timeDurationTarget.dataset.duration) {
-      this.timeDurationTarget.innerHTML = displayTime(video.duration);
-    }
-
-    if (this.timecodeSynchronizer.timecodeSeconds >= 0) {
-      progress.dataset.currentTime = this.timecodeSynchronizer.timecodeSeconds.toString();
-    }
-
-    const width = Math.floor((video.currentTime / video.duration) * 100);
-    this.progressBarButtonTarget.style.width = `${width + 3}%`;
-    progress.style.width = `${width}%`;
-  }
-
-  handleProgressBarMouseDown(event: MouseEvent): void {
-    event.preventDefault();
-    this.mouseIsDown = true;
-
-    if (this.state != "paused") {
-      this.state = "paused";
-      this.videoTarget.pause();
-      return;
-    }
-  }
-
-  handleProgressBarMouseMove(event: MouseEvent): void {
-    event.preventDefault();
-    if (this.mouseIsDown !== true) {
-      return;
-    }
-
-    console.log("mouseMoving");
-    const frameRect = this.progressBarBackgroundTarget.getBoundingClientRect();
-    const x = event.clientX - frameRect.left;
-    const pos = x / frameRect.width;
-    console.log(pos);
-    this.videoTarget.currentTime = pos * this.videoTarget.duration;
-    this.progressBarTarget.dataset.currentTime = (
-      pos * this.videoTarget.duration
-    ).toString();
-    this.handleTimeUpdate();
-  }
-
-  handleProgressBarMouseUp(event: MouseEvent): void {
-    this.mouseIsDown = false;
-    this.state = "playing";
-    this.videoTarget.play();
   }
 
   set state(state: string) {

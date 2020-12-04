@@ -4,18 +4,25 @@
   .time-display
     %span{"data-target": "audience-view.timeDisplay"}
 
-  %span.progress-background{style: "position: relative; background: red; min-width: 100px; width: 80%; height: 10px; border-radius: 10px; margin-left: 10px; margin-right: auto;", data: { target: "audience-view.progressBarBackground"}}
+  %span.progress-bar-container{
+    style: "cursor: pointer; display: flex; align-items: center; background: red; min-width: 100px; width: 80%; height: 10px; border-radius: 10px; margin-left: 10px; margin-right: auto;",
+    data: {
+      target: "audience--video-controls.progressBarContainer",
+      action: "mousedown->audience--video-controls#handleMouseDown mouseup->audience--video-controls#handleMouseUp
+               mousemove->audience--video-controls#handleMouseMove"
+    }}
     %span.progress-bar{
-      style: "position: absolute; z-index: 20; background: blue; height: 100%; width: 40%;",
-      data: { target: "audience-view.progressBar", currentTime: "0", duration: "0" }
+      style: "background: blue; height: 100%; width: 100%;",
+      data: { target: "audience--video-controls.progressBar", currentTime: "0", duration: "0" }
     }
-    %span.progress-btn{
-      style: "position: absolute; z-index: 10; width: 42%; height: 100%; background: yellow; clip-path: circle(40%)",
-      data: { target: "audience-view.progressBarButton" }
+
+    %button.progress-bar-btn{
+      style: "height: 140%; width: 14px; border-radius: 9999px; padding: 0; margin: 0 0 0 -8px; background: yellow;",
+      data: { target: "audience--video-controls.progressBarButton" }
     }
 
   .time-display
-    %span{"data-target": "audience-view.timeDuration"}
+    %span{"data-target": "audience-view.timeDuration audience--video-controls.timeDuration"}
 
   %a.icon.toggle-audio{data: {action: "click->audience-view#toggleAudio", target: "audience-view.audio"}}
     = svg_tag 'speaker'
