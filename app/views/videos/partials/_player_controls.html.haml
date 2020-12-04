@@ -26,3 +26,12 @@
   %a.icon.toggle-audio{data: {action: "click->audience-view#toggleAudio", target: "audience-view.audio"}}
     = svg_tag 'speaker'
 
+
+-# Need to be removed from parent due to positioning.
+.mobile-controls
+  %a.active-icon.toggle-play.mobile{"data-action" => "click->audience-view#togglePlay", "data-target" => "audience-view.toggle", :title => "Toggle Play"}
+    = svg_tag 'play'
+
+  %a.icon.toggle-audio.mobile{data: {action: "click->audience-view#toggleAudio", target: "audience-view.audio"}}
+    = svg_tag 'speaker'
+
