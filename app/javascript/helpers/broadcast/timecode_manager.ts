@@ -30,19 +30,5 @@ export default class {
     this.tickInterval = null;
   }
 
-  private drawTimecode() {
-    this.timecodeDisplayElement.innerText = displayTime(this.timecodeMs / 1000);
-    const colorSequence = Timecode.numberToColors(this.timecodeMs);
-
-    colorSequence.forEach((color, index) => {
-      this.canvasContext.fillStyle = color;
-      const x = this.canvas.width - Timecode.digitWidth * (index + 1);
-      this.canvasContext.fillRect(
-        x,
-        this.canvas.height - Timecode.digitHeight,
-        Timecode.digitWidth,
-        Timecode.digitHeight
-      );
-    });
-  }
+  private drawTimecode() {}
 }

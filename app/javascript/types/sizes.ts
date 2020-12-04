@@ -1,5 +1,5 @@
 import { Size } from "types/rectangle";
-import VideoLayout from "types/video_layout";
+import { BroadcastVideoLayout } from "types/video_layout";
 import Timecode from "util/timecode";
 
 export default class Sizes {
@@ -30,11 +30,10 @@ export const DefaultVideoLayout = {
     },
   ],
   timecode: {
-    type: "timecode",
-    priority: -1,
+    digits: 12,
     width: Timecode.codeWidth,
     height: Timecode.codeHeight,
     y: Sizes.fullCanvas.height - Timecode.codeHeight,
     x: Sizes.fullCanvas.width - Timecode.codeWidth,
   },
-} as VideoLayout;
+} as BroadcastVideoLayout;
