@@ -5,6 +5,53 @@
     opacity: 0.8;
   }
 
+  .player-controls,
+  .mobile-controls {
+    a {
+      margin: 0 0.25rem;
+      padding: 0.65rem 0.75rem;
+      border-radius: 0.65rem;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      svg {
+        fill: white;
+        width: 15px;
+        height: 14px;
+        color: color.$white;
+      }
+
+      img {
+        width: 15px;
+        height: 14px;
+      }
+    }
+
+    .toggle-play,
+    .toggle-audio {
+      display: flex;
+      justify-content: center;
+      height: 1rem;
+      width: 1rem;
+      padding: 10px;
+    }
+
+    .toggle-audio {
+      background-color: color.$light-black;
+    }
+
+    .icon {
+      color: white;
+      padding-left: 0.5rem;
+    }
+
+    .active-icon {
+      background-color: color.$cornflower;
+      opacity: 1;
+    }
+  }
+
   .player-controls {
     padding: 0.5rem 0.75rem;
     // CHANGE THIS BACK TO 0
@@ -20,36 +67,6 @@
     transform: translate(-50%, -50%);
     align-items: center;
     width: 80%;
-
-    a {
-      margin: 0 0.25rem;
-      padding: 0.65rem 0.75rem;
-      border-radius: 0.65rem;
-      display: flex;
-      align-items: center;
-
-      svg {
-        fill: white;
-        width: 15px;
-        height: 14px;
-        color: color.$white;
-      }
-
-      img {
-        width: 15px;
-        height: 14px;
-      }
-    }
-
-    .icon {
-      color: white;
-      padding-left: 0.5rem;
-    }
-
-    .active-icon {
-      background-color: color.$cornflower;
-      opacity: 1;
-    }
 
     .time-display {
       margin-left: 10px;
@@ -93,36 +110,29 @@
     }
   }
 
-  .toggle-play,
-  .toggle-audio {
-    display: flex;
-    justify-content: center;
-    height: 1rem;
-    width: 1rem;
-    padding: 10px;
-  }
-
-  .toggle-play.mobile,
-  .toggle-audio.mobile {
+  .mobile-controls {
     position: absolute;
-    height: 2.5rem;
-    width: 1rem;
-    top: 50%;
-    left: 50%;
-  }
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    bottom: 50%;
 
-  .toggle-audio.mobile {
-    left: 40%;
-    transform: translate(-50%, -47.5%);
-    background-color: color.$light-black;
-    z-index: 10;
-  }
+    // 45% instead of 50% to account for any padding, margin, etc
+    left: 45%;
 
-  .toggle-play.mobile {
-    transform: translate(-50%, -52.5%);
-    z-index: 40;
-    height: 4rem;
-    width: 4rem;
-    opacity: 1;
+    .toggle-play.mobile,
+    .toggle-audio.mobile {
+      opacity: 0.9;
+      height: 1.8rem;
+      width: 1.8rem;
+    }
+
+    .toggle-play.mobile {
+      border: 2px solid white;
+    }
+
+    .toggle-audio.mobile {
+      border: 2px solid white;
+    }
   }
 }
