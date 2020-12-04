@@ -1,11 +1,11 @@
 .player-controls
   %a.active-icon.toggle-play{"data-action" => "click->audience-view#togglePlay", "data-target" => "audience-view.toggle", :title => "Toggle Play"}
     = svg_tag 'play'
+
   .time-display
     %span{"data-target": "audience--player-controls.timeDisplay audience-view.timeDisplay"}
 
   %span.progress-bar-container{
-    style: "cursor: pointer; display: flex; align-items: center; background: red; min-width: 100px; width: 80%; height: 10px; border-radius: 10px; margin-left: 10px; margin-right: auto;",
     data: {
       target: "audience--player-controls.progressBarContainer",
       action: "mousedown->audience--player-controls#handleMouseDown
@@ -13,12 +13,10 @@
                mousemove->audience--player-controls#handleMouseMove"
     }}
     %span.progress-bar{
-      style: "background: blue; height: 100%; width: 100%;",
       data: { target: "audience--player-controls.progressBar", currentTime: "0", duration: "0" }
     }
 
     %button.progress-bar-btn{
-      style: "height: 140%; width: 14px; border-radius: 9999px; padding: 0; margin: 0 0 0 -8px; background: yellow;",
       data: { target: "audience--player-controls.progressBarButton" }
     }
 
@@ -27,3 +25,4 @@
 
   %a.icon.toggle-audio{data: {action: "click->audience-view#toggleAudio", target: "audience-view.audio"}}
     = svg_tag 'speaker'
+

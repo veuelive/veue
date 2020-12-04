@@ -55,6 +55,43 @@
       margin-right: 10px;
     }
 
+    .toggle-audio {
+      margin-left: 1rem;
+      padding: 10px;
+      width: 1.5rem;
+      background-color: color.$light-black;
+    }
+
+    .progress-bar-container {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      background: color.$gray-medium-1;
+      min-width: 100px;
+      width: 80%;
+      height: 10px;
+      border-radius: 10px;
+      margin-left: 10px;
+      margin-right: auto;
+    }
+
+    .progress-bar {
+      background: color.$veue-corporate;
+      border-radius: 10px;
+      height: 100%;
+      width: 100%;
+    }
+
+    .progress-bar-btn {
+      height: 1rem;
+      width: 1rem;
+      border-radius: 9999px;
+      padding: 0;
+      margin: 0 0 0 -8px;
+      background: color.$white;
+      box-shadow: color.$box-shadow;
+    }
+
     .progress-background {
       &:hover {
         cursor: pointer;
