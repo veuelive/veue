@@ -1,7 +1,7 @@
 import { CaptureStreamCanvas } from "./video_mixer";
 import { ipcRenderer } from "helpers/electron/ipc_renderer";
 
-export default class StreamCapturer {
+export default class StreamRecorder {
   canvas: CaptureStreamCanvas;
   mediaRecorder: MediaRecorder;
   private timerCallback;

@@ -1,12 +1,15 @@
 import Sizes, { DefaultVideoLayout } from "types/sizes";
 import TimecodeSynchronizer from "./timecode_synchronizer";
-import VideoLayout, { LayoutSection } from "types/video_layout";
+import VideoLayout, {
+  BroadcastVideoLayout,
+  LayoutSection,
+} from "types/video_layout";
 
 export default class VideoDemixer {
   private canvasContextGroups: Array<Array<CanvasRenderingContext2D>>;
   private videoElement: HTMLVideoElement;
   private timecodeSynchronizer: TimecodeSynchronizer;
-  private videoLayout: VideoLayout;
+  private videoLayout: BroadcastVideoLayout;
   private sectionsByPriority: Array<LayoutSection>;
 
   constructor(

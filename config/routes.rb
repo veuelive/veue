@@ -24,6 +24,10 @@ Rails.application.routes.draw do
     resource :follow, only: %i[show create destroy]
   end
 
+  resource :stream, only: :show do
+
+  end
+
   resources :broadcasts, only: [:show, :index] do
     scope module: "broadcasts" do
       controller "event" do

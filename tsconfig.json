@@ -3,7 +3,7 @@
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["es6", "dom", "ES2017", "ES2015"],
+    "lib": ["dom", "ESNext"],
     "module": "es6",
     "moduleResolution": "node",
     "baseUrl": ".",
@@ -11,7 +11,7 @@
       "*": ["node_modules/*", "app/javascript/*"]
     },
     "sourceMap": true,
-    "target": "es5"
+    "target": "ES2015"
   },
   "typeRoots": ["./app/javascript/", "./node_modules/@types"],
   "exclude": [

@@ -1,15 +1,15 @@
-import StreamCapturer from "helpers/broadcast/stream_capturer";
+import StreamRecorder from "helpers/broadcast/stream_capturer";
 import { MediaDeviceChangeEvent } from "controllers/broadcast/media_manager_controller";
 
 export default class AudioCapturer {
   private _audioTrack: MediaStreamTrack;
-  private streamCapturer: StreamCapturer;
+  private streamCapturer: StreamRecorder;
   private audioCtx: AudioContext;
   private analyser: AnalyserNode;
   private canvasCtx: CanvasRenderingContext2D;
   private canvas: HTMLCanvasElement;
 
-  constructor(streamCapturer: StreamCapturer) {
+  constructor(streamCapturer: StreamRecorder) {
     this.streamCapturer = streamCapturer;
 
     this.canvas = document.createElement("canvas");
