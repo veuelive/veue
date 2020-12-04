@@ -3,7 +3,7 @@ import playSvg from "images/play.svg";
 import pauseSvg from "images/pause.svg";
 import mutedSvg from "images/muted.svg";
 import unmutedSvg from "images/speaker.svg";
-import { displayTime, replaceTimeParams } from "util/time";
+import { displayTime } from "util/time";
 import TimecodeSynchronizer from "helpers/audience/timecode_synchronizer";
 import VideoDemixer from "helpers/audience/video_demixer";
 import { VideoEventProcessor } from "helpers/event/event_processor";
@@ -153,7 +153,6 @@ export default class extends BaseController {
 
       const seconds = this.timecodeSynchronizer.timecodeSeconds;
       this.timeDisplayTarget.innerHTML = displayTime(seconds);
-      replaceTimeParams(seconds);
     }
   }
 
