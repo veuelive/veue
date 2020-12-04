@@ -5,3 +5,11 @@ export function displayTime(seconds: number): string {
 
   return [hours, minutes, seconds % 60].map(format).join(":");
 }
+
+export function replaceTimeParams(seconds: number): void {
+  const params = new URLSearchParams(window.location.search);
+
+  seconds = Math.floor(seconds);
+  params.set("t", seconds.toString());
+  window.history.replaceState(null, document.title, `?${params}`);
+}

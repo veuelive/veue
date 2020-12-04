@@ -2,7 +2,7 @@
   %a.active-icon.toggle-play{"data-action" => "click->audience-view#togglePlay", "data-target" => "audience-view.toggle", :title => "Toggle Play"}
     = svg_tag 'play'
   .time-display
-    %span{"data-target": "audience-view.timeDisplay"}
+    %span{"data-target": "audience--video-controls.timeDisplay audience-view.timeDisplay"}
 
   %span.progress-bar-container{
     style: "cursor: pointer; display: flex; align-items: center; background: red; min-width: 100px; width: 80%; height: 10px; border-radius: 10px; margin-left: 10px; margin-right: auto;",
