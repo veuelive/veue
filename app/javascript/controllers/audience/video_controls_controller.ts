@@ -9,9 +9,11 @@ export default class extends BaseController {
     "progressBarContainer",
     "progressBarButton",
     "timeDuration",
+    "timeDisplay",
   ];
 
   readonly timeDurationTarget!: HTMLElement;
+  readonly timeDisplayTarget!: HTMLElement;
   readonly audienceViewTarget!: HTMLElement;
   readonly videoTarget!: HTMLVideoElement;
   readonly progressBarTarget!: HTMLElement;
@@ -22,7 +24,9 @@ export default class extends BaseController {
 
   connect(): void {
     this.videoTarget.addEventListener("loadedmetadata", async () => {
-      this.progressBarTarget.dataset.duration = this.videoTarget.duration.toString();
+      // Accounts for offsets
+      const duration = Math.floor(this.videoTarget.duration - 2);
+      this.timeDurationTarget.innerHTML = displayTime(duration);
     });
 
     this.videoTarget.addEventListener(
@@ -42,20 +46,6 @@ export default class extends BaseController {
     const progress = this.progressBarTarget;
     const video = this.videoTarget;
 
-    if (!progress.dataset.duration) {
-      progress.dataset.duration = video.duration.toString();
-    }
-
-    if (!this.timeDurationTarget.dataset.duration) {
-      this.timeDurationTarget.innerHTML = displayTime(video.duration);
-    }
-
-    const timecode = this.data.get("timecode");
-
-    if (parseInt(timecode) >= 0) {
-      progress.dataset.currentTime = timecode;
-    }
-
     const width = Math.floor((video.currentTime / video.duration) * 100) + 1;
     progress.style.width = `${width}%`;
   }
@@ -67,6 +57,7 @@ export default class extends BaseController {
 
     if (this.videoState !== "paused") {
       this.videoTarget.pause();
+      this.videoState = "paused";
     }
 
     this.handleMouseLocation(event);
@@ -84,22 +75,41 @@ export default class extends BaseController {
     this.handleTimeUpdate();
   }
 
-  handleMouseLocation(event: MouseEvent) {
+  handleMouseLocation(event: MouseEvent): void {
     const frameRect = this.progressBarContainerTarget.getBoundingClientRect();
     const x = event.clientX - frameRect.left;
     const pos = x / frameRect.width;
-    this.videoTarget.currentTime = pos * this.videoTarget.duration;
-    this.progressBarTarget.dataset.currentTime = (
-      pos * this.videoTarget.duration
-    ).toString();
+
+    const currentTime = pos * this.videoTarget.duration;
+    this.videoTarget.currentTime = currentTime;
+
+    // Account for offset
+    this.timeDisplayTarget.innerHTML = displayTime(Math.floor(currentTime - 2));
   }
 
   handleMouseUp(): void {
     this.mouseIsDown = false;
 
-    if (this.videoState === "paused") {
-      this.videoTarget.play();
+    if (this.videoState !== "paused") {
+      return;
     }
+
+    this.videoTarget
+      .play()
+      .then(() => (this.videoState = "playing"))
+      .catch(() => {
+        this.videoState = "paused";
+        this.videoTarget
+          .play()
+          .then(() => (this.videoState = "playing"))
+          .catch((e) => {
+            console.error(e);
+          });
+      });
+  }
+
+  set videoState(state: string) {
+    this.data.set("state", state);
   }
 
   get videoState(): string {
