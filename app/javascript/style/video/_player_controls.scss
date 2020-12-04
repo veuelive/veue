@@ -1,11 +1,11 @@
 @use '../utils/color';
 
 #videos__show {
-  .primary-video-area:hover .player-actions {
+  .primary-video-area:hover .player-controls {
     opacity: 0.8;
   }
 
-  .player-actions {
+  .player-controls {
     padding: 0.5rem 0.75rem;
     opacity: 0;
     color: white;
