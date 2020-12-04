@@ -2,7 +2,7 @@ import { Controller } from "stimulus";
 import { ipcRenderer } from "helpers/electron/ipc_renderer";
 import { Rectangle } from "types/rectangle";
 import VideoMixer from "helpers/broadcast/video_mixer";
-import StreamCapturer from "helpers/broadcast/stream_capturer";
+import StreamRecorder from "helpers/broadcast/stream_capturer";
 import {
   calculateBroadcastArea,
   calculateFullVideoSize,
@@ -28,7 +28,7 @@ export default class extends Controller {
   private webcamVideoElementTarget!: HTMLVideoElement;
 
   private mixer: VideoMixer;
-  private streamCapturer: StreamCapturer;
+  private streamCapturer: StreamRecorder;
   private timecodeManager: TimecodeManager;
   private audioCapturer: AudioCapturer;
   private eventManager: EventManagerInterface;
@@ -43,7 +43,7 @@ export default class extends Controller {
     this.state = "loading";
 
     this.mixer = new VideoMixer(this.webcamVideoElementTarget);
-    this.streamCapturer = new StreamCapturer(this.mixer.canvas);
+    this.streamCapturer = new StreamRecorder(this.mixer.canvas);
     this.audioCapturer = new AudioCapturer(this.streamCapturer);
     this.timecodeManager = new TimecodeManager(this.mixer.canvas);
 

@@ -2,187 +2,76 @@ import { Rectangle } from "types/rectangle";
 import { desktopCapturer } from "helpers/electron/desktop_capture";
 import Sizes from "types/sizes";
 import { MediaDeviceChangeEvent } from "controllers/broadcast/media_manager_controller";
+import { BroadcastVideoLayout } from "types/video_layout";
+import { CaptureSourceBase } from "helpers/broadcast/capture_sources/base";
+import { displayTime } from "util/time";
+import Timecode from "util/timecode";
 
 export default class VideoMixer {
   canvas: CaptureStreamCanvas;
 
-  private readonly webcamVideoElement: HTMLVideoElement;
-  private readonly browserVideoElement: HTMLVideoElement;
-
-  private browserDimensions: Rectangle;
   private canvasContext: CanvasRenderingContext2D;
+  private captureSources: CaptureSourceBase[] = [];
+  private broadcastLayout: BroadcastVideoLayout;
 
-  constructor(webcamVideoElement: HTMLVideoElement) {
-    this.webcamVideoElement = webcamVideoElement;
-
-    this.browserVideoElement = document.createElement("video");
-    this.browserVideoElement.setAttribute("style", "display: none");
-
+  constructor(broadcastLayout: BroadcastVideoLayout) {
+    this.broadcastLayout = broadcastLayout;
     this.canvas = document.createElement("canvas") as CaptureStreamCanvas;
     this.canvas.setAttribute("id", "debug_canvas");
-    this.canvas.setAttribute("width", Sizes.fullCanvas.width.toString());
-    this.canvas.setAttribute("height", Sizes.fullCanvas.height.toString());
+    this.canvas.setAttribute("width", broadcastLayout.width.toString());
+    this.canvas.setAttribute("height", broadcastLayout.height.toString());
     document.querySelector(".debug-area").appendChild(this.canvas);
-    if (this.canvas) {
-      this.canvasContext = this.canvas.getContext("2d");
-    }
 
-    document.addEventListener(
-      MediaDeviceChangeEvent,
-      (ev: CustomEvent<MediaDeviceInfo>) => {
-        if (ev.detail.kind === "videoinput") {
-          this.startWebcamCapture(ev.detail).then();
-        }
-      }
-    );
-
-    this.startWebcamCapture().then(() => {
-      this.computeFrame();
-    });
+    this.canvasContext = this.canvas.getContext("2d");
   }
 
-  public async startWebcamCapture(
-    mediaDevice?: MediaDeviceInfo
-  ): Promise<void> {
-    const constraints = {
-      width: Sizes.secondaryView.width,
-      height: Sizes.secondaryView.height,
-      deviceId: null,
-    };
-    if (mediaDevice) {
-      constraints.deviceId = mediaDevice.deviceId;
-    }
-    const mediaStream = await navigator.mediaDevices.getUserMedia({
-      video: constraints,
-    });
-    this.deviceId = mediaStream.getVideoTracks()[0].getSettings().deviceId;
-    this.webcamVideoElement.srcObject = mediaStream;
-    // this.webcamVideoElement.load();
-    this.webcamVideoElement.muted = true;
-    return this.webcamVideoElement.play();
-  }
-
-  public getWebcamShot(): Promise<void | Blob> {
-    return this.getScreenshotFromVideo((canvas, ctx) => {
-      const video = this.webcamVideoElement;
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-    });
-  }
-
-  public getScreenshot(): Promise<void | Blob> {
-    return this.getScreenshotFromVideo((canvas, ctx) => {
-      canvas.width = Sizes.primaryView.width;
-      canvas.height = Sizes.primaryView.height;
-      ctx.drawImage(
-        this.browserVideoElement,
-        this.browserDimensions.x,
-        this.browserDimensions.y,
-        this.browserDimensions.width,
-        this.browserDimensions.height,
-        0,
-        0,
-        Sizes.primaryView.width,
-        Sizes.primaryView.height
-      );
-    });
-  }
-
-  private getScreenshotFromVideo(
-    drawFunction: (
-      canvas: HTMLCanvasElement,
-      ctx: CanvasRenderingContext2D
-    ) => void
-  ): Promise<void | Blob> {
-    const tempCanvas = document.createElement("canvas");
-    const ctx = tempCanvas.getContext("2d");
-    drawFunction(tempCanvas, ctx);
-    return new Promise((resolve, reject) => {
-      tempCanvas.toBlob((data) => {
-        if (data == null) {
-          reject("Couldn't take screenshot");
-        } else {
-          resolve(data);
-          tempCanvas.remove();
-        }
-      });
-    });
-  }
-
-  async startBrowserCapture(
-    windowTitle: string,
-    browserDimensions: Rectangle,
-    videoSize: Rectangle
-  ): Promise<void> {
-    this.browserDimensions = browserDimensions;
-
-    const source = await this.getWindowSource(windowTitle);
-
-    if (source.id === "MOCK") {
-      return Promise.resolve();
-    }
-
-    this.browserVideoElement.srcObject = await navigator.mediaDevices.getUserMedia(
-      {
-        audio: false,
-        video: {
-          mandatory: {
-            chromeMediaSource: "desktop",
-            chromeMediaSourceId: source.id,
-            minWidth: videoSize.width,
-            maxWidth: videoSize.width,
-            minHeight: videoSize.height,
-            maxHeight: videoSize.height,
-          },
-        } as Record<string, unknown>,
-      }
-    );
-    this.browserVideoElement.addEventListener("loadedmetadata", () => {
-      console.log("videoHeight", this.browserVideoElement.videoHeight);
-      console.log("videoWidth", this.browserVideoElement.videoWidth);
-      this.browserVideoElement.play();
-    });
-  }
-
-  private async getWindowSource(windowTitle: string) {
-    let source;
-
-    while (!source) {
-      const sources = await desktopCapturer.getSources({ types: ["window"] });
-      source = sources.find((source) => source.name === windowTitle);
-    }
-    return source;
+  addCaptureSource(captureSource: CaptureSourceBase): void {
+    this.captureSources.push(captureSource);
   }
 
   private computeFrame() {
-    this.canvasContext.drawImage(
-      this.webcamVideoElement,
-      0,
-      Sizes.primaryView.height,
-      Sizes.secondaryView.width,
-      Sizes.secondaryView.height
+    const videoSources = this.captureSources.flatMap(
+      (source) => source.videoSources
     );
 
-    if (this.browserDimensions) {
-      // console.log(this.browserDimensions);
-      this.canvasContext.drawImage(
-        this.browserVideoElement,
-        this.browserDimensions.x,
-        this.browserDimensions.y,
-        this.browserDimensions.width,
-        this.browserDimensions.height,
-        0,
-        0,
-        Sizes.primaryView.width,
-        Sizes.primaryView.height
-      );
-    }
+    this.broadcastLayout.sections
+      .sort((a, b) => a.priority - b.priority)
+      .forEach((broadcastPosition, index) => {
+        const videoSource = videoSources[index];
+        const sourceLocation = videoSource.layout;
+        this.canvasContext.drawImage(
+          videoSource.element,
+          sourceLocation.x,
+          sourceLocation.y,
+          sourceLocation.width,
+          sourceLocation.height,
+          broadcastPosition.x,
+          broadcastPosition.y,
+          broadcastPosition.width,
+          broadcastPosition.height
+        );
+      });
     requestAnimationFrame(() => this.computeFrame());
   }
 
-  set deviceId(deviceId: string) {
-    document.body.setAttribute("data-video-device-id", deviceId);
+  private drawTimecode() {
+    const timecodeLayout = this.broadcastLayout.timecode;
+    const colorSequence = Timecode.numberToColors(globalThis.timecodeMs);
+    const digitWidth = timecodeLayout.width / colorSequence.length;
+
+    colorSequence.forEach((color, index) => {
+      this.canvasContext.fillStyle = color;
+      const x =
+        timecodeLayout.width -
+        Timecode.digitWidth * (index + 1) +
+        timecodeLayout.x;
+      this.canvasContext.fillRect(
+        x,
+        timecodeLayout.y,
+        Timecode.digitWidth,
+        timecodeLayout.height
+      );
+    });
   }
 }
 

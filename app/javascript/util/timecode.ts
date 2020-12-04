@@ -8,15 +8,18 @@ export default class Timecode {
   public static codeWidth = Timecode.codeCount * Timecode.digitWidth;
   public static codeHeight = Timecode.digitHeight;
 
-  public static numberToColors(number: number): string[] {
-    const encodedDigits = this.numberToEncodedDigits(number);
+  public static numberToColors(number: number, digits: number): string[] {
+    const encodedDigits = this.numberToEncodedDigits(number, digits);
     return encodedDigits.map(this.encodedDigitToColor);
   }
 
-  public static numberToEncodedDigits(number: number): EncodedDigit[] {
+  public static numberToEncodedDigits(
+    number: number,
+    digits: number
+  ): EncodedDigit[] {
     return number
       .toString(this.bitWidth)
-      .padStart(this.codeCount, "0")
+      .padStart(digits, "0")
       .split("") as EncodedDigit[];
   }
 
