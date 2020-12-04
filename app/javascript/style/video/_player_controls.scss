@@ -7,7 +7,8 @@
 
   .player-controls {
     padding: 0.5rem 0.75rem;
-    opacity: 0;
+    // CHANGE THIS BACK TO 0
+    opacity: 1;
     color: white;
     transition: 100ms opacity;
     border-radius: 1rem;
@@ -55,13 +56,6 @@
       margin-right: 10px;
     }
 
-    .toggle-audio {
-      margin-left: 1rem;
-      padding: 10px;
-      width: 1.5rem;
-      background-color: color.$light-black;
-    }
-
     .progress-bar-container {
       cursor: pointer;
       display: flex;
@@ -97,5 +91,38 @@
         cursor: pointer;
       }
     }
+  }
+
+  .toggle-play,
+  .toggle-audio {
+    display: flex;
+    justify-content: center;
+    height: 1rem;
+    width: 1rem;
+    padding: 10px;
+  }
+
+  .toggle-play.mobile,
+  .toggle-audio.mobile {
+    position: absolute;
+    height: 2.5rem;
+    width: 1rem;
+    top: 50%;
+    left: 50%;
+  }
+
+  .toggle-audio.mobile {
+    left: 40%;
+    transform: translate(-50%, -47.5%);
+    background-color: color.$light-black;
+    z-index: 10;
+  }
+
+  .toggle-play.mobile {
+    transform: translate(-50%, -52.5%);
+    z-index: 40;
+    height: 4rem;
+    width: 4rem;
+    opacity: 1;
   }
 }
