@@ -17,6 +17,7 @@ export default class CaptureSourceManager {
     this.mixers = [videoMixer, audioMixer];
 
     this.webcamSource = new WebcamCaptureSource();
+    this.webcamSource.start();
     this.microphoneSource = new MicrophoneCaptureSource();
   }
 
@@ -41,8 +42,8 @@ export default class CaptureSourceManager {
     rectangle: Rectangle
   ) {
     const screenCaptureSource = new ScreenCaptureSource();
-    screenCaptureSource.start(broadcastArea);
-    this.captureSources.push(screenCaptureSource);
+    // screenCaptureSource.start(broadcastArea);
+    // this.captureSources.push(screenCaptureSource);
   }
 
   private swapSources(newSource: CaptureSource, oldSource?: CaptureSource) {
