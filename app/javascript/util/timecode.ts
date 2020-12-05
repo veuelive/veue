@@ -2,11 +2,6 @@ type EncodedDigit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7";
 
 export default class Timecode {
   public static bitWidth = 8;
-  public static codeCount = 12;
-  public static digitHeight = 10;
-  public static digitWidth = 30;
-  public static codeWidth = Timecode.codeCount * Timecode.digitWidth;
-  public static codeHeight = Timecode.digitHeight;
 
   public static numberToColors(number: number, digits: number): string[] {
     const encodedDigits = this.numberToEncodedDigits(number, digits);

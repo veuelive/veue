@@ -1,9 +1,7 @@
-import Sizes, { DefaultVideoLayout } from "types/sizes";
+import Sizes from "types/sizes";
 import TimecodeSynchronizer from "./timecode_synchronizer";
-import VideoLayout, {
-  BroadcastVideoLayout,
-  LayoutSection,
-} from "types/video_layout";
+import { BroadcastVideoLayout, LayoutSection } from "types/video_layout";
+import { Rectangle } from "types/rectangle";
 
 export default class VideoDemixer {
   private canvasContextGroups: Array<Array<CanvasRenderingContext2D>>;
@@ -15,11 +13,12 @@ export default class VideoDemixer {
   constructor(
     videoElement: HTMLVideoElement,
     canvasesByPriority: HTMLCanvasElement[][],
-    timecodeSynchronizer: TimecodeSynchronizer
+    timecodeSynchronizer: TimecodeSynchronizer,
+    videoLayout: BroadcastVideoLayout
   ) {
     // This is set with a default, but later will need to be not just dynamically updated
     // but likely the number of canvases will be controlled by this plus a layout mapping
-    this.videoLayout = DefaultVideoLayout;
+    this.videoLayout = videoLayout;
     this.videoElement = videoElement;
     this.timecodeSynchronizer = timecodeSynchronizer;
 
@@ -36,7 +35,7 @@ export default class VideoDemixer {
 
   private drawFrame() {
     const pixelDensity =
-      this.videoElement.videoHeight / Sizes.fullCanvas.height;
+      this.videoElement.videoHeight / this.videoLayout.height;
 
     if (this.videoElement.videoHeight > 0) {
       for (let i = 0; i < this.canvasContextGroups.length; i++) {
@@ -60,7 +59,7 @@ export default class VideoDemixer {
   private drawSection(
     canvasCtx: CanvasRenderingContext2D,
     pixelDensity: number,
-    sectionLayout: LayoutSection
+    sectionLayout: Rectangle
   ) {
     canvasCtx.canvas.width = sectionLayout.width;
     canvasCtx.canvas.height = sectionLayout.height;

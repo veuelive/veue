@@ -1,19 +1,22 @@
 import Timecode from "util/timecode";
+import { TimecodeSection } from "types/video_layout";
 
 export default class {
   private readonly canvas: HTMLCanvasElement;
   private readonly timecodeUpdatedCallback: () => void;
   public readonly canvasCtx: CanvasRenderingContext2D;
   private _timecodeMs: number;
+  private timecodeLayout: TimecodeSection;
 
-  constructor(timecodeUpdatedCallback: () => void) {
+  constructor(
+    timecodeLayout: TimecodeSection,
+    timecodeUpdatedCallback: () => void
+  ) {
+    this.timecodeLayout = timecodeLayout;
     this.timecodeUpdatedCallback = timecodeUpdatedCallback;
     this.canvas = document.createElement("canvas");
-    this.canvas.setAttribute(
-      "width",
-      (Timecode.codeCount * Timecode.digitWidth).toString()
-    );
-    this.canvas.setAttribute("height", Timecode.digitHeight.toString());
+    this.canvas.setAttribute("width", timecodeLayout.width.toString());
+    this.canvas.setAttribute("height", timecodeLayout.height.toString());
     this.canvas.setAttribute("style", "display: none;");
     this.canvasCtx = this.canvas.getContext("2d");
     document
@@ -30,10 +33,11 @@ export default class {
       this.canvas.width,
       1
     );
+    const digitWidth = this.timecodeLayout.width / this.timecodeLayout.digits;
     const colorSequence = [];
-    const pixelOffset = Timecode.digitWidth / 2;
-    for (let index = 0; index < Timecode.codeCount; index++) {
-      const dataStart = (pixelOffset + Timecode.digitWidth * index) * 4;
+    const pixelOffset = digitWidth / 2;
+    for (let index = 0; index < this.timecodeLayout.digits; index++) {
+      const dataStart = (pixelOffset + digitWidth * index) * 4;
       colorSequence.push(imageData.data.slice(dataStart, dataStart + 3));
     }
     this.timecode = Timecode.decodeColorSequence(colorSequence.reverse());

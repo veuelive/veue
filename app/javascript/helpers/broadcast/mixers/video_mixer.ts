@@ -3,16 +3,17 @@ import { desktopCapturer } from "helpers/electron/desktop_capture";
 import Sizes from "types/sizes";
 import { MediaDeviceChangeEvent } from "controllers/broadcast/media_manager_controller";
 import { BroadcastVideoLayout } from "types/video_layout";
-import { CaptureSourceBase } from "helpers/broadcast/capture_sources/base";
+import { CaptureSource } from "helpers/broadcast/capture_sources/base";
 import { displayTime } from "util/time";
 import Timecode from "util/timecode";
+import Mixer from "helpers/broadcast/mixers/mixer";
 
-export default class VideoMixer {
+export default class VideoMixer implements Mixer {
   canvas: CaptureStreamCanvas;
 
   private canvasContext: CanvasRenderingContext2D;
-  private captureSources: CaptureSourceBase[] = [];
   private broadcastLayout: BroadcastVideoLayout;
+  private captureSources: CaptureSource[] = [];
 
   constructor(broadcastLayout: BroadcastVideoLayout) {
     this.broadcastLayout = broadcastLayout;
@@ -25,53 +26,61 @@ export default class VideoMixer {
     this.canvasContext = this.canvas.getContext("2d");
   }
 
-  addCaptureSource(captureSource: CaptureSourceBase): void {
-    this.captureSources.push(captureSource);
-  }
-
   private computeFrame() {
-    const videoSources = this.captureSources.flatMap(
-      (source) => source.videoSources
-    );
+    const videoSources = this.captureSources
+      .flatMap((source) => source.videoSources)
+      .filter((videoSource) => videoSource.element.isConnected);
 
     this.broadcastLayout.sections
       .sort((a, b) => a.priority - b.priority)
       .forEach((broadcastPosition, index) => {
         const videoSource = videoSources[index];
-        const sourceLocation = videoSource.layout;
-        this.canvasContext.drawImage(
-          videoSource.element,
-          sourceLocation.x,
-          sourceLocation.y,
-          sourceLocation.width,
-          sourceLocation.height,
-          broadcastPosition.x,
-          broadcastPosition.y,
-          broadcastPosition.width,
-          broadcastPosition.height
-        );
+        if (videoSource) {
+          const sourceLocation = videoSource.layout;
+          this.canvasContext.drawImage(
+            videoSource.element,
+            sourceLocation.x,
+            sourceLocation.y,
+            sourceLocation.width,
+            sourceLocation.height,
+            broadcastPosition.x,
+            broadcastPosition.y,
+            broadcastPosition.width,
+            broadcastPosition.height
+          );
+        }
       });
     requestAnimationFrame(() => this.computeFrame());
   }
 
   private drawTimecode() {
     const timecodeLayout = this.broadcastLayout.timecode;
-    const colorSequence = Timecode.numberToColors(globalThis.timecodeMs);
+    const colorSequence = Timecode.numberToColors(
+      globalThis.timecodeMs,
+      timecodeLayout.digits
+    );
+
     const digitWidth = timecodeLayout.width / colorSequence.length;
 
-    colorSequence.forEach((color, index) => {
+    colorSequence.reverse().forEach((color, index) => {
       this.canvasContext.fillStyle = color;
-      const x =
-        timecodeLayout.width -
-        Timecode.digitWidth * (index + 1) +
-        timecodeLayout.x;
       this.canvasContext.fillRect(
-        x,
+        timecodeLayout.x + digitWidth * index,
         timecodeLayout.y,
-        Timecode.digitWidth,
+        digitWidth,
         timecodeLayout.height
       );
     });
+  }
+
+  addCaptureSource(captureSource: CaptureSource): void {
+    this.captureSources.push(captureSource);
+  }
+
+  removeCaptureSource(_captureSource: CaptureSource): void {
+    this.captureSources = this.captureSources.filter(
+      (source) => source.deviceId !== _captureSource.deviceId
+    );
   }
 }
 

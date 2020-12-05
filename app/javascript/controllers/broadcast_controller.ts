@@ -1,8 +1,8 @@
 import { Controller } from "stimulus";
 import { ipcRenderer } from "helpers/electron/ipc_renderer";
 import { Rectangle } from "types/rectangle";
-import VideoMixer from "helpers/broadcast/video_mixer";
-import StreamRecorder from "helpers/broadcast/stream_capturer";
+import VideoMixer from "helpers/broadcast/mixers/video_mixer";
+import StreamRecorder from "helpers/broadcast/stream_recorder";
 import {
   calculateBroadcastArea,
   calculateFullVideoSize,
@@ -12,8 +12,10 @@ import TimecodeManager from "helpers/broadcast/timecode_manager";
 import { postForm } from "util/fetch";
 import { getCurrentUrl } from "controllers/broadcast/browser_controller";
 import EventManagerInterface from "types/event_manager_interface";
-import AudioCapturer from "helpers/broadcast/audio_capturer";
 import LiveEventManager from "helpers/event/live_event_manager";
+import { DefaultVideoLayout } from "types/sizes";
+import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
+import CaptureSourceManager from "helpers/broadcast/capture_source_manager";
 
 type BroadcastState =
   | "loading"
@@ -27,11 +29,12 @@ export default class extends Controller {
   static targets = ["webcamVideoElement", "timeDisplay"];
   private webcamVideoElementTarget!: HTMLVideoElement;
 
-  private mixer: VideoMixer;
+  private videoMixer: VideoMixer;
   private streamCapturer: StreamRecorder;
   private timecodeManager: TimecodeManager;
-  private audioCapturer: AudioCapturer;
   private eventManager: EventManagerInterface;
+  private audioMixer: AudioMixer;
+  private captureSourceManager: CaptureSourceManager;
 
   connect(): void {
     const currentVideoState = this.data.get("video-state");
@@ -42,10 +45,16 @@ export default class extends Controller {
 
     this.state = "loading";
 
-    this.mixer = new VideoMixer(this.webcamVideoElementTarget);
-    this.streamCapturer = new StreamRecorder(this.mixer.canvas);
-    this.audioCapturer = new AudioCapturer(this.streamCapturer);
-    this.timecodeManager = new TimecodeManager(this.mixer.canvas);
+    this.videoMixer = new VideoMixer(DefaultVideoLayout);
+    this.audioMixer = new AudioMixer();
+
+    this.captureSourceManager = new CaptureSourceManager(
+      this.videoMixer,
+      this.audioMixer
+    );
+
+    this.streamCapturer = new StreamRecorder(this.videoMixer, this.audioMixer);
+    this.timecodeManager = new TimecodeManager(this.videoMixer.canvas);
 
     ipcRenderer.send("wakeup");
     ipcRenderer.send("load_browser_view", this.data.get("session-token"));
@@ -73,7 +82,7 @@ export default class extends Controller {
 
         console.log("broadcastArea", broadcastArea);
 
-        await this.mixer.startBrowserCapture(
+        await this.captureSourceManager.startBrowserCapture(
           windowTitle,
           broadcastArea,
           calculateFullVideoSize(windowSize, scaleFactor)
@@ -103,13 +112,13 @@ export default class extends Controller {
         this.state = "starting";
         this.data.set("started-at", Date.now().toString());
 
-        const screenshot = await this.mixer.getScreenshot();
-        const streamer = await this.mixer.getWebcamShot();
+        // const screenshot = await this.videoMixer.getScreenshot();
+        // const streamer = await this.videoMixer.getWebcamShot();
 
         await postForm("./start", {
           url: getCurrentUrl(),
-          primary_shot: screenshot,
-          secondary_shot: streamer,
+          // primary_shot: screenshot,
+          // secondary_shot: streamer,
         });
         this.state = "live";
         this.timecodeManager.start();
@@ -131,7 +140,7 @@ export default class extends Controller {
     const url = document
       .querySelector("input[data-target='broadcast--browser.addressBar']")
       .getAttribute("value");
-    this.mixer.getScreenshot().then((image) => {
+    this.videoMixer.getScreenshot().then((image) => {
       return postForm("./pins", {
         name: "Card",
         url,

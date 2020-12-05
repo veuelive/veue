@@ -6,16 +6,28 @@ interface VideoSource {
   element: HTMLVideoElement;
 }
 
-type AudioSource = MediaStreamTrack;
+type AudioSource = {
+  track: MediaStreamTrack;
+  mediaStream: MediaStream;
+};
 
-export class CaptureSourceBase {
+export class CaptureSource {
   deviceId: string;
-  videoSources: Array<VideoSource> = [];
-  audioSources: Array<AudioSource> = [];
-  // You must subclass this if you want to use it!
-  protected constructor() {
-    this.deviceId = undefined;
-  }
+}
+
+/**
+ * A CaptureSource is our generic representation of
+ * a MediaStream/Device/Etc that we are actively using in the
+ * Broadcasting world.
+ *
+ * **IMPORTANT** Even though there are `getAudioTracks` and `getVideoTracks` (both PLURAL),
+ * the W3C doesn't really allow you to ever return more than one audio or video track from an
+ * input device using the standard browser APIs:
+ * https://dev.w3.org/2011/webrtc/editor/getusermedia-20120813.html#:~:text=It%20is%20recommended%20for%20multiple,zero%20or%20one%20video%20tracks.
+ *
+ */
+export class VideoCaptureSource extends CaptureSource {
+  videoSource?: VideoSource;
 
   async addMediaStream(
     mediaStream: MediaStream,
@@ -32,18 +44,18 @@ export class CaptureSourceBase {
         videoElement.addEventListener("loadedmetadata", async () => {
           await videoElement.play();
         });
-        this.videoSources.push({
+        this.videoSource = {
           layout: videoLayoutLogic(videoElement),
           element: videoElement,
-        });
+        };
       } else if (track.kind === "audio") {
-        this.audioSources.push(track);
+        this.audioSources.push({ mediaStream, track });
       }
     });
   }
 }
 
-export class UserMediaCaptureSource extends CaptureSourceBase {
+export class UserMediaCaptureSource extends CaptureSource {
   protected constraints: MediaStreamConstraints;
 
   public async start(): Promise<void> {
