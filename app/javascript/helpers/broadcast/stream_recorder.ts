@@ -1,31 +1,20 @@
-import { CaptureStreamCanvas } from "./video_mixer";
+import VideoMixer, { CaptureStreamCanvas } from "./mixers/video_mixer";
 import { ipcRenderer } from "helpers/electron/ipc_renderer";
+import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
 
 export default class StreamRecorder {
   canvas: CaptureStreamCanvas;
   mediaRecorder: MediaRecorder;
   private timerCallback;
-  private _audioTrack: MediaStreamTrack;
   mediaStream: MediaStream;
 
-  constructor(canvas: CaptureStreamCanvas) {
-    this.canvas = canvas;
-    navigator.mediaDevices
-      .getUserMedia({
-        audio: true,
-      })
-      .then((mediaStream) => {
-        this.audioTrack = mediaStream.getAudioTracks()[0];
-      });
+  constructor(videoMixer: VideoMixer, audioMixer: AudioMixer) {
+    this.canvas = videoMixer.canvas;
+    this.mediaStream = this.canvas.captureStream(30);
+    this.audioTracks = audioMixer.audioMix.getAudioTracks();
   }
 
   start(streamKey: string): Promise<void> {
-    if (!this._audioTrack) {
-      return Promise.reject("No Audio Track");
-    }
-    this.mediaStream = this.canvas.captureStream(30);
-    this.mediaStream.addTrack(this._audioTrack);
-
     this.mediaRecorder = new MediaRecorder(this.mediaStream, {
       mimeType: "video/webm;codecs=avc1.64000c",
     });
@@ -46,12 +35,13 @@ export default class StreamRecorder {
     return ipcRenderer.invoke("start", { streamKey });
   }
 
-  set audioTrack(audioTrack: MediaStreamTrack) {
-    if (this._audioTrack) {
-      this.mediaStream?.removeTrack(this._audioTrack);
-    }
-    this._audioTrack = audioTrack;
-    this.mediaStream?.addTrack(audioTrack);
+  set audioTracks(audioTracks: MediaStreamTrack[]) {
+    this.mediaStream.getAudioTracks().forEach((track) => {
+      this.mediaStream.removeTrack(track);
+    });
+    audioTracks.forEach((audioTrack) => {
+      this.mediaStream.addTrack(audioTrack);
+    });
   }
 
   stop(): void {

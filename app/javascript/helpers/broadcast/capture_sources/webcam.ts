@@ -1,7 +1,7 @@
 import { UserMediaCaptureSource } from "helpers/broadcast/capture_sources/base";
 
 export class WebcamCaptureSource extends UserMediaCaptureSource {
-  constructor(deviceId: string) {
+  constructor(deviceId?: string) {
     super();
     if (deviceId) {
       this.constraints = {

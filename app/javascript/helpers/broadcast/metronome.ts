@@ -1,18 +1,13 @@
 import { displayTime } from "util/time";
-import Timecode from "util/timecode";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 
 export default class {
   public timecodeMs: number;
-  private timecodeDisplayElement;
-  private canvasContext;
-  private canvas;
+  private timecodeDisplayElement: HTMLElement;
   private startedAt: number;
   private tickInterval?;
 
-  constructor(canvas: HTMLCanvasElement) {
-    this.canvas = canvas;
-    this.canvasContext = canvas.getContext("2d");
+  constructor() {
     this.timecodeDisplayElement = document.getElementById("timecodeDisplay");
   }
 
@@ -20,7 +15,8 @@ export default class {
     this.startedAt = Date.now();
     this.tickInterval = setInterval(() => {
       this.timecodeMs = Date.now() - this.startedAt;
-      this.drawTimecode();
+      this.timecodeDisplayElement.innerHTML = displayTime(this.timecodeMs);
+      globalThis.timecodeMs = this.timecodeMs;
       VideoEventProcessor.syncTime(this.timecodeMs);
     }, 10);
   }
@@ -29,6 +25,4 @@ export default class {
     clearInterval(this.tickInterval);
     this.tickInterval = null;
   }
-
-  private drawTimecode() {}
 }
