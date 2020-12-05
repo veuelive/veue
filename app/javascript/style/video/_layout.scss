@@ -1,5 +1,14 @@
 @use "../utils/breakpoints" as *;
 
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  overflow: hidden;
+}
+html {
+  height: -webkit-fill-available;
+}
+
 body#videos__show {
   /**
   Put any main responsive layout code for ONLY desktop here... this does not count elements that scale to their

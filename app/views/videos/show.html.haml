@@ -1,3 +1,5 @@
+
+
 .content-area#video-show{data: {"controller" => "audience-view", "audience-view" => { "stream-type" => current_video.stream_type}, "video-id": current_video.id}}
   .content-area__primary
     .primary-video-area
@@ -19,10 +21,10 @@
             VIEWS
       %canvas.primary-canvas{"data-target": "audience-view.primaryCanvas", width: 1200, height: 740}
       .pip-drop-quadrants
-        .quadrant.top-left{data: {controller: "audience--pip-quadrants"}}
-        .quadrant.top-right{data: {controller: "audience--pip-quadrants"}}
-        .quadrant.bottom-left{data: {controller: "audience--pip-quadrants"}}
-        .quadrant.bottom-right{data: {controller: "audience--pip-quadrants"}}
+        .quadrant.top-left{data: {corner: 'top-left', controller: "audience--pip-quadrants"}}
+        .quadrant.top-right{data: {corner: 'top-right', controller: "audience--pip-quadrants"}}
+        .quadrant.bottom-left{data: {corner: 'bottom-left',controller: "audience--pip-quadrants"}}
+        .quadrant.bottom-right{data: {corner: 'bottom-right', controller: "audience--pip-quadrants"}}
 
       .pip-component{data: {controller: "audience--pip"}}
         %canvas.pip-secondary-canvas{"data-target": "audience-view.pipSecondaryCanvas audience--pip.canvas", width: 420, height: 340}

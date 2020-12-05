@@ -1,3 +1,14 @@
+import { polyfill } from "mobile-drag-drop";
+
+// optional import of scroll behaviour
+import { scrollBehaviourDragImageTranslateOverride } from "mobile-drag-drop/scroll-behaviour";
+
+// options are optional ;)
+polyfill({
+  // use this to make use of the scroll behaviour
+  dragImageTranslateOverride: scrollBehaviourDragImageTranslateOverride,
+});
+
 import { Controller } from "stimulus";
 
 export default class PipController extends Controller {
@@ -8,22 +19,13 @@ export default class PipController extends Controller {
     this.element.draggable = true;
     this.element.ondragstart = this.onDragStart.bind(this);
 
-    // this.element.ondragstart = this.bind(this.onDragStart)
-
     super.connect();
   }
 
   onDragStart(event): void {
-    console.log("onDragEnter");
-  }
+    event.effectAllowed = "move";
+    event.dropEffect = "none";
 
-  setCorner(corner: string): void {
-    this.element.classList.remove(
-      "bottom-right",
-      "top-left",
-      "top-right",
-      "bottom-left"
-    );
-    this.element.classList.add(corner);
+    console.log("onDragStart");
   }
 }
