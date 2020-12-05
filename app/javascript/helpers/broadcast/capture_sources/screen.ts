@@ -1,8 +1,11 @@
-import { CaptureSource } from "helpers/broadcast/capture_sources/base";
+import {
+  CaptureSource,
+  VideoCaptureSource,
+} from "helpers/broadcast/capture_sources/base";
 import { desktopCapturer } from "helpers/electron/desktop_capture";
-import VideoLayout, { LayoutSection } from "types/video_layout";
+import VideoLayout from "types/video_layout";
 
-export class ScreenCaptureSource extends CaptureSource {
+export class ScreenCaptureSource extends VideoCaptureSource {
   constructor() {
     super();
   }
@@ -14,28 +17,26 @@ export class ScreenCaptureSource extends CaptureSource {
     this.deviceId = await ScreenCaptureSource.getWindowSource(windowTitle);
     const captureArea = videoLayout.sections[0];
 
-    await this.addMediaStream(
-      await navigator.mediaDevices.getUserMedia({
-        audio: false,
-        video: {
-          mandatory: {
-            chromeMediaSource: "desktop",
-            chromeMediaSourceId: this.deviceId,
-          },
-        } as Record<string, unknown>,
-      }),
-      (videoElement: HTMLVideoElement) => {
-        const pixelDensity = videoElement.videoWidth / videoLayout.width;
-        return {
-          width: captureArea.width * pixelDensity,
-          height: captureArea.height * pixelDensity,
-          x: captureArea.x * pixelDensity,
-          y: captureArea.y * pixelDensity,
-          type: "screen",
-          priority: 1,
-        };
-      }
-    );
+    this.mediaStream = await navigator.mediaDevices.getUserMedia({
+      audio: false,
+      video: {
+        mandatory: {
+          chromeMediaSource: "desktop",
+          chromeMediaSourceId: this.deviceId,
+        },
+      },
+    } as Record<string, unknown>);
+
+    await this.processMediaStream(this.mediaStream);
+    const pixelDensity = this.element.videoWidth / videoLayout.width;
+    this.layout = {
+      width: captureArea.width * pixelDensity,
+      height: captureArea.height * pixelDensity,
+      x: captureArea.x * pixelDensity,
+      y: captureArea.y * pixelDensity,
+      type: "screen",
+      priority: 1,
+    };
   }
 
   static async getWindowSource(windowTitle: string): Promise<string> {

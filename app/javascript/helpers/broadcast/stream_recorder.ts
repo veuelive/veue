@@ -7,14 +7,19 @@ export default class StreamRecorder {
   mediaRecorder: MediaRecorder;
   private timerCallback;
   mediaStream: MediaStream;
+  private audioTrack: MediaStreamTrack;
+  private audioMixer: AudioMixer;
 
   constructor(videoMixer: VideoMixer, audioMixer: AudioMixer) {
     this.canvas = videoMixer.canvas;
-    this.mediaStream = this.canvas.captureStream(30);
-    this.audioTracks = audioMixer.audioMix.getAudioTracks();
+    this.audioMixer = audioMixer;
   }
 
   start(streamKey: string): Promise<void> {
+    this.mediaStream = this.canvas.captureStream(30);
+
+    this.mediaStream.addTrack(this.audioMixer.audioTrack);
+
     this.mediaRecorder = new MediaRecorder(this.mediaStream, {
       mimeType: "video/webm;codecs=avc1.64000c",
     });
@@ -35,16 +40,7 @@ export default class StreamRecorder {
     return ipcRenderer.invoke("start", { streamKey });
   }
 
-  set audioTracks(audioTracks: MediaStreamTrack[]) {
-    this.mediaStream.getAudioTracks().forEach((track) => {
-      this.mediaStream.removeTrack(track);
-    });
-    audioTracks.forEach((audioTrack) => {
-      this.mediaStream.addTrack(audioTrack);
-    });
-  }
-
   stop(): void {
-    this.mediaRecorder.stop();
+    this.mediaRecorder?.stop();
   }
 }

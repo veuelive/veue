@@ -1,20 +1,16 @@
-import { UserMediaCaptureSource } from "helpers/broadcast/capture_sources/base";
+import { CaptureSource } from "helpers/broadcast/capture_sources/base";
 
-export default class MicrophoneCaptureSource extends UserMediaCaptureSource {
+export default class MicrophoneCaptureSource extends CaptureSource {
   constructor(deviceId?: string) {
     super();
-    if (deviceId) {
-      this.constraints = {
-        audio: {
-          deviceId: deviceId,
-        },
-        video: false,
-      };
-    } else {
-      this.constraints = {
-        audio: true,
-        video: false,
-      };
-    }
+    this.deviceId = deviceId;
+  }
+
+  async start(): Promise<void> {
+    this.mediaStream = await navigator.mediaDevices.getUserMedia({
+      audio: {
+        deviceId: this.deviceId,
+      },
+    });
   }
 }

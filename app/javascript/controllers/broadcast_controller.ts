@@ -8,7 +8,6 @@ import {
   calculateFullVideoSize,
   copyToClipboard,
 } from "helpers/broadcast_helpers";
-import TimecodeManager from "helpers/broadcast/timecode_manager";
 import { postForm } from "util/fetch";
 import { getCurrentUrl } from "controllers/broadcast/browser_controller";
 import EventManagerInterface from "types/event_manager_interface";
@@ -16,6 +15,7 @@ import LiveEventManager from "helpers/event/live_event_manager";
 import { DefaultVideoLayout } from "types/sizes";
 import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
 import CaptureSourceManager from "helpers/broadcast/capture_source_manager";
+import Metronome from "helpers/broadcast/metronome";
 
 type BroadcastState =
   | "loading"
@@ -31,7 +31,7 @@ export default class extends Controller {
 
   private videoMixer: VideoMixer;
   private streamCapturer: StreamRecorder;
-  private timecodeManager: TimecodeManager;
+  private metronome: Metronome;
   private eventManager: EventManagerInterface;
   private audioMixer: AudioMixer;
   private captureSourceManager: CaptureSourceManager;
@@ -54,7 +54,7 @@ export default class extends Controller {
     );
 
     this.streamCapturer = new StreamRecorder(this.videoMixer, this.audioMixer);
-    this.timecodeManager = new TimecodeManager(this.videoMixer.canvas);
+    this.metronome = new Metronome();
 
     ipcRenderer.send("wakeup");
     ipcRenderer.send("load_browser_view", this.data.get("session-token"));
@@ -121,7 +121,7 @@ export default class extends Controller {
           // secondary_shot: streamer,
         });
         this.state = "live";
-        this.timecodeManager.start();
+        this.metronome.start();
       })
       .catch((e) => console.error(e));
   }
@@ -136,19 +136,19 @@ export default class extends Controller {
     copyToClipboard(video_path);
   }
 
-  pinPage(): void {
-    const url = document
-      .querySelector("input[data-target='broadcast--browser.addressBar']")
-      .getAttribute("value");
-    this.videoMixer.getScreenshot().then((image) => {
-      return postForm("./pins", {
-        name: "Card",
-        url,
-        thumbnail: image,
-        timecode_ms: this.timecodeManager.timecodeMs,
-      });
-    });
-  }
+  // pinPage(): void {
+  //   const url = document
+  //     .querySelector("input[data-target='broadcast--browser.addressBar']")
+  //     .getAttribute("value");
+  //   this.videoMixer.getScreenshot().then((image) => {
+  //     return postForm("./pins", {
+  //       name: "Card",
+  //       url,
+  //       thumbnail: image,
+  //       timecode_ms: this.metronome.timecodeMs,
+  //     });
+  //   });
+  // }
 
   set state(state: BroadcastState) {
     this.element.className = "";
