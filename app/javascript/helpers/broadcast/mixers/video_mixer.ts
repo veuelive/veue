@@ -3,7 +3,10 @@ import { desktopCapturer } from "helpers/electron/desktop_capture";
 import Sizes from "types/sizes";
 import { MediaDeviceChangeEvent } from "controllers/broadcast/media_manager_controller";
 import { BroadcastVideoLayout } from "types/video_layout";
-import { CaptureSource } from "helpers/broadcast/capture_sources/base";
+import {
+  CaptureSource,
+  VideoCaptureSource,
+} from "helpers/broadcast/capture_sources/base";
 import { displayTime } from "util/time";
 import Timecode from "util/timecode";
 import Mixer from "helpers/broadcast/mixers/mixer";
@@ -13,7 +16,7 @@ export default class VideoMixer implements Mixer {
 
   private canvasContext: CanvasRenderingContext2D;
   private broadcastLayout: BroadcastVideoLayout;
-  private captureSources: CaptureSource[] = [];
+  private captureSources: VideoCaptureSource[] = [];
 
   constructor(broadcastLayout: BroadcastVideoLayout) {
     this.broadcastLayout = broadcastLayout;
@@ -27,9 +30,9 @@ export default class VideoMixer implements Mixer {
   }
 
   private computeFrame() {
-    const videoSources = this.captureSources
-      .flatMap((source) => source.videoSources)
-      .filter((videoSource) => videoSource.element.isConnected);
+    const videoSources = this.captureSources.filter(
+      (videoSource) => videoSource.element.isConnected
+    );
 
     this.broadcastLayout.sections
       .sort((a, b) => a.priority - b.priority)
@@ -73,11 +76,11 @@ export default class VideoMixer implements Mixer {
     });
   }
 
-  addCaptureSource(captureSource: CaptureSource): void {
+  addCaptureSource(captureSource: VideoCaptureSource): void {
     this.captureSources.push(captureSource);
   }
 
-  removeCaptureSource(_captureSource: CaptureSource): void {
+  removeCaptureSource(_captureSource: VideoCaptureSource): void {
     this.captureSources = this.captureSources.filter(
       (source) => source.deviceId !== _captureSource.deviceId
     );

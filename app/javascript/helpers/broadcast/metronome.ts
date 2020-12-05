@@ -1,7 +1,7 @@
 import { displayTime } from "util/time";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 
-export default class {
+export default class Metronome {
   public timecodeMs: number;
   private timecodeDisplayElement: HTMLElement;
   private startedAt: number;
