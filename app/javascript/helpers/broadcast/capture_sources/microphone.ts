@@ -1,7 +1,7 @@
 import { UserMediaCaptureSource } from "helpers/broadcast/capture_sources/base";
 
 export default class MicrophoneCaptureSource extends UserMediaCaptureSource {
-  constructor(deviceId: string) {
+  constructor(deviceId?: string) {
     super();
     if (deviceId) {
       this.constraints = {

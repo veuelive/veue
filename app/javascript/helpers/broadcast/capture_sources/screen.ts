@@ -1,14 +1,17 @@
-import { CaptureSourceBase } from "helpers/broadcast/capture_sources/base";
+import { CaptureSource } from "helpers/broadcast/capture_sources/base";
 import { desktopCapturer } from "helpers/electron/desktop_capture";
 import VideoLayout, { LayoutSection } from "types/video_layout";
 
-export class ScreenCaptureSource extends CaptureSourceBase {
-  constructor(deviceId: string) {
+export class ScreenCaptureSource extends CaptureSource {
+  constructor() {
     super();
-    this.deviceId = deviceId;
   }
 
-  public async start(videoLayout: VideoLayout): Promise<void> {
+  public async start(
+    videoLayout: VideoLayout,
+    windowTitle: string
+  ): Promise<void> {
+    this.deviceId = await ScreenCaptureSource.getWindowSource(windowTitle);
     const captureArea = videoLayout.sections[0];
 
     await this.addMediaStream(
@@ -42,6 +45,6 @@ export class ScreenCaptureSource extends CaptureSourceBase {
       const sources = await desktopCapturer.getSources({ types: ["window"] });
       source = sources.find((source) => source.name === windowTitle);
     }
-    return source;
+    return source.id;
   }
 }

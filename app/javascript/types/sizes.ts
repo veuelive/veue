@@ -31,9 +31,9 @@ export const DefaultVideoLayout = {
   ],
   timecode: {
     digits: 12,
-    width: Timecode.codeWidth,
-    height: Timecode.codeHeight,
-    y: Sizes.fullCanvas.height - Timecode.codeHeight,
-    x: Sizes.fullCanvas.width - Timecode.codeWidth,
+    width: 360,
+    height: 10,
+    y: Sizes.fullCanvas.height - 10,
+    x: Sizes.fullCanvas.width - 360,
   },
 } as BroadcastVideoLayout;
