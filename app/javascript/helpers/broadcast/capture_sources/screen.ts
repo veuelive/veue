@@ -6,17 +6,31 @@ import { desktopCapturer } from "helpers/electron/desktop_capture";
 import VideoLayout from "types/video_layout";
 
 export class ScreenCaptureSource extends VideoCaptureSource {
-  constructor() {
-    super();
+  static async connect(
+    windowTitle: string,
+    videoLayout: VideoLayout
+  ): Promise<ScreenCaptureSource> {
+    const deviceId = await ScreenCaptureSource.getWindowSource(windowTitle);
+    const source = new ScreenCaptureSource(deviceId);
+    await source.start();
+    source.addLayout(videoLayout);
+    return source;
   }
 
-  public async start(
-    videoLayout: VideoLayout,
-    windowTitle: string
-  ): Promise<void> {
-    this.deviceId = await ScreenCaptureSource.getWindowSource(windowTitle);
+  private addLayout(videoLayout: VideoLayout) {
     const captureArea = videoLayout.sections[0];
+    const pixelDensity = this.element.videoWidth / videoLayout.width;
+    this.layout = {
+      width: captureArea.width * pixelDensity,
+      height: captureArea.height * pixelDensity,
+      x: captureArea.x * pixelDensity,
+      y: captureArea.y * pixelDensity,
+      type: "screen",
+      priority: 1,
+    };
+  }
 
+  private async start(): Promise<void> {
     this.mediaStream = await navigator.mediaDevices.getUserMedia({
       audio: false,
       video: {
@@ -28,15 +42,6 @@ export class ScreenCaptureSource extends VideoCaptureSource {
     } as Record<string, unknown>);
 
     await this.processMediaStream(this.mediaStream);
-    const pixelDensity = this.element.videoWidth / videoLayout.width;
-    this.layout = {
-      width: captureArea.width * pixelDensity,
-      height: captureArea.height * pixelDensity,
-      x: captureArea.x * pixelDensity,
-      y: captureArea.y * pixelDensity,
-      type: "screen",
-      priority: 1,
-    };
   }
 
   static async getWindowSource(windowTitle: string): Promise<string> {

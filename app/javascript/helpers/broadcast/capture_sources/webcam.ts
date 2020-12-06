@@ -1,14 +1,17 @@
 import { VideoCaptureSource } from "helpers/broadcast/capture_sources/base";
 
 export class WebcamCaptureSource extends VideoCaptureSource {
-  constructor(deviceId?: string) {
-    super();
-    this.deviceId = deviceId;
+  static async connect(deviceId?: string): Promise<WebcamCaptureSource> {
+    const source = new WebcamCaptureSource(deviceId);
+    await source.start();
+    return source;
   }
 
   async start(): Promise<void> {
     this.mediaStream = await navigator.mediaDevices.getUserMedia({
-      video: true,
+      video: {
+        deviceId: this.deviceId || "default",
+      },
       audio: false,
     });
     await this.processMediaStream(this.mediaStream);

@@ -6,54 +6,75 @@ import VideoMixer from "helpers/broadcast/mixers/video_mixer";
 import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
 import Mixer from "helpers/broadcast/mixers/mixer";
 import { Rectangle } from "types/rectangle";
+import VideoLayout from "types/video_layout";
 
 export default class CaptureSourceManager {
-  private _webcamSource: CaptureSource;
-  private _microphoneSource: CaptureSource;
-  private _screenCaptureSource: CaptureSource;
-  private mixers: Mixer[];
+  private _webcamSource: WebcamCaptureSource;
+  private _microphoneSource: MicrophoneCaptureSource;
+  private _screenCaptureSource: ScreenCaptureSource;
+  private videoMixer: VideoMixer;
+  private audioMixer: AudioMixer;
 
   constructor(videoMixer: VideoMixer, audioMixer: AudioMixer) {
-    this.mixers = [videoMixer, audioMixer];
-
-    this.webcamSource = new WebcamCaptureSource();
-    this.webcamSource.start();
-    this.microphoneSource = new MicrophoneCaptureSource();
+    this.videoMixer = videoMixer;
+    this.audioMixer = audioMixer;
   }
 
   set webcamSource(source: WebcamCaptureSource) {
-    this._webcamSource = this.swapSources(source, this._webcamSource);
+    this.swapSources(this.videoMixer, source, this._webcamSource);
+    this._webcamSource = source;
   }
 
   set microphoneSource(source: MicrophoneCaptureSource) {
-    this._microphoneSource = this.swapSources(source, this._microphoneSource);
+    this.swapSources(this.audioMixer, source, this._microphoneSource);
+    this._microphoneSource = source;
   }
 
   set screenCaptureSource(source: ScreenCaptureSource) {
-    this._screenCaptureSource = this.swapSources(
-      source,
-      this._screenCaptureSource
-    );
+    this.swapSources(this.videoMixer, source, this._screenCaptureSource);
+    this._screenCaptureSource = source;
+  }
+
+  async start(): Promise<void> {
+    this.webcamSource = await WebcamCaptureSource.connect();
+    this.microphoneSource = await MicrophoneCaptureSource.connect();
   }
 
   async startBrowserCapture(
     windowTitle: string,
     broadcastArea: Rectangle,
     rectangle: Rectangle
-  ) {
-    const screenCaptureSource = new ScreenCaptureSource();
-    // screenCaptureSource.start(broadcastArea);
-    // this.captureSources.push(screenCaptureSource);
+  ): Promise<void> {
+    const layout: VideoLayout = {
+      width: rectangle.width,
+      height: rectangle.height,
+      sections: [
+        {
+          width: broadcastArea.width,
+          height: broadcastArea.height,
+          x: broadcastArea.x,
+          y: broadcastArea.y,
+          type: "screen",
+          priority: 1,
+        },
+      ],
+    };
+    this.screenCaptureSource = await ScreenCaptureSource.connect(
+      windowTitle,
+      layout
+    );
   }
 
-  private swapSources(newSource: CaptureSource, oldSource?: CaptureSource) {
-    this.mixers.forEach((mixer) => {
-      if (oldSource) {
-        mixer.removeCaptureSource(oldSource);
-      }
+  private swapSources(
+    mixer: Mixer,
+    newSource: CaptureSource,
+    oldSource?: CaptureSource
+  ) {
+    if (oldSource) {
+      mixer.removeCaptureSource(oldSource);
+    }
 
-      mixer.addCaptureSource(newSource);
-    });
+    mixer.addCaptureSource(newSource);
     return newSource;
   }
 }
