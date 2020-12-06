@@ -16,6 +16,7 @@ export default class AudioMixer implements Mixer {
     const sourceNode = this.audioContext.createMediaStreamSource(
       audioSource.mediaStream
     );
+    console.log("Added audio source", audioSource);
     sourceNode.connect(this.destinationNode);
     this.audioSources.set(audioSource, sourceNode);
   }
