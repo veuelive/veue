@@ -19,6 +19,10 @@ export class CaptureSource {
   protected constructor(deviceId?: string) {
     this.deviceId = deviceId;
   }
+
+  stop(): void {
+    this.mediaStream.stop();
+  }
 }
 
 export class VideoCaptureSource extends CaptureSource {
@@ -40,5 +44,10 @@ export class VideoCaptureSource extends CaptureSource {
         this.element.play().then(() => resolve(this.element));
       });
     });
+  }
+
+  stop(): void {
+    this.element.remove();
+    this.mediaStream.stop();
   }
 }
