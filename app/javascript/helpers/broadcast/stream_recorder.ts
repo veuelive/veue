@@ -19,6 +19,7 @@ export default class StreamRecorder {
     this.mediaStream = this.canvas.captureStream(30);
 
     this.mediaStream.addTrack(this.audioMixer.audioTrack);
+    console.log(this.audioMixer.audioTrack);
 
     this.mediaRecorder = new MediaRecorder(this.mediaStream, {
       mimeType: "video/webm;codecs=avc1.64000c",

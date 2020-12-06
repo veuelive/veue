@@ -27,6 +27,8 @@ export default class VideoMixer implements Mixer {
     document.querySelector(".debug-area").appendChild(this.canvas);
 
     this.canvasContext = this.canvas.getContext("2d");
+
+    this.computeFrame();
   }
 
   private computeFrame() {
@@ -53,13 +55,15 @@ export default class VideoMixer implements Mixer {
           );
         }
       });
+
+    this.drawTimecode();
     requestAnimationFrame(() => this.computeFrame());
   }
 
   private drawTimecode() {
     const timecodeLayout = this.broadcastLayout.timecode;
     const colorSequence = Timecode.numberToColors(
-      globalThis.timecodeMs,
+      globalThis.timecodeMs || 0,
       timecodeLayout.digits
     );
 

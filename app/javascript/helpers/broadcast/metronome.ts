@@ -15,7 +15,9 @@ export default class Metronome {
     this.startedAt = Date.now();
     this.tickInterval = setInterval(() => {
       this.timecodeMs = Date.now() - this.startedAt;
-      this.timecodeDisplayElement.innerHTML = displayTime(this.timecodeMs);
+      this.timecodeDisplayElement.innerHTML = displayTime(
+        this.timecodeMs / 1000
+      );
       globalThis.timecodeMs = this.timecodeMs;
       VideoEventProcessor.syncTime(this.timecodeMs);
     }, 10);
