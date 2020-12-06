@@ -1,11 +1,6 @@
 import VideoLayout, { LayoutSection } from "types/video_layout";
 import Sizes from "types/sizes";
 
-export class CaptureSource {
-  deviceId: string;
-  mediaStream: MediaStream;
-}
-
 /**
  * A CaptureSource is our generic representation of
  * a MediaStream/Device/Etc that we are actively using in the
@@ -17,6 +12,15 @@ export class CaptureSource {
  * https://dev.w3.org/2011/webrtc/editor/getusermedia-20120813.html#:~:text=It%20is%20recommended%20for%20multiple,zero%20or%20one%20video%20tracks.
  *
  */
+export class CaptureSource {
+  deviceId: string;
+  mediaStream: MediaStream;
+
+  protected constructor(deviceId?: string) {
+    this.deviceId = deviceId;
+  }
+}
+
 export class VideoCaptureSource extends CaptureSource {
   layout: LayoutSection;
   element: HTMLVideoElement;
@@ -31,9 +35,10 @@ export class VideoCaptureSource extends CaptureSource {
     document.body.append(this.element);
     this.element.srcObject = mediaStream;
     this.element.muted = true;
-    this.element.addEventListener("loadedmetadata", async () => {
-      await this.element.play();
+    return new Promise((resolve) => {
+      this.element.addEventListener("loadedmetadata", async () => {
+        this.element.play().then(() => resolve(this.element));
+      });
     });
-    return this.element;
   }
 }

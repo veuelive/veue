@@ -52,6 +52,7 @@ export default class extends Controller {
       this.videoMixer,
       this.audioMixer
     );
+    this.captureSourceManager.start();
 
     this.streamCapturer = new StreamRecorder(this.videoMixer, this.audioMixer);
     this.metronome = new Metronome();
