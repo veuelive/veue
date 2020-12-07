@@ -1,6 +1,5 @@
 import { Size } from "types/rectangle";
 import { BroadcastVideoLayout } from "types/video_layout";
-import Timecode from "util/timecode";
 
 export default class Sizes {
   public static fullCanvas: Size = { width: 1280, height: 1080 };
