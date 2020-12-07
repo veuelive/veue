@@ -23,11 +23,10 @@ export default class extends BaseController {
   private mouseIsDown: boolean;
 
   connect(): void {
-    this.videoTarget.addEventListener("loadedmetadata", async () => {
-      this.timeDurationTarget.innerHTML = displayTime(
-        this.videoTarget.duration
-      );
-    });
+    this.videoTarget.addEventListener(
+      "loadedmetadata",
+      this.handleLoadedMetadata.bind(this)
+    );
 
     this.videoTarget.addEventListener(
       "timeupdate",
@@ -40,6 +39,15 @@ export default class extends BaseController {
       "timeupdate",
       this.handleTimeUpdate.bind(this)
     );
+
+    this.videoTarget.removeEventListener(
+      "loadedmetadata",
+      this.handleLoadedMetadata.bind(this)
+    );
+  }
+
+  handleLoadedMetadata(): void {
+    this.timeDurationTarget.innerHTML = displayTime(this.videoTarget.duration);
   }
 
   handleTimeUpdate(): void {
@@ -66,27 +74,16 @@ export default class extends BaseController {
     }
 
     this.handleMouseLocation(event);
-    this.handleTimeUpdate();
-  }
-
-  handleMouseLocation(event: MouseEvent): void {
-    const frameRect = this.progressBarContainerTarget.getBoundingClientRect();
-    const x = event.clientX - frameRect.left;
-    const pos = x / frameRect.width;
-
-    const currentTime = pos * this.videoTarget.duration;
-    this.videoTarget.currentTime = currentTime;
-    this.timeDisplayTarget.innerHTML = displayTime(currentTime);
   }
 
   handleMouseUp(): void {
     this.mouseIsDown = false;
 
-    // TODO: fix this
-    if (this.videoState === "paused") {
+    if (this.videoState === "paused" || this.videoState == undefined) {
       return;
     }
 
+    // Play the video
     this.videoTarget
       .play()
       .then(() => (this.videoState = "playing"))
@@ -99,6 +96,20 @@ export default class extends BaseController {
             console.error(e);
           });
       });
+  }
+
+  handleMouseLocation(event: MouseEvent): void {
+    const frameRect = this.progressBarContainerTarget.getBoundingClientRect();
+
+    // find the offset of the progressbar and the actual X location of the event
+    const x = event.clientX - frameRect.left;
+    const pos = x / frameRect.width;
+
+    const currentTime = pos * this.videoTarget.duration;
+
+    this.timeDisplayTarget.innerHTML = displayTime(currentTime);
+    this.videoTarget.currentTime = currentTime;
+    this.handleTimeUpdate();
   }
 
   set videoState(state: string) {
