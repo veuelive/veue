@@ -13,6 +13,7 @@ export default class PipQuadrantsController extends Controller {
   onDragEnter(event): void {}
 
   onDragOver(event): void {
+    console.log("onDragOver....");
     event.preventDefault();
   }
 }

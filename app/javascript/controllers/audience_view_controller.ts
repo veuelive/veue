@@ -106,7 +106,7 @@ export default class extends BaseController {
   }
 
   movePipTo(corner: string): void {
-    this.pipComponentTarget.dataset.cornerPosition = corner;
+    this.pipComponentTarget.setAttribute("data-corner-position", corner);
   }
 
   authChanged(): void {
