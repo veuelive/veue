@@ -54,12 +54,6 @@ export default class extends BaseController {
     event.preventDefault();
 
     this.mouseIsDown = true;
-
-    if (this.videoState !== "paused") {
-      this.videoTarget.pause();
-      this.videoState = "paused";
-    }
-
     this.handleMouseLocation(event);
   }
 
@@ -88,7 +82,8 @@ export default class extends BaseController {
   handleMouseUp(): void {
     this.mouseIsDown = false;
 
-    if (this.videoState !== "paused") {
+    // TODO: fix this
+    if (this.videoState === "paused") {
       return;
     }
 
