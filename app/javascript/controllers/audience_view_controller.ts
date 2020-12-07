@@ -25,6 +25,11 @@ export default class extends BaseController {
     "toggle",
     "audio",
     "timeDisplay",
+    "pipComponent",
+    "topLeft",
+    "topRight",
+    "bottomLeft",
+    "bottomRight",
   ];
   readonly toggleTarget!: HTMLElement;
   readonly audioTarget!: HTMLElement;
@@ -92,6 +97,14 @@ export default class extends BaseController {
         hls.attachMedia(this.videoTarget);
       }
     }
+    this.topLeftTarget.ondrop = () => this.movePipTo("top-left");
+    this.topRightTarget.ondrop = () => this.movePipTo("top-right");
+    this.bottomLeftTarget.ondrop = () => this.movePipTo("bottom-left");
+    this.bottomRightTarget.ondrop = () => this.movePipTo("bottom-right");
+  }
+
+  movePipTo(corner: string): void {
+    this.pipComponentTarget.dataset.cornerPosition = corner;
   }
 
   authChanged(): void {

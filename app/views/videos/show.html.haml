@@ -21,12 +21,12 @@
             VIEWS
       %canvas.primary-canvas{"data-target": "audience-view.primaryCanvas", width: 1200, height: 740}
       .pip-drop-quadrants
-        .quadrant.top-left{data: {corner: 'top-left', controller: "audience--pip-quadrants"}}
-        .quadrant.top-right{data: {corner: 'top-right', controller: "audience--pip-quadrants"}}
-        .quadrant.bottom-left{data: {corner: 'bottom-left',controller: "audience--pip-quadrants"}}
-        .quadrant.bottom-right{data: {corner: 'bottom-right', controller: "audience--pip-quadrants"}}
+        .quadrant.top-left{data: {target: 'audience-view.topLeft', controller: "audience--pip-quadrants"}}
+        .quadrant.top-right{data: {target: 'audience-view.topRight', controller: "audience--pip-quadrants"}}
+        .quadrant.bottom-left{data: {target: 'audience-view.bottomLeft', controller: "audience--pip-quadrants"}}
+        .quadrant.bottom-right{data: {target: 'audience-view.bottomRight', controller: "audience--pip-quadrants"}}
 
-      .pip-component{data: {controller: "audience--pip"}}
+      .pip-component{data: {controller: "audience--pip", target: "audience-view.pipComponent", 'corner-position': 'bottom-right'}}
         %canvas.pip-secondary-canvas{"data-target": "audience-view.pipSecondaryCanvas audience--pip.canvas", width: 420, height: 340}
 
       = render partial: 'videos/partials/player_buttons'

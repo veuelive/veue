@@ -87,22 +87,22 @@ body#videos__show {
     .pip-component {
       position: absolute;
 
-      &.bottom-right {
+      &[data-corner-position="bottom-right"] {
         bottom: 2vw;
         right: 2vw;
       }
 
-      &.bottom-left {
+      &[data-corner-position="bottom-left"] {
         bottom: 2vw;
         left: 2vw;
       }
 
-      &.top-left {
+      &[data-corner-position="top-left"] {
         top: 2vw;
         left: 2vw;
       }
 
-      &.top-rigt {
+      &[data-corner-position="top-right"] {
         top: 2vw;
         right: 2vw;
       }
@@ -110,12 +110,9 @@ body#videos__show {
 
     .pip-drop-quadrants {
       .quadrant {
-        border: solid 1px black;
         width: 49%;
-        position: absolute;
-
         height: 49%;
-
+        position: absolute;
         &.bottom-left {
           bottom: 0;
           left: 0;
