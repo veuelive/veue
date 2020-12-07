@@ -8,9 +8,10 @@ class FollowsController < ApplicationController
   end
 
   def create
-    return render_streamer_profile if current_video.user.followers.include?(current_user)
+    unless current_video.user.followers.include?(current_user)
+      current_video.user.streamer_follows.create!(streamer_follow: current_user)
+    end
 
-    current_video.user.streamer_follows.create!(streamer_follow: current_user)
     render_streamer_profile
   end
 

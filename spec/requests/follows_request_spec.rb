@@ -39,5 +39,27 @@ RSpec.describe "Follows", type: :request do
       delete video_follow_path(video_id: video.to_param)
       expect(streamer.streamer_follows.count).to eq(0)
     end
+
+    it "should send consent message to follwer on first follow of any streamer" do
+      post video_follow_path(video_id: video.to_param)
+
+      # follower sms_status will be changed to :instructions_sent
+      follower.reload
+      expect(follower.sms_status).to eq("instructions_sent")
+
+      perform_enqueued_jobs do
+        SendConsentTextJob.perform_now(follower, streamer)
+        # SmsMessage will be sent with instructions to follower
+        expect(SmsMessage.find_by(to: follower.phone_number)).to be_present
+      end
+
+      # Sms for consent will be sent only once
+      another_streamer = create(:streamer)
+      another_video = create(:video, user: another_streamer)
+
+      expect {
+        post video_follow_path(video_id: another_video.to_param)
+      }.to_not have_enqueued_job(SendConsentTextJob)
+    end
   end
 end
