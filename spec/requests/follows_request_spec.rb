@@ -45,7 +45,7 @@ RSpec.describe "Follows", type: :request do
 
       # follower sms_status will be changed to :instructions_sent
       follower.reload
-      expect(follower.sms_status).to eq("instructions_sent")
+      expect(follower.instructions_sent?).to eq(true)
 
       perform_enqueued_jobs do
         SendConsentTextJob.perform_now(follower, streamer)
