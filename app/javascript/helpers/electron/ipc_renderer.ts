@@ -55,7 +55,6 @@ try {
   const electron = eval("require('electron')");
   ipcRenderer = electron.ipcRenderer as IPCRenderer;
 } catch (e) {
-  console.log("WE ARE NOT IN A NODE ENVIRONMENT, MOCKS ENABLED");
   ipcRenderer = new IPCRendererMock();
   globalThis.ipcRenderer = ipcRenderer;
 }

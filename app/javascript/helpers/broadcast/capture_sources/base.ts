@@ -1,5 +1,4 @@
-import VideoLayout, { LayoutSection } from "types/video_layout";
-import Sizes from "types/sizes";
+import { LayoutSection } from "types/video_layout";
 
 /**
  * A CaptureSource is our generic representation of

@@ -1,7 +1,4 @@
-import {
-  CaptureSource,
-  VideoCaptureSource,
-} from "helpers/broadcast/capture_sources/base";
+import { VideoCaptureSource } from "helpers/broadcast/capture_sources/base";
 import { desktopCapturer } from "helpers/electron/desktop_capture";
 import VideoLayout from "types/video_layout";
 

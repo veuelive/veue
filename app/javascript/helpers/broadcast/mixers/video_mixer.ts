@@ -1,13 +1,5 @@
-import { Rectangle } from "types/rectangle";
-import { desktopCapturer } from "helpers/electron/desktop_capture";
-import Sizes from "types/sizes";
-import { MediaDeviceChangeEvent } from "controllers/broadcast/media_manager_controller";
 import { BroadcastVideoLayout } from "types/video_layout";
-import {
-  CaptureSource,
-  VideoCaptureSource,
-} from "helpers/broadcast/capture_sources/base";
-import { displayTime } from "util/time";
+import { VideoCaptureSource } from "helpers/broadcast/capture_sources/base";
 import Timecode from "util/timecode";
 import Mixer from "helpers/broadcast/mixers/mixer";
 
