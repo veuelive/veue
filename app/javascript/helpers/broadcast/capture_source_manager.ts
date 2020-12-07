@@ -7,6 +7,7 @@ import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
 import Mixer from "helpers/broadcast/mixers/mixer";
 import { Rectangle } from "types/rectangle";
 import VideoLayout from "types/video_layout";
+import { inElectronApp } from "helpers/electron/base";
 
 export default class CaptureSourceManager {
   private _webcamSource: WebcamCaptureSource;
@@ -21,17 +22,29 @@ export default class CaptureSourceManager {
   }
 
   set webcamSource(source: WebcamCaptureSource) {
-    this.swapSources(this.videoMixer, source, this._webcamSource);
+    CaptureSourceManager.swapSources(
+      this.videoMixer,
+      source,
+      this._webcamSource
+    );
     this._webcamSource = source;
   }
 
   set microphoneSource(source: MicrophoneCaptureSource) {
-    this.swapSources(this.audioMixer, source, this._microphoneSource);
+    CaptureSourceManager.swapSources(
+      this.audioMixer,
+      source,
+      this._microphoneSource
+    );
     this._microphoneSource = source;
   }
 
   set screenCaptureSource(source: ScreenCaptureSource) {
-    this.swapSources(this.videoMixer, source, this._screenCaptureSource);
+    CaptureSourceManager.swapSources(
+      this.videoMixer,
+      source,
+      this._screenCaptureSource
+    );
     this._screenCaptureSource = source;
   }
 
@@ -59,13 +72,16 @@ export default class CaptureSourceManager {
         },
       ],
     };
+    if (!inElectronApp) {
+      return;
+    }
     this.screenCaptureSource = await ScreenCaptureSource.connect(
       windowTitle,
       layout
     );
   }
 
-  private swapSources(
+  private static swapSources(
     mixer: Mixer,
     newSource: CaptureSource,
     oldSource?: CaptureSource

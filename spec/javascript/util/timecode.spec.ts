@@ -15,8 +15,9 @@ describe("timecodes", () => {
   });
 
   it("should do full encoding to colors", () => {
-    expect(Timecode.numberToColors(0)).toEqual(
-      new Array(Timecode.codeCount).fill("#000000")
+    const codeCount = 12;
+    expect(Timecode.numberToColors(0, codeCount)).toEqual(
+      new Array(codeCount).fill("#000000")
     );
   });
 

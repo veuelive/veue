@@ -11,7 +11,6 @@ export default class extends Controller {
     } else {
       this.hide();
     }
-    console.log("press");
   }
 
   show(): void {

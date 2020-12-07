@@ -1,4 +1,3 @@
-import Sizes from "types/sizes";
 import TimecodeSynchronizer from "./timecode_synchronizer";
 import { BroadcastVideoLayout, LayoutSection } from "types/video_layout";
 import { Rectangle } from "types/rectangle";
