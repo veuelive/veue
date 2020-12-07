@@ -24,13 +24,13 @@ export default class extends BaseController {
     "primaryCanvas",
     "fixedSecondaryCanvas",
     "pipSecondaryCanvas",
-    "toggle",
-    "audio",
+    "togglePlay",
+    "toggleAudio",
     "timeDisplay",
     "timeDuration",
   ];
-  readonly toggleTarget!: HTMLElement;
-  readonly audioTarget!: HTMLElement;
+  readonly togglePlayTargets!: HTMLElement[];
+  readonly toggleAudioTargets!: HTMLElement[];
   readonly videoTarget!: HTMLVideoElement;
   readonly primaryCanvasTarget!: HTMLCanvasElement;
   readonly fixedSecondaryCanvasTarget!: HTMLCanvasElement;
@@ -167,8 +167,12 @@ export default class extends BaseController {
   set state(state: string) {
     this.data.set("state", state);
 
+    const toggleTo = this.state === "paused" ? "play" : "pause";
     const imagePath = this.state === "paused" ? playSvg : pauseSvg;
-    this.toggleTarget.innerHTML = `<img src="${imagePath}"  alt="${this.state}"/>`;
+
+    this.togglePlayTargets.forEach((playElement) => {
+      playElement.innerHTML = `<img src="${imagePath}" alt="${toggleTo}" />`;
+    });
   }
 
   get state(): string {
@@ -177,10 +181,23 @@ export default class extends BaseController {
 
   set audioState(audioState: string) {
     this.data.set("audioState", audioState);
-    this.videoTarget.muted = this.audioState === "muted";
 
-    const imagePath = this.audioState === "muted" ? mutedSvg : unmutedSvg;
-    this.audioTarget.innerHTML = `<img src="${imagePath}"  alt="${this.audioState}"/>`;
+    let imagePath: string;
+    let toggleTo: "mute" | "unmute";
+
+    if (this.audioState === "muted") {
+      imagePath = mutedSvg;
+      toggleTo = "unmute";
+      this.videoTarget.muted = true;
+    } else {
+      imagePath = unmutedSvg;
+      toggleTo = "mute";
+      this.videoTarget.muted = false;
+    }
+
+    this.toggleAudioTargets.forEach((audioElement) => {
+      audioElement.innerHTML = `<img src="${imagePath}"  alt="${toggleTo}" />`;
+    });
   }
 
   get audioState(): string {

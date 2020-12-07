@@ -34,15 +34,15 @@
       display: flex;
       justify-content: center;
       padding: 10px;
+      flex: 0 0 auto;
+    }
+
+    .toggle-play.play {
+      padding-right: 8px;
     }
 
     .toggle-audio {
       background-color: color.$light-black;
-    }
-
-    .icon {
-      color: white;
-      padding-left: 0.5rem;
     }
 
     .active-icon {
@@ -66,11 +66,6 @@
     transform: translate(-50%, -50%);
     align-items: center;
     width: 80%;
-
-    .toggle-audio.desktop,
-    .toggle-play.desktop {
-      display: none;
-    }
 
     .time-display {
       text-align: center;
@@ -143,7 +138,14 @@
     }
   }
 
-  @include desktop {
+  @include mobilePortrait() {
+    .toggle-audio.desktop,
+    .toggle-play.desktop {
+      display: none;
+    }
+  }
+
+  @include desktop() {
     .mobile-controls {
       display: none;
     }
