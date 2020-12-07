@@ -28,6 +28,17 @@ class User < ApplicationRecord
   encrypts :phone_number
   blind_index :phone_number
 
+  enum sms_status: {new_number: 0, instructions_sent: 1, unsubscribed: 2}
+
+  def send_consent_instructions!(streamer)
+    change_sms_status!(:instructions_sent)
+    SendConsentTextJob.perform_later(self, streamer)
+  end
+
+  def change_sms_status!(status)
+    update!(sms_status: status)
+  end
+
   def setup_as_streamer!
     return if mux_stream_key
 

@@ -13,6 +13,15 @@ class SmsMessage < ApplicationRecord
   validates :to, presence: true
   validates :text, presence: true
 
+  def self.follow_consent_message!(follower:, streamer:)
+    SmsMessage.create!(
+      to: follower.phone_number,
+      from: ENV["TWILIO_PHONE_NUMBER"],
+      text: I18n.t("text_messages.follow_consent", display_name: streamer.display_name),
+      service: "Twilio",
+    ).send_message!
+  end
+
   def self.notify_broadcast_start!(streamer:, video_url:, follower:)
     message = "#{streamer.display_name} is now live on Veue! #{video_url}"
 
