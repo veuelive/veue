@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_04_143442) do
+ActiveRecord::Schema.define(version: 2020_12_07_1431152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   # These are custom enum types that must be created before they can be used in the schema definition
+  create_enum "sms_status_setting", ["new_number", "instructions_sent", "unsubscribed"]
   create_enum "visibility_setting", ["public", "protected", "private"]
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -122,7 +123,7 @@ ActiveRecord::Schema.define(version: 2020_12_04_143442) do
     t.string "display_name"
     t.string "mux_live_stream_id"
     t.text "mux_stream_key_ciphertext"
-    t.integer "sms_status", default: 0
+    t.enum "sms_status", default: "new_number", as: "sms_status_setting"
     t.index ["mux_live_stream_id"], name: "index_users_on_mux_live_stream_id"
   end
 
