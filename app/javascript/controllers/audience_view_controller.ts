@@ -171,6 +171,12 @@ export default class extends BaseController {
     const imagePath = this.state === "paused" ? playSvg : pauseSvg;
 
     this.togglePlayTargets.forEach((playElement) => {
+      // Allows for styling of the play button due to appearing off-center
+      if (toggleTo === "play") {
+        playElement.classList.add("play");
+      } else {
+        playElement.classList.remove("play");
+      }
       playElement.innerHTML = `<img src="${imagePath}" alt="${toggleTo}" />`;
     });
   }
