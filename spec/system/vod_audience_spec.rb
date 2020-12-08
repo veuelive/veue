@@ -59,4 +59,17 @@ describe "Prerecorded Audience View" do
       expect(view_count.call).to eq(initial_view_count + 2)
     end
   end
+
+  describe "Video Controls" do
+    describe "Desktop video controls" do
+      it "Play button should work on desktop"
+        find(".primary-video-area").hover
+
+        play_class = ".toggle-play"
+
+        # There are 2 on the page, but only 1 should be visible
+        expect(page).to have_css(play_class, count: 1)
+      end
+    end
+  end
 end
