@@ -5,7 +5,7 @@
   .primary-video-area:hover {
     .player-controls,
     .mobile-controls {
-      opacity: 0.8;
+      opacity: 1;
     }
   }
 
@@ -47,7 +47,7 @@
     }
 
     .toggle-audio {
-      background-color: color.$light-black;
+      background-color: rgba(color.$light-black, 0.5);
     }
 
     .active-icon {
@@ -61,7 +61,7 @@
     color: white;
     transition: 100ms opacity;
     border-radius: 1rem;
-    background-color: #383838;
+    background-color: rgba(color.$black, 0.5);
     position: absolute;
     bottom: 0;
     left: 50%;
@@ -72,7 +72,7 @@
     .time-display {
       text-align: center;
       font-size: 14px;
-      margin: 0 10px;
+      margin: 0 5px;
       min-width: 70px;
       padding: 0;
     }
@@ -81,7 +81,7 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      background: color.$gray-medium-1;
+      background: color.$neutral-middle;
       min-width: 100px;
       width: 80%;
       height: 10px;
@@ -127,7 +127,7 @@
     .toggle-play.mobile,
     .toggle-audio.mobile {
       display: flex;
-      opacity: 0.8;
+      opacity: 1;
       height: 20px;
       width: 21px;
       img {
@@ -135,17 +135,9 @@
         height: 16px;
       }
     }
-
-    .toggle-play.mobile {
-      border: 2px solid white;
-    }
-
-    .toggle-audio.mobile {
-      border: 2px solid white;
-    }
   }
 
-  @include mobilePortrait() {
+  @mixin mobile-css {
     .player-controls {
       padding: 0.25rem 0;
       width: 95%;
@@ -155,6 +147,14 @@
     .toggle-play.desktop {
       display: none;
     }
+  }
+
+  @include mobileLandscape() {
+    @include mobile-css;
+  }
+
+  @include mobilePortrait() {
+    @include mobile-css;
   }
 
   @include desktop() {
@@ -170,6 +170,7 @@
     .toggle-audio.desktop,
     .toggle-play.desktop {
       display: flex;
+      margin: 0;
     }
   }
 }

@@ -8,9 +8,9 @@
   %span.progress-bar-container{
     data: {
       target: "audience--player-controls.progressBarContainer",
-      action: "mousedown->audience--player-controls#handleMouseDown
-               mouseup->audience--player-controls#handleMouseUp
-               mousemove->audience--player-controls#handleMouseMove"
+      action: "pointerdown->audience--player-controls#handlePointerDown
+               pointerup->audience--player-controls#handlePointerUp
+               pointermove->audience--player-controls#handlePointerMove"
     }}
     %span.progress-bar{
       data: { target: "audience--player-controls.progressBar", currentTime: "0", duration: "0" }

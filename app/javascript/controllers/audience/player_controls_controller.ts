@@ -20,7 +20,7 @@ export default class extends BaseController {
   readonly progressBarContainerTarget!: HTMLElement;
   readonly progressBarButtonTarget!: HTMLButtonElement;
 
-  private mouseIsDown: boolean;
+  private pointerIsDown: boolean;
 
   connect(): void {
     this.videoTarget.addEventListener(
@@ -58,26 +58,26 @@ export default class extends BaseController {
     progress.style.width = `${width}%`;
   }
 
-  handleMouseDown(event: MouseEvent): void {
+  handlePointerDown(event: PointerEvent): void {
     event.preventDefault();
 
-    this.mouseIsDown = true;
-    this.handleMouseLocation(event);
+    this.pointerIsDown = true;
+    this.handlePointerLocation(event);
   }
 
-  handleMouseMove(event: MouseEvent): void {
+  handlePointerMove(event: PointerEvent): void {
     event.preventDefault();
 
-    // The mouse has to be down for us to register a mousemove
-    if (this.mouseIsDown !== true) {
+    // The pointer has to be down for us to register a pointermove
+    if (this.pointerIsDown !== true) {
       return;
     }
 
-    this.handleMouseLocation(event);
+    this.handlePointerLocation(event);
   }
 
-  handleMouseUp(): void {
-    this.mouseIsDown = false;
+  handlePointerUp(): void {
+    this.pointerIsDown = false;
 
     if (this.videoState === "paused" || this.videoState == undefined) {
       return;
@@ -98,7 +98,7 @@ export default class extends BaseController {
       });
   }
 
-  handleMouseLocation(event: MouseEvent): void {
+  handlePointerLocation(event: PointerEvent): void {
     const frameRect = this.progressBarContainerTarget.getBoundingClientRect();
 
     // find the offset of the progressbar and the actual X location of the event

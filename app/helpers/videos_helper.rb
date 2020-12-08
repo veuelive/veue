@@ -18,30 +18,44 @@ module VideosHelper
   def play_button(mobile: false)
     classes = "active-icon toggle-play"
 
-    if (mobile == true)
-      classes += " mobile"
-    end
+    classes +=
+      if mobile == true
+        " mobile"
+      else
+        " desktop"
+      end
 
-    content_tag(:a, class: classes, title: "Toggle Play", data: {
-      action: "click->audience-view#togglePlay",
-      target: "audience-view.togglePlay"
-    }) do
+    tag.a(
+      class: classes,
+      title: "Toggle Play",
+      data: {
+        action: "click->audience-view#togglePlay",
+        target: "audience-view.togglePlay",
+      },
+    ) do
       svg_tag "play"
     end
   end
 
   def audio_button(mobile: false)
-    classes = "icon toggle-audio"
+    classes = "toggle-audio"
 
-    if mobile == true
-      classes += " mobile"
-    end
+    classes +=
+      if mobile == true
+        " mobile"
+      else
+        " desktop"
+      end
 
-    content_tag(:a, class: classes, title: "Toggle Audio", data: {
-      action: "click->audience-view#toggleAudio",
-      target: "audience-view.toggleAudio"
-    }) do
-      svg_tag "speaker"
+    tag.a(
+      class: classes,
+      title: "Toggle Audio",
+      data: {
+        action: "click->audience-view#toggleAudio",
+        target: "audience-view.toggleAudio",
+      },
+    ) do
+      svg_tag "volume-max"
     end
   end
 end
