@@ -78,7 +78,7 @@ body#videos__show {
     .pip-component {
       position: absolute;
       z-index: 2;
-      transition: all 1s ease;
+      transition: transform 500ms ease;
       top: 0;
       left: 0;
 
