@@ -99,10 +99,10 @@ export default class extends BaseController {
         hls.attachMedia(this.videoTarget);
       }
     }
-    this.topLeftTarget.ondrop = () => this.movePipTo("top-left");
-    this.topRightTarget.ondrop = () => this.movePipTo("top-right");
-    this.bottomLeftTarget.ondrop = () => this.movePipTo("bottom-left");
-    this.bottomRightTarget.ondrop = () => this.movePipTo("bottom-right");
+    this.topLeftTarget.ondragenter = () => this.movePipTo("top-left");
+    this.topRightTarget.ondragenter = () => this.movePipTo("top-right");
+    this.bottomLeftTarget.ondragenter = () => this.movePipTo("bottom-left");
+    this.bottomRightTarget.ondragenter = () => this.movePipTo("bottom-right");
   }
 
   movePipTo(corner: string): void {

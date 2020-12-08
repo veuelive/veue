@@ -2,16 +2,16 @@ import { Controller } from "stimulus";
 
 export default class PipQuadrantsController extends Controller {
   connect(): void {
-    this.element.ondragenter = this.onDragEnter.bind(this);
+    // ondragenter is attached by audience_view_controller
     this.element.ondragleave = this.onDragLeave.bind(this);
     this.element.ondragover = this.onDragOver.bind(this);
-    // ondrop is handled in audience-view
+    this.element.onDrop = this.onDrop.bind(this);
+
     super.connect();
   }
 
   onDragLeave(event): void {}
-  onDragEnter(event): void {}
-
+  onDrop(event): void {}
   onDragOver(event): void {
     event.preventDefault();
   }
