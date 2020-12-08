@@ -8,17 +8,24 @@ import Mixer from "helpers/broadcast/mixers/mixer";
 import { Rectangle } from "types/rectangle";
 import VideoLayout from "types/video_layout";
 import { inElectronApp } from "helpers/electron/base";
+import { MediaDeviceChangeEvent } from "controllers/broadcast/media_manager_controller";
 
 export default class CaptureSourceManager {
   private _webcamSource: WebcamCaptureSource;
   private _microphoneSource: MicrophoneCaptureSource;
   private _screenCaptureSource: ScreenCaptureSource;
-  private videoMixer: VideoMixer;
-  private audioMixer: AudioMixer;
+  private readonly videoMixer: VideoMixer;
+  private readonly audioMixer: AudioMixer;
+  private readonly mediaChangeListener: (event: CustomEvent) => Promise<void>;
 
   constructor(videoMixer: VideoMixer, audioMixer: AudioMixer) {
     this.videoMixer = videoMixer;
     this.audioMixer = audioMixer;
+
+    this.mediaChangeListener = async (event: CustomEvent) => {
+      await this.switchToDevice(event.detail as MediaDeviceInfo);
+    };
+    document.addEventListener(MediaDeviceChangeEvent, this.mediaChangeListener);
   }
 
   set webcamSource(source: WebcamCaptureSource) {
@@ -46,6 +53,16 @@ export default class CaptureSourceManager {
       this._screenCaptureSource
     );
     this._screenCaptureSource = source;
+  }
+
+  async switchToDevice(device: MediaDeviceInfo): Promise<void> {
+    if (device.kind === "audioinput") {
+      this.microphoneSource = await MicrophoneCaptureSource.connect(
+        device.deviceId
+      );
+    } else if (device.kind === "videoinput") {
+      this.webcamSource = await WebcamCaptureSource.connect(device.deviceId);
+    }
   }
 
   async start(): Promise<void> {
@@ -88,6 +105,7 @@ export default class CaptureSourceManager {
   ) {
     if (oldSource) {
       mixer.removeCaptureSource(oldSource);
+      oldSource.stop();
     }
 
     mixer.addCaptureSource(newSource);
