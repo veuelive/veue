@@ -61,11 +61,11 @@ class Video < ApplicationRecord
       end
 
       transitions from: :pending, to: :live
-      transitions from: :starting, to: :live
     end
 
     event :end do
       transitions from: :live, to: :ended
+      transitions from: :starting, to: :ended
     end
 
     event :finish do
@@ -73,7 +73,7 @@ class Video < ApplicationRecord
         send_ifttt! "#{user.display_name} stopped streaming"
       end
 
-      transitions from: %i[live paused pending ended], to: :finished
+      transitions from: %i[live paused pending ended starting], to: :finished
     end
   end
 

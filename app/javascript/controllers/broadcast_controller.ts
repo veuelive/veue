@@ -36,7 +36,7 @@ export default class extends Controller {
   connect(): void {
     const currentVideoState = this.data.get("video-state");
 
-    if (["live", "finished"].includes(currentVideoState)) {
+    if (["starting", "live", "finished"].includes(currentVideoState)) {
       document.location.href = "/broadcasts";
     }
 

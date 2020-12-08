@@ -43,7 +43,9 @@ class User < ApplicationRecord
   end
 
   def active_video!
-    return active_video if active_video && !active_video.live?
+    # We need to treat both "live" and "starting" videos as active videos.
+    # Only "pending"  videos should be broadcastable
+    return active_video if active_video&.pending?
 
     active_video&.end!
     create_new_broadcast!

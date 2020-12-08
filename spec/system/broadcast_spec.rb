@@ -102,6 +102,16 @@ describe "Broadcast View" do
 
       expect(message1.body).to match(current_video_url)
     end
+
+    it "should not be able to start a broadcast with a 'starting' state on your video" do
+      video.update!(state: "starting")
+      previous_path = page.current_path
+
+      # Should just redirect us to a new broadcast like if it was "live""
+      page.refresh
+
+      expect(page.current_path).to_not eq(previous_path)
+    end
   end
 
   describe "while live streaming" do
@@ -233,8 +243,6 @@ describe "Broadcast View" do
         using_wait_time(5) do
           expect(page).to have_field("title", with: "")
         end
-
-        expect(video.title).to eq(nil)
       end
     end
   end
