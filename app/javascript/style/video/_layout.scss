@@ -78,24 +78,24 @@ body#videos__show {
     .pip-component {
       position: absolute;
       z-index: 2;
+      transition: all 1s ease;
+      top: 0;
+      left: 0;
+
       &[data-corner-position="bottom-right"] {
-        bottom: 2vw;
-        right: 2vw;
+        transform: translate(71vw, 235%);
       }
 
       &[data-corner-position="bottom-left"] {
-        bottom: 2vw;
-        left: 2vw;
+        transform: translate(2vw, 235%);
       }
 
       &[data-corner-position="top-left"] {
-        top: 2vw;
-        left: 2vw;
+        transform: translate(2vw, 235%);
       }
 
       &[data-corner-position="top-right"] {
-        top: 2vw;
-        right: 2vw;
+        transform: translate(71vw, 0);
       }
     }
 
