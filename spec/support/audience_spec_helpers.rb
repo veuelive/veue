@@ -1,8 +1,32 @@
 # frozen_string_literal: true
 
 module AudienceSpecHelpers
+  def audience_view_controller
+    "div[data-controller~='audience-view']"
+  end
+
+  def audience_view_state_css(state, equality_operator = "=")
+    "#{audience_view_controller}[data-audience-view-state#{equality_operator}'#{state}']"
+  end
+
+  def audience_audio_state_css(state, equality_operator = "=")
+    "#{audience_view_controller}[data-audience-view-audio-state#{equality_operator}'#{state}']"
+  end
+
   def is_video_playing?
-    find("div[data-controller='audience-view']")["data-audience-view-state"] == "playing"
+    page.has_css?(audience_view_state_css("playing"))
+  end
+
+  def is_video_paused?
+    page.has_css?(audience_view_state_css("paused"))
+  end
+
+  def is_video_muted?
+    page.has_css?(audience_audio_state_css("muted"))
+  end
+
+  def is_video_unmuted?
+    page.has_css?(audience_audio_state_css("unmuted"))
   end
 
   def assert_video_is_playing

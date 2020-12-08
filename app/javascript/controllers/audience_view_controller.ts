@@ -1,8 +1,8 @@
 import Hls from "hls.js";
 import playSvg from "images/play.svg";
 import pauseSvg from "images/pause.svg";
-import mutedSvg from "images/muted.svg";
-import unmutedSvg from "images/speaker.svg";
+import mutedSvg from "images/volume-mute.svg";
+import unmutedSvg from "images/volume-max.svg";
 import { displayTime } from "util/time";
 import TimecodeSynchronizer from "helpers/audience/timecode_synchronizer";
 import VideoDemixer from "helpers/audience/video_demixer";

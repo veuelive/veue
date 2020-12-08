@@ -8,7 +8,7 @@
       .broadcast-commands
         -#.btn{data: {action: "click->broadcast#pinPage"}}= svg_tag "add"
         .btn{data: {controller: "broadcast--media-manager", action: "click->broadcast--media-manager#showHideMenu", "broadcast--media-manager": {"type": "audio"}}}
-          = svg_tag "speaker"
+          = svg_tag "volume-max"
         .btn{data: {controller: "broadcast--media-manager", action: "click->broadcast--media-manager#showHideMenu", "broadcast--media-manager": {"type": "video"}}}
           = svg_tag "cam"
         .btn{data: {action: "click->broadcast--debug#showHideAction"}}
