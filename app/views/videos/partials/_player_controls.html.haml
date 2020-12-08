@@ -1,10 +1,6 @@
 
 .player-controls
-  %a.active-icon.toggle-play.desktop{
-    "data-action" => "click->audience-view#togglePlay",
-    "data-target" => "audience-view.togglePlay", :title => "Toggle Play"
-  }
-    = svg_tag 'play'
+  = play_button
 
   .time-display
     %span{"data-target": "audience--player-controls.timeDisplay audience-view.timeDisplay"}
@@ -27,20 +23,10 @@
   .time-display
     %span{"data-target": "audience-view.timeDuration audience--player-controls.timeDuration"}
 
-  %a.icon.toggle-audio.desktop{
-    title: "Toggle Audio",
-    data: {
-      action: "click->audience-view#toggleAudio",
-      target: "audience-view.toggleAudio"
-    }
-  }
-    = svg_tag 'speaker'
+  = audio_button
 
 -# Need to be duplicated and removed parent due to positioning issues with absolute
 .mobile-controls
-  %a.active-icon.toggle-play.mobile{"data-action" => "click->audience-view#togglePlay", "data-target" => "audience-view.togglePlay", :title => "Toggle Play"}
-    = svg_tag 'play'
-
-  %a.icon.toggle-audio.mobile{data: {action: "click->audience-view#toggleAudio", target: "audience-view.toggleAudio"}}
-    = svg_tag 'speaker'
+  = play_button(mobile: true)
+  = audio_button(mobile: true)
 

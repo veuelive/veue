@@ -14,4 +14,34 @@ module VideosHelper
   def videos_controller?
     controller_name == "videos"
   end
+
+  def play_button(mobile: false)
+    classes = "active-icon toggle-play"
+
+    if (mobile == true)
+      classes += " mobile"
+    end
+
+    content_tag(:a, class: classes, title: "Toggle Play", data: {
+      action: "click->audience-view#togglePlay",
+      target: "audience-view.togglePlay"
+    }) do
+      svg_tag "play"
+    end
+  end
+
+  def audio_button(mobile: false)
+    classes = "icon toggle-audio"
+
+    if mobile == true
+      classes += " mobile"
+    end
+
+    content_tag(:a, class: classes, title: "Toggle Audio", data: {
+      action: "click->audience-view#toggleAudio",
+      target: "audience-view.toggleAudio"
+    }) do
+      svg_tag "speaker"
+    end
+  end
 end
