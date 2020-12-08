@@ -33,11 +33,9 @@ export class VideoCaptureSource extends CaptureSource {
   ): Promise<HTMLVideoElement> {
     const track = mediaStream.getVideoTracks()[0];
     this.deviceId = track.getSettings().deviceId;
-    this.element = document.createElement("video");
-    this.element.setAttribute("style", "display: none");
-    document.body.append(this.element);
-    this.element.srcObject = mediaStream;
+    this.element = this.getVideoElement();
     this.element.muted = true;
+    this.element.srcObject = mediaStream;
     return new Promise((resolve) => {
       this.element.addEventListener("loadedmetadata", async () => {
         this.element.play().then(() => resolve(this.element));
@@ -48,5 +46,12 @@ export class VideoCaptureSource extends CaptureSource {
   stop(): void {
     this.element.remove();
     this.mediaStream.stop();
+  }
+
+  protected getVideoElement(): HTMLVideoElement {
+    const element = document.createElement("video");
+    element.setAttribute("style", "display: none");
+    document.body.append(element);
+    return element;
   }
 }

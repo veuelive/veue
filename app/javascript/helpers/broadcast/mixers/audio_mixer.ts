@@ -3,9 +3,7 @@ import Mixer from "helpers/broadcast/mixers/mixer";
 
 /**
  * The AudioMixer is responsible for mixing together multiple audio streams
- * into one single stream. However, at time of initial development and
- * refactor– the AudioContext gods aren't in the favor of Hampton, so this
- * is initially will only forward the FIRST audio source connected.
+ * into one single stream.
  */
 export default class AudioMixer implements Mixer {
   _audioContext: AudioContext;

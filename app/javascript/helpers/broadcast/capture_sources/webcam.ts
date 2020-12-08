@@ -7,6 +7,10 @@ export class WebcamCaptureSource extends VideoCaptureSource {
     return source;
   }
 
+  protected getVideoElement(): HTMLVideoElement {
+    return document.querySelector("#webcam_preview");
+  }
+
   async start(): Promise<void> {
     this.mediaStream = await navigator.mediaDevices.getUserMedia({
       video: {
