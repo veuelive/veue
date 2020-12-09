@@ -50,7 +50,7 @@ class MuxWebhook < ApplicationRecord
       case object["type"]
       when "asset"
         user = User.find_by(mux_live_stream_id: payload["data"]["live_stream_id"])
-        video = Video.find_by(mux_asset_id: object["id"]) || user.active_video!
+        video = Video.find_by(mux_asset_id: object["id"]) || user.active_video
       when "live"
         user = User.find_by(mux_live_stream_id: object["id"])
         video = user.active_video
