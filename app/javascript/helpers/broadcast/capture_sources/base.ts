@@ -46,8 +46,6 @@ export class VideoCaptureSource extends CaptureSource {
     });
   }
 
-  stop(): void {}
-
   protected getVideoElement(): HTMLVideoElement {
     const element = document.createElement("video");
     element.setAttribute("style", "display: none");
