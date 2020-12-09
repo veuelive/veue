@@ -52,4 +52,28 @@ export class VideoCaptureSource extends CaptureSource {
     document.body.append(element);
     return element;
   }
+
+  public captureImage(): Promise<Blob> {
+    const tempCanvas = document.createElement("canvas");
+    tempCanvas.height = this.element.videoHeight;
+    tempCanvas.width = this.element.videoWidth;
+    const ctx = tempCanvas.getContext("2d");
+    ctx.drawImage(
+      this.element,
+      0,
+      0,
+      this.element.videoWidth,
+      this.element.videoHeight
+    );
+    return new Promise((resolve, reject) => {
+      tempCanvas.toBlob((data) => {
+        if (data == null) {
+          reject("Couldn't take screenshot");
+        } else {
+          resolve(data);
+          tempCanvas.remove();
+        }
+      });
+    });
+  }
 }

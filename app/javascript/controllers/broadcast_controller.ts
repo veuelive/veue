@@ -113,13 +113,12 @@ export default class extends Controller {
         this.state = "starting";
         this.data.set("started-at", Date.now().toString());
 
-        // const screenshot = await this.videoMixer.getScreenshot();
-        // const streamer = await this.videoMixer.getWebcamShot();
+        const screenshots = await this.videoMixer.getVideoShots();
 
         await postForm("./start", {
           url: getCurrentUrl(),
-          // primary_shot: screenshot,
-          // secondary_shot: streamer,
+          primary_shot: screenshots[0],
+          secondary_shot: screenshots[1],
         });
         this.state = "live";
         this.metronome.start();
@@ -136,20 +135,6 @@ export default class extends Controller {
     const video_path = window.location.href.replace("broadcasts/", "videos/");
     copyToClipboard(video_path);
   }
-
-  // pinPage(): void {
-  //   const url = document
-  //     .querySelector("input[data-target='broadcast--browser.addressBar']")
-  //     .getAttribute("value");
-  //   this.videoMixer.getScreenshot().then((image) => {
-  //     return postForm("./pins", {
-  //       name: "Card",
-  //       url,
-  //       thumbnail: image,
-  //       timecode_ms: this.metronome.timecodeMs,
-  //     });
-  //   });
-  // }
 
   set state(state: BroadcastState) {
     this.element.className = "";
