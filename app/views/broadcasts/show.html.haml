@@ -4,6 +4,7 @@
       = render partial: "browser_bar"
     .content--right
       %video#webcam_preview{data: {target: "broadcast.webcamVideoElement"}}
+      %canvas#audioCanvas
       .broadcast-commands
         -#.btn{data: {action: "click->broadcast#pinPage"}}= svg_tag "add"
         .btn{data: {controller: "broadcast--media-manager", action: "click->broadcast--media-manager#showHideMenu", "broadcast--media-manager": {"type": "audio"}}}
