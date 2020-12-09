@@ -81,6 +81,12 @@ export default class VideoMixer implements Mixer {
       (source) => source.deviceId !== _captureSource.deviceId
     );
   }
+
+  async getVideoShots(): Promise<Array<Blob>> {
+    return await Promise.all(
+      this.captureSources.map((source) => source.captureImage())
+    );
+  }
 }
 
 export interface CaptureStreamCanvas extends HTMLCanvasElement {
