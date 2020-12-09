@@ -20,7 +20,10 @@ export class CaptureSource {
   }
 
   stop(): void {
-    this.mediaStream.stop();
+    this.mediaStream.getTracks().forEach((track) => {
+      track.stop();
+      this.mediaStream.removeTrack(track);
+    });
   }
 }
 
@@ -43,10 +46,7 @@ export class VideoCaptureSource extends CaptureSource {
     });
   }
 
-  stop(): void {
-    this.element.remove();
-    this.mediaStream.stop();
-  }
+  stop(): void {}
 
   protected getVideoElement(): HTMLVideoElement {
     const element = document.createElement("video");
