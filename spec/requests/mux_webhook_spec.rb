@@ -13,6 +13,8 @@ RSpec.describe "MuxWebhooks" do
 
     # Videos are created BEFORE Mux gets involved
     @video = @user.active_video!
+
+    @video.start!
   end
 
   def skip_ahead_to_next!(event_name)
@@ -87,6 +89,11 @@ RSpec.describe "MuxWebhooks" do
   context "we have two videos in total!" do
     it "should create two videos" do
       skip_ahead_to_next!("video.asset.live_stream_completed")
+
+      # All videos must be started
+      @user.active_video!
+      @user.active_video.start!
+
       skip_ahead_to_next!("video.live_stream.active")
       # So this would be into the second stream now
       expect(Video.count).to eq(2)
