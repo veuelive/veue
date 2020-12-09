@@ -99,14 +99,39 @@ export default class extends BaseController {
         hls.attachMedia(this.videoTarget);
       }
     }
-    this.topLeftTarget.ondragenter = () => this.movePipTo("top-left");
-    this.topRightTarget.ondragenter = () => this.movePipTo("top-right");
-    this.bottomLeftTarget.ondragenter = () => this.movePipTo("bottom-left");
-    this.bottomRightTarget.ondragenter = () => this.movePipTo("bottom-right");
+    this.topLeftTarget.ondrop = () => this.movePipTo("top-left");
+    this.topRightTarget.ondrop = () => this.movePipTo("top-right");
+    this.bottomLeftTarget.ondrop = () => this.movePipTo("bottom-left");
+    this.bottomRightTarget.ondrop = () => this.movePipTo("bottom-right");
+
+    this.topLeftTarget.ondragenter = () => this.animatePipTo("top-left");
+    this.topRightTarget.ondragenter = () => this.animatePipTo("top-right");
+    this.bottomLeftTarget.ondragenter = () => this.animatePipTo("bottom-left");
+    this.bottomRightTarget.ondragenter = () =>
+      this.animatePipTo("bottom-right");
   }
 
   movePipTo(corner: string): void {
-    this.pipComponentTarget.setAttribute("data-corner-position", corner);
+    this.pipComponentTarget.classList.add("no-animate");
+
+    setTimeout(() => {
+      this.pipComponentTarget.setAttribute("data-corner-position", corner);
+      this.pipComponentTarget.setAttribute("data-animate-to-position", "");
+      this.pipComponentTarget.classList.remove("no-animate");
+    }, 1000);
+  }
+
+  animatePipTo(go_to_corner: string): void {
+    const current_corner = this.pipComponentTarget.getAttribute(
+      "data-corner-position"
+    );
+    const current_corners = current_corner.split("-");
+    const go_to_corner_corners = go_to_corner.split("-");
+    const diff = go_to_corner_corners.filter(
+      (x) => !current_corners.includes(x)
+    );
+    const new_value = diff.join("-");
+    this.pipComponentTarget.setAttribute("data-animate-to-position", new_value);
   }
 
   authChanged(): void {
