@@ -5,11 +5,11 @@ module AudienceSpecHelpers
     "div[data-controller~='audience-view']"
   end
 
-  def audience_view_state_css(state, equality_operator = "=")
+  def audience_view_state_css(state, equality_operator="=")
     "#{audience_view_controller}[data-audience-view-state#{equality_operator}'#{state}']"
   end
 
-  def audience_audio_state_css(state, equality_operator = "=")
+  def audience_audio_state_css(state, equality_operator="=")
     "#{audience_view_controller}[data-audience-view-audio-state#{equality_operator}'#{state}']"
   end
 
