@@ -117,12 +117,6 @@ describe "Prerecorded Audience View" do
         expect(is_video_muted?).to be(true)
         expect(is_video_unmuted?).to be(false)
       end
-
-      it "should change video time on mouse click" do
-        currentTime = find("#current-time-display").innerText
-
-        find(".progress-bar-container").click(offset: { x: "50px", y: 0 })
-      end
     end
 
     describe "Mobile video controls" do

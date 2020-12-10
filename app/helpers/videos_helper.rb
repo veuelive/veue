@@ -33,7 +33,7 @@ module VideosHelper
         target: "audience-view.togglePlay",
       },
     ) do
-      svg_tag "play"
+      svg_tag("play")
     end
   end
 
@@ -55,7 +55,7 @@ module VideosHelper
         target: "audience-view.toggleAudio",
       },
     ) do
-      svg_tag "volume-max"
+      svg_tag("volume-max")
     end
   end
 end
