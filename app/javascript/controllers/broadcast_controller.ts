@@ -115,11 +115,17 @@ export default class extends Controller {
 
         const screenshots = await this.videoMixer.getVideoShots();
 
-        await postForm("./start", {
-          url: getCurrentUrl(),
+        // We have to stringify to strip "undefined" values
+        const data = JSON.stringify({
           primary_shot: screenshots[0],
           secondary_shot: screenshots[1],
         });
+
+        await postForm("./start", {
+          url: getCurrentUrl(),
+          data,
+        });
+
         this.state = "live";
         this.metronome.start();
       })
