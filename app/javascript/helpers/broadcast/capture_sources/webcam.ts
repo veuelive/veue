@@ -7,7 +7,7 @@ export class WebcamCaptureSource extends VideoCaptureSource {
     return source;
   }
 
-  protected getVideoElement(): HTMLVideoElement {
+  protected createVideoElement(): HTMLVideoElement {
     return document.querySelector("#webcam_preview");
   }
 

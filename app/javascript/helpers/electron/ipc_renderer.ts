@@ -1,4 +1,5 @@
 import { postJson } from "util/fetch";
+import { electron, inElectronApp } from "helpers/electron/base";
 
 const IGNORE_CHANNEL_INVOCATIONS_FOR = ["stream"];
 
@@ -50,11 +51,10 @@ class IPCRendererMock implements IPCRenderer {
   }
 }
 
-try {
+if (inElectronApp) {
   // We are in a node-environment
-  const electron = eval("require('electron')");
   ipcRenderer = electron.ipcRenderer as IPCRenderer;
-} catch (e) {
+} else {
   ipcRenderer = new IPCRendererMock();
   globalThis.ipcRenderer = ipcRenderer;
 }
