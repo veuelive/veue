@@ -4,7 +4,7 @@ import Timecode from "util/timecode";
 import Mixer from "helpers/broadcast/mixers/mixer";
 
 export default class VideoMixer implements Mixer {
-  canvas: CaptureStreamCanvas;
+  canvas: HTMLCanvasElement;
 
   private canvasContext: CanvasRenderingContext2D;
   private broadcastLayout: BroadcastVideoLayout;
@@ -12,7 +12,7 @@ export default class VideoMixer implements Mixer {
 
   constructor(broadcastLayout: BroadcastVideoLayout) {
     this.broadcastLayout = broadcastLayout;
-    this.canvas = document.createElement("canvas") as CaptureStreamCanvas;
+    this.canvas = document.createElement("canvas");
     this.canvas.setAttribute("id", "debug_canvas");
     this.canvas.setAttribute("width", broadcastLayout.width.toString());
     this.canvas.setAttribute("height", broadcastLayout.height.toString());
@@ -87,8 +87,4 @@ export default class VideoMixer implements Mixer {
       this.captureSources.map((source) => source.captureImage())
     );
   }
-}
-
-export interface CaptureStreamCanvas extends HTMLCanvasElement {
-  captureStream(fps: number): MediaStream;
 }

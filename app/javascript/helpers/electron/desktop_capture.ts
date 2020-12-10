@@ -1,3 +1,5 @@
+import { electron, inElectronApp } from "helpers/electron/base";
+
 export interface DesktopCapturer {
   getSources(options: never): Promise<Array<{ name: string; id: string }>>;
 }
@@ -10,11 +12,10 @@ class DesktopCapturerMock implements DesktopCapturer {
 
 let desktopCapturer;
 
-try {
+if (inElectronApp) {
   // We are in a node-environment
-  const electron = eval("require('electron')");
   desktopCapturer = electron.desktopCapturer as DesktopCapturer;
-} catch (e) {
+} else {
   console.log("WE ARE NOT IN A NODE ENVIRONMENT, MOCKS ENABLED");
   desktopCapturer = new DesktopCapturerMock();
   globalThis.desktopCapture = desktopCapturer;

@@ -5,7 +5,7 @@ export default class Metronome {
   public timecodeMs: number;
   private timecodeDisplayElement: HTMLElement;
   private startedAt: number;
-  private tickInterval?;
+  private tickInterval: number;
 
   constructor() {
     this.timecodeDisplayElement = document.getElementById("timecodeDisplay");
@@ -13,7 +13,10 @@ export default class Metronome {
 
   start(): void {
     this.startedAt = Date.now();
-    this.tickInterval = setInterval(() => {
+
+    // For some reason, typescript will think that this `setInterval` is a NodeJS function
+    // instead of the DOM's setInterval... so here, we make it very clear!
+    this.tickInterval = window.setInterval(() => {
       this.timecodeMs = Date.now() - this.startedAt;
       this.timecodeDisplayElement.innerHTML = displayTime(
         this.timecodeMs / 1000

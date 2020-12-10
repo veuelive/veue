@@ -1,6 +1,12 @@
-import VideoMixer, { CaptureStreamCanvas } from "./mixers/video_mixer";
+import VideoMixer from "./mixers/video_mixer";
 import { ipcRenderer } from "helpers/electron/ipc_renderer";
 import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
+
+// For some reason, the standard HTMLCanvasElement doesn't include
+// the one method we actually do use... so here, we just force it
+interface CaptureStreamCanvas extends HTMLCanvasElement {
+  captureStream(fps: number): MediaStream;
+}
 
 export default class StreamRecorder {
   canvas: CaptureStreamCanvas;
@@ -11,7 +17,7 @@ export default class StreamRecorder {
   private audioMixer: AudioMixer;
 
   constructor(videoMixer: VideoMixer, audioMixer: AudioMixer) {
-    this.canvas = videoMixer.canvas;
+    this.canvas = videoMixer.canvas as CaptureStreamCanvas;
     this.audioMixer = audioMixer;
   }
 

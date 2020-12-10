@@ -75,6 +75,9 @@ export default class CaptureSourceManager {
     broadcastArea: Rectangle,
     rectangle: Rectangle
   ): Promise<void> {
+    if (!inElectronApp) {
+      return;
+    }
     const layout: VideoLayout = {
       width: rectangle.width,
       height: rectangle.height,
@@ -89,9 +92,6 @@ export default class CaptureSourceManager {
         },
       ],
     };
-    if (!inElectronApp) {
-      return;
-    }
     this.screenCaptureSource = await ScreenCaptureSource.connect(
       windowTitle,
       layout
