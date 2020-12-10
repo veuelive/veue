@@ -24,9 +24,9 @@ export default class VideoMixer implements Mixer {
   }
 
   private computeFrame() {
-    const videoSources = this.captureSources.filter(
-      (videoSource) => videoSource.element.isConnected
-    );
+    const videoSources = this.captureSources
+      .filter((videoSource) => videoSource.element.isConnected)
+      .sort((a, b) => a.layout.priority - b.layout.priority);
 
     this.broadcastLayout.sections
       .sort((a, b) => a.priority - b.priority)
