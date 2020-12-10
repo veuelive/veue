@@ -9,12 +9,23 @@
         -#.btn{data: {action: "click->broadcast#pinPage"}}= svg_tag "add"
         .btn{data: {controller: "broadcast--media-manager", action: "click->broadcast--media-manager#showHideMenu", "broadcast--media-manager": {"type": "audio"}}}
           = svg_tag "volume-max"
+          .btn--tooltip
+            Switch Microphone
         .btn{data: {controller: "broadcast--media-manager", action: "click->broadcast--media-manager#showHideMenu", "broadcast--media-manager": {"type": "video"}}}
           = svg_tag "cam"
+          .btn--tooltip
+            Switch Camera
         .btn{data: {action: "click->broadcast--debug#showHideAction"}}
           = svg_tag "toolbox"
-        %button.btn.copy-to-clipboard{data: {action: "click->broadcast#copyCurrentURLToClipboard"}}
-          Copy
+          .btn--tooltip
+            Debug Tools
+        .btn#share-btn{data: {controller: "broadcast--share", action: "click->broadcast--share#showHideMenu"}}
+          = svg_tag "share"
+          .btn--tooltip
+            Share Broadcast
+          .select-menu{data: {target: "broadcast--share.menu"}}
+            .item.open{data: {action: "click->broadcast--share#openLink"}} Open Link
+            .item.copy{data: {action: "click->broadcast--share#copyLink"}} Copy Link
 
       .debug-area{data: {target: "broadcast--debug.debugArea"}}
       = render partial: "shared/chat", locals: { video: current_broadcast_video}

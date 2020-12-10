@@ -1,0 +1,26 @@
+.modal-label
+  Join the Conversation
+.form-row__title
+  Enter your mobile number, and we'll log you in with a quick code.
+.form-row
+  .form-item
+    .form-item__wrapper
+      %input#phone_number_input{type: "tel", data: {target: "authentication.phoneInput", action: "input->authentication#validatePhone"}}
+      %input{type: 'hidden', name: "phone_number"}
+.form-row
+  %button.form-button{data: {target: "authentication.submitButton", action: "click->authentication#doSubmit"}}
+    Continue
+.form-row
+  .form-privacy
+    %p
+      By clicking Continue, you agree to our
+      %a{href: "#"}Terms of Use
+      and you have read our
+      %a{href: "#"}Privacy Policy
+      and
+      %a{href:"#"}Cookie Use.
+.footer
+  .footer__title
+    Your personal information is always yours
+  .footer__body
+    We only use your phone number to verify that you are here and you are a real person.

@@ -50,8 +50,16 @@ describe "Live Audience View" do
 
     it "should mute currently playing video" do
       find(".primary-canvas").hover
+      expect(page.find(".toggle-audio img")["alt"]).to have_content("unmute")
       find(".toggle-audio").click
       expect(page.find(".toggle-audio img")["alt"]).to have_content("mute")
+    end
+
+    describe "video controls" do
+      it "should not have a VOD scrubber or time display" do
+        expect(page).not_to(have_css(".progress-bar-container"))
+        expect(page).not_to(have_css(".time-display"))
+      end
     end
   end
 end

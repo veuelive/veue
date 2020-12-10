@@ -24,6 +24,12 @@ module AuthenticationTestHelpers
       click_on("Sign Out")
     end
 
+    def enter_phone_number(user)
+      click_button("Login")
+      find("#phone_number_input").fill_in(with: user.phone_number)
+      click_button("Continue")
+    end
+
     private
 
     def open_nav_sidebar
@@ -32,15 +38,11 @@ module AuthenticationTestHelpers
       click_button("open-menu")
     end
 
-    def enter_phone_number(user)
-      click_button("Login")
-      find("#phone_number_input").fill_in(with: user.phone_number)
-      click_button("Continue")
-    end
-
     def confirm_secret_code
-      expect(page).to have_selector('input[name="secret_code"]')
-      fill_in("secret_code", with: SessionToken.last.secret_code)
+      4.times do |index|
+        expect(page).to have_selector("input[name='secret_code_#{index}']")
+        fill_in("secret_code_#{index}", with: SessionToken.last.secret_code[index])
+      end
       click_button("Verify")
     end
   end

@@ -3,6 +3,7 @@ import * as IntlTelInput from "intl-tel-input";
 import "intl-tel-input/build/css/intlTelInput.min.css";
 import { secureFormFetch } from "util/fetch";
 import { showHideByLogin } from "helpers/authentication_helpers";
+import { destroy } from "util/fetch";
 
 export default class extends BaseController {
   static targets = [
@@ -57,14 +58,6 @@ export default class extends BaseController {
     }
   }
 
-  validateCode(): void {
-    if (this.secretCodeInputTarget.value.length !== 4) {
-      this.submitButtonTarget.disabled = true;
-    } else {
-      this.submitButtonTarget.disabled = false;
-    }
-  }
-
   validateName(): void {
     if (this.nameInputTarget.value.length === 0) {
       this.submitButtonTarget.disabled = true;
@@ -83,6 +76,8 @@ export default class extends BaseController {
     const target = event.target as HTMLElement;
     if (target?.className === "modal-skirt") {
       this.modalTarget.style.display = "none";
+      // Triggers a new session when you click off the modal
+      destroy("/authentication").then();
     }
   }
 

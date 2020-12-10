@@ -1,0 +1,62 @@
+#broadcast {
+  .broadcast-commands {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    .btn {
+      &--tooltip {
+        display: none;
+      }
+
+      &:hover {
+        cursor: pointer;
+
+        .btn--tooltip {
+          display: block;
+          width: 130px;
+          position: absolute;
+          bottom: 100%;
+          left: 50%;
+          margin-left: -60px;
+          background-color: black;
+          color: #fff;
+          text-align: center;
+          padding: 5px 0;
+          border-radius: 6px;
+        }
+      }
+
+      padding: 0.25rem;
+      position: relative;
+
+      svg {
+        fill: #2e2f30;
+        width: 25px;
+        height: 25px;
+      }
+
+      .select-menu {
+        z-index: 2;
+        position: absolute;
+        top: 25px;
+        left: 5px;
+        background: white;
+        margin: 0.25rem;
+        border: 1px solid darkgrey;
+        display: flex;
+        cursor: pointer;
+        width: 200px;
+        flex-direction: column;
+
+        > div {
+          padding: 5px;
+
+          &:hover {
+            background: #eee;
+          }
+        }
+      }
+    }
+  }
+}
