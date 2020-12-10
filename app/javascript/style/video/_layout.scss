@@ -78,18 +78,16 @@ body#videos__show {
     .pip-component {
       position: absolute;
       z-index: 2;
-      transition: transform 500ms ease;
-      &.no-animate {
-        transition: none;
-      }
+      transition-property: top, left, bottom, right;
+      transition-duration: 1s;
 
       &[data-corner-position="bottom-right"] {
-        bottom: 2vw;
-        right: 2vw;
+        top: 51vw;
+        left: 72vw;
       }
 
       &[data-corner-position="bottom-left"] {
-        bottom: 2vw;
+        top: 51vw;
         left: 2vw;
       }
 
@@ -100,30 +98,7 @@ body#videos__show {
 
       &[data-corner-position="top-right"] {
         top: 2vw;
-        right: 2vw;
-      }
-
-      &[data-animate-to-position="top"] {
-        transform: translate(0, -35vh);
-      }
-      &[data-animate-to-position="top-left"] {
-        transform: translate(-70vw, -5vh3);
-      }
-      &[data-animate-to-position="left"] {
-        transform: translate(-70vw, 0);
-      }
-
-      &[data-animate-to-position="bottom-left"] {
-        transform: translate(-70vw, -35vw);
-      }
-      &[data-animate-to-position="bottom"] {
-        transform: translate(0, 35vw);
-      }
-      &[data-animate-to-position="top-right"] {
-        transform: translate(-70vw, 35vw);
-      }
-      &[data-animate-to-position="right"] {
-        transform: translate(0, 35vw);
+        left: 72vw;
       }
     }
 
