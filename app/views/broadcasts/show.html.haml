@@ -19,13 +19,13 @@
           = svg_tag "toolbox"
           .btn--tooltip
             Debug Tools
-        .btn{data: {controller: "broadcast--share", action: "click->broadcast--share#showHideMenu"}}
+        .btn#share-btn{data: {controller: "broadcast--share", action: "click->broadcast--share#showHideMenu"}}
           = svg_tag "share"
           .btn--tooltip
             Share Broadcast
           .select-menu{data: {target: "broadcast--share.menu"}}
-            .item{data: {action: "click->broadcast--share#openLink"}} Open Link
-            .item{data: {action: "click->broadcast--share#copyLink"}} Copy Link
+            .item.open{data: {action: "click->broadcast--share#openLink"}} Open Link
+            .item.copy{data: {action: "click->broadcast--share#copyLink"}} Copy Link
 
       .debug-area{data: {target: "broadcast--debug.debugArea"}}
       = render partial: "shared/chat", locals: { video: current_broadcast_video}
