@@ -74,6 +74,9 @@ export default class VideoMixer implements Mixer {
 
   addCaptureSource(captureSource: VideoCaptureSource): void {
     this.captureSources.push(captureSource);
+    this.captureSources = this.captureSources.sort(
+      (a, b) => a.layout.priority - b.layout.priority
+    );
   }
 
   removeCaptureSource(_captureSource: VideoCaptureSource): void {

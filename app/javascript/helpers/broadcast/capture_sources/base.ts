@@ -53,15 +53,20 @@ export class VideoCaptureSource extends CaptureSource {
 
   public captureImage(): Promise<Blob> {
     const tempCanvas = document.createElement("canvas");
-    tempCanvas.height = this.element.videoHeight;
-    tempCanvas.width = this.element.videoWidth;
+    const layout = this.layout;
+    tempCanvas.height = layout.height;
+    tempCanvas.width = layout.width;
     const ctx = tempCanvas.getContext("2d");
     ctx.drawImage(
       this.element,
+      layout.x,
+      layout.y,
+      layout.width,
+      layout.height,
       0,
       0,
-      this.element.videoWidth,
-      this.element.videoHeight
+      layout.width,
+      layout.height
     );
     return new Promise((resolve, reject) => {
       tempCanvas.toBlob((data) => {
