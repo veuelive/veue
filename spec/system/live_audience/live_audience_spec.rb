@@ -55,8 +55,9 @@ describe "Live Audience View" do
     end
 
     describe "video controls" do
-      it "should not have a VOD scrubber" do
+      it "should not have a VOD scrubber or time display" do
         expect(page).not_to(have_css(".progress-bar-container"))
+        expect(page).not_to(have_css(".time-display"))
       end
     end
   end
