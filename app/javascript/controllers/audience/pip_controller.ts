@@ -21,7 +21,7 @@ export default class PipController extends Controller {
     super.connect();
   }
 
-  onDragStart(event): void {audience_view_controller.ts
+  onDragStart(event): void {
     event.effectAllowed = "move";
     event.dropEffect = "none";
   }
