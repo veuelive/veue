@@ -13,10 +13,9 @@ class BroadcastsController < ApplicationController
   end
 
   def start
-    current_broadcast_video.update!(
-      primary_shot: params[:primary_shot],
-      secondary_shot: params[:secondary_shot],
-    )
+    current_broadcast_video.primary_shot = params[:primary_shot] if params[:primary_shot]
+    current_broadcast_video.secondary_shot = params[:secondary_shot] if params[:secondary_shot]
+    current_broadcast_video.save!
     BrowserNavigation.create_first_navigation!(
       current_broadcast_video,
       params[:url],
