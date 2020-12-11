@@ -78,7 +78,7 @@ body#videos__show {
     .pip-component {
       position: absolute;
       z-index: 2;
-      transition-property: top, left, bottom, right;
+      transition-property: top, left;
       transition-duration: 1s;
 
       &[data-corner-position="bottom-right"] {
