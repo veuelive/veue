@@ -59,43 +59,6 @@ textarea {
           border: 1px solid red;
         }
       }
-
-      .broadcast-commands {
-        display: flex;
-        flex-direction: row;
-        .btn {
-          &:hover {
-            cursor: pointer;
-          }
-          padding: 0.25rem;
-          position: relative;
-          svg {
-            fill: #2e2f30;
-            width: 25px;
-            height: 25px;
-          }
-
-          .select-menu {
-            z-index: 2;
-            position: absolute;
-            top: 25px;
-            left: 5px;
-            background: white;
-            margin: 0.25rem;
-            border: 1px solid darkgrey;
-            display: flex;
-            cursor: pointer;
-            width: 200px;
-            flex-direction: column;
-            > div {
-              padding: 5px;
-              &:hover {
-                background: #eee;
-              }
-            }
-          }
-        }
-      }
     }
   }
 
