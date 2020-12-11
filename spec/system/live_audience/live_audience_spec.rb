@@ -50,8 +50,9 @@ describe "Live Audience View" do
 
     it "should mute currently playing video" do
       find(".primary-canvas").hover
+      expect(page.find(".toggle-audio img")["alt"]).to have_content("unmute")
       find(".toggle-audio").click
-      expect(page.find(".toggle-audio img")["alt"]).to have_content("muted")
+      expect(page.find(".toggle-audio img")["alt"]).to have_content("mute")
     end
 
     describe "video controls" do
