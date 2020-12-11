@@ -2,7 +2,9 @@
 
 class HealthCheckController < ApplicationController
   def index
-    db_connections_query = ActiveRecord::Base.connection.execute("SELECT count(*) FROM pg_stat_activity WHERE state='active'; ")
+    db_connections_query = ActiveRecord::Base.connection.execute(
+      "SELECT count(*) FROM pg_stat_activity WHERE state='active'; ",
+    )
     db_connections = db_connections_query.count
     sidekiq_workers = Sidekiq::Workers.new.count
 
