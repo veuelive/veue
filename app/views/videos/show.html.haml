@@ -8,7 +8,7 @@
   }
 }
   .content-area__primary
-    .primary-video-area
+    .primary-video-area{data: { controller: "audience--movable-pip" }}
       .primary-video__header{
         "data": { "controller": "audience--header-bar" }
       }
@@ -54,10 +54,30 @@
           height: 340
         }
       .pip-drop-quadrants
-        .quadrant.top-left{data: {target: 'audience-view.topLeft', controller: "audience--pip-quadrants"}}
-        .quadrant.top-right{data: {target: 'audience-view.topRight', controller: "audience--pip-quadrants"}}
-        .quadrant.bottom-left{data: {target: 'audience-view.bottomLeft', controller: "audience--pip-quadrants"}}
-        .quadrant.bottom-right{data: {target: 'audience-view.bottomRight', controller: "audience--pip-quadrants"}}
+        .quadrant.top-left{
+          data: {
+            target: "pipAndDropQuadrants--drop-quadrant.topLeft",
+            controller: ""
+          }
+        }
+        .quadrant.top-right{
+          data: {
+            target: "pipAndDropQuadrants--drop-quadrant.topRight",
+            controller: ""
+          }
+        }
+        .quadrant.bottom-left{
+          data: {
+            target: "pipAndDropQuadrants--drop-quadrant.bottomLeft",
+            controller: ""
+          }
+        }
+        .quadrant.bottom-right{
+          data: {
+            target: "pipAndDropQuadrants--drop-quadrant.bottomRight",
+            controller: ""
+          }
+        }
       = render partial: 'videos/partials/player_controls'
     #streamer-profile-area
       = render partial: "videos/partials/streamer_profile"
