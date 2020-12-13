@@ -9,8 +9,7 @@ export default class MovablePipController extends Controller {
     "bottomRight",
   ];
   connect(): void {
-    debugger;
-    console.log("MovablePipController... connect");
+    console.log("MovablePipController... connect"); // does not appear to connect
     this.topLeftTarget.ondragenter = () => this.movePipTo("top-left");
     this.topRightTarget.ondragenter = () => this.movePipTo("top-right");
     this.bottomLeftTarget.ondragenter = () => this.movePipTo("bottom-left");
