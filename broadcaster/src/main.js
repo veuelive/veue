@@ -116,7 +116,7 @@ if (!app.requestSingleInstanceLock()) {
 
 ipcMain.on("checkAccess", async (event, data) => {
   const accessStatus = await askForMediaAccess();
-  event.sender.send("access_status", accessStatus);
+  event.sender.send("accessStatus", accessStatus);
 });
 
 ipcMain.on("wakeup", (event, data) => {

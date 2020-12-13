@@ -4,7 +4,7 @@ export async function askForMediaAccess() {
   const isCameraAccessible =
     systemPreferences.getMediaAccessStatus("camera") === "granted";
   const isMicrophoneAccessible =
-    systemPreferences.getMediaAccessStatus("camera") === "granted";
+    systemPreferences.getMediaAccessStatus("microphone") === "granted";
 
   if (!isCameraAccessible) {
     isCameraAccessible = await systemPreferences.askForMediaAccess("camera");

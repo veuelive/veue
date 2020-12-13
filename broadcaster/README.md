@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is electron.js based desktop application for doing live streamings.
+This is electron.js based desktop application for doing live streaming.
 
 ## Privileges Required
 

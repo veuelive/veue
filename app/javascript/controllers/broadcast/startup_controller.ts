@@ -21,7 +21,7 @@ export default class extends BaseController {
     this.subscribeToAuthChange();
     ipcRenderer.send("checkAccess");
 
-    ipcRenderer.on("access_status", (_, accessStatus) => {
+    ipcRenderer.on("accessStatus", (_, accessStatus) => {
       if (!accessStatus.isCameraAccessible) {
         this.videoAccessTarget.textContent = "✗";
         this.userInstructionsModalTarget.setAttribute(
