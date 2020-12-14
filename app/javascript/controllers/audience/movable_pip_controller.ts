@@ -1,4 +1,14 @@
 import { Controller } from "stimulus";
+import { polyfill } from "mobile-drag-drop";
+
+// optional import of scroll behaviour
+import { scrollBehaviourDragImageTranslateOverride } from "mobile-drag-drop/scroll-behaviour";
+
+// options are optional ;)
+polyfill({
+  // use this to make use of the scroll behaviour
+  dragImageTranslateOverride: scrollBehaviourDragImageTranslateOverride,
+});
 
 export default class MovablePipController extends Controller {
   static targets = [
@@ -8,6 +18,13 @@ export default class MovablePipController extends Controller {
     "bottomLeft",
     "bottomRight",
   ];
+
+  private pipComponentTarget!: HTMLCanvasElement;
+  private topLeftTarget!: HTMLElement;
+  private topRightTarget!: HTMLElement;
+  private bottomLeftTarget!: HTMLElement;
+  private bottomRightTarget!: HTMLElement;
+
   connect(): void {
     this.topLeftTarget.ondragenter = () => this.movePipTo("top-left");
     this.topRightTarget.ondragenter = () => this.movePipTo("top-right");
