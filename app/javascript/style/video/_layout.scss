@@ -81,22 +81,22 @@ body#videos__show {
       transition-property: top, left;
       transition-duration: 1s;
 
-      &[data-corner-position="bottom-right"] {
+      &[data-corner="bottom-right"] {
         top: 51vw;
         left: 72vw;
       }
 
-      &[data-corner-position="bottom-left"] {
+      &[data-corner="bottom-left"] {
         top: 51vw;
         left: 2vw;
       }
 
-      &[data-corner-position="top-left"] {
+      &[data-corner="top-left"] {
         top: 2vw;
         left: 2vw;
       }
 
-      &[data-corner-position="top-right"] {
+      &[data-corner="top-right"] {
         top: 2vw;
         left: 72vw;
       }

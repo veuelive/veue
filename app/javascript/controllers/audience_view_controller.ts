@@ -28,7 +28,6 @@ export default class extends BaseController {
     "toggleAudio",
     "timeDisplay",
     "timeDuration",
-    "pipComponent",
   ];
   readonly togglePlayTargets!: HTMLElement[];
   readonly toggleAudioTargets!: HTMLElement[];
