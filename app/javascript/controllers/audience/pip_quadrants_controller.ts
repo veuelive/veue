@@ -8,9 +8,10 @@ export default class PipQuadrantsController extends Controller {
     super.connect();
   }
 
-  onDragLeave(event): void {}
+  onDragLeave(): void {}
 
   onDragOver(event): void {
+    debugger;
     event.preventDefault();
   }
 }
