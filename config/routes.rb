@@ -75,7 +75,5 @@ Rails.application.routes.draw do
       ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest(ENV["SIDEKIQ_PASSWORD"]))
   end if Rails.env.production?
 
-  get '/health', to: "health_check#index"
-
   mount Sidekiq::Web => '/_/sidekiq'
 end

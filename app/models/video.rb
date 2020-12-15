@@ -114,18 +114,6 @@ class Video < ApplicationRecord
     !(visibility.eql?("private") && (self.user != user))
   end
 
-  def add_screenshots!(*screenshots)
-    screenshots.each do |shot|
-      next unless shot
-
-      if !primary_shot.attached?
-        self.primary_shot = shot
-      elsif !secondary_shot.attached?
-        self.secondary_shot = shot
-      end
-    end
-  end
-
   private
 
   def after_go_live

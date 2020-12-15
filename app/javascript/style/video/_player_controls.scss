@@ -157,9 +157,10 @@
     @include mobile-css;
   }
 
-  @include vod {
+  @include desktop() {
     .player-controls {
       width: 80%;
+      padding: 0.5rem 0.75rem;
     }
 
     .time-display {
@@ -168,13 +169,6 @@
   }
 
   @include desktop() {
-    @include vod {
-      .toggle-audio.desktop,
-      .toggle-play.desktop {
-        margin: 0;
-      }
-    }
-
     .mobile-controls {
       display: none;
     }
@@ -182,7 +176,7 @@
     .toggle-audio.desktop,
     .toggle-play.desktop {
       display: flex;
-      margin: 0 0.2rem;
+      margin: 0;
     }
   }
 }
