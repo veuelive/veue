@@ -1,7 +1,7 @@
 import BaseController from "./base_controller";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import { currentUserId } from "helpers/authentication_helpers";
-import userSvg from "images/user-icon.svg";
+import userSvg from "images/user-icon-dark.svg";
 import heartSvg from "images/heart-gray.svg";
 import {
   renderReactionMarkup,
