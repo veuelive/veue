@@ -43,6 +43,8 @@ module AuthenticationTestHelpers
         expect(page).to have_selector("input[name='secret_code_#{index}']")
         fill_in("secret_code_#{index}", with: SessionToken.last.secret_code[index])
       end
+
+      expect(page).to have_button("Verify", disabled: false)
       click_button("Verify")
     end
   end
