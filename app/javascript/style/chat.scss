@@ -73,8 +73,8 @@
         margin-top: 10px;
         color: color.$gray-dark;
         .content {
-          border: 2px solid color.$neutral-accents;
-          border-radius: 1rem;
+          border: 1px solid color.$neutral-accents;
+          border-radius: 10px;
           display: inline-flex;
           padding: 0 0.75rem;
           div {
@@ -98,7 +98,7 @@
         flex-direction: row;
         align-items: center;
         margin-top: 10px;
-        border-radius: 15px;
+        border-radius: 10px;
         padding: 5px 10px;
         color: white;
         min-height: 28px;
