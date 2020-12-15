@@ -63,6 +63,7 @@ export default class ChatMessagesController extends BaseController {
   }
 
   private displayVideoReactionNotice(user) {
+    this.lastMessageFromUserId = null;
     this.appendHtml(renderReactionMarkup(user, heartSvg));
   }
 
