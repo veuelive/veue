@@ -57,14 +57,6 @@ export default class extends BaseController {
     }
   }
 
-  validateCode(): void {
-    if (this.secretCodeInputTarget.value.length !== 4) {
-      this.submitButtonTarget.disabled = true;
-    } else {
-      this.submitButtonTarget.disabled = false;
-    }
-  }
-
   validateName(): void {
     if (this.nameInputTarget.value.length === 0) {
       this.submitButtonTarget.disabled = true;
