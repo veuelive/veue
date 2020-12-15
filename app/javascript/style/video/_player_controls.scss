@@ -163,12 +163,6 @@
       padding: 0.5rem 0.75rem;
     }
 
-    .time-display {
-      display: block;
-    }
-  }
-
-  @include desktop() {
     .mobile-controls {
       display: none;
     }
