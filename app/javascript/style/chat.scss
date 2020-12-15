@@ -54,6 +54,10 @@
             border-radius: 50%;
           }
         }
+
+        &:first-child {
+          margin-top: 0 !important;
+        }
       }
 
       .message-right {
@@ -66,6 +70,10 @@
           border: 2px solid color.$neutral-soft;
           color: color.$gray-bluish;
           border-radius: 10px 0px 10px 10px;
+        }
+
+        &:first-child {
+          margin-top: 0 !important;
         }
       }
 
@@ -81,6 +89,10 @@
             margin: 5px 0px 5px 10px;
           }
         }
+
+        &:first-child {
+          margin-top: 0 !important;
+        }
       }
 
       .message-grouped {
@@ -89,6 +101,10 @@
           background-color: color.$white;
           color: color.$neutral-dark;
           border: 1px solid color.$neutral-soft;
+        }
+
+        &:first-child {
+          margin-top: 0 !important;
         }
       }
 
@@ -113,6 +129,10 @@
           color: white;
           width: 12px;
           margin-left: 5px;
+        }
+
+        &:first-child {
+          margin-top: 0 !important;
         }
       }
 
