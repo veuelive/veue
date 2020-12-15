@@ -70,7 +70,7 @@ Style/MethodCallWithArgsParentheses:
 Style/DocumentationMethod:
   Enabled: false
 
-Style/OptionHash: 
+Style/OptionHash:
   Enabled: false
 
 # Single quotes being faster is hardly measurable and only affects parse time.
@@ -169,9 +169,6 @@ Lint/ShadowingOuterLocalVariable:
 
 # Check with yard instead.
 Style/Documentation:
-  Enabled: false
-
-Style/MissingElse:
   Enabled: false
 
 # This is just silly. Calling the argument `other` in all cases makes no sense.

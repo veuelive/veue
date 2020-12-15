@@ -1,12 +1,6 @@
 @use "../utils/breakpoints" as *;
 @use '../utils/color';
 
-@mixin vod {
-  div[data-audience-view-stream-type="vod"] {
-    @content;
-  }
-}
-
 #videos__show {
   .primary-video-area:hover {
     .player-controls,
@@ -64,7 +58,6 @@
 
   .player-controls {
     opacity: 0;
-    padding: 0.5rem 0.75rem;
     color: white;
     transition: 100ms opacity;
     border-radius: 1rem;
@@ -77,7 +70,6 @@
     align-items: center;
 
     .time-display {
-      display: none;
       text-align: center;
       font-size: 14px;
       margin: 0 5px;
@@ -87,7 +79,7 @@
 
     .progress-bar-container {
       cursor: pointer;
-      display: none;
+      display: flex;
       align-items: center;
       background: color.$neutral-middle;
       min-width: 100px;
@@ -146,18 +138,14 @@
   }
 
   @mixin mobile-css {
+    .player-controls {
+      padding: 0.25rem 0;
+      width: 95%;
+    }
+
     .toggle-audio.desktop,
     .toggle-play.desktop {
       display: none;
-    }
-  }
-
-  @include vod {
-    .display-time {
-    }
-
-    .progress-bar-container {
-      display: flex;
     }
   }
 

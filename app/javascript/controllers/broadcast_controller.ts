@@ -138,6 +138,11 @@ export default class extends Controller {
     this.streamCapturer.stop();
   }
 
+  copyCurrentURLToClipboard(): void {
+    const video_path = window.location.href.replace("broadcasts/", "videos/");
+    copyToClipboard(video_path);
+  }
+
   set state(state: BroadcastState) {
     this.element.className = "";
     this.data.set("state", state);
