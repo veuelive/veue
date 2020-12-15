@@ -3,9 +3,23 @@
   = link_to video_link_path(video) do
     .video-card__image
       = image_tag video_card_image_url(video)
+      .video-card__image__time
+        = seconds_to_time(video.duration)
+      .video-card__image__play
+        = svg_tag "play"
+      .video-card__image__views
+        .video-card__image__svg
+          = svg_tag "view"
+        .video-card__image__count
+          = video.video_views.count
       .video-card__image__secondary
         - if video.secondary_shot.attached?
           = image_tag video.secondary_shot.variant(resize_to_limit: [100, 100])
   .video-card__below
-    .video-card__below__info
-      = video.user.display_name
+    .video-card__below__letter
+      A  
+    .video-card__bellow__flex 
+      .video-card__below__title
+        = video.title
+      .video-card__below__name
+        = video.user.display_name
