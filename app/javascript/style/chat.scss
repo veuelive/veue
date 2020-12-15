@@ -22,7 +22,7 @@
       background: color.$white;
     }
     .messages {
-      margin: 1rem;
+      margin: 20px;
       min-height: 95%; // This keeps the messages taking up some space so that the first message is below
       display: flex;
       flex-direction: column;
