@@ -16,20 +16,12 @@ module AuthenticationTestHelpers
       open_nav_sidebar
       enter_phone_number(user)
       confirm_secret_code
-      expect(page.find("*[data-user-id]")["data-user-id"]).to eq(user.id)
+      expect(page).to have_css("[data-user-id='#{user.id}']")
     end
 
     def logout_user
       find(".user-auth-area").hover
       click_on("Sign Out")
-    end
-
-    private
-
-    def open_nav_sidebar
-      return unless has_css?("#open-menu")
-
-      click_button("open-menu")
     end
 
     def enter_phone_number(user)
@@ -38,9 +30,19 @@ module AuthenticationTestHelpers
       click_button("Continue")
     end
 
+    def open_nav_sidebar
+      return unless has_css?("#open-menu")
+
+      click_button("open-menu")
+    end
+
+    private
+
     def confirm_secret_code
-      expect(page).to have_selector('input[name="secret_code"]')
-      fill_in("secret_code", with: SessionToken.last.secret_code)
+      4.times do |index|
+        expect(page).to have_selector("input[name='secret_code_#{index}']")
+        fill_in("secret_code_#{index}", with: SessionToken.last.secret_code[index])
+      end
       click_button("Verify")
     end
   end

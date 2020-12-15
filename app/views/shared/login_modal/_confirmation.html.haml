@@ -1,0 +1,34 @@
+.modal-label
+  Join the Conversation
+.form-row__title
+  Enter below the code we just texted you to
+  = @phone_number
+%p{data: {target: "input->authentication#iti"}}
+.form-row
+  .form-item
+    .form-code-div{
+      data: {
+        target: "secret-code.devCode",
+        value: (Rails.env.development? ? @ula.secret_code : '')
+      }
+    }
+      - 4.times do |index|
+        - if index == 0
+          = auth_input_tag(index, one_time_code: true)
+        - else
+          = auth_input_tag(index)
+    %input{type: 'hidden', name: "session_token_uuid", value: @ula.uuid}
+.form-row
+  %button.form-button{
+    disabled: true,
+    data: {
+      target: "secret-code.submitButton",
+      action: "click->authentication#doSubmit"
+    }
+  }
+    Verify
+.footer
+  .footer__title
+    Your personal information is always yours
+  .footer__body
+    We only use your phone number to verify that you are here and you are a real person.

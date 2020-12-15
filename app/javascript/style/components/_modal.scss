@@ -197,23 +197,18 @@
           margin: 0 65px 0 65px;
         }
 
-        .form-code {
-          width: 300px;
-        }
-
-        #input {
-          height: 40px;
-          background: transparent;
-          border: none;
-          font-size: 25px;
-          letter-spacing: 25px;
-          text-indent: 13px;
+        .auth-input {
+          border: 1px solid color.$neutral-soft;
+          border-radius: 10px;
+          display: inline-block;
+          height: 34px;
+          width: 34px;
+          background: color.$white;
+          font-size: 15px;
+          line-height: 20px;
+          text-align: center;
+          color: color.$neutral-dark;
           margin-bottom: 12px;
-          overflow-y: hidden;
-          @include tinyMobile {
-            letter-spacing: 24px;
-            text-indent: 18px;
-          }
         }
 
         #display-name-input {

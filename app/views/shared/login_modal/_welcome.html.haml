@@ -1,0 +1,18 @@
+.modal-label
+  Welcome Aboard!
+  .form-row__title
+    Pick a name that represents you to be displayed on the streaming chat.
+  .form-row
+    .form-item
+      %input#display-name-input{type: "text", name: "display_name", data:{action:"input->authentication#validateName", target:"authentication.nameInput"}}
+  .form-row
+    %button.form-button{disabled: true, data: {target: "authentication.submitButton", action: "click->authentication#doSubmit"}}
+      Save and Continue
+  .form-cancel
+    = link_to 'Cancel', authentication_path, method: :delete
+  .footer
+    .footer__title
+      Have fun and make new friends
+    .footer__body
+      Be kind and always respect others. By continuing you accept the
+      %a{href:"#"}VEUE Community Guidelines.
