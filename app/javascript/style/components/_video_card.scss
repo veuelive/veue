@@ -1,4 +1,6 @@
 @use "../utils/scale";
+@use "../utils/color.scss";
+@use "../utils/font.scss";
 
 $screenshot_height_scalable: 5vw;
 $screenshot_height_fixed: 150px;
@@ -18,22 +20,105 @@ $person_width_fixed: $person_height_fixed / scale.$video_ratio;
     position: relative;
     height: calc(#{$screenshot_height_scalable} + #{$screenshot_height_fixed});
     overflow: hidden;
+    display: flex;
     > img {
       width: calc(#{$screenshot_width_scalable} + #{$screenshot_width_fixed});
+      border-radius: 10px;
+    }
+    &__time {
+      position: absolute;
+      width: 56px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      font-size: 13px;
+      color: color.$white;
+      margin: 10px 238px 159px 10px;
+      padding: 6px;
     }
 
     &__secondary {
       position: absolute;
+      right: 10px;
+      bottom: 2px;
+      > img {
+        border-radius: 10px;
+        height: 61px;
+        width: 76px;
+      }
+    }
+
+    &__play {
+      position: absolute;
+      top: 40%;
+      left: 40%;
+      > svg {
+        background-color: color.$veue-corporate;
+        border-radius: 10px;
+        height: 25px;
+        width: 25px;
+        padding: 16px 15px 14px 19px;
+      }
+    }
+
+    &__views {
+      position: absolute;
+      display: flex;
+      flex-direction: row;
+      max-width: 65px;
+      height: 28px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
       bottom: 10px;
-      left: 10px;
+      margin-left: 10px;
+    }
+    &__svg {
+      margin: 0 0 8px 10px;
+    }
+    &__count {
+      color: color.$white;
+      font-size: 13px;
+      margin: 5px 10px 5px 5px;
     }
   }
 
   &__below {
     display: flex;
     flex-direction: row;
-    &__info {
-      flex: 1;
+    &__flex {
+      display: flex;
+      flex-direction: row;
+    }
+    &__name {
+      max-width: 51px;
+      height: 19px;
+      font-size: 14px;
+      line-height: 19px;
+      display: flex;
+      align-items: center;
+      color: color.$neutral-regular;
+      margin-left: 10px;
+    }
+    &__title {
+      display: flex;
+      max-width: 190px;
+      height: 25px;
+      line-height: 25px;
+      font-size: 18px;
+      color: color.$neutral-dark;
+      margin: 10px 0 0 10px;
+      align-items: center;
+    }
+    &__letter {
+      background: color.$white;
+      width: 32px;
+      height: 32px;
+      font-size: 16px;
+      line-height: 32px;
+      text-align: center;
+      letter-spacing: -0.5px;
+      color: color.$neutral-regular;
+      margin-top: 16px;
+      border-radius: 20px;
     }
   }
 }
