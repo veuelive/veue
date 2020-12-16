@@ -26,11 +26,18 @@ export default class MovablePipController extends Controller {
   private bottomRightTarget!: HTMLElement;
 
   connect(): void {
+    this.element.draggable = true;
+    this.element.ondragstart = this.onDragStart.bind(this);
+
     this.topLeftTarget.ondragenter = () => this.movePipTo("top-left");
     this.topRightTarget.ondragenter = () => this.movePipTo("top-right");
     this.bottomLeftTarget.ondragenter = () => this.movePipTo("bottom-left");
     this.bottomRightTarget.ondragenter = () => this.movePipTo("bottom-right");
     this.pipComponentTarget.dataset.corner = "bottom-right";
+  }
+
+  onDragStart(event): void {
+    event.dropEffect = "none";
   }
 
   movePipTo(corner: string): void {
