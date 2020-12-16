@@ -1,69 +1,253 @@
-<!DOCTYPE html>
 <html>
-  <head>
-    <title>The page you were looking for doesn't exist (404)</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <style>
-      .rails-default-error-page {
-        background-color: #efefef;
-        color: #2e2f30;
-        text-align: center;
-        font-family: arial, sans-serif;
-        margin: 0;
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+  <meta content='width=device-width, initial-scale=1, viewport-fit=cover' name='viewport'>
+  <title>Veue - Not Found</title>
+  <script>
+    globalThis.startLoadTime = Date.now();
+  </script>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-K4PCNR3');</script>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito&family=Poppins:wght@300&display=swap" rel="stylesheet">
+
+
+  <style>
+    #layout-container {
+      display: flex;
+      flex-direction: column;
+
+    }
+    #layout-container #main-container {
+      height: calc(100vh - 54px);
+      display: flex;
+      justify-content: center;
+      padding: 0;
+      font-family: 'Nunito', sans-serif;
+    }
+    #layout-container.not-found-page {
+      font-family: 'Poppins', sans-serif;
+      color: #40424f;
+    }
+    #layout-container.not-found-page #main-container {
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+    #layout-container.not-found-page #main-container .message {
+      font-size: 0.9em;
+      padding: 0 4em;
+
+    }
+    @media only screen and (min-width: 650px) {
+      #layout-container.not-found-page #main-container .message {
+        font-size: 1.0em;
+      }
+    }
+    #layout-container.not-found-page #main-container span.return-message {
+      font-size: 0.75em;
+      color: #4c46f0;
+      background-color: #ededff;
+      border-radius: 6px;
+      padding: 6px 12px 6px 12px;
+    }
+    #layout-container.not-found-page #main-container h1 {
+      margin-top: -1em;
+      font-family: 'Poppins', sans-serif;
+      font-size: 4.5em;
+      font-weight: 500;
+
+    }
+    @media only screen and (min-width: 650px) {
+      #layout-container.not-found-page #main-container h1 {
+        padding-bottom: 56px;
+        margin-block-start: -1em;
+        font-size: 9em;
+        margin-block-end: -0.2em;
+      }
+    }
+    #layout-container.not-found-page footer {
+      position: relative;
+      color: #c1c1cc;
+      font-size: 0.6em;
+    }
+    #layout-container.not-found-page footer a,
+    #layout-container.not-found-page footer a:visited,
+    #layout-container.not-found-page footer a:hover {
+      color: #c1c1cc !important;
+    }
+    #layout-container.not-found-page footer .left-corner {
+      width: 200px;
+      position: absolute;
+      left: 20px;
+      bottom: 30px;
+    }
+    #layout-container.not-found-page footer .right-corner {
+      text-align: right;
+      position: absolute;
+      width: 200px;
+      right: 20px;
+      bottom: 30px;
+    }
+    #layout-container.not-found-page logo {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #layout-container.not-found-page logo svg {
+      height: 22px;
+    }
+
+    #layout-container .footer-container {
+      width: 100%;
+      position: relative;
+    }
+
+
+
+    #layout-container.not-found-page div.twitter {
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #layout-container.not-found-page div.copyright {
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    #layout-container.not-found-page span.mail a {
+      text-decoration: none;
+    }
+
+    @media only screen and (max-width: 649px) {
+      #layout-container.not-found-page div.twitter {
+        padding-bottom: 2em;
       }
 
-      .rails-default-error-page div.dialog {
-        width: 95%;
-        max-width: 33em;
-        margin: 4em auto 0;
+      #layout-container.not-found-page div.copyright {
+        padding-bottom: 3em;
+      }
+    }
+
+    @media only screen and (min-width: 650px) {
+      #layout-container.not-found-page div.twitter {
+        text-align: left;
+        position: absolute;
+        left: 3.8em;
+        bottom: 3em;
       }
 
-      .rails-default-error-page div.dialog > div {
-        border: 1px solid #ccc;
-        border-right-color: #999;
-        border-left-color: #999;
-        border-bottom-color: #bbb;
-        border-top: #b00100 solid 4px;
-        border-top-left-radius: 9px;
-        border-top-right-radius: 9px;
-        background-color: white;
-        padding: 7px 12% 0;
-        box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
+      #layout-container.not-found-page div.copyright {
+        position: absolute;
+        font-size: 1.1em;
+        right: 3.8em;
+        bottom: 3em;
+        text-align: right;
       }
 
-      .rails-default-error-page h1 {
-        font-size: 100%;
-        color: #730e15;
-        line-height: 1.5em;
+      #layout-container.not-found-page span.mail a {
+        text-decoration: none;
       }
+    }
 
-      .rails-default-error-page div.dialog > p {
-        margin: 0 0 1em;
-        padding: 1em;
-        background-color: #f7f7f7;
-        border: 1px solid #ccc;
-        border-right-color: #999;
-        border-left-color: #999;
-        border-bottom-color: #999;
-        border-bottom-left-radius: 4px;
-        border-bottom-right-radius: 4px;
-        border-top-color: #dadada;
-        color: #666;
-        box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
+
+    .error-code-message {
+      font-size: 0.65em;
+      color: #9F9FAD;
+      padding: 13px 0;
+    }
+    @media only screen and (min-width: 650px) {
+      .error-code-message {
+        font-size: 0.78em;
       }
-    </style>
-  </head>
+    }
 
-  <body class="rails-default-error-page">
-    <!-- This file lives in public/404.html -->
-    <div class="dialog">
-      <div>
-        <h1>The page you were looking for doesn't exist.</h1>
-        <p>You may have mistyped the address or the page may have moved.</p>
-      </div>
-      <p>
-        If you are the application owner check the logs for more information.
-      </p>
+  </style>
+  <script type="text/javascript">
+    (function(){
+      const startClock = Date.now();
+      updateClock = function() {
+        const delta = Date.now() - startClock; // milliseconds elapsed since start
+        const secs_passed = Math.floor(delta / 1000);
+        const countdown = 10 - secs_passed;
+        document.getElementById('home-page-countdown').innerText = "00:" + ("00" + Number(countdown)).slice(-2);
+        if (countdown <= 0) {
+          window.location = "/";
+        } else {
+          setTimeout(updateClock, 1000); //  every second
+        }
+      }
+      setTimeout(updateClock, 1000); // update about every second
+    })()
+  </script>
+
+
+</head>
+<body id='application__not_found'>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K4PCNR3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class='not-found-page' id='layout-container'>
+  <logo style='padding-top: 1em'>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 24" fill="none">
+      <path d="M42.0815 5.33934C42.2021 5.26697 42.3227 5.21872 42.4674 5.21872C42.6604 5.21872 42.8534 5.29109 43.0223 5.41171C43.1912 5.55645 43.2635 5.7012 43.2635 5.89419C43.2635 5.99068 43.2394 6.1113 43.1912 6.2078L37.6668 18.4868C37.5944 18.6557 37.4738 18.7763 37.3291 18.8728C37.1843 18.9693 37.0154 19.0176 36.8225 19.0176C36.6536 19.0176 36.4847 18.9693 36.3159 18.8728C36.1711 18.7763 36.0505 18.6557 35.9781 18.4868L30.4538 6.23192C30.4055 6.13543 30.4055 6.03893 30.4055 5.94244C30.4055 5.72532 30.4779 5.55645 30.6468 5.43583C30.8156 5.29109 31.0086 5.24284 31.2016 5.24284C31.5152 5.24284 31.7323 5.38759 31.8771 5.67707L36.8466 16.8947L41.792 5.67707C41.8643 5.53233 41.9608 5.41171 42.0815 5.33934Z" fill="#40424F"></path>
+      <path d="M45.3623 18.7281C45.2175 18.5833 45.1451 18.3903 45.1451 18.1732V6.1354C45.1451 5.89416 45.2175 5.72529 45.3623 5.58055C45.507 5.43581 45.7 5.36343 45.9412 5.36343H53.1543C53.3955 5.36343 53.5644 5.41168 53.685 5.5323C53.8056 5.65292 53.878 5.79766 53.878 6.01478C53.878 6.23189 53.8056 6.37664 53.685 6.49725C53.5644 6.61787 53.3714 6.66612 53.1543 6.66612H46.7132V11.3944H52.7683C53.0095 11.3944 53.1784 11.4426 53.299 11.5633C53.4196 11.6839 53.492 11.8286 53.492 12.0457C53.492 12.2629 53.4196 12.4076 53.299 12.5282C53.1784 12.6488 52.9854 12.6971 52.7683 12.6971H46.7132V17.6184H53.1543C53.3955 17.6184 53.5644 17.6666 53.685 17.7872C53.8056 17.9078 53.878 18.0526 53.878 18.2697C53.878 18.4868 53.8056 18.6316 53.685 18.7522C53.5644 18.8728 53.3714 18.921 53.1543 18.921H45.9412C45.7241 18.9452 45.5311 18.8728 45.3623 18.7281Z" fill="#40424F"></path>
+      <path d="M57.6173 17.6908C56.7005 16.774 56.2422 15.399 56.2422 13.6138V6.06306C56.2422 5.82182 56.3146 5.62883 56.4593 5.48408C56.604 5.33934 56.797 5.26697 57.0383 5.26697C57.2795 5.26697 57.4484 5.33934 57.5931 5.48408C57.7379 5.62883 57.8102 5.82182 57.8102 6.06306V13.7344C57.8102 15.0613 58.1239 16.0503 58.7752 16.7258C59.4265 17.4013 60.3674 17.739 61.6459 17.739C62.9004 17.739 63.8653 17.4013 64.4926 16.7258C65.1439 16.0503 65.4575 15.0613 65.4575 13.7344V6.06306C65.4575 5.82182 65.5299 5.62883 65.6746 5.48408C65.8194 5.33934 66.0124 5.26697 66.2536 5.26697C66.4948 5.26697 66.6878 5.33934 66.8326 5.48408C66.9773 5.62883 67.0497 5.82182 67.0497 6.06306V13.6138C67.0497 15.399 66.5913 16.7499 65.6746 17.6908C64.7579 18.6316 63.407 19.0899 61.6701 19.0899C59.8849 19.0899 58.534 18.6316 57.6173 17.6908Z" fill="#40424F"></path>
+      <path d="M70.5235 18.7281C70.3788 18.5833 70.3064 18.3903 70.3064 18.1732V6.1354C70.3064 5.89416 70.3788 5.72529 70.5235 5.58055C70.6683 5.43581 70.8612 5.36343 71.1025 5.36343H78.3155C78.5567 5.36343 78.7256 5.41168 78.8462 5.5323C78.9669 5.65292 79.0392 5.79766 79.0392 6.01478C79.0392 6.23189 78.9669 6.37664 78.8462 6.49725C78.7256 6.61787 78.5326 6.66612 78.3155 6.66612H71.8744V11.3944H77.9295C78.1708 11.3944 78.3396 11.4426 78.4603 11.5633C78.5809 11.6839 78.6532 11.8286 78.6532 12.0457C78.6532 12.2629 78.5809 12.4076 78.4603 12.5282C78.3396 12.6488 78.1466 12.6971 77.9295 12.6971H71.8744V17.6184H78.3155C78.5567 17.6184 78.7256 17.6666 78.8462 17.7872C78.9669 17.9078 79.0392 18.0526 79.0392 18.2697C79.0392 18.4868 78.9669 18.6316 78.8462 18.7522C78.7256 18.8728 78.5326 18.921 78.3155 18.921H71.1025C70.8612 18.9452 70.6683 18.8728 70.5235 18.7281Z" fill="#40424F"></path>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M8.71813 2.95104C7.53606 0.924638 4.95481 0.225045 2.95253 1.40711C0.926124 2.56506 0.250655 5.14631 1.4086 7.17272L9.68309 21.5264C10.841 23.5528 13.4223 24.2283 15.4487 23.0703C17.4751 21.9124 18.1506 19.3311 16.9926 17.3047L8.71813 2.95104Z" fill="#6460F1"></path>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M21.1902 9.89874C18.8743 11.2497 15.907 10.4536 14.5561 8.11357C13.2052 5.79768 14.0013 2.83044 16.3413 1.47951C18.6813 0.12857 21.6244 0.924658 22.9753 3.26467C24.3021 5.58056 23.5061 8.5478 21.1902 9.89874Z" fill="#6460F1"></path>
+    </svg>
+
+  </logo>
+  <div id='main-container'>
+
+    <h1>
+      Oops&#8230;
+    </h1>
+    <div class='message'>
+      The page you are looking for can't be found.
     </div>
-  </body>
+    <br>
+    <div>
+<span class='small return-message' style=''>
+Let's go back to the Home page in
+<span data-controller='countdown-clock' id='home-page-countdown'>
+00:10
+</span>
+</span>
+    </div>
+    <p class="error-code-message">
+      Error code: 404
+    </p>
+  </div>
+  <footer id='main-footer' style='position: absolute; bottom:0; left: 0;  width: 100%;'>
+    <div class="footer-container" style="">
+      <div class='twitter'>
+        <span></span>
+        <a href='https://twitter.com/veuelive' target='_blank'>
+          <svg width="17" height="14" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.675 3.98747C17.688 4.16289 17.688 4.3373 17.688 4.51172C17.688 9.84939 13.6254 16 6.20073 16C3.91329 16 1.78825 15.3374 0 14.1867C0.324771 14.2238 0.637514 14.2368 0.975316 14.2368C2.79262 14.2412 4.55847 13.6335 5.98822 12.5117C5.14564 12.4965 4.32886 12.2185 3.65191 11.7166C2.97497 11.2146 2.47165 10.5139 2.21225 9.71207C2.46185 9.74915 2.71244 9.77421 2.97507 9.77421C3.33692 9.77421 3.70079 9.72409 4.03859 9.63689C3.12418 9.45226 2.30194 8.95662 1.71168 8.23424C1.12143 7.51186 0.799592 6.60734 0.800902 5.67448V5.62436C1.33918 5.92407 1.96366 6.11151 2.62523 6.13657C2.07101 5.76828 1.61656 5.26854 1.30243 4.68191C0.988307 4.09528 0.824271 3.44003 0.824959 2.77459C0.824959 2.02481 1.02443 1.33718 1.37426 0.737753C2.38881 1.98574 3.65418 3.0067 5.08842 3.73453C6.52266 4.46235 8.09378 4.88081 9.70004 4.96279C9.63789 4.66207 9.5998 4.35033 9.5998 4.03759C9.59953 3.50729 9.70379 2.98214 9.9066 2.49216C10.1094 2.00218 10.4068 1.55697 10.7818 1.182C11.1568 0.807018 11.602 0.509622 12.092 0.306807C12.5819 0.103993 13.1071 -0.000263004 13.6374 4.98246e-07C14.8001 4.98246e-07 15.8496 0.487157 16.5874 1.27503C17.4913 1.10023 18.3581 0.770252 19.1495 0.299712C18.8482 1.23274 18.217 2.02391 17.3743 2.525C18.176 2.43356 18.9595 2.22273 19.6988 1.89951C19.1466 2.70452 18.4624 3.41044 17.675 3.98747Z" fill="#C1C1CC"/>
+          </svg>
+
+        </a>
+
+        <span class='mail'>
+          &nbsp;&nbsp;
+          &bullet;
+          &nbsp;&nbsp;
+          <a href='mailto:hello@veuelive.com'>
+            hello@veuelive.com
+          </a>
+        </span>
+      </div>
+
+      <div class='copyright' >
+        &copy;
+        2020-2021 Veue Inc.
+        All Rights Reserved
+      </div>
+    </div>
+
+  </footer>
+</div>
+</body>
 </html>
