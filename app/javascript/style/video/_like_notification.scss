@@ -6,22 +6,22 @@
   .user-reaction {
     top: 0;
     position: absolute;
-    left: 1rem;
-    padding: 0.5rem;
-    height: 23px;
-    border-radius: 0.75rem;
+    left: 1.35rem;
+    border-radius: 10px;
     color: color.$white;
     background-color: color.$veue-corporate;
-    align-items: center;
     animation: top 6s ease;
+    height: 34px;
     .content {
-      display: flex;
+      border-radius: 10px;
+      display: inline-flex;
+      padding: 0 0.75rem;
     }
     img {
       animation: beating 5s;
     }
     &__text {
-      margin-left: 0.5rem;
+      margin: 5px 0px 5px 6px;
     }
   }
 }
