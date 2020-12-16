@@ -2,6 +2,7 @@
 import BrowserViewManager from "./BrowserViewManager.ts";
 import ffmpegPath from "../util/ffmpegPath";
 import logger from "./logger";
+import { checkSystemRequirements } from "../util/systemChecks";
 
 const {
   app,
