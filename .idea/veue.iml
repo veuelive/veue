@@ -708,38 +708,6 @@
           <RakeTaskImpl description="" fullCommand="tmp/cache/assets" id="tmp/cache/assets" />
           <RakeTaskImpl description="" fullCommand="tmp/pids" id="tmp/pids" />
           <RakeTaskImpl description="" fullCommand="tmp/sockets" id="tmp/sockets" />
-          <RakeTaskImpl id="webdrivers">
-            <subtasks>
-              <RakeTaskImpl id="chromedriver">
-                <subtasks>
-                  <RakeTaskImpl description="" fullCommand="webdrivers:chromedriver:remove" id="remove" />
-                  <RakeTaskImpl description="" fullCommand="webdrivers:chromedriver:update" id="update" />
-                  <RakeTaskImpl description="" fullCommand="webdrivers:chromedriver:version" id="version" />
-                </subtasks>
-              </RakeTaskImpl>
-              <RakeTaskImpl id="edgedriver">
-                <subtasks>
-                  <RakeTaskImpl description="" fullCommand="webdrivers:edgedriver:remove" id="remove" />
-                  <RakeTaskImpl description="" fullCommand="webdrivers:edgedriver:update" id="update" />
-                  <RakeTaskImpl description="" fullCommand="webdrivers:edgedriver:version" id="version" />
-                </subtasks>
-              </RakeTaskImpl>
-              <RakeTaskImpl id="geckodriver">
-                <subtasks>
-                  <RakeTaskImpl description="" fullCommand="webdrivers:geckodriver:remove" id="remove" />
-                  <RakeTaskImpl description="" fullCommand="webdrivers:geckodriver:update" id="update" />
-                  <RakeTaskImpl description="" fullCommand="webdrivers:geckodriver:version" id="version" />
-                </subtasks>
-              </RakeTaskImpl>
-              <RakeTaskImpl id="iedriver">
-                <subtasks>
-                  <RakeTaskImpl description="" fullCommand="webdrivers:iedriver:remove" id="remove" />
-                  <RakeTaskImpl description="" fullCommand="webdrivers:iedriver:update" id="update" />
-                  <RakeTaskImpl description="" fullCommand="webdrivers:iedriver:version" id="version" />
-                </subtasks>
-              </RakeTaskImpl>
-            </subtasks>
-          </RakeTaskImpl>
         </subtasks>
       </RakeTaskImpl>
     </option>

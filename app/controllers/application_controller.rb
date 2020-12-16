@@ -11,4 +11,7 @@ class ApplicationController < ActionController::Base
     request.xhr?&.zero?
   end
   helper_method :xhr_request?
+
+  def not_found
+  end
 end
