@@ -1,9 +1,9 @@
 @use "components/nav";
+@use 'utils/font.scss';
 
 #layout-container {
   display: flex;
   flex-direction: column;
-
   #main-container {
     height: calc(100vh - 54px);
     display: flex;
@@ -13,6 +13,45 @@
       padding-top: 2vh;
       flex: 1;
       display: flex;
+    }
+  }
+  &.not-found-page {
+    font-family: font.$poppins;
+    color: #40424f;
+
+    footer {
+      position: relative;
+      color: #c1c1cc;
+      font-size: 0.6em;
+      a,
+      a:visited,
+      a:hover {
+        color: #c1c1cc !important;
+      }
+
+      .left-corner {
+        width: 200px;
+        position: absolute;
+        left: 20px;
+        bottom: 30px;
+      }
+
+      .right-corner {
+        text-align: right;
+        position: absolute;
+        width: 200px;
+        right: 20px;
+        bottom: 30px;
+      }
+    }
+    #main-container {
+      flex-direction: column;
+      justify-content: flex-start;
+      text-align: center;
+    }
+
+    logo svg {
+      height: 22px;
     }
   }
 }

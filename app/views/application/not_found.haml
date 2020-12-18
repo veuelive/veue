@@ -1,1 +1,55 @@
-jasdl;fkjsakdlfjsa;df
+
+!!!
+%html
+  %head
+    %meta{content: "text/html; charset=UTF-8", "http-equiv": "Content-Type"}/
+    %meta{name: "viewport", content:"width=device-width, initial-scale=1, viewport-fit=cover"}/
+    %title Veue - Not Found
+    :javascript
+      globalThis.startLoadTime = Date.now();
+    = render partial: 'layouts/gtm'
+    = stylesheet_pack_tag 'application', media: 'all'
+    = javascript_pack_tag 'application'
+
+    = csrf_meta_tags
+    = csp_meta_tag
+  %body{
+    body_attributes
+  }
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K4PCNR3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    #layout-container.not-found-page
+      #main-container
+        %logo{style: 'padding-top: 2em'}
+          = svg_tag 'logo-full'
+        %h1{style: 'font-size: 7em; font-weight: 500; margin-block-start: 0.3em; margin-block-end: 0.2em'}
+          Oops&#8230;
+
+
+        %div{style: 'font-size: 0.7em'}
+          The page you are looking for can't be found.
+        %br
+        %div
+          %span.small{style: 'font-size: 0.65em; color: #4C46F0; background-color: #EDEDFF; border-radius: 6px; padding: 2px 20px 2px 20px'}
+            Let's go back to the Home page in
+            %span#home-page-countdown
+              00:10
+
+
+        %p{style: 'font-size: 0.55em; color: #9F9FAD'}
+          Error code: 404
+
+      %footer#main-footer{style: "color: "}
+        .left-corner
+          %span
+          %a{href: "https://twitter.com/veuelive", target: "_blank"}
+
+            twitter
+          •
+          %a{href: "mailto:hello@veuelive.com"}
+            hello@veuelive.com
+
+        .right-corner
+          &copy;
+          = "2020-#{Time.current.year}. "
+          All rights reserved.
+
