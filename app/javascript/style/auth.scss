@@ -9,7 +9,7 @@
   padding: 1rem;
   margin-left: 30%;
   margin-right: 30%;
-  border-radius: 1rem;
+  border-radius: 10px;
   box-shadow: 0rem 0rem 1rem 0.1rem #8e8e8e4a;
   h2,
   h4 {
@@ -35,7 +35,7 @@
         margin-top: 0.5rem;
         width: 250px;
         height: 20px;
-        border-radius: 0.5rem;
+        border-radius: 10px;
         padding: 0.5rem;
         border: solid 1px color.$gray-medium;
         background-color: color.$gray-light;
@@ -59,7 +59,7 @@
       margin-top: 1.5rem;
       input[type="submit"] {
         padding: 0.75rem 2.5rem;
-        border-radius: 0.75rem;
+        border-radius: 10px;
         background-color: color.$cornflower;
         color: color.$white;
         border: none;

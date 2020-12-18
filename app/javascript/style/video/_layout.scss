@@ -25,7 +25,7 @@ body#videos__show {
       }
 
       > div {
-        border-radius: 0.75rem;
+        border-radius: 10px;
       }
 
       .content-area__secondary {
@@ -33,6 +33,7 @@ body#videos__show {
         background: white;
         max-width: 20vw;
         display: flex;
+        overflow-y: hidden;
         flex-direction: column;
         margin-bottom: 2vh;
       }
