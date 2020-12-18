@@ -73,64 +73,9 @@ body#videos__show {
       display: none;
     }
     // Most of the code for PIP is inside of a separate file
-    .primary-video--video-area {
-      position: relative;
-    }
+
     .pip-component canvas {
       width: 25vw;
-    }
-    .pip-component {
-      $pip-padding: 10px;
-      position: absolute;
-      z-index: 1;
-
-      &[data-corner="bottom-right"] {
-        bottom: $pip-padding;
-        right: $pip-padding;
-      }
-
-      &[data-corner="bottom-left"] {
-        bottom: $pip-padding;
-        left: $pip-padding;
-      }
-
-      &[data-corner="top-left"] {
-        top: $pip-padding;
-        left: $pip-padding;
-      }
-
-      &[data-corner="top-right"] {
-        top: $pip-padding;
-        right: $pip-padding;
-      }
-    }
-
-    .pip-drop-quadrants {
-      z-index: 1;
-      .quadrant {
-        width: 49%;
-        height: 49%;
-        position: absolute;
-        &.bottom-left {
-          bottom: 0;
-          left: 0;
-        }
-
-        &.top-left {
-          top: 0;
-          left: 0;
-        }
-
-        &.top-right {
-          top: 0;
-          right: 0;
-        }
-
-        &.bottom-right {
-          bottom: 0;
-          right: 0;
-        }
-      }
     }
 
     // Hide some stuff on the page when we're mobile and writing a chat

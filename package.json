@@ -15,7 +15,6 @@
     "hls.js": "^0.14.4",
     "intl-tel-input": "^17.0.3",
     "jest-fetch-mock": "^3.0.3",
-    "mobile-drag-drop": "^2.3.0-rc.2",
     "mux-embed": "^3.4.1",
     "node-fetch": "2.6.1",
     "sass": "^1.26.10",
