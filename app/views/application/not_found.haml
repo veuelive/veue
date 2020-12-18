@@ -21,15 +21,15 @@
       #main-container
         %logo{style: 'padding-top: 2em'}
           = svg_tag 'logo-full'
-        %h1{style: 'font-size: 7em; font-weight: 500; margin-block-start: 0.3em; margin-block-end: 0.2em'}
+        %h1
           Oops&#8230;
 
 
-        %div{style: 'font-size: 0.7em'}
+        %div.message
           The page you are looking for can't be found.
         %br
         %div
-          %span.small{style: 'font-size: 0.65em; color: #4C46F0; background-color: #EDEDFF; border-radius: 6px; padding: 2px 20px 2px 20px'}
+          %span.small.return-message{style: ''}
             Let's go back to the Home page in
             %span#home-page-countdown
               00:10
