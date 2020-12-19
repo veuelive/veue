@@ -78,5 +78,4 @@ Rails.application.routes.draw do
   get '/health', to: "health_check#index"
 
   mount Sidekiq::Web => '/_/sidekiq'
-  get '*unmatched_route', to: 'application#not_found'
 end
