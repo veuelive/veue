@@ -1,9 +1,4 @@
 @use "components/nav";
-@use 'utils/font.scss';
-
-@use 'utils/color';
-@use 'utils/keyframes';
-@use 'utils/breakpoints' as *;
 
 #layout-container {
   display: flex;
@@ -17,69 +12,6 @@
       padding-top: 2vh;
       flex: 1;
       display: flex;
-    }
-  }
-  &.not-found-page {
-    font-family: font.$poppins;
-    color: #40424f;
-
-    #main-container {
-      flex-direction: column;
-      justify-content: flex-start;
-      text-align: center;
-      .message {
-        font-size: 0.9em;
-        @include desktop {
-          font-size: 0.8em;
-        }
-      }
-      span.return-message {
-        font-size: 0.65em;
-        color: #4c46f0;
-        background-color: #ededff;
-        border-radius: 6px;
-        padding: 4px 20px 4px 20px;
-      }
-      h1 {
-        margin-block-start: 0.5em;
-        margin-block-end: 0.2em;
-        font-size: 5em;
-        font-weight: 400;
-        @include desktop {
-          margin-block-start: 0.4em;
-          font-size: 7em;
-        }
-      }
-    }
-
-    footer {
-      position: relative;
-      color: #c1c1cc;
-      font-size: 0.6em;
-      a,
-      a:visited,
-      a:hover {
-        color: #c1c1cc !important;
-      }
-
-      .left-corner {
-        width: 200px;
-        position: absolute;
-        left: 20px;
-        bottom: 30px;
-      }
-
-      .right-corner {
-        text-align: right;
-        position: absolute;
-        width: 200px;
-        right: 20px;
-        bottom: 30px;
-      }
-    }
-
-    logo svg {
-      height: 22px;
     }
   }
 }

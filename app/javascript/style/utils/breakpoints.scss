@@ -20,7 +20,7 @@ $mobile-max-height: 650px;
 }
 
 @mixin desktop {
-  @media only screen and (min-width: $mobile-max-width) {
+  @media only screen and (min-width: $mobile-max-width) and (min-height: $mobile-max-height) {
     @content;
   }
 }
