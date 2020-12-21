@@ -10,7 +10,7 @@
     height: 340
   }
 .pip-drop-quadrants
-  .quadrant.top-left{data: {target: 'audience--movable-pip.topLeft'}}
-  .quadrant.top-right{data: {target: 'audience--movable-pip.topRight'}}
-  .quadrant.bottom-left{data: {target: 'audience--movable-pip.bottomLeft'}}
-  .quadrant.bottom-right{data: {target: 'audience--movable-pip.bottomRight'}}
+  .quadrant.top-left{data: {target: 'audience--movable-pip.topLeft', action: 'ondragenter->audience--movable-pip#dragEnterHandler'}}
+  .quadrant.top-right{data: {target: 'audience--movable-pip.topRight', action: 'click->audience--movable-pip#dragEnterHandler'}}
+  .quadrant.bottom-left{data: {target: 'audience--movable-pip.bottomLeft', action: 'click->audience--movable-pip#dragEnterHandler'}}
+  .quadrant.bottom-right{data: {target: 'audience--movable-pip.bottomRight', action: 'click->audience--movable-pip#dragEnterHandler'}}

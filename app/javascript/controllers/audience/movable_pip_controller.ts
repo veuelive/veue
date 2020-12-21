@@ -31,10 +31,10 @@ export default class MovablePipController extends Controller {
     this.pipComponentTarget.draggable = true;
     this.pipComponentTarget.ondragstart = this.onDragStart.bind(this);
 
-    this.topLeftTarget.ondragenter = () => this.movePipTo("top-left");
-    this.topRightTarget.ondragenter = () => this.movePipTo("top-right");
-    this.bottomLeftTarget.ondragenter = () => this.movePipTo("bottom-left");
-    this.bottomRightTarget.ondragenter = () => this.movePipTo("bottom-right");
+    // this.topLeftTarget.ondragenter = () => this.movePipTo("top-left");
+    // this.topRightTarget.ondragenter = () => this.movePipTo("top-right");
+    // this.bottomLeftTarget.ondragenter = () => this.movePipTo("bottom-left");
+    // this.bottomRightTarget.ondragenter = () => this.movePipTo("bottom-right");
 
     // prevent default is need to avoid interface glitches in touch envs
     this.topLeftTarget.ondragover = (event: DragEvent) =>
@@ -48,6 +48,11 @@ export default class MovablePipController extends Controller {
 
     // move pip to bottom-right upon load
     this.pipComponentTarget.dataset.corner = "bottom-right";
+  }
+
+  dragEnterHandler(event: DataTransfer): void {
+    // DOES NOT WORK
+    console.log("dragEnterHandler.....");
   }
 
   onDragStart(event: DataTransfer): void {
