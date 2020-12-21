@@ -27,35 +27,20 @@ export default class MovablePipController extends Controller {
 
   connect(): void {
     this.pipComponentTarget.classList.add("bottom-right");
-
     this.pipComponentTarget.draggable = true;
-    this.pipComponentTarget.ondragstart = this.onDragStart.bind(this);
-
-    // this.topLeftTarget.ondragenter = () => this.movePipTo("top-left");
-    // this.topRightTarget.ondragenter = () => this.movePipTo("top-right");
-    // this.bottomLeftTarget.ondragenter = () => this.movePipTo("bottom-left");
-    // this.bottomRightTarget.ondragenter = () => this.movePipTo("bottom-right");
-
-    // prevent default is need to avoid interface glitches in touch envs
-    this.topLeftTarget.ondragover = (event: DragEvent) =>
-      event.preventDefault();
-    this.topRightTarget.ondragover = (event: DragEvent) =>
-      event.preventDefault();
-    this.bottomLeftTarget.ondragover = (event: DragEvent) =>
-      event.preventDefault();
-    this.bottomRightTarget.ondragover = (event: DragEvent) =>
-      event.preventDefault();
-
-    // move pip to bottom-right upon load
     this.pipComponentTarget.dataset.corner = "bottom-right";
   }
 
-  dragEnterHandler(event: DataTransfer): void {
-    // DOES NOT WORK
-    console.log("dragEnterHandler.....");
+  dragOverHandler(event: DragEvent): void {
+    event.preventDefault();
   }
 
-  onDragStart(event: DataTransfer): void {
+  dragEnterHandler(event: DragEvent): void {
+    const corner = event.target.classList[1]; // TODO: remove dependancy on 2nd class
+    this.movePipTo(corner);
+  }
+
+  dragStartHandler(event: DataTransfer): void {
     event.dropEffect = "none";
   }
 

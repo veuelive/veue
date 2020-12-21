@@ -1,6 +1,7 @@
 .pip-component{
   data: {
-    target: "audience--movable-pip.pipComponent"
+    target: "audience--movable-pip.pipComponent",
+    action: "dragstart->audience--movable-pip#dragStartHandler"
   },
   draggable: "true",
 }
@@ -10,7 +11,7 @@
     height: 340
   }
 .pip-drop-quadrants
-  .quadrant.top-left{data: {target: 'audience--movable-pip.topLeft', action: 'ondragenter->audience--movable-pip#dragEnterHandler'}}
-  .quadrant.top-right{data: {target: 'audience--movable-pip.topRight', action: 'click->audience--movable-pip#dragEnterHandler'}}
-  .quadrant.bottom-left{data: {target: 'audience--movable-pip.bottomLeft', action: 'click->audience--movable-pip#dragEnterHandler'}}
-  .quadrant.bottom-right{data: {target: 'audience--movable-pip.bottomRight', action: 'click->audience--movable-pip#dragEnterHandler'}}
+  .quadrant.top-left{data: {target: 'audience--movable-pip.topLeft', action: 'dragenter->audience--movable-pip#dragEnterHandler dragover->audience--movable-pip#dragOverHandler'}}
+  .quadrant.top-right{data: {target: 'audience--movable-pip.topRight', action: 'dragenter->audience--movable-pip#dragEnterHandler dragover->audience--movable-pip#dragOverHandler'}}
+  .quadrant.bottom-left{data: {target: 'audience--movable-pip.bottomLeft', action: 'dragenter->audience--movable-pip#dragEnterHandler dragover->audience--movable-pip#dragOverHandler'}}
+  .quadrant.bottom-right{data: {target: 'audience--movable-pip.bottomRight', action: 'dragenter->audience--movable-pip#dragEnterHandler dragover->audience--movable-pip#dragOverHandler'}}
