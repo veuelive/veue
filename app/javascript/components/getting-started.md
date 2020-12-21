@@ -13,7 +13,11 @@ Other Libraries:
 
 [@web/test-runner](https://modern-web.dev/docs/test-runner/overview/)
 
-[@web/testing-helpers](https://open-wc.org/docs/testing/helpers/)
+[@open-wc/testing](https://open-wc.org/docs/testing/helpers/)
+
+[@web/dev-server](https://modern-web.dev/docs/dev-server/overview/)
+
+[Storybook](https://storybook.js.org/)
 
 ### Testing
 
