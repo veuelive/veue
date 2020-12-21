@@ -9,6 +9,11 @@ Web Components!
 `lit-element` and `lit-html` are the 2 main libraries for web
 components. Everything else is just for testing / development purposes.
 
+Other Libraries:
+
+[@web/test-runner](https://modern-web.dev/docs/test-runner/overview/)
+[@web/testing-helpers](https://open-wc.org/docs/testing/helpers/)
+
 ### Testing
 
 ```bash
