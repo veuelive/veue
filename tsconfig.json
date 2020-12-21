@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "declaration": false,
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": ["dom", "ESNext"],
     "module": "es6",
@@ -11,7 +10,9 @@
       "*": ["node_modules/*", "app/javascript/*"]
     },
     "sourceMap": true,
-    "target": "ES2015"
+    "target": "ES2015",
+    "allowSyntheticDefaultImports": true,
+    "importHelpers": true
   },
   "typeRoots": ["./app/javascript/", "./node_modules/@types"],
   "exclude": [
