@@ -45,8 +45,8 @@ Maybe you dont have a storybook story yet and youre still working on
 your component, you can preview by using `@web/dev-server` with the following command:
 
 ```bash
-# We will most likely make an easy to use script for this to cut down on
-typing.
+# We will most likely make an easy to use script for this to cut
+# down on typing.
 
 yarn wds --app-index
 app/javascript/components/<component-name>/demo/index.html
