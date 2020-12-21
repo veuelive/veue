@@ -27,6 +27,7 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "@open-wc/testing": "^2.5.32",
     "@typescript-eslint/eslint-plugin": "^4.4.0",
     "@typescript-eslint/parser": "^4.4.0",
     "@web/dev-server": "^0.1.0",
@@ -39,6 +40,7 @@
     "jest": "^26.4.2",
     "lint-staged": ">=10",
     "prettier": "2.0.5",
+    "sinon": "^9.2.2",
     "ts-jest": "^26.3.0",
     "tslib": "^2.0.3",
     "webpack-dev-server": "^3.11.0"
