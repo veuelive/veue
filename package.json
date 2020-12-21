@@ -29,6 +29,10 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.4.0",
     "@typescript-eslint/parser": "^4.4.0",
+    "@web/dev-server": "^0.1.0",
+    "@web/dev-server-esbuild": "^0.2.9",
+    "@web/dev-server-storybook": "^0.3.0",
+    "@web/test-runner": "^0.11.0",
     "babel-jest": "^26.3.0",
     "eslint": "^7.7.0",
     "husky": "^4.3.0",
@@ -36,7 +40,11 @@
     "lint-staged": ">=10",
     "prettier": "2.0.5",
     "ts-jest": "^26.3.0",
+    "tslib": "^2.0.3",
     "webpack-dev-server": "^3.11.0"
+  },
+  "resolutions": {
+    "chokidar": ">= 3"
   },
   "husky": {
     "hooks": {
@@ -48,5 +56,8 @@
     "{app,spec}/*.{js,ts}": "eslint --cache --fix",
     "*.{js,css,md,ts,scss,sass,json}": "prettier --write",
     "{app,spec,config/initializers}/*.rb": "./bin/rubocop -A"
+  },
+  "scripts": {
+    "storybook": "web-dev-server --config .storybook/server.config.mjs"
   }
 }

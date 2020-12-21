@@ -1,4 +1,7 @@
+import { esbuildPlugin } from '@web/dev-server-esbuild';
+
 export default {
-  files: 'spec/javascript/components/**/*.spec.js',
-  nodeResolve: true
+  files: 'app/javascript/components/**/*.test.ts',
+  nodeResolve: true,
+  plugins: [esbuildPlugin({ ts: true })],
 };
