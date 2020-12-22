@@ -62,6 +62,7 @@
     "{app,spec,config/initializers}/*.rb": "./bin/rubocop -A"
   },
   "scripts": {
-    "storybook": "web-dev-server --config .storybook/server.config.mjs"
+    "storybook": "web-dev-server --config .storybook/server.config.mjs",
+    "analyze": "wca analyze \"app/javascript/components/**/*.{js,ts}\" --outFile custom-elements.json"
   }
 }
