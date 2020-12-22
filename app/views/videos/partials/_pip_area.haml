@@ -11,7 +11,7 @@
     height: 340
   }
 .pip-drop-quadrants
-  .quadrant.top-left{data: {target: 'audience--movable-pip.topLeft', action: 'dragenter->audience--movable-pip#dragEnterHandler dragover->audience--movable-pip#dragOverHandler'}}
-  .quadrant.top-right{data: {target: 'audience--movable-pip.topRight', action: 'dragenter->audience--movable-pip#dragEnterHandler dragover->audience--movable-pip#dragOverHandler'}}
-  .quadrant.bottom-left{data: {target: 'audience--movable-pip.bottomLeft', action: 'dragenter->audience--movable-pip#dragEnterHandler dragover->audience--movable-pip#dragOverHandler'}}
-  .quadrant.bottom-right{data: {target: 'audience--movable-pip.bottomRight', action: 'dragenter->audience--movable-pip#dragEnterHandler dragover->audience--movable-pip#dragOverHandler'}}
+  .quadrant.top-left{data: {corner: 'top-left', target: 'audience--movable-pip.topLeft', action: 'dragenter->audience--movable-pip#dragEnterHandler dragover->audience--movable-pip#dragOverHandler'}}
+  .quadrant.top-right{data: {corner: 'top-right', target: 'audience--movable-pip.topRight', action: 'dragenter->audience--movable-pip#dragEnterHandler dragover->audience--movable-pip#dragOverHandler'}}
+  .quadrant.bottom-left{data: {corner: 'bottom-left', target: 'audience--movable-pip.bottomLeft', action: 'dragenter->audience--movable-pip#dragEnterHandler dragover->audience--movable-pip#dragOverHandler'}}
+  .quadrant.bottom-right{data: {corner: 'top-right', target: 'audience--movable-pip.bottomRight', action: 'dragenter->audience--movable-pip#dragEnterHandler dragover->audience--movable-pip#dragOverHandler'}}

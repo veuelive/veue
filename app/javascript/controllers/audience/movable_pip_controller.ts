@@ -36,7 +36,7 @@ export default class MovablePipController extends Controller {
   }
 
   dragEnterHandler(event: DragEvent): void {
-    const corner = event.target.classList[1]; // TODO: remove dependancy on 2nd class
+    const corner = event.target.dataset.corner;
     this.movePipTo(corner);
   }
 
