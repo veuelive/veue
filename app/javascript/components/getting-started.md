@@ -48,8 +48,7 @@ your component, you can preview by using `@web/dev-server` with the following co
 # We will most likely make an easy to use script for this to cut
 # down on typing.
 
-yarn wds --app-index
-app/javascript/components/<component-name>/demo/index.html
+yarn wds --app-index app/javascript/components/<component-name>/demo/index.html
 ```
 
 ### Making a new component
