@@ -1,0 +1,35 @@
+{
+  "version": "experimental",
+  "tags": [
+    {
+      "name": "veue-example",
+      "path": "./app/javascript/components/veue-example/src/VeueExample.ts",
+      "attributes": [
+        {
+          "name": "title",
+          "type": "string",
+          "default": "\"Hey there\""
+        },
+        {
+          "name": "counter",
+          "type": "number",
+          "default": "0"
+        }
+      ],
+      "properties": [
+        {
+          "name": "title",
+          "attribute": "title",
+          "type": "string",
+          "default": "\"Hey there\""
+        },
+        {
+          "name": "counter",
+          "attribute": "counter",
+          "type": "number",
+          "default": "0"
+        }
+      ]
+    }
+  ]
+}
