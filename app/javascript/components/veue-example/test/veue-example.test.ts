@@ -17,7 +17,7 @@ describe("VeueExample", () => {
     const el: VeueExample = await fixture(
       html` <veue-example></veue-example> `
     );
-    el.shadowRoot!.querySelector("button")!.click();
+    el.shadowRoot.querySelector("button").click();
 
     expect(el.counter).to.equal(1);
   });

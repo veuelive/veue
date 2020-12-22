@@ -1,8 +1,8 @@
-import { html, css, LitElement, customElement } from "lit-element";
+import { html, css, LitElement, customElement, CSSResult } from "lit-element";
 
 @customElement("veue-example")
 export default class VeueExample extends LitElement {
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       :host {
         display: block;
@@ -12,12 +12,14 @@ export default class VeueExample extends LitElement {
     `;
   }
 
-  static get properties() {
+  static get properties(): Record<string, unknown> {
     return {
       title: { type: String },
       counter: { type: Number },
     };
   }
+
+  private counter: number;
 
   constructor() {
     super();
@@ -25,11 +27,11 @@ export default class VeueExample extends LitElement {
     this.counter = 0;
   }
 
-  __increment() {
+  __increment(): void {
     this.counter += 1;
   }
 
-  render() {
+  render(): void {
     return html`
       <h2>${this.title} Nr. ${this.counter}!</h2>
       <p><slot></slot></p>
