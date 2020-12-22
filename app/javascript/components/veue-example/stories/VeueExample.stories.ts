@@ -3,6 +3,7 @@ import "../index";
 
 export default {
   title: "VeueExample",
+  component: "veue-example",
   argTypes: {
     title: { control: "string" },
     counter: { control: "number" },
