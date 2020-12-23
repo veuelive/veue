@@ -20,8 +20,7 @@ jobs:
       - name: Build Veue Broadcaster
         env:
           ELECTRON: true
-          APP_VERSION_NUMBER: 0.5.9
           GH_TOKEN: ${{secrets.GH_TOKEN}}
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY}}
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_ACCESS_SECRET}}
-        run: yarn dist
+        run: yarn release

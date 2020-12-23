@@ -1,8 +1,7 @@
 import { autoUpdater } from "electron-updater";
+import logger from "../src/logger";
 
 export default function appUpdater() {
-  const log = require("electron-log");
-  log.transports.file.level = "debug";
-  autoUpdater.logger = log;
+  logger.info("Updating Veue Broadcaster");
   autoUpdater.checkForUpdatesAndNotify();
 }
