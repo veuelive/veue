@@ -1,10 +1,10 @@
 {
   "name": "deskie",
-  "productName": "Veue Broadcaster",
+  "productName": "VeueBroadcaster",
   "version": "0.1.4",
   "description": "My praiseworthy app",
   "license": "MIT",
-  "repository": "veuelive/deskie",
+  "repository": "veuelive/veue",
   "author": {
     "name": "Hampton Catlin",
     "email": "hcatlin@veuelive.com",
@@ -17,7 +17,7 @@
     "build": "webpack --config ./webpack.config.js",
     "start": "yarn build && ENVIRONMENT=localhost electron .",
     "pack": "yarn build && electron-builder --dir",
-    "dist": "yarn build && electron-builder --macos",
+    "dist": "yarn build && electron-builder --macos --publish always",
     "release": "np"
   },
   "dependencies": {
@@ -52,6 +52,12 @@
     "releaseDraft": false
   },
   "build": {
+    "publish": {
+      "provider": "s3",
+      "bucket": "veue-development",
+      "region": "us-east-1",
+      "storageClass": "STANDARD"
+    },
     "appId": "com.hamptoncatlin.veue",
     "files": [
       "!bin"

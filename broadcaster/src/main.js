@@ -13,14 +13,15 @@ const {
   powerSaveBlocker,
 } = require("electron");
 /// const {autoUpdater} = require('electron-updater');
-const { is } = require("electron-util");
 const unhandled = require("electron-unhandled");
 const config = require("./config");
 const debug = require("electron-debug");
 const contextMenu = require("electron-context-menu");
 const menu = require("./menu");
-const { session } = require("electron");
 const child_process = require("child_process");
+const { is } = require("electron-util");
+const { session } = require("electron");
+const { appUpdater } = require("../util/autoUpdater");
 let ffmpeg;
 let browserView;
 

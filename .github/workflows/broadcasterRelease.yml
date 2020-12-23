@@ -1,0 +1,27 @@
+name: BroadcasterRelease
+
+on: workflow_dispatch
+
+jobs:
+  dist:
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: ./broadcaster
+    steps:
+      - name: Checkout to code
+        uses: actions/checkout@master
+      - name: Setup Node
+        uses: actions/setup-node@master
+        with:
+          node-version: 14.10.0
+      - name: Install dependencies
+        run: yarn install
+      - name: Build Veue Broadcaster
+        env:
+          ELECTRON: true
+          APP_VERSION_NUMBER: 0.5.9
+          GH_TOKEN: ${{secrets.GH_TOKEN}}
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_ACCESS_SECRET}}
+        run: yarn dist
