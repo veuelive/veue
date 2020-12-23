@@ -100,7 +100,7 @@ jobs:
           sudo -u postgres createuser -s -d -l runner
           bundle exec rake db:setup
       - name: Run tests
-        run: bundle exec rspec --exclude-pattern "spec/system/*"
+        run: bundle exec rspec --exclude-pattern "spec/system/**/*"
 
   rspecSystem:
       name: rspec system
