@@ -1,4 +1,7 @@
-import { addParameters, setCustomElements } from "@storybook/web-components";
+import {
+  addParameters,
+  setCustomElements,
+} from "@web/storybook-prebuilt/web-components.js";
 
 addParameters({
   docs: {

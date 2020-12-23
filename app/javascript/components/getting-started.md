@@ -56,3 +56,11 @@ yarn wds --app-index app/javascript/components/<component-name>/demo/index.html
 I will be making a generator for this. To get this example took a lot of
 custom effort so it seems best to make my own template for this rather
 than keep it as a manual effort.
+
+### Extra notes
+
+We use a preconfigured storybook created by
+[modern-web](https://modern-web.dev/guides/dev-server/storybook/)
+
+It is a fork of v6 of Storybook so it may not have all the same bells
+and whistles.
