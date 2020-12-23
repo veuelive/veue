@@ -8,7 +8,7 @@
   </script>
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-K4PCNR3');</script>
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito&family=Poppins:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito&family=Poppins:wght@300&display=swap" rel="stylesheet">
 
 
   <style>
@@ -96,16 +96,59 @@
       height: 22px;
     }
 
-
-    #layout-container.footer-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+    #layout-container .footer-container {
+      width: 100%;
+      position: relative;
     }
+
+
+
+    #layout-container.not-found-page div.twitter {
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     #layout-container.not-found-page div.copyright {
-      flex-basis: 15em;
-      text-align: right;
-      align-self: flex-end;
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    #layout-container.not-found-page span.mail a {
+      text-decoration: none;
+    }
+
+    @media only screen and (max-width: 649px) {
+      #layout-container.not-found-page div.twitter {
+        padding-bottom: 2em;
+      }
+
+      #layout-container.not-found-page div.copyright {
+        padding-bottom: 3em;
+      }
+    }
+
+    @media only screen and (min-width: 650px) {
+      #layout-container.not-found-page div.twitter {
+        text-align: left;
+        position: absolute;
+        left: 3.8em;
+        bottom: 3em;
+      }
+
+      #layout-container.not-found-page div.copyright {
+        position: absolute;
+        font-size: 1.1em;
+        right: 3.8em;
+        bottom: 3em;
+        text-align: right;
+      }
+
+      #layout-container.not-found-page span.mail a {
+        text-decoration: none;
+      }
     }
 
 
@@ -129,11 +172,11 @@
         const secs_passed = Math.floor(delta / 1000);
         const countdown = 10 - secs_passed;
         document.getElementById('home-page-countdown').innerText = "00:" + ("00" + Number(countdown)).slice(-2);
-        // if (countdown <= 0) {
-        //   window.location = "/";
-        // } else {
-        //   setTimeout(updateClock, 1000); //  every second
-        // }
+        if (countdown <= 0) {
+          window.location = "/";
+        } else {
+          setTimeout(updateClock, 1000); //  every second
+        }
       }
       setTimeout(updateClock, 1000); // update about every second
     })()
@@ -181,18 +224,26 @@ Let's go back to the Home page in
       <div class='twitter'>
         <span></span>
         <a href='https://twitter.com/veuelive' target='_blank'>
-          twitter
+          <svg width="17" height="14" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.675 3.98747C17.688 4.16289 17.688 4.3373 17.688 4.51172C17.688 9.84939 13.6254 16 6.20073 16C3.91329 16 1.78825 15.3374 0 14.1867C0.324771 14.2238 0.637514 14.2368 0.975316 14.2368C2.79262 14.2412 4.55847 13.6335 5.98822 12.5117C5.14564 12.4965 4.32886 12.2185 3.65191 11.7166C2.97497 11.2146 2.47165 10.5139 2.21225 9.71207C2.46185 9.74915 2.71244 9.77421 2.97507 9.77421C3.33692 9.77421 3.70079 9.72409 4.03859 9.63689C3.12418 9.45226 2.30194 8.95662 1.71168 8.23424C1.12143 7.51186 0.799592 6.60734 0.800902 5.67448V5.62436C1.33918 5.92407 1.96366 6.11151 2.62523 6.13657C2.07101 5.76828 1.61656 5.26854 1.30243 4.68191C0.988307 4.09528 0.824271 3.44003 0.824959 2.77459C0.824959 2.02481 1.02443 1.33718 1.37426 0.737753C2.38881 1.98574 3.65418 3.0067 5.08842 3.73453C6.52266 4.46235 8.09378 4.88081 9.70004 4.96279C9.63789 4.66207 9.5998 4.35033 9.5998 4.03759C9.59953 3.50729 9.70379 2.98214 9.9066 2.49216C10.1094 2.00218 10.4068 1.55697 10.7818 1.182C11.1568 0.807018 11.602 0.509622 12.092 0.306807C12.5819 0.103993 13.1071 -0.000263004 13.6374 4.98246e-07C14.8001 4.98246e-07 15.8496 0.487157 16.5874 1.27503C17.4913 1.10023 18.3581 0.770252 19.1495 0.299712C18.8482 1.23274 18.217 2.02391 17.3743 2.525C18.176 2.43356 18.9595 2.22273 19.6988 1.89951C19.1466 2.70452 18.4624 3.41044 17.675 3.98747Z" fill="#C1C1CC"/>
+          </svg>
+
         </a>
+
+        <span class='mail'>
+          &nbsp;&nbsp;
+          &bullet;
+          &nbsp;&nbsp;
+          <a href='mailto:hello@veuelive.com'>
+            hello@veuelive.com
+          </a>
+        </span>
       </div>
-      <div class='mail'>
-        <a href='mailto:hello@veuelive.com'>
-          hello@veuelive.com
-        </a>
-      </div>
-      <div class='copyright' style="">
+
+      <div class='copyright' >
         &copy;
-        2020-2021.
-        All rights reserved.
+        2020-2021 Veue Inc.
+        All Rights Reserved
       </div>
     </div>
 
