@@ -30,4 +30,5 @@
       .debug-area{data: {target: "broadcast--debug.debugArea"}}
       = render partial: "shared/chat", locals: { video: current_broadcast_video}
 
-  = render partial: "title"
+  - if params[:show_title]
+    = render partial: "title"

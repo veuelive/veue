@@ -60,6 +60,7 @@ describe "Broadcast View" do
     end
 
     it "properly updates the title of the broadcast" do
+      visit "/broadcasts/#{video.id}?show_title=true"
       title_input = "input[name='title']"
       expect(video.title).to be_nil
       new_title = "Look at my fancy title"
