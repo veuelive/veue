@@ -30,5 +30,5 @@
       .debug-area{data: {target: "broadcast--debug.debugArea"}}
       = render partial: "shared/chat", locals: { video: current_broadcast_video}
 
-  - if params[:show_title]
+  - if Rails.env.test?
     = render partial: "title"
