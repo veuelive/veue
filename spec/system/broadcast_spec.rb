@@ -56,7 +56,7 @@ describe "Broadcast View" do
       expect(BrowserNavigation.last.payload["url"]).to eq(url)
 
       visit video_path(video)
-      expect(find("#address-input").text).to eq(url)
+      expect(find("#address-input")).to have_text(url)
     end
 
     it "properly updates the title of the broadcast" do

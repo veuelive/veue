@@ -25,30 +25,25 @@ describe "Prerecorded Audience View" do
     end
 
     it "does not update view count on refresh" do
-      view_count =
-        proc {
-          Integer(find(".widget")["data-views"], 10)
-        }
-
       visit video_path(video)
-      initial_view_count = view_count.call
+      expect(page).to have_css(".widget[data-views='1']")
 
       # Refresh the page
       visit video_path(video)
-      expect(view_count.call).to eq(initial_view_count)
+      expect(page).to have_css(".widget[data-views='1']")
 
       # Log in should keep the view count the same
       login_as user
       visit video_path(video)
 
-      expect(view_count.call).to eq(initial_view_count)
+      expect(page).to have_css(".widget[data-views='1']")
 
       logout_user
 
       login_as create(:user)
       visit video_path(video)
 
-      expect(view_count.call).to eq(initial_view_count + 1)
+      expect(page).to have_css(".widget[data-views='2']")
 
       # Log out and refresh page
       logout_user
@@ -56,7 +51,7 @@ describe "Prerecorded Audience View" do
       # Because the last "anonymous" session got associated with the second
       # user, we are willing to take a new "anonymous" view from this UA+IP
       visit video_path(video)
-      expect(view_count.call).to eq(initial_view_count + 2)
+      expect(page).to have_css(".widget[data-views='3']")
     end
   end
 
