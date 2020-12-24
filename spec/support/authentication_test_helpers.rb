@@ -45,12 +45,16 @@ module AuthenticationTestHelpers
         state: %w[new pending_confirmation],
       ).last.secret_code
 
+      enter_secret_code(secret_code)
+
+      click_button("Verify", wait: 5)
+    end
+
+    def enter_secret_code(secret_code)
       4.times do |index|
         expect(page).to have_css("input[name='secret_code_#{index}']")
         fill_in("secret_code_#{index}", with: secret_code[index])
       end
-
-      click_button("Verify", wait: 5)
     end
   end
 end
