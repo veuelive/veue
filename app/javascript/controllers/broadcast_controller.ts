@@ -6,7 +6,6 @@ import StreamRecorder from "helpers/broadcast/stream_recorder";
 import {
   calculateBroadcastArea,
   calculateFullVideoSize,
-  copyToClipboard,
 } from "helpers/broadcast_helpers";
 import { postForm } from "util/fetch";
 import { getCurrentUrl } from "controllers/broadcast/browser_controller";
