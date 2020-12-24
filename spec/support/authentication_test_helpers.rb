@@ -39,7 +39,11 @@ module AuthenticationTestHelpers
     private
 
     def confirm_secret_code(user)
-      secret_code = SessionToken.where(user: user).last.secret_code
+      expect(page).to have_css("input[name='secret_code_0']")
+
+      secret_code = user.session_tokens.where(
+        state: %w[new pending_confirmation],
+      ).last.secret_code
 
       4.times do |index|
         expect(page).to have_css("input[name='secret_code_#{index}']")
