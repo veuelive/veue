@@ -11,19 +11,9 @@ polyfill({
 });
 
 export default class MovablePipController extends Controller {
-  static targets = [
-    "pipComponent",
-    "topLeft",
-    "topRight",
-    "bottomLeft",
-    "bottomRight",
-  ];
+  static targets = ["pipComponent"];
 
   private pipComponentTarget!: HTMLCanvasElement;
-  private topLeftTarget!: HTMLElement;
-  private topRightTarget!: HTMLElement;
-  private bottomLeftTarget!: HTMLElement;
-  private bottomRightTarget!: HTMLElement;
 
   connect(): void {
     this.pipComponentTarget.classList.add("bottom-right");
@@ -36,7 +26,8 @@ export default class MovablePipController extends Controller {
   }
 
   dragEnterHandler(event: DragEvent): void {
-    const corner = event.target.dataset.corner;
+    const target = event.target as HTMLElement;
+    const corner = target.dataset.corner;
     this.movePipTo(corner);
   }
 
