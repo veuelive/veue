@@ -15,7 +15,7 @@ module AuthenticationTestHelpers
     def login_as(user)
       open_nav_sidebar
       enter_phone_number(user)
-      confirm_secret_code
+      confirm_secret_code(user)
       expect(page).to have_css("[data-user-id='#{user.id}']")
     end
 
@@ -38,13 +38,15 @@ module AuthenticationTestHelpers
 
     private
 
-    def confirm_secret_code
+    def confirm_secret_code(user)
+      secret_code = SessionToken.where(user: user).last.secret_code
+
       4.times do |index|
-        expect(page).to have_selector("input[name='secret_code_#{index}']")
-        fill_in("secret_code_#{index}", with: SessionToken.last.secret_code[index])
+        expect(page).to have_css("input[name='secret_code_#{index}']")
+        fill_in("secret_code_#{index}", with: secret_code[index])
       end
 
-      click_button("Verify")
+      click_button("Verify", wait: 5)
     end
   end
 end
