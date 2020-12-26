@@ -39,6 +39,8 @@ gem "haml-rails"
 # Allows us to do development ENV configuration management with a config/application.yml file
 gem "figaro"
 
+gem "ffi", github: "ffi/ffi", submodules: true
+
 # Ruby library for working with the video streaming network Mux
 gem "mux_ruby"
 
