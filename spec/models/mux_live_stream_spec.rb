@@ -28,7 +28,7 @@ RSpec.describe MuxRuby::LiveStream, type: :model do
       # Okay, let's do it!
       @user.setup_as_streamer!
 
-      expect(@user.mux_live_stream_id).to eq(mux_ruby_live_stream.id)
+      expect(@user.channels.first.mux_live_stream_id).to eq(mux_ruby_live_stream.id)
     end
   end
 end

@@ -2,7 +2,7 @@ import { Rectangle } from "types/rectangle";
 import { postJson } from "util/fetch";
 import { NavigationUpdate } from "controllers/broadcast/browser_controller";
 import { electron, inElectronApp } from "helpers/electron/base";
-import { getCurrentVideoId } from "helpers/event/live_event_manager";
+import { getChannelSlug } from "helpers/channel_helpers";
 
 export function getBroadcastElement(): HTMLElement {
   return document.getElementById("broadcast");
@@ -29,7 +29,7 @@ export function openLinkInBrowser(url: string): void {
 }
 
 export function publicVideoLink(): string {
-  return document.location.origin + "/videos/" + getCurrentVideoId();
+  return document.location.origin + "/" + getChannelSlug();
 }
 
 export function calculateBroadcastArea(

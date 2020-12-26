@@ -1,11 +1,11 @@
-.streamer-profile{ data: {controller: "streamer-profile", "streamer-profile" => { "video-id" => current_video.to_param }}}
+.streamer-profile{ data: {controller: "streamer-profile"}}
   .streamer-info
     .streamer-info__avatar
       = inline_svg_pack_tag 'media/images/user.svg'
       .streamer-name
-        = current_video.user.display_name
+        = current_channel.name
     - if user_signed_in?
-      - if current_user.follows?(current_video.user)
+      - if current_user.follows?(current_channel)
         %button.follow-btn{data: { action: "click->streamer-profile#unfollow" }} Unfollow
       - else
         %button.follow-btn{data: { action: "click->streamer-profile#follow" }} Follow

@@ -1,6 +1,7 @@
 @use "../utils/breakpoints" as *;
 
-body#videos__show {
+#videos__show,
+#channels__show {
   /**
   Put any main responsive layout code for ONLY desktop here... this does not count elements that scale to their
   surroundings

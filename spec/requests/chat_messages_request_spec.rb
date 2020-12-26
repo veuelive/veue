@@ -4,6 +4,7 @@ require "rails_helper"
 
 describe "ChatMessages", type: :request do
   let(:user) { create(:user) }
+  let(:channel) { video.channel }
   let(:video) { create(:live_video) }
   let(:chat_message_params) {
     {
@@ -18,14 +19,14 @@ describe "ChatMessages", type: :request do
     end
 
     it "should create message for signed in user" do
-      post video_chat_messages_path(video), params: chat_message_params
+      post channel_live_chat_messages_path(channel), params: chat_message_params
 
       expect(response).to have_http_status(200)
       expect(user.chat_messages).not_to(be_empty)
     end
 
     it "should not create message as 'body' is not present" do
-      post video_chat_messages_path(video), params: {video_id: video.to_param}
+      post channel_live_chat_messages_path(channel), params: {video_id: video.to_param}
 
       body = JSON.parse(response.body)
       expect(response).to have_http_status(200)
@@ -35,7 +36,7 @@ describe "ChatMessages", type: :request do
 
   describe "create without authentication" do
     it "should not allow to create message" do
-      post video_chat_messages_path(video), params: chat_message_params
+      post channel_live_chat_messages_path(channel), params: chat_message_params
       expect(response).to have_http_status(:unauthorized)
     end
   end

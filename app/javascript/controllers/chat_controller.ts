@@ -1,6 +1,6 @@
 import { postForm } from "util/fetch";
 import { Controller } from "stimulus";
-import { getCurrentVideoId } from "helpers/event/live_event_manager";
+import { getChannelId } from "helpers/channel_helpers";
 
 export default class extends Controller {
   static targets = ["messageInput"];
@@ -26,9 +26,8 @@ export default class extends Controller {
       const textAreaElement = event.target as HTMLElement;
       const message = textAreaElement.innerHTML;
       textAreaElement.innerHTML = "";
-      const videoId = getCurrentVideoId();
       if (message.length > 0) {
-        postForm(`/videos/${videoId}/chat_messages`, { message }).then(() => {
+        postForm(`/${getChannelId()}/chat_messages`, { message }).then(() => {
           console.log("CHAT Sent!");
         });
       }

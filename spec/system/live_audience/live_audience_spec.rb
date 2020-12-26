@@ -8,6 +8,7 @@ describe "Live Audience View" do
 
   let(:user) { create(:user) }
   let(:video) { create(:live_video) }
+  let(:channel) { video.channel }
 
   before :example do
     resize_window_desktop
@@ -15,9 +16,9 @@ describe "Live Audience View" do
 
   describe "a user is logged in" do
     before :each do
-      visit videos_path
+      visit root_path
       login_as user
-      visit video_path(video)
+      visit channel_path(channel)
     end
 
     it "should allow you to follow the streamer" do
@@ -25,13 +26,13 @@ describe "Live Audience View" do
 
       expect(page).to have_content("Unfollow")
 
-      expect(video.user.followers).to include(user)
+      expect(channel.followers).to include(user)
     end
   end
 
   describe "an anonymous user" do
     before :each do
-      visit video_path(video)
+      visit channel_path(channel)
     end
 
     it "should allow you to login without refreshing" do

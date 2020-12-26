@@ -1,5 +1,4 @@
 import { Controller } from "stimulus";
-import { getCurrentVideoId } from "helpers/event/live_event_manager";
 import { putForm } from "util/fetch";
 
 export default class extends Controller {
@@ -22,10 +21,9 @@ export default class extends Controller {
     event.preventDefault();
     const input = this.inputTarget;
     const title = input.value;
-    const videoId = getCurrentVideoId();
 
     this.disableTargets();
-    await putForm(`/videos/${videoId}`, { title });
+    await putForm("./", { title });
     this.inputTarget.dataset.dbValue = title;
     this.enableTargets();
   }

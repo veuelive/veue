@@ -5,29 +5,24 @@ require "system_helper"
 describe "Broadcast Commands" do
   include BroadcastSystemHelpers
 
-  let(:streamer) { create(:streamer) }
-  let(:follower) { create(:user) }
-  let(:other_follower) { create(:user) }
-  let(:video) { streamer.videos.active.first }
+  let(:channel) { create(:channel) }
 
   before :example do
     driven_by :media_browser
     resize_window_desktop
-    Follow.create!(streamer_follow: follower, user_follow: streamer)
-    Follow.create!(streamer_follow: other_follower, user_follow: streamer)
   end
 
   before :each do
-    visit videos_path
-    login_as(streamer)
+    visit root_path
+    login_as(channel.user)
 
     visit "/broadcasts"
     find("body").click
   end
 
-  def video_share_link(video)
+  def channel_share_link
     server = Capybara.current_session.server
-    video_url(video, host: server.host, port: server.port)
+    channel_url(channel, host: server.host, port: server.port)
   end
 
   describe "share features" do
@@ -44,7 +39,8 @@ describe "Broadcast Commands" do
       find(".item.copy").click
       accept_alert
       clip_text = page.evaluate_async_script("navigator.clipboard.readText().then(arguments[0])")
-      expect(clip_text).to eq(video_share_link(video))
+      expect(clip_text).to eq(channel_share_link)
+      expect(clip_text).to include(channel.slug)
     end
 
     it "can open a new link" do
@@ -55,7 +51,7 @@ describe "Broadcast Commands" do
           find(".item.open").click
         end
       switch_to_window audience_window
-      expect(current_url).to eq(video_share_link(video))
+      expect(current_url).to eq(channel_share_link)
     end
   end
 end

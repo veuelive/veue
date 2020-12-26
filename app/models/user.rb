@@ -1,70 +1,43 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  has_many :videos, dependent: :destroy
+  has_many :channels, dependent: :destroy
   has_many :video_events, dependent: :destroy
   has_many :chat_messages, dependent: :destroy
   has_many :session_tokens, dependent: :nullify
-  has_many :mux_webhooks, dependent: :destroy
-  has_many :user_follows,
+  has_many :follows,
            -> { where(unfollowed_at: nil) },
-           class_name: :Follow,
-           foreign_key: :follower_id,
-           inverse_of: :streamer_follow
-  has_many :streamer_follows,
-           -> { where(unfollowed_at: nil) },
-           class_name: :Follow,
-           foreign_key: :streamer_id,
-           inverse_of: :user_follow
-  has_many :followers, through: :streamer_follows, source: :streamer_follow
-  has_many :streamers, through: :user_follows, source: :user_follow
+           inverse_of: :user,
+           dependent: :destroy
+  has_many :subscriptions,
+           through: :follows,
+           source: :channel
 
   validates :display_name, length: {maximum: 40, minimum: 1}, presence: true
   validates :phone_number, phone_number: true
 
   after_create :trigger_user_created_events
 
+  # TODO: Remove this in future! Moved to Channel model
   encrypts :mux_stream_key
   encrypts :phone_number
   blind_index :phone_number
 
   include PGEnum(sms_status: %w[new_number instructions_sent unsubscribed])
 
-  def send_consent_instructions!(streamer)
-    instructions_sent!
-    SendConsentTextJob.perform_later(self, streamer)
-  end
-
   def setup_as_streamer!
-    return if mux_stream_key
+    return if channels.any?
 
-    live_stream_response = MUX_SERVICE.create_live_stream
-    data = live_stream_response.data
-    self.mux_live_stream_id = data.id
-    self.mux_stream_key = data.stream_key
-    save!
+    channels.create!(name: display_name)
   end
 
-  def active_video
-    videos.active.first
+  def send_consent_instructions!(channel)
+    instructions_sent!
+    SendConsentTextJob.perform_later(self, channel)
   end
 
-  def active_video!
-    # We need to treat both "live" and "starting" videos as active videos.
-    # Only "pending"  videos should be broadcastable
-    return active_video if active_video&.pending?
-
-    active_video&.end!
-    create_new_broadcast!
-  end
-
-  def create_new_broadcast!
-    setup_as_streamer!
-    videos.create!
-  end
-
-  def follows?(streamer)
-    streamers.include?(streamer)
+  def follows?(channel)
+    subscriptions.include?(channel)
   end
 
   def trigger_user_created_events
@@ -72,5 +45,9 @@ class User < ApplicationRecord
       message: "'#{display_name}' new user registered",
       url: "https://www.veuelive.com/users/#{id}",
     )
+  end
+
+  def self.find_streamer(url_id)
+    User.find(url_id)
   end
 end

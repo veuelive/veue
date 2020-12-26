@@ -2,13 +2,13 @@
 
 require "system_helper"
 
-RSpec.describe "Follow live streamer" do
-  let(:streamer) { create(:streamer) }
+RSpec.describe "Follow from VOD" do
   let(:follower) { create(:user) }
-  let(:video) { create(:vod_video, user: streamer) }
+  let(:video) { create(:vod_video) }
+  let(:channel) { video.channel }
 
   before :each do
-    visit video_path(video)
+    visit channel_path(channel)
   end
 
   describe "an anonymous user" do
@@ -24,17 +24,17 @@ RSpec.describe "Follow live streamer" do
     end
 
     it "should make user following the streamer" do
-      visit video_path(video)
+      visit path_for_video(video)
       find(".follow-btn").click
       expect(page).to have_content("Unfollow")
     end
 
     it "should make user unfollowed streamer" do
-      @follow = Follow.create!(
-        streamer_id: streamer.to_param,
-        follower_id: follower.to_param,
+      Follow.create!(
+        channel: channel,
+        user: follower,
       )
-      visit video_path(video)
+      visit path_for_video(video)
       find(".follow-btn").click
 
       expect(page).to have_content("Follow")

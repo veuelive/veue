@@ -5,11 +5,17 @@ class BroadcastsController < ApplicationController
 
   def index
     current_user.setup_as_streamer!
-    redirect_to(broadcast_path(current_user.active_video!))
+    channel = current_user.channels.first
+    redirect_to(broadcast_path(channel.active_video!))
   end
 
   def show
     render
+  end
+
+  def update
+    current_broadcast_video.update!(title: params[:title])
+    render(json: :success)
   end
 
   def start
@@ -49,14 +55,14 @@ class BroadcastsController < ApplicationController
   private
 
   def current_broadcast_video
-    @current_broadcast_video ||= current_user.videos.find(params[:id])
+    @current_broadcast_video ||= current_user.channels.first.videos.find(params[:id]).decorate
   end
   helper_method :current_broadcast_video
 
   def send_broadcast_start_text!
     SendBroadcastStartTextJob.perform_later(
-      streamer: current_user,
-      video_url: video_url(current_broadcast_video),
+      channel: current_broadcast_video.channel,
+      channel_url: channel_url(current_broadcast_video.channel),
     )
   end
 end

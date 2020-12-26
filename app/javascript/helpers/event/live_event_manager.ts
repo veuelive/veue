@@ -1,6 +1,7 @@
 import EventManagerInterface from "types/event_manager_interface";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import { secureFetch } from "util/fetch";
+import { getChannelId } from "helpers/channel_helpers";
 
 export const ViewerCountUpdateEvent = "ViewerCountUpdate";
 
@@ -11,15 +12,15 @@ export default class LiveEventManager implements EventManagerInterface {
 
   constructor(allowRemoteReload: boolean) {
     this.allowRemoteReload = allowRemoteReload;
-    const videoId = getCurrentVideoId();
 
+    const channelId = getChannelId();
     this.eventSource = new EventSource(
-      "https://leghorn.onrender.com/videos/" + getCurrentVideoId()
+      "https://leghorn.onrender.com/" + channelId
     );
 
     this.eventSource.onmessage = (event) => this.received(event);
 
-    secureFetch(`/videos/${videoId}/events/recent`)
+    secureFetch(`/${channelId}/events`)
       .then((response) => response.json())
       .then((results) => {
         VideoEventProcessor.addEvents(results);
@@ -53,10 +54,4 @@ export default class LiveEventManager implements EventManagerInterface {
   seekTo(): Promise<void> {
     return Promise.resolve();
   }
-}
-
-export function getCurrentVideoId(): string {
-  return document
-    .querySelector("*[data-video-id]")
-    .getAttribute("data-video-id");
 }

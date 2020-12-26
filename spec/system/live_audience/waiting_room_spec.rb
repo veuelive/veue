@@ -8,12 +8,13 @@ describe "Stream Waiting Room" do
 
   let(:user) { create(:user) }
   let(:video) { create(:upcoming_video) }
+  let(:channel) { video.channel }
 
   describe "user get into waiting room" do
     before(:each) do
-      visit videos_path
+      visit root_path
       login_as user
-      visit video_path(video)
+      visit channel_path(channel)
     end
 
     it "should allow for live chat messages to be sent" do

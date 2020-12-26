@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Video < ApplicationRecord
+  belongs_to :channel
   belongs_to :user
 
   has_many :chat_messages, dependent: :destroy
@@ -28,6 +29,11 @@ class Video < ApplicationRecord
   scope :public_or_protected,
         -> {
           where('"Videos"."visibility" = "public" OR "Videos"."visibility" = "protected" ')
+        }
+
+  scope :most_recent,
+        -> {
+          order("started_at_ms DESC")
         }
 
   aasm column: "state" do
@@ -83,7 +89,7 @@ class Video < ApplicationRecord
   end
 
   def transition_audience_to_live
-    SseBroadcaster.broadcast("videos/#{id}", {state: state, type: "StateChange", timecodeMs: 0})
+    SseBroadcaster.broadcast(channel.id, {state: state, type: "StateChange", timecodeMs: 0})
   end
 
   def recent_events_for_live

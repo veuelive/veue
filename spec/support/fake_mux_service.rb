@@ -2,10 +2,11 @@
 
 class FakeMuxService
   def create_live_stream
+    seed = Faker::Number.unique.number
     OpenStruct.new({
                      data: OpenStruct.new({
-                                            id: "ID",
-                                            stream_key: "STREAM_KEY",
+                                            id: "ID-#{seed}",
+                                            stream_key: "STREAM_KEY-#{seed}",
                                           }),
                    })
   end

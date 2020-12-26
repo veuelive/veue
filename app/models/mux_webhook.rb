@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MuxWebhook < ApplicationRecord
-  belongs_to :user, optional: true
+  belongs_to :channel, optional: true
   belongs_to :video, optional: true
   validates :mux_id, presence: true, uniqueness: true
 
@@ -31,7 +31,7 @@ class MuxWebhook < ApplicationRecord
     end
 
     def build_from_json(webhook_payload)
-      video, user = determine_target(webhook_payload)
+      video, = determine_target(webhook_payload)
 
       create!(
         event_type: webhook_payload["type"],
@@ -39,7 +39,6 @@ class MuxWebhook < ApplicationRecord
         event_received_at: webhook_payload["created_at"],
         mux_environment: webhook_payload["environment"]["name"],
         video: video,
-        user: user,
         payload: webhook_payload,
         mux_request_id: webhook_payload["request_id"],
       )
@@ -49,16 +48,16 @@ class MuxWebhook < ApplicationRecord
       object = payload["object"]
       case object["type"]
       when "asset"
-        user = User.find_by(mux_live_stream_id: payload["data"]["live_stream_id"])
-        video = Video.find_by(mux_asset_id: object["id"]) || user.active_video
+        channel = Channel.find_by(mux_live_stream_id: payload["data"]["live_stream_id"])
+        video = Video.find_by(mux_asset_id: object["id"]) || channel.active_video
       when "live"
-        user = User.find_by(mux_live_stream_id: object["id"])
-        video = user.active_video
+        channel = Channel.find_by(mux_live_stream_id: object["id"])
+        video = channel.active_video
       else
         video = nil
-        user = nil
+        channel = nil
       end
-      [video, user]
+      [video, channel]
     end
   end
 end

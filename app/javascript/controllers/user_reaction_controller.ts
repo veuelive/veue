@@ -8,7 +8,7 @@ export default class extends Controller {
 
   sendReaction(): void {
     if (this.state === "enabled") {
-      post("./reaction").then(() =>
+      post("./reactions").then(() =>
         console.log("User Like/Reaction Event Generated")
       );
       this.state = "disabled";

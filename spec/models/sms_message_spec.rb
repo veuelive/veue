@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe SmsMessage, type: :model do
-  let(:streamer) { create(:streamer) }
+  let(:channel) { create(:channel) }
   let(:follower) { create(:user) }
   let(:video) { create(:video) }
 
@@ -38,12 +38,12 @@ RSpec.describe SmsMessage, type: :model do
 
   describe ".notify_broadcast_start!" do
     it "should try and message twillio" do
-      Follow.create!(streamer_follow: follower, user_follow: streamer)
+      Follow.create!(user: follower, channel: channel)
 
       SmsMessage.notify_broadcast_start!(
-        streamer: streamer,
+        channel: channel,
         follower: follower,
-        video_url: video_url(video),
+        channel_url: channel_url(channel),
       )
 
       expect(FakeTwilio.messages.size).to eq(1)
@@ -52,7 +52,7 @@ RSpec.describe SmsMessage, type: :model do
 
       expect(message.body).to match(/http/)
       expect(message.body).to match(/live/)
-      expect(message.body).to match(video_url(video))
+      expect(message.body).to match(channel_url(channel))
       expect(message.to).to eq(follower.phone_number)
     end
   end
