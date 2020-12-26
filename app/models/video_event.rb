@@ -32,7 +32,7 @@ class VideoEvent < ApplicationRecord
     message[:timecodeMs] = 0 if instant_broadcast_processing?
     message[:viewers] = video.video_views.connected.count
     SseBroadcaster.broadcast(
-      "videos/#{video_id}",
+      video.channel.id,
       message,
     )
   end

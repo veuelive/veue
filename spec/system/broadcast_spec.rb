@@ -7,20 +7,19 @@ require "system_helper"
 describe "Broadcast View" do
   include BroadcastSystemHelpers
 
-  let(:streamer) { create(:streamer) }
+  let(:streamer) { create(:user) }
   let(:follower) { create(:user) }
   let(:other_follower) { create(:user) }
-  let(:video) { streamer.videos.active.first }
+  let(:channel) { streamer.channels.first }
+  let(:video) { channel.videos.first }
 
   before :example do
     driven_by :media_browser
     resize_window_desktop
-    Follow.create!(streamer_follow: follower, user_follow: streamer)
-    Follow.create!(streamer_follow: other_follower, user_follow: streamer)
   end
 
   before :each do
-    visit videos_path
+    visit "/"
     login_as(streamer)
 
     visit "/broadcasts"
@@ -55,7 +54,7 @@ describe "Broadcast View" do
       find("*[data-broadcast-state='live']")
       expect(BrowserNavigation.last.payload["url"]).to eq(url)
 
-      visit video_path(video)
+      visit channel_path(streamer.channels.first)
       expect(find("#address-input")).to have_text(url)
     end
 
@@ -81,6 +80,9 @@ describe "Broadcast View" do
 
   describe "start the broadcast" do
     it "should queue a SendBroadcastStartTextJob" do
+      5.times do
+        Follow.create(channel: channel, user: create(:user))
+      end
       # Just in case, lets clear out our jobs
       clear_enqueued_jobs
 
@@ -88,7 +90,7 @@ describe "Broadcast View" do
       find("*[data-broadcast-state='live']")
 
       server = Capybara.current_session.server
-      current_video_url = video_url(video, host: server.host, port: server.port)
+      current_video_url = channel_path(channel, host: server.host, port: server.port)
 
       perform_enqueued_jobs(only: SendBroadcastStartTextJob)
 
@@ -135,7 +137,7 @@ describe "Broadcast View" do
       it "should have an initial navigation event" do
         expect(video.browser_navigations).to be_any
 
-        visit video_path(video)
+        visit channel_path(channel)
         expect(find("#address-input").text).to start_with("http")
       end
     end

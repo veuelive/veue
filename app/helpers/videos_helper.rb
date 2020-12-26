@@ -11,8 +11,12 @@ module VideosHelper
     video.primary_shot.attached? ? video.primary_shot.variant(resize_to_limit: [500, 500]) : video.thumbnail_url
   end
 
-  def videos_controller?
-    controller_name == "videos"
+  def video_link_path(video)
+    if video.live?
+      channel_path(video.channel)
+    else
+      channel_video_path(video.channel, video)
+    end
   end
 
   def play_button(mobile: false)

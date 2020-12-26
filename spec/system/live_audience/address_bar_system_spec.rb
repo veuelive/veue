@@ -16,7 +16,7 @@ describe "Live Audience View - URL Bar" do
   end
 
   before :each do
-    visit(video_path(video))
+    visit(path_for_video(video))
   end
 
   it "should show the urls in sequence" do
@@ -25,7 +25,7 @@ describe "Live Audience View - URL Bar" do
   end
 
   it "start with content at one second" do
-    visit(video_path(video, t: 1))
+    visit(path_for_video(video, t: 1))
     expect(page).to_not have_content(video.browser_navigations.first.payload["url"])
     expect(page).to have_content(video.browser_navigations.second.payload["url"])
   end

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe SendBroadcastStartTextJob, type: :job do
-  let(:streamer) { create(:streamer) }
+  let(:channel) { create(:channel) }
   let(:follower) { create(:user) }
   let(:other_follower) { create(:user) }
   let(:video) { create(:video) }
@@ -11,14 +11,14 @@ RSpec.describe SendBroadcastStartTextJob, type: :job do
   include ActiveJob::TestHelper
 
   before :example do
-    Follow.create!(streamer_follow: follower, user_follow: streamer)
-    Follow.create!(streamer_follow: other_follower, user_follow: streamer)
+    Follow.create!(user: follower, channel: channel)
+    Follow.create!(user: other_follower, channel: channel)
   end
 
   it "should run without error" do
     args = {
-      video_url: video_url(video),
-      streamer: streamer,
+      channel_url: channel_url(video.channel),
+      channel: channel,
     }
 
     SendBroadcastStartTextJob.perform_later(args)
@@ -27,8 +27,8 @@ RSpec.describe SendBroadcastStartTextJob, type: :job do
 
   it "should run in batches" do
     args = {
-      video_url: video_url(video),
-      streamer: streamer,
+      channel_url: channel_url(video.channel),
+      channel: channel,
       batch_size: 1,
     }
 
@@ -39,21 +39,21 @@ RSpec.describe SendBroadcastStartTextJob, type: :job do
 
   it "should send a message to Twilio" do
     args = {
-      video_url: video_url(video),
-      streamer: streamer,
+      channel_url: channel_url(video.channel),
+      channel: channel,
     }
 
     SendBroadcastStartTextJob.perform_now(args)
     perform_enqueued_jobs(only: SendBroadcastStartTextJob)
     expect(FakeTwilio.messages.size).to eq(2)
 
-    phone_numbers = streamer.followers.pluck(:phone_number)
+    phone_numbers = channel.followers.pluck(:phone_number)
 
     message = FakeTwilio.messages.first
     # Should contain a full url
     expect(message.body).to match(/http/)
 
-    expect(message.body).to match(video_url(video))
+    expect(message.body).to match(channel_url(video.channel))
 
     expect(phone_numbers).to include(message.to)
   end

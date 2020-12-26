@@ -2,7 +2,8 @@
 
 FactoryBot.define do
   factory :video do
-    user factory: :streamer
+    channel factory: :channel
+    user { channel.user }
     state { :pending }
     title { Faker::Company.bs }
     visibility { "public" }

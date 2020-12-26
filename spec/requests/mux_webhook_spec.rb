@@ -9,10 +9,10 @@ RSpec.describe "MuxWebhooks" do
   before :example do
     @webhook_idx = 0
     @live_stream_id = mux_webhooks[0]["data"]["id"]
-    @user = create(:streamer, {mux_live_stream_id: @live_stream_id})
+    @channel = create(:channel, {mux_live_stream_id: @live_stream_id})
 
     # Videos are created BEFORE Mux gets involved
-    @video = @user.active_video!
+    @video = @channel.active_video!
 
     @video.start!
   end
@@ -60,7 +60,6 @@ RSpec.describe "MuxWebhooks" do
       expect(video.mux_playback_id).to eq(webhook.playback_id)
       expect(video).to be_live
       webhook.reload
-      expect(webhook.user).to eq(@user)
       expect(webhook.video).to eq(video)
     end
 
@@ -91,8 +90,8 @@ RSpec.describe "MuxWebhooks" do
       skip_ahead_to_next!("video.asset.live_stream_completed")
 
       # All videos must be started
-      @user.active_video!
-      @user.active_video.start!
+      @channel.active_video!
+      @channel.active_video.start!
 
       skip_ahead_to_next!("video.live_stream.active")
       # So this would be into the second stream now

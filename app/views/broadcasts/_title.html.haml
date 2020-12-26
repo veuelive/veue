@@ -5,16 +5,14 @@
     type: "text", name: "title", id: "title", value: current_broadcast_video.title,
     placeholder: "Title your broadcast!", maxlength: 240, size: "80",
     data: {
-      action: "keydown->broadcast--title#doSubmit
-               blur->broadcast--title#handleBlur focus->broadcast--title#handleFocus",
+      action: "keydown->broadcast--title#doSubmit blur->broadcast--title#handleBlur focus->broadcast--title#handleFocus",
       target: "broadcast--title.input"
     }
   }
 
   %button.btn.title-btn{
     data: {
-      action: "keydown->broadcast--title#doSubmit click->broadcast--title#doSubmit
-               blur->broadcast--title#handleBlur focus->broadcast--title#handleFocus",
+      action: "keydown->broadcast--title#doSubmit click->broadcast--title#doSubmit blur->broadcast--title#handleBlur focus->broadcast--title#handleFocus",
       target: "broadcast--title.submit"
     }
   } Update Title

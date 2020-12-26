@@ -3,23 +3,26 @@
 require "rails_helper"
 
 RSpec.describe "Follows", type: :request do
-  let(:streamer) { create(:streamer) }
+  let(:channel) { create(:channel) }
   let(:follower) { create(:user) }
-  let(:video) { create(:video, user: streamer) }
+
+  def follow_path_for_test
+    channel_follow_path(channel)
+  end
 
   describe "an anonymous user" do
-    it "should hault authentication for create request" do
-      post video_follow_path(video_id: video.to_param)
+    it "should halt authentication for create request" do
+      post follow_path_for_test
       expect(response).to have_http_status(401)
     end
 
     it "should hault authentication for destroy request" do
-      delete video_follow_path(video_id: video.to_param)
+      delete follow_path_for_test
       expect(response).to have_http_status(401)
     end
 
     it "should render streamer profile template" do
-      get video_follow_path(video_id: video.to_param)
+      get follow_path_for_test
       expect(response).to render_template(partial: "_streamer_profile")
     end
   end
@@ -30,35 +33,39 @@ RSpec.describe "Follows", type: :request do
     end
 
     it "should create a follower for video streamer" do
-      post video_follow_path(video_id: video.to_param)
-      expect(streamer.streamer_follows.count).to eq(1)
+      post follow_path_for_test
+      expect(channel.followers.count).to eq(1)
     end
 
-    it "should soft remove follwer for video streamer" do
-      Follow.create!(streamer_follow: streamer, user_follow: follower)
-      delete video_follow_path(video_id: video.to_param)
-      expect(streamer.streamer_follows.count).to eq(0)
+    it "should soft remove follower for video streamer" do
+      post follow_path_for_test
+      delete follow_path_for_test
+      expect(channel.followers.count).to eq(0)
+      expect(Follow.count).to eq(1)
+      expect(Follow.first.unfollowed_at).to_not be_nil
+
+      # and then we can resubscribe
+      post follow_path_for_test
+      expect(channel.followers.count).to eq(1)
+      expect(Follow.count).to eq(2)
     end
 
-    it "should send consent message to follwer on first follow of any streamer" do
-      post video_follow_path(video_id: video.to_param)
+    it "should send consent message to follower on first follow of any streamer" do
+      post follow_path_for_test
 
       # follower sms_status will be changed to :instructions_sent
       follower.reload
       expect(follower.instructions_sent?).to eq(true)
 
       perform_enqueued_jobs do
-        SendConsentTextJob.perform_now(follower, streamer)
+        SendConsentTextJob.perform_now(follower, channel)
         # SmsMessage will be sent with instructions to follower
         expect(SmsMessage.find_by(to: follower.phone_number)).to be_present
       end
 
       # Sms for consent will be sent only once
-      another_streamer = create(:streamer)
-      another_video = create(:video, user: another_streamer)
-
       expect {
-        post video_follow_path(video_id: another_video.to_param)
+        post channel_follow_path(create(:channel))
       }.to_not have_enqueued_job(SendConsentTextJob)
     end
   end

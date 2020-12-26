@@ -1,6 +1,6 @@
 - video = video_card
 .video-card{class: video.state}
-  = link_to video_path(video) do
+  = link_to video_link_path(video) do
     .video-card__image
       = image_tag video_card_image_url(video)
       .video-card__image__secondary

@@ -4,7 +4,9 @@
     "audience-view": {
       "stream-type": current_video.stream_type
     },
-    "video-id": current_video.id
+    "video-id": current_video.id,
+    "channel-id": current_channel.id,
+    "channel-slug": current_channel.slug
   }
 }
   .content-area__primary
@@ -40,10 +42,10 @@
         width: 1200,
         height: 740
       }
-      = render partial: 'videos/partials/pip_area'
-      = render partial: 'videos/partials/player_controls'
+      = render partial: 'channels/videos/partials/pip_area'
+      = render partial: 'channels/videos/partials/player_controls'
     #streamer-profile-area
-      = render partial: "videos/partials/streamer_profile"
+      = render partial: "channels/videos/partials/streamer_profile"
   .content-area__secondary
     %canvas.fixed-secondary-canvas{
       "data-target": "audience-view.fixedSecondaryCanvas",

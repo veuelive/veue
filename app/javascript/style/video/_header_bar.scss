@@ -1,7 +1,7 @@
 @use "../utils/color";
 @use "../utils/font";
 
-body#videos__show {
+#video-show {
   .primary-video__header {
     display: flex;
     height: 3rem;

@@ -78,6 +78,8 @@ export default class extends BaseController {
     } else {
       this.eventManager = new LiveEventManager(true);
 
+      this.sendViewedMessage();
+
       setInterval(() => {
         this.sendViewedMessage();
       }, 60 * 1000);

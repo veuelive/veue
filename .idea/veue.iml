@@ -111,6 +111,7 @@
     <orderEntry type="library" scope="PROVIDED" name="figaro (v1.2.0, RVM: ruby-2.7.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="formtastic (v3.1.5, RVM: ruby-2.7.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="formtastic_i18n (v0.6.0, RVM: ruby-2.7.2) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="friendly_id (v5.4.1, RVM: ruby-2.7.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="globalid (v0.4.2, RVM: ruby-2.7.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="haml (v5.2.1, RVM: ruby-2.7.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="haml-rails (v2.0.1, RVM: ruby-2.7.2) [gem]" level="application" />
@@ -242,6 +243,7 @@
         <option value="formtastic:form" />
         <option value="formtastic:input" />
         <option value="formtastic:install" />
+        <option value="friendly_id" />
         <option value="generator" />
         <option value="haml:application_layout" />
         <option value="helper" />
@@ -321,6 +323,7 @@
         <option value="formtastic:form" />
         <option value="formtastic:input" />
         <option value="formtastic:install" />
+        <option value="friendly_id" />
         <option value="generator" />
         <option value="haml:application_layout" />
         <option value="helper" />

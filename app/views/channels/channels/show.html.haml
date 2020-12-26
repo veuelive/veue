@@ -1,0 +1,9 @@
+.channel-page{
+  "data": {
+    "controller": "channel",
+  }
+}
+  - if current_video
+    = render template: "channels/videos/show"
+  - else
+    = render partial: "channels/videos/partials/streamer_profile"

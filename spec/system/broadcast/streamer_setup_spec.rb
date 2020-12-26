@@ -4,7 +4,8 @@ require "system_helper"
 require("support/audience_spec_helpers")
 
 describe "Broadcaster Startup Flow" do
-  let(:user) { create(:user) }
+  let(:channel) { create(:channel) }
+  let(:user) { channel.user }
 
   it "should ask for media access if there is no access yet" do
     visit "/broadcasts/startup"
@@ -24,8 +25,9 @@ describe "Broadcaster Startup Flow" do
 
       # We should then load the broadcast page
       find("#broadcast")
-      expect(user.videos.count).to eq(1)
-      expect(current_path).to eq(broadcast_path(user.videos.first))
+      expect(channel.videos.count).to eq(1)
+      expect(current_path).to eq(broadcast_path(channel.videos.first))
+      expect(current_path).to eq(broadcast_path(channel.active_video))
     end
   end
 end

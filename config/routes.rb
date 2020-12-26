@@ -5,28 +5,10 @@ Rails.application.routes.draw do
   if ENV["VELVET_ROPE"]
     root "velvet_rope#index"
   else
-    root "videos#index"
+    root "discover#index"
   end
 
-  resources :videos, only: %i[index show new update] do
-    member do
-      post "viewed"
-      post "reaction"
-    end
-
-    resources :events, only: %i[show index] do
-      collection do
-        get "recent"
-      end
-    end
-
-    resources :chat_messages, only: %i[create index]
-    resource :follow, only: %i[show create destroy]
-  end
-
-  resource :stream, only: :show
-
-  resources :broadcasts, only: [:show, :index] do
+  resources :broadcasts, only: [:show, :index, :update] do
     scope module: "broadcasts" do
       controller "event" do
         post "layout"
@@ -59,7 +41,7 @@ Rails.application.routes.draw do
     get "velvet_rope", to: "velvet_rope#index"
   end
 
-  resources :users
+  resources :users, only: %w(create)
 
   post "/mux/webhook", to: "mux_webhooks#index"
 
@@ -78,4 +60,31 @@ Rails.application.routes.draw do
   get '/health', to: "health_check#index"
 
   mount Sidekiq::Web => '/_/sidekiq'
+
+  scope module: :channels, path: ":channel_id", as: "channel" do
+    get "/" => "channels#show"
+    post "viewed" => "channels#viewed"
+
+    resource :follow, only: %i[show create destroy]
+
+    resources :videos, only: %i[show] do
+      member do
+        post "viewed"
+      end
+
+      # These are the routes related to viewing a finished stream
+      # everything in here is scoped by the Video and it's ID
+      namespace :vod, path: "" do
+        resources :events, only: %i[show index]
+      end
+    end
+
+    # These are the routes related to the "Streamers" profile page
+    # and also where you watch their live broadcast
+    namespace :live, path: "" do
+      resources :chat_messages, only: %i[create index]
+      resources :events, only: %i[index]
+      resources :reactions, only: %i[create]
+    end
+  end
 end

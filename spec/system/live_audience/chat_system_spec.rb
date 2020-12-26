@@ -7,6 +7,7 @@ describe "chat" do
   include AudienceSpecHelpers
   let(:user) { create(:user) }
   let(:video) { create(:live_video) }
+  let(:channel) { video.channel }
 
   before :example do
     resize_window_desktop
@@ -14,9 +15,9 @@ describe "chat" do
 
   describe "when a user is logged in" do
     before :each do
-      visit videos_path
+      visit root_path
       login_as user
-      visit video_path(video)
+      visit channel_path(channel)
     end
 
     it "should allow for live chat messages to be sent" do
@@ -30,10 +31,10 @@ describe "chat" do
       # connected and caused repeated messages to appear
       3.times do
         find(".navbar-logo").click
-        expect(current_path).to_not eq(video_path(video))
+        expect(current_path).to_not eq(channel_path(channel))
         find(".video-card").click
         expect(page).to have_content("Follow")
-        expect(current_path).to eq(video_path(video))
+        expect(current_path).to eq(channel_path(channel))
 
         expect(page).to have_content("Cowabunga!").once
       end
@@ -51,7 +52,7 @@ describe "chat" do
 
   describe "logged out user" do
     before :each do
-      visit video_path(video)
+      visit channel_path(channel)
     end
 
     it "should show you joined after you logged in" do

@@ -3,6 +3,7 @@
 @use "../global";
 @use "layout";
 @use "../chat";
+@use "./chat_overrides";
 @use "browser_bar";
 @use "startup";
 @use "commands";

@@ -42,6 +42,9 @@ gem "figaro"
 # Temporarily ensure that we compile ffi directly to make Apple M1 chips work, this likely can be removed in future
 gem "ffi", github: "ffi/ffi", submodules: true
 
+# Helps us create friendly IDs for the urls
+gem "friendly_id"
+
 # Ruby library for working with the video streaming network Mux
 gem "mux_ruby"
 

@@ -15,7 +15,7 @@ describe "Prerecorded Audience View" do
 
   describe "anonymous user" do
     it "should have a video to play!" do
-      visit video_path(video)
+      visit path_for_video(video)
 
       assert_video_is_playing
 
@@ -25,23 +25,23 @@ describe "Prerecorded Audience View" do
     end
 
     it "does not update view count on refresh" do
-      visit video_path(video)
+      visit path_for_video(video)
       expect(page).to have_css(".widget[data-views='1']")
 
       # Refresh the page
-      visit video_path(video)
+      visit path_for_video(video)
       expect(page).to have_css(".widget[data-views='1']")
 
       # Log in should keep the view count the same
       login_as user
-      visit video_path(video)
+      visit path_for_video(video)
 
       expect(page).to have_css(".widget[data-views='1']")
 
       logout_user
 
       login_as create(:user)
-      visit video_path(video)
+      visit path_for_video(video)
 
       expect(page).to have_css(".widget[data-views='2']")
 
@@ -50,14 +50,14 @@ describe "Prerecorded Audience View" do
 
       # Because the last "anonymous" session got associated with the second
       # user, we are willing to take a new "anonymous" view from this UA+IP
-      visit video_path(video)
+      visit path_for_video(video)
       expect(page).to have_css(".widget[data-views='3']")
     end
   end
 
   describe "Video Controls" do
     before :each do
-      visit video_path(video)
+      visit path_for_video(video)
     end
 
     describe "Desktop video controls" do
