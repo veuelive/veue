@@ -39,6 +39,7 @@ gem "haml-rails"
 # Allows us to do development ENV configuration management with a config/application.yml file
 gem "figaro"
 
+# Temporarily ensure that we compile ffi directly to make Apple M1 chips work, this likely can be removed in future
 gem "ffi", github: "ffi/ffi", submodules: true
 
 # Ruby library for working with the video streaming network Mux
