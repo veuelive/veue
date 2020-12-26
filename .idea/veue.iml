@@ -185,6 +185,7 @@
     <orderEntry type="library" scope="PROVIDED" name="ruby-vips (v2.0.17, RVM: ruby-2.7.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ruby_parser (v3.14.2, RVM: ruby-2.7.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rubyzip (v2.3.0, RVM: ruby-2.7.2) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="sassc (v2.4.0, RVM: ruby-2.7.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sassc-rails (v2.1.2, RVM: ruby-2.7.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="selenium-webdriver (v3.142.7, RVM: ruby-2.7.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="semantic_range (v2.3.0, RVM: ruby-2.7.2) [gem]" level="application" />
@@ -707,6 +708,38 @@
           <RakeTaskImpl description="" fullCommand="tmp/cache/assets" id="tmp/cache/assets" />
           <RakeTaskImpl description="" fullCommand="tmp/pids" id="tmp/pids" />
           <RakeTaskImpl description="" fullCommand="tmp/sockets" id="tmp/sockets" />
+          <RakeTaskImpl id="webdrivers">
+            <subtasks>
+              <RakeTaskImpl id="chromedriver">
+                <subtasks>
+                  <RakeTaskImpl description="" fullCommand="webdrivers:chromedriver:remove" id="remove" />
+                  <RakeTaskImpl description="" fullCommand="webdrivers:chromedriver:update" id="update" />
+                  <RakeTaskImpl description="" fullCommand="webdrivers:chromedriver:version" id="version" />
+                </subtasks>
+              </RakeTaskImpl>
+              <RakeTaskImpl id="edgedriver">
+                <subtasks>
+                  <RakeTaskImpl description="" fullCommand="webdrivers:edgedriver:remove" id="remove" />
+                  <RakeTaskImpl description="" fullCommand="webdrivers:edgedriver:update" id="update" />
+                  <RakeTaskImpl description="" fullCommand="webdrivers:edgedriver:version" id="version" />
+                </subtasks>
+              </RakeTaskImpl>
+              <RakeTaskImpl id="geckodriver">
+                <subtasks>
+                  <RakeTaskImpl description="" fullCommand="webdrivers:geckodriver:remove" id="remove" />
+                  <RakeTaskImpl description="" fullCommand="webdrivers:geckodriver:update" id="update" />
+                  <RakeTaskImpl description="" fullCommand="webdrivers:geckodriver:version" id="version" />
+                </subtasks>
+              </RakeTaskImpl>
+              <RakeTaskImpl id="iedriver">
+                <subtasks>
+                  <RakeTaskImpl description="" fullCommand="webdrivers:iedriver:remove" id="remove" />
+                  <RakeTaskImpl description="" fullCommand="webdrivers:iedriver:update" id="update" />
+                  <RakeTaskImpl description="" fullCommand="webdrivers:iedriver:version" id="version" />
+                </subtasks>
+              </RakeTaskImpl>
+            </subtasks>
+          </RakeTaskImpl>
         </subtasks>
       </RakeTaskImpl>
     </option>
