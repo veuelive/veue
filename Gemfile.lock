@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/ffi/ffi.git
-  revision: e3f2cf9b82055709ddbeecbf77810f43438c4b64
+  revision: cf520d748a28d36c00019765eedb227368f3b371
   submodules: true
   specs:
-    ffi (1.13.1)
+    ffi (1.14.2)
 
 GEM
   remote: https://rubygems.org/

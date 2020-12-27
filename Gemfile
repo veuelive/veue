@@ -39,11 +39,12 @@ gem "haml-rails"
 # Allows us to do development ENV configuration management with a config/application.yml file
 gem "figaro"
 
-# TEMPORARY
+# TEMPORARY (SEE `docs/Arm64 Transition.md`)
 # Temporarily ensure that we compile ffi directly to make Apple M1 chips work, this likely can be removed in future
+# FFI is *not* needed (at time of including this) for any direct usage by our code, but is a deep depenency of `active_admin`
 gem "ffi", github: "ffi/ffi", submodules: true
 
-# TEMPORARY
+# TEMPORARY (SEE `docs/Arm64 Transition.md`)
 # Specific version of a dependency of the blind_index gem for M1 compatibility
 gem "argon2-kdf", github: "ankane/argon2-kdf", branch: "mac-universal"
 
