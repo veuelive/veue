@@ -31,10 +31,10 @@ describe "Broadcast View" do
     expect(page).to have_css("div[data-broadcast-state='ready']")
 
     click_button("Start Broadcast")
+    
+    expect(page).to have_css("div[data-broadcast-state='live']", wait: 5)
 
-    expect(page).to have_css("div[data-broadcast-state='live']")
-
-    expect(page).to have_content("Stop Broadcast")
+    expect(page).to have_content("Stop Broadcast", wait: 5)
 
     find("div[data-broadcast-started-at]")
 

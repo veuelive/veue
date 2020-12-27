@@ -36,6 +36,8 @@ RSpec.configure do |config|
     stub_const("MUX_SERVICE", FakeMuxService.new)
   end
 
+  Capybara.default_max_wait_time = 5
+
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
