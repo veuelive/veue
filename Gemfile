@@ -39,8 +39,13 @@ gem "haml-rails"
 # Allows us to do development ENV configuration management with a config/application.yml file
 gem "figaro"
 
+# TEMPORARY
 # Temporarily ensure that we compile ffi directly to make Apple M1 chips work, this likely can be removed in future
 gem "ffi", github: "ffi/ffi", submodules: true
+
+# TEMPORARY
+# Specific version of a dependency of the blind_index gem for M1 compatibility
+gem "argon2-kdf", github: "ankane/argon2-kdf", branch: "mac-universal"
 
 # Ruby library for working with the video streaming network Mux
 gem "mux_ruby"

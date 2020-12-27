@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/ankane/argon2-kdf.git
+  revision: 0301fb2ac9583d650448d2ff72ca87c51bc5496c
+  branch: mac-universal
+  specs:
+    argon2-kdf (0.1.3)
+
+GIT
   remote: https://github.com/ffi/ffi.git
   revision: e3f2cf9b82055709ddbeecbf77810f43438c4b64
   submodules: true
@@ -91,7 +98,6 @@ GEM
       rack
     arbre (1.2.1)
       activesupport (>= 3.0.0)
-    argon2-kdf (0.1.3)
     ast (2.4.1)
     aws-eventstream (1.1.0)
     aws-partitions (1.384.0)
@@ -427,6 +433,7 @@ DEPENDENCIES
   activeadmin
   activerecord-pg_enum
   appsignal
+  argon2-kdf!
   aws-sdk-s3
   blind_index
   bootsnap (>= 1.4.2)
