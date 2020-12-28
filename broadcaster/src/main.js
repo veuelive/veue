@@ -235,6 +235,10 @@ app.on("activate", () => {
   }
 });
 
+app.on("ready", function () {
+  appUpdater();
+});
+
 (async () => {
   await app.whenReady();
 

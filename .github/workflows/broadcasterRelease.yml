@@ -23,4 +23,6 @@ jobs:
           GH_TOKEN: ${{secrets.GH_TOKEN}}
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY}}
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_ACCESS_SECRET}}
+          CSC_LINK: ${{secrets.CSC_LINK}}
+          CSC_KEY_PASSWORD: ${{secrets.CSC_KEY_PASSWORD}}
         run: yarn release

@@ -1,6 +1,6 @@
 {
   "name": "deskie",
-  "productName": "VeueBroadcaster",
+  "productName": "Veue-Broadcaster",
   "version": "0.1.4",
   "description": "My praiseworthy app",
   "license": "MIT",
@@ -67,6 +67,8 @@
       "category": "public.app-category.social-networking",
       "darkModeSupport": false,
       "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist",
+      "hardenedRuntime": true,
       "extendInfo": {
         "NSMicrophoneUsageDescription": "Please give us access to your microphone",
         "NSCameraUsageDescription": "Please give access to your webcam"
@@ -76,6 +78,7 @@
       ]
     },
     "dmg": {
+      "sign": false,
       "iconSize": 160,
       "contents": [
         {
