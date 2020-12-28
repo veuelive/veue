@@ -14,8 +14,11 @@ class BroadcastsController < ApplicationController
   end
 
   def update
-    current_broadcast_video.update!(title: params[:title])
-    render(json: :success)
+    if current_broadcast_video.update(video_params)
+      render(json: :success)
+    else
+      render(json: current_broadcast_video.errors, status: :unprocessable_entity)
+    end
   end
 
   def start
@@ -69,5 +72,9 @@ class BroadcastsController < ApplicationController
       channel: current_broadcast_video.channel,
       channel_url: channel_url(current_broadcast_video.channel),
     )
+  end
+
+  def video_params
+    params.require(:video).permit(:title, :visibility)
   end
 end

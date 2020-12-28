@@ -15,7 +15,7 @@
   .content-area
     .content--left
       = render partial: "browser_bar"
-    .content--right
+    .content--right{data: {controller: "broadcast--settings"}}
       %video#webcam_preview{data: {target: "broadcast.webcamVideoElement"}}
       %canvas#audioCanvas
       .broadcast-commands
@@ -32,6 +32,11 @@
           = svg_tag "toolbox"
           .btn--tooltip
             Debug Tools
+        .btn#settings-btn{ data: { action: "click->broadcast--settings#toggleForm" }}
+          = svg_tag "settings"
+          .btn--tooltip
+            Settings
+
         .btn#share-btn{data: {controller: "broadcast--share", action: "click->broadcast--share#showHideMenu"}}
           = svg_tag "share"
           .btn--tooltip
@@ -41,7 +46,8 @@
             .item.copy{data: {action: "click->broadcast--share#copyLink"}} Copy Link
 
       .debug-area{data: {target: "broadcast--debug.debugArea"}}
-      = render partial: "shared/chat", locals: { video: current_broadcast_video}
 
-  - if Rails.env.test?
-    = render partial: "title"
+      = render partial: "channels/videos/partials/edit",
+               locals: {video: current_broadcast_video}
+
+      = render partial: "shared/chat", locals: {video: current_broadcast_video}
