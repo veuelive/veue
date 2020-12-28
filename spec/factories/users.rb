@@ -8,8 +8,7 @@ FactoryBot.define do
     phone_number { PhoneTestHelpers.generate_valid }
 
     factory :streamer do
-      mux_stream_key { Faker::Alphanumeric.alphanumeric }
-      mux_live_stream_id { Faker::Alphanumeric.alphanumeric }
+      after(:create, &:setup_as_streamer!)
     end
 
     factory :viewer do
