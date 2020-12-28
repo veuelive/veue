@@ -1,5 +1,5 @@
 .chat-section
-  .messages-overflow-container{"data-simplebar": true}
+  .messages-overflow-container{data: {controller: "audience--chat-scroller", target: "audience--chat-scroller.simpleBar"}}
     .messages{data: {controller: "chat-messages"}}
   .like-notification{data: {controller: "reaction-notification"}}
   - unless video.finished?
