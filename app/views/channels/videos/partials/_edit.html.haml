@@ -1,0 +1,12 @@
+- actions = "ajax:success->broadcast--settings#handleAjaxSuccess |
+             ajax:error->broadcast--settings#handleAjaxError"     |
+
+= form_with model: video, url: broadcast_path(video), class: "broadcast-settings__form",
+    data: { target: "broadcast--settings.form", disable_with: "Updating...", action: actions } do |form|
+  = form.label :title
+  = form.text_field :title, placeholder: "Title your broadcast!"
+
+  = form.label :visibility
+  = form.select :visibility, Video.visibilities
+
+  = form.submit "Update", class: "btn"
