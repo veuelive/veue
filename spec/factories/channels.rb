@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :channel do
-    user { create(:streamer) }
+    user { create(:user) }
     name { user.display_name }
   end
 end

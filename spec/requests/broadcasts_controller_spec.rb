@@ -13,8 +13,9 @@ describe BroadcastsController do
       get broadcasts_path
       follow_redirect!
 
-      expect(@streamer.mux_stream_key).to have_attributes(size: (be > 2))
-      expect(response.body).to include(@streamer.mux_stream_key)
+      stream_key = @streamer.channels.first.mux_stream_key
+      expect(stream_key).to have_attributes(size: (be > 2))
+      expect(response.body).to include(stream_key)
     end
   end
 

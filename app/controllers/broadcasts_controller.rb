@@ -55,9 +55,14 @@ class BroadcastsController < ApplicationController
   private
 
   def current_broadcast_video
-    @current_broadcast_video ||= current_user.channels.first.videos.find(params[:id]).decorate
+    @current_broadcast_video ||= current_channel.videos.find(params[:id]).decorate
   end
   helper_method :current_broadcast_video
+
+  def current_channel
+    @current_channel ||= current_user.channels.first
+  end
+  helper_method :current_channel
 
   def send_broadcast_start_text!
     SendBroadcastStartTextJob.perform_later(
