@@ -86,7 +86,8 @@ gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw]
 
 group :production do
   # Gem for sending production logs to LogDNA
-  gem "logdna"
+  # TEMPORARY due to https://github.com/logdna/ruby/issues/30
+  gem "logdna", github: "logdna/ruby", branch: "fixThread"
 
   # Our APM and alerting provider
   gem "appsignal"
