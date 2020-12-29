@@ -11,7 +11,7 @@ describe "Modal login flow" do
     page.has_button?("Verify", disabled: true)
   end
 
-  def fill_secret_code(string: "1234", num: 4)
+  def fill_secret_code(string: "1234")
     expect(page).to have_selector("input[name='secret_code']")
     fill_in("secret_code", with: string)
   end
@@ -41,7 +41,7 @@ describe "Modal login flow" do
       end
 
       it "if less than 4 numbers" do
-        fill_secret_code(num: 3)
+        fill_secret_code(string: "123")
 
         expect(verify_button_disabled?).to eq(true)
       end
