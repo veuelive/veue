@@ -80,11 +80,13 @@ export default class extends BaseController {
 
   async doSubmit(event: Event): Promise<void> {
     event.preventDefault();
+    const submitButton = event.target as HTMLButtonElement;
     const response = await secureFormFetch(
       this.formTarget.dataset.url,
       this.formTarget.dataset.method,
       this.formTarget
     );
+    submitButton.disabled = true;
     const html = await response.text();
     if (response.status == 202) {
       // We are logged in!
@@ -94,6 +96,7 @@ export default class extends BaseController {
       }
       this.emitAuthChange();
       showHideByLogin();
+      submitButton.disabled = false;
       this.modalTarget.style.display = "none";
     } else if (response.status == 200) {
       // Need to show the modal again
