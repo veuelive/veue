@@ -12,10 +12,8 @@ describe "Modal login flow" do
   end
 
   def fill_secret_code(string: "1234", num: 4)
-    num.times do |index|
-      expect(page).to have_selector("input[name='secret_code_#{index}']")
-      fill_in("secret_code_#{index}", with: string[index])
-    end
+    expect(page).to have_selector("input[name='secret_code']")
+    fill_in("secret_code", with: string)
   end
 
   before :example do

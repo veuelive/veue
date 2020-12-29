@@ -194,21 +194,26 @@
         .form-code-div {
           width: 190px;
           overflow: hidden;
-          margin: 0 65px 0 65px;
+          margin: 0 auto 0 auto;
         }
 
         .auth-input {
-          border: 1px solid color.$neutral-soft;
+          border: 2px solid color.$neutral-soft;
           border-radius: 10px;
           display: inline-block;
           height: 34px;
-          width: 34px;
+          width: 90%;
           background: color.$white;
           font-size: 15px;
           line-height: 20px;
           text-align: center;
           color: color.$neutral-dark;
           margin-bottom: 12px;
+
+          &:focus,
+          &:hover {
+            border: 1px solid color.$veue-corporate;
+          }
         }
 
         #display-name-input {
