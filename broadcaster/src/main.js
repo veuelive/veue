@@ -236,7 +236,7 @@ app.on("activate", () => {
 });
 
 app.on("ready", function () {
-  appUpdater();
+  appUpdater(mainWindow);
 });
 
 (async () => {
