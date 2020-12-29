@@ -16,7 +16,7 @@ class AuthenticationsController < ApplicationController
   def update
     ula = SessionToken.find_by(uuid: params[:session_token_uuid])
 
-    secret_code = retrieve_secret_code
+    secret_code = params[:secret_code]
     render_modal and return unless ula&.process_secret_code!(secret_code)
 
     session[:session_token_uuid] = ula.uuid
@@ -47,13 +47,5 @@ class AuthenticationsController < ApplicationController
 
   def render_modal
     render(template: "shared/_login_modal", layout: false)
-  end
-
-  def retrieve_secret_code
-    secret_code = ""
-    4.times do |index|
-      secret_code += params["secret_code_#{index}"]
-    end
-    secret_code
   end
 end

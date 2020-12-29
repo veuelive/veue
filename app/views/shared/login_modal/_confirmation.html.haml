@@ -12,11 +12,7 @@
         value: (Rails.env.development? ? @ula.secret_code : '')
       }
     }
-      - 4.times do |index|
-        - if index == 0
-          = auth_input_tag(index, one_time_code: true)
-        - else
-          = auth_input_tag(index)
+      = auth_input_tag
     %input{type: 'hidden', name: "session_token_uuid", value: @ula.uuid}
 .form-row
   %button.form-button{

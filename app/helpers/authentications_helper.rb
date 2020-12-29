@@ -7,23 +7,20 @@ module AuthenticationsHelper
     "*" * offset + digits_to_show
   end
 
-  def auth_input_tag(index, one_time_code: false)
+  def auth_input_tag
     input_options = {
       class: "auth-input",
       inputmode: "numeric",
-      minlength: "1",
-      maxlength: "1",
+      minlength: "4",
+      maxlength: "4",
       contenteditable: "true",
-      name: "secret_code_#{index}",
+      name: "secret_code",
+      autocomplete: "one_time_code",
       data: {
         target: "secret-code.authInput",
-        action: "input->secret-code#handleInput
-                 keydown->secret-code#handleKeyboardNav
-                 paste->secret-code#handlePaste",
+        action: "input->secret-code#handleInput",
       },
     }
-
-    input_options.merge!({autocomplete: "one_time_code"}) if one_time_code == true
 
     tag.input(input_options)
   end

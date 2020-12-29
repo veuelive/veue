@@ -39,22 +39,15 @@ module AuthenticationTestHelpers
     private
 
     def confirm_secret_code(user)
-      expect(page).to have_css("input[name='secret_code_0']")
+      expect(page).to have_css("input[name='secret_code']")
 
       secret_code = user.session_tokens.where(
         state: %w[new pending_confirmation],
       ).last.secret_code
 
-      enter_secret_code(secret_code)
+      fill_in("secret_code", with: secret_code)
 
       click_button("Verify", wait: 5)
-    end
-
-    def enter_secret_code(secret_code)
-      4.times do |index|
-        expect(page).to have_css("input[name='secret_code_#{index}']")
-        fill_in("secret_code_#{index}", with: secret_code[index])
-      end
     end
   end
 end
