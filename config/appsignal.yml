@@ -2,3 +2,7 @@ production:
   ignore_errors:
     - ActionController::RoutingError
     - ActiveRecord::RecordNotFound
+
+  # https://render.com/docs/environment-variables
+  # https://docs.appsignal.com/guides/deploy-markers.html#ruby
+  revision: "<%= ENV.fetch('RENDER_GIT_COMMIT', `git log --pretty=format:'%h' -n 1`) %>"
