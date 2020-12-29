@@ -34,7 +34,16 @@ describe "Modal login flow" do
         fill_secret_code(string: "1234")
         expect(verify_button_disabled?).to eq(false)
       end
+
+      it "should disable button after form submitted" do
+        fill_secret_code(string: "1234")
+        expect(verify_button_disabled?).to eq(false)
+
+        find_button("Verify").click
+        expect(verify_button_disabled?).to eq(true)
+      end
     end
+
     context "Should leave the Verify button disabled" do
       it "if all are blank" do
         expect(verify_button_disabled?).to eq(true)
