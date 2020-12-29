@@ -2,7 +2,7 @@
 @use '../utils/color';
 
 @mixin vod {
-  div[data-audience-view-stream-type="vod"] {
+  &[data-audience-view-stream-type="vod"] {
     @content;
   }
 }
