@@ -36,11 +36,24 @@ describe "Modal login flow" do
       end
 
       it "should disable button after form submitted" do
-        fill_secret_code(string: "1234")
+        expect(page).to have_css("input[name='secret_code_0']")
+
+        secret_code = user.session_tokens.where(
+          state: %w[new pending_confirmation],
+        ).last.secret_code
+
+        fill_secret_code(string: secret_code)
         expect(verify_button_disabled?).to eq(false)
 
-        find_button("Verify").click
-        expect(verify_button_disabled?).to eq(true)
+        verify_button = find_button("Verify")
+        verify_button.click
+
+        # Verify button will be disabled during request for
+        # code verification.
+        expect(verify_button).to be_disabled
+
+        # Checking if user logged in after code verification request.
+        expect_logged_in_as(user)
       end
     end
 
