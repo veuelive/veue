@@ -36,7 +36,7 @@ describe "Modal login flow" do
       end
 
       it "should disable button after form submitted" do
-        expect(page).to have_css("input[name='secret_code_0']")
+        expect(page).to have_css("input[name='secret_code']")
 
         secret_code = user.session_tokens.where(
           state: %w[new pending_confirmation],
