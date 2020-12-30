@@ -16,7 +16,7 @@ module AuthenticationTestHelpers
       open_nav_sidebar
       enter_phone_number(user)
       confirm_secret_code(user)
-      expect(page).to have_css("[data-user-id='#{user.id}']")
+      expect_logged_in_as(user)
     end
 
     def logout_user
@@ -48,6 +48,10 @@ module AuthenticationTestHelpers
       fill_in("secret_code", with: secret_code)
 
       click_button("Verify", wait: 5)
+    end
+
+    def expect_logged_in_as(user)
+      expect(page).to have_css("[data-user-id='#{user.id}']")
     end
   end
 end
