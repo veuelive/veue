@@ -49,6 +49,13 @@ class IPCRendererMock implements IPCRenderer {
       }
     }
   }
+
+  /**
+   * Helper method that allows us to test ffmpeg failures
+   */
+  simulateFfmpegFailedEvent() {
+    this.simulateEvents({ events: [{ channel: "ffmpeg-error" }] });
+  }
 }
 
 if (inElectronApp) {
