@@ -22,9 +22,12 @@ const child_process = require("child_process");
 const { is } = require("electron-util");
 const { session } = require("electron");
 const { appUpdater } = require("../util/autoUpdater");
+const { checkSystemRequirements } = require("../util/systemChecks");
+
 let ffmpeg;
 let browserView;
 
+checkSystemRequirements({ dialog, app });
 app.getAppPath();
 
 const environments = {
