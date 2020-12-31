@@ -30,8 +30,6 @@ class BroadcastsController < ApplicationController
         :url,
       ),
     )
-
-    send_broadcast_start_text!
   end
 
   def navigation_update
@@ -67,13 +65,6 @@ class BroadcastsController < ApplicationController
     @current_channel ||= current_user.channels.first
   end
   helper_method :current_channel
-
-  def send_broadcast_start_text!
-    SendBroadcastStartTextJob.perform_later(
-      channel: current_broadcast_video.channel,
-      channel_url: channel_url(current_broadcast_video.channel),
-    )
-  end
 
   def video_params
     params.require(:video).permit(:title, :visibility)

@@ -7,11 +7,10 @@ require "system_helper"
 describe "Broadcast View" do
   include BroadcastSystemHelpers
 
-  let(:streamer) { create(:user) }
-  let(:follower) { create(:user) }
-  let(:other_follower) { create(:user) }
+  let(:streamer) { create(:streamer) }
   let(:channel) { streamer.channels.first }
-  let(:video) { channel.videos.first }
+  let(:video) { channel.active_video }
+  let(:settings_form) { ".broadcast-settings__form" }
 
   before :example do
     driven_by :media_browser
@@ -60,10 +59,11 @@ describe "Broadcast View" do
   end
 
   describe "start the broadcast" do
+    before do
+      5.times { create(:follow, user: create(:user), channel: channel) }
+    end
+
     it "should queue a SendBroadcastStartTextJob" do
-      5.times do
-        Follow.create(channel: channel, user: create(:user))
-      end
       # Just in case, lets clear out our jobs
       clear_enqueued_jobs
 
@@ -76,16 +76,34 @@ describe "Broadcast View" do
 
       perform_enqueued_jobs(only: SendBroadcastStartTextJob)
 
-      message1 = FakeTwilio.messages.first
-      message2 = FakeTwilio.messages.last
+      first_message = FakeTwilio.messages.first
+      second_message = FakeTwilio.messages.last
 
       # Verify it sends to different phone numbers
-      expect(message1.to).to_not eq(message2.to)
+      expect(first_message.to).to_not eq(second_message.to)
+      expect(channel.followers.pluck(:phone_number)).to include(first_message.to)
 
-      expect(message1.body).to match(/#{streamer.display_name}/)
-      expect(message1.body).to match("live")
+      expect(first_message.body).to match(/#{streamer.display_name}/)
+      expect(first_message.body).to match("live")
 
-      expect(message1.body).to match(current_video_url)
+      expect(first_message.body).to match(current_video_url)
+    end
+
+    it "should not send a message broadcast start text message if the stream is private" do
+      find("#settings-btn").click
+      expect(page).to have_css(settings_form)
+
+      within(settings_form) do
+        select("private", from: "video_visibility")
+        click_button("Update")
+      end
+
+      click_button("Start Broadcast")
+      find("*[data-broadcast-state='live']")
+
+      perform_enqueued_jobs(only: SendBroadcastStartTextJob)
+
+      expect(FakeTwilio.messages).to be_blank
     end
 
     it "should not be able to start a broadcast with a 'starting' state on your video" do
@@ -169,8 +187,6 @@ describe "Broadcast View" do
     end
 
     describe "update title and visibility feature" do
-      settings_form = ".broadcast-settings__form"
-
       before :each do
         # Open up the form
         find("#settings-btn").click

@@ -3,7 +3,9 @@ import {
   copyToClipboard,
   openLinkInBrowser,
   publicVideoLink,
+  privateVideoLink,
 } from "helpers/broadcast_helpers";
+import { getVideoVisibility } from "helpers/video_helpers";
 
 export default class extends Controller {
   static targets = ["menu"];
@@ -25,14 +27,23 @@ export default class extends Controller {
   openLink(event: Event): void {
     this.hide();
     event.stopPropagation();
-    openLinkInBrowser(publicVideoLink());
+
+    openLinkInBrowser(this.getVideoLink());
   }
 
   copyLink(event: Event): void {
     this.hide();
     event.stopPropagation();
-    copyToClipboard(publicVideoLink());
-    alert("Public Link Copied to Clipboard!");
+    copyToClipboard(this.getVideoLink());
+    alert("Link Copied to Clipboard!");
+  }
+
+  private getVideoLink(): string {
+    if (getVideoVisibility() === "private") {
+      return privateVideoLink();
+    }
+
+    return publicVideoLink();
   }
 
   private hide() {

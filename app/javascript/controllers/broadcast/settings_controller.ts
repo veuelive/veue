@@ -1,9 +1,11 @@
 import { Controller } from "stimulus";
+import { Visibility, setVideoVisibility } from "../../helpers/video_helpers";
 
 export default class SettingsController extends Controller {
-  static targets = ["form"];
+  static targets = ["form", "visibility"];
 
   private readonly formTarget!: HTMLFormElement;
+  private readonly visibilityTarget!: HTMLSelectElement;
 
   connect(): void {
     this.toggleForm();
@@ -22,6 +24,9 @@ export default class SettingsController extends Controller {
 
   handleAjaxSuccess(): void {
     this.handleAjax("success");
+
+    const visibility = this.visibilityTarget.value as Visibility;
+    setVideoVisibility(visibility);
   }
 
   handleAjaxError(): void {

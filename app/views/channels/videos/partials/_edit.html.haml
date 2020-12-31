@@ -7,6 +7,6 @@
   = form.text_field :title, placeholder: "Title your broadcast!"
 
   = form.label :visibility
-  = form.select :visibility, Video.visibilities
+  = form.select :visibility, Video.visibilities, {}, data: { target: "broadcast--settings.visibility" }
 
   = form.submit "Update", class: "btn"

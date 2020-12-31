@@ -3,9 +3,9 @@
 require "rails_helper"
 
 RSpec.describe SmsMessage, type: :model do
-  let(:channel) { create(:channel) }
-  let(:follower) { create(:user) }
-  let(:video) { create(:video) }
+  let(:streamer) { create(:streamer) }
+  let(:channel) { streamer.channels.first }
+  let(:follower) { create(:follow, user: create(:user), channel: channel).user }
 
   describe ".build_text" do
     it "should generate a message with the code" do
@@ -37,15 +37,13 @@ RSpec.describe SmsMessage, type: :model do
   end
 
   describe ".notify_broadcast_start!" do
-    it "should try and message twillio" do
-      Follow.create!(user: follower, channel: channel)
+    let!(:video) { create(:video, channel: channel, user: streamer) }
 
+    it "should try and message twillio" do
       SmsMessage.notify_broadcast_start!(
         channel: channel,
         follower: follower,
-        channel_url: channel_url(channel),
       )
-
       expect(FakeTwilio.messages.size).to eq(1)
 
       message = FakeTwilio.messages.first
