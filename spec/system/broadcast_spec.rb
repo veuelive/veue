@@ -68,6 +68,7 @@ describe "Broadcast View" do
       clear_enqueued_jobs
 
       click_button("Start Broadcast")
+      expect(page).to have_content("Starting")
       find("*[data-broadcast-state='live']")
 
       server = Capybara.current_session.server
@@ -104,6 +105,17 @@ describe "Broadcast View" do
       # For most of these, it's important we wait until we are actually "live"
       # and things like the WS connection are open
       find("*[data-broadcast-state='live']")
+    end
+
+    it "should allow you to stop broadcasting" do
+      click_button("Stop Broadcast")
+      expect(page).to have_content("Broadcast Complete")
+    end
+
+    it "should show failed ffmpeg states" do
+      page.execute_script("globalThis.ipcRenderer.simulateFfmpegFailedEvent()")
+      page.accept_alert
+      expect(page).to have_content("Connection Error")
     end
 
     describe "reload page" do
