@@ -22,13 +22,14 @@ class BroadcastsController < ApplicationController
   end
 
   def start
-    current_broadcast_video.add_screenshots!(params[:primary_shot], params[:secondary_shot])
-
-    BrowserNavigation.create_first_navigation!(
-      current_broadcast_video,
-      params[:url],
+    current_broadcast_video.start_broadcast!(
+      params.permit(
+        :primary_shot,
+        :secondary_shot,
+        :video_layout,
+        :url,
+      ),
     )
-    current_broadcast_video.start!
 
     send_broadcast_start_text!
   end

@@ -10,6 +10,7 @@ module Broadcasts
           width: params["width"],
           height: params["height"],
           sections: params["sections"],
+          timecode: params["timecode"],
         },
         user: current_user,
         timecode_ms: params["timecodeMs"],

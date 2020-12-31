@@ -112,6 +112,26 @@ class Video < ApplicationRecord
       }
   end
 
+  # This is the primary way to start a broadcast
+  def start_broadcast!(params)
+    add_screenshots!(params[:primary_shot], params[:secondary_shot])
+    new_layout_event!(params[:video_layout])
+
+    BrowserNavigation.create_first_navigation!(self, params[:url])
+
+    # The actual state machine transition
+    start!
+  end
+
+  def new_layout_event!(layout_event)
+    layout_event = JSON.parse(layout_event) if layout_event.is_a?(String)
+
+    video_layout_events.create!(
+      input: layout_event.to_hash,
+      user: user,
+    )
+  end
+
   def chat_messages_for_live(limit=50)
     chat_messages.limit(limit).order("created_at DESC")
   end

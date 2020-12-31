@@ -7,7 +7,7 @@ export default class VideoMixer implements Mixer {
   canvas: HTMLCanvasElement;
 
   private canvasContext: CanvasRenderingContext2D;
-  private broadcastLayout: BroadcastVideoLayout;
+  public broadcastLayout: BroadcastVideoLayout;
   private captureSources: VideoCaptureSource[] = [];
 
   constructor(broadcastLayout: BroadcastVideoLayout) {
