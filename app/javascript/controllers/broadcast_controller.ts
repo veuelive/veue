@@ -118,6 +118,7 @@ export default class extends Controller {
         const data = {
           url: getCurrentUrl(),
           primary_shot: screenshots[0],
+          video_layout: JSON.stringify(this.videoMixer.broadcastLayout),
         };
 
         if (screenshots[1]) {

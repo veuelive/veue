@@ -18,6 +18,13 @@ RSpec.describe Broadcasts::EventController do
         y: 0,
       },
     ],
+    timecode: {
+      width: 100,
+      height: 200,
+      digits: 10,
+      x: 0,
+      y: 90,
+    },
     timecodeMs: 10,
   }
 

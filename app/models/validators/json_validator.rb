@@ -48,6 +48,8 @@ class JsonValidator < ActiveModel::EachValidator
       end
     when Array
       validate_array_property(type, value, key)
+    when Hash
+      validate_object_properties(type, value, key)
     else
       message = "Wrong type for #{key}– expected #{type} but got #{value.class}"
       add_error(:json_wrong_property_type, message) unless value.is_a?(type)
