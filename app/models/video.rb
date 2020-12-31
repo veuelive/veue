@@ -156,11 +156,19 @@ class Video < ApplicationRecord
 
   def after_go_live
     transition_audience_to_live
+
+    return if visibility.eql?("private")
+
     send_ifttt!("#{user.display_name} went live!")
+    send_broadcast_start_text!
   end
 
   def send_ifttt!(message)
-    url = "https://www.veuelive.com/videos/#{id}"
+    url = Router.channel_video_url(channel, self)
     IfThisThenThatJob.perform_later(message: message, url: url)
+  end
+
+  def send_broadcast_start_text!
+    SendBroadcastStartTextJob.perform_later(channel)
   end
 end

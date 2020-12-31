@@ -51,5 +51,6 @@ Rails.application.configure do
 
   # Sets a default host for url_helpers, also no idea why this isnt config.*
   # https://github.com/excid3/noticed/issues/49
-  routes.default_url_options[:host] = 'localhost:3000'
+  routes.default_url_options[:host] = 'test.localhost'
+  routes.default_url_options[:port] = 3000
 end

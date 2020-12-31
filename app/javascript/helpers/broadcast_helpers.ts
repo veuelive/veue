@@ -2,8 +2,9 @@ import { Rectangle, Size } from "types/rectangle";
 import { postJson } from "util/fetch";
 import { NavigationUpdate } from "controllers/broadcast/browser_controller";
 import { electron, inElectronApp } from "helpers/electron/base";
-import { getChannelSlug } from "helpers/channel_helpers";
 import VideoLayout from "types/video_layout";
+import { getChannelSlug, getChannelId } from "helpers/channel_helpers";
+import { getVideoId } from "helpers/video_helpers";
 
 export function getBroadcastElement(): HTMLElement {
   return document.getElementById("broadcast");
@@ -31,6 +32,12 @@ export function openLinkInBrowser(url: string): void {
 
 export function publicVideoLink(): string {
   return document.location.origin + "/" + getChannelSlug();
+}
+
+export function privateVideoLink(): string {
+  return (
+    document.location.origin + "/" + getChannelId() + "/videos/" + getVideoId()
+  );
 }
 
 export function calculateCaptureLayout(

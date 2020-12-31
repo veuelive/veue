@@ -33,6 +33,6 @@ module Veue
     # Following the advice on https://github.com/mperham/sidekiq/wiki/Active-Job
     config.action_mailer.deliver_later_queue_name = nil # defaults to "mailers"
     config.active_storage.queues.analysis   = nil       # defaults to "active_storage_analysis"
-    config.active_storage.queues.purge      = nil      
+    config.active_storage.queues.purge      = nil
   end
 end

@@ -57,9 +57,10 @@ Rails.application.configure do
 
   # Sets a default host for url_helpers, also no idea why this isnt config.*
   # https://github.com/excid3/noticed/issues/49
-  routes.default_url_options[:host] = 'localhost:3000'
+  default_url_options[:host] = ENV.fetch("HOSTNAME", "localhost:3000")
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 end
+

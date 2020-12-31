@@ -22,8 +22,13 @@ class SmsMessage < ApplicationRecord
     ).send_message!
   end
 
-  def self.notify_broadcast_start!(channel:, channel_url:, follower:)
-    message = "#{channel.name} is now live on Veue! #{channel_url}"
+  def self.notify_broadcast_start!(channel:, follower:)
+    video = channel.active_video
+
+    return if video.blank?
+
+    url = Router.channel_video_url(channel, video)
+    message = "#{channel.name} is now live on Veue! #{url}"
 
     SmsMessage.create!(
       to: follower.phone_number,
@@ -41,21 +46,10 @@ class SmsMessage < ApplicationRecord
       text: SmsMessage.build_text(session_token.secret_code),
       service: "Twilio",
     ).send_auth_message!
-
-    # Mimics the previous before_create :send_message!
-    # sms_message.send_message!
-    # sms_message.save!
   end
 
   def self.build_text(secret_code)
-    env_prefix =
-      if ENV["HEROKU_APP_NAME"] && ENV["HEROKU_APP_NAME"] != "veue-prod"
-        "[#{ENV['HEROKU_APP_NAME']}] "
-      else
-        ""
-      end
-
-    "#{env_prefix}Veue Login Code: #{secret_code}"
+    "Veue Login Code: #{secret_code}"
   end
 
   def send_message!
