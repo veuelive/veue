@@ -24,6 +24,11 @@
         text-overflow: ellipsis;
         text-overflow-ellipsis: color.$gray-light;
       }
+
+      #not-started-notification {
+        background-color: color.$gray-dark;
+        color: color.$white;
+      }
     }
 
     > * {

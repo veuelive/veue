@@ -2,6 +2,9 @@
 
 #videos__show,
 #channels__show {
+  .channel-page {
+    display: flex;
+  }
   /**
   Put any main responsive layout code for ONLY desktop here... this does not count elements that scale to their
   surroundings
