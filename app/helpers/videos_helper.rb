@@ -19,6 +19,10 @@ module VideosHelper
     end
   end
 
+  def upcoming_stream?
+    current_video.stream_type == "upcoming"
+  end
+
   def play_button(mobile: false)
     classes = "active-icon toggle-play"
 

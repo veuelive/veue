@@ -54,14 +54,14 @@ export default class extends BaseController {
       startMuxData();
     }
 
-    this.timecodeSynchronizer = new TimecodeSynchronizer(
-      this.broadcastLayout.timecode,
-      () => {
-        this.timecodeChanged();
-      }
-    );
-
     if (this.streamType !== "upcoming") {
+      this.timecodeSynchronizer = new TimecodeSynchronizer(
+        this.broadcastLayout.timecode,
+        () => {
+          this.timecodeChanged();
+        }
+      );
+
       this.videoDemixer = new VideoDemixer(
         this.videoTarget,
         [
@@ -85,27 +85,29 @@ export default class extends BaseController {
       }, 60 * 1000);
     }
 
-    this.videoTarget.addEventListener("loadedmetadata", async () => {
-      this.state = "ready";
-      const params = new URLSearchParams(window.location.search);
-      if (params.has("t")) {
-        this.videoTarget.currentTime = parseInt(params.get("t"));
-      }
+    if (this.streamType !== "upcoming") {
+      this.videoTarget.addEventListener("loadedmetadata", async () => {
+        this.state = "ready";
+        const params = new URLSearchParams(window.location.search);
+        if (params.has("t")) {
+          this.videoTarget.currentTime = parseInt(params.get("t"));
+        }
 
-      this.togglePlay();
-    });
+        this.togglePlay();
+      });
 
-    this.subscribeToAuthChange();
-
-    if (!this.videoTarget.canPlayType("application/vnd.apple.mpegurl")) {
-      const hlsSource = this.videoTarget.getAttribute("src");
-      if (hlsSource) {
-        // HLS.js-specific setup code
-        const hls = new Hls();
-        hls.loadSource(hlsSource);
-        hls.attachMedia(this.videoTarget);
+      if (!this.videoTarget.canPlayType("application/vnd.apple.mpegurl")) {
+        const hlsSource = this.videoTarget.getAttribute("src");
+        if (hlsSource) {
+          // HLS.js-specific setup code
+          const hls = new Hls();
+          hls.loadSource(hlsSource);
+          hls.attachMedia(this.videoTarget);
+        }
       }
     }
+
+    this.subscribeToAuthChange();
   }
 
   authChanged(): void {
