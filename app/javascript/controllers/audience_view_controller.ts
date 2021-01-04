@@ -71,21 +71,7 @@ export default class extends BaseController {
         this.timecodeSynchronizer,
         this.broadcastLayout
       );
-    }
 
-    if (this.streamType === "vod") {
-      this.eventManager = new VodEventManager(0);
-    } else {
-      this.eventManager = new LiveEventManager(true);
-
-      this.sendViewedMessage();
-
-      setInterval(() => {
-        this.sendViewedMessage();
-      }, 60 * 1000);
-    }
-
-    if (this.streamType !== "upcoming") {
       this.videoTarget.addEventListener("loadedmetadata", async () => {
         this.state = "ready";
         const params = new URLSearchParams(window.location.search);
@@ -105,6 +91,18 @@ export default class extends BaseController {
           hls.attachMedia(this.videoTarget);
         }
       }
+    }
+
+    if (this.streamType === "vod") {
+      this.eventManager = new VodEventManager(0);
+    } else {
+      this.eventManager = new LiveEventManager(true);
+
+      this.sendViewedMessage();
+
+      setInterval(() => {
+        this.sendViewedMessage();
+      }, 60 * 1000);
     }
 
     this.subscribeToAuthChange();
