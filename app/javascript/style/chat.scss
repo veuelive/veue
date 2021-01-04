@@ -168,13 +168,13 @@
         border-radius: 10px;
         outline: none;
         flex-grow: 1;
-        margin-right: 0.5rem;
       }
       .reaction-button-area {
         border: 1px solid color.$neutral-middle;
         display: flex;
         align-items: center;
         border-radius: 0.85rem;
+        margin-left: 0.5rem;
         padding: 0.5rem 0.85rem;
         cursor: pointer;
         svg {

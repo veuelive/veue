@@ -11,21 +11,19 @@ describe("Url parsing for address entry", () => {
     ];
 
     for (const url of goodUrls) {
-      expect(autocorrectUrlEntry(url)).resolves.toEqual(url);
+      expect(autocorrectUrlEntry(url)).toEqual(url);
     }
   });
 
   it("Should do some basic correction if missing protocol", () => {
-    expect(autocorrectUrlEntry("google.com")).resolves.toEqual(
-      "http://google.com"
-    );
-    expect(autocorrectUrlEntry("hampton.com/?mylivephotos=1")).resolves.toEqual(
+    expect(autocorrectUrlEntry("google.com")).toEqual("http://google.com");
+    expect(autocorrectUrlEntry("hampton.com/?mylivephotos=1")).toEqual(
       "http://hampton.com/?mylivephotos=1"
     );
   });
 
   it("should do a search if nothing else works", () => {
-    expect(autocorrectUrlEntry("example")).resolves.toContain("example");
-    expect(autocorrectUrlEntry("example")).resolves.toContain("duckduckgo");
+    expect(autocorrectUrlEntry("example")).toContain("example");
+    expect(autocorrectUrlEntry("example")).toContain("duckduckgo");
   });
 });

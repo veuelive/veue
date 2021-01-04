@@ -1,8 +1,9 @@
-import { Rectangle } from "types/rectangle";
+import { Rectangle, Size } from "types/rectangle";
 import { postJson } from "util/fetch";
 import { NavigationUpdate } from "controllers/broadcast/browser_controller";
 import { electron, inElectronApp } from "helpers/electron/base";
 import { getChannelSlug } from "helpers/channel_helpers";
+import VideoLayout from "types/video_layout";
 
 export function getBroadcastElement(): HTMLElement {
   return document.getElementById("broadcast");
@@ -32,25 +33,24 @@ export function publicVideoLink(): string {
   return document.location.origin + "/" + getChannelSlug();
 }
 
-export function calculateBroadcastArea(
-  dimensions: Rectangle,
-  workArea: Rectangle,
-  scaleFactor: number
-): Rectangle {
-  const rect = calculateFullVideoSize(dimensions, scaleFactor);
-  rect.y = (dimensions.y + workArea.y) * scaleFactor;
-  return rect;
-}
-
-export function calculateFullVideoSize(
-  rect: Rectangle,
-  scaleFactor: number
-): Rectangle {
+export function calculateCaptureLayout(
+  windowSize: Size,
+  captureBounds: Rectangle,
+  workArea: Rectangle
+): VideoLayout {
   return {
-    width: rect.width * scaleFactor,
-    height: rect.height * scaleFactor,
-    x: rect.x * scaleFactor,
-    y: rect.y * scaleFactor,
+    width: windowSize.width,
+    height: windowSize.height,
+    sections: [
+      {
+        type: "screen",
+        width: captureBounds.width,
+        height: captureBounds.height,
+        y: captureBounds.y + workArea.y,
+        x: captureBounds.x + workArea.x,
+        priority: 1,
+      },
+    ],
   };
 }
 

@@ -1,12 +1,8 @@
 import { Controller } from "stimulus";
 import { ipcRenderer } from "helpers/electron/ipc_renderer";
-import { Rectangle } from "types/rectangle";
 import VideoMixer from "helpers/broadcast/mixers/video_mixer";
 import StreamRecorder from "helpers/broadcast/stream_recorder";
-import {
-  calculateBroadcastArea,
-  calculateFullVideoSize,
-} from "helpers/broadcast_helpers";
+import { calculateCaptureLayout } from "helpers/broadcast_helpers";
 import { postForm } from "util/fetch";
 import { getCurrentUrl } from "controllers/broadcast/browser_controller";
 import EventManagerInterface from "types/event_manager_interface";
@@ -15,6 +11,11 @@ import { DefaultVideoLayout } from "types/sizes";
 import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
 import CaptureSourceManager from "helpers/broadcast/capture_source_manager";
 import Metronome from "helpers/broadcast/metronome";
+import {
+  BroadcasterEnvironment,
+  CreateBrowserViewPayload,
+  WakeupPayload,
+} from "types/electron_env";
 
 type BroadcastState =
   | "loading"
@@ -34,6 +35,7 @@ export default class extends Controller {
   private eventManager: EventManagerInterface;
   private audioMixer: AudioMixer;
   private captureSourceManager: CaptureSourceManager;
+  private environment: BroadcasterEnvironment;
 
   connect(): void {
     const currentVideoState = this.data.get("video-state");
@@ -56,41 +58,49 @@ export default class extends Controller {
     this.streamCapturer = new StreamRecorder(this.videoMixer, this.audioMixer);
     this.metronome = new Metronome();
 
-    ipcRenderer.send("wakeup");
-    ipcRenderer.send("load_browser_view", this.data.get("session-token"));
+    ipcRenderer.invoke("getEnvironment").then(async (data) => {
+      this.environment = data as BroadcasterEnvironment;
 
-    ipcRenderer.on(
-      "visible",
-      async (
-        _,
-        dimensions: Rectangle,
-        workArea: Rectangle,
-        windowSize: Rectangle,
-        windowTitle: string,
-        scaleFactor: number
-      ) => {
-        console.log("dimensions", dimensions);
-        console.log("workArea", workArea);
-        console.log("windowSize", windowSize);
-        console.log("scaleFactor", scaleFactor);
+      const windowSize = {
+        width: 1250,
+        height: 685,
+      };
+      ipcRenderer.send("wakeup", {
+        mainWindow: windowSize,
+        rtmpUrl: `rtmps://global-live.mux.com/app/${this.data.get(
+          "stream-key"
+        )}`,
+        sessionToken: this.data.get("session-token"),
+      } as WakeupPayload);
 
-        const broadcastArea = calculateBroadcastArea(
-          dimensions,
-          workArea,
-          scaleFactor
-        );
+      const browserViewBounds = {
+        x: 10,
+        y: 80,
+        width: 900,
+        height: 570,
+      };
 
-        console.log("broadcastArea", broadcastArea);
+      ipcRenderer.send("createBrowserView", {
+        window: "main",
+        bounds: browserViewBounds,
+        url: "https://www.apple.com",
+      } as CreateBrowserViewPayload);
 
-        await this.captureSourceManager.startBrowserCapture(
-          windowTitle,
-          broadcastArea,
-          calculateFullVideoSize(windowSize, scaleFactor)
-        );
+      const broadcastArea = calculateCaptureLayout(
+        windowSize,
+        browserViewBounds,
+        this.environment.primaryDisplay.workArea
+      );
 
-        this.state = "ready";
-      }
-    );
+      console.log("broadcastArea", broadcastArea);
+
+      await this.captureSourceManager.startBrowserCapture(
+        "Veue Broadcaster",
+        broadcastArea
+      );
+
+      this.state = "ready";
+    });
 
     ipcRenderer.on("ffmpeg-error", () => {
       this.state = "failed";

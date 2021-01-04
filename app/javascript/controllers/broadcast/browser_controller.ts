@@ -1,6 +1,7 @@
 import { Controller } from "stimulus";
 import { ipcRenderer } from "helpers/electron/ipc_renderer";
 import { sendNavigationUpdate } from "helpers/broadcast_helpers";
+import { autocorrectUrlEntry } from "util/address";
 
 export type NavigationUpdate = {
   eventName: string;
@@ -42,7 +43,7 @@ export default class extends Controller {
   }
 
   private navigateToAddress() {
-    this.url = this.addressBarTarget.value;
+    this.url = autocorrectUrlEntry(this.addressBarTarget.value);
 
     ipcRenderer.send("navigate", this.url);
   }
