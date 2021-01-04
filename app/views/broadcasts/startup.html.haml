@@ -22,3 +22,4 @@
         %button{data: {action: "click->broadcast--startup#requestAccess"}} Prompt For Access
       .next{data: {"text-state": "login"}}
         %button{data: {action: "click->authentication#showModal"}} Login
+    = render partial: "broadcasts/user_instructions_modal"
