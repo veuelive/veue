@@ -19,11 +19,7 @@ const debug = require("electron-debug");
 const contextMenu = require("electron-context-menu");
 const menu = require("./menu");
 const child_process = require("child_process");
-const { is } = require("electron-util");
-const { session } = require("electron");
-const { appUpdater } = require("../util/autoUpdater");
-const { checkSystemRequirements } = require("../util/systemChecks");
-
+const { askForMediaAccess } = require("../util/mediaAccess");
 let ffmpeg;
 let browserView;
 
@@ -117,6 +113,11 @@ const createMainWindow = async () => {
 if (!app.requestSingleInstanceLock()) {
   app.quit();
 }
+
+ipcMain.on("checkAccess", async (event, data) => {
+  const accessStatus = await askForMediaAccess();
+  event.sender.send("access_status", accessStatus);
+});
 
 ipcMain.on("wakeup", (event, data) => {
   event.sender.send(

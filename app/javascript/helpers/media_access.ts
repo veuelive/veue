@@ -6,7 +6,6 @@ export default class MediaAccess {
     return navigator.mediaDevices.enumerateDevices().then((devices) => {
       let hasVideo = false;
       let hasMicrophone = false;
-
       devices.forEach((device) => {
         if (device.deviceId !== "") {
           if (device.kind === "videoinput") {

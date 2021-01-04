@@ -1,17 +1,43 @@
 import MediaAccess from "helpers/media_access";
 import BaseController from "controllers/base_controller";
+import { ipcRenderer } from "helpers/electron/ipc_renderer";
 
 type Steps = "done" | "login" | "media";
 
 export default class extends BaseController {
-  static targets = ["microphoneAccess", "videoAccess", "loggedInStep"];
+  static targets = [
+    "microphoneAccess",
+    "videoAccess",
+    "loggedInStep",
+    "userInstructionsModal",
+  ];
   private microphoneAccessTarget!: HTMLElement;
   private videoAccessTarget!: HTMLElement;
   private loggedInStepTarget!: HTMLElement;
+  private userInstructionsModalTarget!: HTMLElement;
 
   connect(): void {
     this.runChecks();
     this.subscribeToAuthChange();
+    ipcRenderer.send("checkAccess");
+
+    ipcRenderer.on("access_status", (_, accessStatus) => {
+      if (!accessStatus.isCameraAccessible) {
+        this.videoAccessTarget.textContent = "✗";
+        this.userInstructionsModalTarget.setAttribute(
+          "style",
+          "display: block;"
+        );
+      }
+
+      if (!accessStatus.isMicrophoneAccessible) {
+        this.microphoneAccessTarget.textContent = "✗";
+        this.userInstructionsModalTarget.setAttribute(
+          "style",
+          "display: block;"
+        );
+      }
+    });
   }
 
   requestAccess(): void {
@@ -24,6 +50,15 @@ export default class extends BaseController {
 
   authChanged(): void {
     this.endSetup();
+  }
+
+  hideModal(event: Event): void {
+    // This might be a click from any of the children of the modal
+    // and we want to only hit the full page direct modal area
+    const target = event.target as HTMLElement;
+    if (target?.className === "modal-skirt") {
+      this.userInstructionsModalTarget.style.display = "none";
+    }
   }
 
   private async runChecks() {
