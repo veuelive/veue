@@ -4,7 +4,6 @@ import { displayTime } from "util/time";
 export default class extends BaseController {
   static targets = [
     "audienceView",
-    "video",
     "progressBar",
     "progressBarContainer",
     "progressBarButton",
@@ -15,44 +14,47 @@ export default class extends BaseController {
   readonly timeDurationTarget!: HTMLElement;
   readonly timeDisplayTarget!: HTMLElement;
   readonly audienceViewTarget!: HTMLElement;
-  readonly videoTarget!: HTMLVideoElement;
   readonly progressBarTarget!: HTMLElement;
   readonly progressBarContainerTarget!: HTMLElement;
   readonly progressBarButtonTarget!: HTMLButtonElement;
 
   private pointerIsDown: boolean;
+  private videoElement: HTMLVideoElement;
 
   connect(): void {
-    this.videoTarget.addEventListener(
+    // Access hidden video element
+    this.videoElement = document.querySelector(".player__video");
+
+    this.videoElement.addEventListener(
       "loadedmetadata",
       this.handleLoadedMetadata.bind(this)
     );
 
-    this.videoTarget.addEventListener(
+    this.videoElement.addEventListener(
       "timeupdate",
       this.handleTimeUpdate.bind(this)
     );
   }
 
   disconnect(): void {
-    this.videoTarget.removeEventListener(
+    this.videoElement.removeEventListener(
       "timeupdate",
       this.handleTimeUpdate.bind(this)
     );
 
-    this.videoTarget.removeEventListener(
+    this.videoElement.removeEventListener(
       "loadedmetadata",
       this.handleLoadedMetadata.bind(this)
     );
   }
 
   handleLoadedMetadata(): void {
-    this.timeDurationTarget.innerHTML = displayTime(this.videoTarget.duration);
+    this.timeDurationTarget.innerHTML = displayTime(this.videoElement.duration);
   }
 
   handleTimeUpdate(): void {
     const progress = this.progressBarTarget;
-    const video = this.videoTarget;
+    const video = this.videoElement;
 
     const width = Math.floor((video.currentTime / video.duration) * 100) + 1;
     progress.style.width = `${width}%`;
@@ -84,12 +86,12 @@ export default class extends BaseController {
     }
 
     // Play the video
-    this.videoTarget
+    this.videoElement
       .play()
       .then(() => (this.videoState = "playing"))
       .catch(() => {
         this.videoState = "paused";
-        this.videoTarget
+        this.videoElement
           .play()
           .then(() => (this.videoState = "playing"))
           .catch((e) => {
@@ -105,10 +107,10 @@ export default class extends BaseController {
     const x = event.clientX - frameRect.left;
     const pos = x / frameRect.width;
 
-    const currentTime = pos * this.videoTarget.duration;
+    const currentTime = pos * this.videoElement.duration;
 
     this.timeDisplayTarget.innerHTML = displayTime(currentTime);
-    this.videoTarget.currentTime = currentTime;
+    this.videoElement.currentTime = currentTime;
     this.handleTimeUpdate();
   }
 

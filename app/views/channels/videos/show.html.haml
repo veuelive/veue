@@ -1,6 +1,6 @@
 .content-area#video-show{
   "data": {
-    "controller": "audience-view audience--player-controls",
+    "controller": "audience-view",
     "audience-view": {
       "stream-type": current_video.stream_type
     },
@@ -25,20 +25,5 @@
     #streamer-profile-area
       = render partial: "channels/videos/partials/streamer_profile"
   .content-area__secondary
-    - if upcoming_stream?
-      .secondary-upcoming-stream
-        = svg_tag "no-webcam"
-    - else
-      %canvas.fixed-secondary-canvas{
-        "data-target": "audience-view.fixedSecondaryCanvas",
-        width: 420,
-        height: 340
-      }
-      %video.player__video.viewer{
-        "data-target": "audience-view.video audience--player-controls.video",
-        crossorigin: "anonymous",
-        src: current_video.hls_url,
-        style: "width: 0px;",
-        playsinline: "playsinline"
-      }
+    = render partial: "channels/videos/partials/video_webcam"
     = render partial: "shared/chat", locals: { video: current_video }
