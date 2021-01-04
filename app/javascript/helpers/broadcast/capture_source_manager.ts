@@ -5,7 +5,6 @@ import { ScreenCaptureSource } from "helpers/broadcast/capture_sources/screen";
 import VideoMixer from "helpers/broadcast/mixers/video_mixer";
 import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
 import Mixer from "helpers/broadcast/mixers/mixer";
-import { Rectangle } from "types/rectangle";
 import VideoLayout from "types/video_layout";
 import { inElectronApp } from "helpers/electron/base";
 import { MediaDeviceChangeEvent } from "controllers/broadcast/media_manager_controller";
@@ -72,29 +71,14 @@ export default class CaptureSourceManager {
 
   async startBrowserCapture(
     windowTitle: string,
-    broadcastArea: Rectangle,
-    rectangle: Rectangle
+    captureLayout: VideoLayout
   ): Promise<void> {
     if (!inElectronApp) {
       return;
     }
-    const layout: VideoLayout = {
-      width: rectangle.width,
-      height: rectangle.height,
-      sections: [
-        {
-          width: broadcastArea.width,
-          height: broadcastArea.height,
-          x: broadcastArea.x,
-          y: broadcastArea.y,
-          type: "screen",
-          priority: 1,
-        },
-      ],
-    };
     this.screenCaptureSource = await ScreenCaptureSource.connect(
       windowTitle,
-      layout
+      captureLayout
     );
   }
 

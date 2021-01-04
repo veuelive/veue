@@ -13,11 +13,7 @@ const allowedTlds = [
   "pk",
 ];
 
-export async function autocorrectUrlEntry(input: string): Promise<string> {
-  if (input.length == 0) {
-    return Promise.reject();
-  }
-
+export function autocorrectUrlEntry(input: string): string {
   /**
    * Check for Proper URL
    */

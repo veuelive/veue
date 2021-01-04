@@ -6,7 +6,7 @@ const IGNORE_CHANNEL_INVOCATIONS_FOR = ["stream"];
 export type IPCRenderer = {
   send(channel: string, ...args);
   on(channel: string, listener: (event: Event, ...args) => void);
-  invoke(channel: string, ...args): Promise<void>;
+  invoke(channel: string, ...args): Promise<unknown>;
 };
 
 let ipcRenderer;
@@ -22,13 +22,20 @@ class IPCRendererMock implements IPCRenderer {
     });
   }
 
-  invoke(channel: string, ...args): Promise<void> {
+  invoke(channel: string, ...args): Promise<unknown> {
     if (IGNORE_CHANNEL_INVOCATIONS_FOR.indexOf(channel) >= 0) {
       return Promise.resolve();
     } else {
       return postJson("/ipc_mock", { channel, args: args })
         .then((response) => response.json())
-        .then((data) => this.simulateEvents(data));
+        .then((data) => {
+          this.simulateEvents(data);
+          if (data.returnValue) {
+            return data.returnValue;
+          } else {
+            return;
+          }
+        });
     }
   }
 

@@ -2,14 +2,18 @@
 module.exports = [
   {
     mode: "development",
-    entry: "./src/main.js",
+    entry: "./src/main.ts",
     target: "electron-main",
+    resolve: {
+      // Add `.ts` and `.tsx` as a resolvable extension.
+      extensions: [".ts", ".tsx", ".js"],
+    },
     module: {
       rules: [
         {
           test: /\.ts$/,
           include: /src/,
-          use: [{ loader: "ts-loader" }],
+          loader: "ts-loader",
         },
       ],
     },

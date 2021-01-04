@@ -9,11 +9,13 @@ import {
 export default class BrowserViewManager {
   window: BrowserWindow;
   browserView: BrowserView;
+
+  private bounds: Rectangle;
   get webContents(): WebContents {
     return this.browserView.webContents;
   }
 
-  constructor(window: BrowserWindow, bounds: Rectangle) {
+  constructor(window: BrowserWindow, bounds: Rectangle, url: string) {
     this.window = window;
     this.browserView = new BrowserView();
     const { webContents } = this;
@@ -28,10 +30,11 @@ export default class BrowserViewManager {
     webContents.on("did-navigate", () => this.browserEvent("did-navigate"));
 
     this.window.addBrowserView(this.browserView);
+    this.browserView.setBounds(bounds);
+    this.browserView.webContents.loadURL(url);
 
     ipcMain.on("navigate", async (event, data) => {
       console.log(data);
-      this.browserView.setBounds(bounds);
       await this.browserView.webContents.loadURL(data);
       event.reply("DONE!");
     });
@@ -61,6 +64,8 @@ export default class BrowserViewManager {
         }
       }
     });
+
+    this.browserView.webContents.loadURL(url);
   }
 
   browserEvent(eventName: string): void {
