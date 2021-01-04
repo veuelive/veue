@@ -17,6 +17,15 @@ describe "Stream Waiting Room" do
       visit channel_path(channel)
     end
 
+    it "should show stream not started notification" do
+      expect(page).to have_content("This stream has not started yet").once
+    end
+
+    it "should should not have primary & secondary canvases" do
+      expect(page).to_not have_selector(".primary-canvas")
+      expect(page).to_not have_selector(".fixed-secondary-canvas")
+    end
+
     it "should allow for live chat messages to be sent" do
       write_chat_message "Cowabunga!"
       expect(page).to have_content("Cowabunga!").once
@@ -32,6 +41,7 @@ describe "Stream Waiting Room" do
 
       video.go_live!
       expect(page).to have_selector("#active-viewers")
+      expect(page).to have_selector(".primary-canvas")
 
       write_chat_message "Cowabunga!"
       expect(page).to have_content("Cowabunga!").twice
