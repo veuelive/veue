@@ -8,7 +8,9 @@
 
   = form.label :visibility
 
-  - visibilities_for_select = Video.visibilities_legend.map { |value, text| [text, value.to_s] }
+  - visibilities_for_select = Video.visibilities_legend.map do |value, text|
+    - [text, value.to_s]
+
   = form.select :visibility, visibilities_for_select, {}, data: { target: "broadcast--settings.visibility" }
 
   = form.submit "Update", class: "btn"

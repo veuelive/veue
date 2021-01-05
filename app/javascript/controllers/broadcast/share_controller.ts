@@ -39,7 +39,8 @@ export default class extends Controller {
   }
 
   private getVideoLink(): string {
-    if (getVideoVisibility() === "private") {
+    const privateVisibilities = ["private", "protected"];
+    if (privateVisibilities.includes(getVideoVisibility())) {
       return privateVideoLink();
     }
 
