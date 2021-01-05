@@ -7,6 +7,8 @@
   = form.text_field :title, placeholder: "Title your broadcast!"
 
   = form.label :visibility
-  = form.select :visibility, Video.visibilities, {}, data: { target: "broadcast--settings.visibility" }
+
+  - visibilities_for_select = Video.visibilities_legend.map { |value, text| [text, value.to_s] }
+  = form.select :visibility, visibilities_for_select, {}, data: { target: "broadcast--settings.visibility" }
 
   = form.submit "Update", class: "btn"
