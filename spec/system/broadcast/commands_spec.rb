@@ -59,17 +59,19 @@ describe "Broadcast Commands" do
       expect(current_url).to eq(channel_share_link)
     end
 
-    describe "Change urls when private" do
+    describe "Change urls when private or protected" do
       before do
         find("#settings-btn").click
-        within(".broadcast-settings__form") do
-          select("private", from: "video_visibility")
-          click_button("Update")
-        end
-        expect(page).to have_css("[data-video-visibility='private']")
       end
 
       it "should copy the private link" do
+        within(".broadcast-settings__form") do
+          select("protected", from: "video_visibility")
+          click_button("Update")
+        end
+
+        expect(page).to have_css("[data-video-visibility='protected']")
+
         page.driver.browser.execute_cdp(
           "Browser.grantPermissions",
           origin: page.server_url,
@@ -89,6 +91,13 @@ describe "Broadcast Commands" do
       end
 
       it "should open the private link" do
+        within(".broadcast-settings__form") do
+          select("private", from: "video_visibility")
+          click_button("Update")
+        end
+
+        expect(page).to have_css("[data-video-visibility='private']")
+
         find(".btn#share-btn").click
         expect(find(".btn#share-btn .select-menu")).to have_content("Copy")
         audience_window =
