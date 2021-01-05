@@ -64,7 +64,7 @@
 
   .player-controls {
     opacity: 0;
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem;
     color: white;
     transition: 100ms opacity;
     border-radius: 1rem;
@@ -75,6 +75,7 @@
     display: flex;
     transform: translate(-50%, -50%);
     align-items: center;
+    z-index: 2;
 
     .time-display {
       display: none;
@@ -150,12 +151,19 @@
     .toggle-play.desktop {
       display: none;
     }
+
+    .player-controls {
+      display: none;
+    }
+
+    @include vod {
+      .player-controls {
+        display: flex;
+      }
+    }
   }
 
   @include vod {
-    .display-time {
-    }
-
     .progress-bar-container {
       display: flex;
     }
