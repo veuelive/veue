@@ -94,7 +94,7 @@ describe "Broadcast View" do
       expect(page).to have_css(settings_form)
 
       within(settings_form) do
-        select("private", from: "video_visibility")
+        find("[value='private']").select_option
         click_button("Update")
       end
 
@@ -202,7 +202,7 @@ describe "Broadcast View" do
 
         within(settings_form) do
           fill_in("video_title", with: new_title)
-          select(new_visibility, from: "video_visibility")
+          find("[value='#{new_visibility}']").select_option
           click_button("Update")
         end
 

@@ -66,7 +66,7 @@ describe "Broadcast Commands" do
 
       it "should copy the private link" do
         within(".broadcast-settings__form") do
-          select("protected", from: "video_visibility")
+          find("[value='protected']").select_option
           click_button("Update")
         end
 
@@ -92,7 +92,7 @@ describe "Broadcast Commands" do
 
       it "should open the private link" do
         within(".broadcast-settings__form") do
-          select("private", from: "video_visibility")
+          find("[value='private']").select_option
           click_button("Update")
         end
 
