@@ -83,6 +83,14 @@ class Video < ApplicationRecord
     end
   end
 
+  def self.visibilities_legend
+    {
+      private: "Only you can view",
+      protected: "Only viewable with link",
+      public: "Everyone can view",
+    }
+  end
+
   def change_playback_id(new_playback_id)
     self.mux_playback_id = new_playback_id
     self.hls_url = "https://stream.mux.com/#{new_playback_id}.m3u8"
