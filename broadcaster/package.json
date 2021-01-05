@@ -1,6 +1,6 @@
 {
   "name": "deskie",
-  "productName": "Veue-Broadcaster",
+  "productName": "Veue Broadcaster",
   "version": "0.1.5",
   "description": "My praiseworthy app",
   "license": "MIT",
@@ -56,7 +56,8 @@
   "build": {
     "publish": {
       "provider": "s3",
-      "bucket": "veue-development",
+      "bucket": "veue-production",
+      "path": "/broadcaster-release",
       "region": "us-east-1",
       "storageClass": "STANDARD"
     },
