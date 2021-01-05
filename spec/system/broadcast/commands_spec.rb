@@ -60,18 +60,9 @@ describe "Broadcast Commands" do
     end
 
     describe "Change urls when private or protected" do
-      before do
-        find("#settings-btn").click
-      end
-
       %w[private protected].each do |visibility|
         it "should copy the private / protected link" do
-          within(".broadcast-settings__form") do
-            find("[value='#{visibility}']").select_option
-            click_button("Update")
-          end
-
-          expect(page).to have_css("[data-video-visibility='#{visibility}']")
+          update_video_visibility(visibility)
 
           page.driver.browser.execute_cdp(
             "Browser.grantPermissions",
@@ -92,10 +83,7 @@ describe "Broadcast Commands" do
         end
 
         it "should open the private / protected link" do
-          within(".broadcast-settings__form") do
-            find("[value='#{visibility}']").select_option
-            click_button("Update")
-          end
+          update_video_visibility(visibility)
 
           expect(page).to have_css("[data-video-visibility='#{visibility}']")
 
