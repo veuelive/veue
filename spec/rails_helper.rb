@@ -21,6 +21,13 @@ rescue ActiveRecord::PendingMigrationError => e
   exit(1)
 end
 
+# https://thoughtbot.com/blog/how-to-stub-external-services-in-tests
+require "webmock/rspec"
+WebMock.disable_net_connect!(
+  allow_localhost: true,
+  allow: [%r{https://leghorn}, %(https://chromedriver.storage.googleapis.com)],
+)
+
 RSpec.configure do |config|
   # Allows you to do things like *_url(<model>)
   config.include Rails.application.routes.url_helpers
@@ -31,10 +38,18 @@ RSpec.configure do |config|
   config.include ResponsiveHelpers
   config.include UploadSpecHelper
 
+  config.before(:all) do
+    ENV["IFTTT_PUSH_KEY"] = ENV.fetch("IFTTT_PUSH_KEY", "1234")
+  end
+
   config.before(:each) do
     stub_const("Twilio::REST::Client", FakeTwilio)
     FakeTwilio.reset!
     stub_const("MUX_SERVICE", FakeMuxService.new)
+
+    WebMock.reset_executed_requests!
+    stub_request(:post, /#{IfThisThenThatJob.post_url}/)
+      .to_return(status: 200, body: "stubbed response", headers: {})
   end
 
   Capybara.default_max_wait_time = 5

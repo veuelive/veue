@@ -12,13 +12,16 @@ class IfThisThenThatJob < ApplicationJob
     IfThisThenThatJob.process!(message: message, url: url)
   end
 
+  def self.post_url
+    IFTTT_URL + "/" + ENV["IFTTT_PUSH_KEY"]
+  end
+
   def self.process!(message:, url:)
-    post_url = "#{IFTTT_URL}/#{ENV['IFTTT_PUSH_KEY']}"
     payload = {
       value1: message,
       value2: url,
     }
-    Faraday.post(post_url, payload.to_json, "Content-Type": "application/json") unless Rails.env.test?
+    Faraday.post(post_url, payload.to_json, "Content-Type": "application/json")
     [post_url, payload]
   end
 end

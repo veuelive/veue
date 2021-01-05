@@ -76,7 +76,7 @@ class Video < ApplicationRecord
 
     event :finish do
       after do
-        send_ifttt! "#{user.display_name} stopped streaming"
+        send_ifttt! "#{user.display_name} stopped streaming" if visibility.eql?("public")
       end
 
       transitions from: %i[live paused pending ended starting], to: :finished
@@ -165,7 +165,7 @@ class Video < ApplicationRecord
   def after_go_live
     transition_audience_to_live
 
-    return if %w[private protected].include?(visibility)
+    return unless visibility.eql?("public")
 
     send_ifttt!("#{user.display_name} went live!")
     send_broadcast_start_text!

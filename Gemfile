@@ -151,4 +151,7 @@ group :test do
 
   # Adding Database Cleaner to make sure our DB is clean when we test
   gem "database_cleaner-active_record"
+
+  # Adds the ability to stub requests easily
+  gem "webmock"
 end

@@ -63,7 +63,7 @@ describe "Broadcast View" do
       5.times { create(:follow, user: create(:user), channel: channel) }
     end
 
-    it "should queue a SendBroadcastStartTextJob" do
+    it "should queue a SendBroadcastStartTextJob and IFTTT job" do
       # Just in case, lets clear out our jobs
       clear_enqueued_jobs
 
@@ -74,12 +74,14 @@ describe "Broadcast View" do
       server = Capybara.current_session.server
       current_video_url = channel_path(channel, host: server.host, port: server.port)
 
-      perform_enqueued_jobs(only: SendBroadcastStartTextJob)
+      perform_enqueued_jobs
+
+      expect(WebMock).to have_requested(:post, IfThisThenThatJob.post_url).once
 
       first_message = FakeTwilio.messages.first
       second_message = FakeTwilio.messages.last
 
-      # Verify it sends to different phone numbers
+      # Verify it sends to different phone numbers on stream start
       expect(first_message.to).to_not eq(second_message.to)
       expect(channel.followers.pluck(:phone_number)).to include(first_message.to)
 
@@ -87,23 +89,46 @@ describe "Broadcast View" do
       expect(first_message.body).to match("live")
 
       expect(first_message.body).to match(current_video_url)
+
+      clear_enqueued_jobs
+      WebMock.reset_executed_requests!
+
+      click_button("Stop Broadcast")
+      expect(page).to have_css("[data-broadcast-state='finished']")
+
+      perform_enqueued_jobs
+
+      # Verify it broadcasts when the stream ends
+      expect(WebMock).to have_requested(:post, IfThisThenThatJob.post_url).once
     end
 
-    it "should not send a message broadcast start text message if the stream is private" do
-      find("#settings-btn").click
-      expect(page).to have_css(settings_form)
+    %w[protected private].each do |visibility|
+      it "should not send notifications if the stream is private or protected" do
+        clear_enqueued_jobs
+        WebMock.reset_executed_requests!
 
-      within(settings_form) do
-        find("[value='private']").select_option
-        click_button("Update")
+        update_video_visibility(visibility)
+
+        click_button("Start Broadcast")
+        expect(page).to have_css("[data-broadcast-state='live']")
+
+        perform_enqueued_jobs
+
+        # Should not say that broadcast started
+        expect(WebMock).not_to(have_requested(:post, IfThisThenThatJob.post_url))
+        expect(FakeTwilio.messages).to be_blank
+
+        clear_enqueued_jobs
+        WebMock.reset_executed_requests!
+
+        click_button("Stop Broadcast")
+        expect(page).to have_css("[data-broadcast-state='finished']")
+
+        perform_enqueued_jobs
+
+        # Should not say that broadcast ended
+        expect(WebMock).not_to(have_requested(:post, IfThisThenThatJob.post_url))
       end
-
-      click_button("Start Broadcast")
-      find("*[data-broadcast-state='live']")
-
-      perform_enqueued_jobs(only: SendBroadcastStartTextJob)
-
-      expect(FakeTwilio.messages).to be_blank
     end
 
     it "should not be able to start a broadcast with a 'starting' state on your video" do
