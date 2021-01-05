@@ -157,7 +157,7 @@ class Video < ApplicationRecord
   def after_go_live
     transition_audience_to_live
 
-    return if visibility.eql?("private")
+    return if %w[private protected].include?(visibility)
 
     send_ifttt!("#{user.display_name} went live!")
     send_broadcast_start_text!
