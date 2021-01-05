@@ -7,7 +7,7 @@ const PLATFORM = normalizePlatform(os.platform());
 
 export function checkSystemRequirements({ app, dialog }) {
   checkPlatform({ app, dialog });
-  checkSystemVersion(dialog);
+  checkSystemVersion({ dialog });
 }
 
 export function normalizePlatform(platform) {
