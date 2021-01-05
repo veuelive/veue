@@ -65,47 +65,51 @@ describe "Broadcast Commands" do
       end
 
       it "should copy the private link" do
-        within(".broadcast-settings__form") do
-          find("[value='protected']").select_option
-          click_button("Update")
+        %w[private protected].each do |visibility|
+          within(".broadcast-settings__form") do
+            find("[value='#{visibility}']").select_option
+            click_button("Update")
+          end
+
+          expect(page).to have_css("[data-video-visibility='#{visibility}']")
+
+          page.driver.browser.execute_cdp(
+            "Browser.grantPermissions",
+            origin: page.server_url,
+            permissions: ["clipboardReadWrite"],
+          )
+          find(".btn#share-btn").hover
+          expect(page).to have_content("Share")
+          find(".btn#share-btn").click
+          expect(find(".btn#share-btn .select-menu")).to have_content("Copy")
+          find(".item.copy").click
+          accept_alert
+          clip_text = page.evaluate_async_script("navigator.clipboard.readText().then(arguments[0])")
+
+          expect(clip_text).to eq(private_share_link)
+          expect(clip_text).to include(channel.id)
+          expect(clip_text).to include(channel.active_video.id)
         end
-
-        expect(page).to have_css("[data-video-visibility='protected']")
-
-        page.driver.browser.execute_cdp(
-          "Browser.grantPermissions",
-          origin: page.server_url,
-          permissions: ["clipboardReadWrite"],
-        )
-        find(".btn#share-btn").hover
-        expect(page).to have_content("Share")
-        find(".btn#share-btn").click
-        expect(find(".btn#share-btn .select-menu")).to have_content("Copy")
-        find(".item.copy").click
-        accept_alert
-        clip_text = page.evaluate_async_script("navigator.clipboard.readText().then(arguments[0])")
-
-        expect(clip_text).to eq(private_share_link)
-        expect(clip_text).to include(channel.id)
-        expect(clip_text).to include(channel.active_video.id)
       end
 
       it "should open the private link" do
-        within(".broadcast-settings__form") do
-          find("[value='private']").select_option
-          click_button("Update")
-        end
-
-        expect(page).to have_css("[data-video-visibility='private']")
-
-        find(".btn#share-btn").click
-        expect(find(".btn#share-btn .select-menu")).to have_content("Copy")
-        audience_window =
-          window_opened_by do
-            find(".item.open").click
+        %w[private protected].each do |visibility|
+          within(".broadcast-settings__form") do
+            find("[value='#{visibility}']").select_option
+            click_button("Update")
           end
-        switch_to_window audience_window
-        expect(current_url).to eq(private_share_link)
+
+          expect(page).to have_css("[data-video-visibility='#{visibility}']")
+
+          find(".btn#share-btn").click
+          expect(find(".btn#share-btn .select-menu")).to have_content("Copy")
+          audience_window =
+            window_opened_by do
+              find(".item.open").click
+            end
+          switch_to_window audience_window
+          expect(current_url).to eq(private_share_link)
+        end
       end
     end
   end
