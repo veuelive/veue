@@ -64,8 +64,8 @@ describe "Broadcast Commands" do
         find("#settings-btn").click
       end
 
-      it "should copy the private link" do
-        %w[private protected].each do |visibility|
+      %w[private protected].each do |visibility|
+        it "should copy the private / protected link" do
           within(".broadcast-settings__form") do
             find("[value='#{visibility}']").select_option
             click_button("Update")
@@ -90,10 +90,8 @@ describe "Broadcast Commands" do
           expect(clip_text).to include(channel.id)
           expect(clip_text).to include(channel.active_video.id)
         end
-      end
 
-      it "should open the private link" do
-        %w[private protected].each do |visibility|
+        it "should open the private / protected link" do
           within(".broadcast-settings__form") do
             find("[value='#{visibility}']").select_option
             click_button("Update")
