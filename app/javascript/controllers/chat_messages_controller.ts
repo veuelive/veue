@@ -120,8 +120,8 @@ export default class ChatMessagesController extends BaseController {
     this.element.insertAdjacentHTML("beforeend", html);
     this.element.lastElementChild.scrollIntoView({
       behavior: "smooth",
-      block: "nearest",
-      inline: "start",
+      block: "start",
+      inline: "nearest",
     });
   }
 }
