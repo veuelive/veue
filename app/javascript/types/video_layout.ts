@@ -1,7 +1,9 @@
 import { Rectangle } from "types/rectangle";
 
+export type VideoSourceType = "camera" | "screen" | "timecode";
+
 export interface LayoutSection extends Rectangle {
-  type: "camera" | "screen";
+  type: VideoSourceType;
   priority: number;
 }
 

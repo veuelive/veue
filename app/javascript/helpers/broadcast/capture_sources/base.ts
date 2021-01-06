@@ -1,4 +1,6 @@
-import { LayoutSection } from "types/video_layout";
+import { LayoutSection, VideoSourceType } from "types/video_layout";
+import { Size } from "types/rectangle";
+import { WebcamCaptureSource } from "helpers/broadcast/capture_sources/webcam";
 
 /**
  * A CaptureSource is our generic representation of
@@ -15,6 +17,10 @@ export class CaptureSource {
   deviceId: string;
   mediaStream: MediaStream;
 
+  get id(): string {
+    return this.deviceId;
+  }
+
   protected constructor(deviceId?: string) {
     this.deviceId = deviceId;
   }
@@ -27,9 +33,31 @@ export class CaptureSource {
   }
 }
 
-export class VideoCaptureSource extends CaptureSource {
+export interface VideoCaptureInterface extends Size {
+  id: string;
+  videoSourceType: VideoSourceType;
+}
+
+export class VideoCaptureSource extends CaptureSource
+  implements VideoCaptureInterface {
   layout: LayoutSection;
   element: HTMLVideoElement;
+
+  get width(): number {
+    return this.element.videoWidth;
+  }
+
+  get height(): number {
+    return this.element.videoHeight;
+  }
+
+  get videoSourceType(): VideoSourceType {
+    if (this instanceof WebcamCaptureSource) {
+      return "camera";
+    } else {
+      return "screen";
+    }
+  }
 
   processMediaStream(mediaStream: MediaStream): Promise<HTMLVideoElement> {
     const track = mediaStream.getVideoTracks()[0];
