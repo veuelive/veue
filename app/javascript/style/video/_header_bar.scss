@@ -41,14 +41,25 @@
     }
 
     .widget {
-      background: color.$gray-light;
+      background: color.$veue-lilac;
       display: flex;
       flex-direction: row;
       align-items: center;
+      font-size: 1rem;
 
       .icon {
         height: 14px;
         margin-right: 0.5rem;
+        display: flex;
+        svg {
+          path {
+            fill: color.$veue-corporate;
+          }
+        }
+      }
+
+      #active-viewers {
+        color: color.$veue-corporate;
       }
 
       &.live {
