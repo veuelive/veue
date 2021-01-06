@@ -4,6 +4,8 @@ class Follow < ApplicationRecord
   belongs_to :user
   belongs_to :channel
 
+  validates :user_id, uniqueness: {scope: %i[channel_id unfollowed_at]}
+
   before_create(
     :send_consent_information,
     unless: -> { user.instructions_sent? || user.unsubscribed? },
