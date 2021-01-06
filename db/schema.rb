@@ -10,36 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_23_133448) do
+ActiveRecord::Schema.define(version: 2021_01_06_165230) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "bloom"
-  enable_extension "btree_gin"
-  enable_extension "btree_gist"
-  enable_extension "citext"
-  enable_extension "cube"
-  enable_extension "dblink"
-  enable_extension "dict_int"
-  enable_extension "dict_xsyn"
-  enable_extension "earthdistance"
-  enable_extension "fuzzystrmatch"
-  enable_extension "hstore"
-  enable_extension "intagg"
-  enable_extension "intarray"
-  enable_extension "isn"
-  enable_extension "lo"
-  enable_extension "ltree"
-  enable_extension "pg_buffercache"
-  enable_extension "pg_prewarm"
-  enable_extension "pg_stat_statements"
-  enable_extension "pg_trgm"
   enable_extension "pgcrypto"
-  enable_extension "pgrowlocks"
-  enable_extension "pgstattuple"
   enable_extension "plpgsql"
-  enable_extension "tablefunc"
-  enable_extension "unaccent"
-  enable_extension "uuid-ossp"
 
   # These are custom enum types that must be created before they can be used in the schema definition
   create_enum "sms_status_setting", ["new_number", "instructions_sent", "unsubscribed"]
@@ -79,16 +54,17 @@ ActiveRecord::Schema.define(version: 2020_12_23_133448) do
     t.index ["slug"], name: "index_channels_on_slug", unique: true
   end
 
-  create_table "follows", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+  create_table "follows", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.datetime "unfollowed_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "channel_id"
     t.index ["channel_id"], name: "index_follows_on_channel_id"
+    t.index ["user_id", "channel_id", "unfollowed_at"], name: "index_follows_on_user_id_and_channel_id_and_unfollowed_at", unique: true
   end
 
-  create_table "mux_webhooks", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+  create_table "mux_webhooks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "mux_id"
     t.datetime "event_received_at"
     t.datetime "finished_processing_at"
@@ -105,7 +81,7 @@ ActiveRecord::Schema.define(version: 2020_12_23_133448) do
     t.index ["video_id"], name: "index_mux_webhooks_on_video_id"
   end
 
-  create_table "pins", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+  create_table "pins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "url"
     t.string "name"
     t.bigint "timecode_ms"
@@ -116,7 +92,7 @@ ActiveRecord::Schema.define(version: 2020_12_23_133448) do
     t.index ["pin_event_id"], name: "index_pins_on_pin_event_id"
   end
 
-  create_table "session_tokens", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+  create_table "session_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "uuid", null: false
     t.text "phone_number_ciphertext"
     t.string "phone_number_bidx"
@@ -150,7 +126,7 @@ ActiveRecord::Schema.define(version: 2020_12_23_133448) do
     t.index ["to_bidx"], name: "index_sms_messages_on_to_bidx"
   end
 
-  create_table "users", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
     t.integer "failed_attempts", default: 0, null: false
@@ -165,7 +141,7 @@ ActiveRecord::Schema.define(version: 2020_12_23_133448) do
     t.index ["mux_live_stream_id"], name: "index_users_on_mux_live_stream_id"
   end
 
-  create_table "video_events", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+  create_table "video_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "video_id"
     t.bigint "timecode_ms"
     t.string "type"
@@ -181,7 +157,7 @@ ActiveRecord::Schema.define(version: 2020_12_23_133448) do
     t.index ["video_id"], name: "index_video_events_on_video_id"
   end
 
-  create_table "video_views", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+  create_table "video_views", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.uuid "video_id", null: false
     t.jsonb "details"
@@ -195,7 +171,7 @@ ActiveRecord::Schema.define(version: 2020_12_23_133448) do
     t.index ["video_id", "user_id"], name: "index_video_views_on_video_id_and_user_id", unique: true, where: "(user_id IS NOT NULL)"
   end
 
-  create_table "videos", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+  create_table "videos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.string "title"
     t.string "mux_playback_id"
