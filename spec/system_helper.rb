@@ -65,3 +65,5 @@ RSpec.configure do |config|
     end
   end
 end
+
+require File.join(__dir__, "support/precompile_assets.rb")
