@@ -7,7 +7,6 @@ import { postForm } from "util/fetch";
 import { getCurrentUrl } from "controllers/broadcast/browser_controller";
 import EventManagerInterface from "types/event_manager_interface";
 import LiveEventManager from "helpers/event/live_event_manager";
-import { DefaultVideoLayout } from "types/sizes";
 import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
 import CaptureSourceManager from "helpers/broadcast/capture_source_manager";
 import Metronome from "helpers/broadcast/metronome";
@@ -46,7 +45,7 @@ export default class extends Controller {
 
     this.state = "loading";
 
-    this.videoMixer = new VideoMixer(DefaultVideoLayout);
+    this.videoMixer = new VideoMixer();
     this.audioMixer = new AudioMixer();
 
     this.captureSourceManager = new CaptureSourceManager(

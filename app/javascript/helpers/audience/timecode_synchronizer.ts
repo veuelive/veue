@@ -1,5 +1,7 @@
 import Timecode from "util/timecode";
 import { TimecodeSection } from "types/video_layout";
+import { DefaultVideoLayout } from "types/sizes";
+import { VideoEventProcessor } from "helpers/event/event_processor";
 
 export default class {
   private readonly canvas: HTMLCanvasElement;
@@ -8,15 +10,16 @@ export default class {
   private _timecodeMs: number;
   private timecodeLayout: TimecodeSection;
 
-  constructor(
-    timecodeLayout: TimecodeSection,
-    timecodeUpdatedCallback: () => void
-  ) {
-    this.timecodeLayout = timecodeLayout;
+  constructor(timecodeUpdatedCallback: () => void) {
+    this.timecodeLayout = DefaultVideoLayout.timecode;
+    VideoEventProcessor.subscribeTo("VideoLayoutEvent", (event) => {
+      console.log(event);
+      this.timecodeLayout = event.detail.data.timecode;
+    });
     this.timecodeUpdatedCallback = timecodeUpdatedCallback;
     this.canvas = document.createElement("canvas");
-    this.canvas.setAttribute("width", timecodeLayout.width.toString());
-    this.canvas.setAttribute("height", timecodeLayout.height.toString());
+    this.canvas.setAttribute("width", this.timecodeLayout.width.toString());
+    this.canvas.setAttribute("height", this.timecodeLayout.height.toString());
     this.canvas.setAttribute("style", "display: none;");
     this.canvasCtx = this.canvas.getContext("2d");
     document

@@ -6,12 +6,7 @@ module Broadcasts
 
     def layout
       @video.video_layout_events.create!(
-        input: {
-          width: params["width"],
-          height: params["height"],
-          sections: params["sections"],
-          timecode: params["timecode"],
-        },
+        input: params["input"],
         user: current_user,
         timecode_ms: params["timecodeMs"],
       )
