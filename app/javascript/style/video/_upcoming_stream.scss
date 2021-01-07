@@ -1,86 +1,87 @@
 @use "../utils/breakpoints" as *;
 @use '../utils/color';
 
-#video-show {
-  #upcoming-stream {
-    .stream-notification {
+#upcoming-stream {
+  .content-area__primary {
+    position: relative;
+  }
+
+  .stream-notification {
+    display: flex;
+    height: 3rem;
+    background: color.$white;
+    font-size: 0.8rem;
+    border-radius: 10px 10px 0 0;
+    padding-right: 0.2rem;
+    padding-left: 0.2rem;
+    border-bottom: 1px solid color.$neutral-accents;
+    &__header {
+      background-color: color.$neutral-regular;
+      border-radius: 10px;
+      margin: 0.4rem 0.2rem;
+      padding: 0 1rem;
       display: flex;
-      height: 3rem;
-      background: color.$white;
-      font-size: 0.8rem;
-      border-radius: 10px 10px 0 0;
-      padding-right: 0.2rem;
-      padding-left: 0.2rem;
-      border-bottom: 1px solid color.$neutral-accents;
-      &__header {
-        background-color: color.$neutral-regular;
-        border-radius: 10px;
-        margin: 0.4rem 0.2rem;
-        padding: 0 1rem;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        color: color.$white;
-        flex: 1 1;
-        font-size: 1rem;
-        span {
-          margin-left: 10px;
-        }
-      }
-    }
-    .stream-body {
-      border-radius: 0 0 10px 10px;
-      display: flex;
-      width: 77vw;
-      height: calc(100vh - 54px);
-      max-width: 1280px;
+      flex-direction: row;
       align-items: center;
       justify-content: center;
-      background-color: color.$white;
-      margin-bottom: 5px;
-    }
-
-    .pip-component {
-      #no-webcam {
-        display: none;
+      color: color.$white;
+      flex: 1 1;
+      font-size: 1rem;
+      span {
+        margin-left: 10px;
       }
     }
   }
-
-  .secondary-upcoming-stream {
+  .stream-body {
+    border-radius: 0 0 10px 10px;
     display: flex;
-    justify-content: center;
+    width: 77vw;
+    height: calc(100vh - 54px);
+    max-width: 1280px;
     align-items: center;
-    width: 20vw;
-    height: 30vh;
-    border-bottom: 1px solid color.$neutral-soft;
+    justify-content: center;
+    background-color: color.$white;
+    margin-bottom: 5px;
   }
 
-  @include mobilePortrait() {
-    #upcoming-stream {
-      .stream-body {
-        width: 100vw;
-        height: 38vh;
-        svg {
-          height: 120px;
-          width: 120px;
-        }
-      }
-      .pip-component {
-        #no-webcam {
-          width: 25vw;
-          height: 20vw;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background-color: color.$neutral-accents;
-          border-radius: 10px;
-        }
+  #no-webcam {
+    display: none;
+  }
+}
+
+.secondary-upcoming-stream {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20vw;
+  height: 30vh;
+  border-bottom: 1px solid color.$neutral-soft;
+}
+
+@include mobilePortrait() {
+  #upcoming-stream {
+    .stream-body {
+      width: 100vw;
+      height: 38vh;
+      svg {
+        height: 120px;
+        width: 120px;
       }
     }
-    .secondary-upcoming-stream {
-      display: none;
+    #no-webcam {
+      position: absolute;
+      right: 10px;
+      bottom: 65px;
+      width: 25vw;
+      height: 20vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: color.$neutral-accents;
+      border-radius: 10px;
     }
+  }
+  .secondary-upcoming-stream {
+    display: none;
   }
 }

@@ -3,7 +3,9 @@
     "controller": "channel",
   }
 }
-  - if current_video
+  - if upcoming_stream?
+    = render template: "channels/videos/upcoming_stream"
+  - elsif current_video
     = render template: "channels/videos/show"
   - else
     = render partial: "channels/videos/partials/streamer_profile"
