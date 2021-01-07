@@ -11,17 +11,14 @@
 }
   .content-area__primary
     .primary-video-area{"data": { controller: "audience--movable-pip" }}
-      - if upcoming_stream?
-        = render partial: "channels/videos/partials/upcoming_stream"
-      - else
-        = render partial: "channels/videos/partials/header"
-        %canvas.primary-canvas{
-          "data-target": "audience-view.primaryCanvas",
-          width: 1200,
-          height: 740
-        }
-        = render partial: "channels/videos/partials/pip_area"
-        = render partial: "channels/videos/partials/player_controls"
+      = render partial: "channels/videos/partials/header"
+      %canvas.primary-canvas{
+        "data-target": "audience-view.primaryCanvas",
+        width: 1200,
+        height: 740
+      }
+      = render partial: "channels/videos/partials/pip_area"
+      = render partial: "channels/videos/partials/player_controls"
     #streamer-profile-area
       = render partial: "channels/videos/partials/streamer_profile"
   .content-area__secondary
