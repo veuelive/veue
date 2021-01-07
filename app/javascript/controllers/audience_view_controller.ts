@@ -15,7 +15,6 @@ import { startMuxData } from "controllers/audience/mux_integration";
 import { isProduction } from "util/environment";
 import { post } from "util/fetch";
 import { BroadcastVideoLayout } from "types/video_layout";
-import { DefaultVideoLayout } from "types/sizes";
 
 type StreamType = "upcoming" | "live" | "vod";
 export default class extends BaseController {
@@ -45,7 +44,6 @@ export default class extends BaseController {
   private eventManager: EventManagerInterface;
 
   connect(): void {
-    this.broadcastLayout = DefaultVideoLayout;
     this.streamType = this.data.get("stream-type") as StreamType;
 
     this.data.set("timecode", "-1");
@@ -54,12 +52,9 @@ export default class extends BaseController {
       startMuxData();
     }
 
-    this.timecodeSynchronizer = new TimecodeSynchronizer(
-      this.broadcastLayout.timecode,
-      () => {
-        this.timecodeChanged();
-      }
-    );
+    this.timecodeSynchronizer = new TimecodeSynchronizer(() => {
+      this.timecodeChanged();
+    });
 
     this.videoDemixer = new VideoDemixer(
       this.videoTarget,
@@ -67,8 +62,7 @@ export default class extends BaseController {
         [this.primaryCanvasTarget],
         [this.pipSecondaryCanvasTarget, this.fixedSecondaryCanvasTarget],
       ],
-      this.timecodeSynchronizer,
-      this.broadcastLayout
+      this.timecodeSynchronizer
     );
 
     this.videoTarget.addEventListener("loadedmetadata", async () => {

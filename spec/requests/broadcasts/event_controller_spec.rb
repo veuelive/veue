@@ -6,24 +6,26 @@ RSpec.describe Broadcasts::EventController do
   let(:live_video) { create(:live_video) }
 
   good_params = {
-    width: 100,
-    height: 100,
-    sections: [
-      {
-        priority: 1,
-        type: "webcam",
-        height: 90,
-        width: 100,
-        x: 0,
-        y: 0,
-      },
-    ],
-    timecode: {
+    input: {
       width: 100,
-      height: 200,
-      digits: 10,
-      x: 0,
-      y: 90,
+      height: 100,
+      sections: [
+        {
+          priority: 1,
+          type: "webcam",
+          height: 90,
+          width: 100,
+          x: 0,
+          y: 0,
+        },
+      ],
+      timecode: {
+        width: 100,
+        height: 200,
+        digits: 10,
+        x: 0,
+        y: 90,
+      },
     },
     timecodeMs: 10,
   }

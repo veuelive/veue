@@ -10,7 +10,7 @@ interface PackSection {
   id: string;
 }
 
-const MAX_VIDEO_PERCENTAGE = 0.8;
+const MAX_VIDEO_PERCENTAGE = 0.9;
 
 /**
  * Alright, this is going to be fun to document. This is the first iteration of our video packing
@@ -134,7 +134,7 @@ function findBestPlacement(
 ): Rectangle {
   return candidates.sort((a, b) => {
     return (
-      scalingNeededToFit(section.size, a) - scalingNeededToFit(section.size, b)
+      scalingNeededToFit(section.size, b) - scalingNeededToFit(section.size, a)
     );
   })[0];
 }

@@ -1,23 +1,25 @@
 import TimecodeSynchronizer from "./timecode_synchronizer";
 import { BroadcastVideoLayout, LayoutSection } from "types/video_layout";
 import { Rectangle } from "types/rectangle";
+import { VideoEventProcessor } from "helpers/event/event_processor";
+import { DefaultVideoLayout } from "types/sizes";
 
 export default class VideoDemixer {
   private canvasContextGroups: Array<Array<CanvasRenderingContext2D>>;
   private videoElement: HTMLVideoElement;
   private timecodeSynchronizer: TimecodeSynchronizer;
-  private videoLayout: BroadcastVideoLayout;
+  private _videoLayout: BroadcastVideoLayout;
   private sectionsByPriority: Array<LayoutSection>;
 
   constructor(
     videoElement: HTMLVideoElement,
     canvasesByPriority: HTMLCanvasElement[][],
-    timecodeSynchronizer: TimecodeSynchronizer,
-    videoLayout: BroadcastVideoLayout
+    timecodeSynchronizer: TimecodeSynchronizer
   ) {
-    // This is set with a default, but later will need to be not just dynamically updated
-    // but likely the number of canvases will be controlled by this plus a layout mapping
-    this.videoLayout = videoLayout;
+    this.videoLayout = DefaultVideoLayout;
+    VideoEventProcessor.subscribeTo("VideoLayoutEvent", (event) => {
+      this.videoLayout = event.detail.data;
+    });
     this.videoElement = videoElement;
     this.timecodeSynchronizer = timecodeSynchronizer;
 
@@ -25,11 +27,18 @@ export default class VideoDemixer {
       canvasGroup.map((canvas) => canvas.getContext("2d"))
     );
 
+    this.drawFrame();
+  }
+
+  set videoLayout(videoLayout: BroadcastVideoLayout) {
+    this._videoLayout = videoLayout;
     this.sectionsByPriority = this.videoLayout.sections.sort(
       (a, b) => a.priority - b.priority
     );
+  }
 
-    this.drawFrame();
+  get videoLayout(): BroadcastVideoLayout {
+    return this._videoLayout;
   }
 
   private drawFrame() {

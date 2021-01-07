@@ -2,6 +2,11 @@ import { BroadcastVideoLayout } from "types/video_layout";
 import { VideoCaptureSource } from "helpers/broadcast/capture_sources/base";
 import Timecode from "util/timecode";
 import Mixer from "helpers/broadcast/mixers/mixer";
+import { buildBroadcastLayout } from "util/layout_packer";
+import { sendBroadcastLayoutUpdate } from "helpers/broadcast_helpers";
+
+const VIDEO_SIZE = { width: 1280, height: 1080 };
+export const BroadcastLayoutChangedEvent = "BroadcastLayoutChanged";
 
 export default class VideoMixer implements Mixer {
   canvas: HTMLCanvasElement;
@@ -10,17 +15,27 @@ export default class VideoMixer implements Mixer {
   public broadcastLayout: BroadcastVideoLayout;
   private captureSources: VideoCaptureSource[] = [];
 
-  constructor(broadcastLayout: BroadcastVideoLayout) {
-    this.broadcastLayout = broadcastLayout;
+  constructor() {
     this.canvas = document.createElement("canvas");
     this.canvas.setAttribute("id", "debug_canvas");
-    this.canvas.setAttribute("width", broadcastLayout.width.toString());
-    this.canvas.setAttribute("height", broadcastLayout.height.toString());
+    this.canvas.setAttribute("width", VIDEO_SIZE.width.toString());
+    this.canvas.setAttribute("height", VIDEO_SIZE.height.toString());
     document.querySelector(".debug-area").appendChild(this.canvas);
 
     this.canvasContext = this.canvas.getContext("2d");
 
+    this.updateBroadcastLayout();
+
     this.computeFrame();
+  }
+
+  private updateBroadcastLayout() {
+    this.broadcastLayout = buildBroadcastLayout(
+      VIDEO_SIZE,
+      this.captureSources
+    );
+
+    sendBroadcastLayoutUpdate(this.broadcastLayout);
   }
 
   private computeFrame() {
@@ -77,12 +92,14 @@ export default class VideoMixer implements Mixer {
     this.captureSources = this.captureSources.sort(
       (a, b) => a.layout.priority - b.layout.priority
     );
+    this.updateBroadcastLayout();
   }
 
   removeCaptureSource(_captureSource: VideoCaptureSource): void {
     this.captureSources = this.captureSources.filter(
       (source) => source.deviceId !== _captureSource.deviceId
     );
+    this.updateBroadcastLayout();
   }
 
   async getVideoShots(): Promise<Array<Blob>> {

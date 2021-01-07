@@ -105,8 +105,8 @@ class Video < ApplicationRecord
   end
 
   def recent_timecode_sorted_events
-    navigations = browser_navigations.order("created_at DESC").limit(100)
-    (navigations + pin_events)
+    layout_events = video_layout_events.order("created_at").limit(10)
+    (browser_navigations.order("created_at DESC").limit(100) + pin_events + layout_events)
       .sort_by(&:timecode_ms)
   end
 
