@@ -1,6 +1,7 @@
 @use "../utils/color";
 
-#video-show {
+#video-show,
+#upcoming-stream {
   .streamer-profile {
     flex: 1;
     border: 1px solid color.$gray-light;

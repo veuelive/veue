@@ -22,7 +22,7 @@ export default class extends Controller {
       setTimeout(() => {
         this.element.classList.remove("active");
         this.state = "enabled";
-      }, 5000);
+      }, 6000);
     }
   }
 

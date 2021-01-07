@@ -20,7 +20,7 @@ module VideosHelper
   end
 
   def upcoming_stream?
-    current_video.stream_type == "upcoming"
+    current_video&.stream_type == "upcoming"
   end
 
   def play_button(mobile: false)

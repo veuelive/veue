@@ -54,42 +54,40 @@ export default class extends BaseController {
       startMuxData();
     }
 
-    if (this.streamType !== "upcoming") {
-      this.timecodeSynchronizer = new TimecodeSynchronizer(
-        this.broadcastLayout.timecode,
-        () => {
-          this.timecodeChanged();
-        }
-      );
+    this.timecodeSynchronizer = new TimecodeSynchronizer(
+      this.broadcastLayout.timecode,
+      () => {
+        this.timecodeChanged();
+      }
+    );
 
-      this.videoDemixer = new VideoDemixer(
-        this.videoTarget,
-        [
-          [this.primaryCanvasTarget],
-          [this.pipSecondaryCanvasTarget, this.fixedSecondaryCanvasTarget],
-        ],
-        this.timecodeSynchronizer,
-        this.broadcastLayout
-      );
+    this.videoDemixer = new VideoDemixer(
+      this.videoTarget,
+      [
+        [this.primaryCanvasTarget],
+        [this.pipSecondaryCanvasTarget, this.fixedSecondaryCanvasTarget],
+      ],
+      this.timecodeSynchronizer,
+      this.broadcastLayout
+    );
 
-      this.videoTarget.addEventListener("loadedmetadata", async () => {
-        this.state = "ready";
-        const params = new URLSearchParams(window.location.search);
-        if (params.has("t")) {
-          this.videoTarget.currentTime = parseInt(params.get("t"));
-        }
+    this.videoTarget.addEventListener("loadedmetadata", async () => {
+      this.state = "ready";
+      const params = new URLSearchParams(window.location.search);
+      if (params.has("t")) {
+        this.videoTarget.currentTime = parseInt(params.get("t"));
+      }
 
-        this.togglePlay();
-      });
+      this.togglePlay();
+    });
 
-      if (!this.videoTarget.canPlayType("application/vnd.apple.mpegurl")) {
-        const hlsSource = this.videoTarget.getAttribute("src");
-        if (hlsSource) {
-          // HLS.js-specific setup code
-          const hls = new Hls();
-          hls.loadSource(hlsSource);
-          hls.attachMedia(this.videoTarget);
-        }
+    if (!this.videoTarget.canPlayType("application/vnd.apple.mpegurl")) {
+      const hlsSource = this.videoTarget.getAttribute("src");
+      if (hlsSource) {
+        // HLS.js-specific setup code
+        const hls = new Hls();
+        hls.loadSource(hlsSource);
+        hls.attachMedia(this.videoTarget);
       }
     }
 

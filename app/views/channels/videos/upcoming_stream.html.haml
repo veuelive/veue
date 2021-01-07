@@ -1,0 +1,28 @@
+.content-area#upcoming-stream{
+  "data": {
+    "controller": "upcoming-stream-audience",
+    "audience-view": {
+      "stream-type": current_video.stream_type
+    },
+    "video-id": current_video.id,
+    "channel-id": current_channel.id,
+    "channel-slug": current_channel.slug
+  }
+}
+  .content-area__primary
+    .stream-notification
+      .stream-notification__header
+        = svg_tag "no-stream"
+        %span
+          This stream has not started yet
+    .stream-body
+      .stream-body__icon
+        = svg_tag "logo-gray-xxl"
+    #no-webcam
+      = svg_tag "no-webcam"
+    #streamer-profile-area
+      = render partial: "channels/videos/partials/streamer_profile"
+  .content-area__secondary
+    .secondary-upcoming-stream
+      = svg_tag "no-webcam"
+    = render partial: "shared/chat", locals: { video: current_video }
