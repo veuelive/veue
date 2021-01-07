@@ -4,7 +4,7 @@
   }
 }
   - if upcoming_stream?
-    = render template: "channels/videos/upcoming_stream"
+    = render partial: "channels/videos/partials/upcoming_stream"
   - elsif current_video
     = render template: "channels/videos/show"
   - else
