@@ -38,7 +38,8 @@ export interface VideoCaptureInterface extends Size {
   videoSourceType: VideoSourceType;
 }
 
-export class VideoCaptureSource extends CaptureSource
+export class VideoCaptureSource
+  extends CaptureSource
   implements VideoCaptureInterface {
   layout: LayoutSection;
   element: HTMLVideoElement;
