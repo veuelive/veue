@@ -1,5 +1,5 @@
 import BaseController from "./base_controller";
-import * as IntlTelInput from "intl-tel-input";
+import IntlTelInput from "intl-tel-input";
 import "intl-tel-input/build/css/intlTelInput.min.css";
 import { secureFormFetch } from "util/fetch";
 import { showHideByLogin } from "helpers/authentication_helpers";
