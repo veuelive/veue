@@ -1418,18 +1418,6 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz"
   integrity sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
 
-"@types/w3c-image-capture@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@types/w3c-image-capture/-/w3c-image-capture-1.0.2.tgz"
-  integrity sha512-r3OpASHP8NtO0WVc+YHZQks1qupfpx7wI7SFiVIsvuzmIQIv1K86wUG5w6o2zY2GN2QvjEGIF4eXBpOJa9dj6A==
-  dependencies:
-    "@types/webrtc" "*"
-
-"@types/webrtc@*":
-  version "0.0.26"
-  resolved "https://registry.yarnpkg.com/@types/webrtc/-/webrtc-0.0.26.tgz"
-  integrity sha512-hTDoPKPYbgcogZA9eqhihPO+HnUs5BNPfnoOyc9bzcuq56eYV28zwJ+3tortPN0uXgmDvNs3f1JaT4oTbtWxqg==
-
 "@types/yargs-parser@*":
   version "15.0.0"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-15.0.0.tgz"
