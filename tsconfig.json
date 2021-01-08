@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "declaration": false,
-    "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": ["dom", "ESNext"],
