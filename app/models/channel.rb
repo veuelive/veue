@@ -39,6 +39,10 @@ class Channel < ApplicationRecord
     videos.create!(user: user)
   end
 
+  def recent_broadcasts
+    videos.finished.visibility_public.most_recent
+  end
+
   def slug_candidates
     [
       :name,

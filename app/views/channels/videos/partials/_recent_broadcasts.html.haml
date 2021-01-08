@@ -1,0 +1,5 @@
+.broadcasts
+  - recent_broadcasts = current_channel.recent_broadcasts
+  - unless recent_broadcasts.empty?
+    .broadcasts__header Broadcasts
+    = render collection: recent_broadcasts.decorate, partial: "shared/video_card"

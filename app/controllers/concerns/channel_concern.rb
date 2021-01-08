@@ -5,7 +5,7 @@ module ChannelConcern
 
   included do
     def current_channel
-      @current_channel ||= Channel.friendly.find(params[:channel_id])
+      @current_channel ||= Channel.friendly.find(params[:channel_id])&.decorate
     end
     helper_method :current_channel
 

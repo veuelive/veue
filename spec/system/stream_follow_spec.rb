@@ -26,7 +26,7 @@ RSpec.describe "Follow from VOD" do
     it "should make user following the streamer" do
       visit path_for_video(video)
       find(".follow-btn").click
-      expect(page).to have_content("Unfollow")
+      expect(page).to have_content("Following")
     end
 
     it "should make user unfollowed streamer" do
@@ -35,7 +35,7 @@ RSpec.describe "Follow from VOD" do
         user: follower,
       )
       visit path_for_video(video)
-      find(".follow-btn").click
+      find(".unfollow-btn").click
 
       expect(page).to have_content("Follow")
     end

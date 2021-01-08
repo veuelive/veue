@@ -21,7 +21,7 @@ module Channels
     helper_method :current_video
 
     def current_channel
-      current_video.channel
+      current_video.channel.decorate
     end
     helper_method :current_channel
   end

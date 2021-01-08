@@ -1,0 +1,19 @@
+@use "../utils/breakpoints" as *;
+
+#channels__show {
+  .channel-page {
+    display: flex;
+  }
+
+  .broadcasts {
+    width: 100%;
+    margin: 10px auto;
+  }
+
+  @include desktop() {
+    .broadcasts {
+      margin: 0 auto;
+      max-width: 90vw;
+    }
+  }
+}

@@ -26,7 +26,13 @@ export default class extends Controller {
   }
 
   scrollToBottom(): void {
-    this.messagesTarget.lastElementChild.scrollIntoView({
+    const lastChild = this.messagesTarget.lastElementChild;
+
+    if (!lastChild) {
+      return;
+    }
+
+    lastChild.scrollIntoView({
       behavior: "smooth",
       block: "start",
       inline: "nearest",

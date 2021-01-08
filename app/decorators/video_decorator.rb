@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class VideoDecorator < Draper::Decorator
-  include ActionView::Helpers::NumberHelper
-
   delegate_all
 
   def thumbnail_url
@@ -21,11 +19,7 @@ class VideoDecorator < Draper::Decorator
   end
 
   def active_viewers_count
-    number_to_human(
-      video.video_views.connected.count,
-      format: "%n%u",
-      units: {thousand: "K", million: "M", billion: "B"},
-    )
+    helpers.number_to_social(video.video_views.connected.count)
   end
 
   def display_state

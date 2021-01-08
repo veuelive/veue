@@ -24,7 +24,7 @@ describe "Live Audience View" do
     it "should allow you to follow the streamer" do
       find(".follow-btn").click
 
-      expect(page).to have_content("Unfollow")
+      expect(page).to have_content("Following")
 
       expect(channel.followers).to include(user)
     end

@@ -1,0 +1,50 @@
+@use "../utils/color";
+@use '../utils/breakpoints' as *;
+
+.main-footer {
+  // layout
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 10px 0;
+  margin-top: auto;
+
+  // style
+  font-size: 15px;
+  color: color.$neutral-middle;
+  border-top: 1px solid color.$neutral-soft;
+
+  > * {
+    padding: 10px 30px;
+  }
+
+  &__contact {
+    display: flex;
+    align-items: center;
+  }
+
+  &__twitter-icon,
+  &__seperator {
+    display: flex;
+    align-items: center;
+  }
+
+  &__seperator {
+    margin: 0 10px;
+  }
+
+  &__email {
+    color: color.$neutral-middle;
+    text-decoration: none;
+    margin-right: auto;
+  }
+}
+
+@include desktop() {
+  .main-footer {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

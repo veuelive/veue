@@ -1,55 +1,25 @@
 @use "../utils/color";
+@use "../utils/font";
+@use "../utils/breakpoints" as *;
 
 #video-show,
 #upcoming-stream {
   .streamer-profile {
-    flex: 1;
-    border: 1px solid color.$gray-light;
+    background: color.$white;
     border-radius: 10px;
-    padding: 1rem;
-    font-size: 0.875rem;
-    text-transform: capitalize;
-    display: flex;
-    flex-direction: column;
+    padding: 0;
 
     .streamer-info {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-
-      &__avatar {
-        display: flex;
-        padding-right: 0.25rem;
-        align-items: center;
-
-        svg {
-          border-radius: 50%;
-          height: 2rem;
-          width: 2rem;
-        }
-
-        .streamer-name {
-          font-size: 14px;
-          font-weight: 500;
-          font-stretch: normal;
-          font-style: normal;
-          line-height: 2.57;
-          letter-spacing: 0.7px;
-          text-align: left;
-          padding-left: 0.5rem;
-        }
-      }
+      padding: 10px 0;
     }
 
-    .stream-info {
-      .stream-num {
-        color: color.$gray-dark;
-        margin-bottom: 0.5rem;
-      }
+    .streamer-info-mobile__about {
+      display: none;
+    }
 
-      .stream-name {
-        color: color.$gray-darker;
+    @include desktop() {
+      .streamer-info {
+        padding: 50px 0;
       }
     }
   }
