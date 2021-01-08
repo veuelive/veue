@@ -1,0 +1,39 @@
+@use "../utils/color";
+@use "../utils/font";
+@use "../utils/breakpoints" as *;
+
+#channel-profile {
+  width: 100vw;
+  position: relative;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+
+  #channel-profile__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 140px;
+    background: color.$veue-corporate;
+    z-index: -1;
+  }
+
+  #channel-profile__area {
+    margin: 78px 10px 0 10px;
+    min-height: 120px;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    text-transform: capitalize;
+    background: color.$white;
+  }
+
+  @include desktop() {
+    #channel-profile__area {
+      margin: 78px auto 0 auto;
+      width: 85%;
+      max-width: 1300px;
+    }
+  }
+}

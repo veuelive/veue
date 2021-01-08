@@ -18,7 +18,10 @@
         }
       }= current_video.active_viewers_count
     .widget.live
-      LIVE
+      .widget-live__desktop
+        LIVE
+      .widget-live__mobile
+        = svg_tag "live"
   - if current_video.finished?
     - video_views = current_video.video_views.count
     .widget{"data-views": video_views}

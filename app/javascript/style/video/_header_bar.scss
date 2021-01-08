@@ -12,6 +12,7 @@
     padding-right: 0.2rem;
     padding-left: 0.2rem;
     border-bottom: 1px solid color.$gray-light;
+    margin-right: 10px;
 
     &__address_bar {
       color: color.$gray-dark;
@@ -68,6 +69,21 @@
         background: color.$red-highlight;
         color: color.$white;
         font-weight: font.$heavy-weight;
+        display: flex;
+
+        & > .widget-live__desktop {
+          display: none;
+        }
+
+        @include desktop() {
+          & > .widget-live__desktop {
+            display: block;
+          }
+
+          & > .widget-live__mobile {
+            display: none;
+          }
+        }
       }
     }
 
@@ -79,6 +95,7 @@
       z-index: 1;
 
       &:hover {
+        background: color.$neutral-darker;
         .badge-message {
           display: block;
         }
@@ -99,7 +116,7 @@
           position: fixed;
           padding: 0.65rem 1rem;
           border-radius: 10px;
-          background-color: color.$gray-darker-2;
+          background-color: color.$neutral-darker;
           max-width: 160px;
 
           &:before {

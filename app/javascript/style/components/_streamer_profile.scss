@@ -1,0 +1,141 @@
+@use "../utils/color";
+@use "../utils/font";
+@use "../utils/breakpoints" as *;
+
+.streamer-profile {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .streamer-info {
+    padding: 50px 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    &__avatar {
+      margin: 0 10px 0 30px;
+
+      svg {
+        border: 1px solid color.$neutral-accents;
+        border-radius: 50%;
+        height: 64px;
+        width: 64px;
+      }
+    }
+
+    &__text {
+      align-self: center;
+      flex: 1;
+      max-width: 475px;
+      padding-right: 1rem;
+    }
+
+    &__name {
+      font-size: 20px;
+      font-weight: 500;
+      font-family: font.$poppins;
+      color: color.$veue-corporate;
+
+      a {
+        text-decoration: none;
+        color: color.$veue-corporate;
+        text-transform: capitalize;
+      }
+    }
+
+    &-mobile__about,
+    &-desktop__about {
+      font-size: 16px;
+      color: color.$neutral-dark;
+    }
+
+    &-desktop__about {
+      display: none;
+    }
+
+    &-mobile__about {
+      border-top: 1px solid color.$neutral-accents;
+      padding: 1.5rem 1.8rem;
+      display: flex;
+    }
+
+    &__follow-info {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-left: auto;
+
+      .streamer-info__follow-count {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 34px;
+        min-width: 63px;
+        border-radius: 10px;
+        color: color.$veue-corporate;
+        background: color.$veue-lilac;
+        flex: 0 1 auto;
+        margin: 0 20px;
+
+        svg {
+          height: 13px;
+          width: 14px;
+
+          path {
+            fill: color.$veue-corporate;
+          }
+        }
+
+        span {
+          padding-left: 10px;
+        }
+      }
+
+      .follow-btn {
+        color: color.$veue-corporate;
+        background: color.$white;
+        border: 1px solid color.$veue-corporate;
+      }
+    }
+  }
+  .stream-info {
+    .stream-num {
+      color: color.$gray-dark;
+      margin-bottom: 0.5rem;
+    }
+
+    .stream-name {
+      color: color.$gray-darker;
+    }
+  }
+}
+
+@include desktop() {
+  .streamer-profile {
+    .streamer-info {
+      &__avatar {
+        margin: 0 40px 0 30px;
+      }
+
+      &__text {
+        display: flex;
+        flex-direction: column;
+      }
+
+      &-desktop__about {
+        display: block;
+      }
+
+      &-mobile__about {
+        display: none;
+      }
+
+      &__follow-info {
+        margin-right: 30px;
+      }
+    }
+  }
+}

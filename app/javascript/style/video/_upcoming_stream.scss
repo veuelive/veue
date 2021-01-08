@@ -15,6 +15,8 @@
     padding-right: 0.2rem;
     padding-left: 0.2rem;
     border-bottom: 1px solid color.$neutral-accents;
+    margin-right: 10px;
+
     &__header {
       background-color: color.$neutral-regular;
       border-radius: 10px;
@@ -32,16 +34,20 @@
       }
     }
   }
+
   .stream-body {
-    border-radius: 0 0 10px 10px;
+    // layout
     display: flex;
-    width: 77vw;
-    height: calc(100vh - 54px);
+    height: calc(70vh - 54px);
+    width: calc(100% - 10px);
     max-width: 1280px;
     align-items: center;
     justify-content: center;
-    background-color: color.$white;
     margin-bottom: 5px;
+
+    // style
+    background-color: color.$white;
+    border-radius: 0 0 10px 10px;
   }
 
   #no-webcam {
@@ -70,8 +76,8 @@
     }
     #no-webcam {
       position: absolute;
-      right: 10px;
-      bottom: 65px;
+      right: 0;
+      transform: translate(-10%, -115%);
       width: 25vw;
       height: 20vw;
       display: flex;

@@ -62,7 +62,7 @@ class BroadcastsController < ApplicationController
   helper_method :current_broadcast_video
 
   def current_channel
-    @current_channel ||= current_user.channels.first
+    @current_channel ||= current_user.channels.first&.decorate
   end
   helper_method :current_channel
 

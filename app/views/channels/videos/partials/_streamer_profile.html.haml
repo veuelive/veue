@@ -1,13 +1,29 @@
+- about = "Entrepreneur and Life Artist | Express yourself! #vegan #teamdogs Moma of Benjamin and Paloma"
+
 .streamer-profile{ data: {controller: "streamer-profile"}}
   .streamer-info
     .streamer-info__avatar
-      = inline_svg_pack_tag 'media/images/user.svg'
-      .streamer-name
-        = current_channel.name
-    - if user_signed_in?
-      - if current_user.follows?(current_channel)
-        %button.follow-btn{data: { action: "click->streamer-profile#unfollow" }} Unfollow
+      = svg_tag 'user-icon-dark'
+    .streamer-info__text
+      .streamer-info__name
+        %a{href: channel_path(current_channel)}
+          = current_channel.name
+      .streamer-info-desktop__about
+        = about
+    .streamer-info__follow-info
+      .streamer-info__follow-count
+        = svg_tag 'user-icon-dark'
+        %span
+          = current_channel.followers.count
+
+      - if user_signed_in?
+        - if current_user.follows?(current_channel)
+          %button.unfollow-btn{data: { action: "click->streamer-profile#unfollow" }} Following
+        - else
+          %button.follow-btn{data: { action: "click->streamer-profile#follow" }} Follow
       - else
-        %button.follow-btn{data: { action: "click->streamer-profile#follow" }} Follow
-    - else
-      %button.follow-btn{data: { action: "click->authentication#showModal" }} Follow
+        %button.follow-btn{data: { action: "click->authentication#showModal" }} Follow
+
+
+  .streamer-info-mobile__about
+    = about

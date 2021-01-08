@@ -25,7 +25,7 @@ export default class extends BaseController {
 
   private async insertHTML(response): Promise<void> {
     const html = await response.text();
-    document.getElementById("streamer-profile-area").innerHTML = html;
+    this.element.parentElement.innerHTML = html;
   }
 
   private followPath(): string {

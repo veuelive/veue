@@ -4,12 +4,7 @@ module Channels
   class ChannelsController < ApplicationController
     include ChannelConcern
 
-    def show
-      @videos = current_channel.videos
-                               .visibility_public
-                               .most_recent
-                               .decorate
-    end
+    def show; end
 
     def viewed
       live_video = current_channel.videos.live.first

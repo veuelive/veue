@@ -1,8 +1,11 @@
+$header-height: 54px;
+
 #layout-container {
   display: flex;
   flex-direction: column;
+
   #main-container {
-    height: calc(100vh - 54px);
+    height: calc(100vh - #{$header-height});
     display: flex;
     justify-content: center;
     padding: 0;

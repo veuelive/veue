@@ -2,12 +2,18 @@
 
 #videos__show,
 #channels__show {
-  .channel-page {
-    display: flex;
+  overflow-x: hidden;
+
+  #streamer-profile-area {
+    margin: 10px 10px auto 0;
   }
+
+  .broadcasts__header {
+    margin-bottom: 0;
+  }
+
   /**
-  Put any main responsive layout code for ONLY desktop here... this does not count elements that scale to their
-  surroundings
+  Put any main responsive layout code for ONLY desktop here... this does not count elements that scale to their surroundings
    */
   @include desktop() {
     .content-area {
@@ -18,15 +24,15 @@
 
       .content-area__primary {
         flex: 1;
-        overflow: scroll;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: 100%;
+        max-width: 1280px;
+        margin-left: 1vw;
 
         &::-webkit-scrollbar {
           display: none;
         }
-
-        height: 100%;
-        max-width: 1280px;
-        margin-left: 1vw;
       }
 
       > div {
@@ -45,6 +51,10 @@
 
       canvas.pip-secondary-canvas {
         display: none;
+      }
+
+      .broadcasts {
+        display: grid;
       }
     }
   }
@@ -146,7 +156,6 @@
       }
 
       #layout-container {
-        //  height: 100%;
         bottom: 270px;
       }
     }
@@ -214,5 +223,17 @@
     canvas.pip-secondary-canvas {
       display: none;
     }
+  }
+}
+
+[data-audience-view-stream-type="vod"],
+[data-audience-view-stream-type="upcoming"],
+[data-audience-view-stream-type="live"] {
+  .broadcasts {
+    display: none;
+  }
+
+  .content-area__secondary {
+    margin-top: 10px;
   }
 }

@@ -1,0 +1,11 @@
+%footer.main-footer
+  .main-footer__contact
+    %a.main-footer__twitter-icon{href: "https://twitter.com/veuelive"}
+      = svg_tag "twitter-icon"
+    %span.main-footer__seperator
+      = svg_tag "ellipse-2"
+    %a.main-footer__email{href: "mailto:hello@veuelive.com"}
+      hello@veuelive.com
+
+  .main-footer__copyright
+    &copy; 2020-#{Time.zone.now.year} Veue Inc. All Rights Reserved

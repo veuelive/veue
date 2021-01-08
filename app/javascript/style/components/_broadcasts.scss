@@ -1,0 +1,29 @@
+@use "../utils/color";
+@use "../utils/font";
+@use "../utils/breakpoints" as *;
+
+$video-width: calc(8vw + 260px);
+
+.broadcasts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, $video-width);
+  justify-content: space-evenly;
+  align-items: center;
+
+  &__header {
+    font-family: font.$poppins;
+    font-weight: font.$normal-weight;
+    line-height: 30px;
+    font-size: 20px;
+    color: color.$neutral-dark;
+    padding-left: 10px;
+    margin: 20px 0;
+    width: 100%;
+    max-width: 90vw;
+    grid-column: 1 / -1;
+  }
+
+  .video-card {
+    margin: 20px;
+  }
+}
