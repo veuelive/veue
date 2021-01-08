@@ -17,6 +17,7 @@
       flex: 1;
       font-size: 1rem;
       border: 1px solid color.$gray-light;
+      min-width: 0;
 
       #address-input {
         overflow: hidden;
