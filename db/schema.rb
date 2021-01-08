@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_06_173803) do
-
-  # These are extensions that must be enabled in order to support this database
+ActiveRecord::Schema.define(version: 2021_01_11_135504) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   # These are custom enum types that must be created before they can be used in the schema definition
   create_enum "sms_status_setting", ["new_number", "instructions_sent", "unsubscribed"]
@@ -76,6 +75,8 @@ ActiveRecord::Schema.define(version: 2021_01_06_173803) do
     t.uuid "user_id"
     t.uuid "video_id"
     t.string "event_type"
+    t.uuid "channel_id"
+    t.index ["channel_id"], name: "index_mux_webhooks_on_channel_id"
     t.index ["mux_id"], name: "index_mux_webhooks_on_mux_id", unique: true
     t.index ["user_id"], name: "index_mux_webhooks_on_user_id"
     t.index ["video_id"], name: "index_mux_webhooks_on_video_id"
