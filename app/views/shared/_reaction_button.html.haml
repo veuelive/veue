@@ -1,2 +1,7 @@
-.reaction-button-area{data: {controller: "user-reaction", action: "click->user-reaction#sendReaction"}}
+.reaction-button-area{
+  data: {
+    controller: "chat--user-reaction",
+    action: "click->chat--user-reaction#sendReaction"
+  }
+}
   = svg_tag "heart"
