@@ -13,6 +13,7 @@
   border-radius: 10px;
 
   .messages-overflow-container {
+    position: relative;
     flex: 1 1 auto;
     overflow-y: auto;
     height: 0;
@@ -147,6 +148,22 @@
       }
     }
   }
+
+  .chat-scroll {
+    display: flex;
+    position: absolute;
+    cursor: pointer;
+    bottom: 100px;
+    right: 30px;
+    padding: 0.65rem;
+    border-radius: 10px;
+    background-color: color.$white;
+    border: 1px solid color.$neutral-regular;
+    svg {
+      fill: color.$neutral-regular;
+    }
+  }
+
   .message-write {
     border-top: 1px solid color.$neutral-accents;
     width: 100%;

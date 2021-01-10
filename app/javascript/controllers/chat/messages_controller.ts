@@ -1,4 +1,4 @@
-import BaseController from "./base_controller";
+import BaseController from "../base_controller";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import { currentUserId } from "helpers/authentication_helpers";
 import userSvg from "images/user-icon-dark.svg";
@@ -8,7 +8,7 @@ import {
   UserReactionMessageEvent,
 } from "./reaction_notification_controller";
 
-export default class ChatMessagesController extends BaseController {
+export default class MessagesController extends BaseController {
   private myUserId: string;
   private lastMessageFromUserId: string;
   private chatMessageCallbackHandler: (event) => void;

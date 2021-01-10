@@ -1,11 +1,27 @@
-.chat-section
-  .messages-overflow-container{"data-simplebar": true}
-    .messages{data: {controller: "chat-messages"}}
-  .like-notification{data: {controller: "reaction-notification"}}
+.chat-section{
+  data: {
+    controller: "chat--scroll"
+  }
+}
+  .messages-overflow-container
+    .messages{
+      data: {
+        controller: "chat--messages",
+        target: "chat--scroll.messages"
+      }
+    }
+  %button.chat-scroll{
+    data: {
+      target: "chat--scroll.scrollButton",
+      action: "chat--scroll#scrollToBottom"
+    }
+  }
+    = svg_tag "arrow"
+  .like-notification{data: {controller: "chat--reaction-notification"}}
   - unless video.finished?
-    .message-write{data: { "controller": "chat", "show-when-logged-in": true }}
+    .message-write{data: { "controller": "chat--send-message", "show-when-logged-in": true }}
       .chat-controls
-        .write-area{placeholder: 'Send a message', contenteditable: true, role: "textbox", data: {action: "keydown->chat#chatBoxKeyDown", target: "chat.messageInput"}}
+        .write-area{placeholder: 'Send a message', contenteditable: true, role: "textbox", data: {action: "keydown->chat--send-message#chatBoxKeyDown", target: "chat--send-message.messageInput"}}
         = render "shared/reaction_button"
     .message-login-prompt{data: { "show-when-logged-out": true }}
       %button{data: {action: "authentication#showModal"}} Login To Chat
