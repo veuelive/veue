@@ -53,6 +53,15 @@ describe "Prerecorded Audience View" do
       visit path_for_video(video)
       expect(page).to have_css(".widget[data-views='3']")
     end
+
+    it "should have replay badge which show message on mouse hover" do
+      visit path_for_video(video)
+
+      expect(page).to have_css(".replay-badge")
+
+      find(".replay-badge").hover
+      expect(page).to have_css(".badge-message", visible: true)
+    end
   end
 
   describe "Video Controls" do
