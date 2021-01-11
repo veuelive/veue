@@ -2,6 +2,7 @@
 @use 'utils/font';
 @use 'utils/text';
 @use 'utils/reactions';
+@use "utils/breakpoints" as *;
 
 // Realtime chat section
 .chat-section {
@@ -153,14 +154,19 @@
     display: flex;
     position: absolute;
     cursor: pointer;
-    bottom: 100px;
-    right: 30px;
+    bottom: 92px;
+    right: 25px;
     padding: 0.65rem;
     border-radius: 10px;
     background-color: color.$white;
     border: 1px solid color.$neutral-regular;
     svg {
       fill: color.$neutral-regular;
+    }
+
+    @include mobilePortrait() {
+      bottom: 80px;
+      right: 12px;
     }
   }
 
