@@ -17,11 +17,36 @@
     }
   }
     = svg_tag "arrow"
-  .like-notification{data: {controller: "chat--reaction-notification"}}
+  .like-notification{
+    data: {
+      controller: "chat--reaction-notification"
+    }
+  }
   - unless video.finished?
-    .message-write{data: { "controller": "chat--send-message", "show-when-logged-in": true }}
+    .message-write{
+      data: {
+        controller: "chat--send-message",
+        "show-when-logged-in": true 
+      }
+    }
       .chat-controls
-        .write-area{placeholder: 'Send a message', contenteditable: true, role: "textbox", data: {action: "keydown->chat--send-message#chatBoxKeyDown", target: "chat--send-message.messageInput"}}
+        .write-area{
+          placeholder: 'Send a message',
+          contenteditable: true,
+          role: "textbox",
+          data: {
+            action: "keydown->chat--send-message#chatBoxKeyDown",
+            target: "chat--send-message.messageInput"
+          }
+        }
         = render "shared/reaction_button"
-    .message-login-prompt{data: { "show-when-logged-out": true }}
-      %button{data: {action: "authentication#showModal"}} Login To Chat
+    .message-login-prompt{
+      data: {
+        "show-when-logged-out": true 
+      }
+    }
+      %button{
+        data: {
+          action: "authentication#showModal"
+        }
+      } Login To Chat
