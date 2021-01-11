@@ -56,12 +56,12 @@ describe "chat" do
       end
 
       chat_message = first(".message-display")
-      execute_script('arguments[0].scrollIntoView(true)', chat_message)
+      execute_script("arguments[0].scrollIntoView(true)", chat_message)
 
       expect(page).to have_css(".chat-scroll")
 
       messages = find(".messages")
-      execute_script('arguments[0].lastElementChild.scrollIntoView(true)', messages)
+      execute_script("arguments[0].lastElementChild.scrollIntoView(true)", messages)
 
       expect(page).to_not have_css(".chat-scroll")
     end
