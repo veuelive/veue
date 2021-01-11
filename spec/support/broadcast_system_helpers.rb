@@ -17,4 +17,8 @@ module BroadcastSystemHelpers
 
     expect(page).to have_css("[data-video-visibility='#{visibility}']")
   end
+
+  def wait_for_broadcast_state(state)
+    expect(page).to have_css("div[data-broadcast-state='#{state}']")
+  end
 end

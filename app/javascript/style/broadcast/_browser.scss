@@ -1,9 +1,18 @@
 @use "../utils/color";
 
-#broadcast {
-  .browser-bar {
-    margin: 0 auto;
-    height: 4.375rem;
+.browser {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: stretch;
+
+  &__underlay {
+    flex: 1;
+    background: color.$gray-dark;
+  }
+
+  &__bar {
+    height: 70px;
     background-color: color.$white;
     box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
     display: flex;
