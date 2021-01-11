@@ -21,10 +21,12 @@ export default class CaptureSourceManager {
     this.videoMixer = videoMixer;
     this.audioMixer = audioMixer;
 
-    this.mediaChangeListener = async (event: CustomEvent) => {
-      await this.switchToDevice(event.detail as MediaDeviceInfo);
-    };
-    document.addEventListener(MediaDeviceChangeEvent, this.mediaChangeListener);
+    document.addEventListener(
+      MediaDeviceChangeEvent,
+      async (event: CustomEvent) => {
+        await this.switchToDevice(event.detail as MediaDeviceInfo);
+      }
+    );
   }
 
   set webcamSource(source: WebcamCaptureSource) {

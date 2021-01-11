@@ -17,29 +17,22 @@ textarea {
 }
 
 #broadcast {
-  @media (min-width: 1079px) {
-    .content-area {
-      .chat-btn,
-      .close-btn {
-        display: none;
-      }
-    }
-  }
-  .chat-section {
-    height: 61vh;
-  }
   .content-area {
-    width: 100%;
-    height: 100%;
+    height: 100vh;
     display: flex;
+    align-items: stretch;
+
     .content--left {
-      width: 910px;
-      height: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
     .content--right {
       width: 320px;
       padding: 5px;
       position: relative;
+      display: flex;
+      flex-direction: column;
 
       #webcam_preview {
         width: 320px;

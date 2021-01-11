@@ -15,6 +15,7 @@ import {
   CreateBrowserViewPayload,
   WakeupPayload,
 } from "types/electron_env";
+import { domRectToRect } from "helpers/converters";
 
 type BroadcastState =
   | "loading"
@@ -25,8 +26,9 @@ type BroadcastState =
   | "finished";
 
 export default class extends Controller {
-  static targets = ["webcamVideoElement", "timeDisplay"];
+  static targets = ["webcamVideoElement", "timeDisplay", "browserUnderlay"];
   private webcamVideoElementTarget!: HTMLVideoElement;
+  private browserUnderlayTarget!: HTMLDivElement;
 
   private videoMixer: VideoMixer;
   private streamCapturer: StreamRecorder;
@@ -64,30 +66,25 @@ export default class extends Controller {
         width: 1250,
         height: 685,
       };
-      ipcRenderer.send("wakeup", {
+      await ipcRenderer.invoke("wakeup", {
         mainWindow: windowSize,
         rtmpUrl: `rtmps://global-live.mux.com/app/${this.data.get(
           "stream-key"
         )}`,
         sessionToken: this.data.get("session-token"),
       } as WakeupPayload);
+      const browserArea = domRectToRect(
+        this.browserUnderlayTarget.getBoundingClientRect()
+      );
 
-      const browserViewBounds = {
-        x: 10,
-        y: 80,
-        width: 900,
-        height: 570,
-      };
-
-      ipcRenderer.send("createBrowserView", {
+      await ipcRenderer.invoke("createBrowserView", {
         window: "main",
-        bounds: browserViewBounds,
+        bounds: browserArea,
         url: "https://www.apple.com",
       } as CreateBrowserViewPayload);
-
       const broadcastArea = calculateCaptureLayout(
         windowSize,
-        browserViewBounds,
+        browserArea,
         this.environment.primaryDisplay.workArea
       );
 

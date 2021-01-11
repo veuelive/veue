@@ -26,7 +26,7 @@ describe "Broadcast View" do
   end
 
   it "should load for a setup streamer" do
-    expect(page).to have_css("div[data-broadcast-state='ready']")
+    wait_for_broadcast_state("ready")
 
     click_button("Start Broadcast")
 
@@ -45,12 +45,12 @@ describe "Broadcast View" do
     it "should allow me to change my URL" do
       navigate_to(url = "https://1982.com")
 
-      find("*[data-broadcast-state='ready']")
+      wait_for_broadcast_state("ready")
       click_button("Start Broadcast")
       find("*[data-broadcast-started-at]")
 
       expect(video).to be_live
-      find("*[data-broadcast-state='live']")
+      wait_for_broadcast_state("live")
       expect(BrowserNavigation.last.payload["url"]).to eq(url)
 
       visit channel_path(streamer.channels.first)
@@ -67,9 +67,11 @@ describe "Broadcast View" do
       # Just in case, lets clear out our jobs
       clear_enqueued_jobs
 
+      wait_for_broadcast_state("ready")
+
       click_button("Start Broadcast")
       expect(page).to have_content("Starting")
-      find("*[data-broadcast-state='live']")
+      wait_for_broadcast_state("live")
 
       server = Capybara.current_session.server
       current_video_url = channel_path(channel, host: server.host, port: server.port)
@@ -94,7 +96,11 @@ describe "Broadcast View" do
       WebMock.reset_executed_requests!
 
       click_button("Stop Broadcast")
-      expect(page).to have_css("[data-broadcast-state='finished']")
+      wait_for_broadcast_state("finished")
+
+      page.refresh
+
+      wait_for_broadcast_state("ready")
 
       perform_enqueued_jobs
 
@@ -110,7 +116,7 @@ describe "Broadcast View" do
         update_video_visibility(visibility)
 
         click_button("Start Broadcast")
-        expect(page).to have_css("[data-broadcast-state='live']")
+        wait_for_broadcast_state("live")
 
         perform_enqueued_jobs
 
@@ -122,7 +128,7 @@ describe "Broadcast View" do
         WebMock.reset_executed_requests!
 
         click_button("Stop Broadcast")
-        expect(page).to have_css("[data-broadcast-state='finished']")
+        wait_for_broadcast_state("finished")
 
         perform_enqueued_jobs
 
@@ -147,7 +153,7 @@ describe "Broadcast View" do
       click_button("Start Broadcast")
       # For most of these, it's important we wait until we are actually "live"
       # and things like the WS connection are open
-      find("*[data-broadcast-state='live']")
+      wait_for_broadcast_state("live")
     end
 
     it "should allow you to stop broadcasting" do

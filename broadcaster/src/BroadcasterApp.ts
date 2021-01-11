@@ -66,7 +66,7 @@ export default class {
       } as BroadcasterEnvironment;
     });
 
-    ipcMain.on("wakeup", (event, payload: WakeupPayload) => {
+    ipcMain.handle("wakeup", (event, payload: WakeupPayload) => {
       console.log("wakeup", payload);
       this.rtmpUrl = payload.rtmpUrl;
       this.mainWindow.setSize(
@@ -78,7 +78,7 @@ export default class {
       this.mainWindow.show();
     });
 
-    ipcMain.on(
+    ipcMain.handle(
       "createBrowserView",
       (event, payload: CreateBrowserViewPayload) => {
         console.log("createBrowserView", payload);

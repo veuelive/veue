@@ -12,20 +12,22 @@ export type IPCRenderer = {
 let ipcRenderer;
 
 class IPCRendererMock implements IPCRenderer {
+  public sentMessages: Array<{ channel: string; args: Array<unknown> }> = [];
+
   channels: {
     [channel: string]: Array<(event: Event, ...args) => void>;
   } = {};
 
   send(channel: string, ...args) {
-    this.invoke(channel, ...args).then(() => {
-      console.log("IPC Mock Send: " + channel);
-    });
+    this.invoke(channel, ...args);
   }
 
   invoke(channel: string, ...args): Promise<unknown> {
     if (IGNORE_CHANNEL_INVOCATIONS_FOR.indexOf(channel) >= 0) {
       return Promise.resolve();
     } else {
+      console.log("IPC Mock: " + channel);
+      this.sentMessages.push({ channel, args });
       return postJson("/ipc_mock", { channel, args: args })
         .then((response) => response.json())
         .then((data) => {
@@ -62,6 +64,24 @@ class IPCRendererMock implements IPCRenderer {
    */
   simulateFfmpegFailedEvent() {
     this.simulateEvents({ events: [{ channel: "ffmpeg-error" }] });
+  }
+
+  /**
+   * Helper method that allows us to find messages
+   */
+  getChannelMessages(channel: string): Array<Array<unknown>> {
+    return this.sentMessages
+      .filter((message) => message.channel == channel)
+      .map((obj) => obj.args);
+  }
+
+  /**
+   * Find the first arg of the first message we got to a channel
+   *
+   * @param channel
+   */
+  getFirstChannelMessagePayload(channel: string): unknown {
+    return this.getChannelMessages(channel)?.[0]?.[0];
   }
 }
 
