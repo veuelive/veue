@@ -1,7 +1,6 @@
 import { postForm } from "util/fetch";
 import { Controller } from "stimulus";
 import { getChannelId } from "helpers/channel_helpers";
-import "simplebar";
 
 export default class extends Controller {
   static targets = ["messageInput"];

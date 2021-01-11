@@ -14,7 +14,6 @@ export default class extends Controller {
 
     const simpleBar = new SimpleBar(messagesContainer);
     const simplebarWrapper = simpleBar.getScrollElement();
-    const simplebarContent = simpleBar.getContentElement();
 
     this.scrollButtonTarget.style.display =
       simplebarWrapper.clientHeight >= messagesContainer.clientHeight
