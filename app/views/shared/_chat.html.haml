@@ -3,7 +3,11 @@
     controller: "chat--scroll"
   }
 }
-  .messages-overflow-container
+  .messages-overflow-container{
+    data: {
+      target: "chat--scroll.messagesContainer"
+    }
+  }
     .messages{
       data: {
         controller: "chat--messages",

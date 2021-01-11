@@ -2,21 +2,18 @@ import { Controller } from "stimulus";
 import SimpleBar from "simplebar";
 
 export default class extends Controller {
-  static targets = ["messages", "scrollButton"];
+  static targets = ["messagesContainer", "messages", "scrollButton"];
 
   readonly messagesTarget!: HTMLElement;
+  readonly messagesContainerTarget!: HTMLElement;
   readonly scrollButtonTarget!: HTMLElement;
 
   connect(): void {
-    const messagesContainer = document.getElementsByClassName(
-      "messages-overflow-container"
-    )[0] as HTMLElement;
-
-    const simpleBar = new SimpleBar(messagesContainer);
+    const simpleBar = new SimpleBar(this.messagesContainerTarget);
     const simplebarWrapper = simpleBar.getScrollElement();
 
     this.scrollButtonTarget.style.display =
-      simplebarWrapper.clientHeight >= messagesContainer.clientHeight
+      simplebarWrapper.clientHeight >= this.messagesContainerTarget.clientHeight
         ? "flex"
         : "none";
 
