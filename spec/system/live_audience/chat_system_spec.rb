@@ -48,6 +48,23 @@ describe "chat" do
     it "should show that you joined the chat" do
       expect(page).to have_content(user.display_name + " joined the chat")
     end
+
+    it "should have visible scroll button after a bunch of messages" do
+      10.times do |i|
+        write_chat_message "Cowabunga!"
+        expect(page).to have_css(".message-display", count: i + 1)
+      end
+
+      chat_message = first(".message-display")
+      execute_script('arguments[0].scrollIntoView(true)', chat_message)
+
+      expect(page).to have_css(".chat-scroll")
+
+      messages = find(".messages")
+      execute_script('arguments[0].lastElementChild.scrollIntoView(true)', messages)
+
+      expect(page).to_not have_css(".chat-scroll")
+    end
   end
 
   describe "logged out user" do
