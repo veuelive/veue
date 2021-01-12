@@ -36,7 +36,7 @@
       .chat-controls
         .write-area{
           placeholder: 'Send a message',
-          contenteditable: true,
+          contenteditable: 'plaintext-only',
           role: "textbox",
           data: {
             action: "keydown->chat--send-message#chatBoxKeyDown",
