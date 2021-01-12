@@ -10,7 +10,7 @@
     border-radius: 10px;
     color: color.$white;
     background-color: color.$veue-corporate;
-    animation: top 6s ease;
+    animation: top 3s ease;
     height: 34px;
     .content {
       border-radius: 10px;
@@ -18,7 +18,7 @@
       padding: 0 0.75rem;
     }
     img {
-      animation: beating 5s;
+      animation: beating 2s;
     }
     &__text {
       margin: 5px 0px 5px 6px;
