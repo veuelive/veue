@@ -4,6 +4,7 @@ export interface BroadcasterEnvironment {
   displays: Array<Display>;
   primaryDisplay: Display;
   appVersion: string;
+  releaseChannel: string;
   system: {
     // https://nodejs.org/api/process.html#process_process_platform
     platform: "darwin" | "win32";

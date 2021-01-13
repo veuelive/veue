@@ -1,19 +1,20 @@
 "use strict";
-import { loadEnvironmentSettings } from "./Environment";
+import Environment from "./Environment";
 import BroadcasterApp from "./BroadcasterApp";
-import { app, dialog, Menu, powerSaveBlocker } from "electron";
+import { app, BrowserWindow, dialog, Menu, powerSaveBlocker } from "electron";
 import * as unhandled from "electron-unhandled";
 import * as debug from "electron-debug";
 import * as contextMenu from "electron-context-menu";
 import menu from "./menu";
-import { appUpdater } from "../util/autoUpdater";
 import { checkSystemRequirements } from "../util/systemChecks";
+import { finishedLoading, loadingProcess } from "./loadingProcess";
+import logger from "./logger";
 
 checkSystemRequirements({ dialog, app });
-const environment = loadEnvironmentSettings();
 
 unhandled({
-  showDialog: environment.showUnhandledExceptionDialog,
+  showDialog: Environment.showUnhandledExceptionDialog,
+  logger: (error) => logger.error(error),
 });
 debug();
 contextMenu();
@@ -33,22 +34,18 @@ if (!app.requestSingleInstanceLock()) {
   app.quit();
 }
 
-app.on("window-all-closed", () => {
-  app.quit();
-});
-
 (async () => {
   await app.whenReady();
 
   Menu.setApplicationMenu(menu);
 
-  broadcasterApp = new BroadcasterApp(environment, app.getVersion());
+  await loadingProcess();
 
-  app.on("ready", function () {
-    appUpdater(broadcasterApp.mainWindow);
-  });
+  broadcasterApp = new BroadcasterApp(Environment, app.getVersion());
 
   broadcasterApp.mainWindow.on("closed", () => {
     app.quit();
   });
+
+  finishedLoading();
 })();

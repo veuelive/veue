@@ -9,6 +9,8 @@ import {
   CreateBrowserViewPayload,
   WakeupPayload,
 } from "../../app/javascript/types/electron_env";
+import { autoUpdater } from "electron-updater";
+import { changeReleaseChannel } from "./appUpdater";
 
 export default class {
   readonly mainWindow: BrowserWindow;
@@ -59,6 +61,7 @@ export default class {
         displays: screen.getAllDisplays(),
         primaryDisplay: screen.getPrimaryDisplay(),
         appVersion: this.version,
+        releaseChannel: autoUpdater.channel,
         system: {
           platform: process.platform,
           arch: process.arch,
@@ -99,8 +102,13 @@ export default class {
       }
     });
 
-    ipcMain.handle("start", (event, data) => {
+    ipcMain.handle("start", (event) => {
       this.startStream(event.sender);
+    });
+
+    ipcMain.on("changeReleaseChannel", (_, releaseChannel) => {
+      logger.info("Got request to change release channel " + releaseChannel);
+      changeReleaseChannel(releaseChannel);
     });
   }
 }

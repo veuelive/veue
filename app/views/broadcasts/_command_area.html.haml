@@ -7,10 +7,6 @@
     = svg_tag "cam"
     .btn--tooltip
       Switch Camera
-  .btn{data: {action: "click->broadcast--debug#showHideAction"}}
-    = svg_tag "toolbox"
-    .btn--tooltip
-      Debug Tools
   .btn#settings-btn{ data: { action: "click->broadcast--settings#toggleForm" }}
     = svg_tag "settings"
     .btn--tooltip
@@ -24,4 +20,7 @@
       .item.open{data: {action: "click->broadcast--share#openLink"}} Open Link
       .item.copy{data: {action: "click->broadcast--share#copyLink"}} Copy Link
 
-  .debug-area{data: {target: "broadcast--debug.debugArea"}}
+.debug-area{data: {target: "broadcast--debug.debugArea"}}
+  .release-channel
+    %input{data: {target: "broadcast--debug.releaseChannel"}}
+    %button{data: {action: "click->broadcast--debug#switchToReleaseChannel"}} Install
