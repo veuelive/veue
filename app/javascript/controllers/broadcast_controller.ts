@@ -16,6 +16,9 @@ import {
   WakeupPayload,
 } from "types/electron_env";
 import { domRectToRect } from "helpers/converters";
+import { attachKeyboardListeners } from "helpers/broadcast/keyboard_listeners";
+
+export const BroadcasterEnvironmentChangedEvent = "broadcastEnvironmentChanged";
 
 type BroadcastState =
   | "loading"
@@ -39,6 +42,8 @@ export default class extends Controller {
   private environment: BroadcasterEnvironment;
 
   connect(): void {
+    attachKeyboardListeners();
+
     const currentVideoState = this.data.get("video-state");
 
     if (["starting", "live", "finished"].includes(currentVideoState)) {
@@ -61,6 +66,9 @@ export default class extends Controller {
 
     ipcRenderer.invoke("getEnvironment").then(async (data) => {
       this.environment = data as BroadcasterEnvironment;
+      document.dispatchEvent(
+        new CustomEvent(BroadcasterEnvironmentChangedEvent, { detail: data })
+      );
 
       const windowSize = {
         width: 1250,

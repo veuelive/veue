@@ -1,7 +1,7 @@
 {
   "name": "deskie",
   "productName": "Veue Broadcaster",
-  "version": "0.2.0",
+  "version": "0.2.1-alpha",
   "description": "My praiseworthy app",
   "license": "MIT",
   "repository": "veuelive/veue",
@@ -61,6 +61,7 @@
       "region": "us-east-1",
       "storageClass": "STANDARD"
     },
+    "generateUpdatesFilesForAllChannels": true,
     "appId": "com.hamptoncatlin.veue",
     "files": [
       "!bin"

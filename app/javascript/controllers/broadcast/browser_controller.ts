@@ -2,6 +2,7 @@ import { Controller } from "stimulus";
 import { ipcRenderer } from "helpers/electron/ipc_renderer";
 import { sendNavigationUpdate } from "helpers/broadcast_helpers";
 import { autocorrectUrlEntry } from "util/address";
+import { TestPatternKeyEvent } from "types/keyboard_mapping";
 
 export type NavigationUpdate = {
   eventName: string;
@@ -34,6 +35,9 @@ export default class extends Controller {
     };
     ipcRenderer.on("browserView", this.browserViewListener);
     this.navigateToAddress();
+    document.addEventListener(TestPatternKeyEvent, () =>
+      this.navigateToAddress(window.location.origin + "/broadcasts/blank")
+    );
   }
 
   onKeypress(event: KeyboardEvent): void {
@@ -42,8 +46,8 @@ export default class extends Controller {
     }
   }
 
-  private navigateToAddress() {
-    this.url = autocorrectUrlEntry(this.addressBarTarget.value);
+  private navigateToAddress(url?: string) {
+    this.url = autocorrectUrlEntry(url || this.addressBarTarget.value);
 
     ipcRenderer.send("navigate", this.url);
   }

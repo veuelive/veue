@@ -12,7 +12,7 @@ export default class FfmpegEncoder extends EventEmitter {
 
     logger.info("RTMP: " + rtmpUrl);
 
-    this.ffmpeg = child_process.spawn(ffmpegPath, [
+    const ffmpegArgs = [
       "-i",
       "-",
 
@@ -48,7 +48,11 @@ export default class FfmpegEncoder extends EventEmitter {
       "flv",
 
       rtmpUrl,
-    ]);
+    ];
+
+    logger.info(ffmpegArgs);
+
+    this.ffmpeg = child_process.spawn(ffmpegPath, ffmpegArgs);
 
     this.ffmpeg.on("close", (code, signal) => {
       logger.info(
