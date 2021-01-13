@@ -4,7 +4,7 @@
 
 This is electron.js based desktop application for doing live streaming.
 
-## Privileges Required
+## MacOS Privileges Required
 
 This application requires access to your camera & microphone when it gets booted for the first time. If you didn't provide
 privileges at first boot, you can set them from **System Preferences** => **Security & Privacy Settings**.

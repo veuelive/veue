@@ -5,6 +5,7 @@ import {
   Rectangle,
   WebContents,
 } from "electron";
+import logger from "./logger";
 
 export default class BrowserViewManager {
   window: BrowserWindow;
@@ -34,12 +35,13 @@ export default class BrowserViewManager {
     this.browserView.webContents.loadURL(url);
 
     ipcMain.on("navigate", async (event, data) => {
-      console.log(data);
+      logger.info(data);
       await this.browserView.webContents.loadURL(data);
       event.reply("DONE!");
     });
 
     ipcMain.on("browser", (event, data) => {
+      logger.info(`Browser Channel: ${data}`);
       const { webContents } = this.browserView;
       switch (data) {
         case "reload": {
