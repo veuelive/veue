@@ -1,7 +1,7 @@
 {
   "name": "deskie",
   "productName": "Veue Broadcaster",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "My praiseworthy app",
   "license": "MIT",
   "repository": "veuelive/veue",
@@ -17,7 +17,7 @@
     "build": "webpack --config ./webpack.config.js",
     "start": "yarn build && ENVIRONMENT=localhost electron .",
     "pack": "yarn build && electron-builder --dir",
-    "dist": "yarn build && electron-builder --macos",
+    "dist": "yarn build && electron-builder -mw",
     "release": "yarn build && electron-builder -mw --publish always"
   },
   "dependencies": {
@@ -77,6 +77,11 @@
       },
       "extraResources": [
         "bin/mac/**"
+      ]
+    },
+    "win": {
+      "extraResources": [
+        "bin/win/**"
       ]
     },
     "dmg": {

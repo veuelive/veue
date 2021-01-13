@@ -67,7 +67,7 @@ export default class {
     });
 
     ipcMain.handle("wakeup", (event, payload: WakeupPayload) => {
-      console.log("wakeup", payload);
+      logger.info("wakeup", payload);
       this.rtmpUrl = payload.rtmpUrl;
       this.mainWindow.setSize(
         payload.mainWindow.width,
@@ -81,7 +81,7 @@ export default class {
     ipcMain.handle(
       "createBrowserView",
       (event, payload: CreateBrowserViewPayload) => {
-        console.log("createBrowserView", payload);
+        logger.info("createBrowserView", payload);
         this.browserView = new BrowserViewManager(
           this.mainWindow,
           payload.bounds,
