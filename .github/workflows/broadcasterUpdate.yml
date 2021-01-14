@@ -25,5 +25,9 @@ jobs:
         run: yarn install
       - name: Update Veue Broadcaster Version
         run: |
-        echo ""
-        yarn updateversion -- ${{ github.events.inputs.release }}
+          echo "Input Value ${{ github.events.inputs.release }}"
+          yarn updateversion -- ${{ github.events.inputs.release }}
+      - name: Add & Commit
+        uses: EndBug/add-and-commit@v6.2.0
+        with:
+          message: "upgrading version of broadcaster"
