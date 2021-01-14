@@ -49,6 +49,19 @@
           }
         }
 
+        .hilighted-message {
+          &__name {
+            color: color.$veue-corporate;
+            margin-bottom: 0.35rem;
+            line-height: 1;
+          }
+          &__text {
+            background-color: color.$veue-corporate;
+            color: color.$white;
+            border: 1px solid color.$veue-corporate;
+          }
+        }
+
         .user-avatar {
           image {
             width: 1.5rem;
@@ -105,7 +118,6 @@
           color: color.$neutral-dark;
           border: 1px solid color.$neutral-soft;
         }
-
         &:first-child {
           margin-top: 0;
         }

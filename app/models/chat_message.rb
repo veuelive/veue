@@ -6,6 +6,7 @@ class ChatMessage < VideoEvent
       name: user.display_name,
       message: input["message"],
       userId: user.to_param,
+      byStreamer: video.user_id == user.to_param,
     }
   end
 
