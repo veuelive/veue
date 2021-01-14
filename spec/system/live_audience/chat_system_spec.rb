@@ -109,5 +109,20 @@ describe "chat" do
       expect(page).to have_content(second_message_text)
       expect(page).to have_content(first_message.user.display_name)
     end
+
+    it "should have hilighted comment of streamer" do
+      expect(page).not_to(have_selector(".message-write"))
+
+      # It is mocking comment of streamer
+      login_as video.user
+      write_chat_message "Cowabunga!"
+      logout_user
+
+      # Watching stream as a common visitor
+      visit path_for_video(video)
+
+      expect(page).to have_content("Cowabunga!").once
+      expect(page).to have_css(".hilighted-message__text")
+    end
   end
 end

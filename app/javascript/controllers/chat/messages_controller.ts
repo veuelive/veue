@@ -81,7 +81,20 @@ export default class MessagesController extends BaseController {
     const sameUser = message.userId === this.lastMessageFromUserId;
 
     let html = "";
-    if (message.userId === this.myUserId) {
+    if (message.byStreamer) {
+      html = `
+        <div class="message-left">
+          <div class="hilighted-message">
+            <div class="hilighted-message__name">
+              ${message.name}
+            </div>
+            <div class="message-display border-left hilighted-message__text">
+              ${message.message}
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (message.userId === this.myUserId) {
       html = `
         <div class="message-right">
           <div class="message-display message-right__text">
