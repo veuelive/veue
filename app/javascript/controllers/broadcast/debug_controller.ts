@@ -10,14 +10,26 @@ export default class extends Controller {
   private releaseChannelTarget!: HTMLInputElement;
   private _environment: BroadcasterEnvironment;
   hidden = true;
+  private debugKeyListener: () => void;
+  private environmentListener: (event: CustomEvent) => void;
 
   connect(): void {
-    document.addEventListener(DebugKeyEvent, () => this.showHideAction());
+    this.debugKeyListener = () => this.showHideAction();
+    document.addEventListener(DebugKeyEvent, this.debugKeyListener);
+    this.environmentListener = (event: CustomEvent) => {
+      this.environment = event.detail;
+    };
     document.addEventListener(
       BroadcasterEnvironmentChangedEvent,
-      (event: CustomEvent) => {
-        this.environment = event.detail;
-      }
+      this.environmentListener
+    );
+  }
+
+  disconnect(): void {
+    document.removeEventListener(DebugKeyEvent, this.environmentListener);
+    document.removeEventListener(
+      BroadcasterEnvironmentChangedEvent,
+      this.environmentListener
     );
   }
 
