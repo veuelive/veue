@@ -33,9 +33,3 @@ Ctrl + Cmd + Shift + P
 
 This will navigate the browser to the "Test Pattern" that you can use in conjunction with the
 Debug Canvas to ensure that the canvas is properly setup.
-
-### Alpha Channel
-
-Ctrl + Cmd + Shift + A
-
-This will prompt you to choose a release channel
