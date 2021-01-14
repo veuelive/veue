@@ -16,7 +16,10 @@ import {
   WakeupPayload,
 } from "types/electron_env";
 import { domRectToRect } from "helpers/converters";
-import { attachKeyboardListeners } from "helpers/broadcast/keyboard_listeners";
+import {
+  attachKeyboardListener,
+  removeKeyboardListeners,
+} from "helpers/broadcast/keyboard_listeners";
 
 export const BroadcasterEnvironmentChangedEvent = "broadcastEnvironmentChanged";
 
@@ -40,9 +43,10 @@ export default class extends Controller {
   private audioMixer: AudioMixer;
   private captureSourceManager: CaptureSourceManager;
   private environment: BroadcasterEnvironment;
+  private keyboardListener: (event) => void;
 
   connect(): void {
-    attachKeyboardListeners();
+    this.keyboardListener = attachKeyboardListener();
 
     const currentVideoState = this.data.get("video-state");
 
@@ -117,6 +121,7 @@ export default class extends Controller {
 
   disconnect(): void {
     this.eventManager?.disconnect();
+    removeKeyboardListeners(this.keyboardListener);
   }
 
   startStreaming(): void {
