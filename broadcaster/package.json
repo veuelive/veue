@@ -18,7 +18,8 @@
     "start": "yarn build && ENVIRONMENT=localhost electron .",
     "pack": "yarn build && electron-builder --dir",
     "dist": "yarn build && electron-builder -mw",
-    "release": "yarn build && electron-builder -mw --publish always"
+    "release": "yarn build && electron-builder -mw --publish always",
+    "updateversion": "standard-version"
   },
   "dependencies": {
     "@logdna/logger": "^2.1.0",

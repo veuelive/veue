@@ -1,0 +1,29 @@
+name: BroadcasterUpdate
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: 'Command for release of version'
+        required: true
+        default: '--release-as minor'
+
+jobs:
+  update:
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: ./broadcaster
+    steps:
+      - name: Checkout to code
+        uses: actions/checkout@master
+      - name: Setup Node
+        uses: actions/setup-node@master
+        with:
+          node-version: 14.10.0
+      - name: Install dependencies
+        run: yarn install
+      - name: Update Veue Broadcaster Version
+        run: |
+        echo ""
+        yarn updateversion -- ${{ github.events.inputs.release }}
