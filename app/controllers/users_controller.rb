@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     @current_user = current_session_token.create_user(params[:display_name])
 
     if @current_user&.valid?
-      render(status: :accepted, template: "layouts/_navbar", layout: false)
+      render(status: :accepted, template: "layouts/_header", layout: false)
     else
       render(status: :bad_request, text: "")
     end
