@@ -17,7 +17,7 @@ export default class extends Controller {
     console.log(event.type, this.isOpen);
     switch (event.type) {
       case "click":
-        if (this.isOpen == true) {
+        if (this.areaTarget.dataset["isOpen"] == "true") {
           // Since we don't want to interrupt clicks that
           // are navigating us somewhere, we should make sure
           // we don't close if it's a link being clicked
@@ -37,15 +37,11 @@ export default class extends Controller {
   }
 
   closeMenu(): void {
-    console.log("Close Menu");
-    this.isOpen = false;
-    this.menuTarget.style.display = "none";
+    this.areaTarget.dataset["isOpen"] = "false";
   }
 
   openMenu(): void {
-    console.log("open");
-    this.isOpen = true;
-    this.menuTarget.style.display = "block";
+    this.areaTarget.dataset["isOpen"] = "true";
   }
 
   layout(): void {

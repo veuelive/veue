@@ -1,5 +1,6 @@
 @use "user_menu/dropdown";
 @use "user_menu/mobile_friendly";
+@use "../utils/color";
 
 .menu-area {
   // layout
@@ -7,8 +8,39 @@
   display: flex;
   align-items: center;
 
-  .user-menu {
+  // There is a second chevron in the mobile
+  // view, so we have to be extra clear on which
+  // one is being addressed
+  > .chevron {
     // layout
-    display: none;
+    margin-left: 10px;
+
+    // looks
+    fill: color.$neutral-regular;
+    transform: rotate(0);
+    transition: all 250ms;
+  }
+
+  .user-menu {
+    transition: opacity 200ms;
+    z-index: 2;
+  }
+
+  &[data-is-open="true"] {
+    > .chevron {
+      transform: rotate(-180deg);
+    }
+    .user-menu {
+      opacity: 100%;
+      visibility: visible;
+    }
+  }
+
+  &[data-is-open="false"] {
+    .user-menu {
+      // layout
+      visibility: collapse;
+      opacity: 0;
+    }
   }
 }
