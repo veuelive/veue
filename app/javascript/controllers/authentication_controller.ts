@@ -91,9 +91,9 @@ export default class extends BaseController {
     submitButton.disabled = false;
     if (response.status == 202) {
       // We are logged in!
-      const topNav = document.querySelector(".top-navbar");
-      if (topNav) {
-        topNav.outerHTML = html;
+      const header = document.querySelector("header");
+      if (header) {
+        header.outerHTML = html;
       }
       this.emitAuthChange();
       showHideByLogin();

@@ -1,0 +1,76 @@
+@use "../header";
+@use '../../utils/color';
+@use '../../utils/font';
+
+.user-menu[data-mode="mobile"] {
+  // layout
+  position: absolute;
+  top: header.$height;
+  left: 0;
+  z-index: 5;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  // looks
+  background: color.$neutral-background;
+
+  .user-menu__back-link {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+
+    svg {
+      fill: color.$veue-corporate;
+      transform: rotate(90deg);
+    }
+
+    &__text {
+      font-family: font.$poppins;
+      margin-left: 10px;
+      color: color.$veue-corporate;
+      font-size: 20px;
+    }
+  }
+
+  ul {
+    // layout
+    margin: 0 20px 0 20px;
+
+    // looks
+    background: color.$white;
+    border-radius: 10px;
+
+    li {
+      // layout
+      display: flex;
+
+      // looks
+      cursor: pointer;
+      border-bottom: 1px solid color.$neutral-soft;
+
+      a,
+      a:hover,
+      a:visited {
+        // layout
+        padding: 20px;
+        flex: 1;
+
+        // looks
+        color: color.$neutral-dark;
+        font-size: 16px;
+      }
+    }
+
+    li:first-of-type {
+      // layout
+      padding: 20px;
+
+      // looks
+      font-size: 20px;
+      font-family: font.$poppins;
+      font-weight: 400;
+      color: color.$veue-corporate;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+@use "user_menu/dropdown";
+@use "user_menu/mobile_friendly";
+
+.menu-area {
+  // layout
+  height: 54px;
+  display: flex;
+  align-items: center;
+
+  .user-menu {
+    // layout
+    display: none;
+  }
+}

@@ -42,7 +42,7 @@ class AuthenticationsController < ApplicationController
   private
 
   def render_navbar
-    render(status: :accepted, template: "layouts/_navbar", layout: false)
+    render(status: :accepted, template: "layouts/_header", layout: false)
   end
 
   def render_modal

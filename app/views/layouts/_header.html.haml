@@ -1,0 +1,32 @@
+%header
+  .header__left
+    .header__left__logo
+      = link_to root_path do
+        = svg_tag 'logo-full'
+  .header__right
+    - if user_signed_in?
+      .menu-area{
+        "data": {
+          "controller": "user-menu",
+          "user-id": current_user.id,
+          "target": "user-menu.area",
+          "action": "mouseenter->user-menu#openMenu mouseleave->user-menu#closeMenu resize@window->user-menu#layout click->user-menu#toggleOpen"
+        }
+      }
+        = svg_tag "logo-circular"
+        = svg_tag "chevron"
+        %nav.user-menu{aria: {label: "Account Settings"}, data: {target: "user-menu.menu"}}
+          .user-menu__back-link
+            = svg_tag "chevron"
+            .user-menu__back-link__text
+              Settings
+          %ul{role: "menubar"}
+            %li.user-menu__name
+              = current_user.display_name
+            %li.user-menu__item{role: "menuitem"}
+              = link_to "Help", "/"
+            %li.user-menu__item{role: "menuitem"}
+              = link_to "Sign Out", authentication_path, method: :delete
+    - else
+      %button{data: { action: "click->authentication#showModal"}}
+        Login
