@@ -84,11 +84,11 @@ export default class MessagesController extends BaseController {
     if (message.byStreamer) {
       html = `
         <div class="message-left">
-          <div class="hilighted-message">
-            <div class="hilighted-message__name">
+          <div class="highlighted-message">
+            <div class="highlighted-message__name">
               ${message.name}
             </div>
-            <div class="message-display border-left hilighted-message__text">
+            <div class="message-display border-left highlighted-message__text">
               ${message.message}
             </div>
           </div>
