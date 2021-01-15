@@ -1,0 +1,45 @@
+@use '../utils/color';
+
+$height: 54px;
+
+header {
+  height: $height;
+  box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
+  display: flex;
+  background-color: color.$white;
+  position: relative;
+  align-items: center;
+  padding: 0 20px;
+  justify-content: space-between;
+
+  .header__left {
+    &__logo {
+      height: 28px;
+
+      a {
+        display: inline-block;
+      }
+    }
+  }
+
+  .header__right {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    height: $height;
+
+    // There is a second chevron in the mobile
+    // view, so we have to be extra clear on which
+    // one is being addressed
+    .menu-area > .chevron {
+      margin-left: 10px;
+      fill: color.$neutral-regular;
+      transform: rotate(0);
+      transition: all 250ms;
+
+      &.chevron--open {
+        transform: rotate(-180deg);
+      }
+    }
+  }
+}

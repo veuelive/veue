@@ -1,0 +1,89 @@
+@use "../../utils/color";
+@use "../../utils/font";
+@use "../header";
+
+.user-menu[data-mode="dropdown"] {
+  // layout
+  position: absolute;
+  top: header.$height;
+  right: 27px;
+  min-width: 190px;
+  padding-top: 10px;
+
+  ul {
+    // layout
+    margin-top: 10px;
+    z-index: 1;
+    position: relative;
+    margin-block-start: 0;
+
+    // looks
+    background: color.$white;
+    border: 1px solid color.$neutral-accents;
+    border-radius: 10px;
+
+    // This is the notch on top of the bubble
+    &::before {
+      // layout
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      bottom: 100%;
+      right: 1.5em; // offset should move with padding of parent
+      border: 6px solid transparent;
+      border-top: none;
+
+      // looks
+      border-bottom-color: color.$white;
+    }
+
+    li {
+      // layout
+      display: flex;
+
+      > * {
+        // layout
+        flex: 1;
+      }
+    }
+
+    li.user-menu__item {
+      // layout
+      margin-top: 6px;
+      margin-left: 20px;
+      margin-bottom: 6px;
+
+      // looks
+      font-size: 16px;
+    }
+
+    li:last-of-type {
+      margin-bottom: 15px;
+    }
+
+    a,
+    a:hover,
+    a:visited {
+      // layout
+      width: 100%;
+
+      // looks
+      color: color.$neutral-dark;
+    }
+
+    .user-menu__name {
+      // layout
+      padding: 0 0 15px 20px;
+      margin-bottom: 15px - 6px;
+      margin-top: 21px;
+
+      // looks
+      color: color.$veue-corporate;
+      font-size: 18px;
+      font-weight: 500;
+      font-family: font.$poppins;
+      border-bottom: 1px solid color.$neutral-accents;
+    }
+  }
+}
