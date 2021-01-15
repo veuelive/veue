@@ -15,22 +15,15 @@
   // looks
   background: color.$neutral-background;
 
-  .user-menu__back-link {
+  .user-menu__text {
+    // layout
     padding: 20px;
-    display: flex;
-    align-items: center;
+    margin-left: 10px;
 
-    svg {
-      fill: color.$veue-corporate;
-      transform: rotate(90deg);
-    }
-
-    &__text {
-      font-family: font.$poppins;
-      margin-left: 10px;
-      color: color.$veue-corporate;
-      font-size: 20px;
-    }
+    // looks
+    font-family: font.$poppins;
+    color: color.$veue-corporate;
+    font-size: 20px;
   }
 
   ul {
@@ -60,6 +53,11 @@
         color: color.$neutral-dark;
         font-size: 16px;
       }
+
+      a:hover {
+        // looks
+        color: color.$veue-corporate;
+      }
     }
 
     li:first-of-type {
@@ -71,6 +69,10 @@
       font-family: font.$poppins;
       font-weight: 400;
       color: color.$veue-corporate;
+    }
+
+    li:last-of-type {
+      border-bottom: unset;
     }
   }
 }

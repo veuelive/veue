@@ -32,7 +32,10 @@ header {
     // view, so we have to be extra clear on which
     // one is being addressed
     .menu-area > .chevron {
+      // layout
       margin-left: 10px;
+
+      // looks
       fill: color.$neutral-regular;
       transform: rotate(0);
       transition: all 250ms;

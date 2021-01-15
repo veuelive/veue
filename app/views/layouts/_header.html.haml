@@ -16,10 +16,8 @@
         = svg_tag "logo-circular"
         = svg_tag "chevron"
         %nav.user-menu{aria: {label: "Account Settings"}, data: {target: "user-menu.menu"}}
-          .user-menu__back-link
-            = svg_tag "chevron"
-            .user-menu__back-link__text
-              Settings
+          .user-menu__text
+            Settings
           %ul{role: "menubar"}
             %li.user-menu__name
               = current_user.display_name
