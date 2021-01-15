@@ -20,7 +20,7 @@ module AuthenticationTestHelpers
     end
 
     def logout_user
-      find(".user-auth-area").hover
+      find(".menu-area").hover
       click_on("Sign Out")
     end
 

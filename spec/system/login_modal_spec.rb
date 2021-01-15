@@ -24,7 +24,6 @@ describe "Modal login flow" do
   before :each do
     visit("/")
     find("body").click
-    open_nav_sidebar
     enter_phone_number(user)
   end
 
