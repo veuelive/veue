@@ -30,7 +30,7 @@ describe "chat" do
       # of event handlers and this was causing multiple websockets to get
       # connected and caused repeated messages to appear
       3.times do
-        find(".navbar-logo").click
+        find(".header__left__logo").click
         expect(current_path).to_not eq(channel_path(channel))
         find(".video-card").click
         expect(page).to have_content("Follow")
