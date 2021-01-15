@@ -27,22 +27,5 @@ header {
     align-items: center;
     cursor: pointer;
     height: $height;
-
-    // There is a second chevron in the mobile
-    // view, so we have to be extra clear on which
-    // one is being addressed
-    .menu-area > .chevron {
-      // layout
-      margin-left: 10px;
-
-      // looks
-      fill: color.$neutral-regular;
-      transform: rotate(0);
-      transition: all 250ms;
-
-      &.chevron--open {
-        transform: rotate(-180deg);
-      }
-    }
   }
 }
