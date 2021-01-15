@@ -23,13 +23,11 @@ jobs:
           node-version: 14.10.0
       - name: Install dependencies
         run: yarn install
-      - name: Update Veue Broadcaster Version
+      - name: Bump Veue Broadcaster Version
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           echo "Input Value ${{ github.events.inputs.release }}"
           yarn updateversion -- ${{ github.events.inputs.release }}
-      - name: Add & Commit
-        uses: EndBug/add-and-commit@v6.2.0
-        with:
-          add: "."
-          message: "upgrading version of broadcaster"
-          token: ${{ secrets.GITHUB_TOKEN }}
+          git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
+          
