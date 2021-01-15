@@ -22,7 +22,7 @@ class AuthenticationsController < ApplicationController
     session[:session_token_uuid] = ula.uuid
     render_modal and return if ula.user.nil?
 
-    render_navbar
+    render_header
   end
 
   # This is used for when we've forgotten who we are, but we want ot use
@@ -41,7 +41,7 @@ class AuthenticationsController < ApplicationController
 
   private
 
-  def render_navbar
+  def render_header
     render(status: :accepted, template: "layouts/_header", layout: false)
   end
 
