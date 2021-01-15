@@ -13,22 +13,31 @@ export async function checkForAppUpdates(): Promise<void> {
     Environment.defaultReleaseChannel
   );
 
+  autoUpdater.logger = logger;
+
   logger.info("Checking for new version on " + channel + " channel");
 
   autoUpdater.channel = channel;
 
-  autoUpdater.on("download-progress", (progress) => {
-    changeLoadingMessage(`Downloading New Version`, progress.percent);
-  });
-
   try {
     const updateCheckResult = await autoUpdater.checkForUpdatesAndNotify();
-
     if (updateCheckResult) {
-      changeLoadingMessage("Downloading New Version");
-      await updateCheckResult.downloadPromise;
+      return new Promise((resolve) => {
+        autoUpdater.on("download-progress", (progress) => {
+          changeLoadingMessage(`Downloading New Version`, progress.percent);
+        });
 
-      autoUpdater.quitAndInstall();
+        changeLoadingMessage(
+          "Downloading New Version " + updateCheckResult.updateInfo.version
+        );
+
+        autoUpdater.on("update-downloaded", () => {
+          autoUpdater.quitAndInstall();
+          resolve();
+        });
+
+        autoUpdater.on("error", () => resolve());
+      });
     }
   } catch (e) {
     logger.error(e);
