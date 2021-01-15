@@ -122,7 +122,7 @@ describe "chat" do
       visit path_for_video(video)
 
       expect(page).to have_content("Cowabunga!").once
-      expect(page).to have_css(".hilighted-message__text")
+      expect(page).to have_css(".highlighted-message__text")
     end
   end
 end
