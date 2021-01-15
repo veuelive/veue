@@ -10,7 +10,7 @@
           "controller": "user-menu",
           "user-id": current_user.id,
           "target": "user-menu.area",
-          "action": "mouseenter->user-menu#openMenu mouseleave->user-menu#closeMenu resize@window->user-menu#layout click->user-menu#toggleOpen"
+          "action": "mouseenter->user-menu#openOrCloseEvent mouseleave->user-menu#openOrCloseEvent resize@window->user-menu#layout click->user-menu#openOrCloseEvent"
         }
       }
         = svg_tag "logo-circular"
