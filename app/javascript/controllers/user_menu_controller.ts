@@ -14,7 +14,6 @@ export default class extends Controller {
 
   @debounce(100)
   openOrCloseEvent(event: Event): void {
-    console.log(event.type, this.isOpen);
     switch (event.type) {
       case "click":
         if (this.areaTarget.dataset["isOpen"] == "true") {
