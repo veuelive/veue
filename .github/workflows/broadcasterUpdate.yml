@@ -27,7 +27,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
-          echo "Input Value ${{ github.events.inputs.release }}"
-          yarn updateversion -- ${{ github.events.inputs.release }}
+          echo "Input Value ${{ github.event.inputs.release }}"
+          yarn updateversion -- ${{ github.event.inputs.release }}
           git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
           
