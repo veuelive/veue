@@ -12,8 +12,8 @@ export const environments = {
     defaultReleaseChannel: "latest",
   },
   stage: {
-    hostname: "https://beta.veuelive.com",
-    auth: "tlhd",
+    hostname: "https://preshow.veuelive.com",
+    auth: "mohawk",
     showUnhandledExceptionDialog: true,
     defaultReleaseChannel: "beta",
   },
