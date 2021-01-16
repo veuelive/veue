@@ -29,6 +29,13 @@ let broadcasterApp;
 const psb_id = powerSaveBlocker.start("prevent-app-suspension");
 console.log(`POWER SAVE BLOCKER ${powerSaveBlocker.isStarted(psb_id)}`); // interestingly this logs to STDOUT in the running Node (electron) app
 
+app.on("login", function (event, webContents, request, authInfo, callback) {
+  event.preventDefault();
+  if (Environment.auth) {
+    callback("", Environment.auth);
+  }
+});
+
 // Prevent multiple instances of the app
 if (!app.requestSingleInstanceLock()) {
   app.quit();
