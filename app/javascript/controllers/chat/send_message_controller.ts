@@ -21,7 +21,7 @@ export default class extends Controller {
     );
   }
 
-  fallBackContentEditable() {
+  fallBackContentEditable(): void {
     if (!this.messageInputTarget.isContentEditable) {
       this.messageInputTarget.contentEditable = "true";
     }
