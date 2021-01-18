@@ -1,6 +1,12 @@
 name: BroadcasterRelease
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: 'Command for release of version'
+        required: true
+        default: '--release-as minor'
 
 jobs:
   dist:
@@ -17,6 +23,13 @@ jobs:
           node-version: 14.10.0
       - name: Install dependencies
         run: yarn install
+      - name: Bump Veue Broadcaster Version
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          echo "Input Value ${{ github.event.inputs.release }}"
+          yarn updateversion -- ${{ github.event.inputs.release }}
+          git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
       - name: Build Veue Broadcaster
         env:
           ELECTRON: true
