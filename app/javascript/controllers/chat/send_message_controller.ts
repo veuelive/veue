@@ -14,17 +14,23 @@ export default class extends Controller {
         window.scrollTo(0, 0);
       }, 200);
     });
+    this.fallBackContentEditable();
     this.messageInputTarget.addEventListener(
       "blur",
       () => (bodyDataset["keyboard"] = "hidden")
     );
   }
 
+  fallBackContentEditable() {
+    if (!this.messageInputTarget.isContentEditable) {
+      this.messageInputTarget.contentEditable = "true";
+    }
+  }
   chatBoxKeyDown(event: KeyboardEvent): void {
     if (!event.shiftKey && event.key === "Enter") {
       event.preventDefault();
       const textAreaElement = event.target as HTMLElement;
-      const message = textAreaElement.innerHTML;
+      const message = textAreaElement.innerText;
       textAreaElement.innerHTML = "";
       if (message.length > 0) {
         postForm(`/${getChannelId()}/chat_messages`, { message }).then(() => {
