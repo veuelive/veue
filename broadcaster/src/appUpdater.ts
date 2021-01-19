@@ -21,8 +21,9 @@ export async function checkForAppUpdates(): Promise<void> {
 
   try {
     const updateCheckResult = await autoUpdater.checkForUpdatesAndNotify();
-    if (updateCheckResult) {
-      return new Promise((resolve) => {
+    logger.info(updateCheckResult);
+    if (updateCheckResult?.downloadPromise) {
+      return new Promise((resolve, reject) => {
         autoUpdater.on("download-progress", (progress) => {
           changeLoadingMessage(`Downloading New Version`, progress.percent);
         });
@@ -36,7 +37,10 @@ export async function checkForAppUpdates(): Promise<void> {
           resolve();
         });
 
-        autoUpdater.on("error", () => resolve());
+        autoUpdater.on("error", (error) => {
+          logger.error(error);
+          reject();
+        });
       });
     }
   } catch (e) {
