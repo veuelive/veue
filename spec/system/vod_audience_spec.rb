@@ -193,7 +193,7 @@ describe "Prerecorded Audience View" do
     end
 
     it "should work for post-live messages" do
-      @late_message = create(
+      late_message = create(
         :chat_message,
         input: {message: "Late to the party!"},
         user: create(:user),
@@ -203,7 +203,7 @@ describe "Prerecorded Audience View" do
       # We need to reload to get the event we just added
       visit path_for_video(video)
       # We are starting at 0ms, but the below method will wait long enough to see it appear
-      expect(page).to have_content(@late_message.payload["message"])
+      expect(page).to have_content(late_message.payload["message"])
     end
   end
 
