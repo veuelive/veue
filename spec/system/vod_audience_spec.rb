@@ -184,6 +184,8 @@ describe "Prerecorded Audience View" do
 
   describe "Events work properly" do
     it "should show pre-live messages" do
+      visit path_for_video(video)
+      
       # Messages from before stream should show
       first_message = video.chat_messages.first
       expect(first_message.timecode_ms).to eq(0)
