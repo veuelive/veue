@@ -23,16 +23,17 @@ export default class VodEventManager implements EventManagerInterface {
     const nextEntry = this.eventIndex.find(
       (entry) => entry.start <= timecodeMs
     );
-    return this.loadEventSet(nextEntry);
+    return this.loadEventSet(nextEntry, timecodeMs);
   }
 
   disconnect(): void {
     return;
   }
 
-  loadEventSet(entry: EventIndexEntry): Promise<void> {
+  loadEventSet(entry: EventIndexEntry, timecodeMs: number): Promise<void> {
     return secureFetch(entry.url)
       .then((response) => response.json())
-      .then((events) => VideoEventProcessor.addEvents(events));
+      .then((events) => VideoEventProcessor.addEvents(events))
+      .then(() => VideoEventProcessor.syncTime(timecodeMs)); // Make sure we at least load all the init events
   }
 }
