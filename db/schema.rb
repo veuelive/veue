@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_13_153135) do
+ActiveRecord::Schema.define(version: 2021_01_19_133551) do
+
+  # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -191,8 +193,10 @@ ActiveRecord::Schema.define(version: 2021_01_13_153135) do
     t.integer "video_views_count"
     t.enum "visibility", default: "public", as: "visibility_setting"
     t.uuid "channel_id"
+    t.datetime "scheduled_at"
     t.index ["mux_asset_id"], name: "index_videos_on_mux_asset_id"
     t.index ["mux_live_stream_id"], name: "index_videos_on_mux_live_stream_id"
+    t.index ["state", "scheduled_at"], name: "index_videos_on_state_and_scheduled_at"
     t.index ["state"], name: "index_videos_on_state"
     t.index ["user_id"], name: "index_videos_on_user_id"
   end
