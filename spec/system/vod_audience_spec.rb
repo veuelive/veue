@@ -197,7 +197,7 @@ describe "Prerecorded Audience View" do
         input: {message: "Late to the party!"},
         user: create(:user),
         video: video,
-        timecode_ms: 1000,
+        timecode_ms: 1_000,
       )
       # We need to reload to get the event we just added
       visit path_for_video(video)
@@ -208,23 +208,25 @@ describe "Prerecorded Audience View" do
 
   describe "Starting further into the video" do
     it "should show all chat messages" do
-      @late_message = create(
+      late_message_text = "Late to the party!"
+      create(
         :chat_message,
-        input: {message: "Late to the party!"},
+        input: {message: late_message_text},
         user: create(:user),
         video: video,
         timecode_ms: 9_999,
       )
       visit path_for_video(video, t: 1)
       expect(page).to have_content(ChatMessage.first.payload["message"])
-      expect(page).to_not have_content("Late to the party!")
+      expect(page).to_not have_content(late_message_text)
 
       # Seeking SHOULD have that message!
       visit path_for_video(video, t: 10)
       # Messages from before stream should show
       first_message = ChatMessage.first
       expect(first_message.timecode_ms).to eq(0)
-      expect(page).to have_content("Late to the party!a")
+      expect(page).to have_content(first_message.payload["message"])
+      expect(page).to have_content(late_message_text)
     end
   end
 end
