@@ -3,7 +3,7 @@
 require "system_helper"
 require_relative("../../support/audience_spec_helpers")
 
-describe "chat" do
+describe "chat during live video" do
   include AudienceSpecHelpers
   let(:user) { create(:user) }
   let(:video) { create(:live_video) }
