@@ -27,7 +27,7 @@ $person_width_fixed: $person_height_fixed / scale.$video_ratio;
     }
     &__time {
       position: absolute;
-      width: 56px;
+      max-width: 56px;
       background: rgba(0, 0, 0, 0.5);
       border-radius: 10px;
       font-size: 13px;
@@ -63,7 +63,6 @@ $person_width_fixed: $person_height_fixed / scale.$video_ratio;
     &__views {
       position: absolute;
       display: flex;
-      flex-direction: row;
       max-width: 65px;
       height: 28px;
       background: rgba(0, 0, 0, 0.5);
@@ -73,6 +72,7 @@ $person_width_fixed: $person_height_fixed / scale.$video_ratio;
     }
     &__svg {
       margin: 0 0 8px 10px;
+      color: color.$white;
     }
     &__count {
       color: color.$white;
@@ -94,7 +94,6 @@ $person_width_fixed: $person_height_fixed / scale.$video_ratio;
       font-size: 14px;
       line-height: 19px;
       display: flex;
-      align-items: center;
       color: color.$neutral-regular;
       margin-left: 10px;
     }
@@ -106,7 +105,6 @@ $person_width_fixed: $person_height_fixed / scale.$video_ratio;
       font-size: 18px;
       color: color.$neutral-dark;
       margin: 10px 0 0 10px;
-      align-items: center;
     }
     &__letter {
       background: color.$white;
