@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module VideoStates
   extend ActiveSupport::Concern
 
@@ -34,11 +36,11 @@ module VideoStates
       end
 
       event :schedule do
-        transitions from: [:pending, :scheduled], to: :scheduled
+        transitions from: %i[pending scheduled], to: :scheduled
       end
 
       event :cancel do
-        transitions from: [:scheduled, :pending], to: :cancelled
+        transitions from: %i[scheduled pending], to: :cancelled
       end
 
       event :go_live do
