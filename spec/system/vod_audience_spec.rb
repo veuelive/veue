@@ -183,7 +183,6 @@ describe "Prerecorded Audience View" do
   end
 
   describe "Events work properly" do
-
     it "should show pre-live messages" do
       # Messages from before stream should show
       first_message = ChatMessage.first
