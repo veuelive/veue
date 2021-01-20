@@ -7,8 +7,8 @@ GIT
 
 GIT
   remote: https://github.com/logdna/ruby.git
-  revision: 367fff3fec9275bb11c9245026d3bbc14b2b3060
-  branch: fixThread
+  revision: 2c6c394d13adc11b3590aac1d9bde6fda14c7e12
+  branch: master
   specs:
     logdna (1.4.2)
       concurrent-ruby (~> 1.0)
