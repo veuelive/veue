@@ -5,16 +5,12 @@
     display: flex;
   }
 
-  .broadcasts {
-    margin: 10px auto;
-    width: 100%;
-  }
-
   @include desktop() {
     .broadcasts {
-      margin: 0 auto;
-      max-width: 90vw;
-      width: auto;
+      // Has to be calc because <img> is absolute and overflows margins.
+      width: calc(100% - 50px);
+      margin-left: 20px;
+      margin-right: 30px;
     }
   }
 }

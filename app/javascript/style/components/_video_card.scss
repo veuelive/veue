@@ -10,11 +10,19 @@
   // Prevents video-card / img mismatches on width.
   width: scale.$video_card_width;
 
+  &:hover,
+  &:focus {
+    .video-card__image__play {
+      display: block;
+    }
+  }
+
   &__image {
     position: relative;
     height: scale.$video_card_height;
     overflow: hidden;
     display: flex;
+
     > img {
       width: scale.$video_card_width;
       border-radius: 10px;
@@ -42,6 +50,7 @@
     }
 
     &__play {
+      display: none;
       position: absolute;
       top: 40%;
       left: 40%;

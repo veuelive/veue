@@ -5,14 +5,14 @@
 
 .broadcasts {
   display: grid;
-
-  // + 1em to account for padding on videos
-  grid-template-columns: repeat(
-    auto-fill,
-    calc(#{scale.$video_card_width} + 1em)
-  );
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
+  width: 100%;
+
+  grid-template-columns: repeat(
+    auto-fit,
+    calc(#{scale.$video_card_width} + 10px)
+  );
 
   &__header {
     font-family: font.$poppins;
@@ -21,13 +21,8 @@
     font-size: 20px;
     color: color.$neutral-dark;
     padding-left: 10px;
-    margin: 20px 0;
+    margin: 20px auto;
     width: 100%;
-    max-width: 90vw;
     grid-column: 1 / -1;
-  }
-
-  .video-card {
-    margin: 20px;
   }
 }
