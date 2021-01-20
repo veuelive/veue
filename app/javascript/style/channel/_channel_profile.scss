@@ -9,9 +9,9 @@ $header-height: 54px;
   position: relative;
   overflow-y: scroll;
   overflow-x: hidden;
+  min-height: calc(100vh - #{$header-height});
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - #{$header-height});
 
   #channel-profile__background {
     position: absolute;
@@ -25,17 +25,15 @@ $header-height: 54px;
 
   #channel-profile__area {
     margin: 78px 10px 0 10px;
-    border-radius: 10px;
     font-size: 0.875rem;
     text-transform: capitalize;
-    background: color.$white;
   }
 
   @include desktop() {
     #channel-profile__area {
       margin: 78px auto 0 auto;
       width: 85%;
-      max-width: 1300px;
+      max-width: 1400px;
     }
   }
 }

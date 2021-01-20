@@ -5,10 +5,11 @@
 .streamer-profile {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  background: color.$white;
+  border-radius: 10px;
 
   .streamer-info {
-    padding: 15px 0;
+    padding: 10px 0;
     height: 100%;
     width: 100%;
     display: flex;
@@ -18,10 +19,9 @@
       margin: 0 10px 0 30px;
 
       svg {
-        border: 1px solid color.$neutral-accents;
         border-radius: 50%;
         height: 64px;
-        width: 64px;
+        width: 62px;
       }
     }
 
@@ -117,7 +117,7 @@
 @include desktop() {
   .streamer-profile {
     .streamer-info {
-      padding: 28px 0;
+      padding: 50px 0;
 
       &__avatar {
         margin: 0 40px 0 30px;
