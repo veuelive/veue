@@ -2,6 +2,8 @@
 @use "../utils/font";
 @use "../utils/breakpoints" as *;
 
+$header-height: 54px;
+
 #channel-profile {
   width: 100vw;
   position: relative;
@@ -9,6 +11,7 @@
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  min-height: calc(100vh - #{$header-height});
 
   #channel-profile__background {
     position: absolute;
@@ -22,7 +25,7 @@
 
   #channel-profile__area {
     margin: 78px 10px 0 10px;
-    min-height: 120px;
+    flex: 1;
     border-radius: 10px;
     font-size: 0.875rem;
     text-transform: capitalize;

@@ -67,6 +67,7 @@
       justify-content: center;
       align-items: center;
       margin-left: auto;
+      padding: 0 10px;
 
       .streamer-info__follow-count {
         display: flex;
@@ -78,7 +79,7 @@
         color: color.$veue-corporate;
         background: color.$veue-lilac;
         flex: 0 1 auto;
-        margin: 0 20px;
+        margin: 0 10px;
 
         svg {
           height: 13px;
