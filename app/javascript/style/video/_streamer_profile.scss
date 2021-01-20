@@ -9,18 +9,8 @@
     border-radius: 10px;
     padding: 0;
 
-    .streamer-info {
-      padding: 10px 0;
-    }
-
     .streamer-info-mobile__about {
       display: none;
-    }
-
-    @include desktop() {
-      .streamer-info {
-        padding: 50px 0;
-      }
     }
   }
 }

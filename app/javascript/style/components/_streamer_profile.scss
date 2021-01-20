@@ -8,7 +8,7 @@
   height: 100%;
 
   .streamer-info {
-    padding: 50px 0;
+    padding: 15px 0;
     height: 100%;
     width: 100%;
     display: flex;
@@ -117,6 +117,8 @@
 @include desktop() {
   .streamer-profile {
     .streamer-info {
+      padding: 28px 0;
+
       &__avatar {
         margin: 0 40px 0 30px;
       }
