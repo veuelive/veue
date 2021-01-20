@@ -6,14 +6,15 @@
   }
 
   .broadcasts {
-    width: 100%;
     margin: 10px auto;
+    width: 100%;
   }
 
   @include desktop() {
     .broadcasts {
       margin: 0 auto;
       max-width: 90vw;
+      width: auto;
     }
   }
 }
