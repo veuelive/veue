@@ -5,8 +5,9 @@
 #channels__show #channel-profile {
   width: 100vw;
   position: relative;
-  overflow-y: scroll;
   overflow-x: hidden;
+  overflow-y: scroll;
+  min-height: calc(100vh - #{$header-height});
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -23,6 +24,7 @@
 
   #channel-profile__area {
     margin: 78px 10px 0 10px;
+    max-width: 1400px;
     font-size: 0.875rem;
   }
 
@@ -30,7 +32,6 @@
     #channel-profile__area {
       margin: 78px auto 0 auto;
       width: 85%;
-      max-width: 1400px;
     }
   }
 }

@@ -8,11 +8,7 @@
   justify-content: space-around;
   align-items: center;
   width: 100%;
-
-  grid-template-columns: repeat(
-    auto-fit,
-    calc(#{scale.$video_card_width} + 10px)
-  );
+  grid-template-columns: 1fr;
 
   &__header {
     font-family: font.$poppins;
@@ -24,5 +20,9 @@
     margin: 20px auto;
     width: 100%;
     grid-column: 1 / -1;
+  }
+
+  @include desktop() {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   }
 }

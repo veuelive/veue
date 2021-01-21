@@ -34,19 +34,19 @@ RSpec.describe "Follows", type: :request do
 
     it "should create a follower for video streamer" do
       post follow_path_for_test
-      expect(channel.followers.count).to eq(1)
+      expect(channel.followers.size).to eq(1)
     end
 
     it "should soft remove follower for video streamer" do
       post follow_path_for_test
       delete follow_path_for_test
-      expect(channel.followers.count).to eq(0)
+      expect(channel.followers.size).to eq(0)
       expect(Follow.count).to eq(1)
       expect(Follow.first.unfollowed_at).to_not be_nil
 
       # and then we can resubscribe
       post follow_path_for_test
-      expect(channel.followers.count).to eq(1)
+      expect(channel.reload.followers.size).to eq(1)
       expect(Follow.count).to eq(2)
     end
 

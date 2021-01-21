@@ -12,21 +12,10 @@ $footer_desktop_height: 65px;
     height: 0;
     padding-top: 591.44px / 1127.34px * 100%;
   }
+
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
 }
-// Video Cards
-$screenshot_height_scalable: 5vw;
-$screenshot_height_fixed: 150px;
-$screenshot_width_scalable: $screenshot_height_scalable / $video_ratio;
-$screenshot_width_fixed: $screenshot_height_fixed / $video_ratio;
-
-$person_height_scalable: 1vw;
-$person_height_fixed: 50px;
-$person_width_scalable: $person_height_scalable / $video_ratio;
-$person_width_fixed: $person_height_fixed / $video_ratio;
-
-$video_card_width: calc(
-  #{$screenshot_width_scalable} + #{$screenshot_width_fixed}
-);
-$video_card_height: calc(
-  #{$screenshot_height_scalable} + #{$screenshot_height_fixed}
-);

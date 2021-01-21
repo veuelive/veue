@@ -2,7 +2,7 @@
 
 class Follow < ApplicationRecord
   belongs_to :user
-  belongs_to :channel
+  belongs_to :channel, counter_cache: :followers_count
 
   validates :user_id, uniqueness: {scope: %i[channel_id unfollowed_at]}
 

@@ -7,11 +7,11 @@ class ChannelDecorator < ApplicationDecorator
     if profile_image.attached?
       h.circle_image_tag(profile_image, size)
     else
-      h.svg_tag("logo-circular", style: "width: #{size}; height: #{size}")
+      h.svg_tag("logo-circular", width: size.to_s, height: size.to_s)
     end
   end
 
   def follower_count
-    helpers.number_to_social(object.followers.count)
+    helpers.number_to_social(object.followers.size)
   end
 end

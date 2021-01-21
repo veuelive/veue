@@ -11,10 +11,6 @@
   }
   overflow-x: hidden;
 
-  #streamer-profile-area {
-    margin: 10px 10px auto 0;
-  }
-
   .broadcasts__header {
     margin-bottom: 0;
   }
@@ -64,6 +60,10 @@
         display: none;
       }
 
+      #streamer-profile-area {
+        margin: 10px 10px auto 0;
+      }
+
       .broadcasts {
         display: grid;
       }
@@ -96,7 +96,8 @@
     .content-area__primary,
     .primary-video-area,
     .content-area__secondary {
-      width: 100vw;
+      // Allow for 10px of padding on each side
+      width: calc(100vw - 20px);
     }
     canvas.fixed-secondary-canvas {
       // We don't want to show the fixed canvas when we are in a small view

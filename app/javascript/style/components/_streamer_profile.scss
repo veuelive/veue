@@ -16,7 +16,7 @@
     align-items: center;
 
     &__avatar {
-      margin: 0 10px 0 30px;
+      margin: 0 10px 0;
 
       svg {
         border-radius: 50%;
@@ -57,7 +57,7 @@
 
     &-mobile__about {
       border-top: 1px solid color.$neutral-accents;
-      padding: 1.5rem 1.8rem;
+      padding: 10px;
       display: flex;
     }
 
@@ -99,6 +99,9 @@
         color: color.$veue-corporate;
         background: color.$white;
         border: 1px solid color.$veue-corporate;
+
+        // Make it so the border doesnt actually take up an extra 1px
+        margin: -1px;
       }
     }
   }

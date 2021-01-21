@@ -23,6 +23,8 @@ class Channel < ApplicationRecord
 
   has_many :mux_webhooks, dependent: :destroy
 
+  scope :most_popular, -> { order(followers_count: :desc) }
+
   def active_video
     videos.active.first
   end
