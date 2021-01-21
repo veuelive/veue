@@ -1,0 +1,43 @@
+.setting-menu{
+  "data-target": "user-settings.settingsMenu"
+}
+  .setting-menu__text
+    Settings
+  %ul{ role: "menubar" }
+    %li.setting-menu__name
+      = current_user.display_name
+    %li#profile-link.setting-menu__item{
+      role: "menuitem",
+      data: {
+        target: "user-settings.menuItem",
+        action: "click->user-settings#closeMenu",
+        link: "profile"
+      }
+    }
+      %a{ href: "#profile" }
+        %span Profile
+        = svg_tag "forward"
+    %li#privacy-link.setting-menu__item{
+      role: "menuitem",
+      data: {
+        target: "user-settings.menuItem",
+        action: "click->user-settings#closeMenu",
+        link: "privacy"
+      }
+    }
+      %a{ href: "#privacy" }
+        %span Privacy
+        = svg_tag "forward"
+    %li#help-link.setting-menu__item{
+      role: "menuitem",
+      data: {
+        target: "user-settings.menuItem",
+        action: "click->user-settings#closeMenu",
+        link: "help"
+      }
+    }
+      %a{ href: "#help" }
+        %span Help
+        = svg_tag "forward"
+    %li.setting-menu__item{role: "menuitem"}
+      = link_to "Sign Out", authentication_path, method: :delete

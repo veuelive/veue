@@ -1,0 +1,78 @@
+@use "../utils/breakpoints" as *;
+@use "../utils/color";
+
+#settings-view {
+  .setting-menu {
+    @include mobilePortrait() {
+      display: none;
+    }
+    &__text {
+      display: flex;
+      align-items: center;
+      color: color.$veue-corporate;
+      font-size: 20px;
+      height: 34px;
+      font-family: "Poppins", Helvetica, Sans-Serif, serif;
+      padding: 0 10px;
+    }
+    &__item {
+      margin-top: 10px;
+      border-radius: 10px;
+      a,
+      a:hover,
+      a:visited {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 15px 6px;
+        color: color.$neutral-middle;
+        @include mobilePortrait() {
+          padding: 20px;
+          color: color.$neutral-dark;
+        }
+        svg {
+          display: block;
+          width: 12px;
+          color: color.$neutral-regular;
+          @include desktop() {
+            display: none;
+          }
+        }
+      }
+      @include mobilePortrait() {
+        margin-top: 0;
+        border-radius: 0;
+        border-top: 1px solid color.$neutral-soft;
+        background-color: color.$white;
+      }
+    }
+    &__name {
+      font-family: "Poppins", Helvetica, Sans-Serif, serif;
+      padding: 20px;
+      font-size: 20px;
+      color: color.$veue-corporate;
+      background-color: color.$white;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      @include desktop() {
+        display: none;
+      }
+    }
+    li:last-of-type {
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      @include desktop() {
+        display: none;
+      }
+    }
+    @include desktop() {
+      .active {
+        background-color: color.$veue-corporate;
+        a,
+        a:hover,
+        a:visited {
+          color: color.$white;
+        }
+      }
+    }
+  }
+}

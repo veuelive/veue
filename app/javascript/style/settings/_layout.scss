@@ -1,0 +1,34 @@
+@use "../utils/breakpoints" as *;
+
+#settings__index {
+  /**
+  Put any main responsive layout code for ONLY desktop here... this does not count elements that scale to their
+  surroundings
+   */
+  @include desktop() {
+    .settings-content {
+      padding-top: 20px;
+      flex-direction: row;
+      display: flex;
+      justify-content: space-between;
+      width: 80%;
+      margin: 0 auto;
+      &__menu {
+        width: 16%;
+      }
+      &__primary {
+        width: 74%;
+      }
+    }
+  }
+
+  /**
+    This is the primary Setting layout for portrait mobile views
+     */
+  @include mobilePortrait() {
+    .settings-content {
+      padding: 6px 20px 0;
+      width: 100%;
+    }
+  }
+}

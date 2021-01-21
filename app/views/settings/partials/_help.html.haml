@@ -1,0 +1,19 @@
+.setting-tab#help-tab{
+  data: {
+    target: "user-settings.settingsTab",
+    tab: "help"
+  }
+}
+  .setting-tab__header
+    .setting-tab__header__name{
+      "data-action": "click->user-settings#openMenu"
+    }
+      = svg_tag "back"
+      Help
+  .setting-tab__body
+    .help-setting
+      .help-setting__info
+        How can we help you?
+        .sub-info
+          For general queries including bugs report or partnership opportunities, please email
+          = mail_to 'hello@veuelive.com', 'hello@veuelive.com'
