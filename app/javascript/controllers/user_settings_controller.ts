@@ -23,7 +23,7 @@ export default class extends Controller {
     });
   }
 
-  showActiveTab(activeTab): void {
+  showActiveTab(activeTab: string): void {
     this.settingsMenuTarget.style.removeProperty("display");
     this.menuItemTargets.forEach((element) => {
       element.dataset.link === activeTab
