@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="PostgreSQL - veue_development@localhost" uuid="4df407ba-f82c-420e-9d41-efcedf9de705">
+    <data-source source="LOCAL" name="Rails veue: development" uuid="075e6ded-31a4-4e8c-af1a-554fa7fe969e">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/config/database.yml</remarks>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/veue_development</jdbc-url>
+      <jdbc-url>jdbc:postgresql://127.0.0.1:5432/veue_development</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="Rails veue: test" uuid="c3d01591-5a56-4245-82f9-1c5f12fc1e68">
-      <driver-ref>greenplum</driver-ref>
+    <data-source source="LOCAL" name="Rails veue: test" uuid="9f7c4a29-dd9a-49f8-902c-3991375becd8">
+      <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
       <remarks>$PROJECT_DIR$/config/database.yml</remarks>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/veue_test</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="Rails veue: development" uuid="ce5c2a65-4cbb-45f9-ab8d-62ec87c49c02">
-      <driver-ref>greenplum</driver-ref>
-      <synchronize>true</synchronize>
-      <imported>true</imported>
-      <remarks>$PROJECT_DIR$/config/database.yml</remarks>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/veue_development</jdbc-url>
+      <jdbc-url>jdbc:postgresql://127.0.0.1:5432/veue_test</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
 </project>
