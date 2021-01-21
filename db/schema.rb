@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2021_01_22_110219) do
     t.text "mux_stream_key_ciphertext"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "followers_count", default: 0
     t.index ["mux_live_stream_id"], name: "index_channels_on_mux_live_stream_id", unique: true
     t.index ["name"], name: "index_channels_on_name", unique: true
     t.index ["slug"], name: "index_channels_on_slug", unique: true

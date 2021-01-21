@@ -13,7 +13,7 @@
       .streamer-info__follow-count
         = svg_tag 'user-icon-dark'
         %span
-          = current_channel.followers.count
+          = current_channel.followers.size
 
       - if user_signed_in?
         - if current_user.follows?(current_channel)
