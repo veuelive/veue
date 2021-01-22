@@ -41,7 +41,9 @@ Rails.application.routes.draw do
     get "velvet_rope", to: "velvet_rope#index"
   end
 
-  resources :users, only: %w(create)
+  resources :users, only: [:create] do
+    get :settings, to: "settings#index"
+  end
 
   post "/mux/webhook", to: "mux_webhooks#index"
 

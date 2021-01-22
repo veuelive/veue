@@ -1,0 +1,10 @@
+.content-area#settings-view{
+  "data-controller": "user-settings"
+}
+  .settings-content
+    .settings-content__menu
+      = render partial: "settings/partials/menu"
+    .settings-content__primary
+      = render partial: "settings/partials/profile"
+      = render partial: "settings/partials/privacy"
+      = render partial: "settings/partials/help"

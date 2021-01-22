@@ -1,0 +1,16 @@
+.setting-tab#profile-tab{
+  data: {
+    target: "user-settings.settingsTab",
+    tab: "profile"
+  }
+}
+  .setting-tab__header
+    .setting-tab__header__name{
+      "data-action": "click->user-settings#openMenu"
+    }
+      = svg_tag "back"
+      Edit Profile
+    .setting-tab__header__actions
+      .action-link Discard
+      .action-button Save Changes
+  %h4 User Profile Edit
