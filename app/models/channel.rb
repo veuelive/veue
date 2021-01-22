@@ -19,6 +19,7 @@ class Channel < ApplicationRecord
             length: {minimum: 2, maximum: 20}
   friendly_id :slug_candidates, use: :slugged
   encrypts :mux_stream_key
+  delegate :profile_image, to: :user
 
   has_many :mux_webhooks, dependent: :destroy
 
@@ -57,6 +58,10 @@ class Channel < ApplicationRecord
 
   def normalize_name
     name.unicode_normalize!
+  end
+
+  def about
+    user.about_me
   end
 
   private

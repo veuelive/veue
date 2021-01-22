@@ -16,6 +16,8 @@ class User < ApplicationRecord
   validates :display_name, length: {maximum: 40, minimum: 1}, presence: true
   validates :phone_number, phone_number: true
 
+  has_one_attached :profile_image
+
   after_create :trigger_user_created_events
 
   # TODO: Remove this in future! Moved to Channel model

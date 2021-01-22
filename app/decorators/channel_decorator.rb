@@ -3,14 +3,13 @@
 class ChannelDecorator < ApplicationDecorator
   delegate_all
 
-  # Define presentation-specific methods here. Helpers are accessed through
-  # `helpers` (aka `h`). You can override attributes, for example:
-  #
-  #   def created_at
-  #     helpers.content_tag :span, class: 'time' do
-  #       object.created_at.strftime("%a %m/%d/%y")
-  #     end
-  #   end
+  def profile_image_circle(size=64)
+    if profile_image.attached?
+      h.circle_image_tag(profile_image, size)
+    else
+      h.svg_tag("logo-circular", style: "width: #{size}; height: #{size}")
+    end
+  end
 
   def follower_count
     helpers.number_to_social(object.followers.count)

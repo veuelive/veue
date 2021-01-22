@@ -21,4 +21,8 @@ module ApplicationHelper
       units: {thousand: "K", million: "M", billion: "B"},
     )
   end
+
+  def circle_image_tag(image, size=64)
+    image_tag(image.variant(resize_to_fill: [size, size]), style: "border-radius: 50%;")
+  end
 end

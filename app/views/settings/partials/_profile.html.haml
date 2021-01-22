@@ -4,13 +4,25 @@
     tab: "profile"
   }
 }
-  .setting-tab__header
-    .setting-tab__header__name{
-      "data-action": "click->user-settings#openMenu"
-    }
-      = svg_tag "back"
-      Edit Profile
-    .setting-tab__header__actions
-      .action-link Discard
-      .action-button Save Changes
-  %h4 User Profile Edit
+  = form_for @user do |f|
+    .setting-tab__header
+      .setting-tab__header__name{
+        "data-action": "click->user-settings#openMenu"
+      }
+        = svg_tag "back"
+        Edit Profile
+      .setting-tab__header__actions
+        .action-link Discard
+        %button.action-button{type: "submit"} Save Changes
+    %h4 User Profile Edit
+
+    Display Name
+    = f.text_field :display_name
+
+    About Me
+    = f.text_area :about_me
+
+    = image_tag @user.profile_image.variant(resize_to_fill: [100, 100])
+
+    Image Upload
+    = f.file_field :profile_image
