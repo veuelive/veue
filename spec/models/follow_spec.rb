@@ -34,5 +34,8 @@ RSpec.describe Follow, type: :model do
 
     expect(channel_two.followers).to include(user)
   end
+
+  it "User cannot follow self" do
+    expect { create(:follow, user: channel_one.user, channel: channel_one) }.to raise_error("You can't follow yourself")
+  end
 end
-# TODO: create spec here
