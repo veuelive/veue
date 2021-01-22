@@ -72,6 +72,9 @@ gem "twilio-ruby"
 # For image processing and resizing with Active Storage
 gem "image_processing"
 
+# Validators for Image upload
+gem 'activestorage-validator'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.2", require: false
 

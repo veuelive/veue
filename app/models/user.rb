@@ -17,6 +17,11 @@ class User < ApplicationRecord
   validates :phone_number, phone_number: true
 
   has_one_attached :profile_image
+  validates :profile_image,
+            blob: {
+              content_type: %w[image/png image/jpg image/jpeg],
+              size_range: 1..5.megabytes,
+            }
 
   after_create :trigger_user_created_events
 
