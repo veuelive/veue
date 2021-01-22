@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_19_133551) do
+ActiveRecord::Schema.define(version: 2021_01_22_110219) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -141,6 +141,7 @@ ActiveRecord::Schema.define(version: 2021_01_19_133551) do
     t.string "mux_live_stream_id"
     t.text "mux_stream_key_ciphertext"
     t.enum "sms_status", default: "new_number", as: "sms_status_setting"
+    t.text "about_me"
     t.index ["mux_live_stream_id"], name: "index_users_on_mux_live_stream_id"
   end
 
