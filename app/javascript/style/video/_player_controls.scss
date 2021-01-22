@@ -8,7 +8,8 @@
 }
 
 #video-show {
-  .primary-video-area:hover, &[data-audience-view-audio-state="muted"] {
+  .primary-video-area:hover,
+  &[data-audience-view-audio-state="muted"] {
     .player-controls,
     .mobile-controls {
       opacity: 1;
