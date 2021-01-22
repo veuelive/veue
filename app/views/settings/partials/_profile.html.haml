@@ -22,7 +22,8 @@
     About Me
     = f.text_area :about_me
 
-    = image_tag @user.profile_image.variant(resize_to_fill: [100, 100])
+    - if @user.profile_image.attached?
+      = image_tag @user.profile_image.variant(resize_to_fill: [100, 100])
 
     Image Upload
     = f.file_field :profile_image
