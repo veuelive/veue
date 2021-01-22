@@ -42,6 +42,7 @@ export default class extends BaseController {
   private streamType: StreamType;
   private videoDemixer: VideoDemixer;
   private eventManager: EventManagerInterface;
+  private viewedPoller: number;
 
   connect(): void {
     this.streamType = this.data.get("stream-type") as StreamType;
@@ -92,7 +93,7 @@ export default class extends BaseController {
 
       this.sendViewedMessage();
 
-      setInterval(() => {
+      this.viewedPoller = window.setInterval(() => {
         this.sendViewedMessage();
       }, 60 * 1000);
     }
@@ -110,6 +111,7 @@ export default class extends BaseController {
 
   disconnect(): void {
     this.eventManager?.disconnect();
+    window.clearInterval(this.viewedPoller);
   }
 
   togglePlay(): void {

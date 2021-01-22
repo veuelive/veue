@@ -7,7 +7,7 @@ module Channels
       include ChannelConcern
 
       def index
-        render(json: current_video.recent_events_for_live.map(&:to_hash))
+        render(json: current_video&.recent_events_for_live&.map(&:to_hash))
       end
     end
   end
