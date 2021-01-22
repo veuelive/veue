@@ -79,7 +79,7 @@ describe BroadcastsController do
       travel 1.day
       expect(Video.stale.count).to eq(1)
 
-      put broadcast_path(video)
+      post keepalive_broadcast_path(video)
       video.reload
       expect(video.updated_at).to be > original_updated_at
       expect(Video.stale.count).to eq(0)
