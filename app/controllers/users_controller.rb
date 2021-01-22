@@ -13,4 +13,18 @@ class UsersController < ApplicationController
       render(status: :bad_request, text: "")
     end
   end
+
+  def update
+    @user = User.find(params[:id])
+    return unless current_user == @user
+
+    @user.update!(permitted_parameters)
+    redirect_back(fallback_location: root_path)
+  end
+
+  private
+
+  def permitted_parameters
+    params.require(:user).permit(:profile_image, :about_me, :display_name)
+  end
 end

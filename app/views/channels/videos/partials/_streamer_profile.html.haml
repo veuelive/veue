@@ -1,15 +1,14 @@
-- about = "Entrepreneur and Life Artist | Express yourself! #vegan #teamdogs Moma of Benjamin and Paloma"
 
 .streamer-profile{ data: {controller: "streamer-profile"}}
   .streamer-info
     .streamer-info__avatar
-      = svg_tag "logo-circular"
+      = current_channel.profile_image_circle
     .streamer-info__text
       .streamer-info__name
         %a{href: channel_path(current_channel)}
           = current_channel.name
       .streamer-info-desktop__about
-        = about
+        = current_channel.about
     .streamer-info__follow-info
       .streamer-info__follow-count
         = svg_tag 'user-icon-dark'
@@ -26,4 +25,4 @@
 
 
   .streamer-info-mobile__about
-    = about
+    = current_channel.about

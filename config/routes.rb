@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     get "velvet_rope", to: "velvet_rope#index"
   end
 
-  resources :users, only: [:create] do
+  resources :users, only: [:create, :update] do
     get :settings, to: "settings#index"
   end
 

@@ -3,5 +3,7 @@
 class SettingsController < ApplicationController
   before_action :authenticate_user!
 
-  def index; end
+  def index
+    @user = User.find(params[:user_id])
+  end
 end
