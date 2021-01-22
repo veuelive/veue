@@ -10,7 +10,7 @@ describe Internal::CronController do
       video = create(:video)
       expect(video).to be_pending
 
-      travel 30.minutes
+      travel 60.minutes
 
       get cron_path
 
