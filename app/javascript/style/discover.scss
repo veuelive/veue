@@ -1,3 +1,5 @@
+@use "./utils/breakpoints" as *;
+
 body#discover__index {
   #main-container {
     width: 100%;
