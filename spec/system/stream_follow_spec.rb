@@ -39,11 +39,16 @@ RSpec.describe "Follow from VOD" do
 
       expect(page).to have_content("Follow")
     end
+  end
 
-    it "should prevent user to follow self" do
-      login_as(user)
-      visit channel_path(user.channel)
-      expect(page).to not_have_content("Follow")
+  describe "channel owner logged in" do
+    before do
+      login_as(channel.user)
+    end
+
+    it "should prevent user from following themselves" do
+      visit channel_path(channel)
+      expect(page).not_to(have_content("Follow"))
     end
   end
 end
