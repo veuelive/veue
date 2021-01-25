@@ -27,5 +27,8 @@
     .video-card__below__flex
       .video-card__below__title
         = video.title
-      .video-card__below__name
+      .video-card__below__details
         = video.user.display_name
+        = svg_tag "ellipse-2"
+        = "#{time_ago_in_words(Time.at(video.started_at_ms / 1000))} ago"
+
