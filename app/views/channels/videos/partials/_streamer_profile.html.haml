@@ -24,5 +24,6 @@
         %button.follow-btn{data: { action: "click->authentication#showModal" }} Follow
 
 
-  .streamer-info-mobile__about
-    = current_channel.about
+  - unless current_channel.about.blank?
+    .streamer-info-mobile__about
+      = current_channel.about

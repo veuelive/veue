@@ -1,3 +1,4 @@
+@use "../utils/scale";
 @use "../utils/color";
 @use '../utils/breakpoints' as *;
 
@@ -7,9 +8,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  padding: 10px 0;
+  flex: 1;
   margin-top: auto;
+  min-height: scale.$footer_mobile_height;
+  max-height: scale.$footer_mobile_height;
 
   // style
   font-size: 15px;
@@ -44,6 +46,9 @@
 
 @include desktop() {
   .main-footer {
+    padding: 0 10px;
+    min-height: scale.$footer_desktop_height;
+    max-height: scale.$footer_desktop_height;
     flex-direction: row;
     justify-content: space-between;
   }

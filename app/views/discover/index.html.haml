@@ -1,11 +1,21 @@
 
 .content-area
-  - if @live_videos.any?
-    %h2 Live Videos!
-    .live-videos
-      = render collection: @live_videos, partial: "shared/video_card"
+  .discover-area
+    - if @live_videos.any?
+      %h2 Live Broadcasts
+      .live-broadcasts
+        = render collection: @live_videos.limit(3), partial: "shared/video_card"
 
-  %h2 Recent Videos
-  .videos
-    = render collection: @recent_videos, partial: "shared/video_card"
+    %h2 Popular streamers
+    .popular-streamers__container
+      .popular-streamers
+        - Channel.most_popular.limit(8).each do |channel|
+          .streamer-picture
+            %a{href: channel_path(channel.slug)}
+              = channel.decorate.profile_image_circle(100)
+
+    %h2 Featured Replays
+    .recent-broadcasts
+      = render collection: @recent_videos, partial: "shared/video_card"
+
   = render partial: "layouts/footer"
