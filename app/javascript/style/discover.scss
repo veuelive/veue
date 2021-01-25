@@ -1,16 +1,116 @@
 body#discover__index {
-  .videos {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+  #main-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+    .content-area {
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      align-items: center;
+
+      .discover-area {
+        max-width: 1400px;
+        display: flex;
+        width: calc(100% - 50px);
+        flex-direction: column;
+        margin: 0 auto;
+        align-items: stretch;
+
+        h2 {
+          margin-left: 20px;
+        }
+
+        // Needs to be wrapped so that the overflow can be set
+        .popular-streamers__container {
+          max-width: 1004px;
+          width: 100%;
+          margin-left: 20px;
+
+          .popular-streamers {
+            width: 100%;
+            display: flex;
+            margin: 30px 20px;
+            height: 160px;
+            overflow-x: auto;
+
+            > .streamer-picture {
+              display: inline-block;
+              margin-right: 29px;
+
+              &:last-child {
+                margin-right: 0;
+              }
+            }
+          }
+        }
+
+        .live-broadcasts,
+        .recent-broadcasts {
+          display: grid;
+          justify-content: space-around;
+          grid-template-columns: minmax(0, 1fr);
+          column-gap: 10px;
+          align-items: center;
+        }
+
+        .live-broadcasts {
+          .video-card:nth-child(1n + 2) {
+            display: none;
+          }
+        }
+      }
+
+      .main-footer {
+        align-self: stretch;
+        margin-top: auto;
+      }
+    }
   }
 
-  #main-container {
-    .content-area {
-      flex-direction: column;
-      h2 {
-        text-align: center;
+  @include desktop() {
+    #main-container {
+      .content-area {
+        .discover-area {
+          margin: 0 140px;
+
+          .popular-streamers__container {
+            width: 100%;
+            margin: 0;
+          }
+
+          .live-broadcasts,
+          .recent-broadcasts {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+
+          .live-broadcasts {
+            // Sets the 2nd video to display: block
+            .video-card:nth-child(2) {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // When 3 videos appear in the grid
+  @media only screen and (min-width: 1100px) {
+    #main-container .content-area .discover-area {
+      .live-broadcasts,
+      .recent-broadcasts {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .live-broadcasts {
+        // Shows all videos
+        .video-card:nth-child(1n) {
+          display: block;
+        }
       }
     }
   }

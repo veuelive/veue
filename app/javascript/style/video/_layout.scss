@@ -1,7 +1,14 @@
 @use "../utils/breakpoints" as *;
+@use "../utils/scale";
 
 #videos__show,
 #channels__show {
+  #main-container {
+    height: calc(100vh - #{scale.$header_height});
+
+    // reset min-height
+    min-height: auto;
+  }
   overflow-x: hidden;
 
   #streamer-profile-area {
@@ -10,6 +17,10 @@
 
   .broadcasts__header {
     margin-bottom: 0;
+  }
+
+  .content-area__secondary {
+    margin-top: 10px;
   }
 
   /**
@@ -55,6 +66,10 @@
 
       .broadcasts {
         display: grid;
+      }
+
+      .main-footer {
+        display: flex;
       }
     }
   }
@@ -226,14 +241,13 @@
   }
 }
 
+/* This allows us to disable the broadcasts and footers for mobile while videos
+   are playing */
 [data-audience-view-stream-type="vod"],
 [data-audience-view-stream-type="upcoming"],
 [data-audience-view-stream-type="live"] {
+  .main-footer,
   .broadcasts {
     display: none;
-  }
-
-  .content-area__secondary {
-    margin-top: 10px;
   }
 }

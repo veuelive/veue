@@ -2,16 +2,14 @@
 @use "../utils/font";
 @use "../utils/breakpoints" as *;
 
-$header-height: 54px;
-
-#channel-profile {
+#channels__show #channel-profile {
   width: 100vw;
   position: relative;
   overflow-y: scroll;
   overflow-x: hidden;
-  min-height: calc(100vh - #{$header-height});
   display: flex;
   flex-direction: column;
+  flex: 1;
 
   #channel-profile__background {
     position: absolute;
@@ -26,7 +24,6 @@ $header-height: 54px;
   #channel-profile__area {
     margin: 78px 10px 0 10px;
     font-size: 0.875rem;
-    text-transform: capitalize;
   }
 
   @include desktop() {
