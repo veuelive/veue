@@ -56,7 +56,7 @@ describe "user profile" do
         all(".user-menu__item")[1].click
         expect(page).to have_css("#privacy-tab")
 
-        find(".privacy-setting__action").click
+        find(".privacy-profile__action").click
         page.driver.browser.switch_to.alert.accept
 
         expect(page).to have_content("Login")

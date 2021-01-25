@@ -1,19 +1,19 @@
-.setting-tab#privacy-tab{
+.profile-tab#privacy-tab{
   data: {
-    target: "user-profile.settingsTab",
+    target: "user-profile.profileTab",
     tab: "privacy"
   }
 }
-  .setting-tab__header
-    .setting-tab__header__name{
+  .profile-tab__header
+    .profile-tab__header__name{
       "data-action": "click->user-profile#openMenu"
     }
       = svg_tag "back"
       Privacy
-  .setting-tab__body
-    .privacy-setting
-      .privacy-setting__info
+  .profile-tab__body
+    .privacy-profile
+      .privacy-profile__info
         Delete Account
         .sub-info
           By deleting your account you will lose all your data
-      = link_to 'Delete Account', user_path(current_user), class: "privacy-setting__action", method: :delete, :data => {:confirm => "Are you sure to remove your account?"}
+      = link_to 'Delete Account', user_path(current_user), class: "privacy-profile__action", method: :delete, :data => {:confirm => "Are you sure to remove your account?"}

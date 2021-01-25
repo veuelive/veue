@@ -1,8 +1,8 @@
 @use "../utils/breakpoints" as *;
 @use "../utils/color";
 
-#settings-view {
-  .setting-tab {
+#profile-view {
+  .profile-tab {
     display: none;
     &__header {
       display: flex;
@@ -46,7 +46,7 @@
       background-color: color.$white;
       border-radius: 10px;
       padding: 22px;
-      .profile-setting {
+      .profile-update {
         @include mobilePortrait {
           margin-top: 20px;
         }
@@ -125,7 +125,7 @@
           }
         }
       }
-      .privacy-setting {
+      .privacy-profile {
         @include desktop() {
           display: flex;
           justify-content: space-between;
@@ -149,7 +149,7 @@
           border-radius: 10px;
         }
       }
-      .help-setting {
+      .help-profile {
         &__info {
           color: color.$neutral-dark;
           .sub-info {
