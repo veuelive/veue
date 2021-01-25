@@ -1,5 +1,5 @@
 .setting-menu{
-  "data-target": "user-settings.settingsMenu"
+  "data-target": "user-profile.settingsMenu"
 }
   .setting-menu__text
     Settings
@@ -9,8 +9,8 @@
     %li#profile-link.setting-menu__item{
       role: "menuitem",
       data: {
-        target: "user-settings.menuItem",
-        action: "click->user-settings#closeMenu",
+        target: "user-profile.menuItem",
+        action: "click->user-profile#closeMenu",
         link: "profile"
       }
     }
@@ -20,8 +20,8 @@
     %li#privacy-link.setting-menu__item{
       role: "menuitem",
       data: {
-        target: "user-settings.menuItem",
-        action: "click->user-settings#closeMenu",
+        target: "user-profile.menuItem",
+        action: "click->user-profile#closeMenu",
         link: "privacy"
       }
     }
@@ -31,8 +31,8 @@
     %li#help-link.setting-menu__item{
       role: "menuitem",
       data: {
-        target: "user-settings.menuItem",
-        action: "click->user-settings#closeMenu",
+        target: "user-profile.menuItem",
+        action: "click->user-profile#closeMenu",
         link: "help"
       }
     }

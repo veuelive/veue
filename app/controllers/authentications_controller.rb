@@ -25,7 +25,7 @@ class AuthenticationsController < ApplicationController
     render_header
   end
 
-  # This is used for when we've forgotten who we are, but we want ot use
+  # This is used for when we've forgotten who we are, but we want to use
   # a previously created UserLoginAttempt
   def override
     return unless params[:session_token_uuid]

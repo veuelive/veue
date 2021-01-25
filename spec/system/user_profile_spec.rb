@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "settings" do
+describe "user profile" do
   let(:user) { create(:user) }
 
   before :example do
@@ -10,9 +10,9 @@ describe "settings" do
   end
 
   describe "logged out user" do
-    it "should not access settings" do
-      visit user_settings_path(user.id)
-      expect(page).not_to(have_css("#settings__index"))
+    it "should not access profile" do
+      visit edit_user_path(user.id)
+      expect(page).not_to(have_css("#users__edit"))
     end
   end
 
@@ -21,12 +21,12 @@ describe "settings" do
       login_as(user)
     end
 
-    it "should have access to settings" do
-      visit user_settings_path(user.id)
-      expect(page).to have_css("#settings__index")
+    it "should have access to profile" do
+      visit edit_user_path(user.id)
+      expect(page).to have_css("#users__edit")
     end
 
-    describe "visit settings from navbar" do
+    describe "visit profile from navbar" do
       before do
         find(".menu-area").hover
       end
@@ -44,6 +44,22 @@ describe "settings" do
       it "should show help tab" do
         all(".user-menu__item")[2].click
         expect(page).to have_css("#help-tab")
+      end
+    end
+
+    describe "privacy tab delete user account" do
+      before do
+        find(".menu-area").hover
+      end
+
+      it "should remove user and redirect user after log out" do
+        all(".user-menu__item")[1].click
+        expect(page).to have_css("#privacy-tab")
+
+        find(".privacy-setting__action").click
+        page.driver.browser.switch_to.alert.accept
+
+        expect(page).to have_content("Login")
       end
     end
   end

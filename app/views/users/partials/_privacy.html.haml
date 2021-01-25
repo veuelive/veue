@@ -1,12 +1,12 @@
 .setting-tab#privacy-tab{
   data: {
-    target: "user-settings.settingsTab",
+    target: "user-profile.settingsTab",
     tab: "privacy"
   }
 }
   .setting-tab__header
     .setting-tab__header__name{
-      "data-action": "click->user-settings#openMenu"
+      "data-action": "click->user-profile#openMenu"
     }
       = svg_tag "back"
       Privacy
@@ -16,4 +16,4 @@
         Delete Account
         .sub-info
           By deleting your account you will lose all your data
-      %a.privacy-setting__action Delete Account
+      = link_to 'Delete Account', user_path(current_user), class: "privacy-setting__action", method: :delete, :data => {:confirm => "Are you sure to remove your account?"}

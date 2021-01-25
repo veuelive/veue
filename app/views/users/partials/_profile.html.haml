@@ -1,13 +1,13 @@
 .setting-tab#profile-tab{
   data: {
-    target: "user-settings.settingsTab",
+    target: "user-profile.settingsTab",
     tab: "profile"
   }
 }
   = form_for @user do |f|
     .setting-tab__header
       .setting-tab__header__name{
-        "data-action": "click->user-settings#openMenu"
+        "data-action": "click->user-profile#openMenu"
       }
         = svg_tag "back"
         Edit Profile
@@ -27,3 +27,4 @@
 
     Image Upload
     = f.file_field :profile_image
+
