@@ -23,11 +23,11 @@
             %li.user-menu__name
               = current_user.display_name
             %li.user-menu__item{role: "menuitem"}
-              = link_to "Profile", user_settings_path(user_id: current_user.id, anchor: 'profile')
+              = link_to "Profile", edit_user_path(id: current_user.id, anchor: 'profile')
             %li.user-menu__item{role: "menuitem"}
-              = link_to "Privacy", user_settings_path(user_id: current_user.id, anchor: 'privacy')
+              = link_to "Privacy", edit_user_path(id: current_user.id, anchor: 'privacy')
             %li.user-menu__item{role: "menuitem"}
-              = link_to "Help", user_settings_path(user_id: current_user.id, anchor: 'help')
+              = link_to "Help", edit_user_path(id: current_user.id, anchor: 'help')
             %li.user-menu__item{role: "menuitem"}
               = link_to "Sign Out", authentication_path, method: :delete
     - else

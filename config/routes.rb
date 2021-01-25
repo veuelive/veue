@@ -41,10 +41,8 @@ Rails.application.routes.draw do
     get "velvet_rope", to: "velvet_rope#index"
   end
 
-  resources :users, only: [:create, :update] do
-    get :settings, to: "settings#index"
-  end
-
+  resources :users, only: [:create, :edit, :update, :destroy]
+  
   post "/mux/webhook", to: "mux_webhooks#index"
 
   ActiveAdmin.routes(self)
