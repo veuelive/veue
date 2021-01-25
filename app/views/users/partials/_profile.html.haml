@@ -1,17 +1,17 @@
-.setting-tab#profile-tab{
+.profile-tab#profile-tab{
   data: {
-    target: "user-profile.settingsTab",
+    target: "user-profile.profileTab",
     tab: "profile"
   }
 }
   = form_for @user do |f|
-    .setting-tab__header
-      .setting-tab__header__name{
+    .profile-tab__header
+      .profile-tab__header__name{
         "data-action": "click->user-profile#openMenu"
       }
         = svg_tag "back"
         Edit Profile
-      .setting-tab__header__actions
+      .profile-tab__header__actions
         .action-link Discard
         %button.action-button{type: "submit"} Save Changes
     %h4 User Profile Edit

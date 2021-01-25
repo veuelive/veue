@@ -1,10 +1,12 @@
-.content-area#settings-view{
-  "data-controller": "user-profile"
+.content-area#profile-view{
+  data: {
+    controller: "user-profile"
+  }
 }
-  .settings-content
-    .settings-content__menu
+  .profile-content
+    .profile-content__menu
       = render partial: "users/partials/menu"
-    .settings-content__primary
+    .profile-content__primary
       = render partial: "users/partials/profile"
       = render partial: "users/partials/privacy"
       = render partial: "users/partials/help"

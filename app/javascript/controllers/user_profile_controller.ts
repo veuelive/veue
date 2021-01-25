@@ -1,11 +1,11 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["settingsTab", "menuItem", "settingsMenu"];
+  static targets = ["profileTab", "menuItem", "profileMenu"];
 
-  readonly settingsTabTargets!: HTMLElement[];
+  readonly profileTabTargets!: HTMLElement[];
   readonly menuItemTargets!: HTMLElement[];
-  readonly settingsMenuTarget!: HTMLElement;
+  readonly profileMenuTarget!: HTMLElement;
 
   connect(): void {
     const currentTab = this.currentTab();
@@ -24,13 +24,13 @@ export default class extends Controller {
   }
 
   showActiveTab(activeTab: string): void {
-    this.settingsMenuTarget.style.removeProperty("display");
+    this.profileMenuTarget.style.removeProperty("display");
     this.menuItemTargets.forEach((element) => {
       element.dataset.link === activeTab
         ? element.classList.add("active")
         : element.classList.remove("active");
     });
-    this.settingsTabTargets.forEach((element) => {
+    this.profileTabTargets.forEach((element) => {
       element.style.display =
         element.dataset.tab === activeTab ? "block" : "none";
     });
@@ -38,8 +38,8 @@ export default class extends Controller {
 
   openMenu(): void {
     if (document.body.clientWidth < 650) {
-      this.settingsMenuTarget.style.display = "block";
-      this.settingsTabTargets.forEach((element) => {
+      this.profileMenuTarget.style.display = "block";
+      this.profileTabTargets.forEach((element) => {
         element.style.display = "none";
       });
     }

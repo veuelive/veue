@@ -1,8 +1,8 @@
 @use "../utils/breakpoints" as *;
 @use "../utils/color";
 
-#settings-view {
-  .setting-menu {
+#profile-view {
+  .profile-menu {
     @include mobilePortrait() {
       display: none;
     }

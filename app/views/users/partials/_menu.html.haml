@@ -1,12 +1,12 @@
-.setting-menu{
-  "data-target": "user-profile.settingsMenu"
+.profile-menu{
+  "data-target": "user-profile.profileMenu"
 }
-  .setting-menu__text
-    Settings
+  .profile-menu__text
+    profiles
   %ul{ role: "menubar" }
-    %li.setting-menu__name
+    %li.profile-menu__name
       = current_user.display_name
-    %li#profile-link.setting-menu__item{
+    %li#profile-link.profile-menu__item{
       role: "menuitem",
       data: {
         target: "user-profile.menuItem",
@@ -17,7 +17,7 @@
       %a{ href: "#profile" }
         %span Profile
         = svg_tag "forward"
-    %li#privacy-link.setting-menu__item{
+    %li#privacy-link.profile-menu__item{
       role: "menuitem",
       data: {
         target: "user-profile.menuItem",
@@ -28,7 +28,7 @@
       %a{ href: "#privacy" }
         %span Privacy
         = svg_tag "forward"
-    %li#help-link.setting-menu__item{
+    %li#help-link.profile-menu__item{
       role: "menuitem",
       data: {
         target: "user-profile.menuItem",
@@ -39,5 +39,5 @@
       %a{ href: "#help" }
         %span Help
         = svg_tag "forward"
-    %li.setting-menu__item{role: "menuitem"}
+    %li.profile-menu__item{role: "menuitem"}
       = link_to "Sign Out", authentication_path, method: :delete
