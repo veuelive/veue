@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: [:edit, :destroy]
+  before_action :authenticate_user!, only: %i[edit destroy]
 
   def edit
-    @user = User.find(params[:user_id])
+    @user = User.find(params[:id])
   end
 
   def create
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
 
-    redirect_to :back && return unless @user.destroy
+    redirect_to(:back) && return unless @user.destroy
 
     session[:session_token_uuid] = nil
     redirect_to("/")
@@ -40,6 +40,6 @@ class UsersController < ApplicationController
   private
 
   def permitted_parameters
-    params.require(:user).permit(:profile_image, :about_me, :display_name)  
+    params.require(:user).permit(:profile_image, :about_me, :display_name)
   end
 end
