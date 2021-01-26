@@ -68,5 +68,11 @@ RSpec.describe "Follows", type: :request do
         post channel_follow_path(create(:channel))
       }.to_not have_enqueued_job(SendConsentTextJob)
     end
+
+    it "should prevent user from following themselves" do
+      login_as channel.user
+      expect { post follow_path_for_test }.to raise_error(ActiveRecord::RecordInvalid)
+      expect(channel.followers.count).to eq(0)
+    end
   end
 end

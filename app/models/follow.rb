@@ -10,6 +10,11 @@ class Follow < ApplicationRecord
     :send_consent_information,
     unless: -> { user.instructions_sent? || user.unsubscribed? },
   )
+  validate :cannot_follow_self
+
+  def cannot_follow_self
+    errors.add(:user_id, "You can't follow yourself") if channel.user_id == user_id
+  end
 
   def unfollow!
     update!(unfollowed_at: Time.current)
