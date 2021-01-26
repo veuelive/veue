@@ -14,7 +14,7 @@ module Channels
           return
         end
 
-        render(json: {success: true})
+        render(json: {success: true, message: message.to_hash})
       end
 
       def index

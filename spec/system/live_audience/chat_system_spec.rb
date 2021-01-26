@@ -23,7 +23,7 @@ describe "chat during live video" do
     it "should allow for live chat messages to be sent" do
       write_chat_message "Cowabunga!"
       expect(page).to have_content("Cowabunga!").once
-      expect(video.chat_messages.count).to be(1)
+      expect(video.chat_messages.count).to eq(1)
 
       # This seems odd, I know, but it's the main way to repo VEUE-144
       # as Turbolinks with the page transitions was doubling the number
@@ -111,10 +111,13 @@ describe "chat during live video" do
       expect(page).to have_content(first_message.user.display_name)
     end
 
-    it "should have hilighted comment of streamer" do
+    it "should have highlighted comment of streamer" do
+      expect(page).not_to(have_selector(".message-write"))
+
       # It is mocking comment of streamer
       login_as video.user
       write_chat_message "Cowabunga!"
+      expect(page).to have_content("Cowabunga!").once
       logout_user
 
       # Watching stream as a common visitor
@@ -129,6 +132,18 @@ describe "chat during live video" do
       find(".message-login-prompt").click
 
       expect(page).to have_css("#phone_number_input")
+    end
+
+    it "should show the message even if rejected" do
+      PerspectiveApi.key = "FAIL"
+      login_as user
+      bad_word = "profanity"
+      write_chat_message bad_word
+      expect(page).to have_content(bad_word)
+
+      visit channel_path(channel)
+
+      expect(page).to have_no_content(bad_word)
     end
   end
 end

@@ -8,16 +8,26 @@ import {
   UserReactionMessageEvent,
 } from "./reaction_notification_controller";
 
+import { ChatMessage } from "types/chat";
+import { appendToChat, displayChatMessage } from "helpers/chat_helpers";
+
+interface User {
+  name: string;
+}
+
 export default class MessagesController extends BaseController {
+  element!: HTMLElement;
+
   private myUserId: string;
   private lastMessageFromUserId: string;
-  private chatMessageCallbackHandler: (event) => void;
-  private userJoinedCallbackHandler: (event) => void;
-  private userReactionListener: (event) => void;
+
+  private chatMessageCallbackHandler: (event: CustomEvent) => void;
+  private userJoinedCallbackHandler: (event: CustomEvent) => void;
+  private userReactionListener: (event: CustomEvent) => void;
 
   connect(): void {
     this.chatMessageCallbackHandler = (event) => {
-      this.displayChatMessage(event.detail.data);
+      this.showChatMessage(event.detail.data);
     };
     VideoEventProcessor.subscribeTo(
       "ChatMessage",
@@ -62,79 +72,29 @@ export default class MessagesController extends BaseController {
     );
   }
 
-  private displayVideoReactionNotice(user) {
+  private displayVideoReactionNotice(name: string) {
     this.lastMessageFromUserId = null;
-    this.appendHtml(renderReactionMarkup(user, heartSvg));
+    appendToChat(this.element, renderReactionMarkup(name, heartSvg));
   }
 
-  private displayUserJoinedNotice(user) {
+  private displayUserJoinedNotice(user: User) {
     this.lastMessageFromUserId = null;
 
-    this.appendHtml(`
+    appendToChat(
+      this.element,
+      `
       <div class="user-joined">
         <img src=${userSvg} alt="user-icon"/>
         <div>${user.name} joined the chat</div>
-      </div>`);
+      </div>`
+    );
   }
 
-  private displayChatMessage(message) {
-    const sameUser = message.userId === this.lastMessageFromUserId;
+  private showChatMessage(message: ChatMessage) {
+    const isSameUser = message.userId === this.lastMessageFromUserId;
 
-    let html = "";
-    if (message.byStreamer) {
-      html = `
-        <div class="message-left">
-          <div class="highlighted-message">
-            <div class="highlighted-message__name">
-              ${message.name}
-            </div>
-            <div class="message-display border-left highlighted-message__text">
-              ${message.message}
-            </div>
-          </div>
-        </div>
-      `;
-    } else if (message.userId === this.myUserId) {
-      html = `
-        <div class="message-right">
-          <div class="message-display message-right__text">
-            ${message.message}
-          </div>
-        </div>
-      `;
-    } else if (sameUser) {
-      html = `
-        <div class="message-grouped">
-          <div class="message-display border-left message-grouped__text">
-            ${message.message}
-          </div>
-        </div>
-      `;
-    } else {
-      html = `
-        <div class="message-left">
-          <div class="message-content">
-            <div class="message-content__name">
-              ${message.name}
-            </div>
-            <div class="message-display border-left message-content__text">
-              ${message.message}
-            </div>
-          </div>
-        </div>
-      `;
-    }
+    displayChatMessage(message, isSameUser);
 
-    this.appendHtml(html);
     this.lastMessageFromUserId = message.userId;
-  }
-
-  private appendHtml(html: string) {
-    this.element.insertAdjacentHTML("beforeend", html);
-    this.element.lastElementChild.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-      inline: "nearest",
-    });
   }
 }

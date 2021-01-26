@@ -8,6 +8,12 @@ export function currentUserId(): string | undefined {
   return element?.getAttribute("data-user-id");
 }
 
+export function currentUserName(): string {
+  return document
+    .querySelector("*[data-user-name]")
+    .getAttribute("data-user-name");
+}
+
 function showLoginElements(): void {
   const loggedIn = !!currentUserId();
 

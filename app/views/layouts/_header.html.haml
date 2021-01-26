@@ -9,6 +9,7 @@
         "data": {
           "controller": "user-menu",
           "user-id": current_user.id,
+          "user-name": current_user.display_name,
           "target": "user-menu.area",
           "is-open": "false",
           "action": "mouseenter->user-menu#openOrCloseEvent mouseleave->user-menu#openOrCloseEvent resize@window->user-menu#layout click->user-menu#openOrCloseEvent"

@@ -9,3 +9,9 @@ export function getChannelSlug(): string {
     .querySelector("*[data-channel-slug]")
     .getAttribute("data-channel-slug");
 }
+
+export function getChannelUserId(): string {
+  return document
+    .querySelector("*[data-channel-user-id]")
+    .getAttribute("data-channel-user-id");
+}

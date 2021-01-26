@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ChatMessage < VideoEvent
+  validates :text, presence: true
+
   def input_to_payload
     {
       name: user.display_name,
@@ -15,12 +17,12 @@ class ChatMessage < VideoEvent
       properties: {
         message: String,
       },
-      required: ["message"],
+      required: %w[message],
     }
   end
 
   def text
-    payload["message"]
+    input["message"]
   end
 
   # Immediately deliver via channel

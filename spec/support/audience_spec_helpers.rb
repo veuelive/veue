@@ -40,7 +40,11 @@ module AudienceSpecHelpers
   end
 
   def someone_chatted(message=Faker::Quote.most_interesting_man_in_the_world, timecode_ms=0)
-    video.chat_messages.create!(user: create(:user), input: {message: message}, timecode_ms: timecode_ms)
+    video.chat_messages.create!(
+      user: create(:user),
+      input: {message: message},
+      timecode_ms: timecode_ms,
+    )
   end
 
   def streamer_visited(url, timecode_ms)
