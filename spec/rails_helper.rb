@@ -37,6 +37,7 @@ RSpec.configure do |config|
   config.include PhoneTestHelpers
   config.include ResponsiveHelpers
   config.include UploadSpecHelper
+  config.include SseSpecHelpers
 
   config.before(:all) do
     ENV["IFTTT_PUSH_KEY"] = ENV.fetch("IFTTT_PUSH_KEY", "1234")
@@ -47,7 +48,8 @@ RSpec.configure do |config|
     FakeTwilio.reset!
     stub_const("MUX_SERVICE", FakeMuxService.new)
 
-    WebMock.reset_executed_requests!
+    WebMock.reset!
+    setup_perspective_mocks!
     stub_request(:post, /#{IfThisThenThatJob.post_url}/)
       .to_return(status: 200, body: "stubbed response", headers: {})
   end

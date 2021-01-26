@@ -37,6 +37,12 @@ We use the following Third-Party services:
 - Heroku (Hosting)
 - AppSignal (APM)
 
+## Environment Variables
+
+PERSPECTIVE_API_ENABLED: true/false - Used to turn on or off the Perspective API
+PERSPECTIVE_API_SCORE_THRESHOLD: 0.0...1.0 - Cutoff values for not publishing chat messages, 1.0 being the worst and 0.0 being innocent
+GOOGLE_CLOUD_KEY: string - Needed for any GCP calls
+
 ## Streaming Architecture
 
 This is the sequence diagram for how the Electron JS app works with other components and how we setup a
