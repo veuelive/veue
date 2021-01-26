@@ -18,13 +18,12 @@
       - if user_signed_in?
         - if current_user.follows?(current_channel)
           %button.unfollow-btn{data: { action: "click->streamer-profile#unfollow" }} Following
-        - else
-          %button.follow-btn{data: { action: "click->streamer-profile#follow" }} Follow
+        - elsif current_channel.user == current_user 
+        - else 
+          %button.follow-btn{data: { action: "click->streamer-profile#follow" }} Follow 
       - else
-
         %button.follow-btn{data: { action: "click->authentication#showModal" }} Follow
 
   - unless current_channel.about.blank?
     .streamer-info-mobile__about
       = current_channel.about
-
