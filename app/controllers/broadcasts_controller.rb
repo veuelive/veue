@@ -13,6 +13,11 @@ class BroadcastsController < ApplicationController
     render
   end
 
+  def keepalive
+    current_broadcast_video.touch if current_broadcast_video.pending?
+    render(json: {state: current_broadcast_video.state})
+  end
+
   def update
     if current_broadcast_video.update(video_params)
       render(json: :success)

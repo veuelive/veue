@@ -185,3 +185,7 @@ Lint/Debugger:
 
 Lint/ConstantResolution:
   Enabled: false
+
+# We use touch! and increment_counters! and by god we like it!
+Rails/SkipsModelValidations:
+  Enabled: false
