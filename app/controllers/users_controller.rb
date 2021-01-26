@@ -21,11 +21,11 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = User.find(params[:id]).decorate
     return unless current_user == @user
 
     if @user.update(permitted_parameters)
-      render(json: :success)
+      render(status: :accepted, template: "users/partials/_edit_form", layout: false)
     else
       render(status: :bad_request, json: "")
     end

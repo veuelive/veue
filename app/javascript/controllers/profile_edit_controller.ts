@@ -25,7 +25,9 @@ export default class extends Controller {
     const submitButton = event.target as HTMLButtonElement;
 
     submitButton.disabled = true;
-    await putForm(".", this.formTarget);
-    submitButton.disabled = false;
+    const response = await putForm(".", this.formTarget);
+
+    const html = await response.text();
+    this.formTarget.parentElement.innerHTML = html;
   }
 }
