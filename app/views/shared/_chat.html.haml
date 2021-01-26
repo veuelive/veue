@@ -40,7 +40,8 @@
           role: "textbox",
           data: {
             action: "keydown->chat--send-message#chatBoxKeyDown",
-            target: "chat--send-message.messageInput"
+            target: "chat--send-message.messageInput",
+            "message-key": SecureRandom.uuid
           }
         }
         = render "shared/reaction_button"

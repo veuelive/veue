@@ -50,7 +50,7 @@ class VideoEvent < ApplicationRecord
     {
       type: type,
       timecodeMs: timecode_ms,
-      data: payload,
+      data: payload.merge({id: id}),
     }
   end
 

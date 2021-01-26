@@ -41,8 +41,6 @@ export const VideoEventProcessor = new (class VideoEventProcessor {
     this.dispatcher.addEventListener(videoEventType, callback);
   }
 
-  private;
-
   dispatch(videoEvent: VideoEvent): void {
     console.log(
       "dispatching",

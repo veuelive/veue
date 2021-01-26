@@ -69,6 +69,8 @@ describe "Prerecorded Audience View" do
     end
   end
 
+  let(:late_message) { create(:chat_message, video: video) }
+
   describe "Events work properly" do
     it "should show pre-live messages" do
       visit path_for_video(video)
@@ -80,13 +82,7 @@ describe "Prerecorded Audience View" do
     end
 
     it "should work for post-live messages" do
-      late_message = create(
-        :chat_message,
-        input: {message: "Late to the party!"},
-        user: create(:user),
-        video: video,
-        timecode_ms: 1_000,
-      )
+      late_message.update!(timecode_ms: 1_000)
       # We need to reload to get the event we just added
       visit path_for_video(video)
       # We are starting at 0ms, but the below method will wait long enough to see it appear
@@ -96,17 +92,11 @@ describe "Prerecorded Audience View" do
 
   describe "Starting further into the video" do
     it "should show all chat messages" do
-      late_message_text = "Late to the party!"
-      create(
-        :chat_message,
-        input: {message: late_message_text},
-        user: create(:user),
-        video: video,
-        timecode_ms: 9_999,
-      )
+      late_message.update!(timecode_ms: 9_999)
       visit path_for_video(video, t: 1)
       expect(page).to have_content(ChatMessage.first.payload["message"])
-      expect(page).to_not have_content(late_message_text)
+
+      expect(page).to_not have_content(late_message.payload["message"])
 
       # Seeking SHOULD have that message!
       visit path_for_video(video, t: 10)
@@ -114,7 +104,7 @@ describe "Prerecorded Audience View" do
       first_message = ChatMessage.first
       expect(first_message.timecode_ms).to eq(0)
       expect(page).to have_content(first_message.payload["message"])
-      expect(page).to have_content(late_message_text)
+      expect(page).to have_content(late_message.payload["message"])
     end
   end
 end

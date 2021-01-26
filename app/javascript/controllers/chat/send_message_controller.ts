@@ -1,10 +1,15 @@
 import { postForm } from "util/fetch";
 import { Controller } from "stimulus";
 import { getChannelId } from "helpers/channel_helpers";
+import { currentUserId } from "helpers/authentication_helpers";
+import { displayChatMessage } from "helpers/chat_helpers";
 
 export default class extends Controller {
   static targets = ["messageInput"];
+  element: HTMLElement;
   private messageInputTarget!: HTMLElement;
+  private lastMessageFromUserId: string;
+  private userId: string;
 
   connect(): void {
     const bodyDataset = document.body.dataset;
@@ -19,6 +24,8 @@ export default class extends Controller {
       "blur",
       () => (bodyDataset["keyboard"] = "hidden")
     );
+
+    this.userId = currentUserId();
   }
 
   fallBackContentEditable(): void {
@@ -32,8 +39,18 @@ export default class extends Controller {
       const textAreaElement = event.target as HTMLElement;
       const message = textAreaElement.innerText;
       textAreaElement.innerHTML = "";
+
+      const isSameUser = this.userId === this.lastMessageFromUserId;
+
       if (message.length > 0) {
-        postForm(`/${getChannelId()}/chat_messages`, { message }).then(() => {
+        postForm(`/${getChannelId()}/chat_messages`, {
+          message,
+        }).then((response: Response) => {
+          response.json().then((data: JSON) => {
+            const messageData = data["message"]["data"];
+            displayChatMessage(messageData, isSameUser);
+            this.lastMessageFromUserId = messageData.userId;
+          });
           console.log("CHAT Sent!");
         });
       }
