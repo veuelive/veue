@@ -63,7 +63,7 @@ module PerspectiveApi
   end
 
   def make_request(text, stream_id)
-    url = "https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=" + PerspectiveApi.key
+    url = "https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=#{PerspectiveApi.key}"
     response = Faraday.post url,
                             build_payload(text, stream_id).to_json,
                             "Content-Type": "application/json"
