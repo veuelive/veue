@@ -147,7 +147,7 @@
       color: color.$neutral-dark;
       margin: 10px 0 0 10px;
     }
-    &__letter {
+    &__picture {
       background: color.$white;
       width: 32px;
       height: 32px;
@@ -155,7 +155,6 @@
       line-height: 32px;
       text-align: center;
       letter-spacing: -0.5px;
-      color: color.$neutral-regular;
       margin-top: 16px;
       border-radius: 20px;
     }
