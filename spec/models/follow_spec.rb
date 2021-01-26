@@ -35,7 +35,7 @@ RSpec.describe Follow, type: :model do
     expect(channel_two.followers).to include(user)
   end
 
-  it "User cannot follow themselves" do
+  it "should prevent user from following themselves" do
     follow = build(:follow, user: channel_one.user, channel: channel_one)
     expect(follow).to be_invalid
     expect(follow.errors.full_messages.join("\n")).to include("You can't follow yourself")
