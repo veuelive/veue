@@ -27,26 +27,22 @@ body#discover__index {
         }
 
         // Needs to be wrapped so that the overflow can be set
-        .popular-streamers__container {
-          max-width: 1004px;
+        .popular-streamers {
+          max-width: 1030px;
           width: 100%;
           margin-left: 20px;
 
-          .popular-streamers {
+          &__inner {
             width: 100%;
             display: flex;
             margin: 30px 20px;
             height: 160px;
             overflow-x: auto;
+          }
 
-            > .streamer-picture {
-              display: inline-block;
-              margin-right: 29px;
-
-              &:last-child {
-                margin-right: 0;
-              }
-            }
+          &__avatar {
+            display: inline-block;
+            margin-right: 29px;
           }
         }
 
@@ -79,7 +75,7 @@ body#discover__index {
         .discover-area {
           margin: 0 140px;
 
-          .popular-streamers__container {
+          .popular-streamers {
             width: 100%;
             margin: 0;
           }
