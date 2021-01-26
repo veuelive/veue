@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :moderation_item do
     text { Faker::Lorem.paragraph }

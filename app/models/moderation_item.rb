@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ModerationItem < ApplicationRecord
   belongs_to :video_event
   belongs_to :user

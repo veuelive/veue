@@ -3,7 +3,7 @@
 class VideoEvent < ApplicationRecord
   belongs_to :user
   belongs_to :video
-  has_many :moderation_items
+  has_many :moderation_items, dependent: :nullify
 
   before_save :set_payload
   before_create :set_timecode

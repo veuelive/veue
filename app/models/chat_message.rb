@@ -32,7 +32,7 @@ class ChatMessage < VideoEvent
     item = moderation_items.build(
       video: video,
       user: user,
-      text: text
+      text: text,
     )
     item.fetch_scores!
     self.published = item.approved?
