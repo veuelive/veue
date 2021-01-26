@@ -110,10 +110,18 @@
               padding: 6px 10px;
               border: 1px solid color.$veue-corporate;
               height: fit-content;
+              position: relative;
               @include mobilePortrait() {
                 :last-child {
                   display: none;
                 }
+              }
+              input[type="file"] {
+                position: absolute;
+                width: 100%;
+                opacity: 0;
+                top: 0;
+                left: 0;
               }
             }
             &__delete {
