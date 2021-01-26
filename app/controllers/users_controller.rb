@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user!, only: %i[edit destroy]
 
   def edit
-    @user = User.find(params[:id])
+    @user = User.find(params[:id]).decorate
   end
 
   def create
@@ -24,8 +24,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     return unless current_user == @user
 
-    @user.update!(permitted_parameters)
-    redirect_back(fallback_location: root_path)
+    if @user.update(permitted_parameters)
+      render(json: :success)
+    else
+      render(status: :bad_request, json: "")
+    end
   end
 
   def destroy
@@ -40,6 +43,6 @@ class UsersController < ApplicationController
   private
 
   def permitted_parameters
-    params.require(:user).permit(:profile_image, :about_me, :display_name)
+    params.require(:user).permit(:profile_image, :about_me, :display_name, :email)
   end
 end

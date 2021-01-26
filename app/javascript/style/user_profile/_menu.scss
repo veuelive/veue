@@ -1,7 +1,7 @@
 @use "../utils/breakpoints" as *;
 @use "../utils/color";
 
-#profile-view {
+#users__edit {
   .profile-menu {
     @include mobilePortrait() {
       display: none;

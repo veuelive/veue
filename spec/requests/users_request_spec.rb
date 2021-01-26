@@ -30,4 +30,33 @@ RSpec.describe "Users", type: :request do
       expect(user.display_name).to_not eq(new_name)
     end
   end
+
+  describe "UPDATE /:id" do
+    let(:user) { create(:user) }
+    before do
+      login_as user
+    end
+
+    it "should update user" do
+      new_name = "Donatello Pepperoni"
+      put "/users/#{user.id}", params: {user: {display_name: new_name}}
+
+      user.reload
+      expect(user.display_name).to eq(new_name)
+    end
+
+    it "should update user with proper email" do
+      email = "donatello@pepperoni.com"
+      put "/users/#{user.id}", params: {user: {email: email}}
+
+      expect(response).to have_http_status(:success)
+    end
+
+    it "should not update user with incorrect email" do
+      email = "donatello@pepperoni"
+      put "/users/#{user.id}", params: {user: {email: email}}
+
+      expect(response).to have_http_status(:bad_request)
+    end
+  end
 end

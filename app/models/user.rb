@@ -15,6 +15,7 @@ class User < ApplicationRecord
 
   validates :display_name, length: {maximum: 40, minimum: 1}, presence: true
   validates :phone_number, phone_number: true
+  validates :email, email: true
 
   has_one_attached :profile_image
   validates :profile_image,
