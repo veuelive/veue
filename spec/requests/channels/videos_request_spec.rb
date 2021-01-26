@@ -6,7 +6,7 @@ describe Channels::VideosController do
   describe "show by id" do
     describe "for a public viewer" do
       before(:each) do
-        @viewer = create(:viewer)
+        @viewer = create(:user)
         login_as @viewer
       end
 

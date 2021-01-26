@@ -47,7 +47,7 @@ describe "chat during live video" do
     end
 
     it "should show that you joined the chat" do
-      expect(page).to have_content(user.display_name + " joined the chat")
+      expect(page).to have_content("#{user.display_name} joined the chat")
     end
 
     it "should have visible scroll button after a bunch of messages" do
@@ -74,9 +74,9 @@ describe "chat during live video" do
     end
 
     it "should show you joined after you logged in" do
-      expect(page).to_not(have_content(user.display_name + " joined the chat"))
+      expect(page).to_not(have_content("#{user.display_name} joined the chat"))
       login_as user
-      expect(page).to(have_content(user.display_name + " joined the chat"))
+      expect(page).to(have_content("#{user.display_name} joined the chat"))
     end
 
     it "should not allow you to chat until you login" do

@@ -44,16 +44,18 @@ module AudienceSpecHelpers
   end
 
   def streamer_visited(url, timecode_ms)
-    video.browser_navigations.create!({
-                                        user: video.user,
-                                        input: {
-                                          url: url,
-                                          canGoBack: false,
-                                          isLoading: false,
-                                          canGoForward: false,
-                                        },
-                                        timecode_ms: timecode_ms,
-                                      })
+    video.browser_navigations.create!(
+      {
+        user: video.user,
+        input: {
+          url: url,
+          canGoBack: false,
+          isLoading: false,
+          canGoForward: false,
+        },
+        timecode_ms: timecode_ms,
+      },
+    )
   end
 
   def write_chat_message(text)

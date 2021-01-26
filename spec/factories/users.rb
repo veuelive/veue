@@ -10,8 +10,5 @@ FactoryBot.define do
     factory :streamer do
       after(:create, &:setup_as_streamer!)
     end
-
-    factory :viewer do
-    end
   end
 end

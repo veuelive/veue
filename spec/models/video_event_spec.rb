@@ -2,29 +2,26 @@
 
 require "rails_helper"
 
-RSpec.describe VideoEvent, type: :model do
-  let(:user) { create(:user) }
-  let(:video) { create(:video) }
+class VideoEventSample < VideoEvent
+  def input_schema
+    {
+      properties: {
+        foo: String,
+        isLivingLegend: :boolean,
+        count: Integer,
+        flags: [:boolean],
+        list: [
+          {
+            name: String,
+            height: Integer,
+          },
+        ],
+      },
+      required: ["foo"],
+    }
+  end
 
-  class VideoEventSample < VideoEvent
-    def input_schema
-      {
-        properties: {
-          foo: String,
-          isLivingLegend: :boolean,
-          count: Integer,
-          flags: [:boolean],
-          list: [
-            {
-              name: String,
-              height: Integer,
-            },
-          ],
-        },
-        required: ["foo"],
-      }
-    end
-
+<<<<<<< Updated upstream
     def input_to_payload
       {
         foo: input["foo"].capitalize,
@@ -32,7 +29,25 @@ RSpec.describe VideoEvent, type: :model do
         isLivingLegend: input["isLivingLegend"],
       }
     end
+=======
+  def input_to_payload
+    {
+      foo: input["foo"].capitalize,
+      year: 1982,
+      isLivingLegend: input["isLivingLegend"],
+    }
   end
+
+  # As a test, only publish if they are a living legend
+  def set_published_state
+    self.published = payload["isLivingLegend"]
+>>>>>>> Stashed changes
+  end
+end
+
+RSpec.describe VideoEvent, type: :model do
+  let(:user) { create(:user) }
+  let(:video) { create(:video) }
 
   def event_with_input(input)
     VideoEventSample.new(video: video, user: user, input: input)
@@ -135,16 +150,18 @@ RSpec.describe VideoEvent, type: :model do
       end
 
       it "should allow properly formatted types" do
-        expect_valid_input({
-                             foo: "bar",
-                             list: [
-                               {
-                                 name: "Hampton",
-                                 height: 6,
-                               },
-                               {name: "Cindy", height: 5},
-                             ],
-                           })
+        expect_valid_input(
+          {
+            foo: "bar",
+            list: [
+              {
+                name: "Hampton",
+                height: 6,
+              },
+              {name: "Cindy", height: 5},
+            ],
+          },
+        )
       end
 
       it "should detect the wrong type inside of a nested array" do
