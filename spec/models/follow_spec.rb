@@ -35,3 +35,4 @@ RSpec.describe Follow, type: :model do
     expect(channel_two.followers).to include(user)
   end
 end
+TODO create spec here

@@ -21,9 +21,10 @@
         - else
           %button.follow-btn{data: { action: "click->streamer-profile#follow" }} Follow
       - else
-        %button.follow-btn{data: { action: "click->authentication#showModal" }} Follow
 
+        %button.follow-btn{data: { action: "click->authentication#showModal" }} Follow
 
   - unless current_channel.about.blank?
     .streamer-info-mobile__about
       = current_channel.about
+
