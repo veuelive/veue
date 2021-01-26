@@ -3,13 +3,13 @@
     - if @live_videos.any?
       %h2 Live Broadcasts
       .live-broadcasts
-        = render collection: @live_videos.limit(3), partial: "shared/video_card"
+        = render collection: @live_videos, partial: "shared/video_card"
 
     %h2 Popular streamers
-    .popular-streamers__container
-      .popular-streamers
-        - Channel.most_popular.limit(8).each do |channel|
-          .streamer-picture
+    .popular-streamers
+      .popular-streamers__inner
+        - @popular_channels.each do |channel|
+          .popular-streamers__avatar
             %a{href: channel_path(channel.slug)}
               = channel.decorate.profile_image_circle(100)
 

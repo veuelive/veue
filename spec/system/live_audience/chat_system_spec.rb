@@ -31,7 +31,7 @@ describe "chat during live video" do
       # connected and caused repeated messages to appear
       3.times do
         find(".header__left__logo").click
-        # visit("/")
+        visit("/")
         expect(current_path).to_not eq(channel_path(channel))
         find(".video-card.live").click
         expect(current_path).to eq(channel_path(channel))

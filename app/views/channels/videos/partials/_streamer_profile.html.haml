@@ -23,6 +23,6 @@
       - else
         %button.follow-btn{data: { action: "click->authentication#showModal" }} Follow
 
-  - unless current_channel.about.blank?
+  - if current_channel.about.present?
     .streamer-info-mobile__about
       = current_channel.about
