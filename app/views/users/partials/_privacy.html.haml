@@ -1,16 +1,16 @@
-.profile-tab#privacy-tab{
+.user-profile#privacy-tab{
   data: {
     target: "user-profile.profileTab",
     tab: "privacy"
   }
 }
-  .profile-tab__header
-    .profile-tab__header__name{
+  .user-profile__header
+    .user-profile__header__name{
       "data-action": "click->user-profile#openMenu"
     }
       = svg_tag "back"
       Privacy
-  .profile-tab__body
+  .user-profile__body
     .privacy-profile
       .privacy-profile__info
         Delete Account
