@@ -21,6 +21,14 @@ class VideoEventSample < VideoEvent
     }
   end
 
+  def input_to_payload
+    {
+      foo: input["foo"].capitalize,
+      year: 1982,
+      isLivingLegend: input["isLivingLegend"],
+    }
+  end
+
   # As a test, only publish if they are a living legend
   def set_published_state
     self.published = payload["isLivingLegend"]
