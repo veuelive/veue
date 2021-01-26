@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SseBroadcaster
+module SseBroadcaster
   def self.broadcast(path, payload)
     url = "https://leghorn.onrender.com/#{path}"
     Rails.logger.debug("POSTING MESSAGE TO #{url} " + payload.keys.inspect)
