@@ -17,8 +17,8 @@ class Video < ApplicationRecord
   has_many :pins, dependent: :destroy
 
   has_many :mux_webhooks, dependent: :nullify
-  scope :active, -> { where(state: %w[pending live starting]) }
-  scope :done, -> { where(state: %w[finished failed ended]) }
+  scope :active, -> { where(state: %w[pending live starting scheduled]) }
+  scope :done, -> { where(state: %w[finished failed ended cancelled]) }
 
   after_save :broadcast_active_viewers, if: -> { saved_change_to_active_viewers? }
 
@@ -31,6 +31,11 @@ class Video < ApplicationRecord
   scope :public_or_protected,
         -> {
           where('"Videos"."visibility" = "public" OR "Videos"."visibility" = "protected" ')
+        }
+
+  scope :stale,
+        -> {
+          pending.where("updated_at < ?", 30.minutes.ago)
         }
 
   scope :most_recent,

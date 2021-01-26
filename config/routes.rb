@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     member do
       post "navigation_update"
       post "start"
+      post "keepalive"
     end
 
     collection do
@@ -57,9 +58,12 @@ Rails.application.routes.draw do
       ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest(ENV["SIDEKIQ_PASSWORD"]))
   end if Rails.env.production?
 
-  get '/health', to: "health_check#index"
+  scope module: :internal, path: "_/_/" do
+    get 'health', to: "health_check#index"
+    get 'cron', to: 'cron#trigger'
 
-  mount Sidekiq::Web => '/_/sidekiq'
+    mount Sidekiq::Web => 'sidekiq'
+  end
 
   scope module: :channels, path: ":channel_id", as: "channel" do
     get "/" => "channels#show"

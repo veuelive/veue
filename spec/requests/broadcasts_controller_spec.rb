@@ -3,6 +3,7 @@
 require "rails_helper"
 
 describe BroadcastsController do
+  include ActiveSupport::Testing::TimeHelpers
   let(:user) { create(:user) }
   let(:channel) { user.channels.first }
   let(:video) { channel.videos.first }
@@ -67,6 +68,25 @@ describe BroadcastsController do
       page_visit = video.browser_navigations.last
       expect(page_visit.payload["url"]).to eq(pdp_page)
       expect(page_visit.timecode_ms).to eq(100)
+    end
+  end
+
+  describe "should allow keepalive updates" do
+    it "should update the updated_at and avoid staleness" do
+      original_updated_at = video.updated_at
+      expect(Video.stale.count).to eq(0)
+
+      travel 1.day
+      expect(Video.stale.count).to eq(1)
+
+      put broadcast_path(video)
+      video.reload
+      expect(video.updated_at).to be > original_updated_at
+      expect(Video.stale.count).to eq(0)
+
+      # And another day in advance...
+      travel 1.day
+      expect(Video.stale.count).to eq(1)
     end
   end
 end
