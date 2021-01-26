@@ -24,9 +24,8 @@
   .video-card__below
     .video-card__below__picture
       - Channel.most_popular.limit(8).each do |channel|
-        .streamer-picture
-          %a{href: channel_path(channel.slug)}
-            = channel.decorate.profile_image_circle(32)
+        %a{href: channel_path(channel.slug)}
+          = channel.decorate.profile_image_circle(32)
     .video-card__below__flex
       .video-card__below__title
         = video.title
