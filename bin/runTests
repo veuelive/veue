@@ -1,4 +1,0 @@
-#!/usr/bin/env sh
-
-rspec
-yarn tsc --noEmit && yarn jest
