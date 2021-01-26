@@ -10,11 +10,13 @@ class HealthCheckController < ApplicationController
 
     live_videos = Video.where(state: "live").count
 
-    render(json: {
-             status: "OK",
-             db_connections: db_connections,
-             live_videos: live_videos,
-             sidekiq_workers: sidekiq_workers,
-           })
+    render(
+      json: {
+        status: "OK",
+        db_connections: db_connections,
+        live_videos: live_videos,
+        sidekiq_workers: sidekiq_workers,
+      },
+    )
   end
 end

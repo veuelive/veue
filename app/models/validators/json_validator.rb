@@ -36,7 +36,7 @@ class JsonValidator < ActiveModel::EachValidator
       # If we are expecting an integer, let's coerce any String inputs into a number
       data[key] = Integer(data[key], 10) if type == Integer && data[key].is_a?(String)
 
-      validate_property(type, data[key], prefix + "." + key)
+      validate_property(type, data[key], "#{prefix}.#{key}")
     end
   end
 

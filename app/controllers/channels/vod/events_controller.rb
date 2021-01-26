@@ -6,12 +6,14 @@ module Channels
       include ChannelConcern
 
       def index
-        render(json: [
-                 {
-                   start: 0,
-                   url: channel_video_vod_event_path(id: 0),
-                 },
-               ])
+        render(
+          json: [
+            {
+              start: 0,
+              url: channel_video_vod_event_path(id: 0),
+            },
+          ],
+        )
       end
 
       def show

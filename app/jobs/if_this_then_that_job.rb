@@ -13,7 +13,7 @@ class IfThisThenThatJob < ApplicationJob
   end
 
   def self.post_url
-    IFTTT_URL + "/" + ENV["IFTTT_PUSH_KEY"]
+    "#{IFTTT_URL}/#{ENV['IFTTT_PUSH_KEY']}"
   end
 
   def self.process!(message:, url:)
