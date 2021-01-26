@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :video_events, dependent: :destroy
   has_many :chat_messages, dependent: :destroy
   has_many :session_tokens, dependent: :nullify
+  has_many :moderation_items, dependent: :nullify
   has_many :follows,
            -> { where(unfollowed_at: nil) },
            inverse_of: :user,

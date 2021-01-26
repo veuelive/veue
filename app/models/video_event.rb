@@ -3,14 +3,21 @@
 class VideoEvent < ApplicationRecord
   belongs_to :user
   belongs_to :video
+  has_many :moderation_items
 
   before_save :set_payload
   before_create :set_timecode
+  before_create :set_published_state
   after_create :broadcast_message!
 
   validates :video, presence: true
   validates :input, json: {schema: -> { input_schema.to_json }}
   validates :payload, presence: true, unless: :new_record?
+
+  scope :published, -> { where(published: true) }
+  scope :unpublished, -> { where(published: false) }
+
+  default_scope { published }
 
   def set_payload
     self.payload = input_to_payload
@@ -28,6 +35,8 @@ class VideoEvent < ApplicationRecord
   end
 
   def broadcast_message!
+    return unless published
+
     message = to_hash
     message[:timecodeMs] = 0 if instant_broadcast_processing?
     message[:viewers] = video.video_views.connected.count
@@ -43,6 +52,11 @@ class VideoEvent < ApplicationRecord
       timecodeMs: timecode_ms,
       data: payload,
     }
+  end
+
+  # Override this if you want different logic for publishing
+  def set_published_state
+    self.published = true
   end
 
   # This should be overridden if the message
