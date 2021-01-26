@@ -2,7 +2,7 @@
 
 def setup_perspective_mock(key_name, response)
   stub_request(:post, /commentanalyzer/)
-    .with { PerspectiveApi.key == key_name}
+    .with { PerspectiveApi.key == key_name }
     .to_return(body: response.to_json)
 end
 

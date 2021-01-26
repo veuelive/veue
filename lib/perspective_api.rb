@@ -30,7 +30,7 @@
 module PerspectiveApi
   extend self
 
-  require 'appsignal'
+  require "appsignal"
 
   class Error < StandardError; end
 
