@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_25_121818) do
+ActiveRecord::Schema.define(version: 2021_01_25_173557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -64,6 +64,19 @@ ActiveRecord::Schema.define(version: 2021_01_25_121818) do
     t.uuid "channel_id"
     t.index ["channel_id"], name: "index_follows_on_channel_id"
     t.index ["user_id", "channel_id", "unfollowed_at"], name: "index_follows_on_user_id_and_channel_id_and_unfollowed_at", unique: true
+  end
+
+  create_table "moderation_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "text"
+    t.jsonb "scores"
+    t.float "summary_score"
+    t.string "state"
+    t.integer "processing_time"
+    t.uuid "video_event_id"
+    t.uuid "user_id"
+    t.uuid "video_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "mux_webhooks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -156,8 +169,10 @@ ActiveRecord::Schema.define(version: 2021_01_25_121818) do
     t.uuid "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "published", default: true
     t.index ["type"], name: "index_video_events_on_type"
     t.index ["user_id"], name: "index_video_events_on_user_id"
+    t.index ["video_id", "published", "timecode_ms", "type"], name: "video_event_big_index"
     t.index ["video_id", "timecode_ms"], name: "index_video_events_on_video_id_and_timecode_ms"
     t.index ["video_id", "type"], name: "index_video_events_on_video_id_and_type"
     t.index ["video_id"], name: "index_video_events_on_video_id"
