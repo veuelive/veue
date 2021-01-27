@@ -23,9 +23,9 @@
           = image_tag video.secondary_shot.variant(resize_to_limit: [100, 100])
   .video-card__below
     .video-card__below__picture
-      - Channel.most_popular.limit(8).each do |channel|
-        %a{href: channel_path(channel.slug)}
-          = channel.decorate.profile_image_circle(32)
+      - channel = video.channel.decorate
+      %a{href: channel_path(channel.slug)}
+        = channel.profile_image_circle(32)
     .video-card__below__flex
       .video-card__below__title
         = video.title
