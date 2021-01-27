@@ -35,7 +35,7 @@ class VideoDecorator < Draper::Decorator
 
   def start_time_in_words(suffix="ago")
     started_at =
-      if started_at_ms.present?
+      if started_at_ms
         Time.zone.at(started_at_ms / 1000)
       else
         created_at
