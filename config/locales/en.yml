@@ -31,3 +31,44 @@
 en:
   text_messages:
     follow_consent: "By following %{display_name}, we will message you every time someone you follow goes live. Text STOP unsubscribe from all future notifications"
+
+  datetime:
+    # This is used for helpers like +#time_ago_in_words+
+    distance_in_words:
+      about_x_hours:
+        one: 1 hour ago
+        other: "%{count} hours ago"
+      about_x_months:
+        one: 1 month ago
+        other: "%{count} months ago"
+      about_x_years:
+        one: 1 year ago
+        other: "%{count} years ago"
+      almost_x_years:
+        one: 1 year ago
+        other: "%{count} years ago"
+      half_a_minute: half a minute ago
+      less_than_x_seconds:
+        one: less than 1 second ago
+        other: less than %{count} seconds ago
+      less_than_x_minutes:
+        one: less than a minute ago
+        other: less than %{count} minutes ago
+      over_x_years:
+        one: 1 year ago
+        other: "%{count} years ago"
+      x_seconds:
+        one: 1 second ago
+        other: "%{count} seconds ago"
+      x_minutes:
+        one: 1 minute ago
+        other: "%{count} minutes ago"
+      x_days:
+        one: yesterday
+        other: "%{count} days ago"
+      x_months:
+        one: 1 month ago
+        other: "%{count} months ago"
+      x_years:
+        one: 1 year ago
+        other: "%{count} years ago"
