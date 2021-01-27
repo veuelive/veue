@@ -29,7 +29,9 @@
         = video.title
       .video-card__below__details
         = video.user.display_name
-        .video-card__below__details__broadcast__time
+
+        - if !(current_page?("/") || current_page?("/discover"))
           = svg_tag "ellipse-2"
-          = video.start_time_in_words
+          .video-card__below__details__broadcast__time
+            = video.start_time_in_words
 
