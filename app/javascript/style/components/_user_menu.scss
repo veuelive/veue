@@ -1,6 +1,7 @@
 @use "user_menu/dropdown";
 @use "user_menu/mobile_friendly";
 @use "../utils/color";
+@use '../utils/z_index';
 
 .menu-area {
   // layout
@@ -23,7 +24,7 @@
 
   .user-menu {
     transition: opacity 200ms;
-    z-index: 2;
+    z-index: z_index.$nav-menu;
   }
 
   &[data-is-open="true"] {

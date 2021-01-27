@@ -1,93 +1,96 @@
 @use "../utils/breakpoints" as *;
-@use '../utils/color';
+@use "../utils/color";
 
-#upcoming-stream {
-  .content-area__primary {
-    position: relative;
-  }
-
-  .stream-notification {
-    display: flex;
-    height: 3rem;
-    background: color.$white;
-    font-size: 0.8rem;
-    border-radius: 10px 10px 0 0;
-    padding-right: 0.2rem;
-    padding-left: 0.2rem;
-    border-bottom: 1px solid color.$neutral-accents;
-    margin-right: 10px;
-
-    &__header {
-      background-color: color.$neutral-regular;
-      border-radius: 10px;
-      margin: 0.4rem 0.2rem;
-      padding: 0 1rem;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      color: color.$white;
-      flex: 1 1;
-      font-size: 1rem;
-      span {
-        margin-left: 10px;
-      }
-    }
-  }
-
-  .stream-body {
-    // layout
-    display: flex;
-    height: calc(70vh - 54px);
-    width: calc(100% - 10px);
-    max-width: 1280px;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 5px;
-
-    // style
-    background-color: color.$white;
-    border-radius: 0 0 10px 10px;
-  }
-
-  #no-webcam {
-    display: none;
-  }
-}
-
-.secondary-upcoming-stream {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 20vw;
-  height: 30vh;
-  border-bottom: 1px solid color.$neutral-soft;
-}
-
-@include mobilePortrait() {
+#channels__show {
   #upcoming-stream {
-    .stream-body {
-      width: 100vw;
-      height: 38vh;
-      svg {
-        height: 120px;
-        width: 120px;
+    .content-area__primary {
+      position: relative;
+    }
+
+    .stream-notification {
+      display: flex;
+      height: 3rem;
+      background: color.$white;
+      font-size: 0.8rem;
+      border-radius: 10px 10px 0 0;
+      padding-right: 0.2rem;
+      padding-left: 0.2rem;
+      border-bottom: 1px solid color.$neutral-accents;
+
+      &__header {
+        background-color: color.$neutral-regular;
+        border-radius: 10px;
+        margin: 0.4rem 0.2rem;
+        padding: 0 1rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        color: color.$white;
+        flex: 1 1;
+        font-size: 1rem;
+
+        span {
+          margin-left: 10px;
+        }
       }
     }
-    #no-webcam {
-      position: absolute;
-      right: 0;
-      transform: translate(-10%, -115%);
-      width: 25vw;
-      height: 20vw;
+
+    .stream-body {
+      // layout
       display: flex;
-      justify-content: center;
+      height: calc(70vh - 54px);
+      max-width: 1280px;
       align-items: center;
-      background-color: color.$neutral-accents;
-      border-radius: 10px;
+      justify-content: center;
+      margin-bottom: 5px;
+
+      // style
+      background-color: color.$white;
+      border-radius: 0 0 10px 10px;
+    }
+
+    .no-webcam {
+      display: none;
     }
   }
+
   .secondary-upcoming-stream {
-    display: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20vw;
+    height: 30vh;
+    border-bottom: 1px solid color.$neutral-soft;
+  }
+
+  @include smallTall() {
+    #upcoming-stream {
+      .stream-body {
+        width: 100vw;
+        height: 38vh;
+
+        svg {
+          height: 120px;
+          width: 120px;
+        }
+      }
+
+      .no-webcam {
+        position: absolute;
+        right: 0;
+        transform: translate(-10%, -115%);
+        width: 25vw;
+        height: 20vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: color.$neutral-accents;
+        border-radius: 10px;
+      }
+    }
+    .secondary-upcoming-stream {
+      display: none;
+    }
   }
 }

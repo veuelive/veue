@@ -8,7 +8,8 @@
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
 
   &__header {
     font-family: font.$poppins;
@@ -20,9 +21,5 @@
     margin: 20px auto;
     width: 100%;
     grid-column: 1 / -1;
-  }
-
-  @include desktop() {
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   }
 }

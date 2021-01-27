@@ -22,7 +22,7 @@
   /**
   Put any main responsive layout code for ONLY desktop here... this does not count elements that scale to their surroundings
    */
-  @include desktop() {
+  @include large() {
     .content-area {
       flex-direction: row;
       display: flex;
@@ -60,10 +60,6 @@
         display: none;
       }
 
-      #streamer-profile-area {
-        margin: 10px 10px auto 0;
-      }
-
       .broadcasts {
         display: grid;
       }
@@ -77,7 +73,7 @@
   /**
     This is the primary Video layout for portrait mobile views
      */
-  @include mobilePortrait() {
+  @include smallTall() {
     #layout-container {
       position: absolute;
       top: 0;
@@ -194,36 +190,39 @@
     }
   }
 
-  @include mobileLandscape() {
-    #main-container {
-      height: -webkit-fill-available;
-    }
-
+  // This is generally when your phone or small device is sideways...
+  // We hide a lot of stuff to make the view very minimal
+  @include smallWide() {
     .content-area {
       flex-direction: row;
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
+      min-width: 0;
     }
 
     .content-area__primary {
       padding-left: env(safe-area-inset-left);
       flex: 1;
 
-      .primary-video-area {
-        max-height: calc(min(100vh, -webkit-fill-available));
+      .primary-canvas {
+        height: 100vh;
+        height: calc(min(100vh, -webkit-fill-available));
       }
     }
 
     .content-area__secondary {
       padding: env(safe-area-inset-top) calc(env(safe-area-inset-right) * 0.75)
-        0 1vw;
+        0 0vw;
       background: white;
       max-width: 20vw;
       display: flex;
       flex-direction: column;
+      margin: 0;
+      height: 100vh;
+      height: calc(min(100vh, -webkit-fill-available));
     }
 
-    .top-navbar,
+    header,
     .primary-video__header {
       display: none;
     }

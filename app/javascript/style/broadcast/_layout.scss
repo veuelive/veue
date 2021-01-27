@@ -1,5 +1,6 @@
 @use "../utils/color";
 @use "../utils/font";
+@use "../utils/z_index";
 
 body {
   margin: 0;
@@ -70,7 +71,7 @@ textarea {
         top: 0;
         left: 10%;
         transform: translate(0, 125%);
-        z-index: 10;
+        z-index: z_index.$nav-menu;
 
         select {
           display: block;

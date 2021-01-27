@@ -1,12 +1,13 @@
 @use '../utils/color';
 @use '../utils/keyframes';
-@use '../utils/font.scss';
+@use '../utils/font';
+@use '../utils/z_index';
 @use '../utils/breakpoints' as *;
 
 .modal {
   .modal-skirt {
     position: fixed;
-    z-index: 2;
+    z-index: z_index.$modal-skirt;
     padding-top: 100px;
     right: 0;
     top: 0;
@@ -17,7 +18,7 @@
   }
 
   .modal-content {
-    z-index: 3;
+    z-index: z_index.$modal;
     position: fixed;
     width: 320px;
     max-width: 90vw;
@@ -77,7 +78,7 @@
         height: 40px;
         color: color.$neutral-dark;
 
-        @include desktop {
+        @include large {
           font-size: 15px;
           max-width: 240px;
         }
@@ -98,7 +99,7 @@
           size: 15px;
           color: color.$neutral-dark;
           line-height: 20px;
-          @include tinyMobile {
+          @include smallThin {
             min-width: 238px;
           }
         }
@@ -257,7 +258,7 @@
         line-height: 11.64px;
         text-align: center;
         margin: 0 40px 31px 40px;
-        @include desktop {
+        @include large {
           font-size: 10px;
           line-height: 13.64px;
         }
@@ -298,7 +299,7 @@
       font-size: 10px;
       text-align: center;
       margin: 29px 20px 8px 20px;
-      @include desktop {
+      @include large {
         font-size: 12px;
         line-height: 18px;
       }
@@ -312,7 +313,7 @@
       height: 28px;
       margin: 8px 60px 37px 60px;
       line-height: 14px;
-      @include desktop {
+      @include large {
         font-size: 10px;
         line-height: 14px;
       }

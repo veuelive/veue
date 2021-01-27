@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     root "discover#index"
   end
 
+  get "/discover", to: "discover#index"
+
   resources :broadcasts, only: [:show, :index, :update] do
     scope module: "broadcasts" do
       controller "event" do

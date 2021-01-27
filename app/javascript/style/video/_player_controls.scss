@@ -170,11 +170,11 @@
     }
   }
 
-  @include mobileLandscape() {
+  @include smallWide() {
     @include mobile-css;
   }
 
-  @include mobilePortrait() {
+  @include smallTall() {
     @include mobile-css;
   }
 
@@ -188,7 +188,7 @@
     }
   }
 
-  @include desktop() {
+  @include large() {
     @include vod {
       .toggle-audio.desktop,
       .toggle-play.desktop {
