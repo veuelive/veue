@@ -6,9 +6,9 @@ class CreateModerationItems < ActiveRecord::Migration[6.0]
       t.float :summary_score
       t.string :state
       t.integer :processing_time
-      t.uuid :video_event_id, null: true
-      t.uuid :user_id, null: true
-      t.uuid :video_id, null: true
+      t.belongs_to :video_event, null: true, type: :uuid
+      t.belongs_to :user, null: true, type: :uuid
+      t.belongs_to :video, null: true, type: :uuid
       t.timestamps
     end
   end
