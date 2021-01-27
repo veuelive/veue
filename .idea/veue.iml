@@ -51,6 +51,7 @@
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/public/system" />
       <excludeFolder url="file://$MODULE_DIR$/components" />
+      <excludeFolder url="file://$MODULE_DIR$/public/packs-test" />
     </content>
     <orderEntry type="jdk" jdkName="RVM: ruby-2.7.2" jdkType="RUBY_SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

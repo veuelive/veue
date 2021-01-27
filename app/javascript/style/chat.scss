@@ -176,7 +176,7 @@
       fill: color.$neutral-regular;
     }
 
-    @include mobilePortrait() {
+    @include smallTall() {
       bottom: 80px;
       right: 12px;
     }
@@ -188,7 +188,6 @@
     min-height: 55px;
     background: color.$white;
     border-radius: 0px 0px 10px 10px;
-    z-index: 1;
 
     > * {
       margin: 12px;

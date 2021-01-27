@@ -5,7 +5,7 @@
     display: flex;
   }
 
-  @include desktop() {
+  @include large() {
     .broadcasts {
       // Has to be calc because <img> is absolute and overflows margins.
       width: calc(100% - 50px);

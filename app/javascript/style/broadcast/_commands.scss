@@ -1,3 +1,5 @@
+@use "../utils/z_index";
+
 #broadcast {
   .broadcast-commands {
     display: flex;
@@ -37,7 +39,7 @@
       }
 
       .select-menu {
-        z-index: 2;
+        z-index: z_index.$nav-menu;
         position: absolute;
         top: 25px;
         left: 5px;

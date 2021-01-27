@@ -81,6 +81,12 @@
         flex: 0 1 auto;
         margin: 0 10px;
 
+        @include smallThin() {
+          & {
+            display: none;
+          }
+        }
+
         svg {
           height: 13px;
           width: 14px;
@@ -117,10 +123,10 @@
   }
 }
 
-@include desktop() {
+@include large() {
   .streamer-profile {
     .streamer-info {
-      padding: 50px 0;
+      padding: 15px 0;
 
       &__avatar {
         margin: 0 40px 0 30px;

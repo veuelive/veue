@@ -1,9 +1,11 @@
 @use "./utils/scale";
+@use "./utils/z_index";
 @use "./utils/breakpoints" as *;
 
 #layout-container {
   display: flex;
   flex-direction: column;
+  z-index: z_index.$default;
 
   #main-container {
     min-height: calc(100vh - #{scale.$header_height});
@@ -18,11 +20,9 @@
     }
   }
 
-  @include desktop() {
-    #main-container {
-      min-height: calc(
-        100vh - #{scale.$header_height} - #{scale.$footer_desktop_height}
-      );
-    }
+  #main-container {
+    min-height: calc(
+      100vh - #{scale.$header_height} - #{scale.$footer_desktop_height}
+    );
   }
 }

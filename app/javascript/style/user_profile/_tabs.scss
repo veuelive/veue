@@ -17,7 +17,7 @@
         svg {
           width: 12px;
           margin-right: 12px;
-          @include desktop() {
+          @include large() {
             display: none;
           }
         }
@@ -26,7 +26,7 @@
         display: flex;
         align-items: center;
         font-size: 15px;
-        @include mobilePortrait() {
+        @include smallTall() {
           display: none;
         }
         .action-link {
@@ -46,16 +46,16 @@
       border-radius: 10px;
       padding: 22px;
       .profile-update {
-        @include mobilePortrait {
+        @include smallTall {
           margin-top: 20px;
         }
-        @include desktop() {
+        @include large() {
           display: flex;
           justify-content: space-between;
           padding: 10px 0;
         }
         &__heading {
-          @include desktop() {
+          @include large() {
             width: 30%;
           }
           .heading-info {
@@ -65,7 +65,7 @@
         }
         &__field {
           padding-top: 10px;
-          @include desktop() {
+          @include large() {
             width: 70%;
             padding-top: 0;
           }
@@ -111,7 +111,8 @@
               border: 1px solid color.$veue-corporate;
               height: fit-content;
               position: relative;
-              @include mobilePortrait() {
+              
+              @include smallTall() {
                 :last-child {
                   display: none;
                 }
@@ -145,7 +146,7 @@
         }
       }
       .privacy-profile {
-        @include desktop() {
+        @include large() {
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -158,7 +159,7 @@
           }
         }
         &__action {
-          @include mobilePortrait {
+          @include smallTall {
             display: inline-block;
             margin-top: 20px;
           }
@@ -182,7 +183,7 @@
     }
     &__footer {
       padding: 20px 0;
-      @include desktop() {
+      @include large() {
         display: none;
       }
       button {

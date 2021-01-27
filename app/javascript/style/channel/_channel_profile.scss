@@ -1,9 +1,10 @@
 @use "../utils/scale";
 @use "../utils/color";
 @use "../utils/font";
+@use "../utils/z_index";
 @use "../utils/breakpoints" as *;
 
-#channels__show #channel-profile {
+#channels__show .channel-profile {
   width: 100vw;
   position: relative;
   overflow-x: hidden;
@@ -13,24 +14,24 @@
   flex-direction: column;
   flex: 1;
 
-  #channel-profile__background {
+  .channel-profile__background {
     position: absolute;
     top: 0;
     left: 0;
     width: 100vw;
     height: 140px;
     background: color.$veue-corporate;
-    z-index: -1;
+    z-index: z_index.$background;
   }
 
-  #channel-profile__area {
+  .channel-profile__area {
     margin: 78px 10px 0 10px;
     max-width: 1400px;
     font-size: 0.875rem;
   }
 
-  @include desktop() {
-    #channel-profile__area {
+  @include large() {
+    .channel-profile__area {
       margin: 78px auto 0 auto;
       width: 85%;
     }

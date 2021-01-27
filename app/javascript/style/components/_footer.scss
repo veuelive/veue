@@ -44,7 +44,7 @@
   }
 }
 
-@include desktop() {
+@include large() {
   .main-footer {
     padding: 0 10px;
     min-height: scale.$footer_desktop_height;

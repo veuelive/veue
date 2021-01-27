@@ -1,0 +1,30 @@
+
+$z-index: 0;
+@function next-z-index() {
+  $z-index: $z-index + 1 !global;
+  @return $z-index;
+}
+
+// Things you want to appear behind content
+$background: -1;
+
+// Default z-index for most elements
+$default: next-z-index();
+
+// The main video, that might be under other video elements
+$primary-video: next-z-index();
+
+// Video areas that might appear on top of the primary video such as PIP
+$secondary-video: next-z-index();
+
+// General index for dropdowns, should cover most things
+$dropdown: next-z-index();
+
+// This is the user menu that toggles visible from the top right.
+$nav-menu: next-z-index();
+
+// The areas behind modals
+$modal-skirt: next-z-index();
+
+// Any screen-dominating modals
+$modal: next-z-index();

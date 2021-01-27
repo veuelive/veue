@@ -3,7 +3,7 @@
 
 #users__edit {
   .profile-menu {
-    @include mobilePortrait() {
+    @include smallTall() {
       display: none;
     }
     &__text {
@@ -25,7 +25,7 @@
         justify-content: space-between;
         padding: 6px 15px 6px;
         color: color.$neutral-middle;
-        @include mobilePortrait() {
+        @include smallTall() {
           padding: 20px;
           color: color.$neutral-dark;
         }
@@ -33,12 +33,12 @@
           display: block;
           width: 12px;
           color: color.$neutral-regular;
-          @include desktop() {
+          @include large() {
             display: none;
           }
         }
       }
-      @include mobilePortrait() {
+      @include smallTall() {
         margin-top: 0;
         border-radius: 0;
         border-top: 1px solid color.$neutral-soft;
@@ -53,18 +53,18 @@
       background-color: color.$white;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
-      @include desktop() {
+      @include large() {
         display: none;
       }
     }
     li:last-of-type {
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
-      @include desktop() {
+      @include large() {
         display: none;
       }
     }
-    @include desktop() {
+    @include large() {
       .active {
         background-color: color.$veue-corporate;
         a,
