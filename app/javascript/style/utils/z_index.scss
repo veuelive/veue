@@ -1,4 +1,3 @@
-
 $z-index: 0;
 @function next-z-index() {
   $z-index: $z-index + 1 !global;
