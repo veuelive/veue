@@ -44,9 +44,7 @@ class VideoDecorator < Draper::Decorator
     time = helpers.time_ago_in_words(started_at)
 
     # If its 'yesterday' we dont need to add the suffix
-    if time == I18n.t('datetime.distance_in_words.x_days.one')
-      return time
-    end
+    return time if time == I18n.t("datetime.distance_in_words.x_days.one")
 
     "#{time} #{suffix}"
   end
