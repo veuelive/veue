@@ -33,7 +33,7 @@ class VideoDecorator < Draper::Decorator
     end
   end
 
-  def start_time_in_words
+  def start_time_in_words(suffix="ago")
     started_at =
       if started_at_ms.present?
         Time.zone.at(started_at_ms / 1000)
@@ -41,6 +41,12 @@ class VideoDecorator < Draper::Decorator
         created_at
       end
 
-    helpers.time_ago_in_words(started_at)
+    time = helpers.time_ago_in_words(started_at)
+
+    if time == I18n.t('datetime.distance_in_words.x_days.one')
+      return time
+    end
+
+    "#{time} #{suffix}"
   end
 end
