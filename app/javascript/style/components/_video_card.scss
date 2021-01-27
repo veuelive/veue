@@ -127,8 +127,13 @@
       color: color.$neutral-regular;
       margin-left: 10px;
       align-items: center;
-      svg {
-        margin: 0 5px;
+      &__broadcast__time {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        svg {
+          margin: 0 5px;
+        }
       }
     }
     &__title {
