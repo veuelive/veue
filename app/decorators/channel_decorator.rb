@@ -2,6 +2,7 @@
 
 class ChannelDecorator < ApplicationDecorator
   delegate_all
+  decorates_association :video
 
   def profile_image_circle(size=64)
     if profile_image.attached?

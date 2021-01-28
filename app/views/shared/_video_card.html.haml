@@ -23,7 +23,7 @@
           = image_tag video.secondary_shot.variant(resize_to_limit: [100, 100])
   .video-card__below
     .video-card__below__picture
-      - channel = video.channel.decorate
+      - channel = video.channel
       %a{href: channel_path(channel.slug)}
         = channel.profile_image_circle(32)
     .video-card__below__flex
