@@ -11,7 +11,8 @@
       flex-direction: row;
       display: flex;
       justify-content: space-between;
-      width: 80%;
+      width: 85%;
+      max-width: 1400px;
       margin: 0 auto;
       &__menu {
         width: 16%;

@@ -1,4 +1,4 @@
-= form_for(@user, html: { data:{ controller: "profile-edit", target: "profile-edit.form" } }) do |f|
+= form_for(user, html: { data:{ controller: "profile-edit", target: "profile-edit.form" } }) do |f|
   .user-profile__header
     .user-profile__header__name{
       "data-action": "click->user-profile#openMenu"
@@ -7,40 +7,21 @@
       Edit Profile
     .user-profile__header__actions
       .action-link Discard
-      %button.action-button{data: {
-        target: "profile-edit.submitButton",
-        action: "click->profile-edit#doSubmit"
-        }
-      } Save Changes 
+      %button.action-button{"data-action": "click->profile-edit#doSubmit"} Save Changes 
   .user-profile__body  
     .profile-update
       .profile-update__heading
         Profile Image
         .heading-info
           Visible to other members
-      .profile-update__field.image-field
-        .user-avatar
-          - if @user.profile_image.attached?
-            = circle_image_tag @user.profile_image
-          - else
-            = svg_tag "logo-circular"
-          .user-avatar__info
-            %div JPEG, PNG or GIF
-            %div (Max. 10 MB.)
-        .upload-option
-          .upload-option__button
-            = f.file_field :profile_image, placeholder: 'Catalina'
-            %span Upload
-            %span Image
-          .upload-option__delete
-            = svg_tag "delete-icon"
+      = render partial: "users/partials/upload_image"
     .profile-update
       .profile-update__heading
         Public Name
         .heading-info
           Real People, Real Names
       .profile-update__field
-        = f.text_field :display_name, class: 'input-field', placeholder: 'Catalina'
+        = f.text_field :display_name, class: 'input-field', placeholder: 'Enter your name'
     .profile-update
       .profile-update__heading
         Bio
@@ -59,13 +40,9 @@
         .heading-info
           Add your email for notifications
       .profile-update__field
-        = f.text_field :email, :data => { :target=> "profile-edit.emailField", :action=> "keyup->profile-edit#checkEmailValidity" }, class: 'input-field', placeholder: "catalina.m@gmail.com"
-        .error-message{ "data-target": "profile-edit.errorMessage" }
+        = f.text_field :email, data: { action: "blur->profile-edit#checkEmailValidity", target: "profile-edit.emailField" }, class: 'input-field', placeholder: "Enter your email address"
+        .error-message{ "data-target": "profile-edit.emailMessage" }
           Invalid Email
   .user-profile__footer
-    %button{data: {
-      target: "profile-edit.submitButton",
-      action: "click->profile-edit#doSubmit"
-      }
-    } Save Changes
+    %button{"data-action": "click->profile-edit#doSubmit"} Save Changes
     %div Discard

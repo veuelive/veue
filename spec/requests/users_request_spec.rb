@@ -58,5 +58,13 @@ RSpec.describe "Users", type: :request do
 
       expect(response).to have_http_status(:bad_request)
     end
+
+    it "should upadate profile image(base64 format)" do
+      # dummy image in base64 format
+      image = "data:image/png;base64, #{Faker::Internet.base64}"
+
+      put "/users/#{user.id}/upload_image", params: {profile_image: image}
+      expect(response).to have_http_status(:success)
+    end
   end
 end
