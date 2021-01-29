@@ -1,5 +1,5 @@
 import { Controller } from "stimulus";
-import { putJson } from "util/fetch";
+import { UploadImageEvent } from "./crop_image_controller";
 
 export default class extends Controller {
   element!: HTMLElement;
@@ -11,6 +11,13 @@ export default class extends Controller {
       this.element.outerHTML = event.detail.html;
     };
 
-    document.addEventListener("UploadImage", this.profileImageUpdateHandler);
+    document.addEventListener(UploadImageEvent, this.profileImageUpdateHandler);
+  }
+
+  disconnect(): void {
+    document.removeEventListener(
+      UploadImageEvent,
+      this.profileImageUpdateHandler
+    );
   }
 }

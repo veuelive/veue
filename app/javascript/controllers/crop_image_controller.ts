@@ -2,6 +2,8 @@ import { Controller } from "stimulus";
 import { putJson } from "util/fetch";
 import Croppie from "croppie";
 
+export const UploadImageEvent = "UploadImage";
+
 export default class extends Controller {
   static targets = [
     "croppieWrapper",
@@ -47,7 +49,7 @@ export default class extends Controller {
     });
     const html = await response.text();
 
-    const uploadImageEvent = new CustomEvent("UploadImage", {
+    const uploadImageEvent = new CustomEvent(UploadImageEvent, {
       detail: { html },
     });
     document.dispatchEvent(uploadImageEvent);
