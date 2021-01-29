@@ -14,10 +14,7 @@
           "action": "mouseenter->user-menu#openOrCloseEvent mouseleave->user-menu#openOrCloseEvent resize@window->user-menu#layout click->user-menu#openOrCloseEvent"
         }
       }
-        - if current_user.profile_image.attached?
-          = circle_image_tag(current_user.profile_image, 32)
-        - else
-          = svg_tag "logo-circular"
+        = render partial: "users/partials/profile_image", locals: { user: current_user }
         = svg_tag "chevron"
         %nav.user-menu{aria: {label: "Account Settings"}, data: {target: "user-menu.menu"}}
           .user-menu__text

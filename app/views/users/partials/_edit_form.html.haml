@@ -1,4 +1,4 @@
-= form_for(user, html: { data:{ controller: "profile-edit", target: "profile-edit.form" } }) do |f|
+= form_for(@user, html: { data:{ controller: "profile-edit", target: "profile-edit.form" } }) do |f|
   .user-profile__header
     .user-profile__header__name{
       "data-action": "click->user-profile#openMenu"

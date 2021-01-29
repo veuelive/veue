@@ -1,0 +1,9 @@
+.profile-image{
+  data: {
+    controller: "profile-image"
+  }
+}
+  - if user.profile_image.attached?
+    = circle_image_tag user.profile_image
+  - else
+    = svg_tag "logo-circular"

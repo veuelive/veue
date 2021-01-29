@@ -1,25 +1,22 @@
-.profile-update__field.image-field{data: { controller: "upload-image" } }
+.profile-update__field.image-field{data: { controller: "crop-image" } }
   .user-avatar
-    - if user.profile_image.attached?
-      = circle_image_tag user.profile_image
-    - else
-      = svg_tag "logo-circular"
+    = render partial: "users/partials/profile_image", locals: { user: @user }
     .user-avatar__info
-      %div JPEG, PNG or JPG
+      %div JPG, JPEG or PNG 
       %div (Max. 5 MB.)   
   .upload-image
     .upload-option
       .upload-option__button
-        %input{type: "file", accept: 'image/png, image/jpg, image/jpeg', data: { target: "upload-image.imageField", action: "change->upload-image#processImage", path: upload_image_user_path(user.id) }
+        %input{type: "file", accept: 'image/png, image/jpg, image/jpeg', data: { target: "crop-image.imageField", action: "change->crop-image#processImage", path: upload_image_user_path(@user.id) }
         }
         %span Upload
         %span Image
       .upload-option__delete
         = svg_tag "delete-icon"
-    .error-message{ "data-target": "upload-image.imageMessage" }
+    .error-message{ "data-target": "crop-image.imageMessage" }
       Invalid Image
-    .croppie-wrapper{"data-target": "upload-image.croppieWrapper"}
-      .croppie-wrapper__body.crop-area{"data-target": "upload-image.croppieField"}
+    .croppie-wrapper{"data-target": "crop-image.croppieWrapper"}
+      .croppie-wrapper__body.crop-area{"data-target": "crop-image.croppieField"}
       .croppie-wrapper__action.crop-area
-        %button.cancel-button{type: "button", "data-action": "click->upload-image#closeCropper"} Cancel
-        %button{type: "button", "data-action": "click->upload-image#submitImage"} Submit
+        %button.cancel-button{type: "button", "data-action": "click->crop-image#closeCropper"} Cancel
+        %button{type: "button", "data-action": "click->crop-image#submitImage"} Submit

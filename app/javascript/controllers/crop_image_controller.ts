@@ -41,13 +41,18 @@ export default class extends Controller {
 
   async submitImage(): Promise<void> {
     const profile_image = await this.croppie.result("base64");
+
     const response = await putJson(this.imageFieldTarget.dataset.path, {
       profile_image,
     });
+    const html = await response.text();
+
+    const uploadImageEvent = new CustomEvent("UploadImage", {
+      detail: { html },
+    });
+    document.dispatchEvent(uploadImageEvent);
 
     this.closeCropper();
-    const html = await response.text();
-    this.element.outerHTML = html;
   }
 
   closeCropper(): void {
