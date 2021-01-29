@@ -30,6 +30,11 @@ export default class BrowserViewManager {
     );
     webContents.on("did-navigate", () => this.browserEvent("did-navigate"));
 
+    webContents.on("new-window", (event, url) => {
+      console.log("Popup creation prevented for: ", url);
+      event.preventDefault();
+    });
+
     this.window.addBrowserView(this.browserView);
     this.browserView.setBounds(bounds);
     this.browserView.webContents.loadURL(url);
