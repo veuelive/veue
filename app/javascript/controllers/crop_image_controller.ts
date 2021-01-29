@@ -27,7 +27,7 @@ export default class extends Controller {
     });
   }
 
-  processImage(event: Event): void {
+  processImage(): void {
     const image = this.imageFieldTarget.files[0];
     const isValid = image.size / 1048576 <= 5;
 
