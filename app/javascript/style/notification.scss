@@ -1,0 +1,27 @@
+@use "utils/color";
+@use "./utils/breakpoints" as *;
+@use "utils/z_index";
+@use 'utils/keyframes';
+
+#notification {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 20px;
+  background-color: color.$neutral-dark;
+  color: color.$white;
+  padding: 6px 15px;
+  border-radius: 10px;
+  z-index: z_index.$modal;
+  animation: fadeInOut ease 10s;
+  display: none;
+  @include smallTall() {
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: max-content;
+    margin: 26px 0;
+  }
+  svg {
+    margin-right: 6px;
+  }
+}

@@ -1,6 +1,7 @@
 import { Controller } from "stimulus";
 import { putForm } from "util/fetch";
 import isValidEmail from "util/email_validator";
+import { showNotification } from "util/notifications";
 
 export default class extends Controller {
   static targets = ["form", "emailField", "emailMessage"];
@@ -29,6 +30,8 @@ export default class extends Controller {
 
       const html = await response.text();
       this.formTarget.parentElement.innerHTML = html;
+
+      showNotification("Your profile was succesfully updated");
     }
   }
 }

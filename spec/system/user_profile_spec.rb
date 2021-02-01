@@ -47,6 +47,20 @@ describe "user profile" do
       end
     end
 
+    describe "profile tab update user account" do
+      before do
+        find(".menu-area").hover
+      end
+      it "should update user and show message" do
+        all(".user-menu__item")[0].click
+        expect(page).to have_css("#profile-tab")
+
+        find("#user_email").base.send_keys("test@user.com", :enter)
+
+        expect(page).to have_content("Your profile was succesfully updated")
+      end
+    end
+
     describe "privacy tab delete user account" do
       before do
         find(".menu-area").hover
