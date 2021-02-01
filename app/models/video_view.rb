@@ -45,8 +45,8 @@ class VideoView < ApplicationRecord
   def process_user_joined_event
     allowable_states = %w[pending live starting]
 
-    return if !allowable_states.include?(video.state)
-    return if !user
+    return unless allowable_states.include?(video.state)
+    return unless user
     return if user_joined_event_id
 
     create_user_joined_event(
