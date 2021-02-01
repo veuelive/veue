@@ -91,9 +91,11 @@
           .user-avatar {
             display: flex;
             align-items: center;
-            svg {
-              width: 64px;
-              height: 64px;
+            .profile-image {
+              * {
+                width: 64px;
+                height: 64px;
+              }
             }
             &__info {
               margin-left: 20px;
@@ -123,6 +125,10 @@
                   opacity: 0;
                   top: 0;
                   left: 0;
+                  cursor: pointer;
+                }
+                input[type="file"]::-webkit-file-upload-button {
+                  cursor: pointer;
                 }
               }
               &__delete {
@@ -132,6 +138,7 @@
                 background-color: color.$neutral-background;
                 margin-left: 10px;
                 border-radius: 10px;
+                cursor: pointer;
               }
             }
             .croppie-wrapper {

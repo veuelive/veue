@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  include CreateBlobFromParams
-
   before_action :authenticate_user!, only: %i[edit destroy]
 
   def edit
@@ -37,13 +35,19 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     return unless current_user == @user
 
-    image = create_blob_from_params(params[:profile_image])
-
-    if @user.profile_image.attach(image)
+    if @user.update(params.permit(:profile_image))
       render(partial: "users/partials/profile_image", locals: {user: @user})
     else
       render(status: :bad_request, json: "")
     end
+  end
+
+  def destroy_image
+    @user = User.find(params[:id])
+    return unless current_user == @user
+
+    @user.profile_image.purge
+    render(partial: "users/partials/profile_image", locals: {user: @user})
   end
 
   def destroy

@@ -1,5 +1,5 @@
 import { Controller } from "stimulus";
-import { putJson } from "util/fetch";
+import { putForm, destroy } from "util/fetch";
 import Croppie from "croppie";
 import "croppie/croppie.css";
 
@@ -13,6 +13,7 @@ export default class extends Controller {
     "imageMessage",
   ];
 
+  element!: HTMLElement;
   readonly croppieWrapperTarget!: HTMLElement;
   readonly croppieFieldTarget!: HTMLElement;
   readonly imageFieldTarget!: HTMLInputElement;
@@ -21,8 +22,9 @@ export default class extends Controller {
   private croppie: Croppie;
 
   connect(): void {
+    console.log(this.element.dataset);
     this.croppie = new Croppie(this.croppieFieldTarget, {
-      viewport: { width: 200, height: 200 },
+      viewport: { width: 200, height: 200, type: "circle" },
       boundary: { width: 300, height: 300 },
       showZoomer: true,
     });
@@ -43,11 +45,21 @@ export default class extends Controller {
   }
 
   async submitImage(): Promise<void> {
-    const profile_image = await this.croppie.result("base64");
-
-    const response = await putJson(this.imageFieldTarget.dataset.path, {
-      profile_image,
+    const profile_image = await this.croppie.result({
+      type: "blob",
+      size: "original",
+      format: "png",
+      quality: 1,
     });
+
+    this.imageFieldTarget.value = "";
+
+    const response = await putForm(
+      `/users/${this.element.dataset.id}/upload_image`,
+      {
+        profile_image,
+      }
+    );
     const html = await response.text();
 
     const uploadImageEvent = new CustomEvent(UploadImageEvent, {
@@ -60,5 +72,17 @@ export default class extends Controller {
 
   closeCropper(): void {
     this.croppieWrapperTarget.style.display = "none";
+  }
+
+  async removeImage(): Promise<void> {
+    const response = await destroy(
+      `/users/${this.element.dataset.id}/destroy_image`
+    );
+    const html = await response.text();
+
+    const uploadImageEvent = new CustomEvent(UploadImageEvent, {
+      detail: { html },
+    });
+    document.dispatchEvent(uploadImageEvent);
   }
 }

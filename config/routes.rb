@@ -47,6 +47,7 @@ Rails.application.routes.draw do
   resources :users, only: [:create, :edit, :update, :destroy] do
     member do
       put :upload_image
+      delete :destroy_image
     end
   end
   

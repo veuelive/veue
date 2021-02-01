@@ -1,4 +1,4 @@
-.profile-update__field.image-field{data: { controller: "crop-image" } }
+.profile-update__field.image-field{data: { controller: "crop-image", id: @user.id } }
   .user-avatar
     = render partial: "users/partials/profile_image", locals: { user: @user }
     .user-avatar__info
@@ -7,11 +7,11 @@
   .upload-image
     .upload-option
       .upload-option__button
-        %input{type: "file", accept: 'image/png, image/jpg, image/jpeg', data: { target: "crop-image.imageField", action: "change->crop-image#processImage", path: upload_image_user_path(@user.id) }
+        %input{type: "file", accept: 'image/png, image/jpg, image/jpeg', data: { target: "crop-image.imageField", action: "change->crop-image#processImage" }
         }
         %span Upload
         %span Image
-      .upload-option__delete
+      .upload-option__delete{data: {action: "click->crop-image#removeImage"}}
         = svg_tag "delete-icon"
     .error-message{ "data-target": "crop-image.imageMessage" }
       Invalid Image
