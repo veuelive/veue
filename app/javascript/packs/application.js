@@ -13,6 +13,3 @@ import "../style/application.scss";
 import "controllers";
 import "simplebar";
 import "simplebar/dist/simplebar.css";
-import "croppie";
-import "croppie/croppie.css";
-import "croppie/croppie.js";

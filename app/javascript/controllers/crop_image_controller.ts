@@ -1,6 +1,7 @@
 import { Controller } from "stimulus";
 import { putJson } from "util/fetch";
 import Croppie from "croppie";
+import "croppie/croppie.css";
 
 export const UploadImageEvent = "UploadImage";
 
