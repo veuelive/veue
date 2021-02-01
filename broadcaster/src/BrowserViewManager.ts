@@ -33,6 +33,7 @@ export default class BrowserViewManager {
     webContents.on("new-window", (event, url) => {
       console.log("Popup creation prevented for: ", url);
       event.preventDefault();
+      this.browserView.webContents.loadURL(url);
     });
 
     this.window.addBrowserView(this.browserView);
