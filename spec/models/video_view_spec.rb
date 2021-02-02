@@ -46,8 +46,11 @@ RSpec.describe VideoView, type: :model do
 
       # This fishy person does NOT get a new user joined event
       expect(video.user_joined_events.count).to eq(1)
-
       # If you are actually looking like a new person...
+
+      # Stub the rails cache fetch to be greater than 5 seconds
+      expect(Rails.cache).to receive(:fetch).and_return(Integer(6.seconds.ago))
+
       VideoView.process_view!(video, second_user, 4, "NEW FINGERPRINT", true)
       # And you even get announced!
       expect(video.user_joined_events.count).to eq(2)
