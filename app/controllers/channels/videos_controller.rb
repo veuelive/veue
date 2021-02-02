@@ -6,13 +6,11 @@ module Channels
     def show
       render("not_found", status: :not_found) && return unless current_video.can_be_accessed_by(current_user)
 
-      render(layout: false) && return if xhr_request?
-
-      viewed
+      render(layout: false) if xhr_request?
     end
 
     def viewed
-      VideoView.process_view!(current_video, current_user, params[:minute] || 0, user_fingerprint, false)
+      VideoView.process_view!(current_video, current_user, params[:minute], user_fingerprint, false)
     end
 
     def current_video

@@ -47,6 +47,7 @@ describe "chat during live video" do
     end
 
     it "should show that you joined the chat" do
+      assert_video_is_playing
       expect(page).to have_content("#{user.display_name} joined the chat")
     end
 

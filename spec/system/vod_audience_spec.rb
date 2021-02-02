@@ -26,8 +26,11 @@ describe "Prerecorded Audience View" do
 
     it "does not update view count on refresh" do
       visit path_for_video(video)
-      expect(page).to have_css(".widget[data-views='1']")
+      assert_video_is_playing
+      # No views because it's US
+      expect(page).to have_css(".widget[data-views='0']")
 
+      # Now our view will count...
       # Refresh the page
       visit path_for_video(video)
       expect(page).to have_css(".widget[data-views='1']")
@@ -51,6 +54,7 @@ describe "Prerecorded Audience View" do
 
       # New fingerprint!
       visit path_for_video(video)
+      assert_video_is_playing
       refresh
       expect(page).to have_css(".widget[data-views='2']")
     end
