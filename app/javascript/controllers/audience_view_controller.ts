@@ -106,7 +106,7 @@ export default class extends BaseController {
   // Every minute we should send a message updating the server on how far we've watched
   sendViewedMessage(): void {
     const minute = Math.ceil(this.videoTarget.currentTime / 60);
-    postForm("./viewed", {minute})
+    postForm("./viewed", { minute });
   }
 
   disconnect(): void {

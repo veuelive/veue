@@ -47,7 +47,8 @@ describe Channels::VideosController do
       it "should allow me to see my own private video" do
         get path_for_video(private_video)
         expect(response).to have_http_status(:ok)
-        expect(private_video.reload.video_views.size).to eq(1)
+        # but you don't count as a viewer
+        expect(private_video.reload.video_views.size).to eq(0)
       end
     end
 
