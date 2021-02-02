@@ -8,7 +8,7 @@ class VideoEvent < ApplicationRecord
   before_save :set_payload
   before_create :set_timecode
   before_create :set_published_state
-  after_create :broadcast_message!
+  after_commit :broadcast_message!, on: :create
 
   validates :video, presence: true
   validates :input, json: {schema: -> { input_schema.to_json }}
