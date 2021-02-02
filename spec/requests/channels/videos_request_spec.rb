@@ -16,7 +16,7 @@ describe Channels::VideosController do
           video = create(:video)
           get path_for_video(video)
           expect(response).to have_http_status(:ok)
-          expect(video.reload.video_views.size).to eq(1)
+          expect(video.reload.video_views.size).to eq(0)
         end
       end
 
@@ -25,7 +25,7 @@ describe Channels::VideosController do
           protected_video = create(:protected_video)
           get path_for_video(protected_video)
           expect(response).to have_http_status(:ok)
-          expect(protected_video.reload.video_views.size).to eq(1)
+          expect(protected_video.reload.video_views.size).to eq(0)
         end
 
         it "should NOT allow me to see someone else's private video" do

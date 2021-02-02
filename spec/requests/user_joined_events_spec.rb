@@ -13,7 +13,9 @@ describe Channels::VideosController do
       it "should create a new user joined event" do
         video = create(:live_video)
         expect(video.user_joined_events.size).to eq(0)
-        get path_for_video(video)
+        post viewed_channel_video_url(video.channel, video, minute: 1)
+        post viewed_channel_video_url(video.channel, video, minute: 1)
+        post viewed_channel_video_url(video.channel, video, minute: 1)
         expect(video.user_joined_events.reload.size).to eq(1)
       end
     end
@@ -22,7 +24,7 @@ describe Channels::VideosController do
       it "should not create a new user joined event" do
         video = create(:vod_video)
         expect(video.user_joined_events.size).to eq(0)
-        get path_for_video(video)
+        post viewed_channel_video_url(video.channel, video, minute: 1)
         expect(video.user_joined_events.reload.size).to eq(0)
       end
     end

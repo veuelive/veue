@@ -116,6 +116,7 @@ export default class extends BaseController {
 
   togglePlay(): void {
     if (this.state !== "playing") {
+      this.sendViewedMessage();
       this.videoTarget
         .play()
         .then(() => (this.state = "playing"))
