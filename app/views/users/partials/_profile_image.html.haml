@@ -4,6 +4,6 @@
   }
 }
   - if user.profile_image.attached?
-    = circle_image_tag user.profile_image
+    = circle_image_tag(user.profile_image, 128)
   - else
     = svg_tag "logo-circular"
