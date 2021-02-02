@@ -106,7 +106,7 @@
         text-align: center;
         position: absolute;
         left: -50px;
-        top: 55px;
+        top: 42px;
 
         @include smallTall() {
           left: -107px;
@@ -125,7 +125,7 @@
             border-right: 6px solid transparent;
             border-bottom: 5px solid color.$neutral-dark;
             content: "";
-            left: 93px;
+            left: 86px;
             top: -5px;
             @include smallTall() {
               left: 75%;
