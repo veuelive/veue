@@ -91,9 +91,11 @@
           .user-avatar {
             display: flex;
             align-items: center;
-            svg {
-              width: 64px;
-              height: 64px;
+            .profile-image {
+              * {
+                width: 64px;
+                height: 64px;
+              }
             }
             &__info {
               margin-left: 20px;
@@ -101,41 +103,86 @@
               color: color.$neutral-regular;
             }
           }
-          .upload-option {
-            display: flex;
-            align-items: center;
-            &__button {
-              border-radius: 10px;
-              color: color.$veue-corporate;
-              padding: 6px 10px;
-              border: 1px solid color.$veue-corporate;
-              height: fit-content;
-              position: relative;
-
-              @include smallTall() {
-                :last-child {
-                  display: none;
-                }
-              }
-              input[type="file"] {
-                position: absolute;
-                width: 100%;
-                opacity: 0;
-                top: 0;
-                left: 0;
-              }
-            }
-            &__delete {
+          .upload-image {
+            .upload-option {
               display: flex;
               align-items: center;
-              padding: 12px;
-              background-color: color.$neutral-background;
-              margin-left: 10px;
-              border-radius: 10px;
+              &__button {
+                border-radius: 10px;
+                color: color.$veue-corporate;
+                padding: 6px 10px;
+                border: 1px solid color.$veue-corporate;
+                height: fit-content;
+                position: relative;
+                @include smallTall() {
+                  :last-child {
+                    display: none;
+                  }
+                }
+                input[type="file"] {
+                  position: absolute;
+                  width: 100%;
+                  opacity: 0;
+                  top: 0;
+                  left: 0;
+                  cursor: pointer;
+                }
+                input[type="file"]::-webkit-file-upload-button {
+                  cursor: pointer;
+                }
+              }
+              &__delete {
+                display: flex;
+                align-items: center;
+                padding: 12px;
+                background-color: color.$neutral-background;
+                margin-left: 10px;
+                border-radius: 10px;
+                cursor: pointer;
+              }
+            }
+            .croppie-wrapper {
+              position: fixed;
+              top: 0;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              display: none;
+              z-index: 1;
+              background-color: rgba(0, 0, 0, 0.4);
+              flex-direction: column;
+              justify-content: center;
+              &__body {
+                max-width: 300px;
+                padding: 1rem;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+              }
+              &__action {
+                width: 300px;
+                padding: 0 1rem 1rem;
+                display: flex;
+                justify-content: space-evenly;
+                border-bottom-left-radius: 10px;
+                border-bottom-right-radius: 10px;
+                button {
+                  min-width: 100px;
+                }
+                .cancel-button {
+                  color: color.$neutral-regular;
+                  background-color: transparent;
+                }
+              }
+              .crop-area {
+                max-height: 350px;
+                background-color: color.$white;
+                margin: 0 auto;
+              }
             }
           }
           .error-message {
             color: color.$red-highlight;
+            font-size: 12px;
             display: none;
           }
         }

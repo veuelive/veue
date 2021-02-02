@@ -58,5 +58,34 @@ RSpec.describe "Users", type: :request do
 
       expect(response).to have_http_status(:bad_request)
     end
+
+    it "should upadate profile image" do
+      image = fixture_file_upload("spec/factories/test.png", "image/png")
+
+      put "/users/#{user.id}/upload_image", params: {profile_image: image}
+      expect(response).to have_http_status(:success)
+
+      user.reload
+      expect(user.profile_image.attached?).to eq(true)
+    end
+  end
+
+  describe "delete /:id/destroy_image" do
+    let(:user) { create(:user) }
+    before do
+      login_as user
+    end
+
+    it "should remove profile image" do
+      # attach image with user to delete
+      user.profile_image.attach(fixture_file_upload("spec/factories/test.png", "image/png"))
+      expect(user.profile_image.attached?).to eq(true)
+
+      delete "/users/#{user.id}/destroy_image"
+      expect(response).to have_http_status(:success)
+
+      user.reload
+      expect(user.profile_image.attached?).to eq(false)
+    end
   end
 end
