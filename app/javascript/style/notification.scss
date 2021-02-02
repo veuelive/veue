@@ -3,7 +3,7 @@
 @use "utils/z_index";
 @use 'utils/keyframes';
 
-#notification {
+.notification-wrapper {
   position: fixed;
   bottom: 0;
   right: 0;

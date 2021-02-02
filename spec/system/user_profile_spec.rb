@@ -51,6 +51,7 @@ describe "user profile" do
       before do
         find(".menu-area").hover
       end
+
       it "should update user and show message" do
         all(".user-menu__item")[0].click
         expect(page).to have_css("#profile-tab")
