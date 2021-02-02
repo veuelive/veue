@@ -42,6 +42,10 @@ We use the following Third-Party services:
 PERSPECTIVE_API_ENABLED: true/false - Used to turn on or off the Perspective API
 PERSPECTIVE_API_SCORE_THRESHOLD: 0.0...1.0 - Cutoff values for not publishing chat messages, 1.0 being the worst and 0.0 being innocent
 GOOGLE_CLOUD_KEY: string - Needed for any GCP calls
+APPSIGNAL_FRONTEND_KEY: string - Needed for AppSignal Javascript Reporting
+APPSIGNAL_PUSH_API_KEY: string - AppSignal's Backend Push Key
+APPSIGNAL_APP_ENV: string - AppSignal "environment" tag, used to structure reporting in Appsignal
+
 
 ## Streaming Architecture
 
