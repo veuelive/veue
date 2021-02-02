@@ -13,7 +13,7 @@ import LiveEventManager from "helpers/event/live_event_manager";
 import BaseController from "controllers/base_controller";
 import { startMuxData } from "controllers/audience/mux_integration";
 import { isProduction } from "util/environment";
-import { post } from "util/fetch";
+import { postForm } from "util/fetch";
 import { BroadcastVideoLayout } from "types/video_layout";
 
 type StreamType = "upcoming" | "live" | "vod";
@@ -90,13 +90,11 @@ export default class extends BaseController {
       this.eventManager = new VodEventManager(0);
     } else {
       this.eventManager = new LiveEventManager(true);
-
-      this.sendViewedMessage();
-
-      this.viewedPoller = window.setInterval(() => {
-        this.sendViewedMessage();
-      }, 60 * 1000);
     }
+
+    this.viewedPoller = window.setInterval(() => {
+      this.sendViewedMessage();
+    }, 60 * 1000);
 
     this.subscribeToAuthChange();
   }
@@ -105,8 +103,10 @@ export default class extends BaseController {
     this.sendViewedMessage();
   }
 
+  // Every minute we should send a message updating the server on how far we've watched
   sendViewedMessage(): void {
-    post("./viewed").then(() => console.log("Updated Viewer Count"));
+    const minute = Math.ceil(this.videoTarget.currentTime / 60);
+    postForm("./viewed", {minute})
   }
 
   disconnect(): void {

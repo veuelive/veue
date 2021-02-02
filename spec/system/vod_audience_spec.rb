@@ -40,18 +40,19 @@ describe "Prerecorded Audience View" do
 
       logout_user
 
+      # Same browser session!
       login_as create(:user)
       visit path_for_video(video)
 
-      expect(page).to have_css(".widget[data-views='2']")
+      # The fingerprint stopped this from counting as a new viewer
+      expect(page).to have_css(".widget[data-views='1']")
 
-      # Log out and refresh page
-      logout_user
+      reset_session!
 
-      # Because the last "anonymous" session got associated with the second
-      # user, we are willing to take a new "anonymous" view from this UA+IP
+      # New fingerprint!
       visit path_for_video(video)
-      expect(page).to have_css(".widget[data-views='3']")
+      refresh
+      expect(page).to have_css(".widget[data-views='2']")
     end
 
     it "should have replay badge which show message on mouse hover" do

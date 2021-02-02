@@ -4,6 +4,7 @@ class VideoView < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :video, counter_cache: true
   belongs_to :user_joined_event, optional: true, dependent: :destroy
+  has_many :video_view_minutes, dependent: :destroy
   after_save :process_user_joined_event
 
   scope :connected, -> { where("updated_at > (current_timestamp - interval '2 minute')") }
@@ -15,32 +16,38 @@ class VideoView < ApplicationRecord
               scope: :video_id,
             }
 
-  # # If its a "NULL" user, only 1 set of unique details allowed.
-  validates :details,
-            uniqueness: {scope: %i[video_id user_id]}
+  # This is the main method we use to track new views and build the logic around how we find them
+  def self.process_view!(video, user, minute, fingerprint, is_live)
+    # If you are the video creator, your views don't matter... MUWAHAHAHAHAH!
+    return if video.user_id == user&.id
 
-  def self.process_view!(video, user, request)
-    details = {
-      ip_address: request.remote_ip,
-      browser: request.user_agent,
-    }
-    video_view = find_existing(video, user, details)
-    video_view ||= video.video_views.build(
-      details: details,
-    )
-    video_view.last_seen_at = Time.zone.now
-    video_view.user = user
-    video_view.save! if video_view.valid?
+    video_view = find_existing(video, user, fingerprint) || video.video_views.build
+    video_view.user ||= user
+    video_view.fingerprint = fingerprint
+    video_view.add_minute!(minute, is_live)
     video_view
   end
 
-  def self.find_existing(video, user, details)
-    video_view ||= video.video_views.find_by(user: user) if user
-    return video_view if video_view
-
-    video_view = video.video_views.find_by(details: details)
-    return video_view if video_view && (video_view.user.nil? || video_view.user == user)
+  def self.find_existing(video, user, fingerprint)
+    video.video_views.find_by(fingerprint: fingerprint) || search_by_user(video, user)
   end
+
+  def self.search_by_user(video, user)
+    video.video_views.find_by(user: user) if user
+  end
+
+  def add_minute!(minute, is_live)
+    self.last_seen_at = Time.zone.now
+
+    # If this is the same as the LAST minute we saw, don't count it again
+    if video_view_minutes.order("created_at ASC").last&.minute != minute
+      video_view_minutes.build(minute: minute, is_live: is_live)
+    end
+
+    save!
+  end
+
+  private
 
   def process_user_joined_event
     allowable_states = %w[pending live starting]

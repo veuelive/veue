@@ -5,9 +5,10 @@ require "rails_helper"
 describe Channels::VideosController do
   describe "show by id" do
     describe "for a public viewer" do
+      let(:user) { create(:user) }
+
       before(:each) do
-        @viewer = create(:user)
-        login_as @viewer
+        login_as user
       end
 
       describe "for anyone" do
@@ -37,16 +38,34 @@ describe Channels::VideosController do
     end
 
     describe "for the owner of the video" do
+      let(:private_video) { create(:private_video) }
+
       before(:each) do
-        @private_video = create(:private_video)
-        @streamer = @private_video.channel.user
-        login_as @streamer
+        login_as private_video.channel.user
       end
 
       it "should allow me to see my own private video" do
-        get path_for_video(@private_video)
+        get path_for_video(private_video)
         expect(response).to have_http_status(:ok)
-        expect(@private_video.reload.video_views.size).to eq(1)
+        expect(private_video.reload.video_views.size).to eq(1)
+      end
+    end
+
+    describe "viewed requests" do
+      let(:video) { create(:video) }
+
+      it "should mark them as non-live views" do
+        expect(VideoView.count).to eq(0)
+
+        post viewed_channel_video_url(video.channel, video, minute: 1)
+
+        expect(VideoView.count).to eq(1)
+
+        post viewed_channel_video_url(video.channel, video, minute: 2)
+
+        expect(VideoView.count).to eq(1)
+        expect(VideoView.first.video_view_minutes_count).to eq(2)
+        expect(VideoView.first.video_view_minutes.where(is_live: false).count).to eq(2)
       end
     end
   end

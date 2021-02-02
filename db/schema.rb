@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_27_160422) do
+ActiveRecord::Schema.define(version: 2021_02_02_194150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -181,6 +181,15 @@ ActiveRecord::Schema.define(version: 2021_01_27_160422) do
     t.index ["video_id"], name: "index_video_events_on_video_id"
   end
 
+  create_table "video_view_minutes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "video_view_id"
+    t.integer "minute"
+    t.boolean "is_live"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["video_view_id"], name: "index_video_view_minutes_on_video_view_id"
+  end
+
   create_table "video_views", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.uuid "video_id", null: false
@@ -189,10 +198,14 @@ ActiveRecord::Schema.define(version: 2021_01_27_160422) do
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "user_joined_event_id"
     t.datetime "last_seen_at"
+    t.uuid "fingerprint"
+    t.integer "video_view_minutes_count"
+    t.index ["fingerprint", "video_id"], name: "index_video_views_on_fingerprint_and_video_id"
     t.index ["user_joined_event_id"], name: "index_video_views_on_user_joined_event_id"
     t.index ["video_id", "details", "user_id"], name: "index_video_views_on_video_id_and_details_and_user_id", unique: true
     t.index ["video_id", "last_seen_at"], name: "index_video_views_on_video_id_and_last_seen_at"
     t.index ["video_id", "user_id"], name: "index_video_views_on_video_id_and_user_id", unique: true, where: "(user_id IS NOT NULL)"
+    t.index ["video_id", "video_view_minutes_count"], name: "index_video_views_on_video_id_and_video_view_minutes_count"
   end
 
   create_table "videos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
