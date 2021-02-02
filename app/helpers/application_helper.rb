@@ -2,7 +2,32 @@
 
 module ApplicationHelper
   def body_attributes
-    {id: "#{controller.controller_name}__#{controller.action_name}"}
+    {
+      id: "#{controller.controller_name}__#{controller.action_name}",
+    }
+  end
+
+  # See `/app/javascript/helpers/app_config.ts` and ensure these remain in sync!
+  # This is cached on every deploy, so DO NOT put user-specific or changing information,
+  # that is what we use the data-* attributes for.
+  def app_config
+    {
+      env: Rails.env,
+      host: ENV["RENDER_EXTERNAL_URL"],
+      veue: {
+        env: ENV["VEUE_ENV"] || "dev",
+        revision: ENV["RENDER_GIT_COMMIT"] || `git rev-parse HEAD`,
+        branch: ENV["RENDER_GIT_BRANCH"] || `git branch --show-current`,
+      },
+      service: {
+        id: ENV["RENDER_SERVICE_ID"],
+        name: ENV["RENDER_SERVICE_NAME"],
+        pod: ENV["RENDER_POD_NAME"],
+      },
+      appsignal: {
+        key: ENV["APPSIGNAL_FRONTEND_KEY"],
+      },
+    }
   end
 
   def svg_tag(filename, options={})
