@@ -24,9 +24,9 @@ describe BroadcastsController do
       expect(response.body).to include(stream_key)
     end
 
-      it "should have an app configuration set" do
-        expect(response.body).to match /"env":"test"/im
-      end
+    it "should have an app configuration set" do
+      expect(response.body).to match(/"env":"test"/im)
+    end
   end
 
   describe "starting up" do
