@@ -127,6 +127,26 @@ class Video < ApplicationRecord
     schedule!
   end
 
+  def last_join_time_cache_location
+    "last_user_join_time_#{id}"
+  end
+
+  def time_since_last_user_joined
+    now = Integer(Time.current)
+    now - Integer(last_user_join_time)
+  end
+
+  def last_user_join_time
+    @last_user_join_time ||=
+      Rails.cache.fetch(last_join_time_cache_location) {
+        last_join = UserJoinedEvent.last
+
+        return 0 if last_join.nil?
+
+        Integer(last_join.created_at.utc)
+      }
+  end
+
   private
 
   def after_go_live

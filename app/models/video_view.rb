@@ -5,7 +5,8 @@ class VideoView < ApplicationRecord
   belongs_to :video, counter_cache: true
   belongs_to :user_joined_event, optional: true, dependent: :destroy
   has_many :video_view_minutes, dependent: :destroy
-  after_save :process_user_joined_event
+
+  after_commit :process_user_joined_event
 
   scope :connected, -> { where("updated_at > (current_timestamp - interval '2 minute')") }
 
@@ -58,10 +59,14 @@ class VideoView < ApplicationRecord
     return unless allowable_states.include?(video.state)
     return unless user
     return if user_joined_event_id
+    return if video.time_since_last_user_joined <= USER_JOIN_RATE_LIMIT_SECONDS
 
-    create_user_joined_event(
+    join_event = create_user_joined_event(
       video: video,
       user: user,
     )
+
+    # Update our cache to be the latest join event creation time
+    Rails.cache.write(video.last_join_time_cache_location, Integer(join_event.created_at.utc))
   end
 end
