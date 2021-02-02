@@ -11,7 +11,7 @@
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_pack_tag 'application', media: 'all'
-    = javascript_pack_tag 'application'
+    = javascript_pack_tag 'application', async: true
     = yield :header if content_for?(:header)
   %body{body_attributes}
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K4PCNR3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>

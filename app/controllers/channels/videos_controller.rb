@@ -12,7 +12,7 @@ module Channels
     end
 
     def viewed
-      VideoView.process_view!(current_video, current_user, request)
+      VideoView.process_view!(current_video, current_user, params[:minute] || 0, user_fingerprint, false)
     end
 
     def current_video

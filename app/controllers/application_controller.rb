@@ -3,6 +3,7 @@
 class ApplicationController < ActionController::Base
   include HttpAuthConcern
   include AuthenticationConcern
+  include FingerprintConcern
   include IpcMockConcern unless Rails.env.production?
 
   private
