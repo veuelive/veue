@@ -48,11 +48,9 @@ jobs:
       #   run: echo "PYTHON=$(which python)" >> $GITHUB_ENV
       # https://github.com/nodejs/node-gyp/issues/2272
       # https://github.com/nodejs/node-gyp/issues/2273
-      - name: fix node-gyp
-        run: |
-          npm install --global npm@latest
-          npm install --global node-gyp@latest
-          npm config set node_gyp $(npm prefix -g)/lib/node_modules/node-gyp/bin/node-gyp.js
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
       - name: eslint
         uses: reviewdog/action-eslint@v1
         with:
