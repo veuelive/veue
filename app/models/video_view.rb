@@ -39,8 +39,11 @@ class VideoView < ApplicationRecord
   def add_minute!(minute, is_live)
     self.last_seen_at = Time.zone.now
 
+    minute = Integer(minute, 10) unless minute.is_a?(Integer)
+
     # If this is the same as the LAST minute we saw, don't count it again
-    if video_view_minutes.order("created_at ASC").last&.minute != Integer(minute, 10)
+    # aka, we might be paused or refresh the page... so you don't get extra minutes for that!
+    if video_view_minutes.order("created_at ASC").last&.minute != minute
       video_view_minutes.build(minute: minute, is_live: is_live)
     end
 
