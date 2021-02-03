@@ -1,0 +1,70 @@
+// This document works on https://sequencediagram.org
+
+title Streaming V3
+
+bottomparticipants
+
+participantgroup Veue Broadcaster
+participant Main
+participant BrowserView
+participant Renderer
+participant ffmpeg
+end
+
+participant Mux
+participant Veue
+
+Main->Renderer:Load Broadcasts Page
+Renderer->Veue:Load Page (and Login and stuff)
+
+activate Veue
+Veue->Veue: Create new Video model\n as Pending
+Veue-->Renderer:HTML/JS Payload
+deactivate Veue
+
+activate Renderer
+
+Renderer-->Main: Wakeup \nSends Session Token\nRequests
+
+Renderer-->Main:createBrowserView\n Dimensions & Loc
+
+Main->BrowserView:Create\nAs Overlay
+activate BrowserView
+
+Main->Renderer:Become Visible
+
+Renderer->Renderer:Start \nWebcam\nCapture
+
+Renderer->Renderer:Start \nWindow\nCapture
+Renderer->Renderer:Start \nMediaRecorder
+
+Renderer->Main:Start Stream
+
+activate Veue
+Renderer->Veue:Starting
+Veue->Veue: Transition to \nStarting
+
+Main->ffmpeg:Start RTMP Connection
+
+activate ffmpeg
+ffmpeg->Mux:RTMP
+activate Mux
+Mux-->>Veue:Various\nWebhooks
+
+Mux-->>Veue:Various\nWebhooks
+Veue->Veue: Transition to\nLive
+loop #2f2e7b Media Recorder Fragment
+Renderer->Main:IPC
+Main->ffmpeg:Stdin
+ffmpeg->Mux:RTMP
+end
+
+Renderer->Veue: Ending
+Renderer->Main:Stop Stream
+Veue->Veue: Transition to\nEnding
+Main->ffmpeg:Kill
+deactivate ffmpeg
+
+deactivate Mux
+Mux-->>Veue:Stream\nEnds\nWebhook
+Veue->Veue: Transition to\nFinished\nVOD Available
