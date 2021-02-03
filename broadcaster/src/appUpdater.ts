@@ -39,7 +39,7 @@ export async function checkForAppUpdates(): Promise<void> {
 
         autoUpdater.on("error", (error) => {
           logger.error(error);
-          reject();
+          throw "Couldn't Update";
         });
       });
     }
