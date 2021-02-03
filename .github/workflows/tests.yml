@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: set-python-path
-        run: echo "PYTHON=python3" >> $GITHUB_ENV
+        run: echo "PYTHON=$(which python3)" >> $GITHUB_ENV
       - name: eslint
         uses: reviewdog/action-eslint@v1
         with:
