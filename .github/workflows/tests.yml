@@ -41,9 +41,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: "actions/setup-python@v2"
-        with:
-          python-version: "3.8"
+      - name: set-python-path
+        run: echo "PYTHON=python3" >> $GITHUB_ENV
       - name: eslint
         uses: reviewdog/action-eslint@v1
         with:
