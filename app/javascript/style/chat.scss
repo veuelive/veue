@@ -30,68 +30,6 @@
       flex-direction: column;
       justify-content: flex-end;
 
-      .message-left {
-        margin-top: 10px;
-        display: flex;
-        justify-content: flex-start;
-
-        .message-content {
-          &__name {
-            color: color.$neutral-middle;
-            margin-bottom: 0.35rem;
-            line-height: 1;
-          }
-
-          &__text {
-            background-color: color.$white;
-            color: color.$neutral-dark;
-            border: 1px solid color.$neutral-soft;
-          }
-        }
-
-        .highlighted-message {
-          &__name {
-            color: color.$veue-corporate;
-            margin-bottom: 0.35rem;
-            line-height: 1;
-          }
-          &__text {
-            background-color: color.$veue-corporate;
-            color: color.$white;
-            border: 1px solid color.$veue-corporate;
-          }
-        }
-
-        .user-avatar {
-          image {
-            width: 1.5rem;
-            height: 1.5rem;
-            border-radius: 50%;
-          }
-        }
-
-        &:first-child {
-          margin-top: 0;
-        }
-      }
-
-      .message-right {
-        display: flex;
-        justify-content: flex-end;
-        width: 100%;
-        margin-top: 10px;
-
-        &__text {
-          border: 1px solid color.$neutral-soft;
-          color: color.$gray-bluish;
-          border-radius: 10px 0px 10px 10px;
-        }
-
-        &:first-child {
-          margin-top: 0;
-        }
-      }
-
       .user-reaction {
         margin-top: 10px;
         color: color.$neutral-regular;
@@ -106,18 +44,6 @@
           }
         }
 
-        &:first-child {
-          margin-top: 0;
-        }
-      }
-
-      .message-grouped {
-        margin-top: 5px;
-        &__text {
-          background-color: color.$white;
-          color: color.$neutral-dark;
-          border: 1px solid color.$neutral-soft;
-        }
         &:first-child {
           margin-top: 0;
         }
@@ -149,15 +75,6 @@
         &:first-child {
           margin-top: 0;
         }
-      }
-
-      .border-left {
-        border-radius: 0px 10px 10px 10px;
-      }
-
-      .message-display {
-        padding: 0.5rem 0.75rem;
-        display: inline-block;
       }
     }
   }
