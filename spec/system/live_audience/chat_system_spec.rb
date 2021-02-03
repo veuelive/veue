@@ -80,7 +80,6 @@ describe "chat during live video" do
     end
 
     it "should not allow you to chat until you login" do
-      expect(page).not_to(have_selector(".message-write"))
       login_as user
       write_chat_message "Who ordered a pizza?"
       expect(page).to have_content("Who ordered a pizza?")
@@ -112,8 +111,6 @@ describe "chat during live video" do
     end
 
     it "should have hilighted comment of streamer" do
-      expect(page).not_to(have_selector(".message-write"))
-
       # It is mocking comment of streamer
       login_as video.user
       write_chat_message "Cowabunga!"
@@ -124,6 +121,13 @@ describe "chat during live video" do
 
       expect(page).to have_content("Cowabunga!").once
       expect(page).to have_css(".highlighted-message__text")
+    end
+
+    it "should see login modal on chat area click" do
+      expect(page).to have_css(".message-login-prompt")
+      find(".message-login-prompt").click
+
+      expect(page).to have_css("#phone_number_input")
     end
   end
 end

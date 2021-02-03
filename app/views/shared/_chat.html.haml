@@ -46,11 +46,13 @@
         = render "shared/reaction_button"
     .message-login-prompt{
       data: {
+        action: "click->authentication#showModal",
         "show-when-logged-out": true
       }
     }
-      %button{
-        data: {
-          action: "authentication#showModal"
+      .chat-controls
+        .write-area{
+          placeholder: 'Send a message'
         }
-      } Login To Chat
+        .reaction-button-area
+          = svg_tag "heart"

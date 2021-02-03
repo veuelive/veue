@@ -182,7 +182,8 @@
     }
   }
 
-  .message-write {
+  .message-write,
+  .message-login-prompt {
     border-top: 1px solid color.$neutral-accents;
     width: 100%;
     min-height: 55px;
@@ -238,17 +239,6 @@
           }
         }
       }
-    }
-  }
-
-  .message-login-prompt {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-    button {
-      width: 100%;
-      background: color.$neutral-soft;
     }
   }
 }
