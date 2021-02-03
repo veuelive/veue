@@ -3,12 +3,14 @@
 @use "../utils/breakpoints" as *;
 
 .streamer-profile {
-  display: flex;
-  flex-direction: column;
-  background: color.$white;
-  border-radius: 10px;
+  &--content {
+    display: flex;
+    flex-direction: column;
+    background: color.$white;
+    border-radius: 10px;
+  }
 
-  .streamer-info {
+  &__info {
     padding: 10px 0;
     height: 100%;
     width: 100%;
@@ -49,23 +51,23 @@
       }
     }
 
-    &-mobile__about,
-    &-desktop__about {
+    &__mobile__about,
+    &__desktop__about {
       font-size: 16px;
       color: color.$neutral-dark;
     }
 
-    &-desktop__about {
+    &__desktop__about {
       display: none;
     }
 
-    &-mobile__about {
+    &__mobile__about {
       border-top: 1px solid color.$neutral-accents;
       padding: 10px;
       display: flex;
     }
 
-    &__follow-info {
+    &__follow {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -73,7 +75,7 @@
       margin-left: auto;
       padding: 0 10px;
 
-      .streamer-info__follow-count {
+      &__count {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -129,7 +131,7 @@
 
 @include large() {
   .streamer-profile {
-    .streamer-info {
+    &__info {
       padding: 15px 0;
 
       &__avatar {
@@ -141,15 +143,15 @@
         flex-direction: column;
       }
 
-      &-desktop__about {
+      &__desktop__about {
         display: block;
       }
 
-      &-mobile__about {
+      &__mobile__about {
         display: none;
       }
 
-      &__follow-info {
+      &__follow {
         margin-right: 30px;
       }
     }

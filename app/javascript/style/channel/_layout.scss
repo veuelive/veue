@@ -3,6 +3,7 @@
 #channels__show {
   .channel-page {
     display: flex;
+    flex: 1;
   }
 
   @include large() {

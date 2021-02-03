@@ -99,6 +99,25 @@
     }
   }
 
+  .stream-end {
+    border-top: 1px solid color.$neutral-accents;
+    padding: 17px 10px;
+
+    &--content {
+      // layouts
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 7px 0;
+
+      // styles
+      border-radius: 10px;
+      font-size: 15px;
+      background: color.$neutral-accents;
+      color: color.$neutral-regular;
+    }
+  }
+
   .message-write,
   .message-login-prompt {
     border-top: 1px solid color.$neutral-accents;
