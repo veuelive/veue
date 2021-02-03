@@ -8,6 +8,6 @@ export interface ChatMessage {
 
 export interface RenderChatMessageToString {
   message: ChatMessage;
-  isSameUser: boolean;
+  isThread: boolean;
   currentUserId: string;
 }

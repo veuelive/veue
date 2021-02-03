@@ -1,0 +1,61 @@
+@use "../utils/color";
+
+.message {
+  margin-top: 10px;
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &--right {
+    justify-content: flex-end;
+  }
+
+  &--grouped {
+    margin-top: 5px;
+  }
+
+  &__content {
+    &__name {
+      color: color.$neutral-middle;
+      margin-bottom: 0.35rem;
+      line-height: 1;
+
+      .message--highlighted & {
+        color: color.$veue-corporate;
+      }
+    }
+
+    &__text {
+      background-color: color.$white;
+      color: color.$neutral-dark;
+      border: 1px solid color.$neutral-accents;
+      padding: 8px 15px;
+
+      .message--highlighted & {
+        background-color: color.$veue-corporate;
+        color: color.$white;
+        border: none;
+      }
+
+      .message--right & {
+        border-radius: 10px 0px 10px 10px;
+      }
+
+      .message--left & {
+        border-radius: 0px 10px 10px 10px;
+      }
+    }
+  }
+
+  .user-avatar {
+    image {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+    }
+  }
+}
