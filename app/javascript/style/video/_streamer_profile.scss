@@ -5,12 +5,56 @@
 #video-show,
 #upcoming-stream {
   .streamer-profile {
-    background: color.$white;
     border-radius: 10px;
-    padding: 0;
 
-    .streamer-info-mobile__about {
-      display: none;
+    &--content {
+      padding: 0;
+      background: transparent;
+    }
+
+    &__info {
+      margin-top: 5px;
+
+      &__mobile__about {
+        display: none;
+      }
+
+      &__follow__count {
+        display: none;
+      }
+
+      &__follow {
+        padding-right: 5px;
+      }
+
+      &__avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+          width: 32px;
+          height: 32px;
+        }
+      }
+    }
+
+    @include large() {
+      margin-top: 10px;
+      background: color.$white;
+
+      .streamer-profile__info {
+        &__follow__count {
+          display: flex;
+        }
+
+        &__avatar {
+          svg {
+            width: 64px;
+            height: 64px;
+          }
+        }
+      }
     }
   }
 }

@@ -5,6 +5,7 @@
 #channels__show {
   #main-container {
     height: calc(100vh - #{scale.$header_height});
+    margin: 0 10px;
 
     // reset min-height
     min-height: auto;
@@ -23,6 +24,10 @@
   Put any main responsive layout code for ONLY desktop here... this does not count elements that scale to their surroundings
    */
   @include large() {
+    #main-container {
+      margin: 0;
+    }
+
     .content-area {
       flex-direction: row;
       display: flex;
@@ -36,6 +41,8 @@
         height: 100%;
         max-width: 1280px;
         margin-left: 1vw;
+        // Use padding, because margin moves to the right of scroll bar on firefox
+        padding-right: 1vw;
 
         &::-webkit-scrollbar {
           display: none;
@@ -92,8 +99,7 @@
     .content-area__primary,
     .primary-video-area,
     .content-area__secondary {
-      // Allow for 10px of padding on each side
-      width: calc(100vw - 20px);
+      width: 100%;
     }
     canvas.fixed-secondary-canvas {
       // We don't want to show the fixed canvas when we are in a small view
@@ -172,7 +178,7 @@
       }
     }
 
-    .streamer-profile {
+    .streamer-profile--content {
       padding-top: 5px;
       padding-bottom: 5px;
     }

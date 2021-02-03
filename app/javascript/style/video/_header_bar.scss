@@ -12,7 +12,6 @@
     padding-right: 0.2rem;
     padding-left: 0.2rem;
     border-bottom: 1px solid color.$gray-light;
-    margin-right: 10px;
 
     &__address_bar {
       color: color.$gray-dark;
@@ -101,12 +100,27 @@
         }
       }
 
+      &__text {
+        display: none;
+      }
+
+      @include large() {
+        &__image {
+          display: none;
+        }
+
+        &__text {
+          display: block;
+        }
+      }
+
       .badge-message {
         display: none;
         text-align: center;
         position: absolute;
         left: -50px;
         top: 42px;
+        background: color.$neutral-darker;
 
         @include smallTall() {
           left: -107px;
@@ -116,19 +130,19 @@
           position: fixed;
           padding: 0.65rem 1rem;
           border-radius: 10px;
-          background-color: color.$neutral-dark;
+          background-color: color.$neutral-darker;
           max-width: 160px;
 
           &:before {
             position: absolute;
             border-left: 6px solid transparent;
             border-right: 6px solid transparent;
-            border-bottom: 5px solid color.$neutral-dark;
+            border-bottom: 8px solid color.$neutral-darker;
             content: "";
             left: 86px;
             top: -5px;
             @include smallTall() {
-              left: 75%;
+              transform: translate(350%, 0);
             }
           }
         }
