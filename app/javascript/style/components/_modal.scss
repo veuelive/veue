@@ -90,7 +90,7 @@
 
         #phone_number_input {
           outline: none;
-          width: 208px;
+          width: 235px;
           height: 34px;
           border-radius: 10px;
           border: 1px solid color.$neutral-soft;
@@ -101,6 +101,16 @@
           line-height: 20px;
           @include smallThin {
             min-width: 238px;
+          }
+          // made specifically for galaxy fold
+          @media screen and (max-width: 280px) and (max-height: 653px) {
+            width: 170px;
+            min-width: 0px;
+          }
+          // made specifically for iPhone 5, since smallThin is shared with other iPhone sizes
+          @media screen and (width: 320px) and (height: 568px) {
+            width: 208px;
+            min-width: 0px;
           }
         }
 
