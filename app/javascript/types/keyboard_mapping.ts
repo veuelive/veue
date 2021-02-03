@@ -5,5 +5,5 @@ export const WebInspectorKeyEvent = "webInspectorKey";
 export const BROADCAST_DEBUG_KEYBINDINGS = {
   D: DebugKeyEvent,
   P: TestPatternKeyEvent,
-  I: WebInspectorKeyEvent
+  I: WebInspectorKeyEvent,
 };
