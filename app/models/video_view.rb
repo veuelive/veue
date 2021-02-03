@@ -40,7 +40,7 @@ class VideoView < ApplicationRecord
     self.last_seen_at = Time.zone.now
 
     # If this is the same as the LAST minute we saw, don't count it again
-    if video_view_minutes.order("created_at ASC").last&.minute != minute
+    if video_view_minutes.order("created_at ASC").last&.minute != Integer(minute, 10)
       video_view_minutes.build(minute: minute, is_live: is_live)
     end
 
