@@ -110,5 +110,9 @@ export default class {
       logger.info("Got request to change release channel " + releaseChannel);
       changeReleaseChannel(releaseChannel);
     });
+
+    ipcMain.on("webInspectorKey", () => {
+      this.mainWindow.webContents.openDevTools();
+    })
   }
 }

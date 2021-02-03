@@ -33,3 +33,9 @@ Ctrl + Cmd + Shift + P
 
 This will navigate the browser to the "Test Pattern" that you can use in conjunction with the
 Debug Canvas to ensure that the canvas is properly setup.
+
+### Web Inspector
+
+Ctrl + Cmd + Shift + I
+
+This opens the Google Chrome inspector to see if there are any errors or interesting logs.
