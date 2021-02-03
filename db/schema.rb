@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_02_194150) do
+ActiveRecord::Schema.define(version: 2021_02_03_193134) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -51,9 +51,11 @@ ActiveRecord::Schema.define(version: 2021_02_02_194150) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "followers_count", default: 0
+    t.boolean "verified", default: false
     t.index ["mux_live_stream_id"], name: "index_channels_on_mux_live_stream_id", unique: true
     t.index ["name"], name: "index_channels_on_name", unique: true
     t.index ["slug"], name: "index_channels_on_slug", unique: true
+    t.index ["verified"], name: "index_channels_on_verified"
   end
 
   create_table "follows", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -160,7 +162,9 @@ ActiveRecord::Schema.define(version: 2021_02_02_194150) do
     t.enum "sms_status", default: "new_number", as: "sms_status_setting"
     t.text "about_me"
     t.string "email"
+    t.boolean "verified", default: false
     t.index ["mux_live_stream_id"], name: "index_users_on_mux_live_stream_id"
+    t.index ["verified"], name: "index_users_on_verified"
   end
 
   create_table "video_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
