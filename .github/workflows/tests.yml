@@ -43,9 +43,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-python@v2
         with:
-          python-version: "3.7"
-      - name: set-python-path
-        run: echo "PYTHON=$(which python3)" >> $GITHUB_ENV
+          python-version: "2.7"
       - name: eslint
         uses: reviewdog/action-eslint@v1
         with:
