@@ -68,6 +68,15 @@ RSpec.describe "Users", type: :request do
       user.reload
       expect(user.profile_image.attached?).to eq(true)
     end
+
+    it "should not update with inappropriate display name" do
+      PerspectiveApi.enabled = "true"
+      PerspectiveApi.key = "FAIL"
+      display_name = "superbad"
+      put "/users/#{user.id}/", params: {user: {display_name: display_name}}
+      expect(response).to have_http_status(:bad_request)
+      expect(user.reload.display_name).to_not eq(display_name)
+    end
   end
 
   describe "delete /:id/destroy_image" do
