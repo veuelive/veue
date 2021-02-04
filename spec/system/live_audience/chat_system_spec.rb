@@ -52,20 +52,20 @@ describe "chat during live video" do
     end
 
     it "should have visible scroll button after a bunch of messages" do
-      10.times do |i|
+      13.times do |i|
         write_chat_message "Cowabunga!"
         expect(page).to have_css(".message", count: i + 1)
       end
 
       chat_message = first(".message")
-      execute_script("arguments[0].scrollIntoView(true)", chat_message)
+      scroll_to(chat_message)
 
       expect(page).to have_css(".chat-scroll")
 
-      messages = find(".messages")
-      execute_script("arguments[0].lastElementChild.scrollIntoView(true)", messages)
+      last_message = all(".messages").last
+      scroll_to(last_message, align: :bottom)
 
-      expect(page).to_not have_css(".chat-scroll")
+      expect(page).to have_no_css(".chat-scroll")
     end
   end
 
