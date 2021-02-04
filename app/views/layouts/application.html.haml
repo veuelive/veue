@@ -3,7 +3,11 @@
   %head
     %meta{content: "text/html; charset=UTF-8", "http-equiv": "Content-Type"}/
     %meta{name: "viewport", content:"width=device-width, initial-scale=1, viewport-fit=cover"}/
-    %title Veue
+    %title
+      - if content_for(:title)
+        = yield :title
+      - else
+        Veue
     :javascript
       globalThis.appConfig = #{raw JSON.generate(app_config)};
       globalThis.startLoadTime = Date.now();
