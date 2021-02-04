@@ -28,6 +28,15 @@
       }
     }
 
+    &__details {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 10px;
+    }
+
     &__text {
       align-self: center;
       flex: 1;
@@ -69,8 +78,6 @@
       flex-wrap: wrap;
       justify-content: center;
       align-items: center;
-      margin-left: auto;
-      padding: 0 10px;
 
       &__count {
         display: flex;
@@ -132,7 +139,7 @@
       padding: 15px 0;
 
       &__avatar {
-        margin: 0 40px 0 30px;
+        margin: 0 20px 0 40px;
       }
 
       &__text {
