@@ -43,7 +43,8 @@ body#discover__index {
           &__avatar {
             display: inline-block;
             margin-right: 29px;
-            * {
+            img,
+            svg {
               width: 100px;
               height: 100px;
             }

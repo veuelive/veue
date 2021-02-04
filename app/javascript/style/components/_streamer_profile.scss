@@ -19,15 +19,12 @@
 
     &__avatar {
       margin: 0 10px 0;
-      img {
-        width: 80px;
-        height: 80px;
-      }
 
+      img,
       svg {
         border-radius: 50%;
         height: 64px;
-        width: 62px;
+        width: 64px;
       }
     }
 
