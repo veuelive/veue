@@ -1,11 +1,15 @@
 @use "../utils/breakpoints" as *;
 @use "../utils/scale";
 
+// We dont want this margin on channel pages
+#videos__show {
+  margin: 0 10px;
+}
+
 #videos__show,
 #channels__show {
   #main-container {
     height: calc(100vh - #{scale.$header_height});
-    margin: 0 10px;
 
     // reset min-height
     min-height: auto;
