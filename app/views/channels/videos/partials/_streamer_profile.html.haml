@@ -3,27 +3,28 @@
     .streamer-profile__info
       .streamer-profile__info__avatar
         = current_channel.profile_image_circle(160)
-      .streamer-profile__info__text
-        .streamer-profile__info__name
-          %a{href: channel_path(current_channel)}
-            = current_channel.name
-            - if current_channel.verified?
-              = svg_tag 'verified'
-        .streamer-profile__info__desktop__about
-          = current_channel.about
-      .streamer-profile__info__follow
-        .streamer-profile__info__follow__count
-          = svg_tag 'user-icon-dark'
-          %span
-            = current_channel.followers.size
+      .streamer-profile__info__details
+        .streamer-profile__info__text
+          .streamer-profile__info__name
+            %a{href: channel_path(current_channel)}
+              = current_channel.name
+              - if current_channel.verified?
+                = svg_tag 'verified'
+          .streamer-profile__info__desktop__about
+            = current_channel.about
+        .streamer-profile__info__follow
+          .streamer-profile__info__follow__count
+            = svg_tag 'user-icon-dark'
+            %span
+              = current_channel.followers.size
 
-        - if user_signed_in?
-          - if current_user.follows?(current_channel)
-            %button.unfollow-btn{data: { action: "click->streamer-profile#unfollow" }} Following
-          - elsif current_channel.user != current_user
-            %button.follow-btn{data: { action: "click->streamer-profile#follow" }} Follow
-        - else
-          %button.follow-btn{data: { action: "click->authentication#showModal" }} Follow
+          - if user_signed_in?
+            - if current_user.follows?(current_channel)
+              %button.unfollow-btn{data: { action: "click->streamer-profile#unfollow" }} Following
+            - elsif current_channel.user != current_user
+              %button.follow-btn{data: { action: "click->streamer-profile#follow" }} Follow
+          - else
+            %button.follow-btn{data: { action: "click->authentication#showModal" }} Follow
     - if current_channel.about.present?
       .streamer-profile__info__mobile__about
         = current_channel.about
