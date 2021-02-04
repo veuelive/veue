@@ -54,10 +54,10 @@ describe "chat during live video" do
     it "should have visible scroll button after a bunch of messages" do
       10.times do |i|
         write_chat_message "Cowabunga!"
-        expect(page).to have_css(".message-display", count: i + 1)
+        expect(page).to have_css(".message", count: i + 1)
       end
 
-      chat_message = first(".message-display")
+      chat_message = first(".message")
       execute_script("arguments[0].scrollIntoView(true)", chat_message)
 
       expect(page).to have_css(".chat-scroll")
@@ -124,7 +124,7 @@ describe "chat during live video" do
       visit path_for_video(video)
 
       expect(page).to have_content("Cowabunga!").once
-      expect(page).to have_css(".highlighted-message__text")
+      expect(page).to have_css(".message--highlighted")
     end
 
     it "should see login modal on chat area click" do
