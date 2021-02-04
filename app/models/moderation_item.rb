@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class ModerationItem < ApplicationRecord
-  belongs_to :video_event
+  belongs_to :video_event, optional: true
   belongs_to :user
-  belongs_to :video
+  belongs_to :video, optional: true
 
   aasm column: :state do
     state :open, initial: true
