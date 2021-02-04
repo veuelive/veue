@@ -11,9 +11,13 @@ class UsersController < ApplicationController
     return unless current_session_token
     return unless current_session_token.user.nil?
 
-    @current_user = current_session_token.create_user(params[:display_name])
+    @current_user = User.new(
+      session_tokens: [current_session_token],
+      display_name: params[:display_name],
+      phone_number: current_session_token.phone_number
+    )
 
-    if @current_user&.valid?
+    if @current_user.save
       render(status: :accepted, template: "layouts/_header", layout: false)
     else
       render(status: :bad_request, text: "")

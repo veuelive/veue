@@ -24,10 +24,13 @@ describe "Modal login flow" do
   before :each do
     visit("/")
     find("body").click
-    enter_phone_number(user)
   end
 
-  context "Should appropriately toggle the Verify button" do
+  describe "Should appropriately toggle the Verify button" do
+    before :each do
+      enter_phone_number(user)
+    end
+
     context "Should make the Verify button enabled" do
       it "should allow a user to login" do
         fill_secret_code(string: "1234")
@@ -72,6 +75,29 @@ describe "Modal login flow" do
         fill_secret_code(string: string)
         expect(verify_button_disabled?).to eq(true)
       end
+    end
+  end
+
+  describe "Should fail when the user provides an inappropriate display name" do
+    it "should fail to create a new user" do
+      expect_any_instance_of(SessionToken).to receive(:secret_code=).and_return("1234")
+      expect_any_instance_of(SessionToken).to receive(:secret_code).and_return("1234")
+
+      click_button("Login")
+      find("#phone_number_input").fill_in(with: PhoneTestHelpers.generate_valid)
+      click_button("Continue")
+
+      fill_secret_code(string: "1234")
+      click_button("Verify")
+
+      PerspectiveApi.enabled = "true"
+      PerspectiveApi.key = "FAIL"
+
+      find("#display-name-input").fill_in(with: "bad word")
+      click_button("Save and Continue")
+
+      expect(page).to have_no_css("*[data-user-id]")
+      expect(page).to have_css("*[data-user-id]")
     end
   end
 end
