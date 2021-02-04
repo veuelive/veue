@@ -45,14 +45,6 @@
       flex: 1;
       max-width: 475px;
       padding-right: 1rem;
-
-      @include galaxyFold {
-        padding-right: 0px;
-      }
-
-      @include iPhone5 {
-        padding-right: 0px;
-      }
     }
 
     &__name {
