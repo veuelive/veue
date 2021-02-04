@@ -9,6 +9,9 @@ class SessionToken < ApplicationRecord
   encrypts :phone_number
   blind_index :phone_number
 
+  encrypts :ip_address, migrating: true
+  blind_index :ip_address, migrating: true
+
   before_validation :copy_phone_if_user
   before_create :setup_secrets!
   before_create :lookup_user!

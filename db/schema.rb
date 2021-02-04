@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_03_193134) do
+ActiveRecord::Schema.define(version: 2021_02_04_212826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -124,7 +124,10 @@ ActiveRecord::Schema.define(version: 2021_02_03_193134) do
     t.inet "ip_address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "ip_address_ciphertext"
+    t.inet "ip_address_bidx"
     t.index ["ip_address"], name: "index_session_tokens_on_ip_address"
+    t.index ["ip_address_bidx"], name: "index_session_tokens_on_ip_address_bidx"
     t.index ["phone_number_bidx"], name: "index_session_tokens_on_phone_number_bidx"
     t.index ["state"], name: "index_session_tokens_on_state"
     t.index ["user_id"], name: "index_session_tokens_on_user_id"
@@ -163,6 +166,9 @@ ActiveRecord::Schema.define(version: 2021_02_03_193134) do
     t.text "about_me"
     t.string "email"
     t.boolean "verified", default: false
+    t.text "email_ciphertext"
+    t.string "email_bidx"
+    t.index ["email_bidx"], name: "index_users_on_email_bidx", unique: true
     t.index ["mux_live_stream_id"], name: "index_users_on_mux_live_stream_id"
     t.index ["verified"], name: "index_users_on_verified"
   end

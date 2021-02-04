@@ -16,7 +16,7 @@ class User < ApplicationRecord
 
   validates :display_name, length: {maximum: 40, minimum: 1}, presence: true
   validates :phone_number, phone_number: true
-  validates :email, email: true
+  validates :email, email: true, uniqueness: {allow_blank: true}
 
   has_one_attached :profile_image
   validates :profile_image,
@@ -31,6 +31,10 @@ class User < ApplicationRecord
   encrypts :mux_stream_key
   encrypts :phone_number
   blind_index :phone_number
+
+  encrypts :email, migrating: true
+  # Downcase instead of checking case sensitivity: https://github.com/ankane/blind_index#validations
+  blind_index :email, expression: ->(v) { v.presence && v.downcase }, migrating: true
 
   include PGEnum(sms_status: %w[new_number instructions_sent unsubscribed])
 
