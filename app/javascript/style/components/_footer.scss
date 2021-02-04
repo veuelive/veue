@@ -42,6 +42,10 @@
     text-decoration: none;
     margin-right: auto;
   }
+
+  &__copyright {
+    text-align: center;
+  }
 }
 
 @include large() {
