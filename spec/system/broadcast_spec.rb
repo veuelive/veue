@@ -196,7 +196,7 @@ describe "Broadcast View" do
         # VEUE-257 - Navigation events can throw off processing after being live
         navigate_to("https://1982.com")
 
-        expect(find(".message-left")).to have_content(first_message.text)
+        expect(find(".message--left")).to have_content(first_message.text)
         expect(page).to_not have_content(second_message_text)
         expect(page).to have_content(first_message.user.display_name)
 
