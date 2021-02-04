@@ -1,11 +1,6 @@
 @use "../utils/breakpoints" as *;
 @use "../utils/scale";
 
-// We dont want this margin on channel pages
-#videos__show {
-  margin: 0 10px;
-}
-
 #videos__show,
 #channels__show {
   overflow-x: hidden;
