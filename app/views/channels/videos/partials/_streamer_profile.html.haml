@@ -17,7 +17,6 @@
             = svg_tag 'user-icon-dark'
             %span
               = current_channel.followers.size
-
           - if user_signed_in?
             - if current_user.follows?(current_channel)
               %button.unfollow-btn{data: { action: "click->streamer-profile#unfollow" }} Following

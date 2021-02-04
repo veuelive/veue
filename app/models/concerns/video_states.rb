@@ -58,7 +58,7 @@ module VideoStates
 
       event :finish do
         after do
-          send_ifttt! "#{user.display_name} stopped streaming" if visibility.eql?("public")
+          after_broadcast_finished
         end
 
         transitions from: %i[live paused pending ended starting], to: :finished

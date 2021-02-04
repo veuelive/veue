@@ -34,7 +34,7 @@ function hideLoginElements(): void {
     });
 }
 
-function visibilityOfDataElement(
+export function visibilityOfDataElement(
   dataElementName: HTMLElement,
   hidden: boolean
 ): void {

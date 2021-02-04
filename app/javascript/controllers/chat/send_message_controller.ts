@@ -3,6 +3,9 @@ import { Controller } from "stimulus";
 import { getChannelId } from "helpers/channel_helpers";
 import { currentUserId } from "helpers/authentication_helpers";
 import { displayChatMessage } from "helpers/chat_helpers";
+import { VideoEventProcessor } from "helpers/event/event_processor";
+import { VideoState } from "types/video_state";
+import { showHideWhenLive } from "helpers/video_helpers";
 
 export default class extends Controller {
   static targets = ["messageInput"];
@@ -13,6 +16,7 @@ export default class extends Controller {
 
   connect(): void {
     const bodyDataset = document.body.dataset;
+
     this.messageInputTarget.addEventListener("focus", () => {
       bodyDataset["keyboard"] = "visible";
       setTimeout(function () {
@@ -26,6 +30,11 @@ export default class extends Controller {
     );
 
     this.userId = currentUserId();
+
+    showHideWhenLive();
+    document.addEventListener("BroadcastFinished", (event: CustomEvent) => {
+      this.processStateChange(event.detail);
+    });
   }
 
   fallBackContentEditable(): void {
@@ -33,6 +42,7 @@ export default class extends Controller {
       this.messageInputTarget.contentEditable = "true";
     }
   }
+
   chatBoxKeyDown(event: KeyboardEvent): void {
     if (!event.shiftKey && event.key === "Enter") {
       event.preventDefault();
@@ -54,6 +64,12 @@ export default class extends Controller {
           console.log("CHAT Sent!");
         });
       }
+    }
+  }
+
+  private processStateChange(videoState: VideoState) {
+    if (videoState.state === "finished") {
+      showHideWhenLive();
     }
   }
 }

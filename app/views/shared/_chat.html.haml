@@ -26,38 +26,45 @@
       controller: "chat--reaction-notification"
     }
   }
-  - if video.finished?
-    .stream-end
+  .message-write{
+    data: {
+      controller: "chat--send-message",
+      "show-when-logged-in": true
+    }
+  }
+    .stream-end{
+      data: {
+        "show-when-vod": true
+      }
+    }
       .stream-end--content
         This stream has ended
-  - else
-    .message-write{
+
+    .chat-controls{
       data: {
-        controller: "chat--send-message",
-        "show-when-logged-in": true
+        "show-when-live": true
       }
     }
-      .chat-controls
-        .write-area{
-          placeholder: 'Send a message',
-          contenteditable: 'plaintext-only',
-          role: "textbox",
-          data: {
-            action: "keydown->chat--send-message#chatBoxKeyDown",
-            target: "chat--send-message.messageInput",
-            "message-key": SecureRandom.uuid
-          }
+      .write-area{
+        placeholder: 'Send a message',
+        contenteditable: 'plaintext-only',
+        role: "textbox",
+        data: {
+          action: "keydown->chat--send-message#chatBoxKeyDown",
+          target: "chat--send-message.messageInput",
+          "message-key": SecureRandom.uuid
         }
-        = render "shared/reaction_button"
-    .message-login-prompt{
-      data: {
-        action: "click->authentication#showModal",
-        "show-when-logged-out": true
       }
+      = render "shared/reaction_button"
+  .message-login-prompt{
+    data: {
+      action: "click->authentication#showModal",
+      "show-when-logged-out": true
     }
-      .chat-controls
-        .write-area{
-          placeholder: 'Send a message'
-        }
-        .reaction-button-area
-          = svg_tag "heart"
+  }
+    .chat-controls
+      .write-area{
+        placeholder: 'Send a message'
+      }
+      .reaction-button-area
+        = svg_tag "heart"

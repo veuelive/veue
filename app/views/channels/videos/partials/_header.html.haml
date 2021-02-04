@@ -7,33 +7,43 @@
         "target": "audience--header-bar.addressInput"
       }
     }
-  - if current_video.live?
-    .widget
-      .icon
-        = svg_tag "view"
-      #active-viewers{
-        "data": {
-          "controller": "live-viewer-count",
-          "target": "live-viewer-count.counter"
-        }
-      }= current_video.active_viewers_count
-    .widget.live
-      .widget-live__desktop
-        LIVE
-      .widget-live__mobile
-        = svg_tag "live"
-  - if current_video.finished?
-    - video_views = current_video.video_views.count
-    .widget{"data-views": video_views}
-      .icon
-        = svg_tag "view"
-      #active-viewers
-        = video_views
-    .replay-badge
-      .replay-badge__text
-        REPLAY
-      = svg_tag "no-stream", class: "replay-badge__image"
-      .badge-message
-        .badge-message__body
-          This stream happened on
-          = current_video.created_at.strftime("%B %d, %Y")
+  .widget{
+    data: {
+      "show-when-live": true
+    }
+  }
+    .icon
+      = svg_tag "view"
+    #active-viewers{
+      "data": {
+        "controller": "live-viewer-count",
+        "target": "live-viewer-count.counter"
+      }
+    }= current_video.active_viewers_count
+  .widget.live{
+    data: {
+      "show-when-live": true
+    }
+  }
+    .widget-live__desktop
+      LIVE
+    .widget-live__mobile
+      = svg_tag "live"
+  .widget{
+    data: {
+      views: video_views,
+      "show-when-vod": true
+    }
+  }
+    .icon
+      = svg_tag "view"
+    #active-viewers
+      = video_views
+  .replay-badge
+    .replay-badge__text
+      REPLAY
+    = svg_tag "no-stream", class: "replay-badge__image"
+    .badge-message
+      .badge-message__body
+        This stream happened on
+        = current_video.created_at.strftime("%B %d, %Y")

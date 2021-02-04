@@ -130,6 +130,17 @@
       margin: 12px;
     }
 
+    .broadcast-finished {
+      background: color.$neutral-background;
+      color: color.$neutral-regular;
+      border-radius: 10px;
+      &__message {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+      }
+    }
+
     .chat-controls {
       display: flex;
       .write-area {

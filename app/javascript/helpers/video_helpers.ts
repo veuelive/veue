@@ -1,3 +1,5 @@
+import { visibilityOfDataElement } from "./authentication_helpers";
+
 export function getVideoId(): string {
   return document
     .querySelector("*[data-video-id]")
@@ -29,4 +31,35 @@ export function getVideoVisibility(): Visibility {
 
 function getVideoVisibilityElement(): HTMLElement {
   return document.querySelector("*[data-video-visibility]");
+}
+
+export function showHideWhenLive() {
+  showStreamElements();
+  hideStreamElements();
+}
+
+export function currentStreamType(): string | undefined {
+  const element = document.querySelector("*[data-audience-view-stream-type]");
+  console.log("stream type element", element);
+  return element?.getAttribute("data-audience-view-stream-type");
+}
+
+function showStreamElements() {
+  const liveStream = currentStreamType() === "live";
+
+  document
+    .querySelectorAll("*[data-show-when-live]")
+    .forEach((element: HTMLElement) => {
+      visibilityOfDataElement(element, !liveStream);
+    });
+}
+
+function hideStreamElements() {
+  const liveStream = currentStreamType() === "live";
+
+  document
+    .querySelectorAll("*[data-show-when-vod]")
+    .forEach((element: HTMLElement) => {
+      visibilityOfDataElement(element, liveStream);
+    });
 }

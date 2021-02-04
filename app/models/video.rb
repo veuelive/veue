@@ -56,7 +56,7 @@ class Video < ApplicationRecord
     self.hls_url = "https://stream.mux.com/#{new_playback_id}.m3u8"
   end
 
-  def transition_audience_to_live
+  def transition_state_for_audience
     SseBroadcaster.broadcast(channel.id, {state: state, type: "StateChange", timecodeMs: 0})
   end
 
@@ -150,12 +150,18 @@ class Video < ApplicationRecord
   private
 
   def after_go_live
-    transition_audience_to_live
+    transition_state_for_audience
 
     return unless visibility.eql?("public")
 
     send_ifttt!("#{user.display_name} went live!")
     send_broadcast_start_text!
+  end
+
+  def after_broadcast_finished
+    transition_state_for_audience
+
+    send_ifttt! "#{user.display_name} stopped streaming" if visibility.eql?("public")
   end
 
   def send_ifttt!(message)
