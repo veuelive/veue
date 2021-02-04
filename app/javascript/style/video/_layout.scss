@@ -8,13 +8,14 @@
 
 #videos__show,
 #channels__show {
+  overflow-x: hidden;
+
   #main-container {
     height: calc(100vh - #{scale.$header_height});
 
     // reset min-height
     min-height: auto;
   }
-  overflow-x: hidden;
 
   .broadcasts__header {
     margin-bottom: 0;
@@ -213,11 +214,6 @@
     .content-area__primary {
       padding-left: env(safe-area-inset-left);
       flex: 1;
-
-      .primary-canvas {
-        height: 100vh;
-        height: calc(min(100vh, -webkit-fill-available));
-      }
     }
 
     .content-area__secondary {
