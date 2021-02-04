@@ -31,11 +31,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-
-        svg {
-          width: 32px;
-          height: 32px;
-        }
+        width: 32px;
+        height: 32px;
       }
     }
 
@@ -49,10 +46,8 @@
         }
 
         &__avatar {
-          svg {
-            width: 64px;
-            height: 64px;
-          }
+          width: 64px;
+          height: 64px;
         }
       }
     }
