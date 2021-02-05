@@ -102,7 +102,7 @@ export default class extends BaseController {
 
     this.subscribeToAuthChange();
 
-    document.addEventListener(BroadcastFinishedEvent, (event: CustomEvent) => {
+    VideoEventProcessor.subscribeTo("StateChange", (event: CustomEvent) => {
       this.processVideoStateChange(event.detail);
     });
   }
