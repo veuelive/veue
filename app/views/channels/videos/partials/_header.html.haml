@@ -22,7 +22,8 @@
     }= current_video.active_viewers_count
   .widget.live{
     data: {
-      "show-when-live": true
+      "show-when-live": true,
+      "show-on-audience": true
     }
   }
     .widget-live__desktop
@@ -32,7 +33,8 @@
   .widget{
     data: {
       views: video_views,
-      "show-when-vod": true
+      "show-when-vod": true,
+      "show-on-audience": "true"
     }
   }
     .icon
@@ -41,7 +43,8 @@
       = video_views
   .replay-badge{
     data: {
-      "show-when-vod": true
+      "show-when-vod": true,
+      "show-on-audience": true
     }
   }
     .replay-badge__text

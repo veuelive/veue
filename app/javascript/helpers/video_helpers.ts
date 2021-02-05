@@ -47,20 +47,26 @@ export function currentStreamType(): string | undefined {
 }
 
 function showStreamElements() {
-  const vodStream = currentStreamType() !== "vod" && !!currentUserId();
+  let vodStream = currentStreamType() !== "vod";
   document
     .querySelectorAll("*[data-show-when-live]")
     .forEach((element: HTMLElement) => {
+      const showOnAudience = element.dataset.hasOwnProperty("showOnAudience");
+      vodStream = showOnAudience ? vodStream : vodStream && !!currentUserId();
+
       visibilityOfDataElement(element, !vodStream, "flex");
     });
 }
 
 function hideStreamElements() {
-  const vodStream = currentStreamType() === "vod" && !!currentUserId();
+  let vodStream = currentStreamType() === "vod";
 
   document
     .querySelectorAll("*[data-show-when-vod]")
     .forEach((element: HTMLElement) => {
+      const showOnAudience = element.dataset.hasOwnProperty("showOnAudience");
+      vodStream = showOnAudience ? vodStream : vodStream && !!currentUserId();
+
       visibilityOfDataElement(element, !vodStream, "flex");
     });
 }
