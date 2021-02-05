@@ -3,8 +3,6 @@ import { Controller } from "stimulus";
 import { getChannelId } from "helpers/channel_helpers";
 import { currentUserId } from "helpers/authentication_helpers";
 import { displayChatMessage } from "helpers/chat_helpers";
-import { VideoEventProcessor } from "helpers/event/event_processor";
-import { VideoState } from "types/video_state";
 import { showHideWhenLive } from "helpers/video_helpers";
 import { StreamTypeChangedEvent } from "../audience_view_controller";
 

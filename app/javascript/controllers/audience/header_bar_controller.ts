@@ -2,7 +2,6 @@ import { Controller } from "stimulus";
 import { NavigationUpdate } from "controllers/broadcast/browser_controller";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import { showHideWhenLive } from "helpers/video_helpers";
-import { VideoState } from "types/video_state";
 import { StreamTypeChangedEvent } from "../audience_view_controller";
 
 export default class HeaderBarController extends Controller {
