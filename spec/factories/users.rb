@@ -10,9 +10,5 @@ FactoryBot.define do
     factory :streamer do
       after(:create, &:setup_as_streamer!)
     end
-
-    factory :no_name_user do
-      display_name { "hi" }
-    end
   end
 end
