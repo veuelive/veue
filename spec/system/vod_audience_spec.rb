@@ -96,7 +96,7 @@ describe "Prerecorded Audience View" do
       visit path_for_video(video, t: 1)
       expect(page).to have_content(ChatMessage.first.payload["message"])
 
-      expect(page).to have_content(late_message.payload["message"])
+      expect(page).to have_no_content(late_message.payload["message"])
 
       # Seeking SHOULD have that message!
       visit path_for_video(video, t: 10)
@@ -104,7 +104,7 @@ describe "Prerecorded Audience View" do
       first_message = ChatMessage.first
       expect(first_message.timecode_ms).to eq(0)
       expect(page).to have_content(first_message.payload["message"])
-      expect(page).to have_no_content(late_message.payload["message"])
+      expect(page).to have_content(late_message.payload["message"])
     end
   end
 end
