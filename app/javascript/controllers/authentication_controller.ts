@@ -3,6 +3,7 @@ import IntlTelInput from "intl-tel-input";
 import "intl-tel-input/build/css/intlTelInput.min.css";
 import { secureFormFetch } from "util/fetch";
 import { showHideByLogin } from "helpers/authentication_helpers";
+import { showHideWhenLive } from "helpers/video_helpers";
 
 export default class extends BaseController {
   static targets = [
@@ -97,6 +98,7 @@ export default class extends BaseController {
       }
       this.emitAuthChange();
       showHideByLogin();
+      showHideWhenLive();
       this.modalTarget.style.display = "none";
     } else if (response.status == 200) {
       // Need to show the modal again

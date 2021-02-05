@@ -1,4 +1,7 @@
-import { visibilityOfDataElement } from "./authentication_helpers";
+import {
+  visibilityOfDataElement,
+  currentUserId,
+} from "./authentication_helpers";
 
 export function getVideoId(): string {
   return document
@@ -44,17 +47,16 @@ export function currentStreamType(): string | undefined {
 }
 
 function showStreamElements() {
-  const vodStream = currentStreamType() === "vod";
-
+  const vodStream = currentStreamType() !== "vod" && !!currentUserId();
   document
     .querySelectorAll("*[data-show-when-live]")
     .forEach((element: HTMLElement) => {
-      visibilityOfDataElement(element, vodStream, "flex");
+      visibilityOfDataElement(element, !vodStream, "flex");
     });
 }
 
 function hideStreamElements() {
-  const vodStream = currentStreamType() === "vod";
+  const vodStream = currentStreamType() === "vod" && !!currentUserId();
 
   document
     .querySelectorAll("*[data-show-when-vod]")

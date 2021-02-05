@@ -100,15 +100,12 @@
   }
 
   .stream-end {
-    border-top: 1px solid color.$neutral-accents;
-    padding: 10px;
-
     &--content {
       // layouts
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 7px 0;
+      padding: 7px;
       width: 100%;
 
       // styles
