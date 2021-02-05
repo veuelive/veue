@@ -19,7 +19,10 @@
 
     &__avatar {
       margin: 0 10px 0;
-      img,
+      img {
+        width: 80px;
+        height: 80px;
+      }
       svg {
         border-radius: 50%;
         height: 64px;
@@ -42,12 +45,11 @@
       max-width: 475px;
       padding-right: 1rem;
 
-      //galaxy fold
-      @media screen and (max-width: 280px) and (max-height: 653px) {
+      @include galaxyFold {
         padding-right: 0px;
       }
-      // iPhone 5
-      @media screen and (width: 320px) and (height: 568px) {
+
+      @include iPhone5 {
         padding-right: 0px;
       }
     }
