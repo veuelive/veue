@@ -39,7 +39,11 @@
       = svg_tag "view"
     #active-viewers
       = video_views
-  .replay-badge
+  .replay-badge{
+    data: {
+      "show-when-vod": true
+    }
+  }
     .replay-badge__text
       REPLAY
     = svg_tag "no-stream", class: "replay-badge__image"

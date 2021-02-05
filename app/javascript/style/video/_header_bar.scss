@@ -44,14 +44,10 @@
 
     .widget {
       background: color.$veue-lilac;
+      display: flex;
+      flex-direction: row;
       align-items: center;
       font-size: 1rem;
-
-      .widget-content {
-        display: flex;
-        align-items: center;
-        margin-top: 7px;
-      }
 
       .icon {
         height: 14px;
@@ -90,28 +86,12 @@
       }
     }
 
-    .replay-badge-mobile {
-      font-weight: font.$heavy-weight;
-      position: relative;
-      z-index: 1;
-      padding: 0;
-
-      @include large() {
-        display: none;
-      }
-    }
-
-    .replay-badge-desktop {
-      font-weight: font.$heavy-weight;
-      position: relative;
-      z-index: 1;
+    .replay-badge {
       background: color.$neutral-regular;
       color: color.$white;
-      display: none;
-
-      @include large() {
-        display: flex;
-      }
+      font-weight: font.$heavy-weight;
+      position: relative;
+      z-index: 1;
 
       &:hover {
         background: color.$neutral-darker;

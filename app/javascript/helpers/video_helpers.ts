@@ -40,26 +40,25 @@ export function showHideWhenLive() {
 
 export function currentStreamType(): string | undefined {
   const element = document.querySelector("*[data-audience-view-stream-type]");
-  console.log("stream type element", element);
   return element?.getAttribute("data-audience-view-stream-type");
 }
 
 function showStreamElements() {
-  const liveStream = currentStreamType() === "live";
+  const vodStream = currentStreamType() === "vod";
 
   document
     .querySelectorAll("*[data-show-when-live]")
     .forEach((element: HTMLElement) => {
-      visibilityOfDataElement(element, !liveStream);
+      visibilityOfDataElement(element, vodStream, "flex");
     });
 }
 
 function hideStreamElements() {
-  const liveStream = currentStreamType() === "live";
+  const vodStream = currentStreamType() === "vod";
 
   document
     .querySelectorAll("*[data-show-when-vod]")
     .forEach((element: HTMLElement) => {
-      visibilityOfDataElement(element, liveStream);
+      visibilityOfDataElement(element, !vodStream, "flex");
     });
 }

@@ -36,10 +36,11 @@ function hideLoginElements(): void {
 
 export function visibilityOfDataElement(
   dataElementName: HTMLElement,
-  hidden: boolean
+  hidden: boolean,
+  visibility: string = "block"
 ): void {
   dataElementName.setAttribute(
     "style",
-    hidden ? "display: none;" : "display: block;"
+    hidden ? "display: none;" : `display: ${visibility};`
   );
 }

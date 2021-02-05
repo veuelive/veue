@@ -6,9 +6,11 @@ import { displayChatMessage } from "helpers/chat_helpers";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import { VideoState } from "types/video_state";
 import { showHideWhenLive } from "helpers/video_helpers";
+import { StreamTypeChangedEvent } from "../audience_view_controller";
 
 export default class extends Controller {
   static targets = ["messageInput"];
+
   element: HTMLElement;
   private messageInputTarget!: HTMLElement;
   private lastMessageFromUserId: string;
@@ -32,8 +34,8 @@ export default class extends Controller {
     this.userId = currentUserId();
 
     showHideWhenLive();
-    document.addEventListener("BroadcastFinished", (event: CustomEvent) => {
-      this.processStateChange(event.detail);
+    document.addEventListener(StreamTypeChangedEvent, () => {
+      showHideWhenLive();
     });
   }
 
@@ -64,12 +66,6 @@ export default class extends Controller {
           console.log("CHAT Sent!");
         });
       }
-    }
-  }
-
-  private processStateChange(videoState: VideoState) {
-    if (videoState.state === "finished") {
-      showHideWhenLive();
     }
   }
 }

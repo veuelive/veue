@@ -15,6 +15,10 @@ import { startMuxData } from "controllers/audience/mux_integration";
 import { isProduction } from "util/environment";
 import { postForm } from "util/fetch";
 import { BroadcastVideoLayout } from "types/video_layout";
+import { BroadcastFinishedEvent } from "helpers/event/live_event_manager";
+import { VideoState } from "types/video_state";
+
+export const StreamTypeChangedEvent = "StreamTypeChanged";
 
 type StreamType = "upcoming" | "live" | "vod";
 export default class extends BaseController {
@@ -97,6 +101,10 @@ export default class extends BaseController {
     }, 60 * 1000);
 
     this.subscribeToAuthChange();
+
+    document.addEventListener(BroadcastFinishedEvent, (event: CustomEvent) => {
+      this.processVideoStateChange(event.detail);
+    });
   }
 
   authChanged(): void {
@@ -159,6 +167,14 @@ export default class extends BaseController {
 
   hideChat(): void {
     this.element.className = "content-area";
+  }
+
+  private processVideoStateChange(videoState: VideoState): void {
+    this.streamType = videoState.state === "finished" ? "vod" : "live";
+    this.data.set("stream-type", this.streamType);
+    if (videoState.state === "finished") {
+      document.dispatchEvent(new CustomEvent(StreamTypeChangedEvent));
+    }
   }
 
   set state(state: string) {
