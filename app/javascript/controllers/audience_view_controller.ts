@@ -15,7 +15,6 @@ import { startMuxData } from "controllers/audience/mux_integration";
 import { isProduction } from "util/environment";
 import { postForm } from "util/fetch";
 import { BroadcastVideoLayout } from "types/video_layout";
-import { BroadcastFinishedEvent } from "helpers/event/live_event_manager";
 import { VideoState } from "types/video_state";
 
 export const StreamTypeChangedEvent = "StreamTypeChanged";

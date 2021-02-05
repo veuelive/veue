@@ -4,7 +4,6 @@ import { secureFetch } from "util/fetch";
 import { getChannelId } from "helpers/channel_helpers";
 
 export const ViewerCountUpdateEvent = "ViewerCountUpdate";
-export const BroadcastFinishedEvent = "BroadcastFinished";
 
 export default class LiveEventManager implements EventManagerInterface {
   private subscription;
@@ -45,12 +44,6 @@ export default class LiveEventManager implements EventManagerInterface {
     if (data.viewers) {
       document.dispatchEvent(
         new CustomEvent(ViewerCountUpdateEvent, { detail: data.viewers })
-      );
-    }
-
-    if (data.state) {
-      document.dispatchEvent(
-        new CustomEvent(BroadcastFinishedEvent, { detail: data })
       );
     }
   }
