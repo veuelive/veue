@@ -161,7 +161,7 @@ class Video < ApplicationRecord
   def after_broadcast_finished
     transition_state_for_audience
 
-    send_ifttt! "#{user.display_name} stopped streaming" if visibility.eql?("public")
+    send_ifttt!("#{user.display_name} stopped streaming") if visibility.eql?("public")
   end
 
   def send_ifttt!(message)

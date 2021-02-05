@@ -81,7 +81,7 @@ describe "Live Audience View" do
       find(".replay-badge").hover
       expect(page).to have_css(".badge-message", visible: true)
 
-      #Hide chat area and show stream ended message when state transition to VOD
+      # Hide chat area and show stream ended message when state transition to VOD
       expect(page).to_not have_css(".chat-controls")
       expect(page).to have_css(".stream-end", visible: true)
     end
