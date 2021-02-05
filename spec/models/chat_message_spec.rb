@@ -25,8 +25,12 @@ describe ChatMessage, type: :model do
     end
 
     it "should reject and not publish failures" do
+      # Have to actually create the user / video before we start failing things
+      video = create(:live_video)
+
+      # Now we fail things
       PerspectiveApi.key = "FAIL"
-      message = create(:chat_message)
+      message = create(:chat_message, user: video.channel.user, video: video)
       expect_to_sse_broadcast(0)
 
       expect(message.video.chat_messages).to be_empty
