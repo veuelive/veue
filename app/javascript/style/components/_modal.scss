@@ -102,6 +102,14 @@
           @include smallThin {
             min-width: 238px;
           }
+          @include galaxyFold {
+            width: 170px;
+            min-width: 0px;
+          }
+          @include iPhone5 {
+            width: 208px;
+            min-width: 0px;
+          }
         }
 
         .iti__selected-flag {
