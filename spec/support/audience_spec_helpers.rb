@@ -65,4 +65,8 @@ module AudienceSpecHelpers
   def write_chat_message(text)
     find(".write-area").base.send_keys(text, :enter)
   end
+
+  def wait_for_audience_stream_type(state)
+    expect(page).to have_css("div[data-audience-view-stream-type='#{state}']")
+  end
 end

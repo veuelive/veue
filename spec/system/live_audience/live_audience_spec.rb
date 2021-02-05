@@ -63,4 +63,27 @@ describe "Live Audience View" do
       end
     end
   end
+
+  describe "video state transition" do
+    before :each do
+      visit root_path
+      login_as user
+      visit channel_path(channel)
+    end
+
+    it "should show VOD indicators when video transition to finish" do
+      video.finish!
+
+      wait_for_audience_stream_type("vod")
+
+      # Replay badge and it's tooltip are visible and functional
+      expect(page).to have_css(".replay-badge", wait: 5)
+      find(".replay-badge").hover
+      expect(page).to have_css(".badge-message", visible: true)
+
+      #Hide chat area and show stream ended message when state transition to VOD
+      expect(page).to_not have_css(".chat-controls")
+      expect(page).to have_css(".stream-end", visible: true)
+    end
+  end
 end
