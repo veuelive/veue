@@ -26,25 +26,21 @@
       controller: "chat--reaction-notification"
     }
   }
+  .stream-end{
+    data: {
+      "show-when-vod": true
+    }
+  }
+    .stream-end--content
+      This stream has ended
   .message-write{
     data: {
       controller: "chat--send-message",
-      "show-when-logged-in": true
+      "show-when-logged-in": true,
+      "show-when-live": true
     }
   }
-    .stream-end{
-      data: {
-        "show-when-vod": true
-      }
-    }
-      .stream-end--content
-        This stream has ended
-
-    .chat-controls{
-      data: {
-        "show-when-live": true
-      }
-    }
+    .chat-controls
       .write-area{
         placeholder: 'Send a message',
         contenteditable: 'plaintext-only',
