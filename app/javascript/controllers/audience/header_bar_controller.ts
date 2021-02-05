@@ -23,10 +23,4 @@ export default class HeaderBarController extends Controller {
   private processNavigationEvent(navigationUpdate: NavigationUpdate) {
     this.addressInputTarget.innerText = navigationUpdate.url;
   }
-
-  private processStateChange(videoState: VideoState) {
-    if (videoState?.state === "finished") {
-      showHideWhenLive();
-    }
-  }
 }
