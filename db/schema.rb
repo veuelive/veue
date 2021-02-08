@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_03_193134) do
+ActiveRecord::Schema.define(version: 2021_02_04_212826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -163,6 +163,9 @@ ActiveRecord::Schema.define(version: 2021_02_03_193134) do
     t.text "about_me"
     t.string "email"
     t.boolean "verified", default: false
+    t.text "email_ciphertext"
+    t.string "email_bidx"
+    t.index ["email_bidx"], name: "index_users_on_email_bidx"
     t.index ["mux_live_stream_id"], name: "index_users_on_mux_live_stream_id"
     t.index ["verified"], name: "index_users_on_verified"
   end
