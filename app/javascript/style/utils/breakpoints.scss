@@ -18,21 +18,21 @@ $aspect-ratio: "9/6";
   @media only screen and (max-width: 450px) {
     @content;
   }
+
+  //galaxy fold
+  @media screen and (width: 280px) and (height: 653px) {
+    width: 170px;
+    min-width: 0px;
+  }
+  //iPhone5
+  @media screen and (width: 320px) and (height: 568px) {
+    width: 208px;
+    min-width: 0px;
+  }
 }
 
 @mixin large {
   @media only screen and (min-width: $desktop-min-width) {
-    @content;
-  }
-}
-
-@mixin galaxyFold {
-  @media screen and (max-width: 280px) and (max-height: 653px) {
-    @content;
-  }
-}
-@mixin iPhone5 {
-  @media screen and (width: 320px) and (height: 568px) {
     @content;
   }
 }
