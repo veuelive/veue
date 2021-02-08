@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 
   def create
     return unless current_session_token
-    return unless current_session_token.user.nil?
+    return if current_session_token.user
 
     @current_user = User.new(
       session_tokens: [current_session_token],
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     if @current_user.save
       render(status: :accepted, template: "layouts/_header", layout: false)
     else
-      render(status: :bad_request, text: "")
+      render(status: :bad_request, body: "")
     end
   end
 

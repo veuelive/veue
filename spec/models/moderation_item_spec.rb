@@ -33,8 +33,10 @@ RSpec.describe ModerationItem do
     end
 
     it "should fail on the failure!" do
-      PerspectiveApi.key = "FAIL"
+      # Must happen before setting the key otherwise it raises an error trying
+      # to create the user
       item = build(:moderation_item)
+      PerspectiveApi.key = "FAIL"
       item.fetch_scores!
       expect(item.summary_score).to be > 0.5
       expect(item).to be_rejected
