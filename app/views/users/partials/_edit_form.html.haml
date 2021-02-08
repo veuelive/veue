@@ -7,8 +7,8 @@
       Edit Profile
     .user-profile__header__actions
       .action-link Discard
-      %button.action-button{"data-action": "click->profile-edit#doSubmit"} Save Changes 
-  .user-profile__body  
+      %button.action-button{"data-action": "click->profile-edit#doSubmit"} Save Changes
+  .user-profile__body
     .profile-update
       .profile-update__heading
         Profile Image
@@ -21,14 +21,14 @@
         .heading-info
           Real People, Real Names
       .profile-update__field
-        = f.text_field :display_name, class: 'input-field', placeholder: 'Enter your name'
+        = f.text_field :display_name, class: 'input-field', placeholder: 'Enter your name', maxlength: "30"
     .profile-update
       .profile-update__heading
         Bio
         .heading-info
           Let us know about you
       .profile-update__field
-        = f.text_area :about_me, class: 'input-field'
+        = f.text_area :about_me, class: 'input-field', maxlength: "160"
     .profile-update
       .profile-update__heading
         Phone Number
