@@ -139,6 +139,7 @@
         border-radius: 10px;
         outline: none;
         flex-grow: 1;
+        word-break: break-word;
         &:empty:before {
           content: attr(placeholder);
           color: color.$neutral-middle;
