@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     @current_user = User.new(
       session_tokens: [current_session_token],
       display_name: params[:display_name],
-      phone_number: current_session_token.phone_number
+      phone_number: current_session_token.phone_number,
     )
 
     if @current_user.save
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     if @user.update(permitted_parameters)
       render(status: :accepted, template: "users/partials/_edit_form", layout: false)
     else
-      render(status: :bad_request, json: "")
+      render(status: :bad_request, template: "users/partials/_edit_form", layout: false)
     end
   end
 
