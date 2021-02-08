@@ -97,7 +97,6 @@ describe "Modal login flow" do
       click_button("Save and Continue")
 
       expect(page).to have_no_css("*[data-user-id]")
-      expect(page).to have_css("*[data-user-id]")
     end
   end
 end

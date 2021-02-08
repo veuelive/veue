@@ -135,8 +135,8 @@ describe "chat during live video" do
     end
 
     it "should show the message even if rejected" do
-      PerspectiveApi.key = "FAIL"
       login_as user
+      PerspectiveApi.key = "FAIL"
       bad_word = "profanity"
       write_chat_message bad_word
       expect(page).to have_content(bad_word)
