@@ -163,7 +163,7 @@ export default class extends BaseController {
     }
   }
 
-  handleVideoEnded() {
+  handleVideoEnded(): void {
     this.state = "ended";
     const streamType = this.data.get("stream-type") as StreamType;
     if (streamType === "live") {
