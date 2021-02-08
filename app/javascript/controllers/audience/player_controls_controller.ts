@@ -21,6 +21,7 @@ export default class extends BaseController {
   readonly progressBarButtonTarget!: HTMLButtonElement;
 
   private pointerIsDown: boolean;
+  element!: HTMLElement;
 
   connect(): void {
     this.videoTarget.addEventListener(
@@ -113,10 +114,10 @@ export default class extends BaseController {
   }
 
   set videoState(state: string) {
-    this.data.set("state", state);
+    this.element.dataset.audienceViewState = state;
   }
 
   get videoState(): string {
-    return this.data.get("state");
+    return this.element.dataset.audienceViewState;
   }
 }

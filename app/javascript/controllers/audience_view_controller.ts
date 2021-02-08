@@ -76,6 +76,11 @@ export default class extends BaseController {
       this.togglePlay();
     });
 
+    this.videoTarget.addEventListener(
+      "ended",
+      this.handleVideoEnded.bind(this)
+    );
+
     if (!this.videoTarget.canPlayType("application/vnd.apple.mpegurl")) {
       const hlsSource = this.videoTarget.getAttribute("src");
       if (hlsSource) {
@@ -112,6 +117,11 @@ export default class extends BaseController {
   disconnect(): void {
     this.eventManager?.disconnect();
     window.clearInterval(this.viewedPoller);
+
+    this.videoTarget.removeEventListener(
+      "ended",
+      this.handleVideoEnded.bind(this)
+    );
   }
 
   togglePlay(): void {
@@ -150,6 +160,15 @@ export default class extends BaseController {
 
       const seconds = this.timecodeSynchronizer.timecodeSeconds;
       this.timeDisplayTarget.innerHTML = displayTime(seconds);
+    }
+  }
+
+  handleVideoEnded() {
+    this.state = "ended";
+    const streamType = this.data.get("stream-type") as StreamType;
+    if (streamType === "live") {
+      alert("This stream has ended");
+      document.location.reload();
     }
   }
 
