@@ -1,4 +1,4 @@
-.modal.auth{ "data-target": "authentication.modal", "data-action": "click->authentication#hideModal"}
+.modal.auth{ style: "display: none;", "data-target": "authentication.modal", "data-action": "click->authentication#hideModal"}
   .modal-skirt
   .modal-content
     - if flash[:modal_error]
