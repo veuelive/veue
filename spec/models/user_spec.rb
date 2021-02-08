@@ -17,7 +17,7 @@ RSpec.describe User, type: :model do
     expect { create(:user) }.to raise_error(ActiveRecord::RecordInvalid)
 
     new_user = build(:user)
-    new_user.save
+    new_user.save!
     expect(new_user.errors.added?(:display_name, "is not appropriate")).to eq(true)
   end
 end

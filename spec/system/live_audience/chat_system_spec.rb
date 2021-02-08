@@ -136,6 +136,8 @@ describe "chat during live video" do
 
     it "should show the message even if rejected" do
       login_as user
+
+      # Must come after to allow the user to be created
       PerspectiveApi.key = "FAIL"
       bad_word = "profanity"
       write_chat_message bad_word
