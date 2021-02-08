@@ -70,7 +70,6 @@ RSpec.describe "Users", type: :request do
     end
 
     it "should not update with inappropriate display name" do
-      PerspectiveApi.enabled = "true"
       PerspectiveApi.key = "FAIL"
       display_name = "superbad"
       put "/users/#{user.id}/", params: {user: {display_name: display_name}}
