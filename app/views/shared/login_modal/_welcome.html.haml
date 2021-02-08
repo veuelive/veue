@@ -4,7 +4,7 @@
     Pick a name that represents you to be displayed on the streaming chat.
   .form-row
     .form-item
-      %input#display-name-input{type: "text", name: "display_name", data:{action:"input->authentication#validateName", target:"authentication.nameInput"}}
+      %input#display-name-input{type: "text", maxlength: "30", name: "display_name", data:{action:"input->authentication#validateName", target:"authentication.nameInput"}}
   .form-row
     %button.form-button{disabled: true, data: {target: "authentication.submitButton", action: "click->authentication#doSubmit"}}
       Save and Continue
