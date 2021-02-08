@@ -16,10 +16,7 @@ class User < ApplicationRecord
 
   validates :display_name, length: {maximum: 40, minimum: 1}, presence: true
   validates :phone_number, phone_number: true
-  # rubocop:disable Rails/UniqueValidationWithoutIndex
-  # Disabled because we index the blind index
   validates :email, email: true, uniqueness: {allow_blank: true}
-  # rubocop:enable Rails/UniqueValidationWithoutIndex
 
   has_one_attached :profile_image
   validates :profile_image,
