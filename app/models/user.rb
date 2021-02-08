@@ -14,9 +14,10 @@ class User < ApplicationRecord
            through: :follows,
            source: :channel
 
-  validates :display_name, length: {maximum: 40, minimum: 1}, presence: true
+  validates :display_name, length: {maximum: 30, minimum: 1}, presence: true
   validates :phone_number, phone_number: true
   validates :email, email: true
+  validates :about_me, length: {maximum: 160}
 
   has_one_attached :profile_image
   validates :profile_image,
