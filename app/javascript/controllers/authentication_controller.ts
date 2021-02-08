@@ -21,7 +21,7 @@ export default class extends BaseController {
   private iti: IntlTelInput.Plugin;
 
   connect(): void {
-    this.modalTarget.hidden = true;
+    this.modalTarget.style.display = "none";
     this.attachPhoneNumberField();
     showHideByLogin();
   }
