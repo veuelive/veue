@@ -98,6 +98,7 @@ describe "Modal login flow" do
       click_button("Save and Continue")
 
       expect(page).to have_no_css("*[data-user-id]")
+      expect(find("#display-name-input")).to have_no_content("bad word")
     end
   end
 end
