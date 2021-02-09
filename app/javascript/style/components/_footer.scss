@@ -19,7 +19,8 @@
   border-top: 1px solid color.$neutral-soft;
 
   > * {
-    padding: 10px 30px;
+    // Y-padding for when they stack
+    padding: 10px 0;
   }
 
   &__contact {
@@ -50,7 +51,7 @@
 
 @include large() {
   .main-footer {
-    padding: 0 10px;
+    margin: auto 20px 0 20px;
     min-height: scale.$footer_desktop_height;
     max-height: scale.$footer_desktop_height;
     flex-direction: row;
