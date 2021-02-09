@@ -1,6 +1,13 @@
 @use "../utils/breakpoints" as *;
+@use "../utils/z_index";
 
 #channels__show {
+  header {
+    position: sticky;
+    top: 0;
+    z-index: z_index.$default;
+  }
+
   .channel-page {
     width: 100%;
     display: flex;

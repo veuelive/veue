@@ -1,6 +1,13 @@
 @use "./utils/breakpoints" as *;
+@use "./utils/z_index";
 
 body#discover__index {
+  header {
+    position: sticky;
+    top: 0;
+    z-index: z_index.$default;
+  }
+
   #main-container {
     width: 100%;
     margin: 0;
