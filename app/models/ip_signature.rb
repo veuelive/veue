@@ -1,0 +1,2 @@
+class IpSignature < ApplicationRecord
+end
