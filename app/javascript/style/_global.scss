@@ -66,3 +66,12 @@ input[type="text"],
 input[type="tel"] {
   font-size: 1.4rem;
 }
+
+img,
+svg {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}

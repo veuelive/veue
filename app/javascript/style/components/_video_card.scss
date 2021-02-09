@@ -25,7 +25,6 @@
       width: 100%;
       height: 100%;
       border-radius: 10px;
-      -webkit-user-drag: none;
     }
 
     &__time,
@@ -73,7 +72,6 @@
         border-radius: 10px;
         height: 61px;
         width: 76px;
-        -webkit-user-drag: none;
       }
     }
 
@@ -166,9 +164,6 @@
       text-align: center;
       margin-top: 16px;
       border-radius: 20px;
-      * {
-        -webkit-user-drag: none;
-      }
     }
   }
 }
