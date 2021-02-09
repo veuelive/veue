@@ -101,6 +101,7 @@ export default class extends BaseController {
     } else if (response.status == 200) {
       // Need to show the modal again
       this.modalTarget.outerHTML = html;
+      this.modalTarget.style.display = "block";
       this.attachPhoneNumberField();
       this.scrollToFocus();
     }
