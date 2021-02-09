@@ -47,6 +47,7 @@ body#discover__index {
             svg {
               width: 100px;
               height: 100px;
+              -webkit-user-drag: none;
             }
           }
         }
