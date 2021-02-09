@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     if @current_user.save
       render(status: :accepted, template: "layouts/_header", layout: false)
     else
-      render(status: :bad_request, body: "")
+      render(status: :bad_request, template: "shared/_login_modal", layout: false)
     end
   end
 

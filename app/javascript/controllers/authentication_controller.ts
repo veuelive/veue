@@ -103,6 +103,13 @@ export default class extends BaseController {
       this.modalTarget.outerHTML = html;
       this.attachPhoneNumberField();
       this.scrollToFocus();
+    } else if (response.status >= 400) {
+      this.modalTarget.innerHTML = html;
+      this.refocusInput();
     }
+  }
+
+  private refocusInput() {
+    this.modalTarget.querySelector("input").focus();
   }
 }
