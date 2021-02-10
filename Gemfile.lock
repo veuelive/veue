@@ -262,10 +262,6 @@ GEM
     pg (1.2.3)
     pg (1.2.3-x64-mingw32)
     phone (1.2.3)
-    piwik_analytics (1.0.2)
-      actionpack
-      activesupport
-      rails (>= 3.0.0)
     polyamorous (2.3.2)
       activerecord (>= 5.2.1)
     posix-spawn (0.3.15)
@@ -473,7 +469,6 @@ DEPENDENCIES
   mux_ruby
   pg (>= 0.18, < 2.0)
   phone
-  piwik_analytics (~> 1.0.0)
   posix-spawn
   puma (~> 4.3)
   rails (~> 6.0.3, >= 6.0.3.2)
