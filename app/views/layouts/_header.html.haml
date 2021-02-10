@@ -23,6 +23,10 @@
           %ul{role: "menubar"}
             %li.user-menu__name
               = current_user.display_name
+
+            - if channel_slug = current_user&.channels&.first&.slug
+              %li.user-menu__item{role: "menuitem"}
+                = link_to "My Channel", channel_path(channel_slug)
             %li.user-menu__item{role: "menuitem"}
               = link_to "Profile", edit_user_path(id: current_user.id, anchor: 'profile')
             %li.user-menu__item{role: "menuitem"}
