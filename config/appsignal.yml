@@ -1,4 +1,6 @@
 production:
+  ignore_actions:
+    - "Internal::HealthCheckController#index"
   ignore_errors:
     - ActionController::RoutingError
     - ActiveRecord::RecordNotFound
