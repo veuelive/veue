@@ -9,35 +9,45 @@
   &__underlay {
     flex: 1;
     background: color.$gray-dark;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
 
   &__bar {
-    height: 70px;
     background-color: color.$white;
     box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
+    border-bottom: 1px solid color.$neutral-accents;
     display: flex;
     align-items: center;
-    padding-left: 1em;
+    padding: 15px 10px;
 
     justify-content: space-between;
-    border-top-left-radius: 0.625rem;
-    border-top-right-radius: 0.625rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    &__logo {
+      display: flex;
+      padding: 0 15px;
+      svg {
+        width: 26px;
+      }
+    }
 
     &__controls {
-      button {
-        font-size: 25px;
-        height: 35px;
-        width: 35px;
-        background: color.$white;
+      display: flex;
+      padding-right: 12px;
+      a {
+        height: 19px;
+        width: 19px;
+        background: none;
         border: 0;
+        padding: 0 11px;
         &:disabled * {
           fill: #eee;
         }
         &:active {
-          transform: scale(0.98);
           /* Scaling button to 0.98 to its original size */
-          box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
-          /* Lowering the shadow */
+          transform: scale(0.98);
         }
         &:focus {
           border: 0;
@@ -55,6 +65,7 @@
       border: 1px solid color.$gray-light;
       border-radius: 0.625rem;
       position: relative;
+      margin-right: 10px;
       input {
         border: none;
         outline: none;
@@ -63,6 +74,20 @@
         font-size: 1rem;
         background-color: color.$white;
         color: color.$gray-dark-2;
+      }
+    }
+
+    &__button {
+      a {
+        background: color.$veue-corporate;
+        color: color.$white;
+        padding: 9px 25px;
+        border-radius: 10px;
+        svg {
+          width: 19px;
+          height: 12px;
+          fill: color.$white;
+        }
       }
     }
   }

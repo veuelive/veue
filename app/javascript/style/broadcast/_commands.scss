@@ -1,12 +1,29 @@
 @use "../utils/z_index";
+@use "../utils/color";
 
 #broadcast {
   .broadcast-commands {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
+    margin: 10px 0;
+    background: color.$white;
+    border-radius: 10px;
+
+    &__left,
+    &__right {
+      display: flex;
+      padding: 8px 10px;
+    }
 
     .btn {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      position: relative;
+      margin-right: 5px;
+      background: #f0f0f6;
+      border-radius: 10px;
+
       &--tooltip {
         display: none;
       }
@@ -29,13 +46,12 @@
         }
       }
 
-      padding: 0.25rem;
       position: relative;
 
       svg {
         fill: #2e2f30;
-        width: 25px;
-        height: 25px;
+        width: 14px;
+        height: 14px;
       }
 
       .select-menu {
