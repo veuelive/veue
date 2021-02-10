@@ -11,7 +11,9 @@
     :javascript
       globalThis.appConfig = #{raw JSON.generate(app_config)};
       globalThis.startLoadTime = Date.now();
-    = render partial: "layouts/matomo"
+
+    - if Rails.env.production?
+      = render partial: "layouts/matomo"
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_pack_tag 'application', media: 'all'
