@@ -24,7 +24,7 @@
             %li.user-menu__name
               = current_user.display_name
 
-            - if channel_slug = current_user&.channels&.first&.slug
+            - if channel_slug = current_user.channels.select(:slug).first
               %li.user-menu__item{role: "menuitem"}
                 = link_to "My Channel", channel_path(channel_slug)
             %li.user-menu__item{role: "menuitem"}
