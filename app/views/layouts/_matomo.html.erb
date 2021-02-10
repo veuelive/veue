@@ -1,4 +1,4 @@
-<% if Rails.env.production? %>
+<% if ENV["VEUE_ENV"] == "production" %>
   <!-- Matomo Code -->
   <script type="text/javascript">
     var _paq = window._paq = window._paq || [];
