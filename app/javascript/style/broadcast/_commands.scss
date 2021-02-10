@@ -8,6 +8,7 @@
     margin: 10px 0;
     background: color.$white;
     border-radius: 10px;
+    position: relative;
 
     &__left,
     &__right {
@@ -46,32 +47,62 @@
         }
       }
 
-      position: relative;
-
       svg {
         fill: #2e2f30;
         width: 14px;
         height: 14px;
       }
+    }
+  }
 
-      .select-menu {
-        z-index: z_index.$nav-menu;
-        position: absolute;
-        top: 25px;
-        left: 5px;
-        background: white;
-        margin: 0.25rem;
-        border: 1px solid darkgrey;
-        display: flex;
-        cursor: pointer;
-        width: 200px;
-        flex-direction: column;
+  .select-menu {
+    display: none;
+    z-index: z_index.$nav-menu;
+    position: absolute;
+    background: color.$white;
+    color: color.$neutral-dark;
+    margin: 0.25rem;
+    border: 1px solid color.$neutral-middle;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 280px;
+    flex-direction: column;
+    top: 45px;
 
-        > div {
-          padding: 5px;
+    &:before {
+      border-style: solid;
+      border-width: 1px 1px 0 0;
+      display: inline-block;
+      height: 0.45em;
+      transform: rotate(-45deg);
+      vertical-align: top;
+      width: 0.45em;
+
+      content: "";
+      position: absolute;
+
+      bottom: 206px;
+      left: 20px;
+      border-right-color: color.$neutral-middle;
+      border-top-color: color.$neutral-middle;
+    }
+
+    &--content {
+      &__title {
+        padding: 20px;
+        color: color.$veue-corporate;
+        font-weight: 500;
+        border-bottom: 1px solid color.$neutral-middle;
+      }
+
+      &__body {
+        padding: 20px;
+
+        &__item {
+          padding-bottom: 20px;
 
           &:hover {
-            background: #eee;
+            color: color.$veue-corporate;
           }
         }
       }

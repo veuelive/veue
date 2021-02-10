@@ -1,5 +1,6 @@
 import { Controller } from "stimulus";
 import { Visibility, setVideoVisibility } from "../../helpers/video_helpers";
+import { ShowMenuEvent } from "./commands_menu_controller";
 
 export default class SettingsController extends Controller {
   static targets = ["form", "visibility"];
@@ -15,11 +16,13 @@ export default class SettingsController extends Controller {
   }
 
   toggleForm(): void {
-    if (this.formTarget.style.display === "none") {
-      this.showForm();
-    } else {
-      this.hideForm();
-    }
+    document.dispatchEvent(
+      new CustomEvent(ShowMenuEvent, {
+        detail: {
+          type: this.type,
+        },
+      })
+    );
   }
 
   handleAjaxSuccess(): void {
@@ -31,14 +34,6 @@ export default class SettingsController extends Controller {
 
   handleAjaxError(): void {
     this.handleAjax("error");
-  }
-
-  private hideForm(): void {
-    this.formTarget.style.display = "none";
-  }
-
-  private showForm(): void {
-    this.formTarget.style.display = "flex";
   }
 
   private handleAjax(status: "success" | "error"): void {
@@ -61,5 +56,9 @@ export default class SettingsController extends Controller {
     flash.className = "flash-error";
     flash.innerText = "Unable to update settings!";
     return flash;
+  }
+
+  get type(): string {
+    return this.data.get("type");
   }
 }

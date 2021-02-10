@@ -1,0 +1,17 @@
+.select-menu{
+  data: {
+    controller: "broadcast--commands-menu"
+  }
+}
+  .select-menu--content
+    .select-menu--content__title{
+      data: {
+        target: "broadcast--commands-menu.title"
+      }
+    }
+    .select-menu--content__body{
+      data: {
+        target: "broadcast--commands-menu.menuItems"
+      }
+    }
+    = render partial: "channels/videos/partials/edit", locals: {video: current_broadcast_video}

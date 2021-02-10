@@ -2,7 +2,7 @@
              ajax:error->broadcast--settings#handleAjaxError"     |
 
 = form_with model: video, url: broadcast_path(video), class: "broadcast-settings__form",
-    data: { target: "broadcast--settings.form", disable_with: "Updating...", action: actions } do |form|
+    data: { target: "broadcast--settings.form broadcast--commands-menu.settingsForm", disable_with: "Updating...", action: actions } do |form|
   = form.label :title
   = form.text_field :title, placeholder: "Title your broadcast!"
 

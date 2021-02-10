@@ -1,41 +1,31 @@
 import { Controller } from "stimulus";
 
+import { ShowMenuEvent } from "./commands_menu_controller";
+
 export const MediaDeviceChangeEvent = "MediaDeviceChangeEvent";
 
 export default class extends Controller {
   private menuDiv?: HTMLElement;
 
   async showHideMenu(): Promise<void> {
-    if (this.menuDiv) {
-      this.menuDiv.remove();
-      this.menuDiv = null;
-    } else {
-      this.menuDiv = await this.buildMenu();
-      this.element.appendChild(this.menuDiv);
-    }
+    let devices = await navigator.mediaDevices.enumerateDevices();
+    devices = devices.filter((d) => d.kind === this.type);
+    // it will dispatch event for opening or closing of menu
+    document.dispatchEvent(
+      new CustomEvent(ShowMenuEvent, {
+        detail: {
+          devices,
+          type: this.type,
+          changeMediaHandler: this.changeMediaSource,
+        },
+      })
+    );
   }
 
   changeMediaSource(device: MediaDeviceInfo): void {
     document.dispatchEvent(
       new CustomEvent(MediaDeviceChangeEvent, { detail: device })
     );
-  }
-
-  async buildMenu(): Promise<HTMLElement> {
-    const menuDiv = document.createElement("div");
-    menuDiv.className = "select-menu";
-    let devices = await navigator.mediaDevices.enumerateDevices();
-    devices = devices.filter((d) => d.kind === this.type);
-    devices.forEach((device) => {
-      const menuItem = document.createElement("div");
-      menuItem.innerText = device.label;
-      menuItem.setAttribute("data-media-id", device.deviceId);
-      menuDiv.appendChild(menuItem);
-      menuItem.addEventListener("click", () => {
-        this.changeMediaSource(device);
-      });
-    });
-    return menuDiv;
   }
 
   get type(): MediaDeviceKind {

@@ -1,38 +1,33 @@
 import { Controller } from "stimulus";
+import { getVideoVisibility } from "helpers/video_helpers";
+import { ShowMenuEvent } from "./commands_menu_controller";
 import {
   copyToClipboard,
   openLinkInBrowser,
   publicVideoLink,
   privateVideoLink,
 } from "helpers/broadcast_helpers";
-import { getVideoVisibility } from "helpers/video_helpers";
 
 export default class extends Controller {
-  static targets = ["menu"];
-  private menuTarget!: HTMLElement;
-  private hidden: boolean;
-
-  connect(): void {
-    this.hide();
-  }
+  connect(): void {}
 
   showHideMenu(): void {
-    if (this.hidden) {
-      this.show();
-    } else {
-      this.hide();
-    }
+    document.dispatchEvent(
+      new CustomEvent(ShowMenuEvent, {
+        detail: {
+          type: this.type,
+        },
+      })
+    );
   }
 
   openLink(event: Event): void {
-    this.hide();
     event.stopPropagation();
 
     openLinkInBrowser(this.getVideoLink());
   }
 
   copyLink(event: Event): void {
-    this.hide();
     event.stopPropagation();
     copyToClipboard(this.getVideoLink());
     alert("Link Copied to Clipboard!");
@@ -47,13 +42,7 @@ export default class extends Controller {
     return publicVideoLink();
   }
 
-  private hide() {
-    this.hidden = true;
-    this.menuTarget.setAttribute("style", "display: none;");
-  }
-
-  private show() {
-    this.hidden = false;
-    this.menuTarget.setAttribute("style", "display: block;");
+  get type(): string {
+    return this.data.get("type");
   }
 }

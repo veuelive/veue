@@ -19,11 +19,9 @@
     .content--left
       = render partial: "broadcast_controls"
       = render partial: "browser"
-    .content--right{data: {controller: "broadcast--settings"}}
+    .content--right{data: {controller: "broadcast--settings", "broadcast--settings": { "type": "settings" }}}
       %video#webcam_preview{data: {target: "broadcast.webcamVideoElement"}}
       %canvas#audioCanvas
       = render partial: "command_area"
-      = render partial: "channels/videos/partials/edit",
-               locals: {video: current_broadcast_video}
 
       = render partial: "shared/chat", locals: {video: current_broadcast_video}

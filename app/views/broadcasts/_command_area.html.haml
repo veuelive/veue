@@ -9,17 +9,18 @@
       .btn--tooltip
         Switch Camera
   .broadcast-commands__right
-    .btn#share-btn{data: {controller: "broadcast--share", action: "click->broadcast--share#showHideMenu"}}
+    .btn#share-btn{data: {controller: "broadcast--share", action: "click->broadcast--share#showHideMenu", "broadcast--share": {"type": "share"}}}
       = svg_tag "share"
       .btn--tooltip
         Share Broadcast
-      .select-menu{data: {target: "broadcast--share.menu"}}
+      .select-menu
         .item.open{data: {action: "click->broadcast--share#openLink"}} Open Link
         .item.copy{data: {action: "click->broadcast--share#copyLink"}} Copy Link
     .btn#settings-btn{ data: { action: "click->broadcast--settings#toggleForm" }}
       = svg_tag "gear"
       .btn--tooltip
         Settings
+  = render partial: "commands_menu"
 .debug-area{data: {target: "broadcast--debug.debugArea"}}
   .release-channel
     %input{data: {target: "broadcast--debug.releaseChannel"}}
