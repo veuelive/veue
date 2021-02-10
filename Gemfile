@@ -87,6 +87,9 @@ gem "activerecord-pg_enum"
 # For Windows users, this is required
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw]
 
+# Analytics via Matomo (formerly Piwik)
+gem "piwik_analytics", "~> 1.0.0"
+
 group :production do
   # Gem for sending production logs to LogDNA
   # TEMPORARY due to https://github.com/logdna/ruby/issues/30
