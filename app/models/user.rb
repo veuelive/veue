@@ -71,7 +71,7 @@ class User < ApplicationRecord
   def display_name_is_appropriate
     return true unless PerspectiveApi.enabled
 
-    item = moderation_items.build(user: self)
+    item = moderation_items.build(user: self, text: display_name)
     item.fetch_scores!
 
     return true if item.approved?
