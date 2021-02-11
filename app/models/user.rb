@@ -39,6 +39,7 @@ class User < ApplicationRecord
   blind_index :email, expression: ->(v) { v.presence && v.downcase }, migrating: true
 
   include PGEnum(sms_status: %w[new_number instructions_sent unsubscribed])
+  include PGEnum(user_type: %w[normal employee admin])
 
   def setup_as_streamer!
     return if channels.any?

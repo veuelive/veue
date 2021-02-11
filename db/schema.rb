@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_04_212826) do
+ActiveRecord::Schema.define(version: 2021_02_11_155058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2021_02_04_212826) do
 
   # These are custom enum types that must be created before they can be used in the schema definition
   create_enum "sms_status_setting", ["new_number", "instructions_sent", "unsubscribed"]
+  create_enum "user_type_enum", ["normal", "employee", "admin"]
   create_enum "visibility_setting", ["public", "protected", "private"]
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -66,6 +67,15 @@ ActiveRecord::Schema.define(version: 2021_02_04_212826) do
     t.uuid "channel_id"
     t.index ["channel_id"], name: "index_follows_on_channel_id"
     t.index ["user_id", "channel_id", "unfollowed_at"], name: "index_follows_on_user_id_and_channel_id_and_unfollowed_at", unique: true
+  end
+
+  create_table "ip_signatures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "location"
+    t.text "ip_address_ciphertext"
+    t.string "ip_address_bidx"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ip_address_bidx"], name: "index_ip_signatures_on_ip_address_bidx"
   end
 
   create_table "moderation_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -121,10 +131,8 @@ ActiveRecord::Schema.define(version: 2021_02_04_212826) do
     t.uuid "user_id"
     t.text "secret_code_ciphertext"
     t.string "state"
-    t.inet "ip_address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["ip_address"], name: "index_session_tokens_on_ip_address"
     t.index ["phone_number_bidx"], name: "index_session_tokens_on_phone_number_bidx"
     t.index ["state"], name: "index_session_tokens_on_state"
     t.index ["user_id"], name: "index_session_tokens_on_user_id"
@@ -165,6 +173,7 @@ ActiveRecord::Schema.define(version: 2021_02_04_212826) do
     t.boolean "verified", default: false
     t.text "email_ciphertext"
     t.string "email_bidx"
+    t.enum "user_type", default: "normal", as: "user_type_enum"
     t.index ["email_bidx"], name: "index_users_on_email_bidx"
     t.index ["mux_live_stream_id"], name: "index_users_on_mux_live_stream_id"
     t.index ["verified"], name: "index_users_on_verified"
