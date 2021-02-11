@@ -181,19 +181,31 @@
                 display: flex;
                 flex-direction: column;
               }
+              //croppie bar & slider
               .cr-slider {
                 padding-top: 0;
                 padding-bottom: 0;
-                // -webkit-appearance: auto;
                 border: none;
                 cursor: pointer;
                 margin: 0;
-                color: red;
-                &__::-webkit-slider-runnable-track {
-                  background: green;
+                //the bar and circle style needs to be separate or will not show
+                &::-webkit-slider-runnable-track {
+                  background: color.$neutral-soft;
                 }
-                &__::-webkit-slider-thumb {
-                  background: hotpink;
+                &::-webkit-slider-thumb {
+                  background: color.$veue-corporate;
+                }
+                &::-moz-range-track {
+                  background: color.$neutral-soft;
+                }
+                &::-moz-range-thumb {
+                  background: color.$veue-corporate;
+                }
+                &::-ms-track {
+                  background: color.$neutral-soft;
+                }
+                &::-ms-thumb {
+                  background: color.$veue-corporate;
                 }
               }
               .cr-slider-wrap {
