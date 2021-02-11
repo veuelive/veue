@@ -2,9 +2,10 @@
 
 module Channels
   class VideosController < ApplicationController
+    load_resource :current_video
     # GET /videos/1
     def show
-      render("not_found", status: :not_found) && return unless current_video.can_be_accessed_by(current_user)
+      render("not_found", status: :not_found) if can?(:read, @current_video)
 
       render(layout: false) if xhr_request?
     end

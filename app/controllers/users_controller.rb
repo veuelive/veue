@@ -3,8 +3,11 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, only: %i[edit destroy]
 
+  # Automatically generates @user
+  load_and_authorize_resource except: %i[create]
+
   def edit
-    @user = User.find(params[:id]).decorate
+    @user = @user.decorate
   end
 
   def create
@@ -25,8 +28,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id]).decorate
-    return unless current_user == @user
+    @user = @user.decorate
 
     if @user.update(permitted_parameters)
       render(status: :accepted, template: "users/partials/_edit_form", layout: false)
