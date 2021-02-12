@@ -122,9 +122,10 @@ ActiveRecord::Schema.define(version: 2021_02_11_155058) do
     t.uuid "user_id"
     t.text "secret_code_ciphertext"
     t.string "state"
+    t.inet "ip_address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.inet "ip_address"
+    t.index ["ip_address"], name: "index_session_tokens_on_ip_address"
     t.index ["phone_number_bidx"], name: "index_session_tokens_on_phone_number_bidx"
     t.index ["state"], name: "index_session_tokens_on_state"
     t.index ["user_id"], name: "index_session_tokens_on_user_id"
