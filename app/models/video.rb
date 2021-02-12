@@ -104,10 +104,6 @@ class Video < ApplicationRecord
     chat_messages.limit(limit).order("created_at DESC")
   end
 
-  def can_be_accessed_by(user)
-    !(visibility.eql?("private") && (self.user != user))
-  end
-
   def add_screenshots!(*screenshots)
     screenshots.each do |shot|
       next unless shot
