@@ -69,15 +69,6 @@ ActiveRecord::Schema.define(version: 2021_02_11_155058) do
     t.index ["user_id", "channel_id", "unfollowed_at"], name: "index_follows_on_user_id_and_channel_id_and_unfollowed_at", unique: true
   end
 
-  create_table "ip_signatures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "location"
-    t.text "ip_address_ciphertext"
-    t.string "ip_address_bidx"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["ip_address_bidx"], name: "index_ip_signatures_on_ip_address_bidx"
-  end
-
   create_table "moderation_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "text"
     t.jsonb "scores"
@@ -133,6 +124,7 @@ ActiveRecord::Schema.define(version: 2021_02_11_155058) do
     t.string "state"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.inet "ip_address"
     t.index ["phone_number_bidx"], name: "index_session_tokens_on_phone_number_bidx"
     t.index ["state"], name: "index_session_tokens_on_state"
     t.index ["user_id"], name: "index_session_tokens_on_user_id"
