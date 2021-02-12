@@ -31,11 +31,14 @@ class ChatMessage < VideoEvent
   end
 
   def set_published_state
-    item = moderation_items.build(
+    item = moderation_items.create(
       video: video,
       user: user,
       text: text,
     )
+
+    return self.published = false unless item.persisted?
+
     item.fetch_scores!
     self.published = item.approved?
   end
