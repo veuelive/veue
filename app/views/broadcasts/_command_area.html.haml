@@ -1,22 +1,23 @@
-.broadcast-commands
+.broadcast-commands{
+  data: {
+    controller: "broadcast--commands"
+  }
+}
   .broadcast-commands__left
-    .btn{data: {controller: "broadcast--media-manager", action: "click->broadcast--media-manager#showHideMenu", "broadcast--media-manager": {"type": "audio"}}}
+    .btn{data: {controller: "broadcast--media-manager", action: "click->broadcast--commands#showAudioInput", "broadcast--media-manager": {"type": "audio"}}}
       = svg_tag "volume"
       .btn--tooltip
         Switch Microphone
-    .btn{data: {controller: "broadcast--media-manager", action: "click->broadcast--media-manager#showHideMenu", "broadcast--media-manager": {"type": "video"}}}
+    .btn{data: {controller: "broadcast--media-manager", action: "click->broadcast--commands#showVideoInput", "broadcast--media-manager": {"type": "video"}}}
       = svg_tag "cam"
       .btn--tooltip
         Switch Camera
   .broadcast-commands__right
-    .btn#share-btn{data: {controller: "broadcast--share", action: "click->broadcast--share#showHideMenu", "broadcast--share": {"type": "share"}}}
+    .btn#share-btn{data: {controller: "broadcast--share", action: "click->broadcast--commands#showShareOptions", "broadcast--share": {"type": "share"}}}
       = svg_tag "share"
       .btn--tooltip
         Share Broadcast
-      .select-menu
-        .item.open{data: {action: "click->broadcast--share#openLink"}} Open Link
-        .item.copy{data: {action: "click->broadcast--share#copyLink"}} Copy Link
-    .btn#settings-btn{ data: { action: "click->broadcast--settings#toggleForm" }}
+    .btn#settings-btn{ data: { action: "click->broadcast--commands#showSettingsForm" }}
       = svg_tag "gear"
       .btn--tooltip
         Settings

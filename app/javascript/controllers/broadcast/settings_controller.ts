@@ -9,21 +9,9 @@ export default class SettingsController extends Controller {
   private readonly visibilityTarget!: HTMLSelectElement;
 
   connect(): void {
-    this.toggleForm();
     document
       .querySelectorAll(".flash-success .flash-error")
       .forEach((el) => el.remove());
-  }
-
-  toggleForm(): void {
-    document.dispatchEvent(
-      new CustomEvent(ShowMenuEvent, {
-        detail: {
-          title: "Settings",
-          type: this.type,
-        },
-      })
-    );
   }
 
   handleAjaxSuccess(): void {
@@ -57,9 +45,5 @@ export default class SettingsController extends Controller {
     flash.className = "flash-error";
     flash.innerText = "Unable to update settings!";
     return flash;
-  }
-
-  get type(): string {
-    return this.data.get("type");
   }
 }

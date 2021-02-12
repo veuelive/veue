@@ -31,9 +31,7 @@ export default class extends Controller {
         this.menuItemsTarget.innerHTML = "";
 
         data.devices?.forEach((device) => {
-          this.menuItemsTarget.appendChild(
-            this.deviceMenuItem(device, data.changeMediaHandler)
-          );
+          this.menuItemsTarget.appendChild(this.deviceMenuItem(device));
         });
       } else if (data.type === "share") {
         const markup = this.shareMenuItem();
@@ -52,22 +50,20 @@ export default class extends Controller {
     }
   }
 
-  private resetMenu(): void {
+  resetMenu(): void {
     this.element.style.display = "none";
     this.menuItemsTarget.innerHTML = "";
     this.element.classList.remove(this.type);
     this.type = "";
   }
 
-  private deviceMenuItem(
-    device: MediaDeviceInfo,
-    mediaCalback: Function
-  ): HTMLElement {
+  private deviceMenuItem(device: MediaDeviceInfo): HTMLElement {
     const menuItem = document.createElement("div");
     menuItem.classList.add("select-menu--content__body__item");
     menuItem.innerText = device.label;
     menuItem.setAttribute("data-media-id", device.deviceId);
     menuItem.addEventListener("click", () => {
+      this.resetMenu();
       changeMediaSource(device);
     });
     return menuItem;
@@ -75,10 +71,10 @@ export default class extends Controller {
 
   private shareMenuItem(): string {
     return `
-      <div class="select-menu--content__body__item" data-action="click->broadcast--share#openLink">
+      <div class="select-menu--content__body__item" data-action="click->broadcast--commands#openLink">
         Open Link
       </div>
-      <div class="select-menu--content__body__item" data-action="click->broadcast--share#copyLink">
+      <div class="select-menu--content__body__item" data-action="click->broadcast--commands#copyLink">
         Copy Link
       </div>
     `;

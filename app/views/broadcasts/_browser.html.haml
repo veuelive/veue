@@ -9,6 +9,8 @@
         = svg_tag "forward-arrow"
       %a{data: {action: "click->broadcast--browser#doReload", target: "broadcast--browser.reloadButton"}}
         = svg_tag "reload"
+      %a{data: {action: "click->broadcast--browser#stopLoading", target: "broadcast--browser.stopButton"}, style: "display: none;"}
+        = svg_tag "stop_reload"
     .browser__bar__address
       %input{type: "text", value: "https://apple.com", data: {action: "keypress->broadcast--browser#onKeypress", target: "broadcast--browser.addressBar"}}
     .browser__bar__button
