@@ -36,7 +36,7 @@ describe "ChatMessages", type: :request do
 
   describe "create without authentication" do
     it "should not allow to create message" do
-      post(channel_live_chat_messages_path(channel), params: chat_message_params, headers: json_request_header)
+      post(channel_live_chat_messages_path(channel), params: chat_message_params, headers: request_json_header)
       expect(response).to have_http_status(:unauthorized)
     end
   end
