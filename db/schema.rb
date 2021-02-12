@@ -69,26 +69,19 @@ ActiveRecord::Schema.define(version: 2021_02_11_155058) do
     t.index ["user_id", "channel_id", "unfollowed_at"], name: "index_follows_on_user_id_and_channel_id_and_unfollowed_at", unique: true
   end
 
-  create_table "ip_signatures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "location"
-    t.text "ip_address_ciphertext"
-    t.string "ip_address_bidx"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["ip_address_bidx"], name: "index_ip_signatures_on_ip_address_bidx"
-  end
-
   create_table "moderation_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "text"
     t.jsonb "scores"
     t.float "summary_score"
     t.string "state"
+    t.inet "ip_address"
     t.integer "processing_time"
     t.uuid "video_event_id"
     t.uuid "user_id"
     t.uuid "video_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["ip_address"], name: "index_session_tokens_on_ip_address"
     t.index ["user_id"], name: "index_moderation_items_on_user_id"
     t.index ["video_event_id"], name: "index_moderation_items_on_video_event_id"
     t.index ["video_id"], name: "index_moderation_items_on_video_id"
