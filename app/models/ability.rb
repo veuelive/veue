@@ -6,7 +6,7 @@ class Ability
 
   def initialize(user)
     can(:read, [Channel, User])
-    can(:read, Video)
+    can(:read, Video, visibility: %w[public protected])
 
     return if user.blank?
 

@@ -27,7 +27,11 @@ module AuthenticationConcern
     def authenticate_user!
       return true if user_signed_in?
 
-      render(status: :unauthorized, html: "")
+      respond_to do |format|
+        format.json { render(json: {}, status: :unauthorized) }
+        format.html { redirect_to(root_url) }
+        format.js   { render(nothing: true, status: :unauthorized) }
+      end
       false
     end
   end
