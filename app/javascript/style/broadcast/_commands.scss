@@ -1,6 +1,26 @@
 @use "../utils/z_index";
 @use "../utils/color";
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
 #broadcast {
   .broadcast-commands {
     display: flex;
@@ -67,22 +87,51 @@
     cursor: pointer;
     width: 280px;
     flex-direction: column;
-    top: 45px;
+    top: 52px;
+    animation: fadeIn 0.2s;
+
+    &.audioinput {
+      &:before {
+        bottom: 202px;
+        left: 20px;
+      }
+    }
+
+    &.videoinput {
+      &:before {
+        bottom: 138px;
+        left: 54px;
+      }
+    }
+
+    &.share {
+      left: 30px;
+      &:before {
+        bottom: 181px;
+        right: 58px;
+      }
+    }
+
+    &.settings {
+      left: 30px;
+      &:before {
+        bottom: 293px;
+        right: 20px;
+      }
+    }
 
     &:before {
+      border-radius: 2px;
       border-style: solid;
       border-width: 1px 1px 0 0;
       display: inline-block;
-      height: 0.45em;
+      height: 0.85rem;
       transform: rotate(-45deg);
       vertical-align: top;
-      width: 0.45em;
-
+      width: 0.85rem;
+      background: color.$white;
       content: "";
       position: absolute;
-
-      bottom: 206px;
-      left: 20px;
       border-right-color: color.$neutral-middle;
       border-top-color: color.$neutral-middle;
     }

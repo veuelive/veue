@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   get "/discover", to: "discover#index"
 
-  resources :broadcasts, only: [:show, :index, :update] do
+  resources :broadcasts, only: [:show, :index, :edit, :update] do
     scope module: "broadcasts" do
       controller "event" do
         post "layout"

@@ -15,6 +15,7 @@ export default class extends Controller {
     document.dispatchEvent(
       new CustomEvent(ShowMenuEvent, {
         detail: {
+          title: "Share Broadcast",
           type: this.type,
         },
       })

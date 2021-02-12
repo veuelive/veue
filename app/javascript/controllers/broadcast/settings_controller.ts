@@ -19,6 +19,7 @@ export default class SettingsController extends Controller {
     document.dispatchEvent(
       new CustomEvent(ShowMenuEvent, {
         detail: {
+          title: "Settings",
           type: this.type,
         },
       })

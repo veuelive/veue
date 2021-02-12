@@ -67,60 +67,48 @@ textarea {
       }
 
       .broadcast-settings__form {
-        margin: 1rem auto;
-        padding: 0.5rem;
-        display: none;
-        position: absolute;
-        width: 250px;
+        display: flex;
         flex-direction: column;
         justify-content: center;
         text-align: left;
-        border-radius: 10px;
         background-color: color.$white;
-        box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.1);
-        top: 0;
-        left: 10%;
-        transform: translate(0, 125%);
-        z-index: z_index.$nav-menu;
+
+        * {
+          margin-bottom: 5px;
+          &:focus {
+            outline: none;
+          }
+        }
 
         select {
-          display: block;
-          font-size: 0.95rem;
-          width: 100%;
-          padding: 0.25rem 0 0.5rem 0.25rem;
-          text-align: left;
+          border: 1px solid color.$neutral-soft;
+          border-radius: 10px;
+          padding: 7px 10px;
+          font-size: 1.1rem;
         }
 
         input[type="text"] {
-          padding-left: 0.5rem;
+          border: 1px solid color.$neutral-soft;
+          border-radius: 10px;
+          padding: 7px 10px;
+          font-size: 1.1rem;
         }
 
         label {
-          padding-left: 0.25rem;
-          margin-top: 1rem;
-          &:nth-of-type(1) {
-            margin-top: 0;
-          }
-        }
-
-        * {
-          width: 90%;
+          margin-bottom: 5px;
         }
 
         input[type="submit"] {
-          margin: 1rem auto;
-          padding: 0.25rem 0.5rem;
-          font-size: 0.85rem;
-          border: none;
-          cursor: pointer;
-          border-radius: 9999px;
-          background-color: color.$veue-corporate;
           color: color.$white;
-
-          &:focus,
-          &:hover {
-            background-color: darken(color.$veue-corporate, 2%);
-          }
+          background-color: color.$veue-corporate;
+          border: 1px solid color.$neutral-soft;
+          border-radius: 10px;
+          padding: 7px 10px;
+          font-size: 1.1rem;
+          margin-top: 10px;
+          margin-right: 0;
+          display: flex;
+          justify-content: center;
         }
 
         .flash-success,
@@ -129,9 +117,9 @@ textarea {
           border-radius: 9999px;
           text-align: center;
           position: absolute;
-          top: -1.2rem;
-          left: -0.5rem;
-          width: 100%;
+          top: 40px;
+          left: 12px;
+          width: 240px;
           box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
           transition: all 5s ease-out;
         }

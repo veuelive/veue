@@ -20,6 +20,7 @@ import {
   attachKeyboardListener,
   removeKeyboardListeners,
 } from "helpers/broadcast/keyboard_listeners";
+import { ShowMenuEvent } from "./broadcast/commands_menu_controller";
 
 export const BroadcasterEnvironmentChangedEvent = "broadcastEnvironmentChanged";
 
@@ -45,6 +46,8 @@ export default class extends Controller {
   private captureSourceManager: CaptureSourceManager;
   private environment: BroadcasterEnvironment;
   private keyboardListener: (event) => void;
+
+  element!: HTMLElement;
 
   connect(): void {
     this.keyboardListener = attachKeyboardListener();
@@ -128,31 +131,42 @@ export default class extends Controller {
   }
 
   startStreaming(): void {
-    this.streamCapturer
-      .start(this.data.get("stream-key"))
-      .then(async () => {
-        this.state = "starting";
-        this.data.set("started-at", Date.now().toString());
+    if (!this.element.dataset.videoTitle) {
+      document.dispatchEvent(
+        new CustomEvent(ShowMenuEvent, {
+          detail: {
+            title: "Settings",
+            type: "settings",
+          },
+        })
+      );
+    } else {
+      this.streamCapturer
+        .start(this.data.get("stream-key"))
+        .then(async () => {
+          this.state = "starting";
+          this.data.set("started-at", Date.now().toString());
 
-        const screenshots = await this.videoMixer.getVideoShots();
+          const screenshots = await this.videoMixer.getVideoShots();
 
-        // We have to stringify to strip "undefined" values
-        const data = {
-          url: getCurrentUrl(),
-          primary_shot: screenshots[0],
-          video_layout: JSON.stringify(this.videoMixer.broadcastLayout),
-        };
+          // We have to stringify to strip "undefined" values
+          const data = {
+            url: getCurrentUrl(),
+            primary_shot: screenshots[0],
+            video_layout: JSON.stringify(this.videoMixer.broadcastLayout),
+          };
 
-        if (screenshots[1]) {
-          data["secondary_shot"] = screenshots[1];
-        }
+          if (screenshots[1]) {
+            data["secondary_shot"] = screenshots[1];
+          }
 
-        await postForm("./start", data);
+          await postForm("./start", data);
 
-        this.state = "live";
-        this.metronome.start();
-      })
-      .catch((e) => console.error(e));
+          this.state = "live";
+          this.metronome.start();
+        })
+        .catch((e) => console.error(e));
+    }
   }
 
   stopStreaming(): void {

@@ -2,8 +2,6 @@ import { Controller } from "stimulus";
 
 import { ShowMenuEvent } from "./commands_menu_controller";
 
-export const MediaDeviceChangeEvent = "MediaDeviceChangeEvent";
-
 export default class extends Controller {
   private menuDiv?: HTMLElement;
 
@@ -15,17 +13,15 @@ export default class extends Controller {
       new CustomEvent(ShowMenuEvent, {
         detail: {
           devices,
+          title: this.title(),
           type: this.type,
-          changeMediaHandler: this.changeMediaSource,
         },
       })
     );
   }
 
-  changeMediaSource(device: MediaDeviceInfo): void {
-    document.dispatchEvent(
-      new CustomEvent(MediaDeviceChangeEvent, { detail: device })
-    );
+  title(): string {
+    return this.type === "audioinput" ? "Audio Input" : "Video Input";
   }
 
   get type(): MediaDeviceKind {

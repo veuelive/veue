@@ -18,6 +18,10 @@ class BroadcastsController < ApplicationController
     render(json: {state: current_broadcast_video.state})
   end
 
+  def edit
+    render layout: false
+  end
+
   def update
     if current_broadcast_video.update(video_params)
       render(json: :success)
