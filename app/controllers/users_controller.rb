@@ -4,10 +4,9 @@ class UsersController < ApplicationController
   before_action :authenticate_user!, only: %i[edit destroy]
 
   # Automatically generates @user
-  load_resource except: %i[create]
+  load_and_authorize_resource except: %i[create]
 
   def edit
-    authorize!(:manage, @user)
     @user = @user.decorate
   end
 
@@ -29,7 +28,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    authorize!(:manage, @user)
     @user = @user.decorate
 
     if @user.update(permitted_parameters)
@@ -40,7 +38,6 @@ class UsersController < ApplicationController
   end
 
   def upload_image
-    authorize!(:manage, @user)
     @user = @user.decorate
 
     if @user.update(params.permit(:profile_image))
@@ -51,8 +48,6 @@ class UsersController < ApplicationController
   end
 
   def destroy_image
-    authorize!(:manage, @user)
-
     @user = @user.decorate
 
     @user.profile_image.purge
@@ -60,7 +55,6 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    authorize!(:manage, @user)
     redirect_to(:back) && return unless @user.destroy
 
     session[:session_token_uuid] = nil
