@@ -24,5 +24,9 @@
     min-height: calc(
       100vh - #{scale.$header_height} - #{scale.$footer_desktop_height}
     );
+
+    .object-not-found {
+      justify-content: center;
+    }
   }
 }

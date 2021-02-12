@@ -2,10 +2,12 @@
 
 module Channels
   class VideosController < ApplicationController
-    load_resource :current_video
     # GET /videos/1
     def show
-      render("not_found", status: :not_found) if can?(:read, @current_video)
+      authorize!(:read, current_video)
+
+      # have to decorate after authorizing
+      @current_video = @current_video.decorate
 
       render(layout: false) if xhr_request?
     end
@@ -15,7 +17,7 @@ module Channels
     end
 
     def current_video
-      @current_video ||= Video.find(params[:id]).decorate
+      @current_video ||= Video.find(params[:id])
     end
     helper_method :current_video
 

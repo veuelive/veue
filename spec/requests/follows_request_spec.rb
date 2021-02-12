@@ -12,12 +12,12 @@ RSpec.describe "Follows", type: :request do
 
   describe "an anonymous user" do
     it "should halt authentication for create request" do
-      post follow_path_for_test
+      post follow_path_for_test, headers: request_json_header
       expect(response).to have_http_status(401)
     end
 
     it "should hault authentication for destroy request" do
-      delete follow_path_for_test
+      delete follow_path_for_test, headers: request_json_header
       expect(response).to have_http_status(401)
     end
 

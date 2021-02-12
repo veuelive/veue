@@ -6,6 +6,14 @@ class ApplicationController < ActionController::Base
   include FingerprintConcern
   include IpcMockConcern unless Rails.env.production?
 
+  rescue_from CanCan::AccessDenied do |exception|
+    respond_to do |format|
+      format.json { render nothing: true, status: :not_found }
+      format.html { render "layouts/not_found", status: :not_found, locals: {object: exception.subject} }
+      format.js   { render nothing: true, status: :not_found }
+    end
+  end
+
   private
 
   def xhr_request?
