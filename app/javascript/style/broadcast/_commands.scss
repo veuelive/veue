@@ -165,10 +165,10 @@
       }
 
       &__body {
-        padding: 20px;
+        margin: 20px;
 
         &__item {
-          padding-bottom: 20px;
+          margin-bottom: 20px;
 
           &:hover {
             color: color.$veue-corporate;
