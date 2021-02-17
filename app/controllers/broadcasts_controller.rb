@@ -19,7 +19,7 @@ class BroadcastsController < ApplicationController
   end
 
   def edit
-    render layout: false
+    render(layout: false)
   end
 
   def update

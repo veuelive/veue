@@ -1,5 +1,4 @@
 import { Controller } from "stimulus";
-import { secureFetch } from "util/fetch";
 
 export const ShowMenuEvent = "ShowMenu";
 export const CloseMenuEvent = "CloseMenu";

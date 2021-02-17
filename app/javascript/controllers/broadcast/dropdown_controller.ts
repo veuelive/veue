@@ -1,5 +1,4 @@
 import { Controller } from "stimulus";
-import { BroadcasterCommand } from "types/broadcaster_command";
 import {
   ShowMenuEvent,
   CloseMenuEvent,
@@ -25,7 +24,7 @@ export default class extends Controller {
     );
   }
 
-  protected resetMenu() {
+  protected resetMenu(): void {
     document.dispatchEvent(new CustomEvent(ResetMenuEvent));
   }
 

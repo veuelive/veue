@@ -20,7 +20,6 @@ import {
   attachKeyboardListener,
   removeKeyboardListeners,
 } from "helpers/broadcast/keyboard_listeners";
-import { ShowSettingsMenuEvent } from "./broadcast/settings_controller";
 
 export const BroadcasterEnvironmentChangedEvent = "broadcastEnvironmentChanged";
 

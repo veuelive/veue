@@ -1,5 +1,4 @@
 import DropdownController from "./dropdown_controller";
-import { ShowMenuEvent } from "./commands_menu_controller";
 import { changeMediaSource } from "helpers/broadcast/change_media_initializer";
 
 export default class extends DropdownController {

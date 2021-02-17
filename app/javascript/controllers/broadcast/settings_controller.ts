@@ -30,9 +30,7 @@ export default class SettingsController extends DropdownController {
     );
   }
 
-  showHideMenu(event: CustomEvent): void {
-    const data = event.detail;
-
+  showHideMenu(): void {
     this.resetMenu();
 
     this.appendSettingsForm();
