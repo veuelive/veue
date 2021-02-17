@@ -4,14 +4,14 @@ import { changeMediaSource } from "helpers/broadcast/change_media_initializer";
 
 export default class extends DropdownController {
   async showHideMenu(): Promise<void> {
-    this.reset();
+    this.resetMenu();
 
     await this.deviceMarkup();
 
     const menuTitle = this.title();
     this.setTitle(menuTitle);
 
-    this.dispatchMenuToggle(this.type);
+    this.toggleMenu(this.type);
   }
 
   private async deviceMarkup(): Promise<void> {

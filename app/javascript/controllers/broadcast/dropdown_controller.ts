@@ -3,6 +3,7 @@ import { BroadcasterCommand } from "types/broadcaster_command";
 import {
   ShowMenuEvent,
   CloseMenuEvent,
+  ResetMenuEvent,
 } from "controllers/broadcast/commands_menu_controller";
 
 export default class extends Controller {
@@ -14,7 +15,7 @@ export default class extends Controller {
     this.menuBody = document.querySelector(".select-menu--content__body");
   }
 
-  protected dispatchMenuToggle(type: string): void {
+  protected toggleMenu(type: string): void {
     document.dispatchEvent(
       new CustomEvent(ShowMenuEvent, {
         detail: {
@@ -24,9 +25,8 @@ export default class extends Controller {
     );
   }
 
-  protected reset(): void {
-    this.menuTitle.innerHTML = "";
-    this.menuBody.innerHTML = "";
+  protected resetMenu() {
+    document.dispatchEvent(new CustomEvent(ResetMenuEvent));
   }
 
   protected dispatchMenuClose(): void {

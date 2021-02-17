@@ -33,12 +33,12 @@ export default class SettingsController extends DropdownController {
   showHideMenu(event: CustomEvent): void {
     const data = event.detail;
 
-    this.reset();
+    this.resetMenu();
 
     this.appendSettingsForm();
 
     this.setTitle("Settings");
-    this.dispatchMenuToggle("settings");
+    this.toggleMenu("settings");
   }
 
   async appendSettingsForm(): Promise<void> {

@@ -9,11 +9,11 @@ import {
 
 export default class extends DropdownController {
   showHideMenu(): void {
-    this.reset();
+    this.resetMenu();
 
     this.shareItemsMarkup();
     this.setTitle("Share Broadcaster");
-    this.dispatchMenuToggle("share");
+    this.toggleMenu("share");
   }
 
   private shareItemsMarkup(): void {
