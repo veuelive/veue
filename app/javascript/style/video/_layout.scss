@@ -41,7 +41,6 @@
       min-width: 0;
 
       .content-area__primary {
-        flex: 1;
         overflow-y: scroll;
         overflow-x: hidden;
         height: 100%;
@@ -60,9 +59,11 @@
       }
 
       .content-area__secondary {
+        flex: 1;
         margin: 0 1vw 0 1vw;
         background: white;
         max-width: 20vw;
+        min-width: 230px;
         display: flex;
         overflow-y: hidden;
         flex-direction: column;
