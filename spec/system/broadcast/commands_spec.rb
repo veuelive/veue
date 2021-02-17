@@ -40,8 +40,8 @@ describe "Broadcast Commands" do
       find(".btn#share-btn").hover
       expect(page).to have_content("Share")
       find(".btn#share-btn").click
-      expect(find(".btn#share-btn .select-menu")).to have_content("Copy")
-      find(".item.copy").click
+      expect(find(".select-menu--content")).to have_content("Copy")
+      find(".select-menu--content__body__item.copy").click
       accept_alert
       clip_text = page.evaluate_async_script("navigator.clipboard.readText().then(arguments[0])")
       expect(clip_text).to eq(channel_share_link)
@@ -50,10 +50,10 @@ describe "Broadcast Commands" do
 
     it "can open a new link" do
       find(".btn#share-btn").click
-      expect(find(".btn#share-btn .select-menu")).to have_content("Copy")
+      expect(find(".select-menu")).to have_content("Copy")
       audience_window =
         window_opened_by do
-          find(".item.open").click
+          find(".select-menu--content__body__item.open").click
         end
       switch_to_window audience_window
       expect(current_url).to eq(channel_share_link)
@@ -72,8 +72,8 @@ describe "Broadcast Commands" do
           find(".btn#share-btn").hover
           expect(page).to have_content("Share")
           find(".btn#share-btn").click
-          expect(find(".btn#share-btn .select-menu")).to have_content("Copy")
-          find(".item.copy").click
+          expect(find(".select-menu--content")).to have_content("Copy")
+          find(".select-menu--content__body__item.copy").click
           accept_alert
           clip_text = page.evaluate_async_script("navigator.clipboard.readText().then(arguments[0])")
 
@@ -88,10 +88,10 @@ describe "Broadcast Commands" do
           expect(page).to have_css("[data-video-visibility='#{visibility}']")
 
           find(".btn#share-btn").click
-          expect(find(".btn#share-btn .select-menu")).to have_content("Copy")
+          expect(find(".select-menu--content")).to have_content("Copy")
           audience_window =
             window_opened_by do
-              find(".item.open").click
+              find(".select-menu--content__body__item.open").click
             end
           switch_to_window audience_window
           expect(current_url).to eq(private_share_link)

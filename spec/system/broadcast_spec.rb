@@ -28,11 +28,11 @@ describe "Broadcast View" do
   it "should load for a setup streamer" do
     wait_for_broadcast_state("ready")
 
-    click_button("Start Broadcast")
+    click_link("Go Live")
 
     expect(page).to have_css("div[data-broadcast-state='live']", wait: 5)
 
-    expect(page).to have_content("Stop Broadcast", wait: 5)
+    expect(page).to have_css(".stop-btn", wait: 5)
 
     find("div[data-broadcast-started-at]")
 
@@ -46,7 +46,7 @@ describe "Broadcast View" do
       navigate_to(url = "https://1982.com")
 
       wait_for_broadcast_state("ready")
-      click_button("Start Broadcast")
+      click_link("Go Live")
       find("*[data-broadcast-started-at]")
 
       expect(video).to be_live
@@ -69,7 +69,7 @@ describe "Broadcast View" do
 
       wait_for_broadcast_state("ready")
 
-      click_button("Start Broadcast")
+      click_link("Go Live")
       expect(page).to have_content("Starting")
       wait_for_broadcast_state("live")
 
@@ -95,7 +95,7 @@ describe "Broadcast View" do
       clear_enqueued_jobs
       WebMock.reset_executed_requests!
 
-      click_button("Stop Broadcast")
+      click_on(class: "stop-btn")
       wait_for_broadcast_state("finished")
 
       page.refresh
@@ -115,7 +115,7 @@ describe "Broadcast View" do
 
         update_video_visibility(visibility)
 
-        click_button("Start Broadcast")
+        click_link("Go Live")
         wait_for_broadcast_state("live")
 
         perform_enqueued_jobs
@@ -127,7 +127,7 @@ describe "Broadcast View" do
         clear_enqueued_jobs
         WebMock.reset_executed_requests!
 
-        click_button("Stop Broadcast")
+        click_on(class: "stop-btn")
         wait_for_broadcast_state("finished")
 
         perform_enqueued_jobs
@@ -150,14 +150,14 @@ describe "Broadcast View" do
 
   describe "while live streaming" do
     before :each do
-      click_button("Start Broadcast")
+      click_link("Go Live")
       # For most of these, it's important we wait until we are actually "live"
       # and things like the WS connection are open
       wait_for_broadcast_state("live")
     end
 
     it "should allow you to stop broadcasting" do
-      click_button("Stop Broadcast")
+      click_on(class: "stop-btn")
       expect(page).to have_content("Broadcast Complete")
     end
 
