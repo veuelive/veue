@@ -20,6 +20,7 @@ import {
   attachKeyboardListener,
   removeKeyboardListeners,
 } from "helpers/broadcast/keyboard_listeners";
+import FfmpegEncoder from "helpers/broadcast/ffmpeg_encoder";
 
 export const BroadcasterEnvironmentChangedEvent = "broadcastEnvironmentChanged";
 
@@ -45,6 +46,7 @@ export default class extends Controller {
   private captureSourceManager: CaptureSourceManager;
   private environment: BroadcasterEnvironment;
   private keyboardListener: (event) => void;
+  private encoder: FfmpegEncoder;
 
   connect(): void {
     this.keyboardListener = attachKeyboardListener();
@@ -68,6 +70,8 @@ export default class extends Controller {
     );
     this.captureSourceManager.start();
 
+    this.encoder = new FfmpegEncoder();
+
     this.streamCapturer = new StreamRecorder(this.videoMixer, this.audioMixer);
     this.metronome = new Metronome();
 
@@ -81,11 +85,10 @@ export default class extends Controller {
         width: 1250,
         height: 685,
       };
+
       await ipcRenderer.invoke("wakeup", {
         mainWindow: windowSize,
-        rtmpUrl: `rtmps://global-live.mux.com/app/${this.data.get(
-          "stream-key"
-        )}`,
+        videoId: this.videoId,
         sessionToken: this.data.get("session-token"),
       } as WakeupPayload);
       const browserArea = domRectToRect(
@@ -129,7 +132,7 @@ export default class extends Controller {
 
   startStreaming(): void {
     this.streamCapturer
-      .start(this.data.get("stream-key"))
+      .start(this.videoId)
       .then(async () => {
         this.state = "starting";
         this.data.set("started-at", Date.now().toString());
@@ -172,5 +175,9 @@ export default class extends Controller {
       .forEach((element: HTMLElement) => {
         element.hidden = element.dataset.showonstate !== state;
       });
+  }
+
+  get videoId(): string {
+    return (this.element as HTMLElement).dataset.videoId;
   }
 }

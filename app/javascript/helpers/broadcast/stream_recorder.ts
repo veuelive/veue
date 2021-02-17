@@ -21,7 +21,7 @@ export default class StreamRecorder {
     this.audioMixer = audioMixer;
   }
 
-  start(streamKey: string): Promise<void> {
+  start(videoId: string): Promise<void> {
     this.mediaStream = this.canvas.captureStream(30);
 
     this.mediaStream.addTrack(this.audioMixer.audioTrack);
@@ -42,9 +42,9 @@ export default class StreamRecorder {
       clearInterval(this.timerCallback);
     });
 
-    this.mediaRecorder.start(500);
+    this.mediaRecorder.start(2000);
 
-    return ipcRenderer.invoke("start", { streamKey });
+    return ipcRenderer.invoke("start", { videoId });
   }
 
   stop(): void {

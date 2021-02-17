@@ -15,7 +15,7 @@ export interface BroadcasterEnvironment {
 
 export interface WakeupPayload {
   mainWindow: Size;
-  rtmpUrl: string;
+  videoId: string;
   sessionToken: string;
 }
 

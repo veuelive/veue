@@ -29,6 +29,7 @@
     "electron-unhandled": "^3.0.2",
     "electron-updater": "^4.3.5",
     "electron-util": "^0.14.2",
+    "ffmpeg.js": "^4.2.9003",
     "logdna-winston": "^3.0.2",
     "semver": "^7.3.4",
     "ts-loader": "^8.0.7",

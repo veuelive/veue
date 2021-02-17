@@ -14,7 +14,7 @@ import { changeReleaseChannel } from "./appUpdater";
 
 export default class {
   readonly mainWindow: BrowserWindow;
-  rtmpUrl: string;
+  videoId: string;
   private ffmpegEncoder: FfmpegEncoder;
   private browserView: BrowserViewManager;
   readonly version: string;
@@ -45,7 +45,7 @@ export default class {
   }
 
   startStream(renderer: WebContents): void {
-    this.ffmpegEncoder = new FfmpegEncoder(this.rtmpUrl);
+    this.ffmpegEncoder = new FfmpegEncoder(this.videoId);
 
     this.ffmpegEncoder.on("close", () => {
       this.ffmpegEncoder = undefined;
@@ -71,7 +71,7 @@ export default class {
 
     ipcMain.handle("wakeup", (event, payload: WakeupPayload) => {
       logger.info("wakeup", payload);
-      this.rtmpUrl = payload.rtmpUrl;
+      this.videoId = payload.videoId;
       this.mainWindow.setSize(
         payload.mainWindow.width,
         payload.mainWindow.height,
@@ -113,6 +113,6 @@ export default class {
 
     ipcMain.on("webInspectorKey", () => {
       this.mainWindow.webContents.openDevTools();
-    })
+    });
   }
 }

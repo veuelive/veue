@@ -3,14 +3,17 @@ import * as child_process from "child_process";
 import { ChildProcess } from "child_process";
 import logger from "./logger";
 import { EventEmitter } from "events";
+import * as fs from "fs";
 
 export default class FfmpegEncoder extends EventEmitter {
   readonly ffmpeg: ChildProcess;
+  videoId: string;
 
-  constructor(rtmpUrl: string) {
+  constructor(streamId: string) {
     super();
+    this.videoId = streamId;
 
-    logger.info("RTMP: " + rtmpUrl);
+    logger.info("Video ID: " + streamId);
 
     const ffmpegArgs = [
       "-i",
@@ -33,22 +36,20 @@ export default class FfmpegEncoder extends EventEmitter {
       //force to overwrite
       "-y",
 
-      // used for audio sync
-      "-use_wallclock_as_timestamps",
-      "1",
-      "-async",
-      "1",
-
-      //'-filter_complex', 'aresample=44100', // resample audio to 44100Hz, needed if input is not 44100
-      "-strict",
-      "experimental",
-      "-bufsize",
-      "1000",
       "-f",
-      "flv",
+      "hls",
 
-      rtmpUrl,
+      "-hls_segment_type",
+      "fmp4",
+      "-hls_playlist_type",
+      "event",
+      "-hls_segment_filename",
+      this.path("data%02d.m4s"),
+
+      this.path("main.m3a8"),
     ];
+
+    fs.mkdirSync(this.path(""));
 
     logger.info(ffmpegArgs);
 
@@ -72,13 +73,28 @@ export default class FfmpegEncoder extends EventEmitter {
       });
     });
 
+    const segmentMatcher = new RegExp("Opening '(.*).m4s' for writing");
+
     // FFmpeg outputs all of its messages to STDERR. Let's log them to the console.
     this.ffmpeg.stderr.on("data", (data) => {
+      const message = data.toString();
+      const segmentFile = message.match(segmentMatcher);
+      if (segmentFile) {
+        this.uploadSegment(segmentFile[1] + ".m4s");
+      }
       logger.log({
         level: "info",
-        message: "FFmpeg STDERR Error: " + data.toString(),
+        message: "FFmpeg STDERR Data: " + message,
       });
     });
+  }
+
+  path(filename): string {
+    return `tmp/${this.videoId}/${filename}`;
+  }
+
+  get manifest(): string {
+    return this.path("main.m3a8");
   }
 
   dataPayload(payload: unknown): Promise<void> {
@@ -88,5 +104,25 @@ export default class FfmpegEncoder extends EventEmitter {
     } else {
       return Promise.reject();
     }
+  }
+
+  private uploadSegment(filePath: string) {
+    let manifestCopy = filePath + ".m3u8";
+    fs.copyFileSync(this.manifest, manifestCopy);
+    console.log("Uploading Segment: " + filePath);
+    this.uploadFile(filePath, filePath);
+    console.log("Uploading manifest " + manifestCopy);
+    this.uploadFile(manifestCopy, this.manifest);
+    console.log("Done with " + filePath);
+  }
+
+  private uploadFile(local, remote) {
+    child_process.exec(
+      `aws s3 cp ${local} s3://hamptons-test/${remote}`,
+      (error, stdout) => {
+        console.log(error);
+        console.log(stdout);
+      }
+    );
   }
 }
