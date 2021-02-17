@@ -18,7 +18,6 @@ export default class Metronome {
     // instead of the DOM's setInterval... so here, we make it very clear!
     this.tickInterval = window.setInterval(() => {
       this.timecodeMs = Date.now() - this.startedAt;
-      console.log(this.timecodeMs);
       this.timecodeDisplayElement.innerHTML = displayTime(
         this.timecodeMs / 1000
       );

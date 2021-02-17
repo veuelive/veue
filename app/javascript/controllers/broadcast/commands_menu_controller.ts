@@ -7,10 +7,9 @@ export const CloseMenuEvent = "CloseMenu";
 export default class extends Controller {
   element!: HTMLElement;
 
-  static targets = ["menuItems", "settingsForm"];
+  static targets = ["menuItems"];
 
   private menuItemsTarget!: HTMLElement;
-  private settingsFormTarget: HTMLElement;
 
   connect(): void {
     document.addEventListener(ShowMenuEvent, this.showMenuHandler.bind(this));

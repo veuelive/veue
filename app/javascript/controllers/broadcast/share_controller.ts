@@ -1,6 +1,5 @@
 import DropdownController from "./dropdown_controller";
 import { getVideoVisibility } from "helpers/video_helpers";
-import { ShowMenuEvent } from "./commands_menu_controller";
 import {
   copyToClipboard,
   openLinkInBrowser,

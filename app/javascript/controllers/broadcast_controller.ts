@@ -131,42 +131,45 @@ export default class extends Controller {
   }
 
   startStreaming(): void {
-    const titlePresent = this.element.dataset.videoTitle;
-    if (!titlePresent) {
-      document.dispatchEvent(
-        new CustomEvent(ShowSettingsMenuEvent, {
-          detail: {
-            titlePresent,
-          },
-        })
-      );
-    } else {
-      this.streamCapturer
-        .start(this.data.get("stream-key"))
-        .then(async () => {
-          this.state = "starting";
-          this.data.set("started-at", Date.now().toString());
+    // TODO:: this mechanism of event is partially implemented, will
+    // be part of next PR.
 
-          const screenshots = await this.videoMixer.getVideoShots();
+    // const titlePresent = this.element.dataset.videoTitle;
+    // if (!titlePresent) {
+    //   document.dispatchEvent(
+    //     new CustomEvent(ShowSettingsMenuEvent, {
+    //       detail: {
+    //         titlePresent,
+    //       },
+    //     })
+    //   );
+    // }
 
-          // We have to stringify to strip "undefined" values
-          const data = {
-            url: getCurrentUrl(),
-            primary_shot: screenshots[0],
-            video_layout: JSON.stringify(this.videoMixer.broadcastLayout),
-          };
+    this.streamCapturer
+      .start(this.data.get("stream-key"))
+      .then(async () => {
+        this.state = "starting";
+        this.data.set("started-at", Date.now().toString());
 
-          if (screenshots[1]) {
-            data["secondary_shot"] = screenshots[1];
-          }
+        const screenshots = await this.videoMixer.getVideoShots();
 
-          await postForm("./start", data);
+        // We have to stringify to strip "undefined" values
+        const data = {
+          url: getCurrentUrl(),
+          primary_shot: screenshots[0],
+          video_layout: JSON.stringify(this.videoMixer.broadcastLayout),
+        };
 
-          this.state = "live";
-          this.metronome.start();
-        })
-        .catch((e) => console.error(e));
-    }
+        if (screenshots[1]) {
+          data["secondary_shot"] = screenshots[1];
+        }
+
+        await postForm("./start", data);
+
+        this.state = "live";
+        this.metronome.start();
+      })
+      .catch((e) => console.error(e));
   }
 
   stopStreaming(): void {
