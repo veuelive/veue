@@ -19,7 +19,7 @@ export default class extends DropdownController {
 
   private shareItemsMarkup(): void {
     const openLink = document.createElement("div");
-    openLink.classList.add("select-menu--content__body__item");
+    openLink.classList.add("select-menu--content__body__item", "open");
     openLink.innerText = "Open Link";
     openLink.addEventListener("click", (event: Event) => {
       this.openLink(event);
@@ -28,7 +28,7 @@ export default class extends DropdownController {
     this.appendElement(openLink);
 
     const copyLink = document.createElement("div");
-    copyLink.classList.add("select-menu--content__body__item");
+    copyLink.classList.add("select-menu--content__body__item", "copy");
     copyLink.innerText = "Copy Link";
     copyLink.addEventListener("click", (event: Event) => {
       this.copyLink(event);

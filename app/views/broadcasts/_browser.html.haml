@@ -3,13 +3,13 @@
     .browser__bar__logo
       = svg_tag "logo"
     .browser__bar__controls
-      %a{data: {action: "click->broadcast--browser#goBack", target: "broadcast--browser.backButton"}}
+      %a{data: {action: "click->broadcast--browser#goBack", target: "broadcast--browser.backButton"}, href: "javascript:void(0)"}
         = svg_tag "back-arrow"
-      %a{data: {action: "click->broadcast--browser#goForward", target: "broadcast--browser.forwardButton"}}
+      %a{data: {action: "click->broadcast--browser#goForward", target: "broadcast--browser.forwardButton"}, href: "javascript:void(0)"}
         = svg_tag "forward-arrow"
-      %a{data: {action: "click->broadcast--browser#doReload", target: "broadcast--browser.reloadButton"}}
+      %a{data: {action: "click->broadcast--browser#doReload", target: "broadcast--browser.reloadButton"}, href: "javascript:void(0)"}
         = svg_tag "reload"
-      %a{data: {action: "click->broadcast--browser#stopLoading", target: "broadcast--browser.stopButton"}, style: "display: none;"}
+      %a{data: {action: "click->broadcast--browser#stopLoading", target: "broadcast--browser.stopButton"}, style: "display: none;", href: "javascript:void(0)"}
         = svg_tag "stop_icon"
     .browser__bar__address
       %input{type: "text", value: "https://apple.com", data: {action: "keypress->broadcast--browser#onKeypress", target: "broadcast--browser.addressBar"}}
@@ -22,10 +22,10 @@
             "target": "live-viewer-count.counter"
           }
         }= current_broadcast_video.active_viewers_count
-      %a{data: {showOnState: "starting"}} Starting...
-      %a{data: {showOnState: "failed"}} Connection Error
-      %a{data: {showOnState: "finished"}} Broadcast Complete
-      %a{data: {action: "click->broadcast#startStreaming", showOnState: "ready"}}
+      %a{data: {showOnState: "starting"}, href: "javascript:void(0)"} Starting...
+      %a{data: {showOnState: "failed"}, href: "javascript:void(0)"} Connection Error
+      %a{data: {showOnState: "finished"}, href: "javascript:void(0)"} Broadcast Complete
+      %a{data: {action: "click->broadcast#startStreaming", showOnState: "ready"}, href: "javascript:void(0)"}
         = svg_tag "videocam"
         %span Go Live
       %a.time-area{data: {showOnState: "live"}}
@@ -33,6 +33,6 @@
         %span.dot.time-dot
         %span#timecodeDisplay
           \-:-:-
-      %a.stop-btn{data: {action: "click->broadcast#stopStreaming", showOnState: "live"}}
+      %a.stop-btn{data: {action: "click->broadcast#stopStreaming", showOnState: "live"}, href: "javascript:void(0)"}
         = svg_tag "close"
   .browser__underlay{data: {target: "broadcast.browserUnderlay"}}

@@ -32,7 +32,6 @@ export default class SettingsController extends DropdownController {
 
   showHideMenu(event: CustomEvent): void {
     const data = event.detail;
-    console.log(data);
 
     this.reset();
 
