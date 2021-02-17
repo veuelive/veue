@@ -51,7 +51,7 @@ export default class extends Controller {
   }
 
   show(): void {
-    this.debugAreaTarget.setAttribute("style", "width: 200px; height: 400px;");
+    this.debugAreaTarget.setAttribute("style", "width: 280px; height: 400px;");
     this.hidden = false;
   }
 

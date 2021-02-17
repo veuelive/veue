@@ -1,17 +1,51 @@
-import { Controller } from "stimulus";
+import DropdownController from "./dropdown_controller";
+import { secureFetch } from "util/fetch";
 import { Visibility, setVideoVisibility } from "../../helpers/video_helpers";
-import { ShowMenuEvent } from "./commands_menu_controller";
 
-export default class SettingsController extends Controller {
+export const ShowSettingsMenuEvent = "ShowSettingsMenu";
+
+export default class SettingsController extends DropdownController {
   static targets = ["form", "visibility"];
 
   private readonly formTarget!: HTMLFormElement;
   private readonly visibilityTarget!: HTMLSelectElement;
 
   connect(): void {
+    super.connect();
+
+    document.addEventListener(
+      ShowSettingsMenuEvent,
+      this.showHideMenu.bind(this)
+    );
+
     document
       .querySelectorAll(".flash-success .flash-error")
       .forEach((el) => el.remove());
+  }
+
+  disconnect(): void {
+    document.removeEventListener(
+      ShowSettingsMenuEvent,
+      this.showHideMenu.bind(this)
+    );
+  }
+
+  showHideMenu(event: CustomEvent): void {
+    const data = event.detail;
+    console.log(data);
+
+    this.reset();
+
+    this.appendSettingsForm();
+
+    this.setTitle("Settings");
+    this.dispatchMenuToggle("settings");
+  }
+
+  async appendSettingsForm(): Promise<void> {
+    const response = await secureFetch("./edit");
+    const markup = await response.text();
+    this.insertElement(markup);
   }
 
   handleAjaxSuccess(): void {

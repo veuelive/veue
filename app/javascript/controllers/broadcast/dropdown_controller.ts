@@ -1,16 +1,17 @@
+import { Controller } from "stimulus";
 import { BroadcasterCommand } from "types/broadcaster_command";
 import {
   ShowMenuEvent,
   CloseMenuEvent,
 } from "controllers/broadcast/commands_menu_controller";
 
-export class Dropdown {
-  private heading: HTMLElement;
+export default class extends Controller {
+  private menuTitle: HTMLElement;
   private menuBody: HTMLElement;
 
-  constructor() {
+  connect(): void {
+    this.menuTitle = document.querySelector(".select-menu--content__title");
     this.menuBody = document.querySelector(".select-menu--content__body");
-    this.heading = document.querySelector(".select-menu--content__title");
   }
 
   protected dispatchMenuToggle(type: string): void {
@@ -24,7 +25,7 @@ export class Dropdown {
   }
 
   protected reset(): void {
-    this.heading.innerHTML = "";
+    this.menuTitle.innerHTML = "";
     this.menuBody.innerHTML = "";
   }
 
@@ -36,7 +37,11 @@ export class Dropdown {
     this.menuBody.appendChild(element);
   }
 
+  protected insertElement(markup: string): void {
+    this.menuBody.innerHTML = markup;
+  }
+
   protected setTitle(title: string): void {
-    this.heading.innerText = title;
+    this.menuTitle.innerText = title;
   }
 }

@@ -21,6 +21,26 @@
   }
 }
 
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
 #broadcast {
   .broadcast-commands {
     display: flex;
@@ -92,14 +112,12 @@
 
     &.audioinput {
       &:before {
-        bottom: 202px;
         left: 20px;
       }
     }
 
     &.videoinput {
       &:before {
-        bottom: 138px;
         left: 54px;
       }
     }
@@ -107,7 +125,6 @@
     &.share {
       left: 30px;
       &:before {
-        bottom: 181px;
         right: 58px;
       }
     }
@@ -115,7 +132,6 @@
     &.settings {
       left: 30px;
       &:before {
-        bottom: 293px;
         right: 20px;
       }
     }
@@ -125,13 +141,17 @@
       border-style: solid;
       border-width: 1px 1px 0 0;
       display: inline-block;
+
+      top: -8px;
       height: 0.85rem;
-      transform: rotate(-45deg);
-      vertical-align: top;
       width: 0.85rem;
-      background: color.$white;
+      transform: rotate(-45deg);
+
+      vertical-align: top;
       content: "";
       position: absolute;
+
+      background: color.$white;
       border-right-color: color.$neutral-middle;
       border-top-color: color.$neutral-middle;
     }

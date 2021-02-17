@@ -42,6 +42,7 @@
         background: none;
         border: 0;
         padding: 0 11px;
+        cursor: pointer;
         &:disabled * {
           fill: #eee;
         }
@@ -72,6 +73,7 @@
         width: 100%;
         padding-left: 1.2rem;
         font-size: 1rem;
+        cursor: pointer;
         background-color: color.$white;
         color: color.$gray-dark-2;
       }
@@ -81,8 +83,9 @@
       a {
         background: color.$veue-corporate;
         color: color.$white;
-        padding: 9px 25px;
+        padding: 9px 11px;
         border-radius: 10px;
+        cursor: pointer;
         svg {
           width: 19px;
           height: 12px;
@@ -90,26 +93,32 @@
         }
       }
     }
-  }
-  .time-area {
-    padding: 0.6875rem 1.125rem;
-    border: none;
-    border-radius: 0.9375rem;
-    margin-right: 0.4375rem;
-    font-weight: 600;
-  }
-  .time-red {
-    background-color: color.$red-light;
-    color: color.$red-highlight;
-    .time-dot {
-      background-color: color.$red-highlight;
+
+    .widget {
+      margin-right: 5px;
+      background: color.$veue-lilac;
+      color: color.$veue-corporate;
+      svg {
+        path {
+          fill: color.$veue-corporate;
+        }
+      }
     }
   }
-  .time-gray {
-    background-color: color.$gray-light;
-    color: color.$gray-dark-1;
-    .dot {
-      background-color: color.$gray-dark-1;
+  .time-area {
+    padding: 9px 11px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    background-color: color.$red-highlight;
+    margin-right: 5px;
+  }
+  .stop-btn {
+    background-color: color.$red-highlight;
+    svg {
+      path {
+        fill: #fff;
+      }
     }
   }
   .time-dot {
@@ -118,5 +127,6 @@
     display: inline-block;
     border-radius: 0.4375rem;
     vertical-align: middle;
+    background-color: color.$white;
   }
 }

@@ -56,13 +56,47 @@ textarea {
       }
 
       .debug-area {
+        &--content {
+          border: 1px solid color.$neutral-middle;
+          border-radius: 10px;
+        }
+
+        .title {
+          padding: 0 15px;
+          display: flex;
+          justify-content: space-between;
+          color: color.$veue-corporate;
+          border-bottom: 1px solid color.$neutral-soft;
+
+          .icon {
+            cursor: pointer;
+
+            svg {
+              width: 10px;
+              height: 10px;
+              path {
+                fill: color.$neutral-regular;
+              }
+            }
+          }
+        }
+
+        .release-channel {
+          padding: 7px 15px;
+          input {
+            padding: 7px 5px;
+            border-radius: 10px;
+            border: 1px solid color.$neutral-middle;
+          }
+        }
+
         width: 0;
         height: 0;
         overflow: hidden;
         canvas {
           width: 99%;
           min-width: 1px;
-          border: 1px solid red;
+          padding: 0 15px;
         }
       }
 

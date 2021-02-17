@@ -10,19 +10,29 @@
       %a{data: {action: "click->broadcast--browser#doReload", target: "broadcast--browser.reloadButton"}}
         = svg_tag "reload"
       %a{data: {action: "click->broadcast--browser#stopLoading", target: "broadcast--browser.stopButton"}, style: "display: none;"}
-        = svg_tag "stop_reload"
+        = svg_tag "stop_icon"
     .browser__bar__address
       %input{type: "text", value: "https://apple.com", data: {action: "keypress->broadcast--browser#onKeypress", target: "broadcast--browser.addressBar"}}
     .browser__bar__button
+      %a.widget{data: {showOnState: "live"}}
+        = svg_tag "view"
+        %span#active-viewers{
+          "data": {
+            "controller": "live-viewer-count",
+            "target": "live-viewer-count.counter"
+          }
+        }= current_broadcast_video.active_viewers_count
       %a{data: {showOnState: "starting"}} Starting...
       %a{data: {showOnState: "failed"}} Connection Error
       %a{data: {showOnState: "finished"}} Broadcast Complete
       %a{data: {action: "click->broadcast#startStreaming", showOnState: "ready"}}
         = svg_tag "videocam"
         %span Go Live
-      %a{data: {action: "click->broadcast#stopStreaming", showOnState: "live"}} Stop Broadcast
       %a.time-area{data: {showOnState: "live"}}
+        %span Live
         %span.dot.time-dot
         %span#timecodeDisplay
           \-:-:-
+      %a.stop-btn{data: {action: "click->broadcast#stopStreaming", showOnState: "live"}}
+        = svg_tag "close"
   .browser__underlay{data: {target: "broadcast.browserUnderlay"}}

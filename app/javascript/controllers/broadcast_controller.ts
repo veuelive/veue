@@ -20,7 +20,7 @@ import {
   attachKeyboardListener,
   removeKeyboardListeners,
 } from "helpers/broadcast/keyboard_listeners";
-import { ShowMenuEvent } from "./broadcast/commands_menu_controller";
+import { ShowSettingsMenuEvent } from "./broadcast/settings_controller";
 
 export const BroadcasterEnvironmentChangedEvent = "broadcastEnvironmentChanged";
 
@@ -131,12 +131,12 @@ export default class extends Controller {
   }
 
   startStreaming(): void {
-    if (!this.element.dataset.videoTitle) {
+    const titlePresent = this.element.dataset.videoTitle;
+    if (!titlePresent) {
       document.dispatchEvent(
-        new CustomEvent(ShowMenuEvent, {
+        new CustomEvent(ShowSettingsMenuEvent, {
           detail: {
-            title: "Settings",
-            type: "settings",
+            titlePresent,
           },
         })
       );

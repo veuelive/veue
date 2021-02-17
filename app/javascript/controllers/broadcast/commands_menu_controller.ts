@@ -36,8 +36,8 @@ export default class extends Controller {
   }
 
   private resetMenu(): void {
-    this.menuItemsTarget.innerHTML = "";
     this.element.style.display = "none";
+    this.menuItemsTarget.innerHTML = "";
     this.element.classList.remove(this.type);
     this.type = "";
   }

@@ -1,7 +1,6 @@
-import { Controller } from "stimulus";
+import DropdownController from "./dropdown_controller";
 import { getVideoVisibility } from "helpers/video_helpers";
 import { ShowMenuEvent } from "./commands_menu_controller";
-import { ShareDropdown } from "helpers/broadcast/commands/share_dropdown";
 import {
   copyToClipboard,
   openLinkInBrowser,
@@ -9,14 +8,53 @@ import {
   privateVideoLink,
 } from "helpers/broadcast_helpers";
 
-export default class extends Controller {
-  private dropdown;
+export default class extends DropdownController {
+  showHideMenu(): void {
+    this.reset();
 
-  connect(): void {
-    this.dropdown = new ShareDropdown();
+    this.shareItemsMarkup();
+    this.setTitle("Share Broadcaster");
+    this.dispatchMenuToggle("share");
   }
 
-  showHideMenu(): void {
-    this.dropdown.toggleMenu();
+  private shareItemsMarkup(): void {
+    const openLink = document.createElement("div");
+    openLink.classList.add("select-menu--content__body__item");
+    openLink.innerText = "Open Link";
+    openLink.addEventListener("click", (event: Event) => {
+      this.openLink(event);
+      this.dispatchMenuClose();
+    });
+    this.appendElement(openLink);
+
+    const copyLink = document.createElement("div");
+    copyLink.classList.add("select-menu--content__body__item");
+    copyLink.innerText = "Copy Link";
+    copyLink.addEventListener("click", (event: Event) => {
+      this.copyLink(event);
+      this.dispatchMenuClose();
+    });
+    this.appendElement(copyLink);
+  }
+
+  openLink(event: Event): void {
+    event.stopPropagation();
+
+    openLinkInBrowser(this.getVideoLink());
+  }
+
+  copyLink(event: Event): void {
+    event.stopPropagation();
+    copyToClipboard(this.getVideoLink());
+    alert("Link Copied to Clipboard!");
+  }
+
+  private getVideoLink(): string {
+    const privateVisibilities = ["private", "protected"];
+    if (privateVisibilities.includes(getVideoVisibility())) {
+      return privateVideoLink();
+    }
+
+    return publicVideoLink();
   }
 }
