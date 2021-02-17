@@ -18,12 +18,31 @@
     padding: 10px;
   }
 
+  .primary-video-area {
+    // This is required to ensure that the controls can be shown over this area
+    position: relative;
+
+    canvas.primary-canvas {
+      width: 100%;
+      border-radius: 0 0 10px 10px;
+    }
+
+    canvas.pip-secondary-canvas {
+      border-radius: 10px;
+    }
+  }
+
   .broadcasts__header {
     margin-bottom: 0;
   }
 
   .content-area__secondary {
     margin-top: 10px;
+
+    canvas.fixed-secondary-canvas {
+      border-radius: 10px 10px 0 0;
+      width: 100%;
+    }
   }
 
   /**
@@ -51,6 +70,12 @@
 
         &::-webkit-scrollbar {
           display: none;
+        }
+
+        canvas.primary-canvas {
+          width: unset;
+          max-height: 65vh;
+          max-width: 100%;
         }
       }
 
