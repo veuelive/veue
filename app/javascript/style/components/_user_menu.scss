@@ -9,6 +9,9 @@
   display: flex;
   align-items: center;
 
+  // Safari workaround for improper widths...
+  justify-content: flex-end;
+
   // There is a second chevron in the mobile
   // view, so we have to be extra clear on which
   // one is being addressed
