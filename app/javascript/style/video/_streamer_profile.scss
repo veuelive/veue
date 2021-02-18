@@ -7,11 +7,9 @@
   .streamer-profile {
     border-radius: 0 0 10px 10px;
     max-height: 20vh;
-
-    &--content {
-      padding: 0;
-      background: transparent;
-    }
+    height: unset;
+    padding: 0;
+    background: transparent;
 
     &__info {
       &__mobile__about {
