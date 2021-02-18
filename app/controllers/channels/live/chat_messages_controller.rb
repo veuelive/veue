@@ -3,18 +3,31 @@
 module Channels
   module Live
     class ChatMessagesController < ApplicationController
+      include ModerateConcern
       include ChannelConcern
+
       before_action :authenticate_user!, only: [:create]
 
       def create
-        message = build_chat_message
+        # moderation_item = create_moderation_item(
+        #   text: params[:message],
+        #   user: current_user,
+        #   video: current_video,
+        # )
 
-        unless message.save
+        # message = build_chat_message(published: moderation_item.approved?)
+
+        message = current_user.chat_messages.build(
+          input: {message: params[:message]},
+          video: current_video,
+          published: false,
+        )
+        if message.save
+          # moderation_item.update!(video_event: message)
+          render(json: {success: true, message: message.to_hash})
+        else
           render(json: {success: false, error_messages: message.errors.full_messages})
-          return
         end
-
-        render(json: {success: true, message: message.to_hash})
       end
 
       def index
@@ -30,11 +43,12 @@ module Channels
 
       private
 
-      def build_chat_message
+      def build_chat_message(published:)
         ChatMessage.new(
           user: current_user,
           input: {message: params[:message]},
           video: current_video,
+          published: published,
         )
       end
     end

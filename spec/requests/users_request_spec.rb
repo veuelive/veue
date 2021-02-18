@@ -45,6 +45,19 @@ RSpec.describe "Users", type: :request do
       expect(user.display_name).to eq(new_name)
     end
 
+    it "should not update user with an improper display name but still create a moderation item" do
+      new_name = "bad word"
+
+      expect(ModerationItem.count).to eq(0)
+
+      PerspectiveApi.key = "FAIL"
+
+      put "/users/#{user.id}", params: {user: {display_name: new_name}}
+
+      expect(user.display_name).not_to(eq(new_name))
+      expect(ModerationItem.count).to eq(1)
+    end
+
     it "should update user with proper email" do
       email = "donatello@pepperoni.com"
       put "/users/#{user.id}", params: {user: {email: email}}
@@ -59,7 +72,7 @@ RSpec.describe "Users", type: :request do
       expect(response).to have_http_status(:bad_request)
     end
 
-    it "should upadate profile image" do
+    it "should update profile image" do
       image = fixture_file_upload("spec/factories/test.png", "image/png")
 
       put "/users/#{user.id}/upload_image", params: {profile_image: image}

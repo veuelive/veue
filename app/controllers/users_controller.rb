@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  include ModerateConcern
+
   before_action :authenticate_user!, only: %i[edit destroy]
 
   # Automatically generates @user
@@ -14,13 +16,13 @@ class UsersController < ApplicationController
     return unless current_session_token
     return if current_session_token.user
 
-    @current_user = User.new(
-      session_tokens: [current_session_token],
-      display_name: params[:display_name],
-      phone_number: current_session_token.phone_number,
-    )
+    display_name = params[:display_name]
 
-    if @current_user.save
+    @current_user = build_current_user(display_name)
+    moderation_item = create_moderation_item(text: display_name)
+
+    if moderation_item.approved? && @current_user.save
+      moderation_item.update!(user: @current_user)
       render(status: :accepted, template: "layouts/_header", layout: false)
     else
       render(status: :bad_request, template: "shared/_login_modal", layout: false)
@@ -30,11 +32,15 @@ class UsersController < ApplicationController
   def update
     @user = @user.decorate
 
-    if @user.update(permitted_parameters)
+    moderation_item = create_moderation_item(text: permitted_parameters[:display_name], user: @user)
+
+    if moderation_item.approved? && @user.update(permitted_parameters)
       render(status: :accepted, template: "users/partials/_edit_form", layout: false)
     else
       render(status: :bad_request, template: "users/partials/_edit_form", layout: false)
     end
+
+    moderation_item.save!
   end
 
   def upload_image
@@ -65,5 +71,13 @@ class UsersController < ApplicationController
 
   def permitted_parameters
     params.require(:user).permit(:about_me, :display_name, :email)
+  end
+
+  def build_current_user(display_name)
+    User.new(
+      session_tokens: [current_session_token],
+      display_name: display_name,
+      phone_number: current_session_token.phone_number,
+    )
   end
 end

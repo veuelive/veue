@@ -30,13 +30,7 @@ class ChatMessage < VideoEvent
     true
   end
 
+  # This is set by the +chat_messages_controller+
   def set_published_state
-    item = moderation_items.build(
-      video: video,
-      user: user,
-      text: text,
-    )
-    item.fetch_scores!
-    self.published = item.approved?
   end
 end
