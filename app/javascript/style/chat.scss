@@ -12,6 +12,7 @@
   background-color: color.$white;
   font-size: 1rem;
   border-radius: 10px;
+  position: relative;
 
   .messages-overflow-container {
     position: relative;
@@ -26,6 +27,7 @@
     .messages {
       margin: 20px;
       min-height: 95%; // This keeps the messages taking up some space so that the first message is below
+      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -80,23 +82,28 @@
   }
 
   .chat-scroll {
+    // layout
     display: flex;
     position: absolute;
-    cursor: pointer;
-    bottom: 92px;
-    right: 25px;
+    bottom: 0;
+    right: 0;
+    transform: translate(-30%, -185%);
     padding: 0.65rem;
+
+    // style
+    cursor: pointer;
     border-radius: 10px;
     background-color: color.$white;
     border: 1px solid color.$neutral-regular;
+
     svg {
       fill: color.$neutral-regular;
     }
 
-    @include smallTall() {
-      bottom: 80px;
-      right: 12px;
-    }
+    // @include smallTall() {
+    //   bottom: 80px;
+    //   right: 12px;
+    // }
   }
 
   .stream-end {
