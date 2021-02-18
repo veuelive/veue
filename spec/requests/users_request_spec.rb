@@ -32,17 +32,17 @@ RSpec.describe "Users", type: :request do
   end
 
   describe "UPDATE /:id" do
-    let(:user) { create(:user) }
+    let(:user) { create(:streamer) }
     before do
       login_as user
     end
 
-    it "should update user" do
+    it "should update user and their channels" do
       new_name = "Donatello Pepperoni"
       put "/users/#{user.id}", params: {user: {display_name: new_name}}
 
-      user.reload
-      expect(user.display_name).to eq(new_name)
+      expect(user.reload.display_name).to eq(new_name)
+      expect(user.channels.first.name).to eq(new_name)
     end
 
     it "should update user with proper email" do
@@ -69,7 +69,7 @@ RSpec.describe "Users", type: :request do
       expect(user.profile_image.attached?).to eq(true)
     end
 
-    it "should not update with inappropriate display name" do
+    it "should not update user with inappropriate display name" do
       PerspectiveApi.key = "FAIL"
       display_name = "superbad"
       put "/users/#{user.id}/", params: {user: {display_name: display_name}}
