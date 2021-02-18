@@ -5,25 +5,23 @@
       broadcast: {
         "stream-key": current_channel.mux_stream_key,
         "video-state": current_broadcast_video.state,
-        "session-token": current_session_token.uuid
+        "session-token": current_session_token.uuid,
       },
       "video-id": current_broadcast_video.id,
       "video-visibility": current_broadcast_video.visibility,
+      "video-title": current_broadcast_video.title,
       "channel-id": current_broadcast_video.channel.id,
       "channel-slug": current_broadcast_video.channel.slug,
       "channel-user-id": current_broadcast_video.user.id,
       "user-name": current_user.display_name,
     }
   }
-  .content-area
+  .broadcast--content
     .content--left
       = render partial: "broadcast_controls"
       = render partial: "browser"
-    .content--right{data: {controller: "broadcast--settings"}}
+    .content--right{data: {controller: "broadcast--settings", "broadcast--settings": { "type": "settings" }}}
       %video#webcam_preview{data: {target: "broadcast.webcamVideoElement"}}
       %canvas#audioCanvas
       = render partial: "command_area"
-      = render partial: "channels/videos/partials/edit",
-               locals: {video: current_broadcast_video}
-
       = render partial: "shared/chat", locals: {video: current_broadcast_video}

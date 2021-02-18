@@ -1,38 +1,48 @@
-import { Controller } from "stimulus";
+import DropdownController from "./dropdown_controller";
+import { getVideoVisibility } from "helpers/video_helpers";
 import {
   copyToClipboard,
   openLinkInBrowser,
   publicVideoLink,
   privateVideoLink,
 } from "helpers/broadcast_helpers";
-import { getVideoVisibility } from "helpers/video_helpers";
 
-export default class extends Controller {
-  static targets = ["menu"];
-  private menuTarget!: HTMLElement;
-  private hidden: boolean;
+export default class extends DropdownController {
+  showHideMenu(): void {
+    this.resetMenu();
 
-  connect(): void {
-    this.hide();
+    this.shareItemsMarkup();
+    this.setTitle("Share Broadcaster");
+    this.toggleMenu("share");
   }
 
-  showHideMenu(): void {
-    if (this.hidden) {
-      this.show();
-    } else {
-      this.hide();
-    }
+  private shareItemsMarkup(): void {
+    const openLink = document.createElement("div");
+    openLink.classList.add("select-menu--content__body__item", "open");
+    openLink.innerText = "Open Link";
+    openLink.addEventListener("click", (event: Event) => {
+      this.openLink(event);
+      this.dispatchMenuClose();
+    });
+    this.appendElement(openLink);
+
+    const copyLink = document.createElement("div");
+    copyLink.classList.add("select-menu--content__body__item", "copy");
+    copyLink.innerText = "Copy Link";
+    copyLink.addEventListener("click", (event: Event) => {
+      this.copyLink(event);
+      this.dispatchMenuClose();
+    });
+    this.appendElement(copyLink);
   }
 
   openLink(event: Event): void {
-    this.hide();
     event.stopPropagation();
 
     openLinkInBrowser(this.getVideoLink());
   }
 
   copyLink(event: Event): void {
-    this.hide();
     event.stopPropagation();
     copyToClipboard(this.getVideoLink());
     alert("Link Copied to Clipboard!");
@@ -45,15 +55,5 @@ export default class extends Controller {
     }
 
     return publicVideoLink();
-  }
-
-  private hide() {
-    this.hidden = true;
-    this.menuTarget.setAttribute("style", "display: none;");
-  }
-
-  private show() {
-    this.hidden = false;
-    this.menuTarget.setAttribute("style", "display: block;");
   }
 }

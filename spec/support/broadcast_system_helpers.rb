@@ -21,4 +21,12 @@ module BroadcastSystemHelpers
   def wait_for_broadcast_state(state)
     expect(page).to have_css("div[data-broadcast-state='#{state}']")
   end
+
+  def click_start_broadcast_button
+    click_link("Go Live")
+  end
+
+  def click_stop_broadcast_button
+    click_on(class: "stop-btn")
+  end
 end

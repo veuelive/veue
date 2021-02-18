@@ -46,6 +46,8 @@ export default class extends Controller {
   private environment: BroadcasterEnvironment;
   private keyboardListener: (event) => void;
 
+  element!: HTMLElement;
+
   connect(): void {
     this.keyboardListener = attachKeyboardListener();
 
@@ -128,6 +130,20 @@ export default class extends Controller {
   }
 
   startStreaming(): void {
+    // TODO:: this mechanism of event is partially implemented, will
+    // be part of next PR.
+
+    // const titlePresent = this.element.dataset.videoTitle;
+    // if (!titlePresent) {
+    //   document.dispatchEvent(
+    //     new CustomEvent(ShowSettingsMenuEvent, {
+    //       detail: {
+    //         titlePresent,
+    //       },
+    //     })
+    //   );
+    // }
+
     this.streamCapturer
       .start(this.data.get("stream-key"))
       .then(async () => {

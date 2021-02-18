@@ -1,26 +1,29 @@
-.broadcast-commands
-  .btn{data: {controller: "broadcast--media-manager", action: "click->broadcast--media-manager#showHideMenu", "broadcast--media-manager": {"type": "audio"}}}
-    = svg_tag "volume-max"
-    .btn--tooltip
-      Switch Microphone
-  .btn{data: {controller: "broadcast--media-manager", action: "click->broadcast--media-manager#showHideMenu", "broadcast--media-manager": {"type": "video"}}}
-    = svg_tag "cam"
-    .btn--tooltip
-      Switch Camera
-  .btn#settings-btn{ data: { action: "click->broadcast--settings#toggleForm" }}
-    = svg_tag "settings"
-    .btn--tooltip
-      Settings
-
-  .btn#share-btn{data: {controller: "broadcast--share", action: "click->broadcast--share#showHideMenu"}}
-    = svg_tag "share"
-    .btn--tooltip
-      Share Broadcast
-    .select-menu{data: {target: "broadcast--share.menu"}}
-      .item.open{data: {action: "click->broadcast--share#openLink"}} Open Link
-      .item.copy{data: {action: "click->broadcast--share#copyLink"}} Copy Link
-
+.broadcast-commands{
+  data: {
+    controller: "broadcast--commands"
+  }
+}
+  .broadcast-commands__left
+    .btn{data: {controller: "broadcast--media-manager", action: "click->broadcast--media-manager#showHideMenu", "broadcast--media-manager": {"type": "audio"}}}
+      = svg_tag "volume"
+      .btn--tooltip
+        Switch Microphone
+    .btn{data: {controller: "broadcast--media-manager", action: "click->broadcast--media-manager#showHideMenu", "broadcast--media-manager": {"type": "video"}}}
+      = svg_tag "cam"
+      .btn--tooltip
+        Switch Camera
+  .broadcast-commands__right
+    .btn#share-btn{data: {controller: "broadcast--share", action: "click->broadcast--share#showHideMenu"}}
+      = svg_tag "share"
+      .btn--tooltip
+        Share Broadcast
+    .btn#settings-btn{ data: { action: "click->broadcast--settings#showHideMenu" }}
+      = svg_tag "gear"
+      .btn--tooltip
+        Settings
+  = render partial: "commands_menu"
 .debug-area{data: {target: "broadcast--debug.debugArea"}}
-  .release-channel
-    %input{data: {target: "broadcast--debug.releaseChannel"}}
-    %button{data: {action: "click->broadcast--debug#switchToReleaseChannel"}} Install
+  .debug-area--content
+    .release-channel
+      %input{data: {target: "broadcast--debug.releaseChannel"}}
+      %button{data: {action: "click->broadcast--debug#switchToReleaseChannel"}} Install

@@ -12,32 +12,41 @@
   }
 
   &__bar {
-    height: 70px;
     background-color: color.$white;
     box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
+    border-bottom: 1px solid color.$neutral-accents;
     display: flex;
     align-items: center;
-    padding-left: 1em;
+    padding: 15px 10px;
 
     justify-content: space-between;
-    border-top-left-radius: 0.625rem;
-    border-top-right-radius: 0.625rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    &__logo {
+      display: flex;
+      padding: 0 15px;
+      svg {
+        width: 26px;
+      }
+    }
 
     &__controls {
-      button {
-        font-size: 25px;
-        height: 35px;
-        width: 35px;
-        background: color.$white;
+      display: flex;
+      padding-right: 12px;
+      a {
+        height: 19px;
+        width: 19px;
+        background: none;
         border: 0;
+        padding: 0 11px;
+        cursor: pointer;
         &:disabled * {
           fill: #eee;
         }
         &:active {
-          transform: scale(0.98);
           /* Scaling button to 0.98 to its original size */
-          box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
-          /* Lowering the shadow */
+          transform: scale(0.98);
         }
         &:focus {
           border: 0;
@@ -55,36 +64,59 @@
       border: 1px solid color.$gray-light;
       border-radius: 0.625rem;
       position: relative;
+      margin-right: 10px;
       input {
         border: none;
         outline: none;
         width: 100%;
         padding-left: 1.2rem;
         font-size: 1rem;
+        cursor: pointer;
         background-color: color.$white;
         color: color.$gray-dark-2;
       }
     }
-  }
-  .time-area {
-    padding: 0.6875rem 1.125rem;
-    border: none;
-    border-radius: 0.9375rem;
-    margin-right: 0.4375rem;
-    font-weight: 600;
-  }
-  .time-red {
-    background-color: color.$red-light;
-    color: color.$red-highlight;
-    .time-dot {
-      background-color: color.$red-highlight;
+
+    &__button {
+      a {
+        background: color.$veue-corporate;
+        color: color.$white;
+        padding: 9px 11px;
+        border-radius: 10px;
+        cursor: pointer;
+        svg {
+          width: 19px;
+          height: 12px;
+          fill: color.$white;
+        }
+      }
+    }
+
+    .widget {
+      margin-right: 5px;
+      background: color.$veue-lilac;
+      color: color.$veue-corporate;
+      svg {
+        path {
+          fill: color.$veue-corporate;
+        }
+      }
     }
   }
-  .time-gray {
-    background-color: color.$gray-light;
-    color: color.$gray-dark-1;
-    .dot {
-      background-color: color.$gray-dark-1;
+  .time-area {
+    padding: 9px 11px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    background-color: color.$red-highlight;
+    margin-right: 5px;
+  }
+  .stop-btn {
+    background-color: color.$red-highlight;
+    svg {
+      path {
+        fill: #fff;
+      }
     }
   }
   .time-dot {
@@ -93,5 +125,6 @@
     display: inline-block;
     border-radius: 0.4375rem;
     vertical-align: middle;
+    background-color: color.$white;
   }
 }

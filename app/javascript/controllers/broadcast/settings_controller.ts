@@ -1,25 +1,48 @@
-import { Controller } from "stimulus";
+import DropdownController from "./dropdown_controller";
+import { secureFetch } from "util/fetch";
 import { Visibility, setVideoVisibility } from "../../helpers/video_helpers";
 
-export default class SettingsController extends Controller {
+export const ShowSettingsMenuEvent = "ShowSettingsMenu";
+
+export default class SettingsController extends DropdownController {
   static targets = ["form", "visibility"];
 
   private readonly formTarget!: HTMLFormElement;
   private readonly visibilityTarget!: HTMLSelectElement;
 
   connect(): void {
-    this.toggleForm();
+    super.connect();
+
+    document.addEventListener(
+      ShowSettingsMenuEvent,
+      this.showHideMenu.bind(this)
+    );
+
     document
       .querySelectorAll(".flash-success .flash-error")
       .forEach((el) => el.remove());
   }
 
-  toggleForm(): void {
-    if (this.formTarget.style.display === "none") {
-      this.showForm();
-    } else {
-      this.hideForm();
-    }
+  disconnect(): void {
+    document.removeEventListener(
+      ShowSettingsMenuEvent,
+      this.showHideMenu.bind(this)
+    );
+  }
+
+  showHideMenu(): void {
+    this.resetMenu();
+
+    this.appendSettingsForm();
+
+    this.setTitle("Settings");
+    this.toggleMenu("settings");
+  }
+
+  async appendSettingsForm(): Promise<void> {
+    const response = await secureFetch("./edit");
+    const markup = await response.text();
+    this.insertElement(markup);
   }
 
   handleAjaxSuccess(): void {
@@ -31,14 +54,6 @@ export default class SettingsController extends Controller {
 
   handleAjaxError(): void {
     this.handleAjax("error");
-  }
-
-  private hideForm(): void {
-    this.formTarget.style.display = "none";
-  }
-
-  private showForm(): void {
-    this.formTarget.style.display = "flex";
   }
 
   private handleAjax(status: "success" | "error"): void {

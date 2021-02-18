@@ -46,7 +46,7 @@ export default class AudioMixer implements Mixer {
       this.analyser.getByteFrequencyData(array);
       const arrAvg = array.reduce((a, b) => a + b, 0) / array.length;
       this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      this.canvasContext.fillStyle = "green";
+      this.canvasContext.fillStyle = "#6460f1";
       this.canvasContext.fillRect(0, 0, arrAvg, this.canvas.height);
     }
     requestAnimationFrame(() => this.renderCanvas());

@@ -7,7 +7,7 @@ import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
 import Mixer from "helpers/broadcast/mixers/mixer";
 import VideoLayout from "types/video_layout";
 import { inElectronApp } from "helpers/electron/base";
-import { MediaDeviceChangeEvent } from "controllers/broadcast/media_manager_controller";
+import { MediaDeviceChangeEvent } from "helpers/broadcast/change_media_initializer";
 
 export default class CaptureSourceManager {
   private _webcamSource: WebcamCaptureSource;

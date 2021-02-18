@@ -1,44 +1,45 @@
-import { Controller } from "stimulus";
+import DropdownController from "./dropdown_controller";
+import { changeMediaSource } from "helpers/broadcast/change_media_initializer";
 
-export const MediaDeviceChangeEvent = "MediaDeviceChangeEvent";
-
-export default class extends Controller {
-  private menuDiv?: HTMLElement;
-
+export default class extends DropdownController {
   async showHideMenu(): Promise<void> {
-    if (this.menuDiv) {
-      this.menuDiv.remove();
-      this.menuDiv = null;
-    } else {
-      this.menuDiv = await this.buildMenu();
-      this.element.appendChild(this.menuDiv);
-    }
+    this.resetMenu();
+
+    await this.deviceMarkup();
+
+    const menuTitle = this.title();
+    this.setTitle(menuTitle);
+
+    this.toggleMenu(this.type);
   }
 
-  changeMediaSource(device: MediaDeviceInfo): void {
-    document.dispatchEvent(
-      new CustomEvent(MediaDeviceChangeEvent, { detail: device })
-    );
-  }
-
-  async buildMenu(): Promise<HTMLElement> {
-    const menuDiv = document.createElement("div");
-    menuDiv.className = "select-menu";
+  private async deviceMarkup(): Promise<void> {
     let devices = await navigator.mediaDevices.enumerateDevices();
     devices = devices.filter((d) => d.kind === this.type);
+
     devices.forEach((device) => {
-      const menuItem = document.createElement("div");
-      menuItem.innerText = device.label;
-      menuItem.setAttribute("data-media-id", device.deviceId);
-      menuDiv.appendChild(menuItem);
-      menuItem.addEventListener("click", () => {
-        this.changeMediaSource(device);
-      });
+      this.appendElement(this.deviceMenuItem(device));
     });
-    return menuDiv;
   }
 
-  get type(): MediaDeviceKind {
-    return (this.data.get("type") + "input") as MediaDeviceKind;
+  private deviceMenuItem(device: MediaDeviceInfo): HTMLElement {
+    const menuItem = document.createElement("div");
+    menuItem.classList.add("select-menu--content__body__item");
+    menuItem.innerText = device.label;
+    menuItem.setAttribute("data-media-id", device.deviceId);
+    menuItem.addEventListener("click", () => {
+      changeMediaSource(device);
+      this.dispatchMenuClose();
+    });
+
+    return menuItem;
+  }
+
+  private title(): string {
+    return this.type === "audioinput" ? "Audio Input" : "Video Input";
+  }
+
+  get type(): string {
+    return this.data.get("type") + "input";
   }
 }

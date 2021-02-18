@@ -20,7 +20,7 @@ export default class VideoMixer implements Mixer {
     this.canvas.setAttribute("id", "debug_canvas");
     this.canvas.setAttribute("width", VIDEO_SIZE.width.toString());
     this.canvas.setAttribute("height", VIDEO_SIZE.height.toString());
-    document.querySelector(".debug-area").appendChild(this.canvas);
+    document.querySelector(".debug-area--content").appendChild(this.canvas);
 
     this.canvasContext = this.canvas.getContext("2d");
 
