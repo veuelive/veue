@@ -32,6 +32,18 @@ describe "ChatMessages", type: :request do
       expect(response).to have_http_status(200)
       expect(body["error_messages"][0]).to match("message")
     end
+
+    it "should not publish moderation failures" do
+      expect(user.chat_messages).to(be_empty)
+
+      PerspectiveApi.key = "FAIL"
+      post channel_live_chat_messages_path(channel), params: chat_message_params
+
+      expect(response).to have_http_status(200)
+      expect(user.chat_messages.unscoped).not_to(be_empty)
+      expect_to_sse_broadcast(0)
+      expect(video.chat_messages).to(be_empty)
+    end
   end
 
   describe "create without authentication" do

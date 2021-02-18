@@ -2,7 +2,7 @@
 
 class ModerationItem < ApplicationRecord
   belongs_to :video_event, optional: true
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :video, optional: true
 
   aasm column: :state do

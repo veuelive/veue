@@ -15,7 +15,6 @@ class User < ApplicationRecord
            source: :channel
 
   validates :display_name, length: {maximum: 30, minimum: 1}, presence: true
-  validate :display_name, :display_name_is_appropriate
   validates :phone_number, phone_number: true
   validates :email, email: true
   validates :about_me, length: {maximum: 160}
@@ -65,18 +64,5 @@ class User < ApplicationRecord
 
   def self.find_streamer(url_id)
     User.find(url_id)
-  end
-
-  private
-
-  def display_name_is_appropriate
-    return true unless PerspectiveApi.enabled
-
-    item = moderation_items.build(user: self, text: display_name)
-    item.fetch_scores!
-
-    return true if item.approved?
-
-    errors.add(:display_name, "is not appropriate")
   end
 end
