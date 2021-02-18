@@ -3,12 +3,11 @@
 @use "../utils/breakpoints" as *;
 
 .streamer-profile {
-  &--content {
-    display: flex;
-    flex-direction: column;
-    background: color.$white;
-    border-radius: 10px;
-  }
+  display: flex;
+  flex-direction: column;
+  background: color.$white;
+  border-radius: 10px;
+  height: 100px;
 
   &__info {
     height: 100%;
