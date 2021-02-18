@@ -45,6 +45,13 @@ export default class extends BaseController {
   private viewedPoller: number;
 
   connect(): void {
+    // Works for FF, and in some cases will work for Chrome / Safari
+    this.videoTarget.autoplay = true;
+
+    // Fun workaround for Safari / Chrome
+    // https://developers.google.com/web/updates/2017/09/autoplay-policy-changes
+    document.body.addEventListener("pointerdown", this.unlockAudio);
+
     this.streamType = this.data.get("stream-type") as StreamType;
 
     this.data.set("timecode", "-1");
@@ -115,6 +122,7 @@ export default class extends BaseController {
   }
 
   disconnect(): void {
+    document.body.removeEventListener("pointerdown", this.unlockAudio);
     this.eventManager?.disconnect();
     window.clearInterval(this.viewedPoller);
 
@@ -129,7 +137,9 @@ export default class extends BaseController {
       this.sendViewedMessage();
       this.videoTarget
         .play()
-        .then(() => (this.state = "playing"))
+        .then(() => {
+          this.state = "playing";
+        })
         .catch(() => {
           this.state = "paused";
           this.audioState = "muted";
@@ -225,4 +235,13 @@ export default class extends BaseController {
   get audioState(): string {
     return this.data.get("audioState");
   }
+
+  // Fun workaround for safari
+  private unlockAudio = () => {
+    document.body.removeEventListener("pointerdown", this.unlockAudio);
+
+    if (this.audioState === "muted") {
+      this.audioState = "unmuted";
+    }
+  };
 }
