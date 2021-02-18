@@ -15,7 +15,6 @@
   #video-show,
   #upcoming-stream {
     width: 100%;
-    padding: 10px;
   }
 
   .primary-video-area {
@@ -72,10 +71,13 @@
           display: none;
         }
 
+        line-height: 0;
         canvas.primary-canvas {
           width: unset;
-          max-height: 65vh;
+          max-height: 68vh;
           max-width: 100%;
+          // Overridden for Desktop
+          border-radius: 0;
         }
       }
 
