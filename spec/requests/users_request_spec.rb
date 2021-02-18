@@ -88,6 +88,7 @@ RSpec.describe "Users", type: :request do
       put "/users/#{user.id}/", params: {user: {display_name: display_name}}
       expect(response).to have_http_status(:bad_request)
       expect(user.reload.display_name).to_not eq(display_name)
+      expect(user.channels.first.name).to_not eq(display_name)
     end
   end
 
