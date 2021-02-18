@@ -43,6 +43,11 @@ class Video < ApplicationRecord
           order("started_at_ms DESC")
         }
 
+  scope :private_videos, -> { where(visibility: "private") }
+  scope :public_videos, -> { where(visibility: "public") }
+  scope :protected_videos, -> { where(visibility: "protected") }
+  scope :scheduled, -> { where("scheduled_at IS NOT NULL") }
+
   def self.visibilities_legend
     {
       private: "Only you can view",
