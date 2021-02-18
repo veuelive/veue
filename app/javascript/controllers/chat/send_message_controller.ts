@@ -54,6 +54,16 @@ export default class extends Controller {
           console.log("CHAT Sent!");
         });
       }
+    } else {
+      event.preventDefault();
+      const textAreaElement = event.target as HTMLElement;
+      const message = textAreaElement.innerText;
+
+      if (message.length > 0) {
+        //TODO switch the icon
+      } else {
+        //TODO switch the icon back
+      }
     }
   }
 }
