@@ -18,6 +18,7 @@ textarea {
 
 #main-container {
   display: flex;
+  justify-content: center;
   height: calc(100vh - 40px);
   padding: 20px;
 }
