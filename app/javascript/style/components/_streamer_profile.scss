@@ -11,11 +11,11 @@
   }
 
   &__info {
-    padding: 10px 0;
     height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
 
     &__avatar {
       margin: 0 10px 0;
@@ -136,10 +136,8 @@
 @include large() {
   .streamer-profile {
     &__info {
-      padding: 15px 0;
-
       &__avatar {
-        margin: 0 20px 0 40px;
+        margin: 0 20px 0 20px;
       }
 
       &__text {
@@ -156,7 +154,7 @@
       }
 
       &__follow {
-        margin-right: 30px;
+        margin-right: 20px;
       }
     }
   }

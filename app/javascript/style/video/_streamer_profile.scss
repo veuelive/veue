@@ -5,7 +5,7 @@
 #video-show,
 #upcoming-stream {
   .streamer-profile {
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
     max-height: 20vh;
 
     &--content {
@@ -14,8 +14,6 @@
     }
 
     &__info {
-      margin-top: 5px;
-
       &__mobile__about {
         display: none;
       }
@@ -41,10 +39,14 @@
     }
 
     @include large() {
-      margin-top: 10px;
+      height: 100px;
+      margin-top: 0px;
       background: color.$white;
+      border-radius: 0 0 10px 10px;
 
       .streamer-profile__info {
+        height: 100%;
+
         &__follow__count {
           display: flex;
         }
