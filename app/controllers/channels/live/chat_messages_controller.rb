@@ -9,21 +9,17 @@ module Channels
       before_action :authenticate_user!, only: [:create]
 
       def create
-        # moderation_item = create_moderation_item(
-        #   text: params[:message],
-        #   user: current_user,
-        #   video: current_video,
-        # )
-
-        # message = build_chat_message(published: moderation_item.approved?)
-
-        message = current_user.chat_messages.build(
-          input: {message: params[:message]},
+        moderation_item = create_moderation_item(
+          text: params[:message],
+          user: current_user,
           video: current_video,
-          published: false,
         )
+
+        message = build_chat_message(published: moderation_item.approved?)
+
         if message.save
-          # moderation_item.update!(video_event: message)
+          # Has to be updated *after* the message is saved.
+          moderation_item.update!(video_event: message)
           render(json: {success: true, message: message.to_hash})
         else
           render(json: {success: false, error_messages: message.errors.full_messages})
