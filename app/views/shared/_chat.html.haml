@@ -49,6 +49,12 @@
           }
         }
         = render "shared/reaction_button"
+        .message-write__send{
+          data: {
+            target: "chat--send-message.messageSend"
+          }
+        }
+          = svg_tag "send"
     .message-login-prompt{
       data: {
         action: "click->authentication#showModal",

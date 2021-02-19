@@ -5,9 +5,11 @@ import { currentUserId } from "helpers/authentication_helpers";
 import { displayChatMessage } from "helpers/chat_helpers";
 
 export default class extends Controller {
-  static targets = ["messageInput"];
+  static targets = ["messageInput", "messageSend", "messageReaction"];
   element: HTMLElement;
   private messageInputTarget!: HTMLElement;
+  private messageSendTarget!: HTMLDivElement;
+  private messageReactionTarget!: HTMLDivElement;
   private lastMessageFromUserId: string;
   private userId: string;
 
@@ -34,12 +36,11 @@ export default class extends Controller {
     }
   }
   chatBoxKeyDown(event: KeyboardEvent): void {
+    const textAreaElement = event.target as HTMLElement;
+    const message = textAreaElement.innerText;
     if (!event.shiftKey && event.key === "Enter") {
       event.preventDefault();
-      const textAreaElement = event.target as HTMLElement;
-      const message = textAreaElement.innerText;
       textAreaElement.innerHTML = "";
-
       const isSameUser = this.userId === this.lastMessageFromUserId;
 
       if (message.length > 0) {
@@ -55,15 +56,20 @@ export default class extends Controller {
         });
       }
     } else {
-      event.preventDefault();
-      const textAreaElement = event.target as HTMLElement;
-      const message = textAreaElement.innerText;
-
-      if (message.length > 0) {
-        //TODO switch the icon
+      console.log(message.length);
+      if (message.trim() === "") {
+        this.showReactionIcon();
       } else {
-        //TODO switch the icon back
+        this.showSendIcon();
       }
     }
+  }
+  showSendIcon(): void {
+    this.messageSendTarget.style.display = "block";
+    this.messageReactionTarget.style.display = "none";
+  }
+  showReactionIcon(): void {
+    this.messageSendTarget.style.display = "none";
+    this.messageReactionTarget.style.display = "block";
   }
 }
