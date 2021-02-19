@@ -51,7 +51,8 @@
         = render "shared/reaction_button"
         .message-write__send{
           data: {
-            target: "chat--send-message.messageSend"
+            target: "chat--send-message.messageSend",
+            action: "click->chat--user-reaction#sendReaction"
           }
         }
           = svg_tag "send"
