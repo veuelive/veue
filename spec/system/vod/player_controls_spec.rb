@@ -19,7 +19,7 @@ describe "VOD Player Controls" do
 
     describe "Desktop video controls" do
       it "should play / pause on button click" do
-        find(".primary-video-area").hover
+        find(".primary-video").hover
 
         play_class = ".toggle-play.desktop"
 
@@ -78,7 +78,7 @@ describe "VOD Player Controls" do
 
       it "should play / pause video on mobile" do
         # Hover doesnt exist on mobile
-        find(".primary-video-area").click
+        find(".primary-video").click
         play_class = ".toggle-play.mobile"
 
         # Only the mobile buttons should be visible on mobile
@@ -103,7 +103,7 @@ describe "VOD Player Controls" do
       end
 
       it "should mute / umuted on button click" do
-        find(".primary-video-area").hover
+        find(".primary-video").hover
 
         audio_class = ".toggle-audio.mobile"
 
