@@ -1,17 +1,34 @@
-ActiveAdmin.register Video do
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  # permit_params :user_id, :title, :mux_playback_id, :state, :mux_live_stream_id, :name, :description, :hls_url, :mux_asset_id, :mux_asset_playback_id, :duration, :started_at_ms, :active_viewers, :video_views_count, :visibility, :channel_id, :scheduled_at
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:user_id, :title, :mux_playback_id, :state, :mux_live_stream_id, :name, :description, :hls_url, :mux_asset_id, :mux_asset_playback_id, :duration, :started_at_ms, :active_viewers, :video_views_count, :visibility, :channel_id, :scheduled_at]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
+# frozen_string_literal: true
 
+ActiveAdmin.register(Video) do
+  permit_params :title, :state, :description, :visibility, :scheduled_at, :active_admin_requested_event
+
+  form do |f|
+    f.semantic_errors
+    f.inputs do
+      f.input(:title)
+      f.input(:description, input_html: {rows: "5"})
+      f.input(:visibility, as: :select)
+      f.input(
+        :scheduled_at,
+        as: :datepicker,
+        datepicker_options: {
+          min_date: "Time.now.strftime('%Y-%m-%d')",
+          max_date: "+3W",
+        },
+      )
+
+      # display current state as disabled to avoid modifying it directly
+      f.input(:state, input_html: {disabled: true}, label: "Current state")
+
+      # use the attr_accessor to pass the data
+      f.input(
+        :active_admin_requested_event,
+        label: "Change state",
+        as: :select,
+        collection: Video.aasm.events.map(&:name),
+      )
+    end
+    f.actions
+  end
 end

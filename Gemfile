@@ -54,6 +54,9 @@ gem "aasm"
 # Used for our admin interfaces
 gem "activeadmin"
 
+# Additional addons for increased functionality
+gem "activeadmin_addons"
+
 # Helps set up role-based access
 gem "cancancan"
 
