@@ -188,7 +188,12 @@
       display: none;
       background: color.$veue-corporate;
       border-radius: 10px;
-      margin: 10px 8px 10px 11px;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      cursor: pointer;
+      padding: 0.5rem;
+      margin: 10px;
     }
   }
 }
