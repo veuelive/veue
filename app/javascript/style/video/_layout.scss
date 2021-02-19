@@ -23,7 +23,7 @@
     }
   }
 
-  .primary-video-area {
+  .primary-video {
     // This is required to ensure that the controls can be shown over this area
     position: relative;
 
@@ -147,7 +147,7 @@
     }
 
     .content-area__primary,
-    .primary-video-area,
+    .primary-video,
     .content-area__secondary {
       width: 100%;
     }
