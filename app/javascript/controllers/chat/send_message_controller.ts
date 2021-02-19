@@ -41,6 +41,9 @@ export default class extends Controller {
       this.sendMessage();
     }
   }
+  chatClickOnSend(): void {
+    this.sendMessage();
+  }
   sendMessage(): void {
     const textAreaElement = this.messageInputTarget;
     const message = textAreaElement.innerText;
