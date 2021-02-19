@@ -26,7 +26,7 @@ class Video < ApplicationRecord
   has_one_attached :primary_shot
   include PGEnum(visibility: %w[public protected private], _prefix: "visibility")
 
-  validates :title, allow_nil: true, length: {maximum: 240}
+  validates :title, allow_nil: true, length: {maximum: 70}
 
   scope :public_or_protected,
         -> {
