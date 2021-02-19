@@ -43,7 +43,7 @@
           contenteditable: 'plaintext-only',
           role: "textbox",
           data: {
-            action: "keydown->chat--send-message#chatBoxKeyDown",
+            action: "keydown->chat--send-message#chatBoxKeyDown input->chat--send-message#toggleIcon",
             target: "chat--send-message.messageInput",
             "message-key": SecureRandom.uuid
           }

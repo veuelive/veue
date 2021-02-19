@@ -36,32 +36,37 @@ export default class extends Controller {
     }
   }
   chatBoxKeyDown(event: KeyboardEvent): void {
-    const textAreaElement = event.target as HTMLElement;
-    const message = textAreaElement.innerText;
     if (!event.shiftKey && event.key === "Enter") {
       event.preventDefault();
-      textAreaElement.innerHTML = "";
-      const isSameUser = this.userId === this.lastMessageFromUserId;
+      this.sendMessage();
+    }
+  }
+  sendMessage(): void {
+    const textAreaElement = this.messageInputTarget;
+    const message = textAreaElement.innerText;
+    textAreaElement.innerHTML = "";
+    const isSameUser = this.userId === this.lastMessageFromUserId;
 
-      if (message.length > 0) {
-        postForm(`/${getChannelId()}/chat_messages`, {
-          message,
-        }).then((response: Response) => {
-          response.json().then((data: JSON) => {
-            const messageData = data["message"]["data"];
-            displayChatMessage(messageData, isSameUser);
-            this.lastMessageFromUserId = messageData.userId;
-          });
-          console.log("CHAT Sent!");
+    if (message.length > 0) {
+      postForm(`/${getChannelId()}/chat_messages`, {
+        message,
+      }).then((response: Response) => {
+        response.json().then((data: JSON) => {
+          const messageData = data["message"]["data"];
+          displayChatMessage(messageData, isSameUser);
+          this.lastMessageFromUserId = messageData.userId;
         });
-      }
+        console.log("CHAT Sent!");
+      });
+    }
+  }
+  toggleIcon(): void {
+    const textAreaElement = this.messageInputTarget;
+    const message = textAreaElement.innerText;
+    if (message.trim() === "") {
+      this.showReactionIcon();
     } else {
-      console.log(message.length);
-      if (message.trim() === "") {
-        this.showReactionIcon();
-      } else {
-        this.showSendIcon();
-      }
+      this.showSendIcon();
     }
   }
   showSendIcon(): void {
