@@ -52,20 +52,12 @@ export default class SettingsController extends DropdownController {
     setVideoVisibility(visibility);
   }
 
-  handleAjaxError(event: CustomEvent): void {
-    this.handleAjax("error", event.detail[0]);
+  handleAjaxError(): void {
+    this.handleAjax("error");
   }
 
-  private handleAjax(status: "success" | "error", messages = []): void {
+  private handleAjax(status: "success" | "error"): void {
     const flashEl = this[`${status}Flash`];
-    // a small tweak to show actual error that occurred. It will be changed
-    // with new form for settings.
-    if (messages.length) {
-      messages.forEach((message) => {
-        flashEl.append(` ${message}`);
-      });
-    }
-
     this.formTarget.appendChild(flashEl);
 
     window.setTimeout(() => (flashEl.style.opacity = "0"), 200);
