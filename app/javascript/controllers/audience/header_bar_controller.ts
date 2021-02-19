@@ -8,6 +8,7 @@ export default class HeaderBarController extends Controller {
 
   connect(): void {
     VideoEventProcessor.subscribeTo("BrowserNavigation", (event) => {
+      console.log("HEADER BAR CONTROLLER");
       this.processNavigationEvent(event.detail.data);
     });
   }

@@ -71,7 +71,15 @@
           display: none;
         }
 
+        // If you don't specify the line height as 0
+        // then there is spacing on the bottom of the canvas
+        // but we don't want this to cascade into the header so
+        // we revert it in the header part of the video area
         line-height: 0;
+        .primary-video__header {
+          line-height: normal;
+        }
+
         canvas.primary-canvas {
           width: unset;
           max-height: 68vh;
