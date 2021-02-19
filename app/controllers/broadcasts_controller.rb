@@ -26,7 +26,7 @@ class BroadcastsController < ApplicationController
     if current_broadcast_video.update(video_params)
       render(json: :success)
     else
-      render(json: current_broadcast_video.errors, status: :unprocessable_entity)
+      render(json: current_broadcast_video.errors.full_messages, status: :unprocessable_entity)
     end
   end
 
