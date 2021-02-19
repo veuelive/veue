@@ -52,8 +52,8 @@ export default class SettingsController extends DropdownController {
     setVideoVisibility(visibility);
   }
 
-  handleAjaxError(data): void {
-    this.handleAjax("error", data.detail[0]);
+  handleAjaxError(event: CustomEvent): void {
+    this.handleAjax("error", event.detail[0]);
   }
 
   private handleAjax(status: "success" | "error", messages = []): void {
