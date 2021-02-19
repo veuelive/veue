@@ -55,6 +55,7 @@ export default class extends Controller {
           const messageData = data["message"]["data"];
           displayChatMessage(messageData, isSameUser);
           this.lastMessageFromUserId = messageData.userId;
+          this.toggleIcon();
         });
         console.log("CHAT Sent!");
       });
