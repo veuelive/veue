@@ -3,6 +3,8 @@
 class Video < ApplicationRecord
   include VideoStates
 
+  attr_accessor :active_admin_requested_event
+
   belongs_to :channel
   belongs_to :user
 
