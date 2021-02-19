@@ -18,7 +18,7 @@ describe "Stream Waiting Room" do
     end
 
     it "should show stream not started notification" do
-      expect(page).to have_content("starting").once
+      expect(page).to have_content("Starting").once
     end
 
     it "should should not have primary & secondary canvases" do
