@@ -93,4 +93,13 @@ describe BroadcastsController do
       expect(Video.stale.count).to eq(1)
     end
   end
+
+  describe "update video" do
+    it "should not update when title has more than 70 characters" do
+      put broadcast_path(video, params: { video: { title: Faker::Lorem.characters(number: 80)}})
+      error_message = "Title is too long (maximum is 70 characters)"
+      expect(JSON.parse(response.body)).to eq([error_message])
+      expect(response).to have_http_status(422)
+    end
+  end
 end
