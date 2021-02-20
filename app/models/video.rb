@@ -3,6 +3,8 @@
 class Video < ApplicationRecord
   include VideoStates
 
+  # Needed for AASM + ActiveAdmin
+  # https://github.com/activeadmin/activeadmin/wiki/How-to-work-with-AASM
   attr_accessor :active_admin_requested_event
 
   belongs_to :channel
