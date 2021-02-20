@@ -4,3 +4,4 @@ import "./active_admin/active_admin";
 
 // Now load the JS
 import "@activeadmin/activeadmin";
+import "activeadmin_addons";

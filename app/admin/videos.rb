@@ -16,30 +16,52 @@ ActiveAdmin.register(Video) do
     end
   end
 
+  # /index
   index do
     selectable_column
-    column(:id) do |video|
+    column :id do |video|
       link_to video.id, admin_video_path(video)
     end
-    column(:channel)
-    column(:title)
-    column(:visibility)
-    column(:scheduled_at)
+    column :channel
+    column :title
+    state_column :state
+    column :visibility
+    column "Scheduled at (UTC)", :scheduled_at
   end
 
+  # /:id/show
+  show do
+    attributes_table do
+      row :id do |video|
+        link_to video.id, edit_admin_video_path(video)
+      end
+      row :channel
+      row :title
+      row :description
+      state_row :state
+      row :visibility
+      row :scheduled_at do |video|
+        text_node "#{video.scheduled_at}"
+      end
+    end
+    active_admin_comments
+  end
+
+  # /:id/edit
   form do |f|
     f.semantic_errors
     f.inputs do
       f.input(:title)
       f.input(:description, input_html: {rows: "5"})
-      f.input(:visibility, as: :select)
+      f.input(:visibility, as: :select, include_blank: false)
       f.input(
         :scheduled_at,
-        as: :datepicker,
-        datepicker_options: {
-          min_date: "Time.now.strftime('%Y-%m-%d')",
-          max_date: "+3W",
+        as: :date_time_picker,
+        picker_options: {
+          format: "d-m-Y H:i",
+          step: 30,
         },
+        label: "Scheduled At (UTC Time)"
       )
 
       # display current state as disabled to avoid modifying it directly

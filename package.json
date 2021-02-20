@@ -16,6 +16,7 @@
     "@types/jest": "^26.0.13",
     "@types/jquery": "^3.5.5",
     "@types/w3c-image-capture": "^1.0.2",
+    "activeadmin_addons": "^1.0.0",
     "croppie": "^2.6.5",
     "hls.js": "^0.14.4",
     "intl-tel-input": "^17.0.3",
