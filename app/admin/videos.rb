@@ -9,7 +9,7 @@ ActiveAdmin.register(Video) do
     event = params[:video][:active_admin_requested_event]
 
     if event.present?
-      # whitelist to ensure we don't run an arbitrary method
+      # allow list to ensure we don't run an arbitrary method
       safe_event = (video.aasm.events(permitted: true).map(&:name) & [event.to_sym]).first
       raise StandardError.new("Forbidden event #{event} requested on instance #{your_model.id}") unless safe_event
 
