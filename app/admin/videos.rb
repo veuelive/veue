@@ -3,6 +3,8 @@
 ActiveAdmin.register(Video) do
   permit_params :title, :state, :description, :visibility, :scheduled_at, :active_admin_requested_event
 
+  # Needed for AASM + ActiveAdmin
+  # https://github.com/activeadmin/activeadmin/wiki/How-to-work-with-AASM
   after_save do |video|
     event = params[:video][:active_admin_requested_event]
 
