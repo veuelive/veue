@@ -13,7 +13,7 @@ describe "Broadcast View" do
   let(:settings_form) { ".broadcast-settings__form" }
 
   before :example do
-    driven_by :media_browser
+    driven_by :debug_browser
     resize_window_desktop
   end
 
@@ -242,16 +242,6 @@ describe "Broadcast View" do
         video.reload
         expect(video.title).to eq(new_title)
         expect(video.visibility).to eq(new_visibility)
-      end
-
-      it "properly displays flash errors" do
-        new_title = "*" * 241
-        within(settings_form) do
-          fill_in("video_title", with: new_title)
-          click_button("Update")
-        end
-
-        expect(page).to have_css(".flash-error")
       end
     end
   end
