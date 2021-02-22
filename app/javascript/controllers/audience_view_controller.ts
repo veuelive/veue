@@ -71,7 +71,6 @@ export default class extends BaseController {
 
     // If its equal to "0" it turns into null...good stuff.
     const startOffset = parseInt(this.element.dataset.startOffset);
-    const endOffset = parseInt(this.element.dataset.endOffset);
 
     this.videoTarget.addEventListener("loadedmetadata", async () => {
       this.state = "ready";
@@ -79,7 +78,9 @@ export default class extends BaseController {
 
       this.videoTarget.currentTime += startOffset;
 
-      if (params.has("t")) {
+      const timeOffset = parseInt(params.get("t"));
+
+      if (timeOffset && timeOffset < this.duration) {
         this.videoTarget.currentTime += parseInt(params.get("t"));
       }
 
@@ -135,6 +136,10 @@ export default class extends BaseController {
   }
 
   togglePlay(): void {
+    if (this.state === "ended") {
+      this.videoTarget.currentTime = 0;
+    }
+
     if (this.state !== "playing") {
       this.sendViewedMessage();
       this.videoTarget
@@ -179,6 +184,8 @@ export default class extends BaseController {
     if (streamType === "live") {
       alert("This stream has ended");
       document.location.reload();
+    } else {
+      this.videoTarget.pause();
     }
   }
 
@@ -193,8 +200,10 @@ export default class extends BaseController {
   set state(state: string) {
     this.data.set("state", state);
 
-    const toggleTo = this.state === "paused" ? "play" : "pause";
-    const imagePath = this.state === "paused" ? playSvg : pauseSvg;
+    const pausedStates = ["paused", "ended"];
+
+    const toggleTo = pausedStates.includes(this.state) ? "play" : "pause";
+    const imagePath = pausedStates.includes(this.state) ? playSvg : pauseSvg;
 
     this.togglePlayTargets.forEach((playElement) => {
       // Allows for styling of the play button due to appearing off-center
