@@ -64,6 +64,12 @@ export default class extends Controller {
   toggleIcon(): void {
     const textAreaElement = this.messageInputTarget;
     const message = textAreaElement.innerText;
+    if (document.querySelector("#broadcast")) {
+      const reactionButtonArea = document.querySelector(
+        ".reaction-button-area"
+      ) as HTMLDivElement;
+      reactionButtonArea.style.display = "flex";
+    }
     if (message.trim() === "") {
       this.showReactionIcon();
     } else {
