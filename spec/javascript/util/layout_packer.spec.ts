@@ -1,6 +1,7 @@
 import {
   buildBroadcastLayout,
   candidateBoxesRemaining,
+  fitInsideMyBox,
   resizeInto,
 } from "../../../app/javascript/util/layout_packer";
 
@@ -80,6 +81,17 @@ describe("Layout Packing", () => {
         width: 789,
         height: 1000,
       });
+    });
+  });
+
+  describe(fitInsideMyBox, () => {
+    it("should work for a box coming from the right", () => {
+      expect(
+        fitInsideMyBox(
+          { x: 100, y: 0, width: 100, height: 100 },
+          { x: 50, y: 20, width: 100, height: 50 }
+        )
+      ).toEqual({ x: 100, y: 20, width: 50, height: 50 });
     });
   });
 
@@ -221,7 +233,7 @@ describe("Layout Packing", () => {
             width: 1152,
             height: 837,
             x: 0,
-            y: 0,
+            y: 10,
             type: "screen",
             priority: 1,
           },

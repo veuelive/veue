@@ -107,10 +107,7 @@ export default class extends Controller {
 
       console.log("broadcastArea", broadcastArea);
 
-      await this.captureSourceManager.startBrowserCapture(
-        "Veue Broadcaster",
-        broadcastArea
-      );
+      await this.captureSourceManager.startBrowserCapture(broadcastArea);
 
       this.state = "ready";
     });

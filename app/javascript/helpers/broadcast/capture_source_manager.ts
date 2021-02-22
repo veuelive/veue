@@ -9,6 +9,9 @@ import VideoLayout from "types/video_layout";
 import { inElectronApp } from "helpers/electron/base";
 import { MediaDeviceChangeEvent } from "helpers/broadcast/change_media_initializer";
 
+export const HideScreenCaptureEvent = "HideScreenCaptureEvent";
+export const ShowScreenCaptureEvent = "ShowScreenCaptureEvent";
+
 export default class CaptureSourceManager {
   private _webcamSource: WebcamCaptureSource;
   private _microphoneSource: MicrophoneCaptureSource;
@@ -26,6 +29,14 @@ export default class CaptureSourceManager {
       async (event: CustomEvent) => {
         await this.switchToDevice(event.detail as MediaDeviceInfo);
       }
+    );
+
+    document.addEventListener(HideScreenCaptureEvent, () =>
+      this.hideScreenCapture()
+    );
+
+    document.addEventListener(ShowScreenCaptureEvent, () =>
+      this.showScreenCapture()
     );
   }
 
@@ -71,17 +82,19 @@ export default class CaptureSourceManager {
     this.microphoneSource = await MicrophoneCaptureSource.connect();
   }
 
-  async startBrowserCapture(
-    windowTitle: string,
-    captureLayout: VideoLayout
-  ): Promise<void> {
+  hideScreenCapture(): void {
+    this.videoMixer.removeCaptureSource(this._screenCaptureSource);
+  }
+
+  showScreenCapture(): void {
+    this.videoMixer.addCaptureSource(this._screenCaptureSource);
+  }
+
+  async startBrowserCapture(captureLayout: VideoLayout): Promise<void> {
     if (!inElectronApp) {
       return;
     }
-    this.screenCaptureSource = await ScreenCaptureSource.connect(
-      windowTitle,
-      captureLayout
-    );
+    this.screenCaptureSource = await ScreenCaptureSource.connect(captureLayout);
   }
 
   private static swapSources(

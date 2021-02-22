@@ -1,4 +1,4 @@
-.browser{data: {controller: "broadcast--browser"}}
+.browser{data: {controller: "broadcast--browser", "broadcast--browser": {visible: "true"}}}
   .browser__bar
     .browser__bar__logo
       = svg_tag "logo"
@@ -11,6 +11,9 @@
         = svg_tag "reload"
       %a{data: {action: "click->broadcast--browser#stopLoading", target: "broadcast--browser.stopButton"}, style: "display: none;", href: "javascript:void(0)"}
         = svg_tag "stop_icon"
+      %a{data: {action: "click->broadcast--browser#toggleVisibility"}}
+        = svg_tag "visible-true"
+        = svg_tag "visible-false"
     .browser__bar__address
       %input{type: "text", value: "https://apple.com", data: {action: "keypress->broadcast--browser#onKeypress", target: "broadcast--browser.addressBar"}}
     .browser__bar__button

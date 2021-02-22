@@ -44,7 +44,7 @@ export function buildBroadcastLayout(
       height: 10,
     },
     resizable: false,
-    priority: 3,
+    priority: 0,
     type: "timecode",
     id: "timecode",
   };
@@ -234,11 +234,15 @@ export function bisectBox(
   box: Rectangle,
   bisectingObject: Rectangle
 ): Array<Rectangle> {
-  if (box.x != bisectingObject.x || box.y != bisectingObject.y) {
+  // Make a local copy so we don't fuck with the actual object
+  const bisector = fitInsideMyBox(box, bisectingObject);
+
+  if (bisector == false) {
     return [box];
   }
+
   const boxes = [];
-  if (box.height > bisectingObject.height) {
+  if (box.height > bisector.height) {
     boxes.push({
       ...box,
       height: box.height - bisectingObject.height,
@@ -253,6 +257,64 @@ export function bisectBox(
     });
   }
   return boxes;
+}
+
+// Here we are checking for boxes that overlap us from various positions
+// __________________
+// |0,0     |box     |
+// |________|__      |
+// |bisector   |     |
+// |___________|     |
+// |        |        |
+// |________|________|
+//
+//
+// And our reaction is to chop it down and make it fit inside us
+//
+// __________________
+// |0,0     |box     |
+// |        |__      |
+// |        |B |     |
+// |        |__|     |
+// |        |        |
+// |________|________|
+//
+export function fitInsideMyBox(
+  box: Rectangle,
+  bisectorRef: Rectangle
+): Rectangle | false {
+  // WE MANIPULATE THIS RECT OBJECT, SO COPY IT FIRST!
+  const bisector = { ...bisectorRef };
+
+  // This is the case that it starts to the left
+  if (bisector.x < box.x) {
+    bisector.width -= box.x - bisector.x;
+    // If we are now too small to exist, return false
+    if (bisector.width <= 0) {
+      return false;
+    }
+    bisector.x = box.x;
+  }
+
+  // This is the case that it's too wide for the box
+  if (bisector.width > box.width) {
+    bisector.width = box.width;
+  }
+
+  // This is the case that it's above us
+  if (bisector.y < box.y) {
+    bisector.height = box.y - bisector.y;
+    if (bisector.height <= 0) {
+      return false;
+    }
+    bisector.y = box.y;
+  }
+
+  if (bisector.height > box.height) {
+    bisector.height = box.height;
+  }
+
+  return bisector;
 }
 
 /**
