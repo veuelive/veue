@@ -23,6 +23,10 @@
     }
   }
 
+  canvas.hidden {
+    display: none;
+  }
+
   .primary-video {
     // This is required to ensure that the controls can be shown over this area
     position: relative;

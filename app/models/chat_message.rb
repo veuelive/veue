@@ -31,6 +31,5 @@ class ChatMessage < VideoEvent
   end
 
   # This is set by the +chat_messages_controller+
-  def set_published_state
-  end
+  def set_published_state; end
 end
