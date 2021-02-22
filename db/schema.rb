@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_11_155058) do
+ActiveRecord::Schema.define(version: 2021_02_22_170155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -237,6 +237,8 @@ ActiveRecord::Schema.define(version: 2021_02_11_155058) do
     t.enum "visibility", default: "public", as: "visibility_setting"
     t.uuid "channel_id"
     t.datetime "scheduled_at"
+    t.integer "start_offset", default: 0
+    t.integer "end_offset", default: 0
     t.index ["mux_asset_id"], name: "index_videos_on_mux_asset_id"
     t.index ["mux_live_stream_id"], name: "index_videos_on_mux_live_stream_id"
     t.index ["state", "scheduled_at"], name: "index_videos_on_state_and_scheduled_at"
