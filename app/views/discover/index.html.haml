@@ -12,7 +12,7 @@
       .popular-streamers__inner
         - @popular_channels.each do |channel|
           .popular-streamers__avatar
-            %a{href: channel_path(channel.slug)}
+            %a.popular-streamers__link{href: channel_path(channel.slug), draggable: "false"}
               = channel.decorate.profile_image_circle(200)
 
     %h2 Featured Replays
