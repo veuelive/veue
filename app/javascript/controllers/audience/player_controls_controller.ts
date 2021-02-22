@@ -59,7 +59,7 @@ export default class extends BaseController {
     progress.style.width = `${width}%`;
 
     if (video.currentTime >= this.duration) {
-      video.dispatchEvent(new CustomEvent("ended", { bubbles: true }));
+      video.dispatchEvent(new Event("ended"));
     }
   }
 
