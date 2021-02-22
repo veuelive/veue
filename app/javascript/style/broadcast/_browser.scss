@@ -103,6 +103,7 @@
       }
     }
   }
+
   .time-area {
     padding: 9px 11px;
     border: none;
@@ -111,6 +112,7 @@
     background-color: color.$red-highlight;
     margin-right: 5px;
   }
+
   .stop-btn {
     background-color: color.$red-highlight;
     svg {
@@ -119,6 +121,7 @@
       }
     }
   }
+
   .time-dot {
     width: 0.4375rem;
     height: 0.4375rem;
@@ -126,5 +129,19 @@
     border-radius: 0.4375rem;
     vertical-align: middle;
     background-color: color.$white;
+  }
+
+  /**
+     This works as a visibility toggle for the Browser Controller
+   */
+  &[data-broadcast--browser-visible="true"] {
+    .visible-false-svg {
+      display: none;
+    }
+  }
+  &[data-broadcast--browser-visible="false"] {
+    .visible-true-svg {
+      display: none;
+    }
   }
 }

@@ -3,11 +3,10 @@ import { desktopCapturer } from "helpers/electron/desktop_capture";
 import VideoLayout from "types/video_layout";
 
 export class ScreenCaptureSource extends VideoCaptureSource {
-  static async connect(
-    windowTitle: string,
-    videoLayout: VideoLayout
-  ): Promise<ScreenCaptureSource> {
-    const deviceId = await ScreenCaptureSource.getWindowSource(windowTitle);
+  static async connect(videoLayout: VideoLayout): Promise<ScreenCaptureSource> {
+    const deviceId = await ScreenCaptureSource.getWindowSource(
+      "Veue Broadcaster"
+    );
     const source = new ScreenCaptureSource(deviceId);
     await source.start();
     source.addLayout(videoLayout);

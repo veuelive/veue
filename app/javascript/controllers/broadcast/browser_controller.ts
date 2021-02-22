@@ -3,6 +3,11 @@ import { ipcRenderer } from "helpers/electron/ipc_renderer";
 import { sendNavigationUpdate } from "helpers/broadcast_helpers";
 import { autocorrectUrlEntry } from "util/address";
 import { TestPatternKeyEvent } from "types/keyboard_mapping";
+import debounce from "util/debounce";
+import {
+  HideScreenCaptureEvent,
+  ShowScreenCaptureEvent,
+} from "helpers/broadcast/capture_source_manager";
 
 export type NavigationUpdate = {
   eventName: string;
@@ -28,6 +33,7 @@ export default class extends Controller {
 
   private browserViewListener: (name, event, second) => void;
   private _url: string;
+  private _visible = true;
 
   connect(): void {
     this.browserViewListener = (_, navigationUpdate: NavigationUpdate) => {
@@ -83,6 +89,18 @@ export default class extends Controller {
     this.sendToBrowser("stop");
   }
 
+  @debounce(3000)
+  toggleVisibility(): void {
+    this.visible = !this.visible;
+    let eventType;
+    if (this.visible) {
+      eventType = ShowScreenCaptureEvent;
+    } else {
+      eventType = HideScreenCaptureEvent;
+    }
+    document.dispatchEvent(new CustomEvent(eventType));
+  }
+
   private sendToBrowser(event: string) {
     ipcRenderer.send("browser", event);
   }
@@ -94,6 +112,15 @@ export default class extends Controller {
 
   get url(): string {
     return this._url;
+  }
+
+  get visible(): boolean {
+    return this._visible;
+  }
+
+  set visible(value: boolean) {
+    this._visible = value;
+    this.data.set("visible", `${value}`);
   }
 }
 
