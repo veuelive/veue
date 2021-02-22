@@ -69,20 +69,18 @@ export default class extends BaseController {
       this.timecodeSynchronizer
     );
 
-    // If its equal to "0" it turns into null...good stuff.
-    const startOffset = parseInt(this.element.dataset.startOffset);
-
     this.videoTarget.addEventListener("loadedmetadata", async () => {
       this.state = "ready";
       const params = new URLSearchParams(window.location.search);
 
-      this.videoTarget.currentTime += startOffset;
+      let startOffset = parseInt(this.element.dataset.startOffset);
+      const requestedStartTime = parseInt(params.get("t"));
 
-      const timeOffset = parseInt(params.get("t"));
-
-      if (timeOffset && timeOffset < this.duration) {
-        this.videoTarget.currentTime += parseInt(params.get("t"));
+      if (requestedStartTime && requestedStartTime < this.duration) {
+        startOffset += requestedStartTime;
       }
+
+      this.videoTarget.currentTime = startOffset;
 
       this.togglePlay();
     });
