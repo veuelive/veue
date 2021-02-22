@@ -65,15 +65,8 @@ export function isLive(): boolean {
 }
 
 export function getTimecodeMs(): number {
-  if (!isLive()) {
-    return -1;
-  }
-  const startedAt = getBroadcastElement().getAttribute(
-    "data-broadcast-started-at"
-  );
-  const timecode = Date.now() - parseInt(startedAt);
-  console.log("Current timecode: ", timecode);
-  return timecode;
+  console.log("Current timecode: ", globalThis.timecodeMs);
+  return globalThis.timecodeMs;
 }
 
 export function sendNavigationUpdate(navigationUpdate: NavigationUpdate): void {
@@ -87,9 +80,10 @@ export function sendBroadcastLayoutUpdate(
   broadcastLayout: BroadcastVideoLayout
 ): void {
   if (isLive()) {
-    postJson("./layout", {
+    const payload = {
       timecodeMs: getTimecodeMs(),
       input: broadcastLayout,
-    });
+    };
+    postJson("./layout", payload);
   }
 }

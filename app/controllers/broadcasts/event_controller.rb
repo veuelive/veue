@@ -20,10 +20,9 @@ module Broadcasts
     end
 
     def ensure_valid_video_target!
-      @video = Video.find(params[:broadcast_id])
+      @video = Video.active.find(params[:broadcast_id])
       return fail!("No such video stream ID") unless @video
       return fail!("Does not belong to you") unless @video.channel.user == current_user
-      return fail!("Video not live!") unless @video.live?
 
       true
     end

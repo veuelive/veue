@@ -1,4 +1,4 @@
-import { Rectangle, Size } from "types/rectangle";
+import { Bounds, Rectangle, rectToBounds, Size } from "types/rectangle";
 import { BroadcastVideoLayout, VideoSourceType } from "types/video_layout";
 import { VideoCaptureInterface } from "helpers/broadcast/capture_sources/base";
 
@@ -172,11 +172,6 @@ function constrainPackSections(
  *
  * Candidate boxes are overlapping rectangles of non-used space left.
  *
- * This function ONLY works if each increasing box starts in the top left
- * of an expected existing candidate box. Aka, the very first "box" MUST
- * be located at {x: 0, y: 0}, and the next one would be in the top corner
- * of one of the resulting candidate boxes from that first placement.
- *
  * @param area: Size
  * @param boxes: Array<Rectangle>
  */
@@ -194,9 +189,7 @@ export function candidateBoxesRemaining(
 }
 
 /**
- * This is a very simple version of "bisecting", as this is assuming our
- * algorithm will only ever place a box that's specifically nestled in the top
- * right of this candidate box.
+ * Given two Rectangles in a coordinate space, return their bisection.
  *
  * This is used to know what remaining areas we could fit the NEXT box into.
  *
@@ -205,15 +198,15 @@ export function candidateBoxesRemaining(
  * This will produce overlapping candidates or none.
  *
  *  _______________________
- *  |         |           |
- *  |         |           |
- *  |    box  |    A      |
- *  |         |           |
- *  |__________           |
- *  |                     |
- *  |     B               |
- *  |                     |
- *  |_____________________|
+ *  |  ___A_____           |
+ *  | |        |           |
+ *  |B|   box  |    C      |
+ *  | |        |           |
+ *  | |________|           |
+ *  |                      |
+ *  |     D                |
+ *  |                      |
+ *  |______________ _______|
  *
  *  Assuming we have an "area", we put a box into the top right corner. This will
  *  cause us to have TWO rectangles we could fit the next box into. One that is
@@ -222,10 +215,8 @@ export function candidateBoxesRemaining(
  *  So, with this algorithm, given a box in the corner like this, we will return
  *  two candidates if we have space.
  *
- *  This function will return an array of 0 to 2 remaining areas if possible.
+ *  This function will return an array of 0 to 4 remaining areas if possible.
  *
- *  If the "bisecting object" isn't perfectly nestled to the top right of the
- *  box Rectangle, we return [] and assume that we don't need to do anything.
  *
  * @param box
  * @param bisectingObject
@@ -241,19 +232,37 @@ export function bisectBox(
     return [box];
   }
 
+  const bisectBounds = rectToBounds(bisector);
+  const boxBounds = rectToBounds(box);
+
   const boxes = [];
-  if (box.height > bisector.height) {
+  // Check for space at the top
+  if (boxBounds.top < bisectBounds.top) {
     boxes.push({
       ...box,
-      height: box.height - bisectingObject.height,
-      y: bisectingObject.height + box.y,
+      height: bisector.y - box.y,
     });
   }
-  if (box.width > bisectingObject.width) {
+  // space at the bottom
+  if (boxBounds.bottom > bisectBounds.bottom) {
     boxes.push({
       ...box,
-      width: box.width - bisectingObject.width,
-      x: box.x + bisectingObject.width,
+      y: bisectBounds.bottom,
+      height: boxBounds.bottom - bisectBounds.bottom,
+    });
+  }
+  // space to the left
+  if (boxBounds.left < bisectBounds.left) {
+    boxes.push({
+      ...box,
+      width: bisectBounds.left - boxBounds.left,
+    });
+  }
+  if (boxBounds.right > bisectBounds.right) {
+    boxes.push({
+      ...box,
+      x: bisectBounds.right,
+      width: boxBounds.right - bisectBounds.right,
     });
   }
   return boxes;
@@ -286,6 +295,16 @@ export function fitInsideMyBox(
   // WE MANIPULATE THIS RECT OBJECT, SO COPY IT FIRST!
   const bisector = { ...bisectorRef };
 
+  // It's too far to our right
+  if (bisector.x > box.x + box.width) {
+    return false;
+  }
+
+  // It's too far below us
+  if (bisector.y > box.y + box.height) {
+    return false;
+  }
+
   // This is the case that it starts to the left
   if (bisector.x < box.x) {
     bisector.width -= box.x - bisector.x;
@@ -303,7 +322,7 @@ export function fitInsideMyBox(
 
   // This is the case that it's above us
   if (bisector.y < box.y) {
-    bisector.height = box.y - bisector.y;
+    bisector.height -= box.y - bisector.y;
     if (bisector.height <= 0) {
       return false;
     }
