@@ -50,10 +50,19 @@ body#discover__index {
           &__avatar {
             display: inline-block;
             margin-right: 29px;
+            a {
+              width: 100px;
+              height: 100px;
+              display: block;
+            }
             img,
             svg {
               width: 100px;
               height: 100px;
+
+              // This is so that the svg doesnt get dragged
+              position: absolute;
+              z-index: z_index.$background;
             }
           }
         }

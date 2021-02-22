@@ -1,6 +1,7 @@
 @use "../utils/scale";
 @use "../utils/color.scss";
 @use "../utils/font.scss";
+@use "../utils/z_index.scss";
 
 .video-card {
   padding: 1em;
@@ -164,6 +165,21 @@
       text-align: center;
       margin-top: 16px;
       border-radius: 20px;
+      background: transparent;
+
+      a {
+        display: block;
+        width: 32px;
+        height: 32px;
+      }
+
+      img,
+      svg {
+        // This is so that the svg doesnt get dragged
+        position: absolute;
+        z-index: z_index.$background;
+        left: 0;
+      }
     }
   }
 }

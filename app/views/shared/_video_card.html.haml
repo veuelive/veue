@@ -1,8 +1,8 @@
 - video = video_card
 .video-card{class: video.state}
-  = link_to video_link_path(video) do
+  = link_to video_link_path(video), draggable: "false" do
     .video-card__image
-      = image_tag video_card_image_url(video)
+      = image_tag video_card_image_url(video), draggable: "false"
 
       - if video.live?
         .video-card__image__live
@@ -20,11 +20,11 @@
           = video.video_views.count
       .video-card__image__secondary
         - if video.secondary_shot.attached?
-          = image_tag video.secondary_shot.variant(resize_to_limit: [100, 100])
+          = image_tag video.secondary_shot.variant(resize_to_limit: [100, 100]), draggable: "false"
   .video-card__below
     .video-card__below__picture
       - channel = video.channel
-      %a{href: channel_path(channel.slug)}
+      %a{href: channel_path(channel.slug), draggable: "false"}
         = channel.profile_image_circle(32)
     .video-card__below__flex
       .video-card__below__title
