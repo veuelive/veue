@@ -244,7 +244,7 @@ describe "Broadcast View" do
         expect(video.visibility).to eq(new_visibility)
       end
 
-      it "properly displays flash errors" do
+      it "properly displays flash message on save" do
         new_title = "*" * 75
         within(settings_form) do
           fill_in("video_title", with: new_title)
