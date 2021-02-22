@@ -158,8 +158,6 @@
     }
     &__picture {
       background: color.$white;
-      width: 32px;
-      height: 32px;
       font-size: 16px;
       line-height: 32px;
       text-align: center;
@@ -167,10 +165,14 @@
       border-radius: 20px;
       background: transparent;
 
+      &,
       a {
-        display: block;
         width: 32px;
         height: 32px;
+      }
+
+      a {
+        display: block;
       }
 
       img,
