@@ -73,14 +73,17 @@ export default class extends BaseController {
       this.state = "ready";
       const params = new URLSearchParams(window.location.search);
 
-      let startOffset = parseInt(this.element.dataset.startOffset);
+      let startTime: number;
+
       const requestedStartTime = parseInt(params.get("t"));
 
       if (requestedStartTime && requestedStartTime < this.duration) {
-        startOffset += requestedStartTime;
+        startTime = requestedStartTime;
+      } else {
+        startTime = parseInt(this.element.dataset.startOffset);
       }
 
-      this.videoTarget.currentTime = startOffset;
+      this.videoTarget.currentTime = startTime;
 
       this.togglePlay();
     });

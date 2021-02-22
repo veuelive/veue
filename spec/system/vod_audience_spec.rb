@@ -106,5 +106,29 @@ describe "Prerecorded Audience View" do
       expect(page).to have_content(first_message.payload["message"])
       expect(page).to have_content(late_message.payload["message"])
     end
+
+    it "should start the video later if an offset is defined for the video" do
+      video.update!(start_offset: 5, duration: 30)
+
+      visit path_for_video(video)
+
+      expect(page).to have_css("[data-start-offset='5']")
+
+      # Use 4 due to possible rounded issues
+      expect(current_timecode).to be >= 4
+    end
+
+    it "should end the video earlier if an offset is defined" do
+      video.update!(end_offset: 5, duration: 30)
+
+      visit path_for_video(video)
+
+      expect(page).to have_css("[data-end-offset='5']")
+      expect(is_video_playing?).to be(true)
+
+      # Use 26 to account for possible rounding issues.
+      # Use a float because video durations on a video element are floats
+      expect(Float(find("#duration-time-display")["data-duration"])).to be <= 26.0
+    end
   end
 end

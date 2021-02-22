@@ -29,7 +29,7 @@ class Video < ApplicationRecord
   validates :title, allow_nil: true, length: {maximum: 70}
   validates :start_offset,
             :end_offset,
-            numericality: {greater_than_or_equal_to: 0, only_integer: true, less_than: :duration}
+            numericality: {greater_than_or_equal_to: 0, only_integer: true}
 
   scope :public_or_protected,
         -> {

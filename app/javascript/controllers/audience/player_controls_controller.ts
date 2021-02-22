@@ -48,6 +48,7 @@ export default class extends BaseController {
   }
 
   handleLoadedMetadata(): void {
+    this.timeDurationTarget.dataset.duration = this.duration.toString();
     this.timeDurationTarget.innerHTML = displayTime(this.duration);
   }
 
