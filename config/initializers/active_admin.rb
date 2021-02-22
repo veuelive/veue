@@ -44,6 +44,10 @@ ActiveAdmin.setup do |config|
   #   config.namespace :admin do |admin|
   #     admin.site_title = "Custom Admin Title"
   #   end
+
+  config.namespace(:admin) do |admin|
+    admin.route_options = {path: "/_/admin"}
+  end
   #
   # This will ONLY change the title for the admin section. Other
   # namespaces will continue to use the main "site_title" configuration.
