@@ -18,6 +18,8 @@ import { BroadcastVideoLayout } from "types/video_layout";
 
 type StreamType = "upcoming" | "live" | "vod";
 export default class extends BaseController {
+  element: HTMLElement;
+
   static targets = [
     "video",
     "primaryCanvas",
@@ -28,6 +30,7 @@ export default class extends BaseController {
     "timeDisplay",
     "timeDuration",
   ];
+
   readonly togglePlayTargets!: HTMLElement[];
   readonly toggleAudioTargets!: HTMLElement[];
   readonly videoTarget!: HTMLVideoElement;
@@ -66,11 +69,18 @@ export default class extends BaseController {
       this.timecodeSynchronizer
     );
 
+    // If its equal to "0" it turns into null...good stuff.
+    const startOffset = parseInt(this.element.dataset.startOffset);
+    const endOffset = parseInt(this.element.dataset.endOffset);
+
     this.videoTarget.addEventListener("loadedmetadata", async () => {
       this.state = "ready";
       const params = new URLSearchParams(window.location.search);
+
+      this.videoTarget.currentTime += startOffset;
+
       if (params.has("t")) {
-        this.videoTarget.currentTime = parseInt(params.get("t"));
+        this.videoTarget.currentTime += parseInt(params.get("t"));
       }
 
       this.togglePlay();
@@ -224,5 +234,13 @@ export default class extends BaseController {
 
   get audioState(): string {
     return this.data.get("audioState");
+  }
+
+  get endOffset(): number {
+    return parseInt(this.element.dataset.endOffset);
+  }
+
+  get duration(): number {
+    return this.videoTarget.duration - this.endOffset;
   }
 }

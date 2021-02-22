@@ -27,6 +27,9 @@ class Video < ApplicationRecord
   include PGEnum(visibility: %w[public protected private], _prefix: "visibility")
 
   validates :title, allow_nil: true, length: {maximum: 70}
+  validates :start_offset,
+            :end_offset,
+            numericality: {greater_than_or_equal_to: 0, only_integer: true, less_than: :duration}
 
   scope :public_or_protected,
         -> {

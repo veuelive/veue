@@ -48,15 +48,19 @@ export default class extends BaseController {
   }
 
   handleLoadedMetadata(): void {
-    this.timeDurationTarget.innerHTML = displayTime(this.videoTarget.duration);
+    this.timeDurationTarget.innerHTML = displayTime(this.duration);
   }
 
   handleTimeUpdate(): void {
     const progress = this.progressBarTarget;
     const video = this.videoTarget;
 
-    const width = Math.floor((video.currentTime / video.duration) * 100) + 1;
+    const width = Math.floor((video.currentTime / this.duration) * 100) + 1;
     progress.style.width = `${width}%`;
+
+    if (video.currentTime >= this.duration) {
+      video.dispatchEvent(new CustomEvent("ended", { bubbles: true }));
+    }
   }
 
   handlePointerDown(event: PointerEvent): void {
@@ -106,7 +110,7 @@ export default class extends BaseController {
     const x = event.clientX - frameRect.left;
     const pos = x / frameRect.width;
 
-    const currentTime = pos * this.videoTarget.duration;
+    const currentTime = pos * this.duration;
 
     this.timeDisplayTarget.innerHTML = displayTime(currentTime);
     this.videoTarget.currentTime = currentTime;
@@ -119,5 +123,13 @@ export default class extends BaseController {
 
   get videoState(): string {
     return this.element.dataset.audienceViewState;
+  }
+
+  get endOffset(): number {
+    return parseInt(this.element.dataset.endOffset);
+  }
+
+  get duration(): number {
+    return this.videoTarget.duration - this.endOffset;
   }
 }
