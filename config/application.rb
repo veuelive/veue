@@ -21,7 +21,7 @@ Bundler.require(*Rails.groups)
 module Veue
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults(6.0)
+    config.load_defaults(6.1)
 
     config.autoload_paths << "app/models/validators"
 
@@ -34,5 +34,8 @@ module Veue
     config.action_mailer.deliver_later_queue_name = nil # defaults to "mailers"
     config.active_storage.queues.analysis   = nil       # defaults to "active_storage_analysis"
     config.active_storage.queues.purge      = nil
+
+    # Persist variants to the database
+    config.active_storage.track_variants = true
   end
 end

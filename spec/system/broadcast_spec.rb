@@ -76,7 +76,10 @@ describe "Broadcast View" do
       server = Capybara.current_session.server
       current_video_url = channel_path(channel, host: server.host, port: server.port)
 
-      perform_enqueued_jobs
+      # Needs to be called twice to send text messages
+      2.times do
+        perform_enqueued_jobs
+      end
 
       expect(WebMock).to have_requested(:post, IfThisThenThatJob.post_url).once
 
