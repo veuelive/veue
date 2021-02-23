@@ -26,9 +26,7 @@ export default class extends BaseController {
   private async insertHTML(response: Response): Promise<void> {
     const html = await response.text();
 
-    // Uses parent element instead of the previous querySelector due to DOM
-    // structure differences between channels and videos.
-    this.element.parentElement.innerHTML = html;
+    this.element.innerHTML = html;
   }
 
   private followPath(): string {
