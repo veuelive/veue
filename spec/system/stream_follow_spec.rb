@@ -23,21 +23,51 @@ RSpec.describe "Follow from VOD" do
       login_as(follower)
     end
 
-    it "should make user following the streamer" do
-      visit path_for_video(video)
-      find(".follow-btn").click
-      expect(page).to have_content("Following")
+    describe "is on VOD page" do
+      it "can follow" do
+        second_video = create(:vod_video, user: channel.user, channel: channel)
+
+        visit path_for_video(video)
+        # VEUE-585: this is just confirming that there is another video and the words REPLAY
+        # setup for testing after follow
+        expect(page).to have_content("REPLAY")
+        expect(page).to have_content(second_video.title)
+
+        find(".follow-btn").click
+        expect(page).to have_content("Following")
+
+        # VEUE-585: the playback area can disappear occasionally
+        expect(page).to have_content("REPLAY")
+        expect(page).to have_content(second_video.title)
+      end
+
+      it "can unfollow streamer" do
+        Follow.create!(
+          channel: channel,
+          user: follower,
+        )
+        visit path_for_video(video)
+        find(".unfollow-btn").click
+
+        expect(page).to have_content("Follow")
+        expect(page).to have_content("REPLAY")
+      end
     end
 
-    it "should make user unfollowed streamer" do
-      Follow.create!(
-        channel: channel,
-        user: follower,
-      )
-      visit path_for_video(video)
-      find(".unfollow-btn").click
+    describe "channel page" do
+      it "should allow following" do
 
-      expect(page).to have_content("Follow")
+        visit channel_path(video.channel)
+        # VEUE-585: this is just confirming that there is another video and the words REPLAY
+        # setup for testing after follow
+        expect(page).to have_content(video.title)
+
+        find(".follow-btn").click
+        expect(page).to have_content("Following")
+
+        # VEUE-585: the playback area can disappear occasionally
+        expect(page).to have_content(video.title)
+      end
     end
   end
 
