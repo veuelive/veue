@@ -25,6 +25,7 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         text-overflow-ellipsis: color.$gray-light;
+        max-width: 500px;
       }
 
       #not-started-notification {
