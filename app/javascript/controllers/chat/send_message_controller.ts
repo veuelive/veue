@@ -64,12 +64,6 @@ export default class extends Controller {
   toggleIcon(): void {
     const textAreaElement = this.messageInputTarget;
     const message = textAreaElement.innerText;
-    if (document.querySelector("#broadcast")) {
-      const reactionButtonArea = document.querySelector(
-        ".reaction-button-area"
-      ) as HTMLDivElement;
-      reactionButtonArea.style.display = "flex";
-    }
     if (message.trim() === "") {
       this.showReactionIcon();
     } else {
@@ -77,11 +71,15 @@ export default class extends Controller {
     }
   }
   showSendIcon(): void {
-    this.messageSendTarget.style.display = "block";
+    this.messageSendTarget.style.display = "flex";
     this.messageReactionTarget.style.display = "none";
   }
   showReactionIcon(): void {
     this.messageSendTarget.style.display = "none";
-    this.messageReactionTarget.style.display = "block";
+    if (document.querySelector("#broadcast")) {
+      this.messageReactionTarget.style.display = "none";
+    } else {
+      this.messageReactionTarget.style.display = "flex";
+    }
   }
 }
