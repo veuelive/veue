@@ -25,9 +25,9 @@ describe "Video Reaction Event" do
       find(".reaction-button-area").click
       expect(page).to have_css(".user-reaction")
 
-      # Wait for 6 sec until the reaction notification disappears (after
+      # Wait for 10 sec until the reaction notification disappears (after
       # timeout) and appears as a chat message event inside messages area.
-      expect(page).to have_css("div.messages > .user-reaction", wait: 6)
+      expect(page).to have_css("div.messages > .user-reaction", wait: 10)
 
       # Should have a joined event AND a reaction
       expect_to_sse_broadcast(2)
