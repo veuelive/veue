@@ -41,7 +41,6 @@ export default class extends Controller {
 
   private closeMenu(): void {
     this.resetMenu();
-    console.log("hello close", this.type);
 
     this.type = "";
     this.element.style.display = "none";

@@ -115,11 +115,9 @@ const otherTemplate = [
 
 const template = process.platform === "darwin" ? macosTemplate : otherTemplate;
 
-// if (is.development) {
 template.push({
   label: "Debug",
   submenu: debugSubmenu,
 });
-// }
 
 export default Menu.buildFromTemplate(template);

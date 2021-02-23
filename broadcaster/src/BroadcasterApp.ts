@@ -1,7 +1,7 @@
 import { BrowserWindow, ipcMain, screen, WebContents } from "electron";
 import config from "./config";
 import { Environment } from "./Environment";
-import logger from "./logger";
+import logger, { logBrowserWindow } from "./logger";
 import FfmpegEncoder from "./Ffmpeg";
 import BrowserViewManager from "./BrowserViewManager";
 import {
@@ -24,16 +24,20 @@ export default class {
     this.mainWindow = new BrowserWindow({
       title: "Veue Broadcaster",
       show: false,
-      width: 900,
-      height: 900,
+      width: 1247,
+      height: 620,
       maximizable: false,
+      useContentSize: true,
       closable: true,
       resizable: false,
       minimizable: false,
       webPreferences: {
         nodeIntegration: true,
+        devTools: true,
       },
     });
+
+    logBrowserWindow(this.mainWindow);
 
     this.mainWindow.loadURL(environment.hostname + "/broadcasts/startup", {
       extraHeaders: "X-Bearer-Token: " + (config.get("sessionToken") || ""),
@@ -113,6 +117,6 @@ export default class {
 
     ipcMain.on("webInspectorKey", () => {
       this.mainWindow.webContents.openDevTools();
-    })
+    });
   }
 }
