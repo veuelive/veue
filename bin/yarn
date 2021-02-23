@@ -6,4 +6,12 @@ rescue Errno::ENOENT
   warn "Yarn executable was not detected in the system."
   warn "Download Yarn at https://yarnpkg.com/en/docs/install"
   exit 1
+
+  if yarn
+    exec yarn, *ARGV
+  else
+    $stderr.puts "Yarn executable was not detected in the system."
+    $stderr.puts "Download Yarn at https://yarnpkg.com/en/docs/install"
+    exit 1
+  end
 end

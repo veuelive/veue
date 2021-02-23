@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "2.7.2"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 6.0.3", ">= 6.0.3.2"
+gem "rails", "~> 6.1.3", ">= 6.1.3"
 
 # Use postgres as the database for Active Record
 gem "pg", ">= 0.18", "< 2.0"
@@ -39,9 +39,6 @@ gem "haml-rails"
 # Allows us to do development ENV configuration management with a config/application.yml file
 gem "figaro"
 
-# Temporarily ensure that we compile ffi directly to make Apple M1 chips work, this likely can be removed in future
-gem "ffi", github: "ffi/ffi", submodules: true
-
 # Helps us create friendly IDs for the urls
 gem "friendly_id"
 
@@ -56,6 +53,10 @@ gem "activeadmin"
 
 # Additional addons for increased functionality
 gem "activeadmin_addons"
+
+# Required by activeadmin_addons -.- doesnt actually get used since we use
+# the webpacker imports...
+gem "sassc-rails"
 
 # Helps set up role-based access
 gem "cancancan"

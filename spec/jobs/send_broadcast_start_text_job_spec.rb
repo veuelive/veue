@@ -20,11 +20,11 @@ RSpec.describe SendBroadcastStartTextJob, type: :job do
 
     it "should run without error" do
       SendBroadcastStartTextJob.perform_later(channel)
-      expect(SendBroadcastStartTextJob).to have_been_enqueued.exactly(:once).with(channel)
+      expect(SendBroadcastStartTextJob).to have_been_enqueued.exactly(:once)
 
       # A second job is queued, the first one is just a batch
       perform_enqueued_jobs(only: SendBroadcastStartTextJob)
-      expect(SendBroadcastStartTextJob).to have_been_enqueued.exactly(:once).with(channel)
+      expect(SendBroadcastStartTextJob).to have_been_enqueued.exactly(:once)
     end
 
     it "should run in batches based on batch_size" do

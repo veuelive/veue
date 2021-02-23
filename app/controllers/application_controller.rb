@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   private
 
   def xhr_request?
-    request.xhr?&.zero?
+    request.xhr?
   end
   helper_method :xhr_request?
 end

@@ -1,5 +1,5 @@
 import DropdownController from "./dropdown_controller";
-import { secureFetch } from "util/fetch";
+import { secureFetch, putForm } from "util/fetch";
 import { Visibility, setVideoVisibility } from "../../helpers/video_helpers";
 
 export const ShowSettingsMenuEvent = "ShowSettingsMenu";
@@ -45,14 +45,28 @@ export default class SettingsController extends DropdownController {
     this.insertElement(markup);
   }
 
-  handleAjaxSuccess(): void {
+  async submitForm(event: Event): Promise<void> {
+    event.preventDefault();
+
+    const url = this.formTarget.action;
+    const response = await putForm(url, this.formTarget);
+
+    const status = response.status;
+    if (status >= 200 && status <= 299) {
+      this.ajaxSuccess();
+    } else {
+      this.ajaxError();
+    }
+  }
+
+  ajaxSuccess(): void {
     this.handleAjax("success");
 
     const visibility = this.visibilityTarget.value as Visibility;
     setVideoVisibility(visibility);
   }
 
-  handleAjaxError(): void {
+  ajaxError(): void {
     this.handleAjax("error");
   }
 
