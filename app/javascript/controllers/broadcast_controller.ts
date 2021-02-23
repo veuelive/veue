@@ -80,8 +80,8 @@ export default class extends Controller {
       );
 
       const windowSize = {
-        width: 1250,
-        height: 685,
+        width: 1550,
+        height: 985,
       };
       await ipcRenderer.invoke("wakeup", {
         mainWindow: windowSize,
