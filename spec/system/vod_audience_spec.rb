@@ -108,22 +108,40 @@ describe "Prerecorded Audience View" do
     end
 
     it "should start the video later if an offset is defined for the video" do
-      video.update!(start_offset: 5, duration: 30)
+      start_offset = 10
+      video.update!(start_offset: start_offset, duration: 30)
 
       visit path_for_video(video)
 
-      expect(page).to have_css("[data-start-offset='5']")
+      expect(page).to have_css("[data-start-offset='#{start_offset}']")
+      expect(is_video_playing?).to be(true)
 
-      # Use 4 due to possible rounded issues
-      expect(current_timecode).to be >= 4
+      # We actually have no clue where in the time code we'll be, but its safe
+      # to assume we'll be greater than 0.
+      expect(current_timecode).to be > 0
+    end
+
+    it "should use the timecode provided by ?t=x instead of user defined timecode" do
+      start_offset = 10
+      video.update!(start_offset: start_offset, duration: 30)
+
+      visit path_for_video(video, t: 25)
+
+      expect(page).to have_css("[data-start-offset='#{start_offset}']")
+      expect(is_video_playing?).to be(true)
+
+      # Use 24 in case of any rounding issues, its a safe number that is close
+      # enough to 't' and far enough from the start offset
+      expect(current_timecode).to be >= 24
     end
 
     it "should end the video earlier if an offset is defined" do
-      video.update!(end_offset: 5, duration: 30)
+      end_offset = 5
+      video.update!(end_offset: end_offset, duration: 30)
 
       visit path_for_video(video)
 
-      expect(page).to have_css("[data-end-offset='5']")
+      expect(page).to have_css("[data-end-offset='#{end_offset}']")
       expect(is_video_playing?).to be(true)
 
       # Use 26 to account for possible rounding issues.
