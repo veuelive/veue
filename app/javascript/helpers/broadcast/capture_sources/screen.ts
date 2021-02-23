@@ -4,13 +4,23 @@ import VideoLayout from "types/video_layout";
 
 export class ScreenCaptureSource extends VideoCaptureSource {
   static async connect(videoLayout: VideoLayout): Promise<ScreenCaptureSource> {
-    const deviceId = await ScreenCaptureSource.getWindowSource(
-      "Veue Broadcaster"
+    const windowTitle = "Veue Broadcaster";
+    const deviceId = await ScreenCaptureSource.getWindowSource(windowTitle);
+    console.log(
+      `DesktopCapture selected deviceId ${deviceId} because it matched window title ${windowTitle}`
     );
-    const source = new ScreenCaptureSource(deviceId);
-    await source.start();
-    source.addLayout(videoLayout);
-    return source;
+    try {
+      const source = new ScreenCaptureSource(deviceId);
+      console.log("Starting source... ", source);
+      await source.start();
+      console.log("Started source", source);
+      source.addLayout(videoLayout);
+      console.log("Source using video layout", videoLayout);
+      return source;
+    } catch (e) {
+      console.error("Failed to start screen capture ", e);
+      return Promise.reject(e);
+    }
   }
 
   private addLayout(videoLayout: VideoLayout) {

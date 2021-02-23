@@ -1,5 +1,5 @@
 import { app, BrowserWindow } from "electron";
-import logger from "./logger";
+import logger, { logBrowserWindow } from "./logger";
 import { checkForAppUpdates } from "./appUpdater";
 
 let loadingScreen;
@@ -14,11 +14,13 @@ export async function loadingProcess(): Promise<void> {
     maximizable: false,
     minimizable: false,
     fullscreenable: false,
+    autoHideMenuBar: true,
     titleBarStyle: "hidden",
     webPreferences: {
       nodeIntegration: true,
     },
   });
+  logBrowserWindow(loadingScreen);
   loadingScreen.on("closed", closeListener);
   await loadingScreen.webContents.loadFile("static/loading.html");
   loadingScreen.show();
