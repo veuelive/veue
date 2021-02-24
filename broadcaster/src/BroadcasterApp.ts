@@ -8,6 +8,7 @@ import {
   BroadcasterEnvironment,
   CreateBrowserViewPayload,
   WakeupPayload,
+  WindowBounds,
 } from "../../app/javascript/types/electron_env";
 import { autoUpdater } from "electron-updater";
 import { changeReleaseChannel } from "./appUpdater";
@@ -27,7 +28,6 @@ export default class {
       width: 1247,
       height: 620,
       maximizable: false,
-      useContentSize: true,
       closable: true,
       resizable: false,
       minimizable: false,
@@ -66,6 +66,9 @@ export default class {
         primaryDisplay: screen.getPrimaryDisplay(),
         appVersion: this.version,
         releaseChannel: autoUpdater.channel,
+        mainWindow: {
+          mediaSourceId: this.mainWindow.getMediaSourceId(),
+        },
         system: {
           platform: process.platform,
           arch: process.arch,
@@ -83,6 +86,11 @@ export default class {
       );
       config.set("sessionToken", payload.sessionToken);
       this.mainWindow.show();
+      return {
+        contentBounds: this.mainWindow.getContentBounds(),
+        bounds: this.mainWindow.getBounds(),
+        normalBounds: this.mainWindow.getNormalBounds(),
+      } as WindowBounds;
     });
 
     ipcMain.handle(
