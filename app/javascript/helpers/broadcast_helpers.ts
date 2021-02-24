@@ -1,4 +1,4 @@
-import { Point, Rectangle, Size } from "types/rectangle";
+import { Rectangle } from "types/rectangle";
 import { postJson } from "util/fetch";
 import { NavigationUpdate } from "controllers/broadcast/browser_controller";
 import { electron, inElectronApp } from "helpers/electron/base";
@@ -7,7 +7,6 @@ import { getChannelSlug, getChannelId } from "helpers/channel_helpers";
 import { getVideoId } from "helpers/video_helpers";
 import { origin } from "helpers/app_config";
 import { BroadcasterEnvironment, WindowBounds } from "types/electron_env";
-import { BroadcasterCommand } from "types/broadcaster_command";
 
 export function getBroadcastElement(): HTMLElement {
   return document.getElementById("broadcast");
