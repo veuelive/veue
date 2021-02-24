@@ -5,6 +5,9 @@ export interface BroadcasterEnvironment {
   primaryDisplay: Display;
   appVersion: string;
   releaseChannel: string;
+  mainWindow: {
+    mediaSourceId: string;
+  };
   system: {
     // https://nodejs.org/api/process.html#process_process_platform
     platform: "darwin" | "win32";
@@ -30,4 +33,10 @@ export interface Display {
   workArea: Rectangle;
   size: Size;
   scaleFactor: number;
+}
+
+export interface WindowBounds {
+  contentBounds: Rectangle;
+  normalBounds: Rectangle;
+  bounds: Rectangle;
 }

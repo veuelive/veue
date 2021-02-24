@@ -1,4 +1,4 @@
-import { Rectangle, Size } from "types/rectangle";
+import { Point, Rectangle, Size } from "types/rectangle";
 import { postJson } from "util/fetch";
 import { NavigationUpdate } from "controllers/broadcast/browser_controller";
 import { electron, inElectronApp } from "helpers/electron/base";
@@ -6,6 +6,8 @@ import VideoLayout, { BroadcastVideoLayout } from "types/video_layout";
 import { getChannelSlug, getChannelId } from "helpers/channel_helpers";
 import { getVideoId } from "helpers/video_helpers";
 import { origin } from "helpers/app_config";
+import { BroadcasterEnvironment, WindowBounds } from "types/electron_env";
+import { BroadcasterCommand } from "types/broadcaster_command";
 
 export function getBroadcastElement(): HTMLElement {
   return document.getElementById("broadcast");
@@ -40,20 +42,37 @@ export function privateVideoLink(): string {
 }
 
 export function calculateCaptureLayout(
-  windowSize: Size,
+  windowBounds: WindowBounds,
   captureBounds: Rectangle,
-  workArea: Rectangle
+  environment: BroadcasterEnvironment
 ): VideoLayout {
+  console.log("windowBounds", windowBounds);
+  console.log("captureAreaBounds", captureBounds);
+  const { contentBounds, bounds } = windowBounds;
+  let x, y;
+  if (environment.system.platform == "win32") {
+    // @hcatlin: I know, I know, I know. I hate this.
+    // But, I tried every combo possible and windows was just
+    // not letting me use ANY of the bounds to get a good result.
+    // So by trial and error on Windows 10.. we end up with this hardcoded
+    // 21 pixels
+    y = captureBounds.y + 21;
+    x = captureBounds.x;
+  } else {
+    // Meanwhile, this makes sense and just works.
+    y = captureBounds.y + (contentBounds.y - bounds.y);
+    x = captureBounds.x + (contentBounds.x - bounds.x);
+  }
   return {
-    width: windowSize.width,
-    height: windowSize.height,
+    width: contentBounds.width,
+    height: contentBounds.height,
     sections: [
       {
         type: "screen",
         width: captureBounds.width,
         height: captureBounds.height,
-        y: captureBounds.y + workArea.y,
-        x: captureBounds.x + workArea.x,
+        y,
+        x,
         priority: 1,
       },
     ],

@@ -75,15 +75,18 @@ export default class extends Controller {
 
     ipcRenderer.invoke("getEnvironment").then(async (data) => {
       this.environment = data as BroadcasterEnvironment;
+      console.log(this.environment);
       document.dispatchEvent(
         new CustomEvent(BroadcasterEnvironmentChangedEvent, { detail: data })
       );
 
+      // We should replace this later using the environment above to calculate
+      // what size we think the window should be when it opens
       const windowSize = {
-        width: 1550,
-        height: 985,
+        width: 1247,
+        height: 720,
       };
-      await ipcRenderer.invoke("wakeup", {
+      const windowBounds = await ipcRenderer.invoke("wakeup", {
         mainWindow: windowSize,
         rtmpUrl: `rtmps://global-live.mux.com/app/${this.data.get(
           "stream-key"
@@ -100,9 +103,9 @@ export default class extends Controller {
         url: "https://www.apple.com",
       } as CreateBrowserViewPayload);
       const broadcastArea = calculateCaptureLayout(
-        windowSize,
+        windowBounds,
         browserArea,
-        this.environment.primaryDisplay.workArea
+        this.environment
       );
 
       console.log("broadcastArea", broadcastArea);
