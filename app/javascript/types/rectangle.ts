@@ -1,4 +1,6 @@
-export interface Rectangle extends Size {
+export interface Rectangle extends Size, Point {}
+
+export interface Point {
   x: number;
   y: number;
 }
