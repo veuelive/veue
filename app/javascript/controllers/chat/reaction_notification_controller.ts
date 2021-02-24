@@ -35,7 +35,7 @@ export default class extends Controller {
       document.dispatchEvent(
         new CustomEvent(UserReactionMessageEvent, { detail: { name: name } })
       );
-    }, 7000);
+    }, 3000);
   }
 }
 
