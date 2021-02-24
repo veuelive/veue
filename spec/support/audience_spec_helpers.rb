@@ -65,4 +65,8 @@ module AudienceSpecHelpers
   def write_chat_message(text)
     find(".write-area").base.send_keys(text, :enter)
   end
+
+  def type_message(text)
+    find(".write-area").base.send_keys(text)
+  end
 end
