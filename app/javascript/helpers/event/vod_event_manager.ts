@@ -11,6 +11,10 @@ export default class VodEventManager implements EventManagerInterface {
   eventIndex: EventIndexEntry[];
 
   constructor(startAtMs: number) {
+    this.playEventsAt(startAtMs);
+  }
+
+  playEventsAt(startAtMs: number): void {
     secureFetch("./events")
       .then((response) => response.json())
       .then((eventIndex) => {
