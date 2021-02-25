@@ -3,7 +3,7 @@ import playSvg from "images/play.svg";
 import pauseSvg from "images/pause.svg";
 import mutedSvg from "images/volume-mute.svg";
 import unmutedSvg from "images/volume-max.svg";
-import { displayTime } from "util/time";
+import { timecodeChangedEvent, displayTime } from "util/time";
 import TimecodeSynchronizer from "helpers/audience/timecode_synchronizer";
 import VideoDemixer from "helpers/audience/video_demixer";
 import { VideoEventProcessor } from "helpers/event/event_processor";
@@ -168,13 +168,14 @@ export default class extends BaseController {
 
   timecodeChanged(): void {
     if (this.streamType !== "upcoming") {
-      this.data.set(
-        "timecode",
-        this.timecodeSynchronizer.timecodeMs.toString()
-      );
-      VideoEventProcessor.syncTime(this.timecodeSynchronizer.timecodeMs);
+      const timecodeMs = this.timecodeSynchronizer.timecodeMs;
+      this.data.set("timecode", timecodeMs.toString());
+      VideoEventProcessor.syncTime(timecodeMs);
 
       const seconds = this.timecodeSynchronizer.timecodeSeconds;
+      this.element.dispatchEvent(
+        new CustomEvent(timecodeChangedEvent, { detail: { seconds } })
+      );
       this.timeDisplayTarget.innerHTML = displayTime(seconds);
     }
   }
