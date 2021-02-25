@@ -3,7 +3,11 @@ import playSvg from "images/play.svg";
 import pauseSvg from "images/pause.svg";
 import mutedSvg from "images/volume-mute.svg";
 import unmutedSvg from "images/volume-max.svg";
-import { timecodeChangedEvent, displayTime } from "util/time";
+import {
+  timecodeChangeEvent,
+  displayTime,
+  playbackTimeChangeEvent,
+} from "util/time";
 import TimecodeSynchronizer from "helpers/audience/timecode_synchronizer";
 import VideoDemixer from "helpers/audience/video_demixer";
 import { VideoEventProcessor } from "helpers/event/event_processor";
@@ -22,6 +26,7 @@ export default class extends BaseController {
 
   static targets = [
     "video",
+    "chat",
     "primaryCanvas",
     "fixedSecondaryCanvas",
     "pipSecondaryCanvas",
@@ -29,16 +34,19 @@ export default class extends BaseController {
     "toggleAudio",
     "timeDisplay",
     "timeDuration",
+    "likeNotification",
   ];
 
   readonly togglePlayTargets!: HTMLElement[];
   readonly toggleAudioTargets!: HTMLElement[];
   readonly videoTarget!: HTMLVideoElement;
+  readonly chatTarget!: HTMLDivElement;
   readonly primaryCanvasTarget!: HTMLCanvasElement;
   readonly fixedSecondaryCanvasTarget!: HTMLCanvasElement;
   readonly pipSecondaryCanvasTarget!: HTMLCanvasElement;
   readonly timeDisplayTarget!: HTMLElement;
   readonly timeDurationTarget!: HTMLElement;
+  readonly likeNotificationTarget!: HTMLDivElement;
 
   private broadcastLayout: BroadcastVideoLayout;
   private timecodeSynchronizer: TimecodeSynchronizer;
@@ -105,6 +113,10 @@ export default class extends BaseController {
 
     if (this.streamType === "vod") {
       this.eventManager = new VodEventManager(0);
+      this.element.addEventListener(
+        playbackTimeChangeEvent,
+        this.playbackTimeChangedTo.bind(this)
+      );
     } else {
       this.eventManager = new LiveEventManager(true);
     }
@@ -174,9 +186,16 @@ export default class extends BaseController {
 
       const seconds = this.timecodeSynchronizer.timecodeSeconds;
       this.element.dispatchEvent(
-        new CustomEvent(timecodeChangedEvent, { detail: { seconds } })
+        new CustomEvent(timecodeChangeEvent, { detail: { seconds } })
       );
       this.timeDisplayTarget.innerHTML = displayTime(seconds);
+    }
+  }
+
+  playbackTimeChangedTo(event: CustomEvent): void {
+    if (this.eventManager instanceof VodEventManager) {
+      this.resetChat();
+      this.eventManager.playEventsAt(event.detail.timecodeMs);
     }
   }
 
@@ -189,6 +208,11 @@ export default class extends BaseController {
     } else {
       this.videoTarget.pause();
     }
+  }
+
+  resetChat(): void {
+    this.chatTarget.innerHTML = "";
+    this.likeNotificationTarget.innerHTML = "";
   }
 
   showChat(): void {
