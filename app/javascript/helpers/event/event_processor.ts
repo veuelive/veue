@@ -4,7 +4,8 @@ interface VideoEvent {
   timecodeMs: number;
 }
 
-const ClearVideoEvent = new CustomEvent("clear");
+export const ClearVideoEvent = "clear";
+const ClearVideoCustomEvent = new CustomEvent(ClearVideoEvent);
 
 export const VideoEventProcessor = new (class VideoEventProcessor {
   public dispatcher: HTMLDivElement;
@@ -23,7 +24,7 @@ export const VideoEventProcessor = new (class VideoEventProcessor {
   }
 
   clear() {
-    this.dispatcher.dispatchEvent(ClearVideoEvent);
+    this.dispatcher.dispatchEvent(ClearVideoCustomEvent);
     this.events = [];
   }
 
