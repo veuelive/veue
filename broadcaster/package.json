@@ -84,7 +84,8 @@
     "win": {
       "extraResources": [
         "bin/win/**"
-      ]
+      ],
+      "target": "portable"
     },
     "dmg": {
       "sign": false,
