@@ -8,6 +8,8 @@ module IpcMockConcern
     case params["channel"]
     when "getEnvironment"
       environment_payload
+    when "wakeup"
+      wakeup_payload
     when "navigate"
       process_navigation_event
     when "start"
@@ -22,6 +24,8 @@ module IpcMockConcern
 
   private
 
+  # Data about the Broadcaster's environment that we
+  # expect to get from Electron
   def environment_payload
     @return = {
       displays: [test_display],
@@ -30,6 +34,27 @@ module IpcMockConcern
         platform: "test",
         arch: "test",
       },
+    }
+  end
+
+  # The second message sent from the Stimulus Broadcast Controller
+  # is the "wakeup" command and we respond with information about our
+  # window sizes
+  #
+  # You can see documentation for the source of this faked payload here:
+  # https://www.electronjs.org/docs/api/browser-window#wingetcontentbounds
+  #
+  def wakeup_payload
+    rect = {
+      width: 1982,
+      height: 1982,
+      x: 0,
+      y: 0,
+    }
+    @return = {
+      bounds: rect,
+      contentBounds: rect,
+      normalBounds: rect,
     }
   end
 
