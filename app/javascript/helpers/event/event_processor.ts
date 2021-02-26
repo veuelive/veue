@@ -25,7 +25,6 @@ export const VideoEventProcessor = new (class VideoEventProcessor {
       })
       .pop();
 
-    // console.log("LAST NAV", lastBrowserNavigation)
     while (this.events[0] && this.events[0].timecodeMs <= timecodeMs) {
       const currentEvent = this.events.shift();
 
@@ -62,11 +61,6 @@ export const VideoEventProcessor = new (class VideoEventProcessor {
   }
 
   dispatch(videoEvent: VideoEvent): void {
-    // if (videoEvent.type === "BrowserNavigation" && !videoEvent.timecodeMs) {
-    //   return
-    // }
-
-    console.trace("TRACING");
     console.log(
       "dispatching",
       videoEvent.type,
