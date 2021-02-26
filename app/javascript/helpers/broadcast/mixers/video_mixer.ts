@@ -5,7 +5,7 @@ import Mixer from "helpers/broadcast/mixers/mixer";
 import { buildBroadcastLayout } from "util/layout_packer";
 import { sendBroadcastLayoutUpdate } from "helpers/broadcast_helpers";
 
-const VIDEO_SIZE = { width: 1280, height: 1080 };
+const VIDEO_SIZE = { width: 1920, height: 1080 };
 export const BroadcastLayoutChangedEvent = "BroadcastLayoutChanged";
 
 export default class VideoMixer implements Mixer {
