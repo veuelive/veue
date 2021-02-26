@@ -134,7 +134,7 @@
     border-radius: 0px 0px 10px 10px;
 
     > * {
-      margin: 12px;
+      margin: 10px;
     }
 
     .chat-controls {
@@ -155,21 +155,40 @@
           content: "";
         }
       }
-      .reaction-button-area {
-        border: 1px solid color.$neutral-middle;
-        display: flex;
-        align-items: center;
-        border-radius: 10px;
-        margin-left: 10px;
-        padding: 11px 10px 11px 11px;
-        cursor: pointer;
-        align-self: flex-end;
+      .message-write__send {
+        display: none;
+        border: 1px solid color.$veue-corporate;
+        background: color.$veue-corporate;
         svg {
-          width: 22px;
-          height: 22px;
+          margin-left: 4px;
+          path {
+            fill: color.$white;
+          }
+        }
+      }
+      .reaction-button-area {
+        display: flex;
+        border: 1px solid color.$neutral-middle;
+        svg {
+          margin-left: 3px;
           path {
             fill: color.$neutral-middle;
           }
+        }
+      }
+      .reaction-button-area,
+      .message-write__send {
+        align-items: center;
+        border-radius: 10px;
+        margin-left: 10px;
+        width: 42px;
+        height: 42px;
+        cursor: pointer;
+        align-self: flex-end;
+        svg {
+          width: 18px;
+          height: 18px;
+          padding: 10px;
         }
         &.active {
           cursor: default;
@@ -181,22 +200,6 @@
             }
           }
         }
-      }
-    }
-    &__send {
-      display: none;
-      background: color.$veue-corporate;
-      border-radius: 10px;
-      width: 32px;
-      height: 33px;
-      align-items: center;
-      cursor: pointer;
-      padding: 0.32rem;
-      margin-left: 0.5rem;
-      svg {
-        width: 22px;
-        height: 22px;
-        margin-left: 6px;
       }
     }
   }
