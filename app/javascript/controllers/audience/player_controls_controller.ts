@@ -4,7 +4,6 @@ import {
   timecodeChangeEvent,
   playbackTimeChangeEvent,
 } from "util/time";
-import { VideoEventProcessor } from "helpers/event/event_processor";
 
 export default class extends BaseController {
   static targets = [
@@ -131,7 +130,6 @@ export default class extends BaseController {
   }
 
   dispatchPlaybackChange(timecodeMs: number): void {
-    console.log("PLAYCHANGE: ", timecodeMs);
     this.element.dispatchEvent(
       new CustomEvent(playbackTimeChangeEvent, { detail: { timecodeMs } })
     );
