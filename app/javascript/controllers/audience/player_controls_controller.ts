@@ -64,10 +64,6 @@ export default class extends BaseController {
 
     const seconds = event.detail.seconds;
 
-    if (seconds === 0) {
-      return;
-    }
-
     const width = Math.floor((seconds / this.duration) * 100) + 1;
     progress.style.width = `${width}%`;
 
@@ -128,15 +124,14 @@ export default class extends BaseController {
 
     const timecodeMs = currentTime * 100;
 
-    this.syncEvents(timecodeMs);
+    this.dispatchPlaybackChange(timecodeMs);
 
     this.videoTarget.currentTime = currentTime;
     this.timeDisplayTarget.innerHTML = displayTime(currentTime);
   }
 
-  syncEvents(timecodeMs: number): void {
-    VideoEventProcessor.clear();
-    VideoEventProcessor.syncTime(timecodeMs);
+  dispatchPlaybackChange(timecodeMs: number): void {
+    console.log("PLAYCHANGE: ", timecodeMs);
     this.element.dispatchEvent(
       new CustomEvent(playbackTimeChangeEvent, { detail: { timecodeMs } })
     );
