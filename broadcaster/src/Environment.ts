@@ -7,7 +7,7 @@ export interface Environment {
 
 export const environments = {
   production: {
-    hostname: "https://www.veuelive.com",
+    hostname: "https://www.veue.tv",
     showUnhandledExceptionDialog: false,
     defaultReleaseChannel: "latest",
   },

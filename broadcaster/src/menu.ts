@@ -17,7 +17,7 @@ const showPreferences = () => {
 const helpSubmenu = [
   openUrlMenuItem({
     label: "Website",
-    url: "https://www.veuelive.com/-/help",
+    url: "https://www.veue.tv/-/help",
   }),
 ] as Array<MenuItemConstructorOptions>;
 
