@@ -18,5 +18,5 @@ export function isProduction(
   location = window.location as { hostname: string }
 ): boolean {
   const { hostname } = location;
-  return hostname == "veuelive.com" || hostname == "www.veuelive.com";
+  return hostname == "veue.tv" || hostname == "www.veue.tv";
 }

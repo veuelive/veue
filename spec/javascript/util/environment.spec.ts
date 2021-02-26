@@ -16,8 +16,8 @@ it("should have working getCsrfToken", () => {
 });
 
 it("should detect production", () => {
-  expect(isProduction({ hostname: "www.veuelive.com" })).toBe(true);
-  expect(isProduction({ hostname: "veuelive.com" })).toBe(true);
-  expect(isProduction({ hostname: "beta.veuelive.com" })).toBe(false);
+  expect(isProduction({ hostname: "www.veue.tv" })).toBe(true);
+  expect(isProduction({ hostname: "veue.tv" })).toBe(true);
+  expect(isProduction({ hostname: "beta.veue.tv" })).toBe(false);
   expect(isProduction({ hostname: "localhost" })).toBe(false);
 });

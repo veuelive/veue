@@ -4,15 +4,15 @@
 
 - Production:
 
-  - [Site](https://www.veuelive.com)
-  - [SideKiq UI](https://www.veuelive.com/_/_/sidekiq)
+  - [Site](https://www.veue.tv)
+  - [SideKiq UI](https://www.veue.tv/_/_/sidekiq)
   - [Render Service](https://dashboard.render.com/web/srv-bukoj3m9ph1hqurcua20)
   - [APM](https://appsignal.com/veue/sites/5f1b3af314ad66221c331630/dashboard)
   - [Logs](https://app.logdna.com/e4202f546b/logs/view/560b2cfe31)
 
 - Stage
-  - [Site](https://preshow.veuelive.com)
-  - [SideKiq UI](https://prewshow.veuelive.com/_/_/sidekiq)
+  - [Site](https://preshow.veue.tv)
+  - [SideKiq UI](https://prewshow.veue.tv/_/_/sidekiq)
   - [Render Service](https://dashboard.render.com/web/srv-bv4jnvgn4r071o276gbg)
   - [APM](https://appsignal.com/veue/sites/5f9c4d5c7478205001c50b2a/dashboard)
   - [Logs](https://app.logdna.com/e4202f546b/logs/view/9603e9e850)
@@ -106,7 +106,7 @@ You can test it from the examples on their download page. It creates a tunnel at
 
 To install, use `brew install --cask ngrok` or `yarn global add ngrok` depending on your preferences.
 
-In a web browser, go to https://dashboard.ngrok.com/ and login with your Veue Google Account. This will give you 
+In a web browser, go to https://dashboard.ngrok.com/ and login with your Veue Google Account. This will give you
 a free pro ngrok account. Follow Step 2 which sets up your auth token.
 
 To run ngrok:
@@ -149,7 +149,7 @@ yarn install
 yarn start
 ```
 
-An Electron app will launch. By default, the app opens with the Chrome debugging tools shown, making the layout 
+An Electron app will launch. By default, the app opens with the Chrome debugging tools shown, making the layout
 look awkward. Close them using the X in the top-right of the window.
 
 If you successfully login using the Broadcaster, it means that everything is working... NGrok, Mux, etc.
@@ -187,10 +187,9 @@ MuxRuby::UnauthorizedError in BroadcastsController
 
 If you see this, then your MUX tokens aren't setup correctly!
 
-
 ## Checks
 
-We use both testing and linters and formatters to ensure consistency in our codebase. On every PR, the 
+We use both testing and linters and formatters to ensure consistency in our codebase. On every PR, the
 following are checked:
 
 ### Rspec
@@ -202,7 +201,7 @@ To run the test suite run:
 ### Prettier — FOR TYPESCRIPT/JAVASCRIPT
 
 To run on the entire codebase, run
-`yarn prettier  app/ spec/`
+`yarn prettier app/ spec/`
 
 To run on only one file, run
 
@@ -236,22 +235,24 @@ The source for this image can be found in the `docs` folder. Please update whene
 ## Environment Variables
 
 ### Flags
+
 These may need to be changed on occasion
 
 ```
 VELVET_ROPE: true/false - Is the landing page on the root or not?
 PERSPECTIVE_API_ENABLED: true/false - Used to turn on or off the Perspective API
 PERSPECTIVE_API_SCORE_THRESHOLD: 0.0...1.0 - Cutoff values for not publishing chat messages, 1.0 being the worst and 0.0 being innocent
-````
+```
 
 ### Third Party Configurations
 
 #### AppSignal
-````
+
+```
 APPSIGNAL_FRONTEND_KEY: string - Needed for AppSignal Javascript Reporting
 APPSIGNAL_PUSH_API_KEY: string - AppSignal's Backend Push Key
 APPSIGNAL_APP_ENV: string - AppSignal "environment" tag, used to structure reporting in Appsignal
-````
+```
 
 #### Google
 
@@ -262,8 +263,8 @@ GOOGLE_CLOUD_KEY: string - Access to the Google Cloud Perspective API
 #### Mux
 
 ```ts
-MUX_TOKEN_ID
-MUX_TOKEN_SECRET
+MUX_TOKEN_ID;
+MUX_TOKEN_SECRET;
 ```
 
 #### AWS
@@ -271,15 +272,15 @@ MUX_TOKEN_SECRET
 Used for S3 storage
 
 ```ts
-AWS_ACCESS_KEY_ID
-AWS_BUCKET
-AWS_SECRET_ACCESS_KEY
+AWS_ACCESS_KEY_ID;
+AWS_BUCKET;
+AWS_SECRET_ACCESS_KEY;
 ```
 
 #### LogDNA
 
 ```ts
-LOG_DNA_KEY
+LOG_DNA_KEY;
 ```
 
 #### Twilio
@@ -293,6 +294,5 @@ TWILIO_PHONE_NUMBER - The actual phone number we send from
 #### IFTTT
 
 ```ts
-IFTTT_PUSH_KEY
+IFTTT_PUSH_KEY;
 ```
-

@@ -117,7 +117,7 @@ export default class extends Controller {
 
     ipcRenderer.on("ffmpeg-error", () => {
       this.state = "failed";
-      alert("Something went wrong with ffmpeg– contact hello@veuelive.com");
+      alert("Something went wrong with ffmpeg– contact hello@veue.tv");
       this.streamCapturer.stop();
     });
 
