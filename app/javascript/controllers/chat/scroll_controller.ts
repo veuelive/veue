@@ -25,17 +25,18 @@ export default class extends Controller {
     });
   }
 
-  scrollToBottom(): void {
+  scrollToBottom(event: Event): void {
+    // This will stop us from losing focus if we are typing a message
+    // and closing the keyboard on mobile
+    event.stopPropagation();
+
     const lastChild = this.messagesTarget.lastElementChild;
 
     if (!lastChild) {
       return;
     }
 
-    lastChild.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-      inline: "nearest",
-    });
+    // This is the equivalent of doing {end} style and is supported by Safari
+    lastChild.scrollIntoView(false);
   }
 }
