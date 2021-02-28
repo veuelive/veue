@@ -33,12 +33,12 @@
       "data-target": "audience-view.fixedSecondaryCanvas",
       width: 420,
       height: 340
-    } 
+    }
     %video.player__video.viewer{
       "data-target": "audience-view.video audience--player-controls.video",
       crossorigin: "anonymous",
       src: current_video.hls_url,
-      style: "width: 0px; height: 0;",
+      style: "width: 0px;",
       playsinline: "playsinline",
     }
     = render partial: "shared/chat", locals: { video: current_video }
