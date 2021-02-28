@@ -35,12 +35,14 @@ export default class extends Controller {
       this.messageInputTarget.contentEditable = "true";
     }
   }
+
   chatBoxKeyDown(event: KeyboardEvent): void {
     if (!event.shiftKey && event.key === "Enter") {
       event.preventDefault();
       this.sendMessage();
     }
   }
+
   sendMessage(): void {
     const textAreaElement = this.messageInputTarget;
     const message = textAreaElement.innerText;
@@ -61,6 +63,7 @@ export default class extends Controller {
       });
     }
   }
+
   toggleIcon(): void {
     const textAreaElement = this.messageInputTarget;
     const message = textAreaElement.innerText;
@@ -70,10 +73,12 @@ export default class extends Controller {
       this.showSendIcon();
     }
   }
+
   showSendIcon(): void {
     this.messageSendTarget.style.display = "flex";
     this.messageReactionTarget.style.display = "none";
   }
+
   showReactionIcon(): void {
     this.messageSendTarget.style.display = "none";
     if (document.querySelector("#broadcast")) {
