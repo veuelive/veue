@@ -11,42 +11,33 @@ export default class VodEventManager implements EventManagerInterface {
   eventIndex: EventIndexEntry[];
 
   constructor(startAtMs: number) {
-    this.playEventsAt(startAtMs, { sync: true });
+    this.playEventsAt(startAtMs);
   }
 
-  playEventsAt(startAtMs: number, { sync = false } = {}): void {
+  playEventsAt(startAtMs: number): void {
     secureFetch("./events")
       .then((response) => response.json())
       .then((eventIndex) => {
-        console.log("eventIndex: ", eventIndex);
         this.eventIndex = eventIndex;
-        return this.seekTo(startAtMs, { sync });
+        return this.seekTo(startAtMs);
       });
   }
 
-  seekTo(timecodeMs: number, { sync = false } = {}): Promise<void> {
+  seekTo(timecodeMs: number): Promise<void> {
     const nextEntry = this.eventIndex.find(
       (entry) => entry.start <= timecodeMs
     );
-    return this.loadEventSet(nextEntry, timecodeMs, { sync });
+    return this.loadEventSet(nextEntry, timecodeMs);
   }
 
   disconnect(): void {
     return;
   }
 
-  loadEventSet(
-    entry: EventIndexEntry,
-    timecodeMs: number,
-    { sync = false } = {}
-  ): Promise<void> {
+  loadEventSet(entry: EventIndexEntry, timecodeMs: number): Promise<void> {
     return secureFetch(entry.url)
       .then((response) => response.json())
       .then((events) => VideoEventProcessor.addEvents(events))
-      .then(() => {
-        if (sync) {
-          VideoEventProcessor.syncTime(timecodeMs);
-        }
-      }); // Make sure we at least load all the init events
+      .then(() => VideoEventProcessor.syncTime(timecodeMs)); // Make sure we at least load all the init events
   }
 }
