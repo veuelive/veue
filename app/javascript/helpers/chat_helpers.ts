@@ -7,7 +7,7 @@ export function appendToChat(element: HTMLElement, html: string): void {
   element.insertAdjacentHTML("beforeend", html);
   element.lastElementChild.scrollIntoView({
     behavior: "smooth",
-    block: "end",
+    block: "start",
     inline: "nearest",
   });
 }

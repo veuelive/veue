@@ -146,9 +146,6 @@
     height: 100%;
 
     .content-area {
-      // While I am loath to add an important, the padding
-      // here shows on mobile on a live broadcast when typing into chat
-      padding-top: 0 !important;
       flex-direction: column;
       align-items: center;
     }
@@ -235,10 +232,9 @@
       }
     }
 
-    .streamer-profile__info {
-      &__details {
-        padding: 0;
-      }
+    .streamer-profile--content {
+      padding-top: 5px;
+      padding-bottom: 5px;
     }
 
     .content-area__secondary {
