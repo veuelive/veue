@@ -17,14 +17,14 @@
       = render partial: "users/partials/upload_image"
     .profile-update
       .profile-update__heading
-        Public Name
+        %label{for: "user_display_name"} Public Name
         .heading-info
           Real People, Real Names
       .profile-update__field
-        = f.text_field :display_name, class: 'input-field', placeholder: 'Enter your name', maxlength: "30"
+        = f.text_field :display_name, class: 'input-field', placeholder: 'Enter your name', maxlength: "20"
     .profile-update
       .profile-update__heading
-        Bio
+        %label{for: "user_about_me"} Bio
         .heading-info
           Let us know about you
       .profile-update__field
@@ -36,7 +36,7 @@
         = f.text_field :masked_phone_number, class: 'input-field', :disabled => true
     .profile-update
       .profile-update__heading
-        Email
+        %label{for: "user_email"} Email
         .heading-info
           Add your email for notifications
       .profile-update__field

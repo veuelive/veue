@@ -58,7 +58,23 @@ describe "user profile" do
 
         find("#user_email").base.send_keys("test@user.com", :enter)
 
-        expect(page).to have_content("Your profile was succesfully updated")
+        expect(page).to have_content("Your profile was successfully updated")
+      end
+
+      it "should stop you from entering too much text!" do
+        click_link "Profile"
+
+        long_text = "Hampton Is So Cool! " * 100
+
+        fill_in "Public Name", with: long_text
+        fill_in "Bio", with: long_text
+        click_on "Save Changes"
+
+        expect(page).to have_content("Your profile was successfully updated")
+
+        user.reload
+        expect(user.display_name).to eq(long_text.first(20))
+        expect(user.about_me).to eq(long_text.first(160))
       end
     end
 

@@ -31,7 +31,7 @@ export default class extends Controller {
       const html = await response.text();
       this.formTarget.parentElement.innerHTML = html;
 
-      showNotification("Your profile was succesfully updated");
+      showNotification("Your profile was successfully updated");
     }
   }
 }
