@@ -135,12 +135,12 @@
      This works as a visibility toggle for the Browser Controller
    */
   &[data-broadcast--browser-visible="true"] {
-    .visible-false-svg {
+    .view-off {
       display: none;
     }
   }
   &[data-broadcast--browser-visible="false"] {
-    .visible-true-svg {
+    .view-on {
       display: none;
     }
   }
