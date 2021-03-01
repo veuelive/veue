@@ -3,6 +3,8 @@
 
 .like-notification {
   position: relative;
+  z-index: 1;
+  height: 30px;
   .user-reaction {
     top: 0;
     position: absolute;
@@ -21,7 +23,7 @@
       animation: beating 3s;
     }
     &__text {
-      margin: 5px 0px 5px 6px;
+      margin: 5px 0px 5px 10px;
     }
   }
 }
