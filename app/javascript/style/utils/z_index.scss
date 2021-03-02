@@ -25,5 +25,11 @@ $nav-menu: next-z-index();
 // The areas behind modals
 $modal-skirt: next-z-index();
 
+// This is the chat entry so the chat reaction can hide behind chat
+$chat-text-entry: next-z-index();
+
+// This is the reaction on chat (heart+name)
+$chat-reaction: next-z-index();
+
 // Any screen-dominating modals
 $modal: next-z-index();

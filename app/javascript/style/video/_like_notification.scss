@@ -4,7 +4,7 @@
 
 .like-notification {
   position: relative;
-  z-index: z_index.$default;
+  z-index: z_index.$chat-text-entry;
   .user-reaction {
     top: 0;
     position: absolute;
