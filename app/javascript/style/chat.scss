@@ -3,6 +3,7 @@
 @use 'utils/text';
 @use 'utils/reactions';
 @use "utils/breakpoints" as *;
+@use "utils/z_index";
 
 // Realtime chat section
 .chat-section {
@@ -132,7 +133,7 @@
     min-height: 55px;
     background: color.$white;
     border-radius: 0px 0px 10px 10px;
-    z-index: 2;
+    z-index: z_index.$modal;
 
     > * {
       margin: 10px;
