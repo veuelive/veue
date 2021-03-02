@@ -1,9 +1,10 @@
 @use '../utils/color';
 @use '../utils/reactions';
+@use '../utils/z_index';
 
 .like-notification {
   position: relative;
-  z-index: 1;
+  z-index: z_index.$default;
   .user-reaction {
     top: 0;
     position: absolute;
