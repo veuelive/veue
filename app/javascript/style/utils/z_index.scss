@@ -10,6 +10,12 @@ $background: -1;
 // Default z-index for most elements
 $default: next-z-index();
 
+// This is the chat entry so the chat reaction can hide behind chat
+$chat-text-entry: next-z-index();
+
+// This is the reaction on chat (heart+name)
+$chat-reaction: next-z-index();
+
 // The main video, that might be under other video elements
 $primary-video: next-z-index();
 
@@ -24,12 +30,6 @@ $nav-menu: next-z-index();
 
 // The areas behind modals
 $modal-skirt: next-z-index();
-
-// This is the chat entry so the chat reaction can hide behind chat
-$chat-text-entry: next-z-index();
-
-// This is the reaction on chat (heart+name)
-$chat-reaction: next-z-index();
 
 // Any screen-dominating modals
 $modal: next-z-index();
