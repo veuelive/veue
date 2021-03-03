@@ -47,11 +47,12 @@ export function renderChatMessageToString({
   }
 
   if (message.byStreamer) {
-    modifiers.push("highlighted");
+    modifiers.push("announcement");
   }
 
   if (isMyMessage) {
     modifiers.push("right");
+    modifiers.push("highlighted");
   } else {
     modifiers.push("left");
   }
