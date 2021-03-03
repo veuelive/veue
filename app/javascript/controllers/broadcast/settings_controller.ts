@@ -1,6 +1,7 @@
 import DropdownController from "./dropdown_controller";
 import { secureFetch, putForm } from "util/fetch";
 import { Visibility, setVideoVisibility } from "../../helpers/video_helpers";
+import { flash } from "../../helpers/flash_helpers";
 
 export const ShowSettingsMenuEvent = "ShowSettingsMenu";
 
@@ -54,9 +55,10 @@ export default class SettingsController extends DropdownController {
     const status = response.status;
     if (status >= 200 && status <= 299) {
       this.ajaxSuccess();
-    } else {
-      this.ajaxError();
+      return;
     }
+
+    this.ajaxError();
   }
 
   ajaxSuccess(): void {
@@ -71,24 +73,20 @@ export default class SettingsController extends DropdownController {
   }
 
   private handleAjax(status: "success" | "error"): void {
-    const flashEl = this[`${status}Flash`];
+    const flashEl = flash[status]();
     this.formTarget.appendChild(flashEl);
 
+    const disabledSubmitBtn = this.formTarget.querySelector(
+      "input[disabled='']"
+    ) as HTMLInputElement;
+
+    if (disabledSubmitBtn) {
+      disabledSubmitBtn.disabled = false;
+    }
+
     window.setTimeout(() => (flashEl.style.opacity = "0"), 200);
-    window.setTimeout(() => flashEl.remove(), 2000);
-  }
-
-  private get successFlash(): HTMLDivElement {
-    const flash = document.createElement("div");
-    flash.className = "flash-success";
-    flash.innerText = "Settings updated!";
-    return flash;
-  }
-
-  private get errorFlash(): HTMLDivElement {
-    const flash = document.createElement("div");
-    flash.className = "flash-error";
-    flash.innerText = "Unable to update settings!";
-    return flash;
+    window.setTimeout(() => {
+      flashEl.remove();
+    }, 2000);
   }
 }

@@ -12,7 +12,7 @@
   flex-direction: column;
   flex: 1;
 
-  .channel-profile__background {
+  &__background {
     position: absolute;
     top: 0;
     left: 0;
@@ -22,14 +22,14 @@
     z-index: z_index.$background;
   }
 
-  .channel-profile__area {
+  &__area {
     margin: 78px 10px 0 10px;
     max-width: 1400px;
     font-size: 0.875rem;
   }
 
   @include large() {
-    .channel-profile__area {
+    &__area {
       margin: 78px auto 0 auto;
       width: 85%;
     }

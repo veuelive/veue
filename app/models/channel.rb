@@ -2,9 +2,10 @@
 
 class Channel < ApplicationRecord
   extend FriendlyId
-  before_create :register_with_mux
-  before_save :normalize_name
   belongs_to :user
+
+  before_save :normalize_name
+  before_create :register_with_mux
   has_many :videos, dependent: :destroy
   has_many :follows,
            -> { where(unfollowed_at: nil) },
@@ -29,10 +30,12 @@ class Channel < ApplicationRecord
     videos.active.first
   end
 
+  def broadcastable_video
+    videos.active.where(state: %w[pending scheduled]).first
+  end
+
   def active_video!
-    # We need to treat both "live" and "starting" videos as active videos.
-    # Only "pending"  videos should be broadcastable
-    return active_video if active_video&.pending?
+    return broadcastable_video if broadcastable_video
 
     active_video&.end!
     create_new_broadcast!

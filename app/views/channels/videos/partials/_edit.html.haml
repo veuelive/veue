@@ -1,5 +1,6 @@
-= form_with model: video, url: broadcast_path(video), class: "broadcast-settings__form", method: :PUT,
-  data: { target: "broadcast--settings.form broadcast--commands-menu.settingsForm",
+= form_with model: video, url: broadcast_path(video), id: "broadcast-settings__form", class: "broadcast-settings__form", method: :PUT,
+  data: { controller: "video-scheduling",
+          target: "broadcast--settings.form broadcast--commands-menu.settingsForm",
           action: "submit->broadcast--settings#submitForm" } do |form|
   = form.label :title
   = form.text_field :title, placeholder: "Title your broadcast!", maxlength: 70
@@ -9,6 +10,19 @@
   - visibilities_for_select = Video.visibilities_legend.map do |value, text|
     - [text, value.to_s]
 
-  = form.select :visibility, visibilities_for_select, {}, data: { target: "broadcast--settings.visibility" }
+  = form.select :visibility, visibilities_for_select, {}, class: "select", data: { target: "broadcast--settings.visibility" }
 
-  = form.submit "Update"
+  .video--scheduled
+    = form.hidden_field(:scheduled_at, data: { target: "video-scheduling.scheduledAt" }, value: video.scheduled_at&.iso8601)
+
+    .video--scheduled__checkbox
+      = label_tag "video[scheduled_checkbox]" do
+        %input{id: "video_scheduled_checkbox", type: "checkbox", checked: video.scheduled?, data: { target: "video-scheduling.checkbox", action: "change->video-scheduling#toggleScheduling change->video-scheduling#updateScheduledAt" }}
+        = "Upcoming Stream"
+
+    .video--scheduled__day
+      = select_tag "video[scheduled_day]", nil, name: "", class: "select video--scheduled video--scheduled__time", data: { target: "video-scheduling.daySelect", action: "change->video-scheduling#updateScheduledAt change->video-scheduling#modifyTimeOptions" }
+    .video--scheduled__time
+      = select_tag("video[scheduled_time]", nil, name: "", class: "select video--scheduled video--scheduled__time", data: {target: "video-scheduling.timeSelect", action: "change->video-scheduling#updateScheduledAt"})
+
+  = form.submit "Update", data: { target: "video-scheduling.submit" }
