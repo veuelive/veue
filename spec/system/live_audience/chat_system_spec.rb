@@ -137,7 +137,7 @@ describe "chat during live video" do
       visit path_for_video(video)
 
       expect(page).to have_content("Cowabunga!").once
-      expect(page).to have_css(".message--highlighted")
+      expect(page).to have_css(".message--announcement")
     end
 
     it "should see login modal on chat area click" do
