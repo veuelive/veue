@@ -6,7 +6,6 @@
 #upcoming-stream {
   .streamer-profile {
     border-radius: 0 0 10px 10px;
-    max-height: 20vh;
     padding: 0;
     background: transparent;
 
@@ -41,8 +40,6 @@
       border-radius: 0 0 10px 10px;
 
       .streamer-profile__info {
-        height: 100%;
-
         &__follow__count {
           display: flex;
         }
