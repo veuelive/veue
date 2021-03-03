@@ -13,11 +13,11 @@
     "end-offset": current_video.end_offset,
   }
 }
-  .content-area__primary
+  .content-area__primary{data: {controller: "canvas-size-observer"}}
     .primary-video{"data": { controller: "audience--movable-pip" }}
       = render partial: "channels/videos/partials/header"
       %canvas.primary-canvas{
-        "data-target": "audience-view.primaryCanvas",
+        "data-target": "audience-view.primaryCanvas canvas-size-observer.canvas",
         width: 1200,
         height: 740
       }

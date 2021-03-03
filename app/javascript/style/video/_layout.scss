@@ -109,8 +109,8 @@
         flex: 1;
         margin: 0 1vw 2vh 0;
         background: white;
-        max-width: 20vw;
         min-width: 230px;
+        max-width: 30vw;
         display: flex;
         overflow-y: hidden;
         flex-direction: column;
@@ -273,7 +273,6 @@
       padding: env(safe-area-inset-top) calc(env(safe-area-inset-right) * 0.75)
         0 0vw;
       background: white;
-      max-width: 20vw;
       display: flex;
       flex-direction: column;
       margin: 0;
