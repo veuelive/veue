@@ -30,11 +30,11 @@ export default class extends Controller {
 
   private displayUserReactiontNotification(name: string): void {
     this.element.innerHTML = renderReactionMarkup(name);
+    document.dispatchEvent(
+      new CustomEvent(UserReactionMessageEvent, { detail: { name: name } })
+    );
     setTimeout(() => {
       this.element.innerHTML = "";
-      document.dispatchEvent(
-        new CustomEvent(UserReactionMessageEvent, { detail: { name: name } })
-      );
     }, 7000);
   }
 }

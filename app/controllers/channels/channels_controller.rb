@@ -7,7 +7,7 @@ module Channels
     def show; end
 
     def viewed
-      live_video = current_channel.videos.live.first
+      live_video = current_channel.videos.active.first
       return unless live_video
 
       VideoView.process_view!(live_video, current_user, params[:minute], user_fingerprint, true)
