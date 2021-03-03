@@ -26,3 +26,16 @@
   - if current_channel.about.present?
     .streamer-profile__info__mobile__about
       = current_channel.about
+  - if current_video&.scheduled?
+    .streamer-profile__upcoming__broadcast
+      .streamer-profile__upcoming__broadcast__text
+        = svg_tag "clock"
+        = "Upcoming Broadcast:"
+      .streamer-profile__upcoming__broadcast__date
+        %local-time{datetime: "#{current_video.scheduled_at.iso8601}", day: "numeric"}
+          = current_video.scheduled_at.day
+        %local-time{datetime: "#{current_video.scheduled_at.iso8601}", month: "long"}
+          = current_video.scheduled_at.month
+        = svg_tag "ellipse-2"
+        %local-time{datetime: "#{current_video.scheduled_at.iso8601}", hour: "numeric", minute: "numeric"}
+          = current_video.scheduled_at.strftime("%H:%M")

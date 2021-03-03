@@ -76,6 +76,6 @@ class BroadcastsController < ApplicationController
   helper_method :current_channel
 
   def video_params
-    params.require(:video).permit(:title, :visibility)
+    params.require(:video).permit(:title, :visibility, :scheduled_at)
   end
 end

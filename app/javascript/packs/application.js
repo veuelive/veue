@@ -5,6 +5,7 @@ import "../style/application.scss";
 import "controllers";
 import "simplebar";
 import "simplebar/dist/simplebar.css";
+import "@github/time-elements";
 
 ujs.start();
 

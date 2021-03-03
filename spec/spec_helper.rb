@@ -34,6 +34,8 @@ RSpec.configure do |config|
   end
 
   config.before(:suite) do
+    ENV["_ORIGINAL_TZ"] = ENV["TZ"]
+    ENV["TZ"] = ActiveSupport::TimeZone::MAPPING.values.sample
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
@@ -42,6 +44,11 @@ RSpec.configure do |config|
     DatabaseCleaner.cleaning do
       example.run
     end
+  end
+
+  config.after(:suite) do
+    ENV["TZ"] = ENV["_ORIGINAL_TZ"]
+    ENV["_ORIGINAL_TZ"] = nil
   end
 
   # rspec-mocks config goes here. You can use an alternate test double

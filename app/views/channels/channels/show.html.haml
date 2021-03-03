@@ -7,7 +7,7 @@
 }
   - if upcoming_stream?
     = render partial: "channels/videos/partials/upcoming_stream"
-  - elsif current_video
+  - elsif current_video && !current_video.scheduled?
     = render template: "channels/videos/show"
   - else
     .channel-profile
@@ -17,3 +17,5 @@
         = render partial: "channels/videos/partials/recent_broadcasts"
 
       = render partial: "layouts/footer"
+
+

@@ -34,6 +34,9 @@ class Video < ApplicationRecord
   validates :start_offset,
             :end_offset,
             numericality: {greater_than_or_equal_to: 0, only_integer: true}
+  validate :scheduled_at, :validate_scheduling, if: -> { scheduled_at.present? && scheduled_at_changed? }
+
+  after_commit :update_scheduled_state!, on: %i[create update], if: -> { saved_change_to_scheduled_at? }
 
   scope :public_or_protected,
         -> {
@@ -53,7 +56,6 @@ class Video < ApplicationRecord
   scope :private_videos, -> { where(visibility: "private") }
   scope :public_videos, -> { where(visibility: "public") }
   scope :protected_videos, -> { where(visibility: "protected") }
-  scope :scheduled, -> { where("scheduled_at IS NOT NULL") }
 
   def self.visibilities_legend
     {
@@ -128,11 +130,25 @@ class Video < ApplicationRecord
     end
   end
 
-  def schedule_for!(datetime)
-    return unless may_schedule?
+  def validate_scheduling
+    errors.add(:scheduled_at, :not_scheduleable, message: "Video is not scheduleable") unless may_schedule?
+    if Time.current > scheduled_at
+      errors.add(
+        :scheduled_at,
+        :in_the_past,
+        message: "Video cannot be scheduled in the past",
+      )
+    end
+  end
 
-    self.scheduled_at = datetime
-    schedule!
+  # Used in an after_create / after_update callback to change the AASM state
+  # of the video. Should not be called directly
+  def update_scheduled_state!
+    if scheduled? && scheduled_at.blank?
+      cancel!
+    else
+      schedule!
+    end
   end
 
   def last_join_time_cache_location

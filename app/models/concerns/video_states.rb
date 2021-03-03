@@ -40,7 +40,8 @@ module VideoStates
       end
 
       event :cancel do
-        transitions from: %i[scheduled pending], to: :cancelled
+        transitions from: :scheduled, to: :pending
+        transitions from: :pending, to: :cancelled
       end
 
       event :go_live do
