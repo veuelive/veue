@@ -1,0 +1,18 @@
+%title
+  - if content_for(:title)
+    = yield :title
+  - elsif @seo_title
+    = @seo_title
+  - else
+    = I18n.t('header.seo.default_title')
+%meta{name: "description", info: @seo_description || I18n.t('header.seo.default_description')}
+
+%meta{name: "twitter:card", content: "summary"}
+%meta{name: "twitter:site", content: "@veuelive"}
+%meta{name: "twitter:title", content: @twitter_title || @seo_title || I18n.t('header.twitter.default_title')}
+%meta{name: "twitter:description", content: @twitter_description || @seo_description || I18n.t('header.twitter.default_description')}
+%meta{name: "twitter:image", content: @twitter_image || @og_image || I18n.t('header.twitter.default_image')}
+
+%meta{name: "og:title", content: @og_title || @seo_title || I18n.t('header.og.default_title')}
+%meta{name: "og:description", content: @og_description || @seo_description || I18n.t("header.og.default_description")}
+%meta{name: "og:image", content: @og_image || I18n.t('header.og.default_image')}

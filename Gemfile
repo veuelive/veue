@@ -51,6 +51,9 @@ gem "aasm"
 # Used for our admin interfaces
 gem "activeadmin"
 
+# CMS From ButterCMS.com
+gem "buttercms-ruby", ">= 1.8"
+
 # Additional addons for increased functionality
 gem "activeadmin_addons"
 

@@ -1,0 +1,18 @@
+{
+  "data": {
+    "slug": "simple",
+    "name": "Simple",
+    "published": "2021-03-08T21:28:32.069025Z",
+    "updated": "2021-03-08T21:28:32.069025Z",
+    "page_type": "company_content",
+    "fields": {
+      "open_graph": { "title": "", "image": "", "description": "" },
+      "seo": { "title": "", "meta_description": "" },
+      "twitter_card": { "title": "", "description": "", "image": "" },
+      "category": "legal",
+      "display_in_footer": false,
+      "allow_seo_indexing": false,
+      "body": "<p>Simple page</p>"
+    }
+  }
+}

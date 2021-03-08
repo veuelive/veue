@@ -40,6 +40,7 @@ RSpec.configure do |config|
   config.include ResponsiveHelpers
   config.include UploadSpecHelper
   config.include SseSpecHelpers
+  config.include I8tnSpecHelpers
 
   config.before(:all) do
     ENV["IFTTT_PUSH_KEY"] = ENV.fetch("IFTTT_PUSH_KEY", "1234")
@@ -64,6 +65,8 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 
   Lockbox.master_key = "0000000000000000000000000000000000000000000000000000000000000000"
+
+  ButterCMS.api_token = "TEST_TOKEN"
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and

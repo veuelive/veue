@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   get "/discover", to: "discover#index"
 
+  get "/en/:page_slug/", to: "content#show"
+
   resources :broadcasts, only: [:show, :index, :edit, :update] do
     scope module: "broadcasts" do
       controller "event" do
@@ -53,25 +55,26 @@ Rails.application.routes.draw do
   
   post "/mux/webhook", to: "mux_webhooks#index"
 
-  ActiveAdmin.routes(self)
-
-  Sidekiq::Web.use Rack::Auth::Basic do |username, password|
-    # Protect against timing attacks:
-    # - See https://codahale.com/a-lesson-in-timing-attacks/
-    # - See https://thisdata.com/blog/timing-attacks-against-string-comparison/
-    # - Use & (do not use &&) so that it doesn't short circuit.
-    # - Use digests to stop length information leaking (see also ActiveSupport::SecurityUtils.variable_size_secure_compare)
-    ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(username), ::Digest::SHA256.hexdigest(ENV["SIDEKIQ_USERNAME"])) &
-      ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest(ENV["SIDEKIQ_PASSWORD"]))
-  end if Rails.env.production?
-
   scope module: :internal, path: "_/_/" do
     get 'health', to: "health_check#index"
     get 'cron', to: 'cron#trigger'
 
     mount Sidekiq::Web => 'sidekiq'
+
+    ActiveAdmin.routes(self)
+
+    Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+      # Protect against timing attacks:
+      # - See https://codahale.com/a-lesson-in-timing-attacks/
+      # - See https://thisdata.com/blog/timing-attacks-against-string-comparison/
+      # - Use & (do not use &&) so that it doesn't short circuit.
+      # - Use digests to stop length information leaking (see also ActiveSupport::SecurityUtils.variable_size_secure_compare)
+      ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(username), ::Digest::SHA256.hexdigest(ENV["SIDEKIQ_USERNAME"])) &
+        ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest(ENV["SIDEKIQ_PASSWORD"]))
+    end if Rails.env.production?
   end
 
+  # CATCHALL AFTER THESE OTHER ROUTES!
   scope module: :channels, path: ":channel_id", as: "channel" do
     get "/" => "channels#show"
     post "viewed" => "channels#viewed"
