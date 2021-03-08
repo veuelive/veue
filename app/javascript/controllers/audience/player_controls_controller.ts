@@ -80,7 +80,6 @@ export default class extends BaseController {
     event.preventDefault();
 
     this.pointerIsDown = true;
-    this.videoTarget.pause();
     this.handlePointerLocation(event);
   }
 
@@ -102,7 +101,7 @@ export default class extends BaseController {
       return;
     }
 
-    // Play the video since we pause while scrubbing
+    // Play the video
     this.videoTarget
       .play()
       .then(() => (this.videoState = "playing"))
@@ -136,10 +135,10 @@ export default class extends BaseController {
 
   syncEvents(timecodeMs: number): void {
     VideoEventProcessor.clear();
-    VideoEventProcessor.syncTime(timecodeMs);
     this.element.dispatchEvent(
       new CustomEvent(playbackTimeChangeEvent, { detail: { timecodeMs } })
     );
+    VideoEventProcessor.syncTime(timecodeMs);
   }
 
   set videoState(state: string) {
