@@ -72,3 +72,15 @@ en:
       x_years:
         one: 1 year
         other: "%{count} years"
+  header:
+    seo:
+      default_title: "Veue: Live Streaming for Everyone"
+      default_description: "Veue is the world's first live streaming platform designed for you and the kind of content you love, no matter what that is. Watch our amazing hosts entertain, thrill, and educate you."
+    twitter:
+      default_title: "Veue: Live Streaming For Everyone"
+      default_description: "Watch your favorite streamers live!"
+      default_image: "https://veue-production.s3.amazonaws.com/static/Logo3.png"
+    og:
+      default_title: "Veue: Live Streaming For Everyone"
+      default_description: "Come watch your favorite streamers!"
+      default_image: "https://veue-production.s3.amazonaws.com/static/Logo3.png"

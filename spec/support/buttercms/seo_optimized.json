@@ -1,0 +1,26 @@
+{
+  "data": {
+    "slug": "landing-page",
+    "name": "Landing Page",
+    "published": "2021-03-08T21:09:53.569978Z",
+    "updated": "2021-03-08T21:10:30.659633Z",
+    "page_type": "company_content",
+    "fields": {
+      "open_graph": {
+        "title": "og title",
+        "image": "og image",
+        "description": "og description"
+      },
+      "seo": { "title": "seo title", "meta_description": "seo description" },
+      "twitter_card": {
+        "title": "twitter title",
+        "description": "twitter description",
+        "image": "twitter image"
+      },
+      "category": "company",
+      "display_in_footer": true,
+      "allow_seo_indexing": false,
+      "body": "<h1>Heading</h1>\n<p><strong>Strong</strong></p>"
+    }
+  }
+}

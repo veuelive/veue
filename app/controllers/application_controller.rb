@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   include AuthenticationConcern
   include FingerprintConcern
   include IpcMockConcern unless Rails.env.production?
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |format|
@@ -20,4 +21,8 @@ class ApplicationController < ActionController::Base
     request.xhr?
   end
   helper_method :xhr_request?
+
+  def record_not_found
+    render(plain: "404 Not Found", status: :not_found)
+  end
 end

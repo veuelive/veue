@@ -1,0 +1,18 @@
+@use "../utils/color";
+
+body#content__show {
+  .content_wrapper {
+    max-width: 800px;
+    background: color.$white;
+    padding: 15px;
+
+    h1,
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+  }
+}
