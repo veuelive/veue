@@ -1,9 +1,7 @@
 import BaseController from "controllers/base_controller";
-import {
-  displayTime,
-  timecodeChangeEvent,
-  playbackTimeChangeEvent,
-} from "util/time";
+import { displayTime, timecodeChangedEvent } from "util/time";
+import VodEventManager from "helpers/event/vod_event_manager";
+import EventManagerInterface from "types/event_manager_interface";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 
 export default class extends BaseController {
@@ -27,23 +25,28 @@ export default class extends BaseController {
   readonly progressBarContainerTarget!: HTMLElement;
   readonly progressBarButtonTarget!: HTMLButtonElement;
 
+  private eventManager: EventManagerInterface;
   private pointerIsDown: boolean;
 
   connect(): void {
+    this.eventManager = new VodEventManager(0);
+
     this.videoTarget.addEventListener(
       "loadedmetadata",
       this.handleLoadedMetadata.bind(this)
     );
 
     this.element.addEventListener(
-      timecodeChangeEvent,
+      timecodeChangedEvent,
       this.handleTimeUpdate.bind(this)
     );
   }
 
   disconnect(): void {
+    this.eventManager?.disconnect();
+
     this.element.removeEventListener(
-      timecodeChangeEvent,
+      timecodeChangedEvent,
       this.handleTimeUpdate.bind(this)
     );
 
@@ -63,6 +66,9 @@ export default class extends BaseController {
     const video = this.videoTarget;
 
     const seconds = event.detail.seconds;
+
+    VideoEventProcessor.syncTime(seconds * 100);
+    this.eventManager.seekTo(seconds * 100);
 
     if (seconds === 0) {
       return;
@@ -124,21 +130,8 @@ export default class extends BaseController {
     const pos = x / frameRect.width;
 
     const currentTime = pos * this.duration;
-
-    const timecodeMs = currentTime * 100;
-
-    this.syncEvents(timecodeMs);
-
     this.videoTarget.currentTime = currentTime;
     this.timeDisplayTarget.innerHTML = displayTime(currentTime);
-  }
-
-  syncEvents(timecodeMs: number): void {
-    VideoEventProcessor.clear();
-    this.element.dispatchEvent(
-      new CustomEvent(playbackTimeChangeEvent, { detail: { timecodeMs } })
-    );
-    VideoEventProcessor.syncTime(timecodeMs);
   }
 
   set videoState(state: string) {
