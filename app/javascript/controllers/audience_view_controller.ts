@@ -151,7 +151,6 @@ export default class extends BaseController {
   togglePlay(): void {
     if (this.state === "ended") {
       this.videoTarget.currentTime = 0;
-      this.resetToTimecode(0);
     }
 
     if (this.state !== "playing") {
@@ -182,11 +181,6 @@ export default class extends BaseController {
   timecodeChanged(): void {
     if (this.streamType !== "upcoming") {
       const timecodeMs = this.timecodeSynchronizer.timecodeMs;
-
-      if (timecodeMs === 0) {
-        return;
-      }
-
       this.data.set("timecode", timecodeMs.toString());
       VideoEventProcessor.syncTime(timecodeMs);
 
@@ -199,15 +193,9 @@ export default class extends BaseController {
   }
 
   playbackTimeChangedTo(event: CustomEvent): void {
-    this.resetToTimecode(event.detail.timecodeMs);
-  }
-
-  resetToTimecode(timecodeMs: number): void {
     if (this.eventManager instanceof VodEventManager) {
       this.resetChat();
-      VideoEventProcessor.clear();
-      VideoEventProcessor.syncTime(timecodeMs);
-      this.eventManager.playEventsAt(timecodeMs);
+      this.eventManager.playEventsAt(event.detail.timecodeMs);
     }
   }
 
