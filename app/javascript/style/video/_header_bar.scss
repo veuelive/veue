@@ -3,7 +3,7 @@
 @use "../utils/breakpoints" as *;
 
 #video-show {
-  .primary-video__header {
+  .video-header {
     display: flex;
     height: 3rem;
     background: color.$white;
