@@ -14,8 +14,8 @@
   }
 }
   .content-area__primary{data: {controller: "canvas-size-observer"}}
+    = render partial: "channels/videos/partials/header"
     .primary-video{"data": { controller: "audience--movable-pip" }}
-      = render partial: "channels/videos/partials/header"
       %canvas.primary-canvas{
         "data-target": "audience-view.primaryCanvas canvas-size-observer.canvas",
         width: 1200,
