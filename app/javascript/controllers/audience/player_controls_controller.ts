@@ -1,8 +1,5 @@
 import BaseController from "controllers/base_controller";
-import { displayTime, timecodeChangedEvent } from "util/time";
-import VodEventManager from "helpers/event/vod_event_manager";
-import EventManagerInterface from "types/event_manager_interface";
-import { VideoEventProcessor } from "helpers/event/event_processor";
+import { displayTime } from "util/time";
 
 export default class extends BaseController {
   static targets = [
@@ -15,8 +12,6 @@ export default class extends BaseController {
     "timeDisplay",
   ];
 
-  element!: HTMLElement;
-
   readonly videoTarget!: HTMLVideoElement;
   readonly timeDurationTarget!: HTMLElement;
   readonly timeDisplayTarget!: HTMLElement;
@@ -25,28 +20,24 @@ export default class extends BaseController {
   readonly progressBarContainerTarget!: HTMLElement;
   readonly progressBarButtonTarget!: HTMLButtonElement;
 
-  private eventManager: EventManagerInterface;
   private pointerIsDown: boolean;
+  element!: HTMLElement;
 
   connect(): void {
-    this.eventManager = new VodEventManager(0);
-
     this.videoTarget.addEventListener(
       "loadedmetadata",
       this.handleLoadedMetadata.bind(this)
     );
 
-    this.element.addEventListener(
-      timecodeChangedEvent,
+    this.videoTarget.addEventListener(
+      "timeupdate",
       this.handleTimeUpdate.bind(this)
     );
   }
 
   disconnect(): void {
-    this.eventManager?.disconnect();
-
-    this.element.removeEventListener(
-      timecodeChangedEvent,
+    this.videoTarget.removeEventListener(
+      "timeupdate",
       this.handleTimeUpdate.bind(this)
     );
 
@@ -61,23 +52,14 @@ export default class extends BaseController {
     this.timeDurationTarget.innerHTML = displayTime(this.duration);
   }
 
-  handleTimeUpdate(event: CustomEvent): void {
+  handleTimeUpdate(): void {
     const progress = this.progressBarTarget;
     const video = this.videoTarget;
 
-    const seconds = event.detail.seconds;
-
-    VideoEventProcessor.syncTime(seconds * 100);
-    this.eventManager.seekTo(seconds * 100);
-
-    if (seconds === 0) {
-      return;
-    }
-
-    const width = Math.floor((seconds / this.duration) * 100) + 1;
+    const width = Math.floor((video.currentTime / this.duration) * 100) + 1;
     progress.style.width = `${width}%`;
 
-    if (seconds >= this.duration) {
+    if (video.currentTime >= this.duration) {
       video.dispatchEvent(new Event("ended"));
     }
   }
@@ -130,8 +112,10 @@ export default class extends BaseController {
     const pos = x / frameRect.width;
 
     const currentTime = pos * this.duration;
-    this.videoTarget.currentTime = currentTime;
+
     this.timeDisplayTarget.innerHTML = displayTime(currentTime);
+    this.videoTarget.currentTime = currentTime;
+    this.handleTimeUpdate();
   }
 
   set videoState(state: string) {
