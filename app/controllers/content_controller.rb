@@ -7,7 +7,7 @@
 # manager or ask someone in marketing.
 class ContentController < ApplicationController
   def show
-    @content = ButterCMS::Page.get("company_content", params[:page_slug], {})
+    @content = ButterCMS::Page.get("company_content", h(params[:page_slug]), {})
     head_info
   rescue ButterCMS::NotFound
     # Here, we bubble this up to the general 404 handler
