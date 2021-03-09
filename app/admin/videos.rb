@@ -43,7 +43,7 @@ ActiveAdmin.register(Video) do
       state_row :state
       row :visibility
       row :scheduled_at do |video|
-        text_node "#{video.scheduled_at}"
+        text_node video.scheduled_at.to_s
       end
     end
     active_admin_comments
@@ -63,7 +63,7 @@ ActiveAdmin.register(Video) do
           format: "d-m-Y H:i",
           step: 30,
         },
-        label: "Scheduled At (UTC Time)"
+        label: "Scheduled At (UTC Time)",
       )
 
       # display current state as disabled to avoid modifying it directly

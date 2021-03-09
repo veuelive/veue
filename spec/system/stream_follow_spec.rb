@@ -56,7 +56,6 @@ RSpec.describe "Follow from VOD" do
 
     describe "channel page" do
       it "should allow following" do
-
         visit channel_path(video.channel)
         # VEUE-585: this is just confirming that there is another video and the words REPLAY
         # setup for testing after follow

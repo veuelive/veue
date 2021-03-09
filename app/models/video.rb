@@ -56,6 +56,7 @@ class Video < ApplicationRecord
   scope :private_videos, -> { where(visibility: "private") }
   scope :public_videos, -> { where(visibility: "public") }
   scope :protected_videos, -> { where(visibility: "protected") }
+  scope :scheduled, -> { where.not(scheduled_at: nil) }
 
   def self.visibilities_legend
     {

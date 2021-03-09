@@ -21,7 +21,7 @@ RSpec.configure do |config|
     options_obj.add_preference(
       "profile.content_settings.exceptions.clipboard",
       {
-        '*': {'setting': 1},
+        '*': {setting: 1},
       },
     )
     Capybara::Selenium::Driver.new(
@@ -47,7 +47,7 @@ RSpec.configure do |config|
     options_obj.add_preference(
       "profile.content_settings.exceptions.clipboard",
       {
-        '*': {'setting': 1},
+        '*': {setting: 1},
       },
     )
     Capybara::Selenium::Driver.new(

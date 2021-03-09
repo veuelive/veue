@@ -2,10 +2,11 @@
 
 class Channel < ApplicationRecord
   extend FriendlyId
-  belongs_to :user
 
   before_save :normalize_name
   before_create :register_with_mux
+
+  belongs_to :user
   has_many :videos, dependent: :destroy
   has_many :follows,
            -> { where(unfollowed_at: nil) },
@@ -14,15 +15,16 @@ class Channel < ApplicationRecord
   has_many :followers,
            through: :follows,
            source: :user
+  has_many :mux_webhooks, dependent: :destroy
+
   validates :name,
             uniqueness: true,
             allow_blank: false,
             length: {minimum: 2, maximum: 20}
+
   friendly_id :slug_candidates, use: :slugged
   encrypts :mux_stream_key
   delegate :profile_image, to: :user
-
-  has_many :mux_webhooks, dependent: :destroy
 
   scope :most_popular, -> { order(followers_count: :desc) }
 
