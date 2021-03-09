@@ -54,12 +54,7 @@ class VideoView < ApplicationRecord
   private
 
   def process_user_joined_event
-    allowable_states = %w[pending live starting]
-
-    return unless allowable_states.include?(video.state)
-    return unless user
-    return if user_joined_event_id
-    return if video.time_since_last_user_joined <= USER_JOIN_RATE_LIMIT_SECONDS
+    return if cannot_process_user_joined_event?
 
     join_event = create_user_joined_event(
       video: video,
@@ -68,5 +63,14 @@ class VideoView < ApplicationRecord
 
     # Update our cache to be the latest join event creation time
     Rails.cache.write(video.last_join_time_cache_location, Integer(join_event.created_at.utc))
+  end
+
+  def cannot_process_user_joined_event?
+    allowable_states = %w[pending live starting]
+
+    allowable_states.exclude?(video.state) ||
+    !user ||
+    user_joined_event_id ||
+    video.time_since_last_user_joined <= USER_JOIN_RATE_LIMIT_SECONDS
   end
 end

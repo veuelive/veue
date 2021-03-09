@@ -21,7 +21,7 @@ class MuxWebhook < ApplicationRecord
     data = JSON.parse(json)
 
     # If we've already processed this webhook... just let it pass!
-    return if MuxWebhook.where("mux_id = ?", data["id"]).any?
+    return if MuxWebhook.where(mux_id: data["id"]).any?
 
     webhook = build_from_json(data)
 
