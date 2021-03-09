@@ -30,7 +30,7 @@ class Video < ApplicationRecord
   has_one_attached :primary_shot
   include PGEnum(visibility: %w[public protected private], _prefix: "visibility")
 
-  validates :title, allow_nil: true, length: {maximum: 70}
+  validates :title, allow_nil: true, length: {maximum: 60}
   validates :start_offset,
             :end_offset,
             numericality: {greater_than_or_equal_to: 0, only_integer: true}
