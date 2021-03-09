@@ -7,7 +7,12 @@
 # manager or ask someone in marketing.
 class ContentController < ApplicationController
   def show
-    @content = ButterCMS::Page.get("company_content", h(params[:page_slug]), {})
+    # This line is here to escape to make Brakeman happy that we aren't passing in HTML here.
+    page_slug = ERB::Util.html_escape(params[:page_slug])
+
+    # This fetches the html and content for the page
+    @content = ButterCMS::Page.get("company_content", page_slug, {})
+
     head_info
   rescue ButterCMS::NotFound
     # Here, we bubble this up to the general 404 handler
