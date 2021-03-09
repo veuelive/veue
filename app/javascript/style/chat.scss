@@ -107,6 +107,9 @@
   .stream-end {
     border-top: 1px solid color.$neutral-accents;
     padding: 10px;
+    z-index: z_index.$chat-reaction;
+    position: relative;
+    background: color.$white;
 
     &--content {
       // layouts
