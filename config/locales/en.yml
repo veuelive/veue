@@ -84,3 +84,10 @@ en:
       default_title: "Veue: Live Streaming For Everyone"
       default_description: "Come watch your favorite streamers!"
       default_image: "https://veue-production.s3.amazonaws.com/static/Logo3.png"
+  channels:
+    twitter:
+      title: "%{name} on Veue"
+    og:
+      title: "%{name} on Veue"
+    seo:
+      title: "%{name} on Veue"
