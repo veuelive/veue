@@ -248,13 +248,13 @@ describe "Broadcast View" do
       end
 
       it "properly displays flash message on save" do
-        new_title = "*" * 75
+        new_title = "*" * 65
         within(settings_form) do
           fill_in("video_title", with: new_title)
           click_button("Update")
         end
 
-        expect(page).to have_css(".flash-success")
+        expect(page).to have_css(".flash-error")
       end
     end
   end
