@@ -6,6 +6,11 @@ module SystemSpecHelpers
     logs.each do |log|
       puts log.inspect
     end
+    # For some reason, on random runs the video source won't start in Chromium, so this
+    # filters out those errors... it's not our fault!
+    logs.filter! do |log|
+      !log.message.ends_with?("Uncaught DOMException: Could not start video source")
+    end
     expect(logs).to be_empty
   end
 end

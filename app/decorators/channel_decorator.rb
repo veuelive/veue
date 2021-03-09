@@ -12,6 +12,12 @@ class ChannelDecorator < ApplicationDecorator
     end
   end
 
+  def social_image(width, height)
+    return unless profile_image.attached?
+
+    h.url_for(profile_image.variant(resize_and_pad: [width, height]))
+  end
+
   def follower_count
     helpers.number_to_social(object.followers.size)
   end
