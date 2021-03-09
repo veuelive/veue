@@ -37,7 +37,6 @@
         color: color.$neutral-regular;
         height: 34px;
         margin-left: 10px;
-        margin-bottom: 10px;
         .content {
           border: 1px solid color.$neutral-soft;
           border-radius: 10px;
@@ -59,7 +58,6 @@
         display: flex;
         align-items: center;
         margin-top: 10px;
-        margin-bottom: 10px;
         margin-left: 10px;
         border-radius: 10px;
         padding: 3px 10px;
@@ -76,10 +74,6 @@
           color: white;
           width: 12px;
           margin-left: 4px;
-        }
-
-        &:first-child {
-          margin-top: 0;
         }
       }
     }
