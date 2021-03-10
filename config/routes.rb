@@ -61,8 +61,6 @@ Rails.application.routes.draw do
 
     mount Sidekiq::Web => 'sidekiq'
 
-    ActiveAdmin.routes(self)
-
     Sidekiq::Web.use Rack::Auth::Basic do |username, password|
       # Protect against timing attacks:
       # - See https://codahale.com/a-lesson-in-timing-attacks/
@@ -73,6 +71,10 @@ Rails.application.routes.draw do
         ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest(ENV["SIDEKIQ_PASSWORD"]))
     end if Rails.env.production?
   end
+
+  # This is mounted at /_/admin, due to configuration in `/initializers/active_admin.rb`
+  # Don't be fooled by it looking like it's on the root like Hampton accidentally did that time.
+  ActiveAdmin.routes(self)
 
   # CATCHALL AFTER THESE OTHER ROUTES!
   scope module: :channels, path: ":channel_id", as: "channel" do
