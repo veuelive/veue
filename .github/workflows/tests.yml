@@ -115,6 +115,24 @@ jobs:
   rspecSystem:
       name: rspec system
       runs-on: ubuntu-latest
+      services:
+        postgres:
+          # Docker Hub image
+          image: postgres
+          # Provide the password for postgres
+          env:
+            POSTGRES_USER: "postgres"
+            POSTGRES_PASSWORD: "password"
+          # Set health checks to wait until postgres has started
+          options: >-
+            --health-cmd pg_isready
+            --health-interval 10ms
+            --health-timeout 3000ms
+            --health-retries 300
+          ports:
+            - "5432:5432"
+
+
       strategy:
         matrix:
           browser: ["chrome"]#, "firefox"]
@@ -166,6 +184,22 @@ jobs:
     if: ${{ false }}
     name: rspec safari
     runs-on: macos-latest
+    services:
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: "postgres"
+          POSTGRES_PASSWORD: "password"
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10ms
+          --health-timeout 3000ms
+          --health-retries 300
+        ports:
+          - "5432:5432"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
