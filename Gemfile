@@ -110,6 +110,9 @@ group :development, :test do
   # Rubocop for making sure that our code follows standards- like a comment for every gem!
   gem "rubocop-rails", require: false
 
+  # Rubocop....for rspec!
+  gem "rubocop-rspec", require: false
+
   # Security Auditing Linter
   gem "brakeman"
 
