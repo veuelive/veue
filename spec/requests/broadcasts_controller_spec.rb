@@ -45,8 +45,9 @@ describe BroadcastsController do
 
       video = Video.last
       expect(video.started_at_ms).to_not be_nil
-      expect(video.video_layout_events.count).to eq(1)
-      expect(video.video_layout_events.last.payload).to eq(JSON.parse(video_layout_payload))
+      layout_events = video.video_layout_events.published
+      expect(layout_events.count).to eq(1)
+      expect(layout_events.last.payload).to eq(JSON.parse(video_layout_payload))
     end
   end
 
@@ -68,8 +69,8 @@ describe BroadcastsController do
       expect(response.status).to eq(204)
 
       video.reload
-      expect(video.video_events).to_not be_empty
-      page_visit = video.browser_navigations.last
+      expect(video.video_events.published).to_not be_empty
+      page_visit = video.browser_navigations.published.last
       expect(page_visit.payload["url"]).to eq(pdp_page)
       expect(page_visit.timecode_ms).to eq(100)
     end

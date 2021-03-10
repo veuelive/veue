@@ -17,8 +17,6 @@ class VideoEvent < ApplicationRecord
   scope :published, -> { where(published: true) }
   scope :unpublished, -> { where(published: false) }
 
-  default_scope { published }
-
   def set_payload
     self.payload = input_to_payload
   end
