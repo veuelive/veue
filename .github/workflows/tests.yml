@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: brakeman
         uses: reviewdog/action-brakeman@v1
         with:
@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: rubocop
         uses: reviewdog/action-rubocop@v1
         with:
@@ -40,7 +40,7 @@ jobs:
     name: runner / eslint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: eslint
         uses: reviewdog/action-eslint@v1
         with:
@@ -60,24 +60,30 @@ jobs:
   rspec:
     name: rspec basic
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: "postgres"
+          POSTGRES_PASSWORD: ""
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10ms
+          --health-timeout 500ms
+          --health-retries 35
+        ports:
+          - "5432:5432"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Startup Postgres
-        run: sudo systemctl start postgresql.service
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
-      - name: Ruby gem cache
-        uses: actions/cache@v1
         with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-      - name: Install gems
-        run: |
-          bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3
+          ruby-version: 2.7
+          bundler-cache: true
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -94,10 +100,9 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install packages
         run: |
-          yarn install --pure-lockfile
+          yarn install --frozen-lockfile
       - name: Setup test database
         run: |
-          sudo -u postgres createuser -s -d -l runner
           bundle exec rake db:setup
       - name: Run tests
         run: bundle exec rspec --exclude-pattern "spec/system/**/*"
@@ -111,21 +116,11 @@ jobs:
       steps:
         - name: Checkout code
           uses: actions/checkout@v2
-        - name: Startup Postgres
-          run: sudo systemctl start postgresql.service
         - name: Setup Ruby
           uses: ruby/setup-ruby@v1
-        - name: Ruby gem cache
-          uses: actions/cache@v1
           with:
-            path: vendor/bundle
-            key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-            restore-keys: |
-              ${{ runner.os }}-gems-
-        - name: Install gems
-          run: |
-            bundle config path vendor/bundle
-            bundle install --jobs 4 --retry 3
+            ruby-version: 2.7
+            bundler-cache: true
         - name: Setup Node
           uses: actions/setup-node@v1
           with:
@@ -142,10 +137,9 @@ jobs:
               ${{ runner.os }}-yarn-
         - name: Install packages
           run: |
-            yarn install --pure-lockfile
+            yarn install --frozen-lockfile
         - name: Setup test database
           run: |
-            sudo -u postgres createuser -s -d -l runner
             bundle exec rake db:setup
         - name: Run tests
           env:
@@ -170,21 +164,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Start Postgres
-        run: brew services start postgresql
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
-      - name: Ruby gem cache
-        uses: actions/cache@v1
         with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-      - name: Install gems
-        run: |
-          bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3
+          ruby-version: 2.7
+          bundler-cache: true
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -201,7 +185,7 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install packages
         run: |
-          yarn install --pure-lockfile
+          yarn install --frozen-lockfile
       - name: Setup test database
         env:
           RAILS_ENV: test
@@ -246,6 +230,6 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install packages
         run: |
-          yarn install --pure-lockfile
+          yarn install --frozen-lockfile
       - name: Run Jest Tests
         run: yarn jest
