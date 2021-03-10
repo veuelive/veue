@@ -27,12 +27,12 @@ RSpec.describe Video, type: :model do
 
     it "should not allow you to schedule in the past" do
       yesterday = 1.day.ago
-      expect{video.update!(scheduled_at: yesterday)}.to raise_error(ActiveRecord::RecordInvalid)
+      expect { video.update!(scheduled_at: yesterday) }.to raise_error(ActiveRecord::RecordInvalid)
     end
 
     it "should not allow you to schedule unschedulable videos" do
       video.finish!
-      expect{video.update!(scheduled_at: 1.day.from_now)}.to raise_error(ActiveRecord::RecordInvalid)
+      expect { video.update!(scheduled_at: 1.day.from_now) }.to raise_error(ActiveRecord::RecordInvalid)
     end
   end
 end

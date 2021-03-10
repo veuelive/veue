@@ -133,13 +133,13 @@ class Video < ApplicationRecord
 
   def validate_scheduling
     errors.add(:scheduled_at, :not_scheduleable, message: "Video is not scheduleable") unless may_schedule?
-    if Time.current > scheduled_at
-      errors.add(
-        :scheduled_at,
-        :in_the_past,
-        message: "Video cannot be scheduled in the past",
-      )
-    end
+    return unless Time.current > scheduled_at
+
+    errors.add(
+      :scheduled_at,
+      :in_the_past,
+      message: "Video cannot be scheduled in the past",
+    )
   end
 
   # Used in an after_create / after_update callback to change the AASM state
