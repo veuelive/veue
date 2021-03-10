@@ -107,7 +107,7 @@
   .stream-end {
     border-top: 1px solid color.$neutral-accents;
     padding: 10px;
-    z-index: z_index.$chat-reaction;
+    z-index: z_index.$chat-text-entry;
     position: relative;
     background: color.$white;
 
@@ -133,7 +133,7 @@
     min-height: 55px;
     background: color.$white;
     border-radius: 0px 0px 10px 10px;
-    z-index: z_index.$chat-reaction;
+    z-index: z_index.$chat-text-entry;
 
     > * {
       margin: 10px;
