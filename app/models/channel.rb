@@ -33,7 +33,7 @@ class Channel < ApplicationRecord
   end
 
   def broadcastable_video
-    videos.active.where(state: %w[pending scheduled]).first
+    videos.find_by(state: %w[pending scheduled])
   end
 
   def active_video!

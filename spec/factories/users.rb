@@ -7,7 +7,6 @@ FactoryBot.define do
     display_name { Faker::Name.name[0..15].strip }
     phone_number { PhoneTestHelpers.generate_valid }
 
-
     factory :streamer do
       after(:create, &:setup_as_streamer!)
     end

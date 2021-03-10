@@ -16,7 +16,6 @@ describe ContentController do
     end
 
     describe "a complex page with seo settings" do
-
       it "should override page headers with content" do
         mock_page_with_file("landing-page", "seo_optimized")
         get "/en/landing-page"
@@ -35,8 +34,10 @@ describe ContentController do
         expect(response.body).to include("twitter description")
         expect(response.body).to include("twitter image")
 
-        expect(response.body).to include("<h1>Heading</h1>
-<p><strong>Strong</strong></p>")
+        expect(response.body).to include(
+          "<h1>Heading</h1>
+<p><strong>Strong</strong></p>",
+        )
       end
     end
 
@@ -73,7 +74,7 @@ describe ContentController do
       )
       .to_return(status: 200,
                  body: File.open(
-                   File.join(Rails.root, "spec/support/buttercms/#{json_name}.json"),
+                   Rails.root.join("spec/support/buttercms/#{json_name}.json"),
                  ),
                  headers: {})
   end
