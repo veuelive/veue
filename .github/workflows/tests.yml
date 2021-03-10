@@ -65,24 +65,11 @@ jobs:
   rspec:
     name: rspec basic
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        # Docker Hub image
-        image: postgres
-        # Provide the password for postgres
-        env:
-          POSTGRES_USER: "postgres"
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10ms
-          --health-timeout 3000ms
-          --health-retries 300
-        ports:
-          - "5432:5432"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Startup Postgres
+        run: sudo systemctl start postgresql.service
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -107,6 +94,7 @@ jobs:
           yarn install --pure-lockfile
       - name: Setup test database
         run: |
+          sudo -u postgres createuser -s -d -l runner
           bundle exec rake db:setup
       - name: Run tests
         run: bundle exec rspec --exclude-pattern "spec/system/**/*"
@@ -114,22 +102,6 @@ jobs:
   rspecSystem:
       name: rspec system
       runs-on: ubuntu-latest
-      services:
-        postgres:
-          # Docker Hub image
-          image: postgres
-          # Provide the password for postgres
-          env:
-            POSTGRES_USER: "postgres"
-          # Set health checks to wait until postgres has started
-          options: >-
-            --health-cmd pg_isready
-            --health-interval 10ms
-            --health-timeout 3000ms
-            --health-retries 300
-          ports:
-            - "5432:5432"
-
 
       strategy:
         matrix:
@@ -137,6 +109,8 @@ jobs:
       steps:
         - name: Checkout code
           uses: actions/checkout@v2
+        - name: Startup Postgres
+          run: sudo systemctl start postgresql.service
         - name: Setup Ruby
           uses: ruby/setup-ruby@v1
           with:
@@ -161,6 +135,7 @@ jobs:
             yarn install --pure-lockfile
         - name: Setup test database
           run: |
+            sudo -u postgres createuser -s -d -l runner
             bundle exec rake db:setup
         - name: Run tests
           env:
@@ -182,24 +157,11 @@ jobs:
     if: ${{ false }}
     name: rspec safari
     runs-on: macos-latest
-    services:
-      postgres:
-        # Docker Hub image
-        image: postgres
-        # Provide the password for postgres
-        env:
-          POSTGRES_USER: "postgres"
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10ms
-          --health-timeout 3000ms
-          --health-retries 300
-        ports:
-          - "5432:5432"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Start postgres
+        run: brew services start postgresql
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
