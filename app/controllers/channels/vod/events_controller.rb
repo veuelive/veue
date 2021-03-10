@@ -18,7 +18,7 @@ module Channels
 
       def show
         video = Video.find(params[:video_id])
-        events = video.video_events.order("timecode_ms")
+        events = video.video_events.published.order("timecode_ms")
         render(json: events.map(&:to_hash))
       end
     end

@@ -39,7 +39,7 @@ RSpec.describe Broadcasts::EventController do
            params: good_params,
            as: :json
       expect(JSON.parse(response.body).symbolize_keys).to include({success: false})
-      expect(video.video_layout_events.count).to eq(0)
+      expect(video.video_layout_events.published.count).to eq(0)
     end
 
     it "must be your own damn video!" do
@@ -48,7 +48,7 @@ RSpec.describe Broadcasts::EventController do
 
       post broadcast_layout_url(live_video, params: good_params, as: :json)
       expect(JSON.parse(response.body).symbolize_keys).to include({success: false})
-      expect(live_video.video_layout_events.count).to eq(0)
+      expect(live_video.video_layout_events.published.count).to eq(0)
     end
 
     it "should work" do
@@ -56,11 +56,13 @@ RSpec.describe Broadcasts::EventController do
 
       post broadcast_layout_url(live_video, params: good_params, as: :json)
       expect(JSON.parse(response.body).symbolize_keys).to include({success: true})
-      expect(live_video.video_layout_events.count).to eq(1)
-      expect(live_video.video_layout_events.first).to have_attributes(timecode_ms: 10)
-      expect(live_video.video_layout_events.first.payload["width"]).to eq(100)
-      expect(live_video.video_layout_events.first.payload["sections"].first["x"]).to eq(0)
-      expect(live_video.video_layout_events.first.payload["sections"].first["height"]).to eq(90)
+
+      layout_events = live_video.video_layout_events.published
+      expect(layout_events.count).to eq(1)
+      expect(layout_events.first).to have_attributes(timecode_ms: 10)
+      expect(layout_events.first.payload["width"]).to eq(100)
+      expect(layout_events.first.payload["sections"].first["x"]).to eq(0)
+      expect(layout_events.first.payload["sections"].first["height"]).to eq(90)
     end
   end
 end

@@ -15,7 +15,7 @@ RSpec.describe VideoView, type: :model do
       expect(video_view.fingerprint).to eq(fingerprint)
       expect(video_view.video_view_minutes_count).to eq(1)
 
-      expect(video.user_joined_events.last.user).to eq(first_user)
+      expect(video.user_joined_events.published.last.user).to eq(first_user)
 
       # When we are the same user, we won't create a new view
       same_video_view = VideoView.process_view!(video, first_user, 1, fingerprint, true)
@@ -35,7 +35,7 @@ RSpec.describe VideoView, type: :model do
       expect(duplicate_video_view.video_view_minutes_count).to eq(1)
       expect(duplicate_video_view.id).to_not eq(video_view.id)
 
-      expect(video.user_joined_events.count).to eq(1)
+      expect(video.user_joined_events.published.count).to eq(1)
 
       # If the same fingerprinted user logs in with a new user, it doesn't count! Sorry, yo!
       same_video_view = VideoView.process_view!(video, second_user, 3, fingerprint, true)
@@ -45,7 +45,7 @@ RSpec.describe VideoView, type: :model do
       expect(same_video_view.user).to eq(first_user)
 
       # This fishy person does NOT get a new user joined event
-      expect(video.user_joined_events.count).to eq(1)
+      expect(video.user_joined_events.published.count).to eq(1)
       # If you are actually looking like a new person...
 
       # Stub the rails cache fetch to be greater than 5 seconds
@@ -53,7 +53,7 @@ RSpec.describe VideoView, type: :model do
 
       VideoView.process_view!(video, second_user, 4, "NEW FINGERPRINT", true)
       # And you even get announced!
-      expect(video.user_joined_events.count).to eq(2)
+      expect(video.user_joined_events.published.count).to eq(2)
     end
 
     it "should upgrade old views to new ones" do

@@ -22,7 +22,7 @@ describe "ChatMessages", type: :request do
       post channel_live_chat_messages_path(channel), params: chat_message_params
 
       expect(response).to have_http_status(200)
-      expect(user.chat_messages).not_to(be_empty)
+      expect(user.chat_messages.published).not_to(be_empty)
     end
 
     it "should not create message as 'body' is not present" do
@@ -34,7 +34,7 @@ describe "ChatMessages", type: :request do
     end
 
     it "should not publish moderation failures" do
-      expect(user.chat_messages).to(be_empty)
+      expect(user.chat_messages.published).to(be_empty)
       expect(user.moderation_items).to(be_empty)
 
       PerspectiveApi.key = "FAIL"
@@ -44,7 +44,7 @@ describe "ChatMessages", type: :request do
       expect(user.moderation_items).not_to(be_empty)
       expect(user.chat_messages.unscoped).not_to(be_empty)
       expect_to_sse_broadcast(0)
-      expect(video.chat_messages).to(be_empty)
+      expect(video.chat_messages.published).to(be_empty)
     end
   end
 

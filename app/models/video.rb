@@ -81,12 +81,12 @@ class Video < ApplicationRecord
 
   def recent_timecode_sorted_events
     layout_events = video_layout_events.order("created_at").limit(10)
-    (browser_navigations.order("created_at DESC").limit(100) + pin_events + layout_events)
+    (browser_navigations.published.order("created_at DESC").limit(100) + pin_events.published + layout_events.published)
       .sort_by(&:timecode_ms)
   end
 
   def recent_instant_events
-    user_joins = user_joined_events.order("created_at DESC").limit(10)
+    user_joins = user_joined_events.published.order("created_at DESC").limit(10)
     (chat_messages_for_live + user_joins)
       .sort_by(&:created_at)
       .map { |event|
@@ -116,7 +116,7 @@ class Video < ApplicationRecord
   end
 
   def chat_messages_for_live(limit=50)
-    chat_messages.limit(limit).order("created_at DESC")
+    chat_messages.published.limit(limit).order("created_at DESC")
   end
 
   def add_screenshots!(*screenshots)
@@ -164,7 +164,7 @@ class Video < ApplicationRecord
   def last_user_join_time
     @last_user_join_time ||=
       Rails.cache.fetch(last_join_time_cache_location) {
-        last_join = UserJoinedEvent.last
+        last_join = UserJoinedEvent.published.last
 
         return 0 if last_join.nil?
 
