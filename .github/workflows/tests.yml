@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
       - name: rubocop
         uses: reviewdog/action-rubocop@v1
         with:
@@ -72,8 +72,8 @@ jobs:
         options: >-
           --health-cmd pg_isready
           --health-interval 10ms
-          --health-timeout 500ms
-          --health-retries 35
+          --health-timeout 3000ms
+          --health-retries 1000
         ports:
           - "5432:5432"
     steps:
