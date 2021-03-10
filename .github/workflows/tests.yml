@@ -100,7 +100,7 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install packages
         run: |
-          yarn install --frozen-lockfile
+          yarn install --pure-lockfile
       - name: Setup test database
         run: |
           bundle exec rake db:setup
@@ -137,7 +137,7 @@ jobs:
               ${{ runner.os }}-yarn-
         - name: Install packages
           run: |
-            yarn install --frozen-lockfile
+            yarn install --pure-lockfile
         - name: Setup test database
           run: |
             bundle exec rake db:setup
@@ -185,7 +185,7 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install packages
         run: |
-          yarn install --frozen-lockfile
+          yarn install --pure-lockfile
       - name: Setup test database
         env:
           RAILS_ENV: test
@@ -230,6 +230,6 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install packages
         run: |
-          yarn install --frozen-lockfile
+          yarn install --pure-lockfile
       - name: Run Jest Tests
         run: yarn jest
