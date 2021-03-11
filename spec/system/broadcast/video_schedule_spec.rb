@@ -10,10 +10,6 @@ describe "Streamer scheduling" do
   let(:streamer) { channel.user }
   let(:video) { channel.videos.active.last }
 
-  before :example do
-    driven_by :selenium, using: :chrome
-  end
-
   before :each do
     visit "/"
     find("body").click

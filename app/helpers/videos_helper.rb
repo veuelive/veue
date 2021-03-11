@@ -59,7 +59,7 @@ module VideosHelper
       class: classes,
       title: "Toggle Audio",
       data: {
-        action: "click->audience-view#toggleAudio",
+        action: "click->audience-view#toggleAudio click->audience-view#hideMuteBanner",
         target: "audience-view.toggleAudio",
       },
     ) do

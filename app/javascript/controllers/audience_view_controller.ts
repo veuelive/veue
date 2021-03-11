@@ -29,6 +29,7 @@ export default class extends BaseController {
     "toggleAudio",
     "timeDisplay",
     "timeDuration",
+    "muteBanner",
   ];
 
   readonly togglePlayTargets!: HTMLElement[];
@@ -39,6 +40,7 @@ export default class extends BaseController {
   readonly pipSecondaryCanvasTarget!: HTMLCanvasElement;
   readonly timeDisplayTarget!: HTMLElement;
   readonly timeDurationTarget!: HTMLElement;
+  readonly muteBannerTarget!: HTMLElement;
 
   private broadcastLayout: BroadcastVideoLayout;
   private timecodeSynchronizer: TimecodeSynchronizer;
@@ -149,6 +151,7 @@ export default class extends BaseController {
         .catch(() => {
           this.state = "paused";
           this.audioState = "muted";
+          this.showMuteBanner();
           this.videoTarget
             .play()
             .then(() => (this.state = "playing"))
@@ -196,6 +199,14 @@ export default class extends BaseController {
 
   hideChat(): void {
     this.element.className = "content-area";
+  }
+
+  showMuteBanner(): void {
+    this.muteBannerTarget.style.display = "flex";
+  }
+
+  hideMuteBanner(): void {
+    this.muteBannerTarget.style.display = "none";
   }
 
   set state(state: string) {

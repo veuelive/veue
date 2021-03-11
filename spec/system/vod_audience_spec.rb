@@ -115,6 +115,7 @@ describe "Prerecorded Audience View" do
 
       expect(page).to have_css("[data-start-offset='#{start_offset}']")
       expect(is_video_playing?).to be(true)
+      byebug
 
       # We actually have no clue where in the time code we'll be, but its safe
       # to assume we'll be greater than 0.
@@ -147,6 +148,23 @@ describe "Prerecorded Audience View" do
       # Use 26 to account for possible rounding issues.
       # Use a float because video durations on a video element are floats
       expect(Float(find("#duration-time-display")["data-duration"])).to be <= 26.0
+    end
+  end
+
+  describe "Unmute banner" do
+    it "Should display when the video is visited and disappear when clicked" do
+      visit path_for_video(video)
+      expect(find(".mute-banner")).to have_content(I18n.t("video.tap_to_unmute"))
+
+      find(".mute-banner").click
+      expect(find(".mute-banner", visible: false)).to_not be_visible
+    end
+
+    it "Should disappear when the user clicks the player control mute button" do
+      visit path_for_video(video)
+      expect(page).to have_css(".mute-banner")
+      find(".toggle-audio", visible: true).click
+      expect(find(".mute-banner", visible: false)).to_not be_visible
     end
   end
 end

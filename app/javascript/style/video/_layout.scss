@@ -1,5 +1,7 @@
 @use "../utils/breakpoints" as *;
 @use "../utils/scale";
+@use "../utils/color";
+@use "../utils/z_index";
 
 #videos__show,
 #channels__show {
@@ -38,6 +40,29 @@
 
     canvas.pip-secondary-canvas {
       border-radius: 10px;
+    }
+
+    .mute-banner {
+      // layout
+      position: absolute;
+      z-index: z_index.$mute-banner;
+      left: 0.6rem;
+      top: 1rem;
+      height: 2rem;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+
+      // style
+      background: rgba(color.$black, 0.5);
+      color: color.$white;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      cursor: pointer;
+
+      svg {
+        margin-right: 10px;
+      }
     }
   }
 
