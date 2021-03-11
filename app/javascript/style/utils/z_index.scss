@@ -19,6 +19,9 @@ $chat-reaction: next-z-index();
 // The main video, that might be under other video elements
 $primary-video: next-z-index();
 
+// The unmuted banner that flashes in front of the primary video
+$mute-banner: next-z-index();
+
 // Video areas that might appear on top of the primary video such as PIP
 $secondary-video: next-z-index();
 

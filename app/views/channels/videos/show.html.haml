@@ -16,6 +16,9 @@
   .content-area__primary{data: {controller: "canvas-size-observer"}}
     = render partial: "channels/videos/partials/header"
     .primary-video{"data": { controller: "audience--movable-pip" }}
+      .mute-banner{style: "display: none;", data: { target: "audience-view.muteBanner", action: "click->audience-view#toggleAudio click->audience-view#hideMuteBanner"}}
+        = svg_tag("volume-mute", height: 14, width: 19)
+        = t("video.tap_to_unmute")
       %canvas.primary-canvas{
         "data-target": "audience-view.primaryCanvas canvas-size-observer.canvas",
         width: 1200,
@@ -33,7 +36,7 @@
       "data-target": "audience-view.fixedSecondaryCanvas",
       width: 420,
       height: 340
-    } 
+    }
     %video.player__video.viewer{
       "data-target": "audience-view.video audience--player-controls.video",
       crossorigin: "anonymous",

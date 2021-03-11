@@ -91,3 +91,7 @@ en:
       title: "%{name} on Veue"
     seo:
       title: "%{name} on Veue"
+  video:
+    tap_to_unmute: "Tap to unmute"
+
+
