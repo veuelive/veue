@@ -149,6 +149,15 @@ describe "Broadcast View" do
 
       expect(page.current_path).to_not eq(previous_path)
     end
+
+    it "should create a snapshot initially and every 10 seconds" do
+      expect(streamer.video_snapshots.count).to eq(0)
+      click_start_broadcast_button
+      wait_for_broadcast_state("live")
+
+      # IPC rendered only screenshots the camera
+      expect(streamer.video_snapshots.count).to eq(1)
+    end
   end
 
   describe "while live streaming" do

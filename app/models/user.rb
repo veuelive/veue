@@ -14,6 +14,9 @@ class User < ApplicationRecord
            through: :follows,
            source: :channel
 
+  has_many :videos, through: :channels, dependent: :destroy
+  has_many :video_snapshots, through: :videos, dependent: :destroy
+
   validates :display_name, length: {maximum: 30, minimum: 1}, presence: true
   validates :phone_number, phone_number: true
   validates :email, email: true

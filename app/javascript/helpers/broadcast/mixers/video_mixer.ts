@@ -8,6 +8,12 @@ import { sendBroadcastLayoutUpdate } from "helpers/broadcast_helpers";
 const VIDEO_SIZE = { width: 1920, height: 1080 };
 export const BroadcastLayoutChangedEvent = "BroadcastLayoutChanged";
 
+interface VideoShot {
+  deviceId: string;
+  deviceType: string;
+  image: Blob;
+}
+
 export default class VideoMixer implements Mixer {
   canvas: HTMLCanvasElement;
 
@@ -103,9 +109,16 @@ export default class VideoMixer implements Mixer {
     this.updateBroadcastLayout();
   }
 
-  async getVideoShots(): Promise<Array<Blob>> {
+  async getVideoShots(): Promise<Array<VideoShot>> {
     return await Promise.all(
-      this.captureSources.map((source) => source.captureImage())
+      this.captureSources.map(async (source) => {
+        const image = await source.captureImage();
+        return {
+          deviceId: source.deviceId,
+          deviceType: source.videoSourceType,
+          image,
+        };
+      })
     );
   }
 }

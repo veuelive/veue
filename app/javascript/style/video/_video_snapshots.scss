@@ -1,0 +1,45 @@
+@use "../utils/color";
+
+.video-snapshots {
+  margin-top: 1rem;
+  width: 90%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-auto-rows: 1fr;
+  grid-gap: 1rem;
+
+  .video-snapshot {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    > img {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    form {
+      margin-top: auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+
+      > button {
+        margin: 0.25rem;
+      }
+
+      .secondary-btn {
+        background: color.$white;
+        border: 1px solid color.$veue-corporate;
+        color: color.$veue-corporate;
+
+        &:disabled {
+          border: 1px solid transparent;
+          color: color.$gray-lighter;
+          background: color.$gray-light-blue;
+        }
+      }
+    }
+  }
+}

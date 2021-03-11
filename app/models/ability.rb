@@ -11,11 +11,13 @@ class Ability
     return if user.blank?
 
     can(:manage, User, id: user.id)
-    can(:manage, [Channel, Video], user_id: user.id)
+    can(:manage, Channel, id: user.channel_ids)
+    can(:manage, Video, id: user.video_ids)
+    can(:manage, VideoSnapshot, id: user.video_snapshot_ids)
 
     return unless user.admin?
 
-    can(:manage, [User, Channel, Video])
+    can(:manage, [User, Channel, Video, VideoSnapshot])
     can(:read, ActiveAdmin::Page, name: "Dashboard", namespace_name: "admin")
   end
 end

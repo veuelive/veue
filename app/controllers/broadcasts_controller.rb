@@ -31,14 +31,7 @@ class BroadcastsController < ApplicationController
   end
 
   def start
-    current_broadcast_video.start_broadcast!(
-      params.permit(
-        :primary_shot,
-        :secondary_shot,
-        :video_layout,
-        :url,
-      ),
-    )
+    current_broadcast_video.start_broadcast!(params.permit(:video_layout, :url))
   end
 
   def navigation_update

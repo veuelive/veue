@@ -17,6 +17,10 @@ class Video < ApplicationRecord
   has_many :video_events, dependent: :destroy
   has_many :video_layout_events, dependent: :destroy
   has_many :video_views, dependent: :destroy
+  has_many :video_snapshots, dependent: :destroy
+
+  has_one_attached :primary_shot
+  has_one_attached :secondary_shot
 
   has_many :pins, dependent: :destroy
 
@@ -26,8 +30,6 @@ class Video < ApplicationRecord
 
   after_save :broadcast_active_viewers, if: -> { saved_change_to_active_viewers? }
 
-  has_one_attached :secondary_shot
-  has_one_attached :primary_shot
   include PGEnum(visibility: %w[public protected private], _prefix: "visibility")
 
   validates :title, allow_nil: true, length: {maximum: 60}
@@ -97,9 +99,7 @@ class Video < ApplicationRecord
 
   # This is the primary way to start a broadcast
   def start_broadcast!(params)
-    add_screenshots!(params[:primary_shot], params[:secondary_shot])
     new_layout_event!(params[:video_layout])
-
     BrowserNavigation.create_first_navigation!(self, params[:url])
 
     # The actual state machine transition
@@ -117,18 +117,6 @@ class Video < ApplicationRecord
 
   def chat_messages_for_live(limit=50)
     chat_messages.published.limit(limit).order("created_at DESC")
-  end
-
-  def add_screenshots!(*screenshots)
-    screenshots.each do |shot|
-      next unless shot
-
-      if !primary_shot.attached?
-        self.primary_shot = shot
-      elsif !secondary_shot.attached?
-        self.secondary_shot = shot
-      end
-    end
   end
 
   def validate_scheduling
