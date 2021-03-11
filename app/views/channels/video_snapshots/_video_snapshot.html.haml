@@ -1,0 +1,11 @@
+- submit_form = "click->video-snapshots#submitForm keydown->video-snapshots#submitForm"
+- if video_snapshot.image.attached?
+  .video-snapshot
+    = image_tag video_snapshot.image, alt: "Video snapshot"
+    = form_with model: video_snapshot, url: channel_video_video_snapshot_path(current_channel, current_video, video_snapshot), data: { controller: "video-snapshots" } do |form|
+      = form.button "Set Primary", name: :commit, value: "primary",
+        disabled: video_snapshot.image.blob == current_video.primary_shot.blob,
+        data: { action: submit_form }
+      = form.button "Set Secondary", name: :commit, value: "secondary", class: "secondary-btn",
+        disabled: video_snapshot.image.blob == current_video.secondary_shot.blob,
+        data: { action: submit_form }

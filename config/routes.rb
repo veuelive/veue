@@ -54,7 +54,7 @@ Rails.application.routes.draw do
 
     resources :images, controller: :user_images, only: [:show]
   end
-  
+
   post "/mux/webhook", to: "mux_webhooks#index"
 
   scope module: :internal, path: "_/_/" do
@@ -95,6 +95,8 @@ Rails.application.routes.draw do
       namespace :vod, path: "" do
         resources :events, only: %i[show index]
       end
+
+      resources :video_snapshots, path: "snapshots", only: %i[create show index update]
     end
 
     # These are the routes related to the "Streamers" profile page

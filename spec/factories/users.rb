@@ -15,5 +15,9 @@ FactoryBot.define do
       about_me { Faker::Lorem.sentence(word_count: 10) }
       profile_image { Rack::Test::UploadedFile.new("spec/fixtures/profile.jpg", "image/jpg") }
     end
+
+    factory :admin do
+      user_type { "admin" }
+    end
   end
 end

@@ -20,6 +20,8 @@ import {
   attachKeyboardListener,
   removeKeyboardListeners,
 } from "helpers/broadcast/keyboard_listeners";
+import { getVideoId } from "helpers/video_helpers";
+import { getChannelId } from "helpers/channel_helpers";
 
 export const BroadcasterEnvironmentChangedEvent = "broadcastEnvironmentChanged";
 
@@ -45,6 +47,7 @@ export default class extends Controller {
   private captureSourceManager: CaptureSourceManager;
   private environment: BroadcasterEnvironment;
   private keyboardListener: (event) => void;
+  private snapshotIntervalId: number;
 
   element!: HTMLElement;
 
@@ -150,30 +153,58 @@ export default class extends Controller {
         this.state = "starting";
         this.data.set("started-at", Date.now().toString());
 
-        const screenshots = await this.videoMixer.getVideoShots();
-
-        // We have to stringify to strip "undefined" values
-        const data = {
-          url: getCurrentUrl(),
-          primary_shot: screenshots[0],
-          video_layout: JSON.stringify(this.videoMixer.broadcastLayout),
-        };
-
-        if (screenshots[1]) {
-          data["secondary_shot"] = screenshots[1];
-        }
-
-        await postForm("./start", data);
+        await Promise.all([this.sendSnapshots(), this.sendStartingLayout()]);
 
         this.state = "live";
         this.metronome.start();
+
+        this.snapshotIntervalId = window.setInterval(
+          this.sendSnapshots.bind(this),
+          10_000
+        );
       })
       .catch((e) => console.error(e));
   }
 
   stopStreaming(): void {
     this.state = "finished";
+    window.clearInterval(this.snapshotIntervalId);
     this.streamCapturer.stop();
+  }
+
+  async sendSnapshots(): Promise<void> {
+    if (this.state === "finished") {
+      return;
+    }
+    // globalThis.timecodeMs is set by the metronome, if its not set, we know the video is
+    // just starting
+    const timecode = globalThis.timecodeMs || 0;
+    const snapshots = await this.videoMixer.getVideoShots();
+
+    await Promise.all(
+      snapshots.map(async (snapshot) => {
+        const { image, deviceType, deviceId } = snapshot;
+        const data = {
+          timecode,
+          image,
+          device_type: deviceType,
+          device_id: deviceId,
+        };
+        await postForm(
+          `/${getChannelId()}/videos/${getVideoId()}/snapshots`,
+          data
+        );
+      })
+    );
+  }
+
+  async sendStartingLayout(): Promise<void> {
+    const data = {
+      url: getCurrentUrl(),
+      video_layout: JSON.stringify(this.videoMixer.broadcastLayout),
+    };
+
+    await postForm("./start", data);
   }
 
   set state(state: BroadcastState) {

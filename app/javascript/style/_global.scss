@@ -57,6 +57,7 @@ button {
   font-weight: font.$heavy-weight;
   border: 0;
   &:disabled {
+    cursor: auto;
     color: color.$gray-lighter;
     background: color.$gray-light-blue;
   }

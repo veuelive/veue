@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_12_165841) do
+ActiveRecord::Schema.define(version: 2021_03_12_175531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -197,6 +197,17 @@ ActiveRecord::Schema.define(version: 2021_03_12_165841) do
     t.index ["video_id"], name: "index_video_events_on_video_id"
   end
 
+  create_table "video_snapshots", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "video_id", null: false
+    t.bigint "timecode"
+    t.integer "viewer_count"
+    t.string "device_id"
+    t.string "device_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["video_id"], name: "index_video_snapshots_on_video_id"
+  end
+
   create_table "video_view_minutes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "video_view_id"
     t.integer "minute"
@@ -255,5 +266,6 @@ ActiveRecord::Schema.define(version: 2021_03_12_165841) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "video_snapshots", "videos"
   add_foreign_key "videos", "users"
 end
