@@ -1,4 +1,8 @@
+default:
+  active: false
+
 production:
+  active: true
   ignore_actions:
     - "Internal::HealthCheckController#index"
   ignore_errors:

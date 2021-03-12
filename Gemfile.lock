@@ -102,7 +102,7 @@ GEM
       zeitwerk (~> 2.3)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
-    appsignal (2.11.9)
+    appsignal (3.0.1)
       rack
     arbre (1.4.0)
       activesupport (>= 3.0.0, < 6.2)
