@@ -77,7 +77,7 @@ function renderMessage(
             ? renderAvatar(message.userAvatar, "left")
             : ""
         }
-        ${userMessage(message, showName, isMyMessage)}
+        ${userMessage(message, showName)}
         ${
           showName && isMyMessage
             ? renderAvatar(message.userAvatar, "right")
@@ -87,11 +87,7 @@ function renderMessage(
     </div>`;
 }
 
-function userMessage(
-  message: ChatMessage,
-  showName: boolean,
-  isMyMessage: boolean
-) {
+function userMessage(message: ChatMessage, showName: boolean) {
   return `
     <div class="message__content__user">
       ${showName ? renderName(message) : ""}

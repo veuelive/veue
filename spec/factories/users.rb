@@ -7,13 +7,6 @@ FactoryBot.define do
     display_name { Faker::Name.name[0..15].strip }
     phone_number { PhoneTestHelpers.generate_valid }
 
-    trait :with_avatar do
-      after :create do |user|
-        file =  Rack::Test::UploadedFile.new('spec/factories/test.png', 'image/png')
-        user.profile_image.attach(file)
-      end
-    end
-
     factory :streamer do
       after(:create, &:setup_as_streamer!)
     end

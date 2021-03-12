@@ -4,15 +4,15 @@ require "rails_helper"
 
 describe Channels::Live::EventsController do
   describe "fetch video events" do
-    let(:first_user) { create(:user, :with_avatar) }
-    let(:video) { create(:video, user: first_user) }
+    let(:user) { create(:user_with_profile) }
+    let(:video) { create(:video, user: user) }
 
     before(:each) do
-      login_as first_user
+      login_as user
     end
 
     it "should fetch chat messages event along with avatar" do
-      chat_message = create(:chat_message, user: first_user, video: video)
+      create(:chat_message, user: user, video: video)
 
       get channel_live_events_path(video.channel.slug)
       expect(response).to have_http_status(:success)
