@@ -42,11 +42,8 @@ class VideoView < ApplicationRecord
 
     minute = Integer(minute, 10) unless minute.is_a?(Integer)
 
-    # If this is the same as the LAST minute we saw, don't count it again
-    # aka, we might be paused or refresh the page... so you don't get extra minutes for that!
-    if video_view_minutes.order("created_at ASC").last&.minute != minute
-      video_view_minutes.build(minute: minute, is_live: is_live)
-    end
+    # Only count video view minutes for unique minutes (both live and not live)
+    video_view_minutes.build(minute: minute, is_live: is_live) if video_view_minutes.where(minute: minute).none?
 
     save!
   end
