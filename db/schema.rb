@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_23_133526) do
+ActiveRecord::Schema.define(version: 2021_03_12_165841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -219,8 +219,8 @@ ActiveRecord::Schema.define(version: 2021_02_23_133526) do
     t.index ["fingerprint", "video_id"], name: "index_video_views_on_fingerprint_and_video_id"
     t.index ["user_joined_event_id"], name: "index_video_views_on_user_joined_event_id"
     t.index ["video_id", "details", "user_id"], name: "index_video_views_on_video_id_and_details_and_user_id", unique: true
+    t.index ["video_id", "fingerprint", "user_id"], name: "index_video_views_on_video_id_and_fingerprint_and_user_id", unique: true
     t.index ["video_id", "last_seen_at"], name: "index_video_views_on_video_id_and_last_seen_at"
-    t.index ["video_id", "user_id"], name: "index_video_views_on_video_id_and_user_id", unique: true, where: "(user_id IS NOT NULL)"
     t.index ["video_id", "video_view_minutes_count"], name: "index_video_views_on_video_id_and_video_view_minutes_count"
   end
 

@@ -62,6 +62,13 @@ RSpec.describe VideoView, type: :model do
       expect(video.video_views.count).to eq(1)
       expect(video.video_views.first.user).to eq(first_user)
       expect(video.video_views.first.video_view_minutes_count).to eq(2)
+
+      # and we can upgrade a view *again* later
+      VideoView.process_view!(video, nil, 1, "NEW FINGERPRINT SAME USER", false)
+      VideoView.process_view!(video, first_user, 2, "NEW FINGERPRINT SAME USER", false)
+
+      # The user is on a different device, so we count this as a unique view
+      expect(video.video_views.count).to eq(2)
     end
 
     it "should ignore the video creator" do
