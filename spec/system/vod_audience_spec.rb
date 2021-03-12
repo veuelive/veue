@@ -115,7 +115,6 @@ describe "Prerecorded Audience View" do
 
       expect(page).to have_css("[data-start-offset='#{start_offset}']")
       expect(is_video_playing?).to be(true)
-      byebug
 
       # We actually have no clue where in the time code we'll be, but its safe
       # to assume we'll be greater than 0.
