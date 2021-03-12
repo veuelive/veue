@@ -1,5 +1,6 @@
 import { ChatMessage, RenderChatMessageToString } from "types/chat";
 import { currentUserId } from "helpers/authentication_helpers";
+import logoCircular from "images/logo-circular.svg";
 
 type ChatMessageRenderType = "left" | "right" | "grouped";
 
@@ -94,9 +95,7 @@ function userMessage(
   return `
     <div class="message__content__user">
       ${showName ? renderName(message) : ""}
-      <div class="message__content__text ${
-        !showName && isMyMessage ? "text--margin" : ""
-      }">
+      <div class="message__content__text ${!showName ? "text--margin" : ""}">
         ${message.message}
       </div>
     </div>`;
@@ -107,8 +106,10 @@ function renderName(message: ChatMessage) {
 }
 
 function renderAvatar(avatar: string, position: string) {
+  const avatarImage = avatar || logoCircular;
+
   return `
     <div class="message__content__avatar message__content__avatar--${position}">
-      <img src="${avatar}" />
+      <img src="${avatarImage}" />
     </div>`;
 }

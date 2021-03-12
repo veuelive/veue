@@ -2,7 +2,6 @@
 
 class ChatMessage < VideoEvent
   validates :text, presence: true
-  ImageSize = 128
 
   def input_to_payload
     {
