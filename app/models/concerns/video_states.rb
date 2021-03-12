@@ -49,7 +49,7 @@ module VideoStates
           after_go_live
         end
 
-        transitions from: %i[pending starting], to: :live
+        transitions from: :pending, to: :live
       end
 
       event :end do
