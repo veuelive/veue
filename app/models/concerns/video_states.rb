@@ -36,7 +36,7 @@ module VideoStates
       end
 
       event :schedule do
-        transitions from: :pending, to: :scheduled
+        transitions from: %i[pending scheduled], to: :scheduled
       end
 
       event :cancel do
