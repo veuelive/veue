@@ -31,7 +31,7 @@ module VideoStates
           self.started_at_ms = Time.now.utc.to_ms
         end
 
-        transitions from: %i[pending scheduled], to: :starting
+        transitions from: :pending, to: :starting
         transitions from: :live, to: :live
       end
 
