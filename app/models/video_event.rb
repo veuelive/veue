@@ -38,6 +38,8 @@ class VideoEvent < ApplicationRecord
     message = to_hash
     message[:timecodeMs] = 0 if instant_broadcast_processing?
     message[:viewers] = video.video_views.connected.count
+    message[:data][:userAvatar] = user.profile_image.variant(resize_to_fill: [128, 128])&.service_url
+
     SseBroadcaster.broadcast(
       video.channel.id,
       message,

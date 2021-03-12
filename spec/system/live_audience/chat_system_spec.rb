@@ -10,6 +10,7 @@ describe "chat during live video" do
   let(:channel) { video.channel }
 
   before :example do
+    driven_by :debug_browser
     resize_window_desktop
   end
 
@@ -44,6 +45,9 @@ describe "chat during live video" do
       # let's verify our SSE connections are still functioning properly.
       write_chat_message "Cowabunga!"
       expect(page).to have_content("Cowabunga!").twice
+
+      # it will have profile image of user for once in thread
+      expect(page).to have_css(".message__content__avatar").once
     end
 
     it "should show that you joined the chat" do
@@ -56,6 +60,7 @@ describe "chat during live video" do
         write_chat_message "Cowabunga!"
         expect(page).to have_css(".message", count: i + 1)
       end
+      expect(page).to have_css(".message__content__avatar").once
 
       chat_message = first(".message")
       scroll_to(chat_message)

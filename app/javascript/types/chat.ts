@@ -4,6 +4,7 @@ export interface ChatMessage {
   userId: string;
   name: string;
   byStreamer: boolean;
+  userAvatar: string;
 }
 
 export interface RenderChatMessageToString {

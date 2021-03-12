@@ -18,17 +18,46 @@
   }
 
   &__content {
-    &__name {
-      color: color.$neutral-middle;
-      margin-bottom: 0.35rem;
-      line-height: 1;
+    display: flex;
 
-      .message--highlighted & {
-        color: color.$veue-corporate;
+    &__user {
+      display: flex;
+      flex-direction: column;
+
+      .message--left & {
+        align-items: flex-start;
       }
 
-      .message--announcement & {
-        color: color.$red-highlight;
+      .message--right & {
+        align-items: flex-end;
+      }
+
+      &__name {
+        color: color.$neutral-middle;
+        line-height: 1;
+        margin-bottom: 2px;
+
+        .message--highlighted & {
+          color: color.$veue-corporate;
+        }
+
+        .message--announcement & {
+          color: color.$red-highlight;
+        }
+      }
+    }
+
+    &__avatar {
+      img {
+        width: 32px;
+        height: 32px;
+      }
+
+      &--left {
+        margin-right: 10px;
+      }
+      &--right {
+        margin-left: 10px;
       }
     }
 
@@ -37,6 +66,7 @@
       color: color.$neutral-dark;
       border: 1px solid color.$neutral-accents;
       padding: 8px 15px;
+      width: max-content;
 
       .message--highlighted & {
         background-color: color.$veue-corporate;
@@ -51,10 +81,16 @@
 
       .message--right & {
         border-radius: 10px 0px 10px 10px;
+        &.text--margin {
+          margin-right: 42px;
+        }
       }
 
       .message--left & {
         border-radius: 0px 10px 10px 10px;
+        &.text--margin {
+          margin-left: 42px;
+        }
       }
     }
   }
