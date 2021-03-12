@@ -91,7 +91,7 @@ class Video < ApplicationRecord
       .sort_by(&:created_at)
       .map { |event|
         event.timecode_ms = 0
-        event.payload[:userAvatar] = event.user.profile_image.variant(resize_to_fill: [128, 128])&.service_url if event.type == "ChatMessage"
+        event.payload[:userAvatar] = event.user_avatar if event.type == "ChatMessage"
         event
       }
   end

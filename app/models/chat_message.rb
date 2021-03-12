@@ -25,6 +25,10 @@ class ChatMessage < VideoEvent
     input["message"]
   end
 
+  def user_avatar
+    user.profile_image.variant(resize_to_fill: [128, 128])&.url if user.profile_image.attached?
+  end
+
   # Immediately deliver via channel
   def instant_broadcast_processing?
     true
