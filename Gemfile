@@ -167,4 +167,7 @@ group :test do
 
   # Adds the ability to stub requests easily
   gem "webmock"
+
+  # Controls time in tests
+  gem "timecop"
 end
