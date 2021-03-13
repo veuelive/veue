@@ -415,6 +415,7 @@ GEM
     temple (0.8.2)
     thor (1.1.0)
     tilt (2.0.10)
+    timecop (0.9.4)
     twilio-ruby (5.47.0)
       faraday (>= 0.9, < 2.0)
       jwt (>= 1.5, <= 2.5)
@@ -504,6 +505,7 @@ DEPENDENCIES
   sidekiq-pro!
   spring
   spring-watcher-listen (~> 2.0.0)
+  timecop
   twilio-ruby
   tzinfo-data
   wdm (>= 0.1.0)
