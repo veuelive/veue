@@ -1,3 +1,4 @@
 # frozen_string_literal: true
 
-USER_JOIN_RATE_LIMIT_SECONDS = Integer(ENV.fetch("USER_JOIN_RATE_LIMIT_SECONDS", "5"), 10)
+# PER MINUTE
+USER_JOIN_RATE_LIMIT = Integer(ENV.fetch("USER_JOIN_RATE_LIMIT", "60"), 10)
