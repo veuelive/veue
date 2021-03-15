@@ -72,17 +72,9 @@ function renderMessage(
   return `
     <div id="${message.id}" class="${messageClasses.join(" ")}">
       <div class="message__content">
-        ${
-          showName && !isMyMessage
-            ? renderAvatar(message.userAvatar, "left")
-            : ""
-        }
+        ${showName && !isMyMessage ? renderAvatar(message, "left") : ""}
         ${userMessage(message, showName)}
-        ${
-          showName && isMyMessage
-            ? renderAvatar(message.userAvatar, "right")
-            : ""
-        }
+        ${showName && isMyMessage ? renderAvatar(message, "right") : ""}
       </div>
     </div>`;
 }
@@ -101,11 +93,13 @@ function renderName(message: ChatMessage) {
   return `<div class="message__content__user__name">${message.name}</div>`;
 }
 
-function renderAvatar(avatar: string, position: string) {
-  const avatarImage = avatar || logoCircular;
-
+function renderAvatar(message: ChatMessage, position: string) {
+  console.log("render avatar:", message);
+  const imageUrl = message.avatarAttached
+    ? `/users/${message.userId}/images/thumbnail.png`
+    : logoCircular;
   return `
     <div class="message__content__avatar message__content__avatar--${position}">
-      <img src="${avatarImage}" />
+      <img src="${imageUrl}" />
     </div>`;
 }

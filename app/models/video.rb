@@ -91,7 +91,7 @@ class Video < ApplicationRecord
       .sort_by(&:created_at)
       .map { |event|
         event.timecode_ms = 0
-        event.payload[:userAvatar] = event.user_avatar if event.type == "ChatMessage"
+        event.payload[:avatarAttached] = event.user.profile_image.attached? if event.type == "ChatMessage"
         event
       }
   end

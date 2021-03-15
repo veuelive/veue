@@ -51,6 +51,8 @@ Rails.application.routes.draw do
       put :upload_image
       delete :destroy_image
     end
+
+    resources :images, only: [:show]
   end
   
   post "/mux/webhook", to: "mux_webhooks#index"

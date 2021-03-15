@@ -18,7 +18,7 @@ describe Channels::Live::EventsController do
       expect(response).to have_http_status(:success)
 
       data = JSON.parse(response.body)[0]["data"]
-      expect(data.keys).to include("userAvatar")
+      expect(data.keys).to include("avatarAttached")
     end
   end
 end
