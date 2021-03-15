@@ -74,6 +74,7 @@ class VideoView < ApplicationRecord
     return false unless user
     # Already created
     return false if user_joined_event_id
+
     # Not above the rate limit over 1 minute period
     video.user_joined_events.where("created_at >= ?", 1.minute.ago).count < USER_JOIN_RATE_LIMIT
   end
