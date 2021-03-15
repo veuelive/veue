@@ -59,6 +59,7 @@ module PerspectiveApi
         TOXICITY: {},
       },
       sessionId: stream_id,
+      languages: ["en"],
     }
   end
 
