@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Images", type: :request do
+RSpec.describe "UserImages", type: :request do
   describe "get user profile image" do
     let(:user) { create(:user_with_profile) }
 
