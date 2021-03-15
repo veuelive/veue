@@ -1,6 +1,7 @@
 @use "../utils/color";
 @use "../utils/font";
 @use "../utils/breakpoints" as *;
+@use "../utils/z_index";
 
 #video-show {
   .video-header {
@@ -121,6 +122,7 @@
         left: -50px;
         top: 42px;
         background: color.$neutral-darker;
+        z-index: z_index.$chat-text-entry;
 
         @include smallTall() {
           left: -107px;
