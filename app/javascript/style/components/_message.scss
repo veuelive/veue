@@ -67,6 +67,7 @@
       border: 1px solid color.$neutral-accents;
       padding: 8px 15px;
       width: max-content;
+      width: inherit;
 
       .message--highlighted & {
         background-color: color.$veue-corporate;
