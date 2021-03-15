@@ -46,7 +46,6 @@ class VideoEvent < ApplicationRecord
     message = to_hash
     message[:timecodeMs] = 0 if instant_broadcast_processing?
     message[:viewers] = video.video_views.connected.count
-    message[:data][:avatarAttached] = user.profile_image.attached? if message[:type] == "ChatMessage"
     message
   end
 

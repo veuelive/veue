@@ -1,6 +1,5 @@
 import { ChatMessage, RenderChatMessageToString } from "types/chat";
 import { currentUserId } from "helpers/authentication_helpers";
-import logoCircular from "images/logo-circular.svg";
 
 type ChatMessageRenderType = "left" | "right" | "grouped";
 
@@ -94,12 +93,8 @@ function renderName(message: ChatMessage) {
 }
 
 function renderAvatar(message: ChatMessage, position: string) {
-  console.log("render avatar:", message);
-  const imageUrl = message.avatarAttached
-    ? `/users/${message.userId}/images/thumbnail.png`
-    : logoCircular;
   return `
     <div class="message__content__avatar message__content__avatar--${position}">
-      <img src="${imageUrl}" />
+      <img src="/users/${message.userId}/images/thumbnail.png" />
     </div>`;
 }
