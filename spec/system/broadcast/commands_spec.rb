@@ -78,7 +78,7 @@ describe "Broadcast Commands" do
           clip_text = page.evaluate_async_script("navigator.clipboard.readText().then(arguments[0])")
 
           expect(clip_text).to eq(private_share_link)
-          expect(clip_text).to include(channel.id)
+          expect(clip_text).to include(channel.slug)
           expect(clip_text).to include(channel.active_video.id)
         end
 
