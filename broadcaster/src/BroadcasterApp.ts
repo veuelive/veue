@@ -1,4 +1,10 @@
-import { BrowserWindow, ipcMain, screen, WebContents } from "electron";
+import {
+  BrowserWindow,
+  ipcMain,
+  powerSaveBlocker,
+  screen,
+  WebContents,
+} from "electron";
 import config from "./config";
 import { Environment } from "./Environment";
 import logger, { logBrowserWindow } from "./logger";
@@ -19,6 +25,7 @@ export default class {
   private ffmpegEncoder: FfmpegEncoder;
   private browserView: BrowserViewManager;
   readonly version: string;
+  private psb_id: number;
 
   constructor(environment: Environment, version: string) {
     this.version = version;
@@ -34,6 +41,7 @@ export default class {
       webPreferences: {
         nodeIntegration: true,
         devTools: true,
+        backgroundThrottling: false,
       },
     });
 
@@ -49,9 +57,14 @@ export default class {
   }
 
   startStream(renderer: WebContents): void {
+    // Don't let the display go to sleep
+    const psb_id = powerSaveBlocker.start("prevent-display-sleep");
+
     this.ffmpegEncoder = new FfmpegEncoder(this.rtmpUrl);
 
     this.ffmpegEncoder.on("close", () => {
+      // Turn off power save blocking
+      powerSaveBlocker.stop(psb_id);
       this.ffmpegEncoder = undefined;
       renderer.send("ffmpeg-error");
     });

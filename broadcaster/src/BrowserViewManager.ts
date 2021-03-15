@@ -18,7 +18,11 @@ export default class BrowserViewManager {
 
   constructor(window: BrowserWindow, bounds: Rectangle, url: string) {
     this.window = window;
-    this.browserView = new BrowserView();
+    this.browserView = new BrowserView({
+      webPreferences: {
+        disableHtmlFullscreenWindowResize: true,
+      },
+    });
     const { webContents } = this;
 
     // Now we want ot subscribe to the following events and send them to the main window

@@ -28,10 +28,8 @@ app.setAppUserModelId("com.veue.deskie");
 // Prevent window from being garbage collected
 let broadcasterApp;
 
-// power-save-blocker
-// for more info see https://www.electronjs.org/docs/api/power-save-blocker
-const psb_id = powerSaveBlocker.start("prevent-app-suspension");
-console.log(`POWER SAVE BLOCKER ${powerSaveBlocker.isStarted(psb_id)}`); // interestingly this logs to STDOUT in the running Node (electron) app
+// Stop the renderer from getting backgrounded when it loses focus
+app.commandLine.appendSwitch("disable-renderer-backgrounding");
 
 app.on("login", function (event, webContents, request, authInfo, callback) {
   event.preventDefault();
