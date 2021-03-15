@@ -27,7 +27,7 @@ describe "Broadcast Commands" do
 
   def private_share_link
     server = Capybara.current_session.server
-    channel_video_url(channel.id, channel.active_video, host: server.host, port: server.port)
+    channel_video_url(channel, channel.active_video, host: server.host, port: server.port)
   end
 
   describe "share features" do
