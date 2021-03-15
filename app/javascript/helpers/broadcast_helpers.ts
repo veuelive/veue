@@ -37,7 +37,7 @@ export function publicVideoLink(): string {
 }
 
 export function privateVideoLink(): string {
-  return origin + "/" + getChannelId() + "/videos/" + getVideoId();
+  return origin + "/" + getChannelSlug() + "/videos/" + getVideoId();
 }
 
 export function calculateCaptureLayout(
