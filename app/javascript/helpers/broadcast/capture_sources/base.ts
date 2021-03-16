@@ -21,6 +21,10 @@ export class CaptureSource {
     return this.deviceId;
   }
 
+  get mediaDeviceType(): MediaDeviceKind {
+    throw "Must implement!"
+  }
+
   protected constructor(deviceId?: string) {
     this.deviceId = deviceId;
   }
@@ -43,6 +47,10 @@ export class VideoCaptureSource
   implements VideoCaptureInterface {
   layout: LayoutSection;
   element: HTMLVideoElement;
+
+  get mediaDeviceType(): MediaDeviceKind {
+    throw "videoinput"
+  }
 
   get width(): number {
     return this.layout.width;

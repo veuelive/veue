@@ -8,6 +8,10 @@ export default class MicrophoneCaptureSource extends CaptureSource {
     return source;
   }
 
+  get mediaDeviceType(): MediaDeviceKind {
+    throw "audioinput"
+  }
+
   async start(): Promise<void> {
     this.mediaStream = await navigator.mediaDevices.getUserMedia({
       audio: {

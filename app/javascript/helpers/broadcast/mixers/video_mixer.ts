@@ -23,6 +23,7 @@ export default class VideoMixer implements Mixer {
     document.querySelector(".debug-area--content").appendChild(this.canvas);
 
     this.canvasContext = this.canvas.getContext("2d");
+    this.canvasContext.imageSmoothingQuality = "high";
 
     this.updateBroadcastLayout();
 
