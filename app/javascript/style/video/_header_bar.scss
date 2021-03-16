@@ -122,7 +122,7 @@
         left: -50px;
         top: 42px;
         background: color.$neutral-darker;
-        z-index: z_index.$chat-text-entry;
+        z-index: z_index.$tool-tip;
 
         @include smallTall() {
           left: -107px;

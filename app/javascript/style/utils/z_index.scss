@@ -19,14 +19,17 @@ $chat-reaction: next-z-index();
 // The main video, that might be under other video elements
 $primary-video: next-z-index();
 
-// The unmuted banner that flashes in front of the primary video
-$mute-banner: next-z-index();
-
 // Video areas that might appear on top of the primary video such as PIP
 $secondary-video: next-z-index();
 
+// The unmuted banner that flashes in front of the primary video
+$video-controls: next-z-index();
+
 // General index for dropdowns, should cover most things
 $dropdown: next-z-index();
+
+// For tooltips on top of all layers but behind popups/modals & menus.
+$tool-tip: next-z-index();
 
 // This is the user menu that toggles visible from the top right.
 $nav-menu: next-z-index();
