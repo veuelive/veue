@@ -37,6 +37,11 @@ export default class extends Controller {
   }
 
   chatBoxKeyDown(event: KeyboardEvent): void {
+    if (this.chatLimitExceeds() && event.key !== "Backspace") {
+      event.preventDefault();
+      return;
+    }
+
     if (!event.shiftKey && event.key === "Enter") {
       event.preventDefault();
       this.sendMessage();
@@ -86,5 +91,10 @@ export default class extends Controller {
     } else {
       this.messageReactionTarget.style.display = "flex";
     }
+  }
+
+  private chatLimitExceeds(): boolean {
+    const charactersLength = this.messageInputTarget.innerHTML.trim().length;
+    return charactersLength > 182;
   }
 }
