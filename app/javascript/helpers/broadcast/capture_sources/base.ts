@@ -22,7 +22,7 @@ export class CaptureSource {
   }
 
   get mediaDeviceType(): MediaDeviceKind {
-    throw "Must implement!"
+    throw "Must implement!";
   }
 
   protected constructor(deviceId?: string) {
@@ -49,7 +49,7 @@ export class VideoCaptureSource
   element: HTMLVideoElement;
 
   get mediaDeviceType(): MediaDeviceKind {
-    throw "videoinput"
+    throw "videoinput";
   }
 
   get width(): number {

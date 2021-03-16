@@ -9,7 +9,7 @@ export default class MicrophoneCaptureSource extends CaptureSource {
   }
 
   get mediaDeviceType(): MediaDeviceKind {
-    throw "audioinput"
+    throw "audioinput";
   }
 
   async start(): Promise<void> {
