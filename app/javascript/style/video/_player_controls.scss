@@ -1,5 +1,6 @@
 @use "../utils/breakpoints" as *;
 @use '../utils/color';
+@use '../utils/z_index';
 
 @mixin vod {
   &[data-audience-view-stream-type="vod"] {
@@ -76,7 +77,7 @@
     display: flex;
     transform: translate(-50%, -50%);
     align-items: center;
-    z-index: 2;
+    z-index: z_index.$video-controls;
 
     .time-display {
       display: none;
