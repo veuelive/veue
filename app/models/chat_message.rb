@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ChatMessage < VideoEvent
-  validates :text, presence: true, length: { maximum: 182 }
+  validates :text, presence: true, length: {maximum: 182}
 
   def input_to_payload
     {
