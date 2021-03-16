@@ -37,7 +37,7 @@ export default class extends Controller {
   }
 
   chatBoxKeyDown(event: KeyboardEvent): void {
-    if (this.chatLimitExceeds() && event.key !== "Backspace") {
+    if (this.chatLimitExceeds()) {
       event.preventDefault();
       return;
     }
@@ -51,10 +51,9 @@ export default class extends Controller {
   sendMessage(): void {
     const textAreaElement = this.messageInputTarget;
     const message = textAreaElement.innerText;
-    textAreaElement.innerHTML = "";
     const isSameUser = this.userId === this.lastMessageFromUserId;
 
-    if (message.length > 0) {
+    if (message.length > 0 && !this.chatLimitExceeds()) {
       postForm(`/${getChannelId()}/chat_messages`, {
         message,
       }).then((response: Response) => {
@@ -62,6 +61,7 @@ export default class extends Controller {
           const messageData = data["message"]["data"];
           displayChatMessage(messageData, isSameUser);
           this.lastMessageFromUserId = messageData.userId;
+          textAreaElement.innerHTML = "";
           this.toggleIcon();
         });
         console.log("CHAT Sent!");

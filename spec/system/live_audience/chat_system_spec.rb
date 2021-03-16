@@ -10,6 +10,7 @@ describe "chat during live video" do
   let(:channel) { video.channel }
 
   before :example do
+    driven_by :debug_browser
     resize_window_desktop
   end
 
@@ -70,6 +71,12 @@ describe "chat during live video" do
       scroll_to(last_message, align: :bottom)
 
       expect(page).to have_no_css(".chat-scroll")
+    end
+
+    it "should not send messages exceeding maximum limit" do
+      message = Faker::Lorem.characters(number: 200)
+      write_chat_message message
+      expect(page).to_not have_content(message)
     end
 
     it "should toggle between the reaction button and send message icon" do
