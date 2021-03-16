@@ -13,7 +13,7 @@ export class WebcamCaptureSource extends VideoCaptureSource {
 
   async findMediaDeviceInfo(): Promise<MediaDeviceInfo> {
     const devices = await navigator.mediaDevices.enumerateDevices();
-    let deviceId = this.deviceId || "default";
+    const deviceId = this.deviceId || "default";
 
     console.log(devices);
 
