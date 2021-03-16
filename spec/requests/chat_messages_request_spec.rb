@@ -33,6 +33,15 @@ describe "ChatMessages", type: :request do
       expect(body["error_messages"][0]).to match("message")
     end
 
+    it "shoud not create message as 'length' exceeds limit" do
+      post channel_live_chat_messages_path(channel), params: {message: Faker::Lorem.characters(number: 183)}
+
+      body = JSON.parse(response.body)
+      error_message = "Text is too long (maximum is 182 characters)"
+      expect(response).to have_http_status(200)
+      expect(body["error_messages"][0]).to match(error_message)
+    end
+
     it "should not publish moderation failures" do
       expect(user.chat_messages.published).to(be_empty)
       expect(user.moderation_items).to(be_empty)
