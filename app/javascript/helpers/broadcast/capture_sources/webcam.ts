@@ -12,21 +12,23 @@ export class WebcamCaptureSource extends VideoCaptureSource {
   }
 
   async findMediaDeviceInfo(): Promise<MediaDeviceInfo> {
-    const devices = await navigator.mediaDevices.enumerateDevices()
-    let deviceId = this.deviceId || "default"
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    let deviceId = this.deviceId || "default";
 
-    console.log(devices)
+    console.log(devices);
 
-    const videoDevices = devices.filter((value) => value.kind === "videoinput")
+    const videoDevices = devices.filter((value) => value.kind === "videoinput");
 
-    const device = videoDevices.find((mediaDevice) => mediaDevice.deviceId === deviceId)
+    const device = videoDevices.find(
+      (mediaDevice) => mediaDevice.deviceId === deviceId
+    );
 
-    if(device) {
-      return device
-    } else if(videoDevices.length > 0) {
-      return videoDevices[0]
+    if (device) {
+      return device;
+    } else if (videoDevices.length > 0) {
+      return videoDevices[0];
     } else {
-      return Promise.reject("No video media device found")
+      return Promise.reject("No video media device found");
     }
   }
 
@@ -35,23 +37,22 @@ export class WebcamCaptureSource extends VideoCaptureSource {
 
     // Typescript is convinced that this API doesn't exist, but it DOES in electron
     // so here we are casting this to a MediaStreamTrack, even though it isn't one.
-    return (mediaDeviceInfo as unknown as MediaStreamTrack).getCapabilities()
+    return ((mediaDeviceInfo as unknown) as MediaStreamTrack).getCapabilities();
   }
 
   async start(): Promise<void> {
-
-    const capabilities = await this.getCapabilities()
+    const capabilities = await this.getCapabilities();
     this.mediaStream = await navigator.mediaDevices.getUserMedia({
       video: {
         deviceId: this.deviceId || "default",
         height: capabilities.height.max,
-        width: capabilities.width.max
+        width: capabilities.width.max,
       },
       audio: false,
     });
-    console.log(this.mediaStream)
+    console.log(this.mediaStream);
     await this.processMediaStream(this.mediaStream);
-    console.log("Video element", this.element)
+    console.log("Video element", this.element);
     this.layout = {
       width: this.element.videoWidth,
       height: this.element.videoHeight,
