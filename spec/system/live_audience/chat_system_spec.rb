@@ -73,9 +73,14 @@ describe "chat during live video" do
     end
 
     it "should not send messages exceeding maximum limit" do
-      message = Faker::Lorem.characters(number: 200)
+      message = Faker::Lorem.characters(number: 181)
       write_chat_message message
-      expect(page).to_not have_content(message)
+
+      expect(page).to have_css(".message")
+      expect(page).to have_content(message)
+
+      div = find(".message__content__text")
+      expect(div.text.length).to eq(181)
     end
 
     it "should toggle between the reaction button and send message icon" do
