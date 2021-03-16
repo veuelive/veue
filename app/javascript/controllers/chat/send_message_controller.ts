@@ -54,6 +54,8 @@ export default class extends Controller {
     const isSameUser = this.userId === this.lastMessageFromUserId;
 
     if (message.length > 0 && !this.chatLimitExceeds()) {
+      textAreaElement.innerHTML = "";
+
       postForm(`/${getChannelId()}/chat_messages`, {
         message,
       }).then((response: Response) => {
@@ -61,7 +63,6 @@ export default class extends Controller {
           const messageData = data["message"]["data"];
           displayChatMessage(messageData, isSameUser);
           this.lastMessageFromUserId = messageData.userId;
-          textAreaElement.innerHTML = "";
           this.toggleIcon();
         });
         console.log("CHAT Sent!");
