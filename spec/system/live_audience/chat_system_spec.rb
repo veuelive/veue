@@ -10,7 +10,6 @@ describe "chat during live video" do
   let(:channel) { video.channel }
 
   before :example do
-    driven_by :debug_browser
     resize_window_desktop
   end
 
