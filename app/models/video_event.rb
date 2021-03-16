@@ -35,13 +35,18 @@ class VideoEvent < ApplicationRecord
   def broadcast_message!
     return unless published
 
-    message = to_hash
-    message[:timecodeMs] = 0 if instant_broadcast_processing?
-    message[:viewers] = video.video_views.connected.count
+    message = build_message
     SseBroadcaster.broadcast(
       video.channel.id,
       message,
     )
+  end
+
+  def build_message
+    message = to_hash
+    message[:timecodeMs] = 0 if instant_broadcast_processing?
+    message[:viewers] = video.video_views.connected.count
+    message
   end
 
   def to_hash

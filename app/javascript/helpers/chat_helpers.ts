@@ -38,7 +38,6 @@ export function renderChatMessageToString({
   message.id = `message-${message.id}`;
 
   const isMyMessage = message.userId == currentUserId;
-  const showName = !isThread && !isMyMessage;
 
   const modifiers = [];
 
@@ -57,27 +56,45 @@ export function renderChatMessageToString({
     modifiers.push("left");
   }
 
-  return renderMessage(message, modifiers, showName);
+  return renderMessage(message, modifiers, !isThread, isMyMessage);
 }
 
 function renderMessage(
   message: ChatMessage,
   modifiers: ChatMessageRenderType[],
-  showName: boolean
+  showName: boolean,
+  isMyMessage: boolean
 ) {
   const messageClasses = ["message"];
   modifiers.forEach((modifier) => messageClasses.push(`message--${modifier}`));
+
   return `
     <div id="${message.id}" class="${messageClasses.join(" ")}">
       <div class="message__content">
-        ${showName ? renderName(message) : ""}
-        <div class="message__content__text">
-          ${message.message}
-        </div>
+        ${showName && !isMyMessage ? renderAvatar(message, "left") : ""}
+        ${userMessage(message, showName)}
+        ${showName && isMyMessage ? renderAvatar(message, "right") : ""}
+      </div>
+    </div>`;
+}
+
+function userMessage(message: ChatMessage, showName: boolean) {
+  return `
+    <div class="message__content__user">
+      ${showName ? renderName(message) : ""}
+      <div class="message__content__text ${!showName ? "text--margin" : ""}">
+        ${message.message}
       </div>
     </div>`;
 }
 
 function renderName(message: ChatMessage) {
-  return `<div class="message__content__name">${message.name}</div>`;
+  return `<div class="message__content__user__name">${message.name}</div>`;
+}
+
+function renderAvatar(message: ChatMessage, position: string) {
+  return `
+    <div class="message__content__avatar message__content__avatar--${position}">
+      <img src="/users/${message.userId}/images/thumbnail.png" />
+    </div>`;
 }
