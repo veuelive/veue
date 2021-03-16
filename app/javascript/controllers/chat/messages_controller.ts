@@ -84,8 +84,7 @@ export default class MessagesController extends BaseController {
       this.element,
       `
       <div class="user-joined">
-        <img src=${userSvg} alt="user-icon"/>
-        <div>${user.name} joined the chat</div>
+        <div>${user.name} has joined</div>
       </div>`
     );
   }
