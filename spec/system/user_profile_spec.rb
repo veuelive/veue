@@ -32,17 +32,17 @@ describe "user profile" do
       end
 
       it "should show profile tab" do
-        all(".user-menu__item").first.click
+        find_test_id("user-menu-profile").click
         expect(page).to have_css("#profile-tab")
       end
 
       it "should show privacy tab" do
-        all(".user-menu__item")[1].click
+        find_test_id("user-menu-privacy").click
         expect(page).to have_css("#privacy-tab")
       end
 
       it "should show help tab" do
-        all(".user-menu__item")[2].click
+        find_test_id("user-menu-help").click
         expect(page).to have_css("#help-tab")
       end
     end
@@ -53,11 +53,10 @@ describe "user profile" do
       end
 
       it "should update user and show message" do
-        all(".user-menu__item")[0].click
+        find_test_id("user-menu-profile").click
         expect(page).to have_css("#profile-tab")
 
         find("#user_email").base.send_keys("test@user.com", :enter)
-
         expect(page).to have_content("Your profile was successfully updated")
       end
 
@@ -84,7 +83,7 @@ describe "user profile" do
       end
 
       it "should remove user and redirect user after log out" do
-        all(".user-menu__item")[1].click
+        find_test_id("user-menu-privacy").click
         expect(page).to have_css("#privacy-tab")
 
         find(".privacy-profile__action").click

@@ -6,6 +6,7 @@
     @include smallTall() {
       display: none;
     }
+
     &__text {
       display: flex;
       align-items: center;
@@ -38,6 +39,7 @@
           }
         }
       }
+
       @include smallTall() {
         margin-top: 0;
         border-radius: 0;

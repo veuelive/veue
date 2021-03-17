@@ -45,9 +45,13 @@ class User < ApplicationRecord
   include PGEnum(user_type: %w[normal employee admin])
 
   def setup_as_streamer!
-    return if channels.any?
+    return if streamer?
 
     channels.create!(name: display_name)
+  end
+
+  def streamer?
+    channels.any?
   end
 
   def send_consent_instructions!(channel)
