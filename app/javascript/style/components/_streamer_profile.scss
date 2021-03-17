@@ -72,6 +72,7 @@
       justify-content: center;
       align-items: center;
       padding: 10px 0;
+      margin-right: 10px;
 
       &__count {
         display: flex;
@@ -177,10 +178,6 @@
 
       &__mobile__about {
         display: none;
-      }
-
-      &__follow {
-        margin-right: 10px;
       }
     }
 
