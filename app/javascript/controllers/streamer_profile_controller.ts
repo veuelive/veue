@@ -9,24 +9,22 @@ export default class extends BaseController {
 
   async follow(): Promise<void> {
     const response = await post(this.followPath());
-    return this.insertHTML(response);
+    return this.replaceHtml(response);
   }
 
   async unfollow(): Promise<void> {
     const response = await destroy(this.followPath());
-    return this.insertHTML(response);
+    return this.replaceHtml(response);
   }
 
   authChanged(): void {
     secureFetch(this.followPath()).then((response) =>
-      this.insertHTML(response)
+      this.replaceHtml(response)
     );
   }
 
-  private async insertHTML(response: Response): Promise<void> {
-    const html = await response.text();
-
-    this.element.innerHTML = html;
+  private async replaceHtml(response: Response): Promise<void> {
+    this.element.outerHTML = await response.text();
   }
 
   private followPath(): string {
