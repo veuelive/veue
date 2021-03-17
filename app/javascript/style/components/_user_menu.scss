@@ -25,6 +25,9 @@
     transition: all 250ms;
   }
   .profile-image {
+    display: flex;
+    align-items: center;
+
     img {
       width: 32px;
     }

@@ -13,4 +13,8 @@ module SystemSpecHelpers
     end
     expect(logs).to be_empty
   end
+
+  def find_test_id(str, **options)
+    find("[data-test-id='#{str}']", **options)
+  end
 end

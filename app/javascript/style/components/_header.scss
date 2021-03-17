@@ -1,4 +1,5 @@
 @use '../utils/color';
+@use '../utils/breakpoints' as *;
 
 $height: 54px;
 
@@ -27,5 +28,37 @@ header {
     align-items: center;
     cursor: pointer;
     height: $height;
+
+    .header-banner {
+      .call-to-action {
+        @include smallTall() {
+          display: none;
+        }
+        // layout
+        display: flex;
+        align-items: center;
+        padding: 0.35rem 1rem 0.35rem 0.8rem;
+        font-size: 0.9375rem;
+        margin: 0 0.625rem;
+
+        // style
+        color: color.$veue-corporate;
+        background: color.$veue-lilac;
+        border-radius: 10px;
+        border: 1px solid transparent;
+
+        &:focus,
+        &:hover {
+          text-decoration: underline;
+          border: 1px solid color.$veue-corporate;
+        }
+
+        svg {
+          flex-shrink: 0;
+          margin-right: 0.5rem;
+          fill: color.$veue-corporate;
+        }
+      }
+    }
   }
 }
