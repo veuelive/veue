@@ -32,10 +32,10 @@
   .primary-video {
     // This is required to ensure that the controls can be shown over this area
     position: relative;
+    display: flex;
 
     canvas.primary-canvas {
       width: 100%;
-      border-radius: 0 0 10px 10px;
     }
 
     canvas.pip-secondary-canvas {
