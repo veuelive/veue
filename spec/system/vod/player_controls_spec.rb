@@ -9,6 +9,7 @@ describe "VOD Player Controls" do
   let(:video) { create(:vod_video) }
 
   before :each do
+    driven_by :media_browser
     resize_window_desktop
   end
 

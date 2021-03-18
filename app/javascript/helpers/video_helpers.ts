@@ -27,6 +27,13 @@ export function getVideoVisibility(): Visibility {
   return null;
 }
 
+type VideoStreamType = "live" | "upcoming" | "ended" | null;
+export function getVideoStreamType(): VideoStreamType {
+  return document
+    .querySelector("*[data-video-stream-type]")
+    ?.getAttribute("data-video-stream-type") as VideoStreamType;
+}
+
 function getVideoVisibilityElement(): HTMLElement {
   return document.querySelector("*[data-video-visibility]");
 }

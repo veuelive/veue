@@ -3,7 +3,7 @@
 @use '../utils/z_index';
 
 @mixin vod {
-  &[data-audience-view-stream-type="vod"] {
+  &[data-video-stream-type="vod"] {
     @content;
   }
 }

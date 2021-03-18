@@ -6,7 +6,7 @@ import { calculateCaptureLayout } from "helpers/broadcast_helpers";
 import { postForm } from "util/fetch";
 import { getCurrentUrl } from "controllers/broadcast/browser_controller";
 import EventManagerInterface from "types/event_manager_interface";
-import LiveEventManager from "helpers/event/live_event_manager";
+// import LiveEventManager from "helpers/event/live_event_manager";
 import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
 import CaptureSourceManager from "helpers/broadcast/capture_source_manager";
 import Metronome from "helpers/broadcast/metronome";
@@ -42,7 +42,7 @@ export default class extends Controller {
   private videoMixer: VideoMixer;
   private streamCapturer: StreamRecorder;
   private metronome: Metronome;
-  private eventManager: EventManagerInterface;
+  // private eventManager: EventManagerInterface;
   private audioMixer: AudioMixer;
   private captureSourceManager: CaptureSourceManager;
   private environment: BroadcasterEnvironment;
@@ -124,11 +124,11 @@ export default class extends Controller {
       this.streamCapturer.stop();
     });
 
-    this.eventManager = new LiveEventManager(false);
+    // this.eventManager = new LiveEventManager(false);
   }
 
   disconnect(): void {
-    this.eventManager?.disconnect();
+    // this.eventManager?.disconnect();
     removeKeyboardListeners(this.keyboardListener);
   }
 

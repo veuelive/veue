@@ -4,10 +4,8 @@ module Channels
   class VideosController < ApplicationController
     # GET /videos/1
     def show
-      authorize!(:read, current_video)
-
-      # have to decorate after authorizing
-      @current_video = @current_video.decorate
+      # have to undecorate when authorizing
+      authorize!(:read, Draper.undecorate(current_video))
 
       render(layout: false) if xhr_request?
     end
@@ -17,7 +15,7 @@ module Channels
     end
 
     def current_video
-      @current_video ||= Video.find(params[:id])
+      @current_video ||= Video.find(params[:id]).decorate
     end
     helper_method :current_video
 
