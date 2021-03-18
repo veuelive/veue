@@ -160,7 +160,7 @@ export default class extends Controller {
 
         this.snapshotIntervalId = window.setInterval(
           this.sendSnapshots.bind(this),
-          10_000
+          30_000
         );
       })
       .catch((e) => console.error(e));
