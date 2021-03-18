@@ -10,6 +10,7 @@ describe "Prerecorded Audience View" do
   let(:video) { create(:vod_video) }
 
   before :each do
+    driven_by :media_browser
     resize_window_desktop
   end
 
@@ -96,7 +97,8 @@ describe "Prerecorded Audience View" do
       visit path_for_video(video, t: 1)
       expect(page).to have_content(ChatMessage.first.payload["message"])
 
-      expect(page).to have_no_content(late_message.payload["message"])
+      # use not_to since we dont want to wait for content to appear.
+      expect(page).not_to have_content(late_message.payload["message"])
 
       # Seeking SHOULD have that message!
       visit path_for_video(video, t: 10)

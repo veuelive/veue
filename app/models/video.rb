@@ -74,7 +74,8 @@ class Video < ApplicationRecord
   end
 
   def transition_audience_to_live
-    SseBroadcaster.broadcast(channel.id, {state: state, type: "StateChange", timecodeMs: 0})
+    # SseBroadcaster.broadcast(channel.id, {state: state, type: "StateChange", timecodeMs: 0})
+    ChannelsChannel.broadcast_to(channel, {state: state, type: "StateChange", timecodeMs: 0})
   end
 
   def recent_events_for_live

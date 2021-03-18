@@ -320,9 +320,9 @@
 
 /* This allows us to disable the broadcasts and footers for mobile while videos
    are playing */
-[data-audience-view-stream-type="vod"],
-[data-audience-view-stream-type="upcoming"],
-[data-audience-view-stream-type="live"] {
+[data-video-stream-type="vod"],
+[data-video-stream-type="upcoming"],
+[data-video-stream-type="live"] {
   .main-footer,
   .broadcasts {
     display: none;

@@ -9,6 +9,7 @@
       globalThis.startLoadTime = Date.now();
 
     = render partial: "layouts/matomo"
+    = action_cable_meta_tag
     = csrf_meta_tags
     = csp_meta_tag
 
