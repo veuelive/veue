@@ -5,11 +5,12 @@
 #video-show,
 #upcoming-stream {
   .streamer-profile {
-    border-radius: 0 0 10px 10px;
-    padding: 0;
-    background: transparent;
+    border-radius: 0;
+    padding: 5px;
 
     &__info {
+      width: inherit;
+
       &__mobile__about {
         display: none;
       }
@@ -38,6 +39,7 @@
       margin-top: 0px;
       background: color.$white;
       border-radius: 0 0 10px 10px;
+      padding: 0;
 
       .streamer-profile__info {
         &__follow__count {
