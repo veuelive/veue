@@ -17,24 +17,8 @@ export const VideoEventProcessor = new (class VideoEventProcessor {
   }
 
   syncTime(timecodeMs: number) {
-    const lastBrowserNavigation = this.events
-      .filter((event) => {
-        return (
-          event.type === "BrowserNavigation" && event.timecodeMs <= timecodeMs
-        );
-      })
-      .pop();
-
     while (this.events[0] && this.events[0].timecodeMs <= timecodeMs) {
       const currentEvent = this.events.shift();
-
-      if (
-        currentEvent.type === "BrowserNavigation" &&
-        currentEvent !== lastBrowserNavigation
-      ) {
-        continue;
-      }
-
       this.dispatch(currentEvent);
     }
 

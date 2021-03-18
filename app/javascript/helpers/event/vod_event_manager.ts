@@ -18,7 +18,6 @@ export default class VodEventManager implements EventManagerInterface {
     secureFetch("./events")
       .then((response) => response.json())
       .then((eventIndex) => {
-        console.log("eventIndex: ", eventIndex);
         this.eventIndex = eventIndex;
         return this.seekTo(startAtMs, { syncTime });
       });
