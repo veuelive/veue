@@ -5,3 +5,6 @@ export function displayTime(seconds: number): string {
 
   return [hours, minutes, seconds % 60].map(format).join(":");
 }
+
+export const timecodeChangeEvent = "TimecodeChanged";
+export const playbackTimeChangeEvent = "PlaybackTimeChange";

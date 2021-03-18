@@ -1,5 +1,8 @@
 import { Controller } from "stimulus";
-import { VideoEventProcessor } from "helpers/event/event_processor";
+import {
+  ClearVideoEvent,
+  VideoEventProcessor,
+} from "helpers/event/event_processor";
 import heartSvg from "images/heart.svg";
 
 export const UserReactionMessageEvent = "UserReactionMessage";
@@ -9,15 +12,22 @@ export default class extends Controller {
   static targets = ["notification"];
 
   readonly notificationTarget!: HTMLElement;
-  private userReactionCallbackHandler: (event) => void;
+
+  private notificationTimeoutId!: number;
+  private userReactionCallbackHandler: (event: CustomEvent) => void;
 
   connect(): void {
     this.userReactionCallbackHandler = (event) => {
-      this.displayUserReactiontNotification(event.detail.data.name);
+      this.displayUserReactionNotification(event.detail.data.name);
     };
     VideoEventProcessor.subscribeTo(
       VideoReactionEvent,
       this.userReactionCallbackHandler
+    );
+
+    VideoEventProcessor.subscribeTo(
+      ClearVideoEvent,
+      this.clearReactionTimeout.bind(this)
     );
   }
 
@@ -26,14 +36,23 @@ export default class extends Controller {
       VideoReactionEvent,
       this.userReactionCallbackHandler
     );
+
+    VideoEventProcessor.unsubscribeFrom(
+      ClearVideoEvent,
+      this.clearReactionTimeout.bind(this)
+    );
   }
 
-  private displayUserReactiontNotification(name: string): void {
+  clearReactionTimeout(): void {
+    window.clearTimeout(this.notificationTimeoutId);
+  }
+
+  private displayUserReactionNotification(name: string): void {
     this.element.innerHTML = renderReactionMarkup(name);
     document.dispatchEvent(
       new CustomEvent(UserReactionMessageEvent, { detail: { name: name } })
     );
-    setTimeout(() => {
+    this.notificationTimeoutId = window.setTimeout(() => {
       this.element.innerHTML = "";
     }, 7000);
   }
@@ -41,12 +60,12 @@ export default class extends Controller {
 
 export function renderReactionMarkup(
   name: string,
-  reationSVG = heartSvg
+  reactionSvg = heartSvg
 ): string {
   return `
     <div class="user-reaction">
       <div class="content">
-        <img src=${reationSVG} alt="reaction-icon"/>
+        <img src=${reactionSvg} alt="reaction-icon"/>
         <div class="user-reaction__text">${name}</div>
       </div>
     </div>

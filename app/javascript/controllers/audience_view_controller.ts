@@ -3,7 +3,6 @@ import playSvg from "images/play.svg";
 import pauseSvg from "images/pause.svg";
 import mutedSvg from "images/volume-mute.svg";
 import unmutedSvg from "images/volume-max.svg";
-import { displayTime } from "util/time";
 import TimecodeSynchronizer from "helpers/audience/timecode_synchronizer";
 import VideoDemixer from "helpers/audience/video_demixer";
 import { VideoEventProcessor } from "helpers/event/event_processor";
@@ -15,13 +14,20 @@ import { startMuxData } from "controllers/audience/mux_integration";
 import { isProduction } from "util/environment";
 import { postForm } from "util/fetch";
 import { BroadcastVideoLayout } from "types/video_layout";
+import {
+  timecodeChangeEvent,
+  displayTime,
+  playbackTimeChangeEvent,
+} from "util/time";
+import { StreamType } from "types/streams";
 
-type StreamType = "upcoming" | "live" | "vod";
 export default class extends BaseController {
   element: HTMLElement;
 
   static targets = [
     "video",
+    "chat",
+    "likeNotification",
     "primaryCanvas",
     "fixedSecondaryCanvas",
     "pipSecondaryCanvas",
@@ -35,6 +41,8 @@ export default class extends BaseController {
   readonly togglePlayTargets!: HTMLElement[];
   readonly toggleAudioTargets!: HTMLElement[];
   readonly videoTarget!: HTMLVideoElement;
+  readonly chatTarget!: HTMLDivElement;
+  readonly likeNotificationTarget!: HTMLDivElement;
   readonly primaryCanvasTarget!: HTMLCanvasElement;
   readonly fixedSecondaryCanvasTarget!: HTMLCanvasElement;
   readonly pipSecondaryCanvasTarget!: HTMLCanvasElement;
@@ -107,6 +115,10 @@ export default class extends BaseController {
 
     if (this.streamType === "vod") {
       this.eventManager = new VodEventManager(0);
+      this.element.addEventListener(
+        playbackTimeChangeEvent,
+        this.playbackTimeChangedTo.bind(this)
+      );
     } else {
       this.eventManager = new LiveEventManager(true);
     }
@@ -141,6 +153,7 @@ export default class extends BaseController {
   togglePlay(): void {
     if (this.state === "ended") {
       this.videoTarget.currentTime = 0;
+      this.resetToTimecode(0);
     }
 
     if (this.state !== "playing") {
@@ -171,13 +184,21 @@ export default class extends BaseController {
 
   timecodeChanged(): void {
     if (this.streamType !== "upcoming") {
-      this.data.set(
-        "timecode",
-        this.timecodeSynchronizer.timecodeMs.toString()
-      );
-      VideoEventProcessor.syncTime(this.timecodeSynchronizer.timecodeMs);
+      const timecodeMs = this.timecodeSynchronizer.timecodeMs;
+
+      if (timecodeMs === 0) {
+        return;
+      }
+
+      this.data.set("timecode", timecodeMs.toString());
+      VideoEventProcessor.syncTime(timecodeMs);
 
       const seconds = this.timecodeSynchronizer.timecodeSeconds;
+
+      this.element.dispatchEvent(
+        new CustomEvent(timecodeChangeEvent, { detail: { seconds } })
+      );
+
       this.timeDisplayTarget.innerHTML = displayTime(seconds);
     }
   }
@@ -191,6 +212,24 @@ export default class extends BaseController {
     } else {
       this.videoTarget.pause();
     }
+  }
+
+  playbackTimeChangedTo(event: CustomEvent): void {
+    this.resetToTimecode(event.detail.timecodeMs);
+  }
+
+  resetToTimecode(timecodeMs: number): void {
+    if (this.eventManager instanceof VodEventManager) {
+      this.resetChat();
+      VideoEventProcessor.clear();
+      VideoEventProcessor.syncTime(timecodeMs);
+      this.eventManager.playEventsAt(timecodeMs);
+    }
+  }
+
+  resetChat(): void {
+    this.chatTarget.innerHTML = "";
+    this.likeNotificationTarget.innerHTML = "";
   }
 
   showChat(): void {

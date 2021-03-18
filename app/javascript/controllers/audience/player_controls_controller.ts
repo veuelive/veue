@@ -1,5 +1,10 @@
 import BaseController from "controllers/base_controller";
-import { displayTime } from "util/time";
+import {
+  displayTime,
+  timecodeChangeEvent,
+  playbackTimeChangeEvent,
+} from "util/time";
+import { StreamType } from "types/streams";
 
 export default class extends BaseController {
   static targets = [
@@ -21,6 +26,7 @@ export default class extends BaseController {
   readonly progressBarButtonTarget!: HTMLButtonElement;
 
   private pointerIsDown: boolean;
+
   element!: HTMLElement;
 
   connect(): void {
@@ -29,15 +35,15 @@ export default class extends BaseController {
       this.handleLoadedMetadata.bind(this)
     );
 
-    this.videoTarget.addEventListener(
-      "timeupdate",
+    this.element.addEventListener(
+      timecodeChangeEvent,
       this.handleTimeUpdate.bind(this)
     );
   }
 
   disconnect(): void {
-    this.videoTarget.removeEventListener(
-      "timeupdate",
+    this.element.removeEventListener(
+      timecodeChangeEvent,
       this.handleTimeUpdate.bind(this)
     );
 
@@ -52,14 +58,22 @@ export default class extends BaseController {
     this.timeDurationTarget.innerHTML = displayTime(this.duration);
   }
 
-  handleTimeUpdate(): void {
+  handleTimeUpdate(event: CustomEvent): void {
     const progress = this.progressBarTarget;
     const video = this.videoTarget;
 
-    const width = Math.floor((video.currentTime / this.duration) * 100) + 1;
+    const seconds = event.detail.seconds;
+
+    const width = Math.floor((seconds / this.duration) * 100) + 1;
     progress.style.width = `${width}%`;
 
-    if (video.currentTime >= this.duration) {
+    // Check for NaN / null / undefined value
+    if (this.duration && this.duration <= 0) {
+      return;
+    }
+
+    const streamType = this.data.get("stream-type") as StreamType;
+    if (streamType === "vod" && seconds >= this.duration) {
       video.dispatchEvent(new Event("ended"));
     }
   }
@@ -68,6 +82,7 @@ export default class extends BaseController {
     event.preventDefault();
 
     this.pointerIsDown = true;
+    this.videoTarget.pause();
     this.handlePointerLocation(event);
   }
 
@@ -89,7 +104,7 @@ export default class extends BaseController {
       return;
     }
 
-    // Play the video
+    // Play the video since we pause while scrubbing
     this.videoTarget
       .play()
       .then(() => (this.videoState = "playing"))
@@ -113,9 +128,17 @@ export default class extends BaseController {
 
     const currentTime = pos * this.duration;
 
-    this.timeDisplayTarget.innerHTML = displayTime(currentTime);
+    const timecodeMs = currentTime * 100;
+    this.dispatchPlaybackChange(timecodeMs);
+
     this.videoTarget.currentTime = currentTime;
-    this.handleTimeUpdate();
+    this.timeDisplayTarget.innerHTML = displayTime(currentTime);
+  }
+
+  dispatchPlaybackChange(timecodeMs: number): void {
+    this.element.dispatchEvent(
+      new CustomEvent(playbackTimeChangeEvent, { detail: { timecodeMs } })
+    );
   }
 
   set videoState(state: string) {

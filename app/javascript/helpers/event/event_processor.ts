@@ -4,7 +4,8 @@ interface VideoEvent {
   timecodeMs: number;
 }
 
-const ClearVideoEvent = new CustomEvent("clear");
+export const ClearVideoEvent = "clear";
+const ClearVideoCustomEvent = new CustomEvent(ClearVideoEvent);
 
 export const VideoEventProcessor = new (class VideoEventProcessor {
   public dispatcher: HTMLDivElement;
@@ -16,14 +17,32 @@ export const VideoEventProcessor = new (class VideoEventProcessor {
   }
 
   syncTime(timecodeMs: number) {
+    const lastBrowserNavigation = this.events
+      .filter((event) => {
+        return (
+          event.type === "BrowserNavigation" && event.timecodeMs <= timecodeMs
+        );
+      })
+      .pop();
+
     while (this.events[0] && this.events[0].timecodeMs <= timecodeMs) {
-      this.dispatch(this.events.shift());
+      const currentEvent = this.events.shift();
+
+      if (
+        currentEvent.type === "BrowserNavigation" &&
+        currentEvent !== lastBrowserNavigation
+      ) {
+        continue;
+      }
+
+      this.dispatch(currentEvent);
     }
+
     this.lastTimecode = timecodeMs;
   }
 
   clear() {
-    this.dispatcher.dispatchEvent(ClearVideoEvent);
+    this.dispatcher.dispatchEvent(ClearVideoCustomEvent);
     this.events = [];
   }
 
