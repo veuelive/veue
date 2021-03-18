@@ -7,6 +7,8 @@
   .streamer-profile {
     border-radius: 0;
     padding: 5px;
+    border-top: 1px solid color.$neutral-accents;
+    border-bottom: 1px solid color.$neutral-accents;
 
     &__info {
       width: inherit;
