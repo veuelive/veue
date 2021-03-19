@@ -32,6 +32,10 @@
   .primary-video {
     // This is required to ensure that the controls can be shown over this area
     position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: column wrap;
+    flex-flow: column wrap;
 
     canvas.primary-canvas {
       width: 100%;
