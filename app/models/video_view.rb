@@ -10,13 +10,6 @@ class VideoView < ApplicationRecord
 
   scope :connected, -> { where("updated_at > (current_timestamp - interval '2 minute')") }
 
-  # Only 1 user allowed to view per video
-  validates :user_id,
-            uniqueness: {
-              allow_nil: true,
-              scope: :video_id,
-            }
-
   # This is the main method we use to track new views and build the logic around how we find them
   def self.process_view!(video, user, minute, fingerprint, is_live)
     # If you are the video creator, your views don't matter... MUWAHAHAHAHAH!

@@ -42,14 +42,7 @@ class VideoDecorator < Draper::Decorator
     elsif scheduled_at < 6.days.from_now
       scheduled_this_week
     else
-      h.haml_tag(
-        "local-time",
-        month: "short",
-        weekday: "short",
-        minute: "numeric",
-        hour: "numeric",
-        datetime: scheduled_at.iso8601,
-      )
+      future_schedule
     end
   end
 
@@ -83,5 +76,16 @@ class VideoDecorator < Draper::Decorator
 
   def scheduled_this_week
     h.haml_tag("local-time", minute: "numeric", hour: "numeric", weekday: "long", datetime: scheduled_at.iso8601)
+  end
+
+  def future_schedule
+    h.haml_tag(
+      "local-time",
+      month: "short",
+      weekday: "short",
+      minute: "numeric",
+      hour: "numeric",
+      datetime: scheduled_at.iso8601,
+    )
   end
 end
