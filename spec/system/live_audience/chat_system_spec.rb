@@ -9,13 +9,10 @@ describe "chat during live video" do
   let(:video) { create(:live_video) }
   let(:channel) { video.channel }
 
-  before :example do
-    # driven_by :media_browser
-    resize_window_desktop
-  end
-
   describe "when a user is logged in" do
     before :each do
+      driven_by :media_browser
+      resize_window_desktop
       visit root_path
       login_as user
       visit channel_path(channel)
@@ -33,18 +30,14 @@ describe "chat during live video" do
       # of event handlers and this was causing multiple websockets to get
       # connected and caused repeated messages to appear
       3.times do
-        find(".header__left__logo").click
         visit("/")
-        expect(current_path).to_not eq(channel_path(channel))
-        # find(".video-card.live").click
         visit(channel_path(channel))
-        # expect(current_path).to eq(channel_path(channel))
         expect(page).to have_content(/Follow/)
         expect(page).to have_css("#channels-channel-cable", visible: false)
         expect(page).to have_content(/Cowabunga!/).once
       end
 
-      visit(channel_path(channel))
+      # visit(channel_path(channel))
       # And now that we've done some turbolinks transitions
       # let's verify our connections are still functioning properly.
       write_chat_message "Cowabunga!"
@@ -152,7 +145,7 @@ describe "chat during live video" do
     end
 
     it "should have highlighted comment of streamer" do
-      expect(page).not_to(have_selector(".message-write"))
+      expect(page).to(have_no_selector(".message-write"))
 
       # It is mocking comment of streamer
       login_as video.user
@@ -161,7 +154,7 @@ describe "chat during live video" do
       logout_user
 
       # Watching stream as a common visitor
-      visit path_for_video(video)
+      visit channel_path(video.channel)
 
       expect(page).to have_content("Cowabunga!").once
       expect(page).to have_css(".message--announcement")
