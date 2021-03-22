@@ -40,16 +40,15 @@ describe "chat during live video" do
         expect(current_path).to eq(channel_path(channel))
         expect(page).to have_content(/Follow/)
         expect(page).to have_css("#channels-channel-cable", visible: false)
-        expect(page).to have_content(/Cowabunga/).once
+        expect(page).to have_content(/Cowabunga!/).once
       end
 
       # And now that we've done some turbolinks transitions
       # let's verify our connections are still functioning properly.
       write_chat_message "Cowabunga!"
       expect(page).to have_content(/Cowabunga!/).twice
-      expect(page).to have_content(/Cowabunga!/, count: 2)
       # it will have profile image of user for once in thread
-      expect(page).to have_css(".message__content__avatar").once
+      expect(page).to have_css(".message__content__avatar").twice
     end
 
     it "should show that you joined the chat" do
