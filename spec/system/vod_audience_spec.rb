@@ -98,7 +98,7 @@ describe "Prerecorded Audience View" do
       expect(page).to have_content(ChatMessage.first.payload["message"])
 
       # use not_to since we dont want to wait for content to appear.
-      expect(page).not_to have_content(late_message.payload["message"])
+      expect(page).not_to(have_content(late_message.payload["message"]))
 
       # Seeking SHOULD have that message!
       visit path_for_video(video, t: 10)
