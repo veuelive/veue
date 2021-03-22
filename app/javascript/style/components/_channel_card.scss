@@ -1,0 +1,29 @@
+@use "../utils/z_index";
+
+// Needs to be wrapped so that the overflow can be set
+.channel-card {
+  width: 100px;
+
+  &__inner {
+    width: 100%;
+    display: flex;
+    margin: 34px 20px;
+    height: 160px;
+  }
+
+  a,
+  img,
+  svg {
+    width: 100px;
+    height: 100px;
+  }
+
+  a {
+    display: block;
+  }
+
+  img,
+  svg {
+    z-index: z_index.$background;
+  }
+}

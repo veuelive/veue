@@ -1,5 +1,5 @@
 - video = video_card
-.video-card{class: video.state}
+.video-card.card{class: video.state}
   = link_to video_link_path(video), draggable: "false" do
     .video-card__image
       = image_tag video_card_image_url(video), draggable: "false"

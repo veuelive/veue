@@ -1,0 +1,26 @@
+@use "../utils/color";
+
+.upcoming-card {
+  max-width: 200px;
+
+  svg,
+  img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    line-height: 24px;
+  }
+
+  & > div {
+    color: color.$neutral-regular;
+    font-size: 14px;
+    line-height: 19px;
+
+    a:hover & {
+      color: inherit;
+    }
+  }
+}

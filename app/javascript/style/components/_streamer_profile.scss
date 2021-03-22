@@ -60,12 +60,6 @@
       color: color.$neutral-dark;
     }
 
-    &__mobile__about {
-      border-top: 1px solid color.$neutral-accents;
-      padding: 10px;
-      display: flex;
-    }
-
     &__follow {
       display: flex;
       flex-wrap: wrap;
@@ -147,6 +141,12 @@
       color: color.$veue-corporate;
       font-weight: font.$heavy-weight;
     }
+
+    &__cta {
+      padding: 5px 2.5px 0 0;
+      flex: 1;
+      text-align: right;
+    }
   }
 
   .stream-info {
@@ -157,6 +157,23 @@
 
     .stream-name {
       color: color.$gray-darker;
+    }
+  }
+}
+
+@include smallTall() {
+  .streamer-profile {
+    &__upcoming__broadcast {
+      // layout
+      padding: 0;
+      margin-top: -5px;
+
+      // style
+      border-top: none;
+
+      &__cta {
+        display: none;
+      }
     }
   }
 }
@@ -174,10 +191,6 @@
         &__about {
           display: block;
         }
-      }
-
-      &__mobile__about {
-        display: none;
       }
     }
 

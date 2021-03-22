@@ -8,6 +8,8 @@
   justify-content: space-around;
   align-items: center;
   width: 100%;
+  row-gap: 50px;
+  column-gap: 50px;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 
   &__header {

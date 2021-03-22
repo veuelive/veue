@@ -2,12 +2,14 @@
 @use 'components/header';
 @use 'components/user_menu';
 @use 'components/modal';
-@use 'components/video_card';
 @use 'components/pin';
 @use 'components/streamer_profile';
 @use 'components/broadcasts';
 @use "components/footer";
 @use "components/message";
+@use "components/channel_card";
+@use 'components/video_card';
+@use "components/upcoming_card";
 @use 'layout';
 @use "user_profile/profile";
 @use 'pages';

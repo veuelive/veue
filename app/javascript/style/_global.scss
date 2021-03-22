@@ -19,6 +19,29 @@ h2 {
   color: color.$neutral-dark;
 }
 
+h3 {
+  font-size: 18px;
+  font-weight: 400;
+  font-family: font.$nunito;
+  color: color.$neutral-dark;
+}
+
+h1,
+h2,
+h3 {
+  a:visited &,
+  a:link & {
+    color: color.$neutral-dark;
+    text-decoration: none;
+    outline: none;
+  }
+
+  a:hover & {
+    color: color.$veue-corporate;
+    text-decoration: underline;
+  }
+}
+
 body {
   margin: 0;
   background: #f5f6f8;
@@ -33,6 +56,15 @@ ul {
 a {
   text-decoration: none;
   outline: none;
+  color: inherit;
+
+  &:focus-visible {
+    border: color.$veue-corporate solid 1px;
+  }
+
+  &:hover {
+    color: color.$veue-corporate;
+  }
 }
 
 button {
@@ -41,8 +73,7 @@ button {
   }
 
   &:active,
-  &:hover,
-  &:focus {
+  &:hover {
     outline: none;
   }
 }
