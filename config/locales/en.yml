@@ -91,9 +91,20 @@ en:
       title: "%{name} on Veue"
     seo:
       title: "%{name} on Veue"
+    scheduled:
+      cta: "Follow %{name} to get notified when they are on-air!"
+      next_live_at: "Next Live Show:"
   video:
     tap_to_unmute: "Tap to unmute"
 
   call_to_action: "Want to host your own Veue stream?"
+  discover:
+    our_streamers: "Our Streamers"
+    recent: "Recent Live Streams"
+    live: "LIVE Broadcasts!"
+    upcoming: "Upcoming Live Streams"
+  scheduling:
+    scheduled_today: "Today at "
+    very_soon: "Starting"
 
 

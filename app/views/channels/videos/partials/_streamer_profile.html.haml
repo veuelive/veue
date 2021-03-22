@@ -26,16 +26,14 @@
   - if current_channel.about.present?
     .streamer-profile__info__mobile__about
       = current_channel.about
-  - if current_video&.scheduled?
+  - if current_channel.videos.scheduled.any?
+    - upcoming_video = current_channel.videos.scheduled.first
     .streamer-profile__upcoming__broadcast
       .streamer-profile__upcoming__broadcast__text
         = svg_tag "clock"
-        = "Upcoming Broadcast:"
+        = t("channels.scheduled.next_live_at")
       .streamer-profile__upcoming__broadcast__date
-        %local-time{datetime: "#{current_video.scheduled_at.iso8601}", day: "numeric"}
-          = current_video.scheduled_at.day
-        %local-time{datetime: "#{current_video.scheduled_at.iso8601}", month: "long"}
-          = current_video.scheduled_at.month
-        = svg_tag "ellipse-2"
-        %local-time{datetime: "#{current_video.scheduled_at.iso8601}", hour: "numeric", minute: "numeric"}
-          = current_video.scheduled_at.strftime("%H:%M")
+        - upcoming_video.decorate.scheduled_at_in_words
+      - unless current_user&.follows?(current_channel)
+        .streamer-profile__upcoming__broadcast__cta
+          = t("channels.scheduled.cta", name: current_channel.name)

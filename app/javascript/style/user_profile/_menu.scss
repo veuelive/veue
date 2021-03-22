@@ -25,10 +25,8 @@
         display: flex;
         justify-content: space-between;
         padding: 6px 15px 6px;
-        color: color.$neutral-middle;
         @include smallTall() {
           padding: 20px;
-          color: color.$neutral-dark;
         }
         svg {
           display: block;

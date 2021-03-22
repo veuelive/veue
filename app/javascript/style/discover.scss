@@ -1,5 +1,6 @@
 @use "./utils/breakpoints" as *;
 @use "./utils/z_index";
+@use "./utils/scroll";
 
 body#discover__index {
   header {
@@ -21,69 +22,40 @@ body#discover__index {
       flex: 1;
       align-items: center;
 
-      .discover-area {
+      .discover {
         max-width: 1400px;
         display: flex;
         width: calc(100% - 50px);
         flex-direction: column;
-        margin: 0 auto;
         align-items: stretch;
 
         h2 {
-          margin-left: 20px;
+          margin: 30px 0 30px;
         }
 
-        // Needs to be wrapped so that the overflow can be set
-        .popular-streamers {
-          max-width: 1004px;
-          width: 100%;
-          margin-left: 20px;
-
-          &__inner {
-            width: 100%;
+        &__strip {
+          &__items {
             display: flex;
-            margin: 30px 20px;
-            height: 160px;
+            flex-direction: row;
+            justify-content: flex-start;
             overflow-x: auto;
-          }
 
-          &__avatar {
-            display: inline-block;
-            margin-right: 29px;
+            @include scroll.hideBars();
 
-            a,
-            img,
-            svg {
-              width: 100px;
-              height: 100px;
-            }
-
-            a {
-              display: block;
-            }
-
-            img,
-            svg {
-              // This is so that the svg doesnt get dragged
-              position: absolute;
-              z-index: z_index.$background;
+            & > * {
+              scroll-snap-align: start;
+              margin-right: 34px;
             }
           }
         }
 
-        .live-broadcasts,
-        .recent-broadcasts {
+        &__grid {
           display: grid;
           justify-content: space-around;
           grid-template-columns: minmax(0, 1fr);
-          column-gap: 10px;
+          column-gap: 50px;
+          row-gap: 25px;
           align-items: center;
-        }
-
-        .live-broadcasts {
-          .video-card:nth-child(1n + 2) {
-            display: none;
-          }
         }
       }
 
@@ -95,46 +67,21 @@ body#discover__index {
   }
 
   @include large() {
-    #main-container {
-      .content-area {
-        .discover-area {
-          margin: 0 140px;
+    .discover {
+      margin: 0 140px;
 
-          .popular-streamers {
-            width: 100%;
-            margin: 0;
-          }
-
-          .live-broadcasts,
-          .recent-broadcasts {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-          }
-
-          .live-broadcasts {
-            // Sets the 2nd video to display: block
-            .video-card:nth-child(2) {
-              display: block;
-            }
-          }
-        }
+      &__grid {
+        // This overrides the default value
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
       }
     }
   }
 
   // When 3 videos appear in the grid
   @media only screen and (min-width: 1100px) {
-    #main-container .content-area .discover-area {
-      .live-broadcasts,
-      .recent-broadcasts {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      .live-broadcasts {
-        // Shows all videos
-        .video-card:nth-child(1n) {
-          display: block;
-        }
-      }
+    .discover__grid {
+      // This overrides the default value
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     }
   }
 }

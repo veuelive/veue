@@ -1,0 +1,8 @@
+- video = upcoming_card
+%a.upcoming-card.card{href: channel_path(video.channel.slug), draggable: "false"}
+  = video.channel.decorate.profile_image_circle(200)
+  %h3= video.title
+  .upcoming-card__time
+    - video.scheduled_at_in_words
+  .upcoming-card__channel
+    = video.channel.name

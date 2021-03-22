@@ -1,22 +1,26 @@
 = content_for :title do
   Discovery Veue
 .content-area
-  .discover-area
+  .discover
     - if @live_videos.any?
-      %h2 Live Broadcasts
-      .live-broadcasts
-        = render collection: @live_videos, partial: "shared/video_card"
+      .discover__strip
+        %h2= t("discover.live")
+        .discover__strip__items
+          = render collection: @live_videos, partial: "shared/video_card"
 
-    %h2 Our streamers
-    .popular-streamers
-      .popular-streamers__inner
-        - @popular_channels.each do |channel|
-          .popular-streamers__avatar
-            %a{href: channel_path(channel.slug), draggable: "false"}
-              = channel.decorate.profile_image_circle(200)
+    - if @upcoming_videos.any?
+      .discover__strip
+        %h2= t("discover.upcoming")
+        .discover__strip__items
+          = render collection: @upcoming_videos, partial: "shared/upcoming_card"
 
-    %h2 Featured Replays
-    .recent-broadcasts
+    .discover__strip
+      %h2= t("discover.our_streamers")
+      .discover__strip__items{data: {controller: "util--click-drag"}}
+        = render collection: @popular_channels, partial: "shared/channel_card"
+
+    %h2= t("discover.recent")
+    .discover__grid
       = render collection: @recent_videos, partial: "shared/video_card"
 
   = render partial: "layouts/footer"
