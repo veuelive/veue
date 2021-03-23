@@ -9,7 +9,7 @@ import VideoDemixer from "helpers/audience/video_demixer";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import EventManagerInterface from "types/event_manager_interface";
 import VodEventManager from "helpers/event/vod_event_manager";
-import LiveEventManager from "helpers/event/live_event_manager";
+// import LiveEventManager from "helpers/event/live_event_manager";
 import BaseController from "controllers/base_controller";
 import { startMuxData } from "controllers/audience/mux_integration";
 import { isProduction } from "util/environment";
@@ -108,7 +108,7 @@ export default class extends BaseController {
     if (this.streamType === "vod") {
       this.eventManager = new VodEventManager(0);
     } else {
-      this.eventManager = new LiveEventManager(true);
+      // this.eventManager = new LiveEventManager(true);
     }
 
     this.viewedPoller = window.setInterval(() => {

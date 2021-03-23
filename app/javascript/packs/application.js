@@ -2,6 +2,7 @@ import ujs from "@rails/ujs";
 // Load our SCSS
 import "../style/application.scss";
 
+import "channels";
 import "controllers";
 import "simplebar";
 import "simplebar/dist/simplebar.css";
