@@ -30,8 +30,8 @@ export function getVideoVisibility(): Visibility {
 type VideoStreamType = "live" | "upcoming" | "ended" | null;
 export function getVideoStreamType(): VideoStreamType {
   return document
-    .querySelector("*[data-audience-view-stream-type]")
-    .getAttribute("data-audience-view-stream-type") as VideoStreamType;
+    .querySelector("*[data-video-stream-type]")
+    ?.getAttribute("data-video-stream-type") as VideoStreamType;
 }
 
 function getVideoVisibilityElement(): HTMLElement {
