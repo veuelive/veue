@@ -55,6 +55,16 @@ RSpec.configure do |config|
     setup_perspective_mocks!
     stub_request(:post, /#{IfThisThenThatJob.post_url}/)
       .to_return(status: 200, body: "stubbed response", headers: {})
+
+    stub_request(:get, "https://api.buttercms.com/v2/pages/*/homepage-en/?auth_token=TEST_TOKEN&preview")
+      .with(
+        headers: {
+          Accept: "application/json",
+          "Accept-Encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+          "User-Agent": "ButterCMS/Ruby 1.8",
+        },
+      )
+      .to_return(status: 404, body: {detail: "Page not found."}.to_json, headers: {})
   end
 
   Capybara.default_max_wait_time = 5
