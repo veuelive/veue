@@ -30,7 +30,7 @@ export default class LiveEventManager implements EventManagerInterface {
 
   async received(event: MessageEvent): Promise<void> {
     const data = JSON.parse(event.data);
-    console.log("Data: ", data);
+    console.log("Data Received: ", data);
     await this.eventReceiver.received(data);
   }
 
