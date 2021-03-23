@@ -13,4 +13,3 @@ import "../style/broadcast/broadcast.scss";
 import "controllers";
 import "simplebar";
 import "simplebar/dist/simplebar.css";
-import "channels";

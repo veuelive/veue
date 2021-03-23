@@ -1,7 +1,9 @@
 .content-area#upcoming-stream{
   "data": {
     "controller": "upcoming-stream-audience",
-    "video-stream-type": current_video.stream_type,
+    "audience-view": {
+      "stream-type": current_video.stream_type
+    },
     "video-id": current_video.id,
     "channel-id": current_channel.id,
     "channel-slug": current_channel.slug

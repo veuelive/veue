@@ -40,13 +40,11 @@ describe "Stream Waiting Room" do
       expect(page).to have_content("Cowabunga!").once
 
       video.go_live!
-
-      expect(page).to have_css("#active-viewers")
+      expect(page).to have_selector("#active-viewers")
       expect(page).to have_selector(".primary-canvas")
 
-      write_chat_message "Woah!"
-      expect(page).to have_content("Cowabunga!").once
-      expect(page).to have_content("Woah!").once
+      write_chat_message "Cowabunga!"
+      expect(page).to have_content("Cowabunga!").twice
     end
   end
 end

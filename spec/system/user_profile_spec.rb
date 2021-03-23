@@ -6,7 +6,6 @@ describe "user profile" do
   let(:user) { create(:user) }
 
   before :example do
-    driven_by :media_browser
     visit root_path
   end
 

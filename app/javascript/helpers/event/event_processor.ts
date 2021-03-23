@@ -1,4 +1,4 @@
-export interface VideoEvent {
+interface VideoEvent {
   type: string;
   data: Record<string, unknown>;
   timecodeMs: number;

@@ -39,7 +39,7 @@ module AudienceSpecHelpers
     Integer(find("*[data-audience-view-timecode]")["data-audience-view-timecode"], 10)
   end
 
-  def someone_chatted(message=Faker::Quote.most_interesting_man_in_the_world.first(182), timecode_ms=0)
+  def someone_chatted(message=Faker::Quote.most_interesting_man_in_the_world, timecode_ms=0)
     video.chat_messages.create!(
       user: create(:user),
       input: {message: message},

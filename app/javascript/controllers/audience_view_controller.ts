@@ -9,7 +9,7 @@ import VideoDemixer from "helpers/audience/video_demixer";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import EventManagerInterface from "types/event_manager_interface";
 import VodEventManager from "helpers/event/vod_event_manager";
-// import LiveEventManager from "helpers/event/live_event_manager";
+import LiveEventManager from "helpers/event/live_event_manager";
 import BaseController from "controllers/base_controller";
 import { startMuxData } from "controllers/audience/mux_integration";
 import { isProduction } from "util/environment";
@@ -50,7 +50,7 @@ export default class extends BaseController {
   private viewedPoller: number;
 
   connect(): void {
-    this.streamType = this.element.dataset.videoStreamType as StreamType;
+    this.streamType = this.data.get("stream-type") as StreamType;
 
     this.data.set("timecode", "-1");
 
@@ -108,7 +108,7 @@ export default class extends BaseController {
     if (this.streamType === "vod") {
       this.eventManager = new VodEventManager(0);
     } else {
-      // this.eventManager = new LiveEventManager(true);
+      this.eventManager = new LiveEventManager(true);
     }
 
     this.viewedPoller = window.setInterval(() => {
@@ -184,7 +184,7 @@ export default class extends BaseController {
 
   handleVideoEnded(): void {
     this.state = "ended";
-    const streamType = this.element.dataset.videoStreamType as StreamType;
+    const streamType = this.data.get("stream-type") as StreamType;
     if (streamType === "live") {
       alert("This stream has ended");
       document.location.reload();
