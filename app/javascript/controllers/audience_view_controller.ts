@@ -50,7 +50,7 @@ export default class extends BaseController {
   private viewedPoller: number;
 
   connect(): void {
-    this.streamType = this.data.get("stream-type") as StreamType;
+    this.streamType = this.element.dataset.videoStreamType as StreamType;
 
     this.data.set("timecode", "-1");
 
@@ -184,8 +184,8 @@ export default class extends BaseController {
 
   handleVideoEnded(): void {
     this.state = "ended";
-    const streamType = this.data.get("stream-type") as StreamType;
-    if (streamType === "live") {
+    this.streamType = this.data.get("stream-type") as StreamType;
+    if (this.streamType === "live") {
       alert("This stream has ended");
       document.location.reload();
     } else {
