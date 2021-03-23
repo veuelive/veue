@@ -192,7 +192,9 @@ describe "Broadcast View" do
         expect(video.browser_navigations.published).to be_any
 
         visit channel_path(channel)
-        expect(find("#address-input")).to have_content(/^http/)
+
+        # The address input takes a while to load, give it 10 seconds
+        expect(find("#address-input", wait: 10).text).to start_with("http")
       end
     end
 
