@@ -8,7 +8,7 @@ module VideosHelper
   end
 
   def video_card_image_url(video)
-    video.primary_shot.attached? ? video.primary_shot.variant(resize_to_limit: [500, 500]) : video.thumbnail_url
+    video.primary_shot.attached? ? video.primary_shot.variant(resize_to_fill: [350, 221]) : video.thumbnail_url
   end
 
   def video_link_path(video)
