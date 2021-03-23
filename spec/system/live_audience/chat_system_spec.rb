@@ -28,13 +28,9 @@ describe "chat during live video" do
       # of event handlers and this was causing multiple websockets to get
       # connected and caused repeated messages to appear
       3.times do
-        find(".header__left__logo").click
         visit("/")
-        expect(current_path).to_not eq(channel_path(channel))
-        find(".video-card.live").click
-        expect(current_path).to eq(channel_path(channel))
+        visit(channel_path(channel))
         expect(page).to have_content(/Follow/)
-
         expect(page).to have_content(/Cowabunga!/).once
       end
 
