@@ -15,7 +15,6 @@ RSpec.configure do |config|
       use-fake-device-for-media-stream
       test-type
       headless
-      no-sandbox
     ]
 
     options_obj = Selenium::WebDriver::Chrome::Options.new(args: options)
@@ -42,7 +41,6 @@ RSpec.configure do |config|
       auto-open-devtools-for-tabs
       test-type
       window-size=2400,2400
-      no-sandbox
     ]
 
     options_obj = Selenium::WebDriver::Chrome::Options.new(args: options)
