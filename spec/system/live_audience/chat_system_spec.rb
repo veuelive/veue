@@ -10,7 +10,7 @@ describe "chat during live video" do
   let(:channel) { video.channel }
 
   before :example do
-    # driven_by :media_browser
+    driven_by :media_browser
     resize_window_desktop
   end
 
@@ -43,16 +43,11 @@ describe "chat during live video" do
         expect(page).to have_content(/Cowabunga!/).once
       end
 
-      visit(channel_path(channel))
       # And now that we've done some turbolinks transitions
       # let's verify our connections are still functioning properly.
       write_chat_message "Cowabunga!"
       expect(page).to have_content(/Cowabunga!/).twice
       # it will have profile image of user for once in thread
-      expect(page).to have_css(".message__content__avatar").twice
-
-      write_chat_message "Cowabunga!"
-      expect(page).to have_content(/Cowabunga!/, count: 3)
       expect(page).to have_css(".message__content__avatar").twice
     end
 
@@ -137,9 +132,7 @@ describe "chat during live video" do
       expect(page).to have_content(second_message_text)
       expect(page).to have_content(first_message.user.display_name)
 
-      # page.refresh
-
-      visit channel_path(channel)
+      page.refresh
 
       # BUG: VEUE-81
       # We had a bug that was causing the following to break, so we refresh to
