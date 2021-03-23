@@ -36,12 +36,10 @@ class VideoEvent < ApplicationRecord
     return unless published
 
     message = build_message
-    # SseBroadcaster.broadcast(
-    #   video.channel.id,
-    #   message,
-    # )
-
-    ChannelsChannel.broadcast_to(video.channel, message)
+    SseBroadcaster.broadcast(
+      video.channel.id,
+      message,
+    )
   end
 
   def build_message
