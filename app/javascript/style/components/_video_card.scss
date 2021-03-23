@@ -6,6 +6,8 @@
 .video-card {
   @include scale.aspect-ratio();
 
+  max-width: 350px;
+
   &:hover,
   &:focus {
     .video-card__image__play {
