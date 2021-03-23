@@ -22,10 +22,6 @@ export class EventReceiver {
 
   connected(): void {
     console.log("Connected to channel");
-
-    if (this.allowRemoteReload) {
-      console.log("ALLOWING REMOTE RELOAD");
-    }
   }
 
   disconnected(): void {
@@ -61,11 +57,11 @@ export class EventReceiver {
     return consumer.subscriptions.create(
       { channel: "ChannelsChannel", room: getChannelId() },
       {
-        connected: this.connected.bind(this),
-        disconnected: this.disconnected.bind(this),
-        reload: this.reload.bind(this),
-        received: this.received.bind(this),
-        seekTo: this.seekTo.bind(this),
+        connected: this.connected,
+        disconnected: this.disconnected,
+        reload: this.reload,
+        received: this.received,
+        seekTo: this.seekTo,
       }
     );
   }
