@@ -20,7 +20,7 @@
           = video.video_views.count
       .video-card__image__secondary
         - if video.secondary_shot.attached?
-          = image_tag video.secondary_shot.variant(resize_to_limit: [100, 100]), draggable: "false"
+          = image_tag video.secondary_shot.variant(resize_to_fill: [76, 61]), draggable: "false"
   .video-card__below
     .video-card__below__picture
       - channel = video.channel
