@@ -53,7 +53,7 @@ describe "Broadcast View" do
       wait_for_broadcast_state("live")
       expect(BrowserNavigation.published.last.payload["url"]).to eq(url)
 
-      visit channel_path(video.channels.first)
+      visit channel_path(streamer.channels.first)
       expect(find("#address-input")).to have_text(url)
     end
   end
