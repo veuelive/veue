@@ -37,7 +37,7 @@ class DiscoverController < ApplicationController
 
   def map_curation_to_videos(curation)
     video_ids = curation.fields.videos.map(&:video_id)
-    videos = Video.where(id: video_ids).visibility_public.all.decorate
+    videos = Video.where(id: video_ids).visibility_public.decorate
     {
       name: curation.fields.curation_name,
       videos: videos,
