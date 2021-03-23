@@ -6,7 +6,7 @@ import { calculateCaptureLayout } from "helpers/broadcast_helpers";
 import { postForm } from "util/fetch";
 import { getCurrentUrl } from "controllers/broadcast/browser_controller";
 import EventManagerInterface from "types/event_manager_interface";
-// import LiveEventManager from "helpers/event/live_event_manager";
+import LiveEventManager from "helpers/event/live_event_manager";
 import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
 import CaptureSourceManager from "helpers/broadcast/capture_source_manager";
 import Metronome from "helpers/broadcast/metronome";
@@ -42,11 +42,11 @@ export default class extends Controller {
   private videoMixer: VideoMixer;
   private streamCapturer: StreamRecorder;
   private metronome: Metronome;
-  // private eventManager: EventManagerInterface;
+  private eventManager: EventManagerInterface;
   private audioMixer: AudioMixer;
   private captureSourceManager: CaptureSourceManager;
   private environment: BroadcasterEnvironment;
-  private keyboardListener: (event) => void;
+  private keyboardListener: (event: KeyboardEvent) => void;
   private snapshotIntervalId: number;
 
   element!: HTMLElement;
@@ -76,47 +76,49 @@ export default class extends Controller {
     this.streamCapturer = new StreamRecorder(this.videoMixer, this.audioMixer);
     this.metronome = new Metronome();
 
-    ipcRenderer.invoke("getEnvironment").then(async (data) => {
-      this.environment = data as BroadcasterEnvironment;
-      console.log(this.environment);
-      document.dispatchEvent(
-        new CustomEvent(BroadcasterEnvironmentChangedEvent, { detail: data })
-      );
+    ipcRenderer
+      .invoke("getEnvironment")
+      .then(async (data: BroadcasterEnvironment) => {
+        this.environment = data;
+        console.log(this.environment);
+        document.dispatchEvent(
+          new CustomEvent(BroadcasterEnvironmentChangedEvent, { detail: data })
+        );
 
-      // We should replace this later using the environment above to calculate
-      // what size we think the window should be when it opens
-      const windowSize = {
-        width: 1247,
-        height: 720,
-      };
-      const windowBounds = await ipcRenderer.invoke("wakeup", {
-        mainWindow: windowSize,
-        rtmpUrl: `rtmps://global-live.mux.com/app/${this.data.get(
-          "stream-key"
-        )}`,
-        sessionToken: this.data.get("session-token"),
-      } as WakeupPayload);
-      const browserArea = domRectToRect(
-        this.browserUnderlayTarget.getBoundingClientRect()
-      );
+        // We should replace this later using the environment above to calculate
+        // what size we think the window should be when it opens
+        const windowSize = {
+          width: 1247,
+          height: 720,
+        };
+        const windowBounds = await ipcRenderer.invoke("wakeup", {
+          mainWindow: windowSize,
+          rtmpUrl: `rtmps://global-live.mux.com/app/${this.data.get(
+            "stream-key"
+          )}`,
+          sessionToken: this.data.get("session-token"),
+        } as WakeupPayload);
+        const browserArea = domRectToRect(
+          this.browserUnderlayTarget.getBoundingClientRect()
+        );
 
-      await ipcRenderer.invoke("createBrowserView", {
-        window: "main",
-        bounds: browserArea,
-        url: "https://www.apple.com",
-      } as CreateBrowserViewPayload);
-      const broadcastArea = calculateCaptureLayout(
-        windowBounds,
-        browserArea,
-        this.environment
-      );
+        await ipcRenderer.invoke("createBrowserView", {
+          window: "main",
+          bounds: browserArea,
+          url: "https://www.apple.com",
+        } as CreateBrowserViewPayload);
+        const broadcastArea = calculateCaptureLayout(
+          windowBounds,
+          browserArea,
+          this.environment
+        );
 
-      console.log("broadcastArea", broadcastArea);
+        console.log("broadcastArea", broadcastArea);
 
-      await this.captureSourceManager.startBrowserCapture(broadcastArea);
+        await this.captureSourceManager.startBrowserCapture(broadcastArea);
 
-      this.state = "ready";
-    });
+        this.state = "ready";
+      });
 
     ipcRenderer.on("ffmpeg-error", () => {
       this.state = "failed";
@@ -124,11 +126,11 @@ export default class extends Controller {
       this.streamCapturer.stop();
     });
 
-    // this.eventManager = new LiveEventManager(false);
+    this.eventManager = new LiveEventManager(false);
   }
 
   disconnect(): void {
-    // this.eventManager?.disconnect();
+    this.eventManager?.disconnect();
     removeKeyboardListeners(this.keyboardListener);
   }
 
