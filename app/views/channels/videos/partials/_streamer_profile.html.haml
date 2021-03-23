@@ -23,9 +23,6 @@
           %button.follow-btn{data: { action: "click->streamer-profile#follow" }} Follow
       - else
         %button.follow-btn{data: { action: "click->authentication#showModal" }} Follow
-  - if current_channel.about.present?
-    .streamer-profile__info__mobile__about
-      = current_channel.about
   - if current_channel.videos.scheduled.any?
     - upcoming_video = current_channel.videos.scheduled.first
     .streamer-profile__upcoming__broadcast
