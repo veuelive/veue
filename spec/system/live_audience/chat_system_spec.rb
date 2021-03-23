@@ -16,7 +16,6 @@ describe "chat during live video" do
       visit root_path
       login_as user
       visit channel_path(channel)
-      # check that weve connected to the websocket
       expect(page).to have_css("#channels-channel-cable", visible: false)
     end
 
@@ -37,7 +36,6 @@ describe "chat during live video" do
         expect(page).to have_content(/Cowabunga!/).once
       end
 
-      # visit(channel_path(channel))
       # And now that we've done some turbolinks transitions
       # let's verify our connections are still functioning properly.
       write_chat_message "Cowabunga!"
@@ -51,6 +49,9 @@ describe "chat during live video" do
     end
 
     it "should show that you joined the chat" do
+      visit channel_path(channel)
+      # check that weve connected to the websocket
+      expect(page).to have_css("#channels-channel-cable", visible: false)
       assert_video_is_playing
       expect(page).to have_content("#{user.display_name} has joined")
     end
@@ -101,7 +102,6 @@ describe "chat during live video" do
   describe "logged out user" do
     before :each do
       visit channel_path(channel)
-      # check that weve connected to the websocket
       expect(page).to have_css("#channels-channel-cable", visible: false)
     end
 
@@ -149,12 +149,13 @@ describe "chat during live video" do
 
       # It is mocking comment of streamer
       login_as video.user
+      expect(page).to(have_selector(".message-write"))
       write_chat_message "Cowabunga!"
       expect(page).to have_content("Cowabunga!").once
       logout_user
 
       # Watching stream as a common visitor
-      visit channel_path(video.channel)
+      visit channel_path(channel)
 
       expect(page).to have_content("Cowabunga!").once
       expect(page).to have_css(".message--announcement")
