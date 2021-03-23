@@ -32,7 +32,7 @@ class DiscoverController < ApplicationController
       {
         preview: params[:preview],
       },
-      )
+    )
   end
 
   def map_curation_to_videos(curation)
