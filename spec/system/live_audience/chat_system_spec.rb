@@ -43,11 +43,11 @@ describe "chat during live video" do
       write_chat_message "Cowabunga!"
       expect(page).to have_content(/Cowabunga!/).twice
       # it will have profile image of user for once in thread
-      expect(page).to have_css(".message__content__avatar").twice
-
+      # Sometimes the join event happens after the messages. Lets account for this.
+      expect(page).to have_css(".message__content__avatar", minimum: 1, maximum: 2)
       write_chat_message "Cowabunga!"
       expect(page).to have_content(/Cowabunga!/, count: 3)
-      expect(page).to have_css(".message__content__avatar").twice
+      expect(page).to have_css(".message__content__avatar", count: 2)
     end
 
     it "should show that you joined the chat" do
