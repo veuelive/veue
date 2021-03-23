@@ -192,7 +192,7 @@ describe "Broadcast View" do
         expect(video.browser_navigations.published).to be_any
 
         visit channel_path(channel)
-        expect(find("#address-input")).to have_content(/^http/)
+        expect(find("#address-input").text).to start_with("http")
       end
     end
 
