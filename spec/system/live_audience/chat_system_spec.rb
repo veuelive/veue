@@ -19,8 +19,6 @@ describe "chat during live video" do
     end
 
     it "should allow for live chat messages to be sent" do
-      # Make sure the join event happens first before writing a chat message
-      expect(page).to have_content(/has joined/)
       write_chat_message "Cowabunga!"
       expect(page).to have_content(/Cowabunga!/).once
       expect(video.chat_messages.count).to eq(1)
@@ -36,6 +34,7 @@ describe "chat during live video" do
         find(".video-card.live").click
         expect(current_path).to eq(channel_path(channel))
         expect(page).to have_content(/Follow/)
+
         expect(page).to have_content(/Cowabunga!/).once
       end
 
@@ -45,7 +44,10 @@ describe "chat during live video" do
       expect(page).to have_content(/Cowabunga!/).twice
       # it will have profile image of user for once in thread
       # Sometimes the join event happens after the messages. Lets account for this.
-      expect(page).to have_css(".message__content__avatar").once
+      expect(page).to have_css(".message__content__avatar", minimum: 1, maximum: 2)
+      write_chat_message "Cowabunga!"
+      expect(page).to have_content(/Cowabunga!/, count: 3)
+      expect(page).to have_css(".message__content__avatar", minimum: 1, maximum: 2)
     end
 
     it "should show that you joined the chat" do
