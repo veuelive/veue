@@ -47,7 +47,7 @@ describe "chat during live video" do
       expect(page).to have_css(".message__content__avatar", minimum: 1, maximum: 2)
       write_chat_message "Cowabunga!"
       expect(page).to have_content(/Cowabunga!/, count: 3)
-      expect(page).to have_css(".message__content__avatar", minimum: 1, maximum: 2)
+      expect(page).to have_css(".message__content__avatar", count: 2)
     end
 
     it "should show that you joined the chat" do
