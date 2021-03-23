@@ -12,7 +12,6 @@ describe "Stream Waiting Room" do
 
   describe "user get into waiting room" do
     before(:each) do
-      driven_by :media_browser
       visit root_path
       login_as user
       visit channel_path(channel)
