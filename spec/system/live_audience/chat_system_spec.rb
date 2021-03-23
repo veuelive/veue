@@ -16,6 +16,7 @@ describe "chat during live video" do
       visit root_path
       login_as user
       visit channel_path(channel)
+      expect(page).to have_css("#channels-channel-cable", visible: false)
     end
 
     it "should allow for live chat messages to be sent" do
@@ -31,6 +32,7 @@ describe "chat during live video" do
         visit("/")
         visit(channel_path(channel))
         expect(page).to have_content(/Follow/)
+        expect(page).to have_css("#channels-channel-cable", visible: false)
         expect(page).to have_content(/Cowabunga!/).once
       end
 
@@ -48,6 +50,8 @@ describe "chat during live video" do
 
     it "should show that you joined the chat" do
       visit channel_path(channel)
+      # check that weve connected to the websocket
+      expect(page).to have_css("#channels-channel-cable", visible: false)
       assert_video_is_playing
       expect(page).to have_content("#{user.display_name} has joined")
     end
@@ -98,6 +102,7 @@ describe "chat during live video" do
   describe "logged out user" do
     before :each do
       visit channel_path(channel)
+      expect(page).to have_css("#channels-channel-cable", visible: false)
     end
 
     it "should show you joined after you logged in" do

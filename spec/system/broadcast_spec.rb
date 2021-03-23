@@ -53,8 +53,8 @@ describe "Broadcast View" do
       wait_for_broadcast_state("live")
       expect(BrowserNavigation.published.last.payload["url"]).to eq(url)
 
-      visit channel_path(video.channels.first)
-      expect(find("#address-input")).to have_text(url)
+      visit channel_path(video.channel.slug)
+      expect(find("#address-input", wait: 10)).to have_text(url)
     end
   end
 
@@ -198,6 +198,11 @@ describe "Broadcast View" do
 
     describe "chat message events" do
       include AudienceSpecHelpers
+
+      before(:each) do
+        # check that weve connected to the websocket
+        expect(page).to have_css("#channels-channel-cable", visible: false)
+      end
 
       it "should display live messages on broadcaster view" do
         first_message = someone_chatted
