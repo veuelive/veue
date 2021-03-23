@@ -25,7 +25,7 @@ end
 require "webmock/rspec"
 WebMock.disable_net_connect!(
   allow_localhost: true,
-  allow: [%r{https://leghorn}, %(https://chromedriver.storage.googleapis.com), %r{wss?://}],
+  allow: [%r{https://leghorn}, %(https://chromedriver.storage.googleapis.com)],
 )
 
 RSpec.configure do |config|
