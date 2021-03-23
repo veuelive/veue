@@ -184,8 +184,8 @@ export default class extends BaseController {
 
   handleVideoEnded(): void {
     this.state = "ended";
-    const streamType = this.element.dataset.videoStreamType as StreamType;
-    if (streamType === "live") {
+    this.streamType = this.data.get("stream-type") as StreamType;
+    if (this.streamType === "live") {
       alert("This stream has ended");
       document.location.reload();
     } else {
