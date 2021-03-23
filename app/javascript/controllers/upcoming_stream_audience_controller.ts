@@ -12,6 +12,6 @@ export default class extends Controller {
   }
 
   disconnect(): void {
-    this.eventManager?.disconnect();
+    // this.eventManager?.disconnect();
   }
 }
