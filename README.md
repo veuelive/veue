@@ -286,13 +286,21 @@ LOG_DNA_KEY;
 #### Twilio
 
 ```ts
-TWILIO_ACCOUNT_SID
-TWILIO_AUTH_TOKEN
-TWILIO_PHONE_NUMBER - The actual phone number we send from
+TWILIO_ACCOUNT_SID;
+TWILIO_AUTH_TOKEN;
+TWILIO_PHONE_NUMBER; //- The actual phone number we send from
 ```
 
 #### IFTTT
 
 ```ts
 IFTTT_PUSH_KEY;
+```
+
+#### Fanout.io
+
+```ts
+GRIP_REALM_ID;
+GRIP_REALM_KEY;
+GRIP_URL; //- optional if you want to override
 ```
