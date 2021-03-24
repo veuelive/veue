@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# TODO: Move this into `app/services` and make it compatible with autoreloading
+
 #
 # API for using Googles "perspective" api.
 #

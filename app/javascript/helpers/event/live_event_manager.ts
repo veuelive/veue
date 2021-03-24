@@ -14,9 +14,7 @@ export default class LiveEventManager implements EventManagerInterface {
     this.allowRemoteReload = allowRemoteReload;
 
     const channelId = getChannelId();
-    this.eventSource = new EventSource(
-      "https://leghorn.onrender.com/" + channelId
-    );
+    this.eventSource = new EventSource("https://live.veue.tv/" + channelId);
 
     this.eventSource.onmessage = (event) => this.received(event);
 

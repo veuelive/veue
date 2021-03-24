@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# TODO: Move this into `app/services` and make it compatible with autoreloading
+
 class MuxService
   def initialize
     @live_api = MuxRuby::LiveStreamsApi.new

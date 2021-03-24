@@ -36,8 +36,11 @@ class VideoEvent < ApplicationRecord
     return unless published
 
     message = build_message
-    SseBroadcaster.broadcast(
+
+    puts "GRIP BROADCAST!"
+    GripBroadcaster.send_message(
       video.channel.id,
+      id,
       message,
     )
   end
