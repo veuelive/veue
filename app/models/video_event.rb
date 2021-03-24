@@ -37,7 +37,6 @@ class VideoEvent < ApplicationRecord
 
     message = build_message
 
-    puts "GRIP BROADCAST!"
     GripBroadcaster.send_message(
       video.channel.id,
       id,

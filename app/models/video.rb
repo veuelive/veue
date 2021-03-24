@@ -73,7 +73,7 @@ class Video < ApplicationRecord
   end
 
   def transition_audience_to_live
-    SseBroadcaster.broadcast(channel.id, {state: state, type: "StateChange", timecodeMs: 0})
+    GripBroadcaster.send_message(channel.id, "live", {state: state, type: "StateChange", timecodeMs: 0})
   end
 
   def recent_events_for_live

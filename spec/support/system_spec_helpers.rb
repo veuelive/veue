@@ -3,9 +3,7 @@
 module SystemSpecHelpers
   def expect_no_javascript_errors
     logs = page.driver.browser.manage.logs.get(:browser)
-    logs.each do |log|
-      puts log.inspect
-    end
+
     # For some reason, on random runs the video source won't start in Chromium, so this
     # filters out those errors... it's not our fault!
     logs.filter! do |log|
