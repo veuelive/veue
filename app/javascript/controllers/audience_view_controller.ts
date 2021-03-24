@@ -15,6 +15,7 @@ import { startMuxData } from "controllers/audience/mux_integration";
 import { isProduction } from "util/environment";
 import { postForm } from "util/fetch";
 import { BroadcastVideoLayout } from "types/video_layout";
+import { VideoSeekEvent } from "helpers/video_helpers";
 
 type StreamType = "upcoming" | "live" | "vod";
 export default class extends BaseController {
@@ -22,6 +23,8 @@ export default class extends BaseController {
 
   static targets = [
     "video",
+    "chat",
+    "likeNotification",
     "primaryCanvas",
     "fixedSecondaryCanvas",
     "pipSecondaryCanvas",
@@ -35,6 +38,8 @@ export default class extends BaseController {
   readonly togglePlayTargets!: HTMLElement[];
   readonly toggleAudioTargets!: HTMLElement[];
   readonly videoTarget!: HTMLVideoElement;
+  readonly chatTarget!: HTMLElement;
+  readonly likeNotificationTarget!: HTMLElement;
   readonly primaryCanvasTarget!: HTMLCanvasElement;
   readonly fixedSecondaryCanvasTarget!: HTMLCanvasElement;
   readonly pipSecondaryCanvasTarget!: HTMLCanvasElement;
@@ -67,6 +72,8 @@ export default class extends BaseController {
     } else {
       this.eventManager = new LiveEventManager(true);
     }
+
+    this.videoTarget.addEventListener(VideoSeekEvent, this.seekTo.bind(this));
 
     this.videoDemixer = new VideoDemixer(
       this.videoTarget,
@@ -133,6 +140,11 @@ export default class extends BaseController {
     window.clearInterval(this.viewedPoller);
 
     this.videoTarget.removeEventListener(
+      VideoSeekEvent,
+      this.seekTo.bind(this)
+    );
+
+    this.videoTarget.removeEventListener(
       "ended",
       this.handleVideoEnded.bind(this)
     );
@@ -141,6 +153,7 @@ export default class extends BaseController {
   togglePlay(): void {
     if (this.state === "ended") {
       this.videoTarget.currentTime = 0;
+      this.resetToTimecode(0);
     }
 
     if (this.state !== "playing") {
@@ -180,6 +193,24 @@ export default class extends BaseController {
       const seconds = this.timecodeSynchronizer.timecodeSeconds;
       this.timeDisplayTarget.innerHTML = displayTime(seconds);
     }
+  }
+
+  seekTo(event: CustomEvent): void {
+    this.resetToTimecode(event.detail.timecodeMs);
+  }
+
+  resetToTimecode(timecodeMs: number): void {
+    if (this.eventManager instanceof VodEventManager) {
+      this.resetChat();
+      VideoEventProcessor.clear();
+      VideoEventProcessor.syncTime(timecodeMs);
+      this.eventManager.seekTo(timecodeMs);
+    }
+  }
+
+  resetChat(): void {
+    this.chatTarget.innerHTML = "";
+    this.likeNotificationTarget.innerHTML = "";
   }
 
   handleVideoEnded(): void {

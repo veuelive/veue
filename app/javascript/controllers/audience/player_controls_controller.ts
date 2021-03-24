@@ -1,5 +1,6 @@
 import BaseController from "controllers/base_controller";
 import { displayTime } from "util/time";
+import { VideoSeekEvent } from "helpers/video_helpers";
 
 export default class extends BaseController {
   static targets = [
@@ -116,6 +117,11 @@ export default class extends BaseController {
     this.timeDisplayTarget.innerHTML = displayTime(currentTime);
     this.videoTarget.currentTime = currentTime;
     this.handleTimeUpdate();
+    const evt = new CustomEvent(VideoSeekEvent, {
+      bubbles: true,
+      detail: { timecodeMs: currentTime },
+    });
+    this.videoTarget.dispatchEvent(evt);
   }
 
   set videoState(state: string) {
