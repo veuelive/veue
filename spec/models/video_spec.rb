@@ -6,7 +6,7 @@ RSpec.describe Video, type: :model do
   let(:video) { create(:video) }
   let(:user) { video.user }
   let(:random_user) { create(:user) }
-  let(:admin_user ) { create(:admin) }
+  let(:admin_user) { create(:admin) }
 
   describe "scheduling" do
     it "should allow you to set a time in the future" do
