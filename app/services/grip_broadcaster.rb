@@ -24,8 +24,6 @@ module GripBroadcaster
   #   ]
   # }
   #
-  # {"channel":"ab4cd815-c432-4ae2-a997-18a106e8b9a5","id":"755285f3-14b2-44c5-bbcd-56d1103675cc","formats":{"http-stream":{"content":"event: message\ndata: {\"type\":\"ChatMessage\",\"timecodeMs\":0,\"data\":{\"name\":\"Ranger Danger Strang\",\"message\":\"idk\",\"userId\":\"6b72f1a5-ac97-4a6e-a8e7-808bca817896\",\"byStreamer\":true,\"id\":\"755285f3-14b2-44c5-bbcd-56d1103675cc\"},\"viewers\":0}"}}}
-  #
   def self.send_message(channel, event_id, message={})
     do_request(
       {
@@ -62,25 +60,29 @@ module GripBroadcaster
     end
   end
 
+  def self.base_url
+    ENV.fetch("GRIP_URL", "https://api.fanout.io/realm/")
+  end
+
   def self.do_request(payload={})
-    api_url = ENV.fetch("GRIP_URL", "https://api.fanout.io/realm/")
-    request_url = "#{api_url}#{realm_id}/publish/"
+    request_url = "#{base_url}#{realm_id}/publish/"
     response = Faraday.post(
       request_url,
       payload.to_json,
-      {
-        "Content-Type": "application/json",
-        Authorization: "Bearer #{jwt_token}",
-      },
+      generate_headers,
     )
-    status = response.status
 
-    # return if status == 200
+    return if response.status == 200
 
     Rails.logger.error("GRIP broadcast failed")
     Rails.logger.error(response.status)
     Rails.logger.error(response.body)
-    Rails.logger.error(request_url)
-    Rails.logger.error(payload.to_json)
+  end
+
+  def self.generate_headers
+    {
+      "Content-Type": "application/json",
+      Authorization: "Bearer #{jwt_token}",
+    }
   end
 end
