@@ -1,3 +1,5 @@
+export const VideoSeekEvent = "seek";
+
 export function getVideoId(): string {
   return document
     .querySelector("*[data-video-id]")
