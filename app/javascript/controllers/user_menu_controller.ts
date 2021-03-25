@@ -27,10 +27,15 @@ export default class extends Controller {
           this.openMenu();
         }
         return;
-      case "mouseenter":
+      case "pointerenter":
+        // Touch events work funny with pointerenter / leave / click, so lets disable it.
+        if (event["pointerType"] !== "mouse") {
+          return;
+        }
+
         this.openMenu();
         return;
-      case "mouseleave":
+      case "pointerleave":
         this.closeMenu();
     }
   }

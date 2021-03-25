@@ -39,6 +39,7 @@ body#discover__index {
             flex-direction: row;
             justify-content: flex-start;
             overflow-x: auto;
+            overflow-y: hidden;
 
             @include scroll.hideBars();
 
