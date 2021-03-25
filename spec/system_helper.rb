@@ -57,6 +57,10 @@ RSpec.configure do |config|
     )
   end
 
+  config.before(:each) do
+    setup_sse_system_mock!
+  end
+
   config.before(:example, type: :system) do
     if ENV["RUBYLIB"] =~ /ruby-debug-ide/
       driven_by :debug_browser

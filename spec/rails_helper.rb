@@ -29,7 +29,7 @@ end
 require "webmock/rspec"
 WebMock.disable_net_connect!(
   allow_localhost: true,
-  allow: [Regexp.new(GripBroadcaster.base_url), %(https://chromedriver.storage.googleapis.com)],
+  allow: [%(https://chromedriver.storage.googleapis.com)],
 )
 
 RSpec.configure do |config|
@@ -57,6 +57,8 @@ RSpec.configure do |config|
 
     WebMock.reset!
     setup_perspective_mocks!
+    setup_sse_mocks!
+
     stub_request(:post, /#{IfThisThenThatJob.post_url}/)
       .to_return(status: 200, body: "stubbed response", headers: {})
 

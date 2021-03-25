@@ -20,7 +20,7 @@ module BroadcastSystemHelpers
 
   def wait_for_broadcast_state(state)
     # We do need to wait a second here, as we are making external calls that take a while
-    expect(page).to have_css("div[data-broadcast-state='#{state}']", wait: 5)
+    expect(page).to have_css("div[data-broadcast-state='#{state}']")
   end
 
   def click_start_broadcast_button
