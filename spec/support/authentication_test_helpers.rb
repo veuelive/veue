@@ -12,16 +12,23 @@ module AuthenticationTestHelpers
   end
 
   module SystemTestHelpers
+    # this will redirect, this is on you to handle this.
     def login_as(user)
-      open_nav_sidebar
-      enter_phone_number(user)
-      confirm_secret_code(user)
-      expect_logged_in_as(user)
+      session_token = SessionToken.find_or_create_by!(user_id: user.id)
+
+      session_token.correct_code! unless session_token.active?
+
+      page.set_rack_session(session_token_uuid: session_token.uuid)
+      # page.refresh
+      # open_nav_sidebar
+      # enter_phone_number(user)
+      # confirm_secret_code(user)
+      # expect_logged_in_as(user)
     end
 
     def logout_user
-      find(".menu-area").hover
-      click_on("Sign Out")
+      # find(".menu-area").hover
+      # click_on("Sign Out")
     end
 
     def enter_phone_number(user)

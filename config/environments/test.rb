@@ -59,4 +59,7 @@ Rails.application.configure do
   # https://github.com/excid3/noticed/issues/49
   routes.default_url_options[:host] = 'test.localhost'
   routes.default_url_options[:port] = 3000
+
+  # Allows us access to session tokens during testing
+  config.middleware.use RackSessionAccess::Middleware
 end
