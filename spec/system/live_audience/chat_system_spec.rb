@@ -15,8 +15,8 @@ describe "chat during live video" do
 
   describe "when a user is logged in" do
     before :each do
-      visit root_path
       login_as user
+      visit root_path
       visit channel_path(channel)
     end
 
@@ -98,23 +98,23 @@ describe "chat during live video" do
   end
 
   describe "logged out user" do
-    before :each do
-      visit channel_path(channel)
-    end
-
     it "should show you joined after you logged in" do
+      visit channel_path(channel)
       expect(page).to_not(have_content("#{user.display_name} has joined"))
       login_as user
+      visit channel_path(channel)
       expect(page).to(have_content("#{user.display_name} has joined"))
     end
 
     it "should not allow you to chat until you login" do
       login_as user
+      visit channel_path(channel)
       write_chat_message "Who ordered a pizza?"
       expect(page).to have_content("Who ordered a pizza?")
     end
 
     it "should show messages from other users" do
+      visit channel_path(channel)
       first_message = someone_chatted
       second_message_text = "Cowabunga!"
 
@@ -140,10 +140,12 @@ describe "chat during live video" do
     end
 
     it "should have highlighted comment of streamer" do
+      visit channel_path(channel)
       expect(page).not_to(have_selector(".message-write"))
 
       # It is mocking comment of streamer
       login_as video.user
+      visit channel_path(channel)
       write_chat_message "Cowabunga!"
       expect(page).to have_content("Cowabunga!").once
       logout_user
@@ -156,6 +158,7 @@ describe "chat during live video" do
     end
 
     it "should see login modal on chat area click" do
+      visit channel_path(channel)
       expect(page).to have_css(".message-login-prompt")
       find(".message-login-prompt").click
 
@@ -164,6 +167,7 @@ describe "chat during live video" do
 
     it "should show the message even if rejected" do
       login_as user
+      visit channel_path(channel)
 
       # Must come after to allow the user to be created
       PerspectiveApi.key = "FAIL"
