@@ -7,7 +7,7 @@ import { displayChatMessage } from "helpers/chat_helpers";
 export default class extends Controller {
   static targets = ["messageInput", "messageSend", "messageReaction"];
   element: HTMLElement;
-  private messageInputTarget!: HTMLElement;
+  private messageInputTarget!: HTMLInputElement;
   private messageSendTarget!: HTMLDivElement;
   private messageReactionTarget!: HTMLDivElement;
   private lastMessageFromUserId: string;
@@ -15,18 +15,16 @@ export default class extends Controller {
 
   connect(): void {
     const bodyDataset = document.body.dataset;
-    this.messageInputTarget.addEventListener("focus", () => {
-      bodyDataset["keyboard"] = "visible";
-      setTimeout(function () {
-        window.scrollTo(0, 0);
-      }, 200);
-    });
-    this.fallBackContentEditable();
-    this.messageInputTarget.addEventListener(
-      "blur",
-      () => (bodyDataset["keyboard"] = "hidden")
-    );
+    function updateView() {
+      const primaryArea = document.getElementsByClassName(
+        "content-area__primary"
+      )[0] as HTMLElement;
+      primaryArea.style.display = event.type === "focus" ? "none" : "block";
+    }
 
+    this.messageInputTarget.addEventListener("focus", updateView);
+    this.messageInputTarget.addEventListener("blur", updateView);
+    this.fallBackContentEditable();
     this.userId = currentUserId();
   }
 
