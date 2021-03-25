@@ -24,10 +24,15 @@ RSpec.configure do |config|
         '*': {setting: 1},
       },
     )
+    cps = Selenium::WebDriver::Remote::Capabilities.chrome(
+      loggingPrefs: {browser: "ALL"},
+      perfLoggingPrefs: {enableNetwork: true},
+    )
     Capybara::Selenium::Driver.new(
       app,
       browser: :chrome,
       options: options_obj,
+      desired_capabilities: cps,
     )
   end
 
@@ -55,10 +60,6 @@ RSpec.configure do |config|
       browser: :chrome,
       options: options_obj,
     )
-  end
-
-  config.before(:each) do
-    setup_sse_system_mock!
   end
 
   config.before(:example, type: :system) do

@@ -58,7 +58,9 @@ describe "chat during live video" do
 
     it "should show that you joined the chat" do
       assert_video_is_playing
-      expect(page).to have_content("#{user.display_name} has joined")
+      write_chat_message "hey hey"
+      page.refresh
+      expect(page).to have_content("#{user.display_name} has joined", wait: 5)
     end
 
     it "should have visible scroll button after a bunch of messages" do

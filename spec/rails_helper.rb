@@ -29,7 +29,7 @@ end
 require "webmock/rspec"
 WebMock.disable_net_connect!(
   allow_localhost: true,
-  allow: [%(https://chromedriver.storage.googleapis.com)],
+  allow: [%(https://chromedriver.storage.googleapis.com), Regexp.new(GripBroadcaster.base_url)],
 )
 
 RSpec.configure do |config|
@@ -57,7 +57,7 @@ RSpec.configure do |config|
 
     WebMock.reset!
     setup_perspective_mocks!
-    setup_sse_mocks!
+    # setup_sse_mocks!
 
     stub_request(:post, /#{IfThisThenThatJob.post_url}/)
       .to_return(status: 200, body: "stubbed response", headers: {})
@@ -73,7 +73,7 @@ RSpec.configure do |config|
       .to_return(status: 404, body: {detail: "Page not found."}.to_json, headers: {})
   end
 
-  Capybara.default_max_wait_time = 5
+  Capybara.default_max_wait_time = 2
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
