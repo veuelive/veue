@@ -27,10 +27,10 @@ export default class extends Controller {
           this.openMenu();
         }
         return;
-      case "mouseenter":
+      case "pointerenter":
         this.openMenu();
         return;
-      case "mouseleave":
+      case "pointerleave":
         this.closeMenu();
     }
   }
