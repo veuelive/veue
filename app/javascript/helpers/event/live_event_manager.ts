@@ -1,22 +1,32 @@
-import EventManagerInterface from "types/event_manager_interface";
+import EventManagerInterface, {
+  VideoEvent,
+} from "types/event_manager_interface";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import { secureFetch } from "util/fetch";
 import { getChannelId } from "helpers/channel_helpers";
+import { SseEventSource } from "helpers/event/sources/sse_event_source";
+import { TestEventSource } from "helpers/event/sources/test_event_source";
+import { LiveEventSource } from "helpers/event/live_event_source";
 
 export const ViewerCountUpdateEvent = "ViewerCountUpdate";
 
 export default class LiveEventManager implements EventManagerInterface {
   private subscription;
-  private eventSource: EventSource;
   private allowRemoteReload: boolean;
+  private liveEventSource: LiveEventSource;
 
   constructor(allowRemoteReload: boolean) {
     this.allowRemoteReload = allowRemoteReload;
 
     const channelId = getChannelId();
-    this.eventSource = new EventSource("https://live.veue.tv/" + channelId);
 
-    this.eventSource.onmessage = (event) => this.received(event);
+    if (globalThis.appConfig.env === "test") {
+      this.liveEventSource = new TestEventSource();
+    } else {
+      this.liveEventSource = new SseEventSource();
+    }
+
+    this.liveEventSource.connect(channelId, (event) => this.received(event));
 
     secureFetch(`/${channelId}/events`)
       .then((response) => response.json())
@@ -32,9 +42,8 @@ export default class LiveEventManager implements EventManagerInterface {
     this.subscription.unsubscribe();
   }
 
-  async received(event: MessageEvent): Promise<void> {
-    const data = JSON.parse(event.data);
-    if (this.allowRemoteReload && data?.state === "live") {
+  async received(data: VideoEvent): Promise<void> {
+    if (this.allowRemoteReload && data.state === "live") {
       await this.reload();
     }
     VideoEventProcessor.addEvent(data);
