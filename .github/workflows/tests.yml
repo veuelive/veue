@@ -140,7 +140,7 @@ jobs:
         - name: Run tests
           env:
             SPEC_BROWSER: headless_${{matrix.browser}}
-          run: bundle exec rspec spec/system
+          run: bundle exec rspec --fail-fast=3 spec/system
         - name: Archive Tmp Folder
           uses: actions/upload-artifact@v2
           if: ${{ failure() }}
