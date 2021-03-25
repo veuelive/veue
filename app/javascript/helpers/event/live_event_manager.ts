@@ -5,7 +5,6 @@ import { VideoEventProcessor } from "helpers/event/event_processor";
 import { secureFetch } from "util/fetch";
 import { getChannelId } from "helpers/channel_helpers";
 import { SseEventSource } from "helpers/event/sources/sse_event_source";
-import { TestEventSource } from "helpers/event/sources/test_event_source";
 import { LiveEventSource } from "helpers/event/live_event_source";
 
 export const ViewerCountUpdateEvent = "ViewerCountUpdate";
@@ -20,11 +19,7 @@ export default class LiveEventManager implements EventManagerInterface {
 
     const channelId = getChannelId();
 
-    if (globalThis.appConfig.env === "test") {
-      this.liveEventSource = new TestEventSource();
-    } else {
-      this.liveEventSource = new SseEventSource();
-    }
+    this.liveEventSource = new SseEventSource();
 
     this.liveEventSource.connect(channelId, (event) => this.received(event));
 
