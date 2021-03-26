@@ -5,7 +5,7 @@ on: [pull_request]
 jobs:
   brakeman:
     name: runner / brakeman
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -17,7 +17,7 @@ jobs:
           reporter: github-pr-check
   woke:
     name: woke
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
       - uses: get-woke/woke-action-reviewdog@v0
@@ -25,7 +25,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
   rubocop:
     name: runner / rubocop
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -43,7 +43,7 @@ jobs:
           reporter: github-pr-check
   eslint:
     name: runner / eslint
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
       - name: eslint
@@ -52,7 +52,7 @@ jobs:
           eslint_flags: 'app/ spec/'
   jsLinters:
     name: runner / prettier
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -64,7 +64,7 @@ jobs:
         run: npx prettier -c app spec
   rspec:
     name: rspec basic
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -101,7 +101,7 @@ jobs:
 
   rspecSystem:
       name: rspec system
-      runs-on: ubuntu-latest
+      runs-on: self-hosted
 
       strategy:
         matrix:
@@ -208,7 +208,7 @@ jobs:
           path: log
   jest:
     name: jest
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

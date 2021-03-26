@@ -225,7 +225,7 @@ describe "Broadcast View" do
         expect(video.chat_messages.count).to be(1)
 
         write_chat_message "Pizza time!"
-        expect(page).to have_content("Pizza time!").once
+        expect(page).to have_content("Pizza time!", wait: 10).once
       end
     end
 
