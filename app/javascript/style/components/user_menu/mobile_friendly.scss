@@ -2,10 +2,15 @@
 @use '../../utils/color';
 @use '../../utils/font';
 
+.menu-area[data-is-open="true"] {
+  .user-menu[data-mode="mobile"] {
+    top: header.$height;
+  }
+}
+
 .user-menu[data-mode="mobile"] {
   // layout
   position: absolute;
-  top: header.$height;
   left: 0;
   width: 100%;
   display: flex;
