@@ -127,14 +127,14 @@ describe "chat during live video" do
       first_message = someone_chatted
       second_message_text = "Cowabunga!"
 
-      expect(page).to have_content(first_message.text)
-      expect(page).to_not have_content(second_message_text)
+      expect(page).to have_content(first_message.text, wait: 10)
+      expect(page).to_not have_content(second_message_text, wait: 1)
       expect(page).to have_content(first_message.user.display_name)
 
       someone_chatted(second_message_text)
 
       expect(page).to have_content(first_message.text)
-      expect(page).to have_content(second_message_text)
+      expect(page).to have_content(second_message_text, wait: 10)
       expect(page).to have_content(first_message.user.display_name)
 
       page.refresh
