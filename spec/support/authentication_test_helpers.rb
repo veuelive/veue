@@ -18,17 +18,27 @@ module AuthenticationTestHelpers
 
       session_token.correct_code! unless session_token.active?
 
+      original_url = page.current_url
       page.set_rack_session(session_token_uuid: session_token.uuid)
-      # page.refresh
-      # open_nav_sidebar
-      # enter_phone_number(user)
-      # confirm_secret_code(user)
-      # expect_logged_in_as(user)
+      visit(original_url)
+    end
+
+    def actual_login_as(user)
+      open_nav_sidebar
+      enter_phone_number(user)
+      confirm_secret_code(user)
+      expect_logged_in_as(user)
     end
 
     def logout_user
-      # find(".menu-area").hover
-      # click_on("Sign Out")
+      original_url = page.current_url
+      page.set_rack_session(session_token_uuid: nil)
+      visit(original_url)
+    end
+
+    def actual_logout_user
+      find(".menu-area").hover
+      click_on("Sign Out")
     end
 
     def enter_phone_number(user)

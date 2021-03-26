@@ -16,7 +16,6 @@ describe "Video Reaction Event" do
 
   describe "user reaction" do
     before do
-      visit root_path
       login_as user
       visit channel_path(channel)
     end
