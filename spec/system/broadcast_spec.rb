@@ -30,11 +30,11 @@ describe "Broadcast View" do
 
     click_start_broadcast_button
 
-    expect(page).to have_css("div[data-broadcast-state='live']", wait: 5)
+    expect(page).to have_css("div[data-broadcast-state='live']", wait: 10)
 
-    expect(page).to have_css(".stop-btn", wait: 5)
+    expect(page).to have_css("div[data-broadcast-started-at]")
 
-    find("div[data-broadcast-started-at]")
+    expect(page).to have_css(".stop-btn")
 
     expect(Video.last.started_at_ms).to_not be_nil
 
