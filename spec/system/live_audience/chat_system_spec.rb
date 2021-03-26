@@ -22,7 +22,7 @@ describe "chat during live video" do
 
     it "should allow for live chat messages to be sent" do
       write_chat_message "Cowabunga!"
-      expect(page).to have_content("Cowabunga!").once
+      expect(page).to have_content(/Cowabunga!/).once
       expect(video.chat_messages.count).to eq(1)
 
       # This seems odd, I know, but it's the main way to repo VEUE-144
@@ -37,16 +37,23 @@ describe "chat during live video" do
         expect(current_path).to eq(channel_path(channel))
         expect(page).to have_content("Follow")
 
-        expect(page).to have_content("Cowabunga!").once
+        expect(page).to have_content(/Cowabunga!/).once
       end
 
       # And now that we've done some turbolinks transitions
       # let's verify our SSE connections are still functioning properly.
       write_chat_message "Cowabunga!"
-      expect(page).to have_content("Cowabunga!").twice
+      expect(page).to have_content(/Cowabunga!/).twice
 
       # it will have profile image of user for once in thread
-      expect(page).to have_css(".message__content__avatar").once
+      # We cant control when the interaction occurs, so lets check both in case user join happens after
+      # the chat message
+      expect(page).to have_css(".message__content__avatar", minimum: 1, maximum: 2)
+
+      # Check that message threads work properly
+      write_chat_message "Cowabunga!"
+      expect(page).to have_content(/Cowabunga!/, count: 3)
+      expect(page).to have_css(".message__content__avatar", minimum: 1, maximum: 2)
     end
 
     it "should show that you joined the chat" do
