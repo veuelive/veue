@@ -39,8 +39,9 @@ describe "Live Audience View" do
       page.evaluate_script("window.not_reloaded = 'not reloaded';")
       expect(page).to have_content("Login")
       new_user = create(:user)
-      login_as(new_user)
+      actual_login_as(new_user)
       expect(page.evaluate_script("window.not_reloaded")).to eq("not reloaded")
+      find(".menu-area").click
       expect(page).to have_content(new_user.display_name)
     end
 
