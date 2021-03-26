@@ -15,9 +15,6 @@ export default class extends Controller {
 
   connect(): void {
     const bodyDataset = document.body.dataset;
-    function updateView() {
-      bodyDataset.keyboard = event.type === "blur" && "visible";
-    }
 
     this.messageInputTarget.addEventListener(
       "focus",
