@@ -172,5 +172,5 @@ group :test do
   gem "timecop"
 
   # Allows us access to session tokens during testing
-  gem 'rack_session_access', '~> 0.2.0'
+  gem "rack_session_access", "~> 0.2.0"
 end
