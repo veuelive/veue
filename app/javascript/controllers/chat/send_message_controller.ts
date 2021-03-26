@@ -16,14 +16,17 @@ export default class extends Controller {
   connect(): void {
     const bodyDataset = document.body.dataset;
     function updateView() {
-      const primaryArea = document.getElementsByClassName(
-        "content-area__primary"
-      )[0] as HTMLElement;
-      primaryArea.style.display = event.type === "focus" ? "none" : "block";
+      bodyDataset.keyboard = event.type === "blur" && "visible";
     }
 
-    this.messageInputTarget.addEventListener("focus", updateView);
-    this.messageInputTarget.addEventListener("blur", updateView);
+    this.messageInputTarget.addEventListener(
+      "focus",
+      () => (bodyDataset["keyboard"] = "visible")
+    );
+    this.messageInputTarget.addEventListener(
+      "blur",
+      () => (bodyDataset["keyboard"] = "hidden")
+    );
     this.fallBackContentEditable();
     this.userId = currentUserId();
   }
