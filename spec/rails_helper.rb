@@ -73,7 +73,7 @@ RSpec.configure do |config|
       .to_return(status: 404, body: {detail: "Page not found."}.to_json, headers: {})
   end
 
-  Capybara.default_max_wait_time = 3
+  Capybara.default_max_wait_time = 2
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
