@@ -85,7 +85,7 @@ describe "chat during live video" do
       message = Faker::Lorem.characters(number: 181)
       write_chat_message message
 
-      expect(page).to have_css(".message")
+      expect(page).to have_css(".message", wait: 10)
       expect(page).to have_content(message)
 
       div = find(".message__content__text")
