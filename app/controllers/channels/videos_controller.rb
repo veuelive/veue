@@ -2,6 +2,8 @@
 
 module Channels
   class VideosController < ApplicationController
+    include ChannelConcern
+
     # GET /videos/1
     def show
       authorize!(:read, current_video)
