@@ -71,7 +71,10 @@ jobs:
       - name: Setup
         run: ./bin/docker-test-setup
       - name: Run tests
-        run: bundle exec rspec --exclude-pattern "spec/system/**/*"
+        run: |
+          /bin/bash --login 
+          rvm use
+          bundle exec rspec --exclude-pattern "spec/system/**/*"
 
   rspecSystem:
       name: rspec system
@@ -86,7 +89,10 @@ jobs:
         - name: Setup
           run: ./bin/docker-test-setup
         - name: Run tests
-          run: bundle exec rspec --fail-fast=3 spec/system
+          run: |
+            /bin/bash --login
+            rvm use
+            bundle exec rspec --fail-fast=3 spec/system
   jest:
     name: jest
     runs-on: ubuntu-latest
