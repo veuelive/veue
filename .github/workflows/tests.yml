@@ -72,7 +72,7 @@ jobs:
         run: ./bin/docker-test-setup
       - name: Run tests
         run: |
-          /bin/bash --login 
+          /bin/bash --login
           rvm use
           bundle exec rspec --exclude-pattern "spec/system/**/*"
 
@@ -91,6 +91,7 @@ jobs:
         - name: Run tests
           run: |
             /bin/bash --login
+            source ~/.bash_profile
             rvm use
             bundle exec rspec --fail-fast=3 spec/system
   jest:

@@ -1,9 +1,7 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash --login
 
 rvm use
 
 bundle install --with=test
 
 rails db:setup
-
-/bin/bash --login
