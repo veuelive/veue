@@ -23,6 +23,19 @@ RSpec.describe "channel behaviour" do
       expect_meta_tag("og:description", channel.about)
     end
 
+    it "should load channel show with uppercase slug too" do
+      do_not_translate
+      visit(channel.slug.upcase)
+
+      expect_meta_tag("twitter:title", "channels.twitter.title")
+      expect_meta_tag("og:title", "channels.og.title")
+      assert_title "channels.seo.title"
+
+      # The descriptions should their about
+      expect_meta_tag("twitter:description", channel.about)
+      expect_meta_tag("og:description", channel.about)
+    end
+
     pending "test images in meta tag"
   end
 

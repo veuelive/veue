@@ -2,6 +2,8 @@
 
 module Channels
   class VideoSnapshotsController < ApplicationController
+    include ChannelConcern
+
     def index
       authorize!(:manage, current_video)
     end
