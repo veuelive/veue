@@ -1,4 +1,4 @@
-#!/usr/bin/env bash --login
+#!/bin/bash --login
 
 rvm use
 
