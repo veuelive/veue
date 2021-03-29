@@ -21,22 +21,18 @@ RSpec.describe Follow, type: :model do
     create(:follow, user: user, channel: channel_one)
 
     # Have to reload channel_one or it doesnt propagate the new follow
-    channel_one.reload
-
-    expect(channel_one.followers).to include(user)
+    expect(channel_one.reload.followers).to include(user)
   end
 
   it "Can follow multiple channels" do
     expect(channel_two.followers).to_not include(user)
 
     create(:follow, user: user, channel: channel_two)
-    channel_two.reload
-
-    expect(channel_two.followers).to include(user)
+    expect(channel_two.reload.followers).to include(user)
   end
 
   it "should prevent user from following themselves" do
-    follow = build(:follow, user: channel_one.user, channel: channel_one)
+    follow = build_stubbed(:follow, user: channel_one.user, channel: channel_one)
     expect(follow).to be_invalid
     expect(follow.errors.full_messages.join("\n")).to include("You can't follow yourself")
   end

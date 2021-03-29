@@ -7,7 +7,7 @@ RSpec.describe MuxRuby::LiveStream, type: :model do
     before do
       @mux_service = double(MUX_SERVICE)
       stub_const("MUX_SERVICE", @mux_service)
-      @user = create(:user)
+      @user = build_stubbed(:user)
     end
 
     it "should be able to #setup_as_streamer!" do
