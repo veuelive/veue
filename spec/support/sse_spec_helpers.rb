@@ -6,7 +6,7 @@ module SseSpecHelpers
   end
 
   def ensure_live_event_source
-    expect(page).to have_selector("body[data-live-event-source]")
+    expect(page).to have_selector("body[data-live-event-source]", wait: 10)
   end
 
   def expect_to_sse_broadcast(times=1)
