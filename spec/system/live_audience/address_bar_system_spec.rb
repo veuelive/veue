@@ -11,11 +11,10 @@ describe "Live Audience View - URL Bar" do
     @random_message = someone_chatted
     someone_chatted
     streamer_visited("http://hamptoncatlin.com", 0)
-    streamer_visited("http://ninjaturtlesrock.com", 204)
+    streamer_visited("http://ninjaturtlesrock.com", 504)
     streamer_visited("http://timeslam.com", 5000)
 
     visit(path_for_video(video))
-    ensure_live_event_source
   end
 
   it "should show the urls in sequence" do

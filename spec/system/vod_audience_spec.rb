@@ -17,7 +17,7 @@ describe "Prerecorded Audience View" do
     it "should have a video to play!" do
       visit path_for_video(video)
 
-      assert_video_is_playing
+      assert_video_is_playing(3)
 
       expect(is_video_playing?).to eq(true)
 
