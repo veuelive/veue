@@ -62,6 +62,7 @@ module AudienceSpecHelpers
   end
 
   def write_chat_message(text)
+    ensure_live_event_source
     find(".write-area").base.send_keys(text, :enter)
   end
 
