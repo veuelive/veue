@@ -98,7 +98,7 @@ describe "Prerecorded Audience View" do
       assert_video_is_playing(2)
       expect(page).to have_content(ChatMessage.first.payload["message"])
 
-      expect(page).to have_no_content(late_message.payload["message"], wait: 0.1)
+      expect(page).to have_no_content(late_message.payload["message"], wait: 0)
 
       # Seeking SHOULD have that message!
       visit path_for_video(video, t: 10)
