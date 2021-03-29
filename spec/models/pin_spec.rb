@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Pin, type: :model do
-  let(:video) { create(:live_video) }
+  let(:video) { build_stubbed(:live_video) }
   it "should be created from a URL and a name" do
     pin = Pin.process_create(
       video,
