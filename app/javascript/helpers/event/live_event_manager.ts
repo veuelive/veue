@@ -21,7 +21,14 @@ export default class LiveEventManager implements EventManagerInterface {
 
     this.liveEventSource = new SseEventSource();
 
-    this.liveEventSource.connect(channelId, (event) => this.received(event));
+    this.liveEventSource
+      .connect(channelId, (event) => this.received(event))
+      .then(() => {
+        console.debug("Connected to SSE Endpoint");
+        // This is useful for tests!
+        document.body.dataset.liveEventSource = "connected";
+      })
+      .catch((error) => console.error(error));
 
     secureFetch(`/${channelId}/events`)
       .then((response) => response.json())

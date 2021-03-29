@@ -18,6 +18,7 @@ describe "Video Reaction Event" do
     before do
       login_as user
       visit channel_path(channel)
+      ensure_live_event_source
     end
 
     it "should display a video heart notification" do

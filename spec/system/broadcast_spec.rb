@@ -23,6 +23,8 @@ describe "Broadcast View" do
 
     visit "/broadcasts"
     find("body").click
+
+    ensure_live_event_source
   end
 
   it "should load for a setup streamer" do
