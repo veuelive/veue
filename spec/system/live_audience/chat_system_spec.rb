@@ -16,7 +16,6 @@ describe "chat during live video" do
   describe "when a user is logged in" do
     before :each do
       login_as user
-      visit root_path
       visit channel_path(channel)
     end
 
