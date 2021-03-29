@@ -29,9 +29,9 @@ module AudienceSpecHelpers
     page.has_css?(audience_audio_state_css("unmuted"))
   end
 
-  def assert_video_is_playing(seconds=1)
+  def assert_video_is_playing(seconds=2)
     expect(page).to have_css("*[data-audience-view-state='playing']")
-    expect(page).to have_content(:all, "00:00:#{seconds.to_s.rjust(2, '0')}", wait: 5)
+    expect(page).to have_content(:all, "00:00:#{seconds.to_s.rjust(2, '0')}", wait: 10)
   end
 
   def current_timecode
