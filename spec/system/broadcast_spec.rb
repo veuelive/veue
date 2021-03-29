@@ -18,7 +18,6 @@ describe "Broadcast View" do
   end
 
   before :each do
-    visit "/"
     login_as(streamer)
 
     visit "/broadcasts"
