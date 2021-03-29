@@ -95,7 +95,7 @@ describe "Prerecorded Audience View" do
     it "should show all chat messages" do
       late_message.update!(timecode_ms: 9_999)
       visit path_for_video(video, t: 1)
-      assert_video_is_playing(3)
+      assert_video_is_playing(2)
       expect(page).to have_content(ChatMessage.first.payload["message"])
 
       expect(page).to have_no_content(late_message.payload["message"], wait: 0.1)

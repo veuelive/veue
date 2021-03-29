@@ -79,7 +79,7 @@ describe "chat during live video" do
     it "should have visible scroll button after a bunch of messages" do
       13.times do |i|
         write_chat_message "Cowabunga!"
-        expect(page).to have_css(".message", count: i + 1)
+        expect(page).to have_css(".message", count: i + 1, wait: 5)
       end
       expect(page).to have_css(".message__content__avatar").once
 

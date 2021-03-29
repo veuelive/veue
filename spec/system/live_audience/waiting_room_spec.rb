@@ -37,7 +37,7 @@ describe "Stream Waiting Room" do
 
     it "should reload the view after video go live" do
       write_chat_message "Cowabunga!"
-      expect(page).to have_content("Cowabunga!").once
+      expect(page).to have_content("Cowabunga!", wait: 5).once
 
       video.go_live!
       expect(page).to have_selector("#active-viewers", wait: 10)
