@@ -3,13 +3,13 @@ $mobile-max-width: $desktop-min-width;
 $aspect-ratio: "9/6";
 
 @mixin smallTall {
-  @media only screen and (max-width: $mobile-max-width) and (min-height: 450px) {
+  @media only screen and (max-width: $mobile-max-width) and (min-height: 400px) {
     @content;
   }
 }
 
 @mixin smallWide {
-  @media only screen and (max-width: $mobile-max-width) and (max-height: 450px) {
+  @media only screen and (max-width: $mobile-max-width) and (max-height: 400px) {
     @content;
   }
 }

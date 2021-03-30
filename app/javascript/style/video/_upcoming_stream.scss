@@ -79,8 +79,8 @@
         position: absolute;
         right: 0;
         transform: translate(-10%, -115%);
-        width: 25vw;
-        height: 20vw;
+        width: 80px;
+        height: 78px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -90,6 +90,17 @@
     }
     .secondary-upcoming-stream {
       display: none;
+    }
+  }
+
+  @include smallWide() {
+    .stream-body {
+      height: auto;
+      &__icon {
+        svg {
+          width: 200px;
+        }
+      }
     }
   }
 }
