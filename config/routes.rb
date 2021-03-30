@@ -96,7 +96,11 @@ Rails.application.routes.draw do
         resources :events, only: %i[show index]
       end
 
-      resources :video_snapshots, path: "snapshots", only: %i[create show index update]
+      resources :video_snapshots, path: "snapshots", only: %i[create show index update] do
+        collection do
+          get "find"
+        end
+      end
     end
 
     # These are the routes related to the "Streamers" profile page

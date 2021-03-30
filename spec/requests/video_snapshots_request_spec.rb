@@ -67,4 +67,47 @@ RSpec.describe "VideoSnapshots", type: :request do
       expect(response).to have_http_status(:success)
     end
   end
+
+  describe "GET /snapshots/find?t=" do
+    let(:video) { create(:vod_video) }
+
+    it "returns a blank hash if no parmas sent" do
+      get find_channel_video_video_snapshots_path(video.channel, video), params: {t: "0"}, as: :json
+      expect(response.body).to eq({}.to_json)
+    end
+
+    it "returns a blank hash if no snapshot found" do
+      get find_channel_video_video_snapshots_path(video.channel, video), params: {t: "0"}, as: :json
+      expect(response.body).to eq({}.to_json)
+    end
+
+    it "returns the first snapshot if NaN is sent" do
+      snapshot = create(:video_snapshot, video: video, timecode: 0)
+
+      get find_channel_video_video_snapshots_path(video.channel, video), params: {t: "NaN"}, as: :json
+
+      body = JSON.parse(response.body)
+      expect(body["id"]).to eq(snapshot.id)
+    end
+
+    it "returns the snapshot at 0 seconds if the timecode is 10 seconds" do
+      snapshot_one = create(:video_snapshot, video: video, timecode: 0)
+      create(:video_snapshot, video: video, timecode: 30_000)
+
+      get find_channel_video_video_snapshots_path(video.channel, video), params: {t: "10"}, as: :json
+
+      body = JSON.parse(response.body)
+      expect(body["id"]).to eq(snapshot_one.id)
+    end
+
+    it "returns the snapshot at 30 seconds if the timecode is 50 seconds" do
+      snapshot_one = create(:video_snapshot, video: video, timecode: 30_000)
+      create(:video_snapshot, video: video, timecode: 60_000)
+
+      get find_channel_video_video_snapshots_path(video.channel, video), params: {t: "50"}, as: :json
+
+      body = JSON.parse(response.body)
+      expect(body["id"]).to eq(snapshot_one.id)
+    end
+  end
 end
