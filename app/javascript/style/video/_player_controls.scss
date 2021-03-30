@@ -90,6 +90,7 @@
 
     .progress-bar-container {
       cursor: pointer;
+      position: relative;
       display: none;
       align-items: center;
       background: color.$neutral-middle;
@@ -116,6 +117,46 @@
       margin-left: -8px;
       background: color.$white;
       box-shadow: color.$box-shadow;
+    }
+
+    .progress-bar__video-preview,
+    .progress-bar__time-preview {
+      // layout
+      position: absolute;
+      z-index: z_index.$video-controls;
+
+      // style
+      opacity: 0.9;
+      border-radius: 10px;
+    }
+
+    .progress-bar__time-preview {
+      // layout
+      padding: 0.2rem 0.4rem;
+
+      // style
+      background: black;
+      color: white;
+    }
+
+    .progress-bar__video-preview {
+      position: absolute;
+
+      box-shadow: color.$box-shadow;
+
+      // Assumed 16:9 ratio
+      height: 112px;
+      width: 200px;
+      border-radius: 10px;
+
+      &__image {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        object-fit: fill;
+        border-radius: 10px;
+      }
     }
 
     .progress-background {
@@ -205,6 +246,12 @@
     .toggle-play.desktop {
       display: flex;
       margin: 0 0.2rem;
+    }
+
+    .player-controls {
+      .progress-bar__time-preview {
+        padding: 1rem 0.75rem;
+      }
     }
   }
 }
