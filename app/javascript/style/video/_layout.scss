@@ -169,7 +169,9 @@
       left: 0;
     }
 
-    height: 100%;
+    #main-container {
+      height: 100%;
+    }
 
     .content-area {
       // While I am loath to add an important, the padding
@@ -288,18 +290,23 @@
 
     .content-area__primary {
       padding-left: env(safe-area-inset-left);
+      padding-right: 1vw;
+      margin-left: 17px;
       flex: 1;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      height: 100%;
     }
 
     .content-area__secondary {
       padding: env(safe-area-inset-top) calc(env(safe-area-inset-right) * 0.75)
         0 0vw;
+      margin: 0 1vw 2vh 0;
       background: white;
       display: flex;
       flex-direction: column;
-      margin: 0;
-      height: 100vh;
-      height: calc(min(100vh, -webkit-fill-available));
+      height: 82vh;
+      min-width: 30vw;
     }
 
     header,
