@@ -9,11 +9,6 @@ auto_cancel:
   running:
     when: "branch != 'master'"
 
-global_job_config:
-  prologue:
-    commands:
-
-
 blocks:
   - name: Setup
     task:
