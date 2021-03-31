@@ -9,7 +9,7 @@ RSpec.describe ModerationItem do
     end
 
     it "should not call the perspective api when not enabled" do
-      moderation_item = build(:moderation_item)
+      moderation_item = build_stubbed(:moderation_item)
       moderation_item.fetch_scores!
       expect(moderation_item.summary_score).to eq(-1)
       expect(moderation_item.scores).to eq({})
@@ -18,7 +18,7 @@ RSpec.describe ModerationItem do
 
   describe "API Enabled" do
     it "should return the mocked passing value" do
-      item = build(:moderation_item)
+      item = build_stubbed(:moderation_item)
       item.fetch_scores!
       expect(item.summary_score).to eq(0.1982)
       expect(item).to be_approved
@@ -26,7 +26,7 @@ RSpec.describe ModerationItem do
 
     it "should error on the error key" do
       PerspectiveApi.key = "ERROR"
-      item = build(:moderation_item)
+      item = build_stubbed(:moderation_item)
       item.fetch_scores!
       expect(item.summary_score).to eq(-1)
       expect(item).to be_approved
@@ -35,7 +35,7 @@ RSpec.describe ModerationItem do
     it "should fail on the failure!" do
       # Must happen before setting the key otherwise it raises an error trying
       # to create the user
-      item = build(:moderation_item)
+      item = build_stubbed(:moderation_item)
       PerspectiveApi.key = "FAIL"
       item.fetch_scores!
       expect(item.summary_score).to be > 0.5

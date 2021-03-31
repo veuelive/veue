@@ -15,27 +15,27 @@ RSpec.describe SessionToken, type: :model do
 
     it "should validate the phone number" do
       %w[Abc 1235 23427309784329087230497823908743208724309].each do |bad_number|
-        ula = SessionToken.new(phone_number: bad_number)
+        ula = build_stubbed(:session_token, phone_number: bad_number)
         expect(ula).to_not be_valid
         expect(ula.errors["phone_number"]).to_not be_empty
       end
 
       ["+19043840459", "+44 7911 123456"].each do |valid_number|
-        ula = SessionToken.new(phone_number: valid_number)
+        ula = build_stubbed(:session_token, phone_number: valid_number)
         expect(ula).to be_valid
         expect(ula.errors["phone_number"]).to be_empty
       end
     end
 
     it "should normalize the phone number" do
-      ula = SessionToken.create!(phone_number: "+1 (904) 384-0459")
+      ula = create(:session_token, phone_number: "+1 (904) 384-0459")
       expect(ula.phone_number).to eq("+19043840459")
     end
   end
 
   context "no user account" do
     it "should fail with a bad code" do
-      ula = SessionToken.create!(phone_number: "+19043840459")
+      ula = create(:session_token, phone_number: "+19043840459")
       expect(ula).to be_valid
 
       perform_enqueued_jobs
