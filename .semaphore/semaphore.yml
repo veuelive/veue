@@ -15,13 +15,15 @@ blocks:
         - name: DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL
           value: 'true'
       jobs:
-        - name: Test
+        - name: Rspec Tests
           commands:
             - checkout
-            - sem-service start postgres 12
+            - sem-service start postgres 11
             - sem-version ruby 2.7.2
+            - sem-version node 14
             - cache restore
             - bundle install --deployment --path vendor/bundle
+            - yarn install
             - cache store
             - 'bundle exec rake db:setup'
             - bundle exec rspec
