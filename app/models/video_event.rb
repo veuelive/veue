@@ -33,7 +33,7 @@ class VideoEvent < ApplicationRecord
   end
 
   def broadcast_message!
-    return unless published
+    return unless published || video.finished?
 
     message = build_message
 
