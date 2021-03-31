@@ -48,6 +48,7 @@ blocks:
           value: 'true'
       prologue:
         commands:
+          - cache restore
           - sem-service start postgres 11
           - 'bundle exec rake db:setup'
       jobs:
