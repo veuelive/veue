@@ -52,7 +52,7 @@ gem "aasm"
 gem "activeadmin"
 
 # CMS From ButterCMS.com
-gem "buttercms-ruby", ">= 1.8"
+gem "buttercms-ruby", github: "veuelive/buttercms-ruby", branch: "hcatlin-patch-1"
 
 # Additional addons for increased functionality
 gem "activeadmin_addons"
