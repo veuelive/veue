@@ -29,20 +29,19 @@ module AudienceSpecHelpers
     page.has_css?(audience_audio_state_css("unmuted"))
   end
 
-  def assert_video_is_playing
-    find("*[data-audience-view-state='playing']")
-    page.assert_no_selector("*[data-audience-view-timecode='-1']")
-    page.assert_no_selector("*[data-audience-view-timecode='0']")
+  def assert_video_is_playing(seconds=1)
+    expect(page).to have_css("*[data-audience-view-state='playing']")
+    expect(page).to have_content(:all, "00:00:#{seconds.to_s.rjust(2, '0')}", wait: 10)
   end
 
   def current_timecode
     Integer(find("*[data-audience-view-timecode]")["data-audience-view-timecode"], 10)
   end
 
-  def someone_chatted(message=Faker::Quote.most_interesting_man_in_the_world, timecode_ms=0)
+  def someone_chatted(message=Faker::Quote.unique.most_interesting_man_in_the_world, timecode_ms=0)
     video.chat_messages.create!(
       user: create(:user),
-      input: {message: message},
+      input: {message: message[0..180]},
       timecode_ms: timecode_ms,
     )
   end
@@ -63,6 +62,7 @@ module AudienceSpecHelpers
   end
 
   def write_chat_message(text)
+    ensure_live_event_source
     find(".write-area").base.send_keys(text, :enter)
   end
 

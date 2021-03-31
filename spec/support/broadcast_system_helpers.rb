@@ -19,8 +19,8 @@ module BroadcastSystemHelpers
   end
 
   def wait_for_broadcast_state(state)
-    # We do need to wait a second here, as we are making external calls that take a while
-    expect(page).to have_css("div[data-broadcast-state='#{state}']", wait: 5)
+    # We do need to wait a second here, as we are making external calls that take a while especially on GH Actions
+    expect(page).to have_css("div[data-broadcast-state='#{state}']", wait: 20)
   end
 
   def click_start_broadcast_button

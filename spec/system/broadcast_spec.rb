@@ -18,11 +18,12 @@ describe "Broadcast View" do
   end
 
   before :each do
-    visit "/"
     login_as(streamer)
 
     visit "/broadcasts"
     find("body").click
+
+    ensure_live_event_source
   end
 
   it "should load for a setup streamer" do
@@ -30,11 +31,11 @@ describe "Broadcast View" do
 
     click_start_broadcast_button
 
-    expect(page).to have_css("div[data-broadcast-state='live']", wait: 5)
+    expect(page).to have_css("div[data-broadcast-state='live']", wait: 10)
 
-    expect(page).to have_css(".stop-btn", wait: 5)
+    expect(page).to have_css("div[data-broadcast-started-at]")
 
-    find("div[data-broadcast-started-at]")
+    expect(page).to have_css(".stop-btn")
 
     expect(Video.last.started_at_ms).to_not be_nil
 
@@ -208,13 +209,13 @@ describe "Broadcast View" do
         # VEUE-257 - Navigation events can throw off processing after being live
         navigate_to("https://1982.com")
 
-        expect(find(".message--left")).to have_content(first_message.text)
+        expect(find(".message--left")).to have_content(first_message.text, wait: 10)
         expect(page).to_not have_content(second_message_text)
         expect(page).to have_content(first_message.user.display_name)
 
         someone_chatted(second_message_text)
 
-        expect(page).to have_content(first_message.text)
+        expect(page).to have_content(first_message.text, wait: 10)
         expect(page).to have_content(second_message_text)
         expect(page).to have_content(first_message.user.display_name)
       end
@@ -225,7 +226,7 @@ describe "Broadcast View" do
         expect(video.chat_messages.count).to be(1)
 
         write_chat_message "Pizza time!"
-        expect(page).to have_content("Pizza time!").once
+        expect(page).to have_content("Pizza time!", wait: 10).once
       end
     end
 
