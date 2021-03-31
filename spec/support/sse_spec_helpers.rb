@@ -5,9 +5,8 @@ module SseSpecHelpers
     Regexp.new(GripBroadcaster.base_url)
   end
 
-  def stub_sse_broadcasts!
-    stub_request(:post, sse_url_matcher)
-      .to_return(status: 200)
+  def ensure_live_event_source
+    expect(page).to have_selector("body[data-live-event-source]", wait: 10)
   end
 
   def expect_to_sse_broadcast(times=1)
