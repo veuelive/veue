@@ -11,6 +11,7 @@ auto_cancel:
 
 blocks:
   - name: Setup
+    dependencies: []
     task:
       jobs:
         - name: Setup
