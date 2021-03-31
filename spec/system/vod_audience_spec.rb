@@ -85,9 +85,9 @@ describe "Prerecorded Audience View" do
       late_message.update!(timecode_ms: 1_000)
       # We need to reload to get the event we just added
       visit path_for_video(video)
-      assert_video_is_playing
+
       # We are starting at 0ms, but the below method will wait long enough to see it appear
-      expect(page).to have_content(late_message.payload["message"])
+      expect(page).to have_content(late_message.payload["message"], wait: 13)
     end
   end
 
