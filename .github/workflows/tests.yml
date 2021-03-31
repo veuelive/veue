@@ -64,44 +64,21 @@ jobs:
         run: npx prettier -c app spec
   rspec:
     name: rspec basic
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Startup Postgres
-        run: sudo systemctl start postgresql.service
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.7
-          bundler-cache: true
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.10.0
-      - name: Find yarn cache location
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: JS package cache
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Install packages
-        run: |
-          yarn install --pure-lockfile
-      - name: Setup test database
-        run: |
-          sudo -u postgres createuser -s -d -l runner
-          bundle exec rake db:setup
+      - name: Setup
+        run: ./bin/docker-test-setup
       - name: Run tests
-        run: bundle exec rspec --exclude-pattern "spec/system/**/*"
+        run: |
+          /bin/bash --login
+          rvm use
+          bundle exec rspec --exclude-pattern "spec/system/**/*"
 
   rspecSystem:
     name: rspec system
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     strategy:
       matrix:
@@ -109,103 +86,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Startup Postgres
-        run: sudo systemctl start postgresql.service
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.7
-          bundler-cache: true
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.10.0
-      - name: Find yarn cache location
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: JS package cache
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Install packages
-        run: |
-          yarn install --pure-lockfile
-      - name: Setup test database
-        run: |
-          sudo -u postgres createuser -s -d -l runner
-          bundle exec rake db:setup
+      - name: Setup
+        run: ./bin/docker-test-setup
       - name: Run tests
-        env:
-          SPEC_BROWSER: headless_${{matrix.browser}}
-        run: bundle exec rspec spec/system --fail-fast --order random
-      - name: Archive Tmp Folder
-        uses: actions/upload-artifact@v2
-        if: ${{ failure() }}
-        with:
-          name: ${{matrix.browser}} screenshots
-          path: tmp/screenshots
-      - name: Archive Log Folder
-        uses: actions/upload-artifact@v2
-        if: ${{ failure() }}
-        with:
-          name: logs ${{matrix.browser}}
-          path: log
-  rspecSafari:
-    if: ${{ false }}
-    name: rspec safari
-    runs-on: macos-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Start postgres
-        run: brew services start postgresql
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.7
-          bundler-cache: true
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.10.0
-      - name: Find yarn cache location
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: JS package cache
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Install packages
         run: |
-          yarn install --pure-lockfile
-      - name: Setup test database
-        env:
-          RAILS_ENV: test
-        run: |
-          bundle exec rake db:setup
-
-      - name: Run tests
-        env:
-          SPEC_BROWSER: safari
-        run: bundle exec rspec spec/system
-      - name: Archive Tmp Folder
-        uses: actions/upload-artifact@v2
-        if: ${{ failure() }}
-        with:
-          name: safari screenshots
-          path: tmp/screenshots
-      - name: Archive Log Folder
-        uses: actions/upload-artifact@v2
-        if: ${{ failure() }}
-        with:
-          name: safari logs
-          path: log
+          /bin/bash --login
+          source ~/.bash_profile
+          rvm use
+          bundle exec rspec --fail-fast=3 spec/system
   jest:
     name: jest
     runs-on: ubuntu-latest
