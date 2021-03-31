@@ -25,6 +25,7 @@ module GripBroadcaster
   # }
   #
   def self.send_message(channel, event_id, message={})
+    Rails.logger.info("Broadcasting to channel #{channel} with payload of #{message.inspect}")
     do_request(
       {
         items: [
@@ -41,11 +42,11 @@ module GripBroadcaster
   end
 
   def self.realm_id
-    ENV.fetch("GRIP_REALM_ID", "")
+    ENV.fetch("GRIP_REALM_ID", "fe9875ce")
   end
 
   def self.realm_key
-    ENV.fetch("GRIP_REALM_KEY", "")
+    ENV.fetch("GRIP_REALM_KEY", "+oz938I0EV+Y5eC1j/ZT8g==")
   end
 
   def self.jwt_token
