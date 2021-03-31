@@ -12,6 +12,8 @@ blocks:
           value: 'postgresql://postgres:@0.0.0.0:5432/myapp_test'
         - name: RAILS_ENV
           value: test
+        - name: DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL
+          value: 'true'
       jobs:
         - name: Test
           commands:
@@ -21,6 +23,5 @@ blocks:
             - cache restore
             - bundle install --deployment --path vendor/bundle
             - cache store
-            - export DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true
             - 'bundle exec rake db:setup'
             - bundle exec rspec
