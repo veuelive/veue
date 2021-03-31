@@ -24,7 +24,7 @@ blocks:
             - cache restore
             - bundle install --deployment --path vendor/bundle
             - yarn install
-            - 'rake webpacker:compile'
+            - 'bundle exec rake webpacker:compile'
             - cache store
             - 'bundle exec rake db:setup'
             - bundle exec rspec
