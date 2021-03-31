@@ -3,7 +3,7 @@ name: Veue
 agent:
   machine:
     type: e1-standard-4
-    os_image: ubuntu2004
+    os_image: ubuntu1804
 
 auto_cancel:
   running:
@@ -26,7 +26,7 @@ blocks:
             # Read about caching: https://docs.semaphoreci.com/article/149-caching
             - cache restore
 
-            - sem-version ruby 2.6.0
+            - sem-version ruby 2.7.2
             - sem-version node 14.16.1
             - bundle config set deployment 'true'
             - bundle config set path 'vendor/bundle'
