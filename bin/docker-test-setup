@@ -1,0 +1,7 @@
+#!/bin/bash --login
+
+rvm use
+
+bundle install --with=test
+
+rails db:setup

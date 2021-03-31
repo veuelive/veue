@@ -16,9 +16,9 @@ describe "Live Audience View" do
 
   describe "a user is logged in" do
     before :each do
-      visit root_path
       login_as user
       visit channel_path(channel)
+      ensure_live_event_source
     end
 
     it "should allow you to follow the streamer" do
