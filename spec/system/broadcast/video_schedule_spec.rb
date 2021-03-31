@@ -11,8 +11,6 @@ describe "Streamer scheduling" do
   let(:video) { channel.videos.active.last }
 
   before :each do
-    visit "/"
-    find("body").click
     login_as(streamer)
   end
 

@@ -17,7 +17,7 @@ describe "Prerecorded Audience View" do
     it "should have a video to play!" do
       visit path_for_video(video)
 
-      assert_video_is_playing
+      assert_video_is_playing(3)
 
       expect(is_video_playing?).to eq(true)
 
@@ -85,6 +85,7 @@ describe "Prerecorded Audience View" do
       late_message.update!(timecode_ms: 1_000)
       # We need to reload to get the event we just added
       visit path_for_video(video)
+      assert_video_is_playing
       # We are starting at 0ms, but the below method will wait long enough to see it appear
       expect(page).to have_content(late_message.payload["message"])
     end
@@ -94,12 +95,14 @@ describe "Prerecorded Audience View" do
     it "should show all chat messages" do
       late_message.update!(timecode_ms: 9_999)
       visit path_for_video(video, t: 1)
+      assert_video_is_playing(2)
       expect(page).to have_content(ChatMessage.first.payload["message"])
 
-      expect(page).to have_no_content(late_message.payload["message"])
+      expect(page).to have_no_content(late_message.payload["message"], wait: 0)
 
       # Seeking SHOULD have that message!
       visit path_for_video(video, t: 10)
+      assert_video_is_playing(10)
       # Messages from before stream should show
       first_message = ChatMessage.first
       expect(first_message.timecode_ms).to eq(0)
@@ -114,7 +117,7 @@ describe "Prerecorded Audience View" do
       visit path_for_video(video)
 
       expect(page).to have_css("[data-start-offset='#{start_offset}']")
-      expect(is_video_playing?).to be(true)
+      assert_video_is_playing(11)
 
       # We actually have no clue where in the time code we'll be, but its safe
       # to assume we'll be greater than 0.
@@ -126,6 +129,7 @@ describe "Prerecorded Audience View" do
       video.update!(start_offset: start_offset, duration: 30)
 
       visit path_for_video(video, t: 25)
+      assert_video_is_playing(30)
 
       expect(page).to have_css("[data-start-offset='#{start_offset}']")
       expect(is_video_playing?).to be(true)

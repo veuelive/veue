@@ -1,0 +1,30 @@
+version: v1.0
+name: Test MyApp
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Test
+    task:
+      env_vars:
+        - name: DATABASE_URL
+          value: 'postgresql://postgres:@0.0.0.0:5432/myapp_test'
+        - name: RAILS_ENV
+          value: test
+        - name: DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL
+          value: 'true'
+      jobs:
+        - name: Rspec Tests
+          commands:
+            - checkout
+            - sem-service start postgres 11
+            - sem-version ruby 2.7.2
+            - sem-version node 14
+            - cache restore
+            - bundle install --deployment --path vendor/bundle
+            - yarn install
+            - 'rake webpacker:compile'
+            - cache store
+            - 'bundle exec rake db:setup'
+            - bundle exec rspec
