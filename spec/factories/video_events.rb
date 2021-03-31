@@ -33,6 +33,6 @@ FactoryBot.define do
   factory :chat_message do
     video { create(:video) }
     user { create(:user) }
-    input { {message: Faker::Marketing.buzzwords} }
+    input { {message: Faker::Alphanumeric.unique.alpha(number: 20)} }
   end
 end

@@ -62,6 +62,12 @@ export default class extends BaseController {
       this.timecodeChanged();
     });
 
+    if (this.streamType === "vod") {
+      this.eventManager = new VodEventManager(0);
+    } else {
+      this.eventManager = new LiveEventManager(true);
+    }
+
     this.videoDemixer = new VideoDemixer(
       this.videoTarget,
       [
@@ -103,12 +109,6 @@ export default class extends BaseController {
         hls.loadSource(hlsSource);
         hls.attachMedia(this.videoTarget);
       }
-    }
-
-    if (this.streamType === "vod") {
-      this.eventManager = new VodEventManager(0);
-    } else {
-      this.eventManager = new LiveEventManager(true);
     }
 
     this.viewedPoller = window.setInterval(() => {
