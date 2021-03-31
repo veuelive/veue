@@ -50,9 +50,8 @@ export default class extends Controller {
       size: "original",
       format: "png",
       quality: 1,
+      circle: false,
     });
-
-    this.imageFieldTarget.value = "";
 
     const response = await putForm(
       `/users/${this.element.dataset.id}/upload_image`,
@@ -71,6 +70,7 @@ export default class extends Controller {
   }
 
   closeCropper(): void {
+    this.imageFieldTarget.value = "";
     this.croppieWrapperTarget.style.display = "none";
   }
 
