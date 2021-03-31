@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "system_helper"
-require("support/audience_spec_helpers")
+require "support/audience_spec_helpers"
 
 describe "Broadcaster Startup Flow" do
   let(:channel) { create(:channel) }
@@ -21,7 +21,7 @@ describe "Broadcaster Startup Flow" do
 
     it "should ask you to login" do
       visit "/broadcasts/startup"
-      login_as user
+      actual_login_as user
 
       # We should then load the broadcast page
       find("#broadcast")

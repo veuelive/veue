@@ -1,8 +1,4 @@
-interface VideoEvent {
-  type: string;
-  data: Record<string, unknown>;
-  timecodeMs: number;
-}
+import { VideoEvent } from "types/event_manager_interface";
 
 const ClearVideoEvent = new CustomEvent("clear");
 

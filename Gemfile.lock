@@ -8,6 +8,13 @@ GIT
       json (~> 2.0)
       require_all (~> 1.4)
 
+GIT
+  remote: https://github.com/veuelive/buttercms-ruby.git
+  revision: 1dd4902c6ae20b6cf61b0d02a19de066d36bd101
+  branch: hcatlin-patch-1
+  specs:
+    buttercms-ruby (1.9)
+
 GEM
   remote: https://rubygems.org/
   remote: https://gems.contribsys.com/
@@ -133,7 +140,6 @@ GEM
       msgpack (~> 1.0)
     brakeman (5.0.0)
     builder (3.2.4)
-    buttercms-ruby (1.8)
     byebug (11.1.3)
     cancancan (3.2.1)
     capybara (3.35.3)
@@ -475,7 +481,7 @@ DEPENDENCIES
   blind_index
   bootsnap (>= 1.4.2)
   brakeman
-  buttercms-ruby (>= 1.8)
+  buttercms-ruby!
   byebug
   cancancan
   capybara (>= 2.15)
