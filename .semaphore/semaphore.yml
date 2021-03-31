@@ -21,5 +21,6 @@ blocks:
             - cache restore
             - bundle install --deployment --path vendor/bundle
             - cache store
+            - export DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true
             - 'bundle exec rake db:setup'
             - bundle exec rspec
