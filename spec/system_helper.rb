@@ -61,7 +61,8 @@ RSpec.configure do |config|
     if ENV["RUBYLIB"] =~ /ruby-debug-ide/
       driven_by :debug_browser
     else
-      driven_by :selenium, using: (ENV["SPEC_BROWSER"] || :headless_chrome).to_sym
+      browser = (ENV["SPEC_BROWSER"] || :headless_chrome).to_sym
+      driven_by :selenium, using: browser
     end
   end
 end

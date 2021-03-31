@@ -16,8 +16,8 @@ describe "chat during live video" do
   describe "when a user is logged in" do
     before :each do
       login_as user
-      visit root_path
       visit channel_path(channel)
+      ensure_live_event_source
     end
 
     it "should allow for live chat messages to be sent" do
@@ -58,13 +58,28 @@ describe "chat during live video" do
 
     it "should show that you joined the chat" do
       assert_video_is_playing
-      expect(page).to have_content("#{user.display_name} has joined")
+      write_chat_message "hey hey"
+      page.refresh
+      expect(page).to have_content("#{user.display_name} has joined", wait: 5)
+    end
+
+    it "should show the message even if rejected" do
+      # Must come after to allow the user to be created
+      PerspectiveApi.key = "FAIL"
+      bad_word = "profanity"
+
+      write_chat_message bad_word
+      expect(page).to have_content(bad_word)
+
+      visit channel_path(channel)
+
+      expect(page).to have_no_content(bad_word)
     end
 
     it "should have visible scroll button after a bunch of messages" do
       13.times do |i|
         write_chat_message "Cowabunga!"
-        expect(page).to have_css(".message", count: i + 1)
+        expect(page).to have_css(".message", count: i + 1, wait: 5)
       end
       expect(page).to have_css(".message__content__avatar").once
 
@@ -83,7 +98,7 @@ describe "chat during live video" do
       message = Faker::Lorem.characters(number: 181)
       write_chat_message message
 
-      expect(page).to have_css(".message")
+      expect(page).to have_css(".message", wait: 10)
       expect(page).to have_content(message)
 
       div = find(".message__content__text")
@@ -105,34 +120,34 @@ describe "chat during live video" do
   end
 
   describe "logged out user" do
-    it "should show you joined after you logged in" do
+    before :each do
       visit channel_path(channel)
+      ensure_live_event_source
+    end
+
+    it "should show you joined after you logged in" do
       expect(page).to_not(have_content("#{user.display_name} has joined"))
       login_as user
+      # Load twice, one to register the user, and the other to reload and make sure
+      # we saw the message appear... it's tough because with SSE, it takes a second
+      # to register that you are on the page and your sse might not be setup yet.
+      visit channel_path(channel)
       visit channel_path(channel)
       expect(page).to(have_content("#{user.display_name} has joined"))
     end
 
-    it "should not allow you to chat until you login" do
-      login_as user
-      visit channel_path(channel)
-      write_chat_message "Who ordered a pizza?"
-      expect(page).to have_content("Who ordered a pizza?")
-    end
-
     it "should show messages from other users" do
-      visit channel_path(channel)
       first_message = someone_chatted
       second_message_text = "Cowabunga!"
 
-      expect(page).to have_content(first_message.text)
-      expect(page).to_not have_content(second_message_text)
+      expect(page).to have_content(first_message.text, wait: 20)
+      expect(page).to_not have_content(second_message_text, wait: 1)
       expect(page).to have_content(first_message.user.display_name)
 
       someone_chatted(second_message_text)
 
       expect(page).to have_content(first_message.text)
-      expect(page).to have_content(second_message_text)
+      expect(page).to have_content(second_message_text, wait: 10)
       expect(page).to have_content(first_message.user.display_name)
 
       page.refresh
@@ -147,7 +162,6 @@ describe "chat during live video" do
     end
 
     it "should have highlighted comment of streamer" do
-      visit channel_path(channel)
       expect(page).not_to(have_selector(".message-write"))
 
       # It is mocking comment of streamer
@@ -165,26 +179,10 @@ describe "chat during live video" do
     end
 
     it "should see login modal on chat area click" do
-      visit channel_path(channel)
       expect(page).to have_css(".message-login-prompt")
       find(".message-login-prompt").click
 
       expect(page).to have_css("#phone_number_input")
-    end
-
-    it "should show the message even if rejected" do
-      login_as user
-      visit channel_path(channel)
-
-      # Must come after to allow the user to be created
-      PerspectiveApi.key = "FAIL"
-      bad_word = "profanity"
-      write_chat_message bad_word
-      expect(page).to have_content(bad_word)
-
-      visit channel_path(channel)
-
-      expect(page).to have_no_content(bad_word)
     end
   end
 end

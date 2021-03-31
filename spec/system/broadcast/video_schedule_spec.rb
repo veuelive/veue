@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require "system_helper"
 
 describe "Streamer scheduling" do
   include AuthenticationTestHelpers::SystemTestHelpers
@@ -11,8 +11,7 @@ describe "Streamer scheduling" do
   let(:video) { channel.videos.active.last }
 
   before :each do
-    visit "/"
-    find("body").click
+    visit("/")
     login_as(streamer)
   end
 
