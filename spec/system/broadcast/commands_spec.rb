@@ -13,7 +13,6 @@ describe "Broadcast Commands" do
   end
 
   before :each do
-    visit root_path
     login_as(channel.user)
 
     visit "/broadcasts"
