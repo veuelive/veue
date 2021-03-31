@@ -27,7 +27,7 @@ blocks:
             - cache restore
 
             - sem-version ruby 2.7.2
-            - sem-version node 14.16.1
+            - sem-version node 14.16.0
             - bundle config set deployment 'true'
             - bundle config set path 'vendor/bundle'
             - bundle install
