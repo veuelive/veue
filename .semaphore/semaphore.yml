@@ -10,34 +10,7 @@ auto_cancel:
     when: "branch != 'master'"
 
 blocks:
-  - name: Setup
-    dependencies: []
-    task:
-      jobs:
-        - name: Setup
-          commands:
-            # Checkout code from Git repository. This step is mandatory if the
-            # job is to work with your code.
-            # Optionally you may use --use-cache flag to avoid roundtrip to
-            # remote repository.
-            # See https://docs.semaphoreci.com/article/54-toolbox-reference#checkout
-            - checkout
-            # Restore dependencies from cache.
-            # Read about caching: https://docs.semaphoreci.com/article/149-caching
-            - cache restore
-
-            - sem-version ruby 2.7.2
-            - sem-version node 14.16.0
-            - bundle config set deployment 'true'
-            - bundle config set path 'vendor/bundle'
-            - bundle install
-            - yarn install
-            - 'bundle exec rake webpacker:compile'
-            - gem install semaphore_test_boosters
-            - cache store
   - name: Rspec
-    dependencies:
-      - Setup
     task:
       env_vars:
         - name: DATABASE_URL
@@ -48,7 +21,25 @@ blocks:
           value: 'true'
       prologue:
         commands:
+          # Checkout code from Git repository. This step is mandatory if the
+          # job is to work with your code.
+          # Optionally you may use --use-cache flag to avoid roundtrip to
+          # remote repository.
+          # See https://docs.semaphoreci.com/article/54-toolbox-reference#checkout
+          - checkout
+          # Restore dependencies from cache.
+          # Read about caching: https://docs.semaphoreci.com/article/149-caching
           - cache restore
+
+          - sem-version ruby 2.7.2
+          - sem-version node 14.16.0
+          - bundle config set deployment 'true'
+          - bundle config set path 'vendor/bundle'
+          - bundle install
+          - yarn install
+          - 'bundle exec rake webpacker:compile'
+          - gem install semaphore_test_boosters
+          - cache store
           - sem-service start postgres 11
           - 'bundle exec rake db:setup'
       jobs:
