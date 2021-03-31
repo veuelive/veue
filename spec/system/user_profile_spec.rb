@@ -5,10 +5,6 @@ require "system_helper"
 describe "user profile" do
   let(:user) { create(:user) }
 
-  before :example do
-    visit root_path
-  end
-
   describe "logged out user" do
     it "should not access profile" do
       visit edit_user_path(user.id)
@@ -19,6 +15,7 @@ describe "user profile" do
   describe "logged in user" do
     before do
       login_as(user)
+      visit root_path
     end
 
     it "should have access to profile" do
