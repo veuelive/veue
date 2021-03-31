@@ -128,6 +128,10 @@ describe "chat during live video" do
     it "should show you joined after you logged in" do
       expect(page).to_not(have_content("#{user.display_name} has joined"))
       login_as user
+      # Load twice, one to register the user, and the other to reload and make sure
+      # we saw the message appear... it's tough because with SSE, it takes a second
+      # to register that you are on the page and your sse might not be setup yet.
+      visit channel_path(channel)
       visit channel_path(channel)
       expect(page).to(have_content("#{user.display_name} has joined"))
     end
