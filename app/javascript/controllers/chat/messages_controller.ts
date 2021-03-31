@@ -10,6 +10,7 @@ import {
 
 import { ChatMessage } from "types/chat";
 import { appendToChat, displayChatMessage } from "helpers/chat_helpers";
+import { VideoSeekEvent } from "helpers/video_helpers";
 
 interface User {
   name: string;
@@ -44,6 +45,10 @@ export default class MessagesController extends BaseController {
 
     this.subscribeToUserReactions();
 
+    document.addEventListener(
+      VideoSeekEvent,
+      this.resetLastMessageFromUserId.bind(this)
+    );
     this.myUserId = currentUserId();
   }
 
@@ -59,6 +64,11 @@ export default class MessagesController extends BaseController {
     document.removeEventListener(
       UserReactionMessageEvent,
       this.userReactionListener
+    );
+
+    document.removeEventListener(
+      VideoSeekEvent,
+      this.resetLastMessageFromUserId.bind(this)
     );
   }
 
@@ -87,6 +97,10 @@ export default class MessagesController extends BaseController {
         <div>${user.name} has joined</div>
       </div>`
     );
+  }
+
+  private resetLastMessageFromUserId(): void {
+    this.lastMessageFromUserId = null;
   }
 
   private showChatMessage(message: ChatMessage) {

@@ -11,7 +11,7 @@
     .messages{
       data: {
         controller: "chat--messages",
-        target: "chat--scroll.messages"
+        target: "chat--scroll.messages audience-view.chat"
       }
     }
   %button.chat-scroll{
@@ -23,7 +23,8 @@
     = svg_tag "chevron"
   .like-notification{
     data: {
-      controller: "chat--reaction-notification"
+      controller: "chat--reaction-notification",
+      target: "audience-view.likeNotification"
     }
   }
   - if video.finished?

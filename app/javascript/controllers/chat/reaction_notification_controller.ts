@@ -41,12 +41,12 @@ export default class extends Controller {
 
 export function renderReactionMarkup(
   name: string,
-  reationSVG = heartSvg
+  reactionSVG = heartSvg
 ): string {
   return `
     <div class="user-reaction">
       <div class="content">
-        <img src=${reationSVG} alt="reaction-icon"/>
+        <img src=${reactionSVG} alt="reaction-icon"/>
         <div class="user-reaction__text">${name}</div>
       </div>
     </div>
