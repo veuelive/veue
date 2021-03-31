@@ -1,11 +1,11 @@
 version: v1.0
-name: Test MyApp
+name: Veue
 agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: Test
+  - name: Rspec
     task:
       env_vars:
         - name: DATABASE_URL
@@ -16,6 +16,7 @@ blocks:
           value: 'true'
       jobs:
         - name: Rspec Tests
+          parallelism: 5
           commands:
             - checkout
             - sem-service start postgres 11
@@ -25,6 +26,7 @@ blocks:
             - bundle install --deployment --path vendor/bundle
             - yarn install
             - 'bundle exec rake webpacker:compile'
+            - gem install semaphore_test_boosters
             - cache store
             - 'bundle exec rake db:setup'
-            - bundle exec rspec
+            - rspec_booster --job $SEMAPHORE_JOB_INDEX/$SEMAPHORE_JOB_COUNT
