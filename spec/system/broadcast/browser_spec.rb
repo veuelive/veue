@@ -15,7 +15,6 @@ describe "Broadcaster Browser Area" do
   end
 
   before :each do
-    visit "/"
     login_as(streamer)
 
     visit "/broadcasts"
