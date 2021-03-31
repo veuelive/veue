@@ -62,38 +62,6 @@ jobs:
           node-version: 14.10.0
       - name: Prettier
         run: npx prettier -c app spec
-  rspec:
-    name: rspec basic
-    runs-on: self-hosted
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Setup
-        run: ./bin/docker-test-setup
-      - name: Run tests
-        run: |
-          /bin/bash --login
-          rvm use
-          bundle exec rspec --exclude-pattern "spec/system/**/*"
-
-  rspecSystem:
-    name: rspec system
-    runs-on: self-hosted
-
-    strategy:
-      matrix:
-        browser: ["chrome"]#, "firefox"]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Setup
-        run: ./bin/docker-test-setup
-      - name: Run tests
-        run: |
-          /bin/bash --login
-          source ~/.bash_profile
-          rvm use
-          bundle exec rspec --fail-fast=3 spec/system
   jest:
     name: jest
     runs-on: ubuntu-latest
