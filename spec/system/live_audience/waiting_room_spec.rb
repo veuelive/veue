@@ -12,9 +12,9 @@ describe "Stream Waiting Room" do
 
   describe "user get into waiting room" do
     before(:each) do
-      visit root_path
       login_as user
       visit channel_path(channel)
+      ensure_live_event_source
     end
 
     it "should show stream not started notification" do
@@ -37,10 +37,10 @@ describe "Stream Waiting Room" do
 
     it "should reload the view after video go live" do
       write_chat_message "Cowabunga!"
-      expect(page).to have_content("Cowabunga!").once
+      expect(page).to have_content("Cowabunga!", wait: 5).once
 
       video.go_live!
-      expect(page).to have_selector("#active-viewers")
+      expect(page).to have_selector("#active-viewers", wait: 10)
       expect(page).to have_selector(".primary-canvas")
 
       write_chat_message "Cowabunga!"
