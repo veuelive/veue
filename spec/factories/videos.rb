@@ -37,6 +37,10 @@ FactoryBot.define do
       state { :live }
       hls_url { "/__test/live/playback.m3u8" }
       started_at_ms { Time.now.utc.to_ms }
+
+      after :create do |video|
+        create(:video_layout_event, video: video, user: video.user)
+      end
     end
   end
 end
