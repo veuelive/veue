@@ -1,5 +1,5 @@
 export function displayTime(seconds: number): string {
-  const format = (val) => `0${Math.floor(val)}`.slice(-2);
+  const format = (val: number) => `0${Math.floor(val)}`.slice(-2);
   const hours = seconds / 3600;
   const minutes = (seconds % 3600) / 60;
 
