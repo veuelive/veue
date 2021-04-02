@@ -11,6 +11,7 @@ export const BroadcastLayoutChangedEvent = "BroadcastLayoutChanged";
 interface VideoShot {
   deviceId: string;
   deviceType: string;
+  priority: number;
   image: Blob;
 }
 
@@ -114,6 +115,7 @@ export default class VideoMixer implements Mixer {
       this.captureSources.map(async (source) => {
         const image = await source.captureImage();
         return {
+          priority: source.layout.priority,
           deviceId: source.deviceId,
           deviceType: source.videoSourceType,
           image,
