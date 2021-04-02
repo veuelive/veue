@@ -140,8 +140,8 @@ describe "Prerecorded Audience View" do
     end
 
     it "should end the video earlier if an offset is defined" do
-      end_offset = 5
-      video.update!(end_offset: end_offset, duration: 30)
+      end_offset = 50
+      video.update!(end_offset: end_offset, duration: 54)
 
       visit path_for_video(video)
 

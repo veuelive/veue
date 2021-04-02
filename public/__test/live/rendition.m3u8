@@ -4,4 +4,4 @@
 #EXT-X-PLAYLIST-TYPE:EVENT
 #EXT-X-MEDIA-SEQUENCE:0
 #EXTINF:2,
-/__test/0.ts
+/__test/chunks/0.ts

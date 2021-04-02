@@ -36,11 +36,11 @@ describe "Prerecorded Audience View" do
     end
 
     it "should not show the last navigation" do
-      current_navigation_url = video.browser_navigations[-2].payload["url"]
+      current_navigation_url = video.browser_navigations.first.payload["url"]
       last_navigation_url = video.browser_navigations.last.payload["url"]
 
       expect(page).to have_content(current_navigation_url)
-      expect(page).to have_no_content(last_navigation_url)
+      expect(page).to have_no_content(last_navigation_url, wait: 0)
     end
   end
 end
