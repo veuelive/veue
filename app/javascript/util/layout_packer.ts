@@ -1,5 +1,9 @@
 import { Rectangle, rectToBounds, Size } from "types/rectangle";
-import { BroadcastVideoLayout, VideoSourceType } from "types/video_layout";
+import {
+  BroadcastVideoLayout,
+  VideoSourceType,
+  TimecodeSection,
+} from "types/video_layout";
 import { VideoCaptureInterface } from "helpers/broadcast/capture_sources/base";
 
 interface PackSection {
