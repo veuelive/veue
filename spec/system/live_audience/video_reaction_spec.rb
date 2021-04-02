@@ -29,8 +29,8 @@ describe "Video Reaction Event" do
       # timeout) and appears as a chat message event inside messages area.
       expect(page).to have_css("div.messages > .user-reaction", wait: 10)
 
-      # Should have a joined event AND a reaction
-      expect_to_sse_broadcast(2)
+      # Should have a layout event, a joined event AND a reaction
+      expect_to_sse_broadcast(3)
     end
   end
 end
