@@ -20,13 +20,6 @@ describe "Live Audience View - URL Bar" do
   it "should show the urls in sequence" do
     browser_navigations = video.browser_navigations.published
     expect(page).to have_content(browser_navigations.first.payload["url"])
-    expect(page).to have_content(browser_navigations.second.payload["url"])
-  end
-
-  it "start with content at one second" do
-    visit(path_for_video(video, t: 1))
-    browser_navigations = video.browser_navigations.published
-    expect(page).to_not have_content(browser_navigations.first.payload["url"])
-    expect(page).to have_content(browser_navigations.second.payload["url"])
+    expect(page).to have_content(browser_navigations.second.payload["url"], wait: 10)
   end
 end

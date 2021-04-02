@@ -15,7 +15,7 @@ describe "Prerecorded Audience View" do
   before :each do
     3.times.map do |x|
       # Creates 0, 16s, and 24s time stamped events
-      timecode = x * 8000
+      timecode = x * 16_000
 
       create(:browser_navigation, video: video, timecode_ms: timecode)
       create(:chat_message, video: video, timecode_ms: timecode)
@@ -36,11 +36,11 @@ describe "Prerecorded Audience View" do
     end
 
     it "should not show the last navigation" do
-      current_navigation_url = video.browser_navigations[-2].payload["url"]
+      current_navigation_url = video.browser_navigations.first.payload["url"]
       last_navigation_url = video.browser_navigations.last.payload["url"]
 
-      expect(page).to have_content(current_navigation_url)
-      expect(page).to have_no_content(last_navigation_url)
+      expect(page).to have_content(current_navigation_url, wait: 1)
+      expect(page).to_not have_content(last_navigation_url, wait: 1)
     end
   end
 end
