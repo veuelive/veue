@@ -46,7 +46,7 @@ describe "Live Audience View" do
     end
 
     it "should update the timecode" do
-      assert_video_is_playing(0)
+      assert_video_is_playing
       expect(current_timecode).to be > 0
     end
 
