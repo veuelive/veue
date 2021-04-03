@@ -29,16 +29,16 @@
 
             - if channel_slug = current_user.channels.select(:slug).first
               %li.user-menu__item{role: "menuitem", data: { "test-id" => "user-menu-channel" }}
-                = link_to "My Channel", channel_path(channel_slug)
+                = link_to "My Channel", channel_path(channel_slug), draggable: false
 
             %li.user-menu__item{role: "menuitem", data: { "test-id" => "user-menu-profile" }}
-              = link_to "Profile", edit_user_path(id: current_user.id, anchor: 'profile')
+              = link_to "Profile", edit_user_path(id: current_user.id, anchor: 'profile'), draggable: false
             %li.user-menu__item{role: "menuitem", data: { "test-id" => "user-menu-privacy" }}
-              = link_to "Privacy", edit_user_path(id: current_user.id, anchor: 'privacy')
+              = link_to "Privacy", edit_user_path(id: current_user.id, anchor: 'privacy'), draggable: false
             %li.user-menu__item{role: "menuitem", data: { "test-id" => "user-menu-help" }}
-              = link_to "Help", edit_user_path(id: current_user.id, anchor: 'help')
+              = link_to "Help", edit_user_path(id: current_user.id, anchor: 'help'), draggable: false
             %li.user-menu__item{role: "menuitem", data: { "test-id" => "user-menu-sign-out" }}
-              = link_to "Sign Out", authentication_path, method: :delete
+              = link_to "Sign Out", authentication_path, method: :delete, draggable: false
     - else
       %button{data: { action: "click->authentication#showModal"}}
         Login
