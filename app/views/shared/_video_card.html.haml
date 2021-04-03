@@ -1,39 +1,39 @@
 - video = video_card
-.video-card.card{class: video.state}
-  = link_to video_link_path(video), draggable: "false" do
-    .video-card__image
-      = image_tag video_card_image_url(video), draggable: "false"
+- cache [video, video.channel] do
+  .video-card.card{class: video.state}
+    = link_to video_link_path(video), draggable: "false" do
+      .video-card__image
+        = image_tag video_card_image_url(video), draggable: "false"
 
-      - if video.live?
-        .video-card__image__live
-          = "LIVE"
-      - elsif video.finished?
-        .video-card__image__time
-          = seconds_to_time(video.duration)
+        - if video.live?
+          .video-card__image__live
+            = "LIVE"
+        - elsif video.finished?
+          .video-card__image__time
+            = seconds_to_time(video.duration)
 
-      .video-card__image__play
-        = svg_tag "play"
-      .video-card__image__views
-        .video-card__image__svg
-          = svg_tag "view"
-        .video-card__image__count
-          = video.video_views.count
-      .video-card__image__secondary
-        - if video.secondary_shot.attached?
-          = image_tag video.secondary_shot.variant(resize_to_fill: [76, 61]), draggable: "false"
-  .video-card__below
-    .video-card__below__picture
-      - channel = video.channel
-      %a{href: channel_path(channel.slug), draggable: "false"}
-        = channel.profile_image_circle(32)
-    .video-card__below__flex
-      .video-card__below__title
-        = video.title
-      .video-card__below__details
-        = video.user.display_name
+        .video-card__image__play
+          = svg_tag "play"
+        .video-card__image__views
+          .video-card__image__svg
+            = svg_tag "view"
+          .video-card__image__count
+            = video.video_views.count
+        .video-card__image__secondary
+          - if video.secondary_shot.attached?
+            = image_tag video.secondary_shot.variant(resize_to_fill: [76, 61]), draggable: "false"
+    .video-card__below
+      .video-card__below__picture
+        - channel = video.channel
+        %a{href: channel_path(channel.slug), draggable: "false"}
+          = channel.profile_image_circle(32)
+      .video-card__below__flex
+        .video-card__below__title
+          = video.title
+        .video-card__below__details
+          = video.user.display_name
 
-        - if !(current_page?("/") || current_page?("/discover"))
-          = svg_tag "ellipse-2"
-          .video-card__below__details__broadcast__time
-            = video.start_time_in_words
-
+          - if !(current_page?("/") || current_page?("/discover"))
+            = svg_tag "ellipse-2"
+            .video-card__below__details__broadcast__time
+              = video.start_time_in_words
