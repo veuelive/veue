@@ -11,6 +11,10 @@
     "channel-slug": current_channel.slug,
     "start-offset": current_video.start_offset,
     "end-offset": current_video.end_offset,
+    "phenix": {
+      "auth-token": PhenixEdgeAuth.auth_token(current_channel.slug),
+      "stream-token": PhenixEdgeAuth.stream_token(current_channel.slug)
+    }
   }
 }
   .content-area__primary{data: {controller: "canvas-size-observer"}}
@@ -25,7 +29,7 @@
       %canvas.primary-canvas{
         "data-target": "audience-view.primaryCanvas canvas-size-observer.canvas",
         width: 1200,
-        height: 740
+        height: 740,
       }
       = render partial: "channels/videos/partials/pip_area"
       = render partial: "channels/videos/partials/player_controls"
