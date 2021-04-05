@@ -224,14 +224,6 @@ export default class extends BaseController {
     }
   }
 
-  showChat(): void {
-    this.element.className += " show-chat";
-  }
-
-  hideChat(): void {
-    this.element.className = "content-area";
-  }
-
   showMuteBanner(): void {
     this.muteBannerTarget.style.display = "flex";
   }

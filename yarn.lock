@@ -7219,6 +7219,16 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
+phenix-edge-auth@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/phenix-edge-auth/-/phenix-edge-auth-1.2.5.tgz#27eb6b793b59aed0513274b4cf8b72941d04bc3b"
+  integrity sha512-Ezc/G94dUxzBW+c7kK7SJ8uGyCdIsnnXmjhcawMsmZb92MjFOpNuoPrWbiArwG3xJ0hka/sjkJWkXpQ1+xvOlg==
+
+phenix-web-sdk@^2021.0.9:
+  version "2021.0.9"
+  resolved "https://registry.yarnpkg.com/phenix-web-sdk/-/phenix-web-sdk-2021.0.9.tgz#f2f38112309eaf2bbe1539809556b0eac8f112ae"
+  integrity sha512-gQ4ELqZi45J0zIOrsTSwl/HA5dIC3Ig6Qr9shNGfQtU/VnLOb6uo3fLkMCJ08GyjCxx5Z/1pl+slfi1jqy+bjg==
+
 php-date-formatter@^1.3.4:
   version "1.3.6"
   resolved "https://registry.yarnpkg.com/php-date-formatter/-/php-date-formatter-1.3.6.tgz#6d67359da890c742005fa89d20be3ded31cc1d2a"
