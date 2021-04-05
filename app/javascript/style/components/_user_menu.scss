@@ -1,5 +1,6 @@
 @use "user_menu/dropdown";
 @use "user_menu/mobile_friendly";
+@use "../utils/breakpoints" as *;
 @use "../utils/color";
 @use '../utils/z_index';
 
@@ -35,7 +36,11 @@
 
   .user-menu {
     transition: opacity 200ms;
-    z-index: z_index.$nav-menu;
+    z-index: z_index.$nav-menu-mobile;
+
+    @include large() {
+      z-index: z_index.$nav-menu-desktop;
+    }
   }
 
   &[data-is-open="true"] {

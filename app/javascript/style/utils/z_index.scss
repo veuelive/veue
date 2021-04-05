@@ -31,8 +31,14 @@ $dropdown: next-z-index();
 // For tooltips on top of all layers but behind popups/modals & menus.
 $tool-tip: next-z-index();
 
-// This is the user menu that toggles visible from the top right.
-$nav-menu: next-z-index();
+// This is the user menu that toggles visible from the top right in mobile view.
+$nav-menu-mobile: next-z-index();
+
+// This is the mobile sticky header
+$header: next-z-index();
+
+// This is the user menu that toggles visible from the top right in desktop view.
+$nav-menu-desktop: next-z-index();
 
 // The areas behind modals
 $modal-skirt: next-z-index();
