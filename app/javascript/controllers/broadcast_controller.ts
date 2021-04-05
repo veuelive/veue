@@ -10,6 +10,7 @@ import LiveEventManager from "helpers/event/live_event_manager";
 import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
 import CaptureSourceManager from "helpers/broadcast/capture_source_manager";
 import Metronome from "helpers/broadcast/metronome";
+import { express } from "phenix-web-sdk";
 import {
   BroadcasterEnvironment,
   CreateBrowserViewPayload,
@@ -73,7 +74,11 @@ export default class extends Controller {
     );
     this.captureSourceManager.start();
 
-    this.streamCapturer = new StreamRecorder(this.videoMixer, this.audioMixer);
+    this.streamCapturer = new StreamRecorder(
+      this.videoMixer,
+      this.audioMixer,
+      this.element.dataset.phenixAuthToken
+    );
     this.metronome = new Metronome();
 
     ipcRenderer.invoke("getEnvironment").then(async (data) => {
@@ -148,12 +153,17 @@ export default class extends Controller {
     // }
 
     this.streamCapturer
-      .start(this.data.get("stream-key"))
+      .start(
+        this.element.dataset.phenixChannelId,
+        this.element.dataset.phenixPublishToken
+      )
       .then(async () => {
         this.state = "starting";
         this.data.set("started-at", Date.now().toString());
 
-        await Promise.all([this.sendSnapshots(), this.sendStartingLayout()]);
+        await this.sendStartingLayout();
+
+        this.sendSnapshots().then(() => "Snapshots uploaded");
 
         this.state = "live";
         this.metronome.start();
