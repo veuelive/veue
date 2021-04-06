@@ -8,5 +8,6 @@ FactoryBot.define do
     viewer_count { Faker::Number.within(range: 1..100_000) }
     device_id { SecureRandom.uuid }
     device_type { %w[screen camera].sample }
+    priority { 1 }
   end
 end
