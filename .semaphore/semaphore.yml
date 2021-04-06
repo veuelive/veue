@@ -31,7 +31,7 @@ blocks:
           # Read about caching: https://docs.semaphoreci.com/article/149-caching
           - cache restore
 
-          - git -C "$HOME/.rbenv/plugins/ruby-build" pull
+          - if [[ -f "/home/semaphore/.rbenv/plugins/ruby-build" ]]; then git -C /home/semaphore/.rbenv/plugins/ruby-build pull; fi
           - sem-version ruby 2.7.3
           - sem-version node 14.16.0
           - bundle config set deployment 'true'
