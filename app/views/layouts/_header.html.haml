@@ -15,7 +15,7 @@
           "user-name": current_user.display_name,
           "target": "user-menu.area",
           "is-open": "false",
-          "action": "mouseenter->user-menu#openOrCloseEvent mouseleave->user-menu#openOrCloseEvent resize@window->user-menu#layout click->user-menu#openOrCloseEvent"
+          "action": "pointerenter->user-menu#openOrCloseEvent pointerleave->user-menu#openOrCloseEvent resize@window->user-menu#layout click->user-menu#openOrCloseEvent"
         }
       }
         = render partial: "users/partials/profile_image", locals: { user: current_user }
