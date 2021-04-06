@@ -10,8 +10,15 @@
       target: "audience--player-controls.progressBarContainer",
       action: "pointerdown->audience--player-controls#handlePointerDown
                pointerup->audience--player-controls#handlePointerUp
-               pointermove->audience--player-controls#handlePointerMove"
+               pointermove->audience--player-controls#handlePointerMove
+               pointerenter->audience--player-controls#handlePointerEnter
+               pointerleave->audience--player-controls#handlePointerLeave"
     }}
+
+    .progress-bar__time-preview{style: "display: none;", data: { target: "audience--player-controls.timePreview"}}
+    .progress-bar__video-preview{style: "display: none;", data: { target: "audience--player-controls.videoPreviewContainer" }}
+      %img.progress-bar__video-preview__image{style: "display: none;", data: { target: "audience--player-controls.videoPreviewImage" }}
+
     %span.progress-bar{
       data: { target: "audience--player-controls.progressBar", currentTime: "0", duration: "0" }
     }
