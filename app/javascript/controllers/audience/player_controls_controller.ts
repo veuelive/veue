@@ -1,21 +1,28 @@
 import BaseController from "controllers/base_controller";
 import { displayTime } from "util/time";
 import { VideoSeekEvent } from "helpers/video_helpers";
+import { secureFetch } from "util/fetch";
 
 export default class extends BaseController {
   static targets = [
     "video",
+    "videoPreviewContainer",
+    "videoPreviewImage",
     "audienceView",
     "progressBar",
     "progressBarContainer",
     "progressBarButton",
     "timeDuration",
     "timeDisplay",
+    "timePreview",
   ];
 
   readonly videoTarget!: HTMLVideoElement;
+  readonly videoPreviewImageTarget!: HTMLImageElement;
+  readonly videoPreviewContainerTarget!: HTMLDivElement;
   readonly timeDurationTarget!: HTMLElement;
   readonly timeDisplayTarget!: HTMLElement;
+  readonly timePreviewTarget!: HTMLDivElement;
   readonly audienceViewTarget!: HTMLElement;
   readonly progressBarTarget!: HTMLElement;
   readonly progressBarContainerTarget!: HTMLElement;
@@ -69,18 +76,20 @@ export default class extends BaseController {
     event.preventDefault();
 
     this.pointerIsDown = true;
-    this.handlePointerLocation(event);
+    this.updateVideoTime(event);
   }
 
   handlePointerMove(event: PointerEvent): void {
     event.preventDefault();
+
+    this.displayPreview(event);
 
     // The pointer has to be down for us to register a pointermove
     if (this.pointerIsDown !== true) {
       return;
     }
 
-    this.handlePointerLocation(event);
+    this.updateVideoTime(event);
   }
 
   handlePointerUp(): void {
@@ -105,6 +114,39 @@ export default class extends BaseController {
       });
   }
 
+  handlePointerEnter(event: PointerEvent): void {
+    event.preventDefault();
+
+    this.displayPreview(event);
+  }
+
+  handlePointerLeave(event: PointerEvent): void {
+    event.preventDefault();
+
+    this.timePreviewTarget.style.display = "none";
+    this.videoPreviewContainerTarget.style.display = "none";
+  }
+
+  displayPreview(event: PointerEvent): void {
+    event.preventDefault();
+
+    const currentTime = this.getPointerLocationTime(event);
+
+    if (currentTime == null || currentTime < -1 || currentTime === NaN) {
+      return;
+    }
+
+    this.displayTimeAndVideoPreviews(event, currentTime);
+
+    const timecode = Math.floor(currentTime / 30);
+
+    if (timecode >= 0) {
+      this.videoPreviewImageTarget.src = `${window.location.pathname}/snapshots/${timecode}.jpg`;
+    }
+
+    this.videoPreviewImageTarget.style.display = "block";
+  }
+
   handlePointerLocation(event: PointerEvent): void {
     const frameRect = this.progressBarContainerTarget.getBoundingClientRect();
 
@@ -122,6 +164,45 @@ export default class extends BaseController {
       detail: { timecodeMs: currentTime },
     });
     this.videoTarget.dispatchEvent(evt);
+  }
+
+  updateVideoTime(event: PointerEvent): void {
+    const currentTime = this.getPointerLocationTime(event);
+    this.timeDisplayTarget.innerHTML = displayTime(currentTime);
+    this.videoTarget.currentTime = currentTime;
+    this.handleTimeUpdate();
+  }
+
+  getPointerLocationTime(event: PointerEvent): number {
+    const frameRect = this.progressBarContainerTarget.getBoundingClientRect();
+
+    // find the offset of the progressbar and the actual X location of the event
+    const x = event.clientX - frameRect.left;
+    const pos = x / frameRect.width;
+    return pos * this.duration;
+  }
+
+  private displayTimeAndVideoPreviews(
+    event: PointerEvent,
+    currentTime: number
+  ): void {
+    const containerOffset = this.progressBarContainerTarget.getBoundingClientRect()
+      .x;
+    const timePreviewOffset =
+      this.timePreviewTarget.getBoundingClientRect().width / 2;
+
+    const x = event.clientX - containerOffset;
+    const timePreviewX = x - timePreviewOffset;
+    this.timePreviewTarget.style.transform = `translate(${timePreviewX}px, -100%)`;
+    this.timePreviewTarget.innerText = displayTime(currentTime);
+    this.timePreviewTarget.style.display = "block";
+
+    const videoPreviewOffset =
+      this.videoPreviewContainerTarget.getBoundingClientRect().width / 2;
+    const videoPreviewX = x - videoPreviewOffset;
+
+    this.videoPreviewContainerTarget.style.transform = `translate(${videoPreviewX}px, -100%)`;
+    this.videoPreviewContainerTarget.style.display = "block";
   }
 
   set videoState(state: string) {
