@@ -67,4 +67,33 @@ RSpec.describe "VideoSnapshots", type: :request do
       expect(response).to have_http_status(:success)
     end
   end
+
+  describe "GET /snapshots.png?t=timecode" do
+    let(:video) { create(:vod_video) }
+    let(:headers) { {ACCEPT: "image/jpeg"} }
+
+    it "returns the snapshot at 0 seconds if the timecode is 0" do
+      snapshot_one = create(:video_snapshot, video: video, timecode: 0)
+      create(:video_snapshot, video: video, timecode: 31_000)
+
+      expect(get("#{channel_video_video_snapshot_path(video.channel, video, '0')}.jpg"))
+        .to redirect_to(snapshot_one.preview_url)
+    end
+
+    it "returns the snapshot at 30 seconds if the timecode is 1" do
+      create(:video_snapshot, video: video, timecode: 0)
+      snapshot_two = create(:video_snapshot, video: video, timecode: 30_000)
+
+      expect(get("#{channel_video_video_snapshot_path(video.channel, video, '1')}.jpg"))
+        .to redirect_to(snapshot_two.preview_url)
+    end
+
+    it "returns the snapshot at 60 seconds if the timecode is 3" do
+      create(:video_snapshot, video: video, timecode: 30_000)
+      snapshot_two = create(:video_snapshot, video: video, timecode: 60_000)
+
+      expect(get("#{channel_video_video_snapshot_path(video.channel, video, '2')}.jpg"))
+        .to redirect_to(snapshot_two.preview_url)
+    end
+  end
 end
