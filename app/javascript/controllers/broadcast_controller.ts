@@ -183,10 +183,11 @@ export default class extends Controller {
 
     await Promise.all(
       snapshots.map(async (snapshot) => {
-        const { image, deviceType, deviceId } = snapshot;
+        const { image, deviceType, deviceId, priority } = snapshot;
         const data = {
           timecode,
           image,
+          priority,
           device_type: deviceType,
           device_id: deviceId,
         };
