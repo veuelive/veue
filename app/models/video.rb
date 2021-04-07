@@ -18,7 +18,7 @@ class Video < ApplicationRecord
   has_many :video_layout_events, dependent: :destroy
   has_many :video_views, dependent: :destroy
   has_many :video_snapshots, dependent: :destroy
-  has_many :video_categories
+  has_many :video_categories, dependent: :destroy
   has_many :categories, through: :video_categories
 
   has_one_attached :primary_shot
