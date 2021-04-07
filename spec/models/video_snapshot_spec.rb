@@ -8,6 +8,27 @@ RSpec.describe VideoSnapshot, type: :model do
   let(:random_user) { create(:user) }
   let(:video) { create(:video, user: user, channel: user.channels.first) }
 
+  describe "Timecode testing" do
+    let!(:first_snapshot) { create(:video_snapshot, video: video, timecode: 0, priority: 2) }
+    let!(:second_snapshot) { create(:video_snapshot, video: video, timecode: 30_000) }
+    let!(:third_snapshot) { create(:video_snapshot, video: video, timecode: 60_000) }
+
+    it "Should show the first snapshot from 0 - 30 seconds even with a priority 2" do
+      snapshot = video.video_snapshots.find_at_timecode(0)
+      expect(snapshot).to eq(first_snapshot)
+    end
+
+    it "Should show the second snapshot when looking from 30 - 60 seconds" do
+      snapshot = video.video_snapshots.find_at_timecode(1)
+      expect(snapshot).to eq(second_snapshot)
+    end
+
+    it "Should show the third snapshot when looking from 60 - 90 seconds" do
+      snapshot = video.video_snapshots.find_at_timecode(2)
+      expect(snapshot).to eq(third_snapshot)
+    end
+  end
+
   describe "Ability testing on snapshots" do
     let!(:video_snapshot) { create(:video_snapshot, video: video) }
 
@@ -20,7 +41,9 @@ RSpec.describe VideoSnapshot, type: :model do
     it "Should not allow a user who does not own the video to read or manage snapshots" do
       ability = Ability.new(random_user)
 
-      %i[manage create read update destroy].each do |action|
+      expect(ability.can?(:read, video_snapshot)).to eq(true)
+
+      %i[manage create update destroy].each do |action|
         expect(ability.cannot?(action, video_snapshot)).to eq(true)
       end
     end
@@ -28,7 +51,10 @@ RSpec.describe VideoSnapshot, type: :model do
     it "Should not allow an anonymous user to read or manage snapshots" do
       ability = Ability.new(nil)
       expect(ability.cannot?(:manage, video)).to eq(true)
-      %i[manage create read update destroy].each do |action|
+
+      expect(ability.can?(:read, video_snapshot)).to eq(true)
+
+      %i[manage create update destroy].each do |action|
         expect(ability.cannot?(action, video_snapshot)).to eq(true)
       end
     end
