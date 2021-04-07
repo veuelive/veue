@@ -4,8 +4,7 @@
 
 module PhenixEdgeAuth
   def self.default_publishing_capabilities
-    # %w(streaming-lite on-demand-lite xhd)
-    %w[uhd on-demand]
+    %w[uhd streaming on-demand multi-bitrate sd xhd fhd].join(", ")
   end
 
   def self.app_id

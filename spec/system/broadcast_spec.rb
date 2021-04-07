@@ -42,23 +42,6 @@ describe "Broadcast View" do
     expect_no_javascript_errors
   end
 
-  describe "before live streaming" do
-    it "should allow me to change my URL" do
-      navigate_to(url = "https://1982.com")
-
-      wait_for_broadcast_state("ready")
-      click_start_broadcast_button
-      find("*[data-broadcast-started-at]")
-
-      expect(video).to be_live
-      wait_for_broadcast_state("live")
-      expect(BrowserNavigation.published.last.payload["url"]).to eq(url)
-
-      visit channel_path(streamer.channels.first)
-      expect(find("#address-input")).to have_text(url)
-    end
-  end
-
   describe "start the broadcast" do
     before do
       5.times { create(:follow, user: create(:user), channel: channel) }
@@ -71,7 +54,6 @@ describe "Broadcast View" do
       wait_for_broadcast_state("ready")
 
       click_start_broadcast_button
-      expect(page).to have_content("Starting")
       wait_for_broadcast_state("live")
 
       server = Capybara.current_session.server

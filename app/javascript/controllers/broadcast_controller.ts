@@ -138,20 +138,6 @@ export default class extends Controller {
   }
 
   startStreaming(): void {
-    // TODO:: this mechanism of event is partially implemented, will
-    // be part of next PR.
-
-    // const titlePresent = this.element.dataset.videoTitle;
-    // if (!titlePresent) {
-    //   document.dispatchEvent(
-    //     new CustomEvent(ShowSettingsMenuEvent, {
-    //       detail: {
-    //         titlePresent,
-    //       },
-    //     })
-    //   );
-    // }
-
     this.streamCapturer
       .start(
         this.element.dataset.phenixChannelId,

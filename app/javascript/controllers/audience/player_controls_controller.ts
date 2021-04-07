@@ -1,25 +1,38 @@
 import BaseController from "controllers/base_controller";
 import { displayTime } from "util/time";
 import { VideoSeekEvent } from "helpers/video_helpers";
+import playSvg from "images/play.svg";
+import pauseSvg from "images/pause.svg";
+import mutedSvg from "images/volume-mute.svg";
+import unmutedSvg from "images/volume-max.svg";
+
+export const VideoReadyEvent = "videoReadyEvent";
 
 export default class extends BaseController {
   static targets = [
     "video",
     "audienceView",
     "progressBar",
+    "videoTarget",
+    "muteBanner",
     "progressBarContainer",
     "progressBarButton",
     "timeDuration",
     "timeDisplay",
+    "toggleAudio",
+    "togglePlay",
   ];
 
   readonly videoTarget!: HTMLVideoElement;
   readonly timeDurationTarget!: HTMLElement;
   readonly timeDisplayTarget!: HTMLElement;
   readonly audienceViewTarget!: HTMLElement;
+  readonly muteBannerTarget!: HTMLElement;
   readonly progressBarTarget!: HTMLElement;
   readonly progressBarContainerTarget!: HTMLElement;
   readonly progressBarButtonTarget!: HTMLButtonElement;
+  readonly togglePlayTargets!: HTMLElement[];
+  readonly toggleAudioTargets!: HTMLElement[];
 
   private pointerIsDown: boolean;
   element!: HTMLElement;
@@ -34,6 +47,11 @@ export default class extends BaseController {
       "timeupdate",
       this.handleTimeUpdate.bind(this)
     );
+
+    this.videoTarget.addEventListener(
+      VideoReadyEvent,
+      this.togglePlay.bind(this)
+    );
   }
 
   disconnect(): void {
@@ -46,6 +64,92 @@ export default class extends BaseController {
       "loadedmetadata",
       this.handleLoadedMetadata.bind(this)
     );
+  }
+
+  toggleAudio(): void {
+    this.audioState = this.audioState === "muted" ? "unmuted" : "muted";
+  }
+
+  togglePlay(): void {
+    if (this.state === "ended") {
+      this.videoTarget.currentTime = 0;
+    }
+
+    if (this.state !== "playing") {
+      this.videoTarget
+        .play()
+        .then(() => (this.state = "playing"))
+        .catch(() => {
+          this.state = "paused";
+          this.audioState = "muted";
+          this.showMuteBanner();
+          this.videoTarget
+            .play()
+            .then(() => (this.state = "playing"))
+            .catch((e) => {
+              console.error(e);
+            });
+        });
+    } else {
+      this.videoTarget.pause();
+      this.state = "paused";
+    }
+  }
+
+  showMuteBanner(): void {
+    this.muteBannerTarget.style.display = "flex";
+  }
+
+  hideMuteBanner(): void {
+    this.muteBannerTarget.style.display = "none";
+  }
+
+  set state(state: string) {
+    this.data.set("state", state);
+
+    const pausedStates = ["paused", "ended"];
+
+    const toggleTo = pausedStates.includes(this.state) ? "play" : "pause";
+    const imagePath = pausedStates.includes(this.state) ? playSvg : pauseSvg;
+
+    this.togglePlayTargets.forEach((playElement) => {
+      // Allows for styling of the play button due to appearing off-center
+      if (toggleTo === "play") {
+        playElement.classList.add("play");
+      } else {
+        playElement.classList.remove("play");
+      }
+      playElement.innerHTML = `<img src="${imagePath}" alt="${toggleTo}" />`;
+    });
+  }
+
+  get state(): string {
+    return this.data.get("state");
+  }
+
+  set audioState(audioState: string) {
+    this.data.set("audioState", audioState);
+
+    let imagePath: string;
+    let toggleTo: "mute" | "unmute";
+
+    if (this.audioState === "muted") {
+      imagePath = mutedSvg;
+      toggleTo = "unmute";
+      this.videoTarget.muted = true;
+    } else {
+      imagePath = unmutedSvg;
+      toggleTo = "mute";
+      this.videoTarget.muted = false;
+    }
+
+    this.toggleAudioTargets.forEach((audioElement) => {
+      audioElement.innerHTML = `<img src="${imagePath}"  alt="${toggleTo}" />`;
+    });
+  }
+
+  get audioState(): string {
+    return this.data.get("audioState");
   }
 
   handleLoadedMetadata(): void {
