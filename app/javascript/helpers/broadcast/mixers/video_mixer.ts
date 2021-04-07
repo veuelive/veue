@@ -71,7 +71,8 @@ export default class VideoMixer implements Mixer {
       });
 
     this.drawTimecode();
-    requestAnimationFrame(() => this.computeFrame());
+    setTimeout(this.computeFrame.bind(this), 5);
+    // requestAnimationFrame(() => this.computeFrame());
   }
 
   private drawTimecode() {

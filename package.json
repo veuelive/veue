@@ -26,6 +26,8 @@
     "mobile-drag-drop": "^2.3.0-rc.2",
     "mux-embed": "^3.4.1",
     "node-fetch": "2.6.1",
+    "phenix-edge-auth": "^1.2.5",
+    "phenix-web-sdk": "^2021.0.9",
     "sass": "^1.26.10",
     "simplebar": "^5.3.0",
     "stimulus": "^1.1.1",

@@ -73,7 +73,11 @@ export default class extends Controller {
     );
     this.captureSourceManager.start();
 
-    this.streamCapturer = new StreamRecorder(this.videoMixer, this.audioMixer);
+    this.streamCapturer = new StreamRecorder(
+      this.videoMixer,
+      this.audioMixer,
+      this.element.dataset.phenixAuthToken
+    );
     this.metronome = new Metronome();
 
     ipcRenderer.invoke("getEnvironment").then(async (data) => {
@@ -133,27 +137,18 @@ export default class extends Controller {
   }
 
   startStreaming(): void {
-    // TODO:: this mechanism of event is partially implemented, will
-    // be part of next PR.
-
-    // const titlePresent = this.element.dataset.videoTitle;
-    // if (!titlePresent) {
-    //   document.dispatchEvent(
-    //     new CustomEvent(ShowSettingsMenuEvent, {
-    //       detail: {
-    //         titlePresent,
-    //       },
-    //     })
-    //   );
-    // }
-
     this.streamCapturer
-      .start(this.data.get("stream-key"))
+      .start(
+        this.element.dataset.phenixChannelId,
+        this.element.dataset.phenixPublishToken
+      )
       .then(async () => {
         this.state = "starting";
         this.data.set("started-at", Date.now().toString());
 
-        await Promise.all([this.sendSnapshots(), this.sendStartingLayout()]);
+        await this.sendStartingLayout();
+
+        this.sendSnapshots().then(() => "Snapshots uploaded");
 
         this.state = "live";
         this.metronome.start();

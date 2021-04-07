@@ -14,6 +14,11 @@
       "channel-slug": current_broadcast_video.channel.slug,
       "channel-user-id": current_broadcast_video.user.id,
       "user-name": current_user.display_name,
+      phenix: {
+        "channel-id": current_channel.slug,
+        "auth-token": PhenixEdgeAuth.auth_token(current_channel.slug),
+        "publish-token": PhenixEdgeAuth.publish_token(current_channel.slug, current_broadcast_video.id)
+      }
     }
   }
   .broadcast--content
