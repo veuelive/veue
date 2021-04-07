@@ -8,7 +8,9 @@ import { startMuxData } from "controllers/audience/mux_integration";
 import { isProduction } from "util/environment";
 import { postForm } from "util/fetch";
 import { BroadcastVideoLayout } from "types/video_layout";
-import { VideoSeekEvent } from "helpers/video_helpers";
+import HlsMediaProvider from "helpers/remote_media_providers/hls_media_provider";
+import PhenixMediaProvider from "helpers/remote_media_providers/phenix_media_provider";
+import RemoteMediaProvider from "helpers/remote_media_providers/remote_media_provider";
 
 export default class extends BaseController {
   element: HTMLElement;
@@ -33,6 +35,7 @@ export default class extends BaseController {
   private videoDemixer: VideoDemixer;
   private eventManager: EventManagerInterface;
   private viewedPoller: number;
+  private remoteMediaProvider: RemoteMediaProvider;
 
   connect(): void {
     this.data.set("timecode", "-1");
@@ -40,6 +43,19 @@ export default class extends BaseController {
     if (isProduction()) {
       startMuxData();
     }
+
+    const config = this.element.dataset;
+    if (config.hlsUrl) {
+      this.remoteMediaProvider = new HlsMediaProvider(config.hlsUrl);
+    } else if (config.phenixAuthToken) {
+      this.remoteMediaProvider = new PhenixMediaProvider(
+        config.phenixAuthToken,
+        config.phenixStreamToken,
+        config.phenixChannelAlias
+      );
+    }
+
+    this.remoteMediaProvider.connect(this.videoTarget);
 
     this.timecodeSynchronizer = new TimecodeSynchronizer(() => {
       this.timecodeChanged();
