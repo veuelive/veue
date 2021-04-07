@@ -308,13 +308,11 @@ GRIP_URL; //- optional if you want to override
 ## Upgrading Ruby Version
 
 When upgrading Ruby versions there are multiple places this must be done
-depending on the upgrade and varies depending on the version upgrade
+depending on the upgrade and varies depending on the version upgrade.
 
 ### Patch Version
 
-Patch versions dont require as many fixes since GH Actions will by
-default handle a new patch version for us. However, we must still update
-the following for new patch versions:
+Patch versions require changing the following 3 files:
 
 - `Gemfile`
 - `.ruby-version`
@@ -333,6 +331,9 @@ ruby 3.0.1
 ruby 3.0.1
 ```
 
+After this, make sure to run `bundle install` to update the
+`Gemfile.lock`
+
 For `.semaphore/semaphore.yml` find the line that looks like this:
 
 ```yml
@@ -343,3 +344,15 @@ For `.semaphore/semaphore.yml` find the line that looks like this:
 ```
 
 ### Major / Minor versions
+
+For major / minor versions of Ruby you must update all of the above
+files and also update the `ruby-version` to the closest minor version in
+`.github/workflows/tests.yml`, this will also pull the latest patch
+version IE: 3.0 -> 3.0.1
+
+```yml
+# .github/workflows/tests.yml
+# ...
+
+- ruby-version: "3.0"
+```
