@@ -4,7 +4,6 @@ class Channel < ApplicationRecord
   extend FriendlyId
 
   before_save :normalize_name
-  before_create :register_with_mux
 
   belongs_to :user
   has_many :videos, dependent: :destroy
@@ -69,16 +68,5 @@ class Channel < ApplicationRecord
 
   def about
     user.about_me
-  end
-
-  private
-
-  def register_with_mux
-    return if mux_live_stream_id
-
-    live_stream_response = MUX_SERVICE.create_live_stream
-    data = live_stream_response.data
-    self.mux_live_stream_id = data.id
-    self.mux_stream_key = data.stream_key
   end
 end

@@ -15,15 +15,6 @@ describe BroadcastsController do
   end
 
   describe "before broadcast" do
-    it "should include the stream key!" do
-      get broadcasts_path
-      follow_redirect!
-
-      stream_key = user.channels.first.mux_stream_key
-      expect(stream_key).to have_attributes(size: (be > 2))
-      expect(response.body).to include(stream_key)
-    end
-
     it "should have an app configuration set" do
       expect(response.body).to match(/"env":"test"/im)
     end
