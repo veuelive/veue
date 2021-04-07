@@ -5,7 +5,7 @@
 .user-menu[data-mode="dropdown"] {
   // layout
   position: absolute;
-  top: header.$height;
+  top: header.$desktop-height;
   right: 27px;
   min-width: 190px;
   padding-top: 10px;
