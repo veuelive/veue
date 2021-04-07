@@ -32,7 +32,7 @@ RSpec.describe Video, type: :model do
       video.update!(scheduled_at: one_week_from_now)
       video.start!
       expect(video.scheduled?).to be(false)
-      expect(video.starting?).to be(true)
+      expect(video.live?).to be(true)
     end
 
     it "should not allow you to schedule in the past" do

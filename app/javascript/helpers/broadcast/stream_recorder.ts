@@ -33,11 +33,16 @@ export default class StreamRecorder {
   }
 
   start(channelId: string, publishToken: string): Promise<void> {
-    this.mediaStream = this.canvas.captureStream(60);
+    this.mediaStream = this.canvas.captureStream(18);
 
     this.mediaStream.addTrack(this.audioMixer.audioTrack);
 
     return new Promise((resolve) => {
+      // In test environment, don't actually connect
+      if (globalThis.appConfig?.env === "test") {
+        resolve();
+      }
+
       this.channelExpress.publishToChannel(
         {
           channel: {
@@ -47,7 +52,8 @@ export default class StreamRecorder {
           // authToken: this.authToken,
           publishToken: publishToken,
           userMediaStream: this.mediaStream,
-          videoElement: document.querySelector("#debug_output"),
+          treatBackgroundAsOffline: false,
+          // videoElement: document.querySelector("#debug_output"),
         },
         (error, response) => {
           if (error) {
