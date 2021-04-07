@@ -4,7 +4,7 @@
 
 .menu-area[data-is-open="true"] {
   .user-menu[data-mode="mobile"] {
-    top: header.$height;
+    top: header.$mobile-height;
   }
 }
 
