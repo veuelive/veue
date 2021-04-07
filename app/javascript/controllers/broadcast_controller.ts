@@ -10,7 +10,6 @@ import LiveEventManager from "helpers/event/live_event_manager";
 import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
 import CaptureSourceManager from "helpers/broadcast/capture_source_manager";
 import Metronome from "helpers/broadcast/metronome";
-import { express } from "phenix-web-sdk";
 import {
   BroadcasterEnvironment,
   CreateBrowserViewPayload,
