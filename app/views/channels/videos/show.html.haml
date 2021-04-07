@@ -4,13 +4,18 @@
   "data": {
     "controller": "audience-view audience--player-controls audience--#{current_video.stream_type}-video",
     "video-id": current_video.id,
+    "audience-view": {
+      "stream-type": current_video.stream_type
+    },
     "channel-id": current_channel.id,
     "channel-slug": current_channel.slug,
     "start-offset": current_video.start_offset,
     "end-offset": current_video.end_offset,
+    "hls-url": current_video.hls_url,
     "phenix": {
       "auth-token": PhenixEdgeAuth.auth_token(current_channel.slug),
-      "stream-token": PhenixEdgeAuth.stream_token(current_channel.slug)
+      "stream-token": PhenixEdgeAuth.stream_token(current_channel.slug),
+      "channel-alias": current_channel.slug
     }
   }
 }
@@ -41,7 +46,6 @@
     %video.player__video.viewer{
       "data-target": "audience--#{current_video.stream_type}-video.video audience--player-controls.video audience-view.video",
       crossorigin: "anonymous",
-      src: current_video.hls_url,
       style: "width: 0px; height: 0;",
       playsinline: "playsinline",
     }
