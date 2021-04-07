@@ -32,7 +32,7 @@ blocks:
           - cache restore
 
           - git -C /home/semaphore/.rbenv/plugins/ruby-build pull
-          - sem-version ruby 2.7.3
+          - sem-version ruby 2.6.7
           - sem-version node 14.16.0
           - bundle config set deployment 'true'
           - bundle config set path 'vendor/bundle'

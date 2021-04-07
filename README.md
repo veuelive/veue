@@ -304,3 +304,55 @@ GRIP_REALM_ID;
 GRIP_REALM_KEY;
 GRIP_URL; //- optional if you want to override
 ```
+
+## Upgrading Ruby Version
+
+When upgrading Ruby versions there are multiple places this must be done
+depending on the upgrade and varies depending on the version upgrade.
+
+### Patch Version
+
+Patch versions require changing the following 3 files:
+
+- `Gemfile`
+- `.ruby-version`
+- `.semaphore/semaphore.yml`
+
+For `Gemfile`, update the `ruby <version>` and do the same for
+`.ruby-version`.
+
+```rb
+# Gemfile
+# ...
+ruby 3.0.1
+
+
+# .ruby-version
+ruby 3.0.1
+```
+
+After this, make sure to run `bundle install` to update the
+`Gemfile.lock`
+
+For `.semaphore/semaphore.yml` find the line that looks like this:
+
+```yml
+# .semaphore/semaphore.yml
+
+# ...
+- sem-version ruby 3.0.1
+```
+
+### Major / Minor versions
+
+For major / minor versions of Ruby you must update all of the above
+files and also update the `ruby-version` to the closest minor version in
+`.github/workflows/tests.yml`, this will also pull the latest patch
+version IE: 3.0 -> 3.0.1
+
+```yml
+# .github/workflows/tests.yml
+# ...
+
+- ruby-version: "3.0"
+```
