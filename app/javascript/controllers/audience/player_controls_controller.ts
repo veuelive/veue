@@ -1,7 +1,6 @@
 import BaseController from "controllers/base_controller";
 import { displayTime } from "util/time";
 import { VideoSeekEvent } from "helpers/video_helpers";
-import { secureFetch } from "util/fetch";
 
 export default class extends BaseController {
   static targets = [
@@ -132,7 +131,7 @@ export default class extends BaseController {
 
     const currentTime = this.getPointerLocationTime(event);
 
-    if (currentTime == null || currentTime < -1 || currentTime === NaN) {
+    if (currentTime == null || currentTime < -1 || isNaN(currentTime)) {
       return;
     }
 
