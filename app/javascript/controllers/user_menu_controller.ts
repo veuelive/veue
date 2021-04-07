@@ -54,7 +54,7 @@ export default class extends Controller {
       this.menuTarget.setAttribute("style", "");
     } else {
       this.menuTarget.dataset.mode = "mobile";
-      const height = document.body.clientHeight - 54;
+      const height = document.body.clientHeight - 46;
       this.menuTarget.setAttribute("style", `height: ${height}px`);
     }
   }

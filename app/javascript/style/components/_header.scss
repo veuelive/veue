@@ -23,9 +23,15 @@ header {
   .header__left {
     &__logo {
       height: 24px;
+      svg {
+        height: 24px;
+      }
 
       @include large() {
         height: 28px;
+        svg {
+          height: 28px;
+        }
       }
 
       a {
@@ -43,6 +49,8 @@ header {
     button {
       height: 32px;
       font-family: font.$poppins;
+      font-weight: 500;
+      font-size: 14px;
 
       @include large() {
         height: 34px;
