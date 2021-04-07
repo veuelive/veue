@@ -304,3 +304,42 @@ GRIP_REALM_ID;
 GRIP_REALM_KEY;
 GRIP_URL; //- optional if you want to override
 ```
+
+## Upgrading Ruby Version
+
+When upgrading Ruby versions there are multiple places this must be done
+depending on the upgrade and varies depending on the version upgrade
+
+### Patch Version
+
+Patch versions dont require as many fixes since GH Actions will by
+default handle a new patch version for us. However, we must still update
+the following for new patch versions:
+
+- `Gemfile`
+- `.ruby-version`
+- `.semaphore/semaphore.yml`
+
+For `Gemfile`, update the `ruby <version>` and do the same for
+`.ruby-version`.
+
+```rb
+# Gemfile
+# ...
+ruby 3.0.1
+
+
+# .ruby-version
+ruby 3.0.1
+```
+
+For `.semaphore/semaphore.yml` find the line that looks like this:
+
+```yml
+# .semaphore/semaphore.yml
+
+# ...
+- sem-version ruby 3.0.1
+```
+
+### Major / Minor versions
