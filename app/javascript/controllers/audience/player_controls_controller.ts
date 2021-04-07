@@ -70,6 +70,11 @@ export default class extends BaseController {
       "loadedmetadata",
       this.handleLoadedMetadata.bind(this)
     );
+
+    this.videoTarget.removeEventListener(
+      VideoReadyEvent,
+      this.togglePlay.bind(this)
+    );
   }
 
   toggleAudio(): void {
