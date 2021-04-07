@@ -2,13 +2,11 @@ import RemoteMediaProvider, {
   RemoteMediaSourceChangeCallback,
 } from "helpers/remote_media_providers/remote_media_provider";
 import { express } from "phenix-web-sdk";
-import * as stream from "stream";
 
 export default class extends RemoteMediaProvider {
   private authToken: string;
   private streamToken: string;
   private channelAlias: string;
-  private channelService: any;
 
   constructor(authToken: string, streamToken: string, channelAlias: string) {
     super();
@@ -56,7 +54,7 @@ export default class extends RemoteMediaProvider {
 
           // Successfully joined channel
           if (response.status === "ok" && response.channelService) {
-            this.channelService = response.channelService;
+            // this.channelService = response.channelService;
           }
         },
         // This is the "Subscribe" callback that indicates media is available
@@ -67,7 +65,7 @@ export default class extends RemoteMediaProvider {
             reject(response.status);
           } else {
             // must be OK
-            const mediaStream = response.mediaStream;
+            // const mediaStream = response.mediaStream;
             // mediaChangedCallback()
           }
         }
