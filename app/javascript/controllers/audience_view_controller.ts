@@ -96,6 +96,7 @@ export default class extends BaseController {
   timecodeChanged(): void {
     this.data.set("timecode", this.timecodeSynchronizer.timecodeMs.toString());
     VideoEventProcessor.syncTime(this.timecodeSynchronizer.timecodeMs);
+
     const seconds = this.timecodeSynchronizer.timecodeSeconds;
     this.timeDisplayTarget.innerHTML = displayTime(seconds);
   }
