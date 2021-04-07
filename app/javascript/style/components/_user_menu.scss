@@ -6,7 +6,11 @@
 
 .menu-area {
   // layout
-  height: 54px;
+  height: 46px;
+
+  @include large() {
+    height: 54px;
+  }
   display: flex;
   align-items: center;
 
