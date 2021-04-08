@@ -40,7 +40,7 @@ export default class extends Controller {
   private browserUnderlayTarget!: HTMLDivElement;
 
   private videoMixer: VideoMixer;
-  private streamCapturer: StreamRecorder;
+  private streamRecorder: StreamRecorder;
   private metronome: Metronome;
   private eventManager: EventManagerInterface;
   private audioMixer: AudioMixer;
@@ -73,7 +73,7 @@ export default class extends Controller {
     );
     this.captureSourceManager.start();
 
-    this.streamCapturer = new StreamRecorder(
+    this.streamRecorder = new StreamRecorder(
       this.videoMixer,
       this.audioMixer,
       this.element.dataset.phenixAuthToken
@@ -125,7 +125,7 @@ export default class extends Controller {
     ipcRenderer.on("ffmpeg-error", () => {
       this.state = "failed";
       alert("Something went wrong with ffmpeg– contact hello@veue.tv");
-      this.streamCapturer.stop();
+      this.streamRecorder.stop();
     });
 
     this.eventManager = new LiveEventManager(false);
@@ -137,9 +137,9 @@ export default class extends Controller {
   }
 
   startStreaming(): void {
-    this.streamCapturer
+    this.streamRecorder
       .start(
-        this.element.dataset.phenixChannelId,
+        this.element.dataset.phenixChannelAlias,
         this.element.dataset.phenixPublishToken
       )
       .then(async () => {
@@ -164,7 +164,7 @@ export default class extends Controller {
   stopStreaming(): void {
     this.state = "finished";
     window.clearInterval(this.snapshotIntervalId);
-    this.streamCapturer.stop();
+    this.streamRecorder.stop();
   }
 
   async sendSnapshots(): Promise<void> {
