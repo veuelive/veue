@@ -13,9 +13,9 @@
     "end-offset": current_video.end_offset,
     "hls-url": current_video.hls_url,
     "phenix": {
-      "auth-token": PhenixEdgeAuth.auth_token(current_channel.slug),
-      "stream-token": PhenixEdgeAuth.stream_token(current_channel.slug),
-      "channel-alias": current_channel.slug
+      "auth-token": Phenix::EdgeAuth.auth_token(current_channel),
+      "stream-token": Phenix::EdgeAuth.stream_token(current_channel),
+      "channel-alias": Phenix.channel_alias(current_channel)
     }
   }
 }

@@ -102,9 +102,7 @@ class Video < ApplicationRecord
   def start_broadcast!(params)
     new_layout_event!(params[:video_layout])
 
-    if(params[:url])
-      BrowserNavigation.create_first_navigation!(self, params[:url])
-    end
+    BrowserNavigation.create_first_navigation!(self, params[:url]) if params[:url]
 
     # The actual state machine transition
     start!

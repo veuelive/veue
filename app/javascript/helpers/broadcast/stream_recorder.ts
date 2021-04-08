@@ -32,7 +32,7 @@ export default class StreamRecorder {
     });
   }
 
-  start(channelId: string, publishToken: string): Promise<void> {
+  start(channelAlias: string, publishToken: string): Promise<void> {
     this.mediaStream = this.canvas.captureStream(18);
 
     this.mediaStream.addTrack(this.audioMixer.audioTrack);
@@ -43,11 +43,11 @@ export default class StreamRecorder {
         resolve();
       }
 
+      // Documentation: https://phenixrts.com/docs/web/#publish-to-a-channel
       this.channelExpress.publishToChannel(
         {
           channel: {
-            name: channelId,
-            alias: channelId,
+            alias: channelAlias,
           },
           // authToken: this.authToken,
           publishToken: publishToken,

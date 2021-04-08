@@ -55,7 +55,9 @@ export default class extends BaseController {
       );
     }
 
-    this.remoteMediaProvider.connect(this.videoTarget);
+    this.remoteMediaProvider.connect(this.videoTarget).catch((error) => {
+      throw error;
+    });
 
     this.timecodeSynchronizer = new TimecodeSynchronizer(() => {
       this.timecodeChanged();
