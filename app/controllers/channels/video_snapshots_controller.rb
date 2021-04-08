@@ -22,6 +22,15 @@ module Channels
       render(json: {success: true})
     end
 
+    def show
+      return unless params[:format] == "jpg"
+
+      timecode = Integer(params[:timecode])
+      @current_snapshot = current_video.video_snapshots.find_at_timecode(timecode)
+
+      redirect_to(@current_snapshot.preview_url) if @current_snapshot
+    end
+
     def update
       authorize!(:manage, current_snapshot)
 
