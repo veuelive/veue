@@ -1,6 +1,4 @@
-import RemoteMediaProvider, {
-  RemoteMediaSourceEvents,
-} from "helpers/remote_media_providers/remote_media_provider";
+import RemoteMediaProvider from "helpers/remote_media_providers/remote_media_provider";
 import Hls from "hls.js";
 
 /**
@@ -39,9 +37,5 @@ export default class extends RemoteMediaProvider {
 
       resolve();
     });
-  }
-
-  disconnect(videoElement: HTMLVideoElement): Promise<void> {
-    throw new Error("Method not implemented.");
   }
 }
