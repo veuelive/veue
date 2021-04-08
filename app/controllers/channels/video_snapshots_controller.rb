@@ -23,14 +23,12 @@ module Channels
     end
 
     def show
-      respond_to do |fmt|
-        fmt.jpg do
-          timecode = Integer(params[:timecode])
-          @current_snapshot = current_video.video_snapshots.find_at_timecode(timecode)
+      return unless params[:format] == "jpg"
 
-          redirect_to(@current_snapshot.preview_url) if @current_snapshot
-        end
-      end
+      timecode = Integer(params[:timecode])
+      @current_snapshot = current_video.video_snapshots.find_at_timecode(timecode)
+
+      redirect_to(@current_snapshot.preview_url) if @current_snapshot
     end
 
     def update
