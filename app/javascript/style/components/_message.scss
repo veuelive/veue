@@ -78,6 +78,7 @@
       .message--announcement & {
         background: color.$red-highlight;
         color: color.$white;
+        border: 1px solid color.$red-highlight;
       }
 
       .message--right & {
