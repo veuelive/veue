@@ -20,9 +20,13 @@
         - if current_user.follows?(current_channel)
           %button.unfollow-btn{data: { action: "click->streamer-profile#unfollow" }} Following
         - elsif current_channel.user != current_user
-          %button.follow-btn{data: { action: "click->streamer-profile#follow" }} Follow
+          %button.follow-btn{data: { action: "click->streamer-profile#follow" }}
+            = svg_tag "plus"
+            %span Follow
       - else
-        %button.follow-btn{data: { action: "click->authentication#showModal" }} Follow
+        %button.follow-btn{data: { action: "click->authentication#showModal" }}
+          = svg_tag "plus"
+          %span Follow
   - if current_channel.videos.scheduled.any?
     - upcoming_video = current_channel.videos.scheduled.first
     .streamer-profile__upcoming__broadcast
