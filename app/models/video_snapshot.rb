@@ -5,8 +5,6 @@ class VideoSnapshot < ApplicationRecord
 
   has_one_attached :image
 
-  default_scope { order(:timecode) }
-
   scope :future_snapshots, ->(timecode) { where("timecode >= ?", timecode) }
   scope :past_snapshots, ->(timecode) { where("timecode < ?", timecode) }
   scope :priority, ->(number) { where(priority: number) }
