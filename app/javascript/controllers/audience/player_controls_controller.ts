@@ -57,6 +57,8 @@ export default class extends BaseController {
   handleLoadedMetadata(): void {
     this.timeDurationTarget.dataset.duration = this.duration.toString();
     this.timeDurationTarget.innerHTML = displayTime(this.duration);
+
+    this.preloadPreviews();
   }
 
   handleTimeUpdate(): void {
@@ -68,6 +70,16 @@ export default class extends BaseController {
 
     if (video.currentTime >= this.duration) {
       video.dispatchEvent(new Event("ended"));
+    }
+  }
+
+  async preloadPreviews(): Promise<void> {
+    const urlPrefix = `${window.location.pathname}/snapshots`;
+    const duration = Math.floor(this.duration / 30);
+
+    for (let i = 0; i < duration; i++) {
+      const img = new Image();
+      img.src = `${urlPrefix}/${i}.jpg`;
     }
   }
 
