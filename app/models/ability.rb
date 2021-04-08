@@ -5,7 +5,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    can(:read, [Channel, User])
+    can(:read, [Channel, User, VideoSnapshot])
     can(:read, Video, visibility: %w[public protected])
 
     return if user.blank?
