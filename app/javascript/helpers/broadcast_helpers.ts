@@ -3,7 +3,7 @@ import { postJson } from "util/fetch";
 import { NavigationUpdate } from "controllers/broadcast/browser_controller";
 import { electron, inElectronApp } from "helpers/electron/base";
 import VideoLayout, { BroadcastVideoLayout } from "types/video_layout";
-import { getChannelSlug, getChannelId } from "helpers/channel_helpers";
+import { getChannelSlug } from "helpers/channel_helpers";
 import { getVideoId } from "helpers/video_helpers";
 import { origin } from "helpers/app_config";
 import { BroadcasterEnvironment, WindowBounds } from "types/electron_env";
