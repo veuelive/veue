@@ -7,6 +7,4 @@ export default class extends BaseController {
   connect(): void {
     this.eventManager = new LiveEventManager(true);
   }
-
-  disconnect() {}
 }

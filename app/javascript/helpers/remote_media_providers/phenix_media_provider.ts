@@ -1,6 +1,4 @@
-import RemoteMediaProvider, {
-  RemoteMediaSourceChangeCallback,
-} from "helpers/remote_media_providers/remote_media_provider";
+import RemoteMediaProvider from "helpers/remote_media_providers/remote_media_provider";
 import { express } from "phenix-web-sdk";
 
 export default class extends RemoteMediaProvider {
@@ -71,9 +69,5 @@ export default class extends RemoteMediaProvider {
         }
       );
     });
-  }
-
-  disconnect(videoElement: HTMLVideoElement): Promise<void> {
-    throw new Error("Method not implemented.");
   }
 }
