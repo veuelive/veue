@@ -1,5 +1,4 @@
 import VideoMixer from "./mixers/video_mixer";
-import { ipcRenderer } from "helpers/electron/ipc_renderer";
 import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
 import { express } from "phenix-web-sdk";
 
@@ -48,6 +47,7 @@ export default class StreamRecorder {
         {
           channel: {
             alias: channelAlias,
+            name: channelAlias,
           },
           // authToken: this.authToken,
           publishToken: publishToken,
