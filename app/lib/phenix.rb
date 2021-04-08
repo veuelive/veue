@@ -45,14 +45,13 @@ module Phenix
         {
           applicationId: Phenix.app_id,
           secret: Phenix.app_secret,
-          expiresInSeconds: 3600,
         },
       )
 
       options =
         options.flat_map do |key, value|
           if value
-            %W[--#{key} #{value.inspect}]
+            ["--#{key}", value]
           else
             "--#{key}"
           end
@@ -60,10 +59,47 @@ module Phenix
 
       cmd = %w[node node_modules/phenix-edge-auth/src/edgeAuth.js] + options
 
+      options.push("--expiresIn")
+      options.push("3600")
+
       Rails.logger.debug(cmd.inspect)
 
       out, _err, _status = Open3.capture3(*cmd)
       out.split("\n").last
+    end
+  end
+
+  module AdminApi
+    def self.conn
+      @conn ||=
+        Faraday.new("https://pcast.phenixrts.com/pcast") do |conn|
+          conn.basic_auth(Phenix.app_id, Phenix.app_secret)
+        end
+    end
+
+    # This updates our webhook.... but note only ONE webhook PER environment
+    #
+    # Documentation: https://phenixrts.com/docs/api/#notifications
+    #
+    def self.update_webhook_url(url)
+      uri = URI.parse(url)
+      payload = {
+        callback: {
+          protocol: uri.scheme,
+          host: uri.host,
+          method: "POST",
+          path: uri.path,
+          query: uri.query,
+        },
+      }
+
+      response = conn.put(
+        "application/#{Phenix.app_id}/callback",
+        payload.to_json,
+        "Content-Type": "application/json",
+      )
+
+      response.status == 200
     end
   end
 end
