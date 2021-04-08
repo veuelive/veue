@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Rails Dev" pattern="(file[veue]:app//*||file[veue]:spec//*||file[veue]:config//*||file[veue]:db//*)&amp;&amp;!file[veue]:app/mailers/*&amp;&amp;!file[veue]:app/admin/*&amp;&amp;!file[veue]:app/assets/*" />
+</component>
