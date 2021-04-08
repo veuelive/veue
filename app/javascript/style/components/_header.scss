@@ -1,21 +1,38 @@
 @use '../utils/color';
 @use '../utils/breakpoints' as *;
+@use "utils/font";
 
-$height: 54px;
+$desktop-height: 54px;
+$mobile-height: 46px;
 
 header {
-  height: $height;
+  height: $mobile-height;
   box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
   display: flex;
   background-color: color.$white;
   position: relative;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 10px;
   justify-content: space-between;
+
+  @include large() {
+    height: $desktop-height;
+    padding: 0 20px;
+  }
 
   .header__left {
     &__logo {
-      height: 28px;
+      height: 24px;
+      svg {
+        height: 24px;
+      }
+
+      @include large() {
+        height: 28px;
+        svg {
+          height: 28px;
+        }
+      }
 
       a {
         display: inline-block;
@@ -27,7 +44,18 @@ header {
     display: flex;
     align-items: center;
     cursor: pointer;
-    height: $height;
+    height: $desktop-height;
+
+    button {
+      height: 32px;
+      font-family: font.$poppins;
+      font-weight: 500;
+      font-size: 14px;
+
+      @include large() {
+        height: 34px;
+      }
+    }
 
     .header-banner {
       .call-to-action {
