@@ -82,6 +82,8 @@ export default class extends BaseController {
     for (let i = 0; i < duration; i++) {
       const img = new Image();
       img.src = `${urlPrefix}/${i}.jpg`;
+      img.style.display = "none";
+      document.body.appendChild(img);
     }
   }
 
