@@ -158,7 +158,7 @@ export default class extends BaseController {
     if (this.element.dataset.audienceViewStreamType === "vod") {
       this.preloadPreviews();
     }
-    this.togglePlay()
+    this.togglePlay();
   }
 
   handleTimeUpdate(): void {

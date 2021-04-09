@@ -27,7 +27,6 @@ describe "Prerecorded Audience View" do
   end
 
   describe "When you move to the video scrubber to ~16 seconds" do
-
     it "should not show the very last chat message" do
       last_message = video.chat_messages.last
       expect(page).to have_no_css("#message-#{last_message.id}")

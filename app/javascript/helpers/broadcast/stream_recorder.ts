@@ -18,7 +18,7 @@ export default class StreamRecorder {
   private channelExpress: express.ChannelExpress;
   private readonly authToken: string;
   private publisher: {
-    stop(): void
+    stop(): void;
   };
 
   constructor(
@@ -76,7 +76,7 @@ export default class StreamRecorder {
           }
 
           if (response.status === "ok") {
-            this.publisher = response.publisher
+            this.publisher = response.publisher;
             resolve();
           }
         }
@@ -85,6 +85,6 @@ export default class StreamRecorder {
   }
 
   stop(): void {
-    this.publisher.stop()
+    this.publisher.stop();
   }
 }
