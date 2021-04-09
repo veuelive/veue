@@ -16,13 +16,8 @@ module Phenix
   end
 
   module EdgeAuth
-<<<<<<< HEAD
-    def self.publish_capabilities
-      %w[streaming streaming-lite on-demand on-demand-lite xhd].join(", ")
-=======
     def self.publishing_capabilities
       %w[uhd streaming on-demand multi-bitrate xhd fhd].join(",")
->>>>>>> [VEUE-694] [PHX] EdgeToken fixes
     end
 
     def self.auth_token(channel)
@@ -33,11 +28,7 @@ module Phenix
       build_token(
         publishingOnly: nil,
         channelAlias: Phenix.channel_alias(channel),
-<<<<<<< HEAD
-        capabilities: publish_capabilities,
-=======
         capabilities: publishing_capabilities,
->>>>>>> [VEUE-694] [PHX] EdgeToken fixes
         applyTag: "videoId:#{video.id}",
       )
     end
