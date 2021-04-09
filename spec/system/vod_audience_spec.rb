@@ -141,9 +141,12 @@ describe "Prerecorded Audience View" do
       video.update!(end_offset: end_offset, duration: 54)
 
       visit path_for_video(video)
+      assert_video_is_playing
 
       expect(page).to have_css("[data-end-offset='#{end_offset}']")
       expect(is_video_playing?).to be(true)
+
+      ensure_controls_visible
 
       # Use 26 to account for possible rounding issues.
       # Use a float because video durations on a video element are floats
