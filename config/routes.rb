@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     member do
       post "navigation_update"
       post "start"
+      post "stop"
       post "keepalive"
     end
 

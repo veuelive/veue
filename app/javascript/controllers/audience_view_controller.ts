@@ -80,6 +80,7 @@ export default class extends BaseController {
   }
 
   authChanged(): void {
+    console.error("AUTH CHANGED")
     this.sendViewedMessage();
   }
 

@@ -2,11 +2,7 @@ import BaseController from "controllers/base_controller";
 import VodEventManager from "helpers/event/vod_event_manager";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import { VideoSeekEvent } from "helpers/video_helpers";
-<<<<<<< HEAD
-=======
 import Hls from "hls.js";
->>>>>>> Got VOD videos working again
-import { VideoReadyEvent } from "controllers/audience/player_controls_controller";
 
 export default class extends BaseController {
   static targets = ["chat", "video", "likeNotification"];
@@ -35,8 +31,6 @@ export default class extends BaseController {
       }
 
       this.videoTarget.currentTime = startTime;
-
-      this.videoTarget.dispatchEvent(new CustomEvent(VideoReadyEvent));
     });
 
     if (!this.videoTarget.canPlayType("application/vnd.apple.mpegurl")) {
