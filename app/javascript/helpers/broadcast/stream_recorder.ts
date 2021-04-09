@@ -17,6 +17,9 @@ export default class StreamRecorder {
   private audioMixer: AudioMixer;
   private channelExpress: express.ChannelExpress;
   private readonly authToken: string;
+  private publisher: {
+    stop(): void
+  };
 
   constructor(
     videoMixer: VideoMixer,
@@ -55,11 +58,9 @@ export default class StreamRecorder {
             alias: channelAlias,
             name: channelAlias,
           },
-          // authToken: this.authToken,
           publishToken: publishToken,
           userMediaStream: this.mediaStream,
           treatBackgroundAsOffline: false,
-          // videoElement: document.querySelector("#debug_output"),
         },
         (error, response) => {
           if (error) {
@@ -75,6 +76,7 @@ export default class StreamRecorder {
           }
 
           if (response.status === "ok") {
+            this.publisher = response.publisher
             resolve();
           }
         }
@@ -83,6 +85,6 @@ export default class StreamRecorder {
   }
 
   stop(): void {
-    this.mediaRecorder?.stop();
+    this.publisher.stop()
   }
 }

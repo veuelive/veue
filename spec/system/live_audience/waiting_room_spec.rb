@@ -39,7 +39,7 @@ describe "Stream Waiting Room" do
       write_chat_message "Cowabunga!"
       expect(page).to have_content("Cowabunga!", wait: 5).once
 
-      video.go_live!
+      video.start!
       expect(page).to have_selector("#active-viewers", wait: 10)
       expect(page).to have_selector(".primary-canvas")
 
