@@ -6,11 +6,11 @@ module AudienceSpecHelpers
   end
 
   def audience_view_state_css(state, equality_operator="=")
-    "#{audience_view_controller}[data-audience-view-state#{equality_operator}'#{state}']"
+    "#{audience_view_controller}[data-audience--player-controls-state#{equality_operator}'#{state}']"
   end
 
   def audience_audio_state_css(state, equality_operator="=")
-    "#{audience_view_controller}[data-audience-view-audio-state#{equality_operator}'#{state}']"
+    "#{audience_view_controller}[data-audience--player-controls-audio-state#{equality_operator}'#{state}']"
   end
 
   def is_video_playing?
@@ -30,8 +30,13 @@ module AudienceSpecHelpers
   end
 
   def assert_video_is_playing(seconds=1)
-    expect(page).to have_css("*[data-audience--player-controls-state='playing']", wait: 5)
-    expect(page).to have_content(:all, "00:00:#{seconds.to_s.rjust(2, '0')}", wait: 10)
+    expect(page).to have_css("*[data-audience--player-controls-state='playing']")
+    expect(page).to have_content(:all, /00:00:\d[#{seconds}-9]+/, wait: 10)
+  end
+
+  def ensure_controls_visible
+    find(".primary-canvas").hover
+    expect(page).to have_css(".player-controls")
   end
 
   def current_timecode

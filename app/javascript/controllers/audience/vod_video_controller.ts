@@ -32,16 +32,6 @@ export default class extends BaseController {
 
       this.videoTarget.currentTime = startTime;
     });
-
-    if (!this.videoTarget.canPlayType("application/vnd.apple.mpegurl")) {
-      const hlsSource = this.videoTarget.getAttribute("src");
-      if (hlsSource) {
-        // HLS.js-specific setup code
-        const hls = new Hls();
-        hls.loadSource(hlsSource);
-        hls.attachMedia(this.videoTarget);
-      }
-    }
   }
 
   disconnect(): void {
