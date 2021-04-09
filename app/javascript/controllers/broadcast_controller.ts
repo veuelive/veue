@@ -147,8 +147,7 @@ export default class extends Controller {
         this.data.set("started-at", Date.now().toString());
 
         await this.sendStartingLayout();
-
-        this.sendSnapshots().then(() => "Snapshots uploaded");
+        await this.sendSnapshots();
 
         this.state = "live";
         this.metronome.start();
