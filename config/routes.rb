@@ -78,9 +78,14 @@ Rails.application.routes.draw do
   # Don't be fooled by it looking like it's on the root like Hampton accidentally did that time.
   ActiveAdmin.routes(self)
 
+  scope module: :channels do
+    resources :channels, only: %i[index]
+  end
+
   # CATCHALL AFTER THESE OTHER ROUTES!
   scope module: :channels, path: ":channel_id", as: "channel" do
     get "/" => "channels#show"
+    get "/edit" => "channels#edit"
     post "viewed" => "channels#viewed"
 
     resource :follow, only: %i[show create destroy]
