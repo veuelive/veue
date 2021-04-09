@@ -43,15 +43,14 @@ export default class extends BaseController {
     );
   }
 
-  seekTo(event: CustomEvent): void {
-    this.resetToTimecode(event.detail.timecodeMs);
+  seekTo(event: CustomEvent): Promise<void> {
+    return this.resetToTimecode(event.detail.timecodeMs);
   }
 
-  resetToTimecode(timecodeMs: number): void {
+  resetToTimecode(timecodeMs: number): Promise<void> {
     this.resetChat();
     VideoEventProcessor.clear();
-    VideoEventProcessor.syncTime(timecodeMs);
-    this.eventManager.seekTo(timecodeMs);
+    return this.eventManager.seekTo(timecodeMs);
   }
 
   resetChat(): void {
