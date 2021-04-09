@@ -26,9 +26,15 @@ export default class StreamRecorder {
     this.canvas = videoMixer.canvas as CaptureStreamCanvas;
     this.audioMixer = audioMixer;
     this.authToken = authToken;
-    this.channelExpress = new express.ChannelExpress({
-      authToken: authToken,
-    });
+
+    /**
+     * Only connect to ChannelExpress IF we aren't running tests.
+     */
+    if (globalThis.appConfig?.env !== "test") {
+      this.channelExpress = new express.ChannelExpress({
+        authToken: authToken,
+      });
+    }
   }
 
   start(channelAlias: string, publishToken: string): Promise<void> {
