@@ -6,8 +6,6 @@ import pauseSvg from "images/pause.svg";
 import mutedSvg from "images/volume-mute.svg";
 import unmutedSvg from "images/volume-max.svg";
 
-export const VideoReadyEvent = "videoReadyEvent";
-
 export default class extends BaseController {
   static targets = [
     "video",
@@ -53,11 +51,6 @@ export default class extends BaseController {
       "timeupdate",
       this.handleTimeUpdate.bind(this)
     );
-
-    this.videoTarget.addEventListener(
-      VideoReadyEvent,
-      this.togglePlay.bind(this)
-    );
   }
 
   disconnect(): void {
@@ -69,11 +62,6 @@ export default class extends BaseController {
     this.videoTarget.removeEventListener(
       "loadedmetadata",
       this.handleLoadedMetadata.bind(this)
-    );
-
-    this.videoTarget.removeEventListener(
-      VideoReadyEvent,
-      this.togglePlay.bind(this)
     );
   }
 
@@ -170,6 +158,7 @@ export default class extends BaseController {
     if (this.element.dataset.audienceViewStreamType === "vod") {
       this.preloadPreviews();
     }
+    this.togglePlay();
   }
 
   handleTimeUpdate(): void {
