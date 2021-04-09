@@ -17,7 +17,7 @@ describe "Prerecorded Audience View" do
     it "should have a video to play!" do
       visit path_for_video(video)
 
-      assert_video_is_playing(3)
+      assert_video_is_playing(5)
 
       expect(is_video_playing?).to eq(true)
 
@@ -166,7 +166,7 @@ describe "Prerecorded Audience View" do
     it "Should disappear when the user clicks the player control mute button" do
       visit path_for_video(video)
       expect(page).to have_css(".mute-banner")
-      find(".toggle-audio", visible: true).click
+      find(".mute-banner", visible: true).click
       expect(find(".mute-banner", visible: false)).to_not be_visible
     end
   end
