@@ -5,7 +5,6 @@ module Channels
     include ChannelConcern
 
     def index
-      # Channel.where
     end
 
     def edit
