@@ -10,7 +10,7 @@ describe Phenix do
     describe "publishing capabilities" do
       it "should have no spaces" do
         # No spaces!
-        expect(Phenix::EdgeAuth.publishing_capabilities).to_not match(/ /)
+        expect(Phenix::EdgeAuth.publishing_capabilities).to_not match(/\s/)
       end
     end
 
