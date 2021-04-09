@@ -2,6 +2,7 @@
 @use "../utils/scale";
 @use "../utils/color";
 @use "../utils/z_index";
+@use "../utils/font";
 
 #videos__show,
 #channels__show {
@@ -45,22 +46,38 @@
       // layout
       position: absolute;
       z-index: z_index.$video-controls;
-      left: 0.6rem;
-      top: 1rem;
-      height: 2rem;
-      padding: 0 1rem;
+      right: 10px;
+      top: 10px;
+      height: 28px;
       display: flex;
       align-items: center;
+      padding: 0 10px 0 10px;
+      justify-content: center;
 
       // style
       background: rgba(color.$black, 0.5);
       color: color.$white;
       border-radius: 10px;
-      font-size: 1.1rem;
+      font-size: 14px;
       cursor: pointer;
+      font-family: font.$nunito;
 
       svg {
-        margin-right: 10px;
+        margin-right: 5px;
+        height: 14px;
+      }
+
+      &__text-desktop {
+        display: none;
+      }
+
+      @include large() {
+        &__text-desktop {
+          display: block;
+        }
+        &__text-mobile {
+          display: none;
+        }
       }
     }
   }
@@ -108,7 +125,6 @@
           // then there is spacing on the bottom of the canvas
           // but we don't want this to cascade into the header so
           // we revert it in the header part of the video area
-          line-height: 0;
           &__header {
             line-height: normal;
           }
@@ -118,7 +134,7 @@
             max-height: 68vh;
             max-width: 100%;
             // Overridden for Desktop
-            border-radius: 0;
+            border-radius: 10px 10px 0 0;
           }
         }
       }
