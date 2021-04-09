@@ -16,8 +16,13 @@ module Phenix
   end
 
   module EdgeAuth
+<<<<<<< HEAD
     def self.publish_capabilities
       %w[streaming streaming-lite on-demand on-demand-lite xhd].join(", ")
+=======
+    def self.publishing_capabilities
+      %w[uhd streaming on-demand multi-bitrate xhd fhd].join(",")
+>>>>>>> [VEUE-694] [PHX] EdgeToken fixes
     end
 
     def self.auth_token(channel)
@@ -28,7 +33,11 @@ module Phenix
       build_token(
         publishingOnly: nil,
         channelAlias: Phenix.channel_alias(channel),
+<<<<<<< HEAD
         capabilities: publish_capabilities,
+=======
+        capabilities: publishing_capabilities,
+>>>>>>> [VEUE-694] [PHX] EdgeToken fixes
         applyTag: "videoId:#{video.id}",
       )
     end
@@ -40,7 +49,7 @@ module Phenix
       )
     end
 
-    def self.build_token(options={})
+    def self.build_command(options={})
       options = options.reverse_merge(
         {
           applicationId: Phenix.app_id,
@@ -57,10 +66,14 @@ module Phenix
           end
         end
 
-      cmd = %w[node node_modules/phenix-edge-auth/src/edgeAuth.js] + options
-
-      options.push("--expiresIn")
+      options.push("--expiresInSeconds")
       options.push("3600")
+
+      %w[node node_modules/phenix-edge-auth/src/edgeAuth.js] + options
+    end
+
+    def self.build_token(options={})
+      cmd = build_command(options)
 
       Rails.logger.debug(cmd.inspect)
 
