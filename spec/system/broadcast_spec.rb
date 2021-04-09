@@ -6,6 +6,8 @@ require "system_helper"
 # within the rails app. This has to be combined with the real Electron App to get full / perfect results.
 describe "Broadcast View" do
   include BroadcastSystemHelpers
+  # These are useful for chat messages
+  include AudienceSpecHelpers
 
   let(:streamer) { create(:streamer) }
   let(:channel) { streamer.channels.first }
@@ -180,8 +182,6 @@ describe "Broadcast View" do
     end
 
     describe "chat message events" do
-      include AudienceSpecHelpers
-
       it "should display live messages on broadcaster view" do
         first_message = someone_chatted
         second_message_text = "Cowabunga!"

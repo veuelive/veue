@@ -3,11 +3,14 @@
 require "system_helper"
 
 describe "Scrubber previews" do
+  include AudienceSpecHelpers
   let(:video) { create(:vod_video) }
 
   before(:each) do
     driven_by :media_browser
     visit path_for_video(video)
+    assert_video_is_playing
+    ensure_controls_visible
   end
 
   describe "With snapshots" do
