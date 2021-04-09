@@ -115,18 +115,7 @@ module Phenix
           return
         end
 
-        case payload["what"]
-        when "starting"
-          video.start! unless video.live?
-        when "ended"
-          video.duration = payload["data"]["duration"] / 1_000
-          video.end_reason = payload["data"]["reason"]
-          video.end!
-        when "on-demand"
-          on_demand_payload(video, payload)
-        else
-          Rails.logger.info "Do nothing"
-        end
+        process_payload(video, payload)
       end
     end
 
@@ -136,6 +125,21 @@ module Phenix
       end)[8..]
 
       Video.find_by(id: video_id)
+    end
+
+    def self.process_payload(video, payload)
+      case payload["what"]
+      when "starting"
+        video.start! unless video.live?
+      when "ended"
+        video.duration = payload["data"]["duration"] / 1_000
+        video.end_reason = payload["data"]["reason"]
+        video.end!
+      when "on-demand"
+        on_demand_payload(video, payload)
+      else
+        Rails.logger.info "Do nothing"
+      end
     end
 
     def self.on_demand_payload(video, payload)
