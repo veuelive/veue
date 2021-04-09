@@ -20,7 +20,7 @@ export default class extends BaseController {
     "primaryCanvas",
     "fixedSecondaryCanvas",
     "pipSecondaryCanvas",
-    "timeDisplay",
+    "timeDisplay"
   ];
 
   readonly videoTarget!: HTMLVideoElement;
@@ -55,9 +55,11 @@ export default class extends BaseController {
       );
     }
 
-    this.remoteMediaProvider.connect(this.videoTarget).catch((error) => {
-      throw error;
-    });
+    this.remoteMediaProvider.connect(this.videoTarget)
+      .then(() => this.sendViewedMessage())
+      .catch((error) => {
+        throw error;
+      });
 
     this.timecodeSynchronizer = new TimecodeSynchronizer(() => {
       this.timecodeChanged();
@@ -67,7 +69,7 @@ export default class extends BaseController {
       this.videoTarget,
       [
         [this.primaryCanvasTarget],
-        [this.pipSecondaryCanvasTarget, this.fixedSecondaryCanvasTarget],
+        [this.pipSecondaryCanvasTarget, this.fixedSecondaryCanvasTarget]
       ],
       this.timecodeSynchronizer
     );
@@ -80,7 +82,6 @@ export default class extends BaseController {
   }
 
   authChanged(): void {
-    console.error("AUTH CHANGED")
     this.sendViewedMessage();
   }
 

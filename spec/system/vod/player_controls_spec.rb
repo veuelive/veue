@@ -15,21 +15,17 @@ describe "VOD Player Controls" do
   describe "Video Controls" do
     before :each do
       visit path_for_video(video)
+      assert_video_is_playing
+      ensure_controls_visible
     end
 
     describe "Desktop video controls" do
       it "should play / pause on button click" do
-        find(".primary-video").hover
-
         play_class = ".toggle-play.desktop"
 
         # Only the desktop buttons should be visible on desktop
         expect(page).to have_css(play_class, visible: true)
         expect(page).to have_css(".toggle-play.mobile", visible: false)
-
-        # Video should be autoplaying
-        expect(is_video_playing?).to be(true)
-        expect(is_video_paused?).to be(false)
 
         # Pauses video
         find(play_class).click
