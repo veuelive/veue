@@ -153,6 +153,10 @@ class Video < ApplicationRecord
     send_broadcast_start_text!
   end
 
+  def after_end
+    send_ifttt!("#{user.display_name} stopped streaming") if visibility.eql?("public")
+  end
+
   def send_ifttt!(message)
     url = Router.channel_video_url(channel, self)
     IfThisThenThatJob.perform_later(message: message, url: url)

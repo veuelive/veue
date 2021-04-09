@@ -30,7 +30,7 @@ module AudienceSpecHelpers
   end
 
   def assert_video_is_playing(seconds=1)
-    expect(page).to have_css("*[data-audience-view-state='playing']")
+    expect(page).to have_css("*[data-audience--player-controls-state='playing']", wait: 5)
     expect(page).to have_content(:all, "00:00:#{seconds.to_s.rjust(2, '0')}", wait: 10)
   end
 
@@ -61,7 +61,7 @@ module AudienceSpecHelpers
     )
   end
 
-  def write_chat_message(text)
+  def write_chat_message(text = Faker::Lorem.sentence)
     ensure_live_event_source
     find(".write-area").base.send_keys(text, :enter)
   end
