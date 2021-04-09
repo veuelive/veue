@@ -89,10 +89,9 @@ export default class extends Controller {
     this.sendToBrowser("stop");
   }
 
-  @debounce(3000)
   toggleVisibility(): void {
     this.visible = !this.visible;
-    let eventType;
+    let eventType: string;
     if (this.visible) {
       eventType = ShowScreenCaptureEvent;
     } else {
