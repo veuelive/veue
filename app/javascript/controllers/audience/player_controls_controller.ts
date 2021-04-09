@@ -75,7 +75,7 @@ export default class extends BaseController {
     event.preventDefault();
 
     this.pointerIsDown = true;
-    this.updateVideoTime(event);
+    this.handlePointerLocation(event);
   }
 
   handlePointerMove(event: PointerEvent): void {
@@ -88,7 +88,7 @@ export default class extends BaseController {
       return;
     }
 
-    this.updateVideoTime(event);
+    this.handlePointerLocation(event);
   }
 
   handlePointerUp(): void {
@@ -155,9 +155,7 @@ export default class extends BaseController {
 
     const currentTime = pos * this.duration;
 
-    this.timeDisplayTarget.innerHTML = displayTime(currentTime);
-    this.videoTarget.currentTime = currentTime;
-    this.handleTimeUpdate();
+    this.updateVideoTime(event);
     const evt = new CustomEvent(VideoSeekEvent, {
       bubbles: true,
       detail: { timecodeMs: currentTime },
