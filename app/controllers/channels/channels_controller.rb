@@ -4,6 +4,14 @@ module Channels
   class ChannelsController < ApplicationController
     include ChannelConcern
 
+    def index
+      # Channel.where
+    end
+
+    def edit
+
+    end
+
     def show
       setup_tags
     end
