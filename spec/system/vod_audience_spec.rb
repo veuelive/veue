@@ -90,7 +90,7 @@ describe "Prerecorded Audience View" do
 
   describe "Starting further into the video" do
     it "should show all chat messages" do
-      late_message.update!(timecode_ms: 9_999)
+      late_message.update!(timecode_ms: 8_999)
       visit path_for_video(video, t: 1)
       assert_video_is_playing(2)
       expect(page).to have_content(ChatMessage.first.payload["message"])
@@ -98,8 +98,8 @@ describe "Prerecorded Audience View" do
       expect(page).to have_no_content(late_message.payload["message"], wait: 0)
 
       # Seeking SHOULD have that message!
-      visit path_for_video(video, t: 10)
-      assert_video_is_playing(10)
+      visit path_for_video(video, t: 9)
+      assert_video_is_playing(9)
       # Messages from before stream should show
       first_message = ChatMessage.first
       expect(first_message.timecode_ms).to eq(0)
