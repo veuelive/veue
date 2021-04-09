@@ -58,7 +58,9 @@ export default class extends BaseController {
     this.timeDurationTarget.dataset.duration = this.duration.toString();
     this.timeDurationTarget.innerHTML = displayTime(this.duration);
 
-    this.preloadPreviews();
+    if (this.element.dataset.audienceViewStreamType === "vod") {
+      this.preloadPreviews();
+    }
   }
 
   handleTimeUpdate(): void {
