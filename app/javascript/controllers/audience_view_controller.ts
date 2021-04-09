@@ -203,7 +203,6 @@ export default class extends BaseController {
     if (this.eventManager instanceof VodEventManager) {
       this.resetChat();
       VideoEventProcessor.clear();
-      VideoEventProcessor.syncTime(timecodeMs);
       this.eventManager.seekTo(timecodeMs);
     }
   }
