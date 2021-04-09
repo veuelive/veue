@@ -31,6 +31,10 @@
               %li.user-menu__item{role: "menuitem", data: { "test-id" => "user-menu-channel" }}
                 = link_to "My Channel", channel_path(channel_slug), draggable: false
 
+            -# Swap to this when the user / channel relationship is fixed
+              %li.user-menu__item{role: "menuitem", data: { "test-id" => "user-menu-channel" }}
+                = link_to "Channels", channels_path, draggable: false
+
             %li.user-menu__item{role: "menuitem", data: { "test-id" => "user-menu-profile" }}
               = link_to "Profile", edit_user_path(id: current_user.id, anchor: 'profile'), draggable: false
             %li.user-menu__item{role: "menuitem", data: { "test-id" => "user-menu-privacy" }}
