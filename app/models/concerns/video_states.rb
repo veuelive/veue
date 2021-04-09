@@ -11,6 +11,7 @@ module VideoStates
       state :scheduled
 
       # The streamer has started, but MUX isn't yet fully live via RTMP. Their clock has started though
+      # LEGACY for old Mux streams
       state :starting
 
       # The video is live! Things are happening!
@@ -31,7 +32,11 @@ module VideoStates
           self.started_at_ms = Time.now.utc.to_ms
         end
 
-        transitions from: %i[pending scheduled], to: :starting
+        after do
+          after_go_live
+        end
+
+        transitions from: %i[pending scheduled], to: :live
         transitions from: :live, to: :live
       end
 
@@ -44,17 +49,10 @@ module VideoStates
         transitions from: :pending, to: :cancelled
       end
 
-      event :go_live do
-        after do
-          after_go_live
-        end
-
-        transitions from: %i[pending starting], to: :live
-      end
-
       event :end do
         transitions from: :live, to: :ended
         transitions from: :starting, to: :ended
+        transitions from: :ended, to: :ended
       end
 
       event :finish do
@@ -62,7 +60,7 @@ module VideoStates
           send_ifttt! "#{user.display_name} stopped streaming" if visibility.eql?("public")
         end
 
-        transitions from: %i[live paused pending ended starting], to: :finished
+        transitions from: %i[live paused pending ended starting finished], to: :finished
       end
     end
   end
