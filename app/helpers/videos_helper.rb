@@ -37,8 +37,8 @@ module VideosHelper
       class: classes,
       title: "Toggle Play",
       data: {
-        action: "click->audience-view#togglePlay",
-        target: "audience-view.togglePlay",
+        action: "click->audience--player-controls#togglePlay",
+        target: "audience--player-controls.togglePlay",
       },
     ) do
       svg_tag("play")
@@ -59,8 +59,8 @@ module VideosHelper
       class: classes,
       title: "Toggle Audio",
       data: {
-        action: "click->audience-view#toggleAudio click->audience-view#hideMuteBanner",
-        target: "audience-view.toggleAudio",
+        action: "click->audience--player-controls#toggleAudio click->audience--player-controls#hideMuteBanner",
+        target: "audience--player-controls.toggleAudio",
       },
     ) do
       svg_tag("volume-max")
