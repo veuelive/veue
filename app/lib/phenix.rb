@@ -106,4 +106,56 @@ module Phenix
       response.status == 200
     end
   end
+
+  module Webhooks
+    def self.process(payload)
+      Rails.logger.info payload.inspect
+
+      ActiveRecord::Base.transaction do
+        video = load_video(payload)
+
+        unless video
+          Rails.logger.warn "Unknown video ID #{video_id}"
+          return
+        end
+
+        process_payload(video, payload)
+      end
+    end
+
+    def self.load_video(payload)
+      video_id = (payload["data"]["tags"].find do |tag|
+        tag.start_with?("videoId")
+      end)[8..]
+
+      Video.find_by(id: video_id)
+    end
+
+    def self.process_payload(video, payload)
+      case payload["what"]
+      when "starting"
+        video.start! unless video.live?
+      when "ended"
+        video.duration = payload["data"]["duration"] / 1_000
+        video.end_reason = payload["data"]["reason"]
+        video.end!
+      when "on-demand"
+        on_demand_payload(video, payload)
+      else
+        Rails.logger.info "Do nothing"
+      end
+    end
+
+    def self.on_demand_payload(video, payload)
+      uri = payload["data"]["uri"]
+      if uri.ends_with?("vod.m3u8")
+        video.hls_url = uri
+      elsif uri.ends_with?("vod.mpd")
+        video.dash_url = uri
+      end
+
+      # We can do VOD now!
+      video.finish!
+    end
+  end
 end
