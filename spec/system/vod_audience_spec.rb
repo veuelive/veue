@@ -63,9 +63,6 @@ describe "Prerecorded Audience View" do
       visit path_for_video(video)
 
       expect(page).to have_css(".replay-badge")
-
-      find(".replay-badge").hover
-      expect(page).to have_css(".badge-message", visible: true)
     end
   end
 
@@ -157,7 +154,7 @@ describe "Prerecorded Audience View" do
   describe "Unmute banner" do
     it "Should display when the video is visited and disappear when clicked" do
       visit path_for_video(video)
-      expect(find(".mute-banner")).to have_content(I18n.t("video.tap_to_unmute"))
+      expect(find(".mute-banner")).to have_content(I18n.t("video.click_to_unmute"))
 
       find(".mute-banner").click
       expect(find(".mute-banner", visible: false)).to_not be_visible

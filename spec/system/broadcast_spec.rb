@@ -53,9 +53,6 @@ describe "Broadcast View" do
       expect(video).to be_live
       wait_for_broadcast_state("live")
       expect(BrowserNavigation.published.last.payload["url"]).to eq(url)
-
-      visit channel_path(streamer.channels.first)
-      expect(find("#address-input")).to have_text(url)
     end
   end
 
@@ -191,9 +188,6 @@ describe "Broadcast View" do
     describe "navigation events" do
       it "should have an initial navigation event" do
         expect(video.browser_navigations.published).to be_any
-
-        visit channel_path(channel)
-        expect(find("#address-input").text).to start_with("http")
       end
     end
 
