@@ -95,7 +95,7 @@ en:
       cta: "Follow %{name} to get notified when they are on-air!"
       next_live_at: "Next Live Show:"
   video:
-    tap_to_unmute: "Tap to unmute"
+    click_to_unmute: "Click to unmute"
 
   call_to_action: "Want to host your own Veue stream?"
   discover:

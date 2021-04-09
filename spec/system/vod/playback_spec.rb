@@ -34,13 +34,5 @@ describe "Prerecorded Audience View" do
       last_message = video.chat_messages.last
       expect(page).to have_no_css("#message-#{last_message.id}")
     end
-
-    it "should not show the last navigation" do
-      current_navigation_url = video.browser_navigations.first.payload["url"]
-      last_navigation_url = video.browser_navigations.last.payload["url"]
-
-      expect(page).to have_content(current_navigation_url, wait: 1)
-      expect(page).to_not have_content(last_navigation_url, wait: 1)
-    end
   end
 end
