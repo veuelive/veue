@@ -5,14 +5,12 @@
 
 #video-show {
   .video-header {
+    position: absolute;
+    z-index: z_index.$video-controls;
+    left: 10px;
+    top: 10px;
+    height: 28px;
     display: flex;
-    height: 3rem;
-    background: color.$white;
-    font-size: 0.8rem;
-    padding-right: 0.2rem;
-    padding-left: 0.2rem;
-    border-bottom: 1px solid color.$gray-light;
-    margin-top: 10px;
 
     @include large() {
       border-radius: 10px 10px 0 0;
@@ -42,33 +40,40 @@
 
     > * {
       border-radius: 10px;
-      margin: 0.4rem 0.2rem 0.4rem 0.2rem;
-      padding: 0 1rem 0 1rem;
       display: flex;
       flex-direction: row;
       align-items: center;
+      justify-content: center;
     }
 
     .widget {
-      background: color.$veue-lilac;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      font-size: 1rem;
+      background: rgba(color.$black, 0.5);
+      color: color.$white;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      height: 28px;
+      width: 65px;
+      margin-left: 5px;
+      justify-content: center;
 
       .icon {
-        height: 14px;
+        height: 11.96px;
         margin-right: 0.5rem;
+        magin-left: 5px;
         display: flex;
         svg {
           path {
-            fill: color.$veue-corporate;
+            fill: color.$white;
           }
         }
       }
 
       #active-viewers {
-        color: color.$veue-corporate;
+        font-size: 13px;
+        font-weight: 700;
+        font-family: font.$nunito;
+        color: color.$white;
       }
 
       &.live {
@@ -76,47 +81,33 @@
         color: color.$white;
         font-weight: font.$heavy-weight;
         display: flex;
+        width: 48px;
 
         & > .widget-live__desktop {
-          display: none;
-        }
-
-        @include large() {
-          & > .widget-live__desktop {
-            display: block;
-          }
-
-          & > .widget-live__mobile {
-            display: none;
+          font-size: 13px;
+          font-weight: 700;
+          font-family: font.$nunito;
+          @include large() {
+            font-size: 14px;
           }
         }
       }
     }
 
     .replay-badge {
-      background: color.$neutral-regular;
+      background: color.$veue-corporate;
       color: color.$white;
       font-weight: font.$heavy-weight;
       position: relative;
-
-      &:hover {
-        background: color.$neutral-darker;
-        .badge-message {
-          display: block;
-        }
-      }
+      height: 28px;
+      width: 70px;
 
       &__text {
-        display: none;
-      }
-
-      @include large() {
-        &__image {
-          display: none;
-        }
-
-        &__text {
-          display: block;
+        font-size: 13px;
+        font-weight: 700;
+        font-family: font.$nunito;
+        @include large() {
+          font-size: 14px;
         }
       }
 
