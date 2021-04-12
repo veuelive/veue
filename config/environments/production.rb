@@ -2,6 +2,8 @@
 require 'socket'
 
 Rails.application.configure do
+  hostname = ENV.fetch("HOSTNAME", ENV.fetch("RENDER_EXTERNAL_HOSTNAME", "veue.tv"))
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -88,7 +90,7 @@ Rails.application.configure do
 
     config.logger = Logdna::Ruby.new(
       ENV["LOG_DNA_KEY"],
-      hostname: ENV["HOSTNAME"],
+      hostname: hostname,
       ip: ip.ip_address,
       app: "Veue",
       env: ENV["VEUE_ENV"],
@@ -129,5 +131,5 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
-  routes.default_url_options[:host] = ENV["HOSTNAME"]
+  routes.default_url_options[:host] = hostname
 end
