@@ -67,7 +67,7 @@ module Phenix
       options.push("--applyTag")
       options.push("webhookHost:#{Phenix.primary_hostname}")
 
-      %w[node node_modules/phenix-edge-auth/src/edgeAuth.js] + options
+      %w[node node_modules/phenix-edge-auth/node/src/edgeAuth.js] + options
     end
 
     def self.build_token(options={})
@@ -76,6 +76,7 @@ module Phenix
       Rails.logger.debug(cmd.inspect)
 
       out, _err, _status = Open3.capture3(*cmd)
+      Rails.logger.info(out)
       out.split("\n").last
     end
   end
@@ -163,7 +164,7 @@ module Phenix
                           end
 
       Faraday.post(
-        Rails.application.routes.url_helpers.phenix_url(domain: webhook_host, port: nil, protocol: "https"),
+        Rails.application.routes.url_helpers.phenix_url(host: webhook_host, port: nil, protocol: "https"),
         body: payload.to_json,
         "Content-Type": "application/json",
       )
