@@ -33,7 +33,7 @@ We use the following technologies:
 
 We use the following Third-Party services:
 
-- Mux (Video Streaming platform)
+- Phenix (Video Streaming platform)
 - Render (Hosting)
 - AppSignal (APM)
 - LogDNA (Logging)
@@ -62,8 +62,8 @@ In your local copy of this repo, generate a file `config/application.yml` with t
 ```yaml
 # config/application.yml
 
-MUX_TOKEN_ID: #{YOURTOKEN}
-MUX_TOKEN_SECRET: #{YOURSECRET}
+PHENIX_APP_ID: ?????????
+PHENIX_APP_SECRET: ?????
 ```
 
 This file will be ignored by git... and leave it that way. Take this secret to your graaaaavvvveeeeeeeee.
@@ -121,11 +121,13 @@ Look for two "Forwarding" URLs with random subdomain strings for .ngrok.io
 This will open a public endpoint that we can use for our webhook. Do not close this tab! Copy the https url in there.
 It will look something like `https://username.ngrok.io`
 
-Go to Mux.com and go into your settings. Settings > Webhooks API > Select your environment, and
-set the webhook url to be the https ngrok URL from above + `/mux/webhook` (something _like_ `https://edbd2cc7d2fc.ngrok.io/mux/webhook`) by adding `/mux/webhook` to the
-end of your ngrok tunnel.
+In your `config/application.yml` file add the following line replacing with your custom ngrok URL.
 
-### 6. Webpacker (OPTIONAL)
+```
+HOSTNAME: https://username.ngrok.io
+```
+
+### 6. Webpacker (RECOMMENDED)
 
 To speed up development of TS files
 (from root of the project in a new shell)

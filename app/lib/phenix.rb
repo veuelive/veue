@@ -15,6 +15,10 @@ module Phenix
     channel.id[0..20]
   end
 
+  def self.primary_hostname
+    ENV.fetch("HOSTNAME", ENV.fetch("RENDER_EXTERNAL_HOST", ""))
+  end
+
   module EdgeAuth
     def self.publishing_capabilities
       %w[uhd streaming on-demand multi-bitrate xhd fhd].join(",")
@@ -59,6 +63,9 @@ module Phenix
 
       options.push("--expiresInSeconds")
       options.push("3600")
+
+      options.push("--applyTag")
+      options.push("webhookHost:#{Phenix.primary_hostname}")
 
       %w[node node_modules/phenix-edge-auth/src/edgeAuth.js] + options
     end
@@ -111,33 +118,30 @@ module Phenix
     def self.process(payload)
       Rails.logger.info payload.inspect
 
+      payload.deep_symbolize_keys!
+
       ActiveRecord::Base.transaction do
         video = load_video(payload)
 
-        unless video
-          Rails.logger.warn "Unknown video ID #{video_id}"
-          return
+        if video
+          process_payload(video, payload)
+        else
+          rebroadcast(payload)
         end
-
-        process_payload(video, payload)
       end
     end
 
     def self.load_video(payload)
-      video_id = (payload["data"]["tags"].find do |tag|
-        tag.start_with?("videoId")
-      end)[8..]
-
-      Video.find_by(id: video_id)
+      Video.find_by(id: find_tag(payload, "videoId"))
     end
 
     def self.process_payload(video, payload)
-      case payload["what"]
+      case payload[:what]
       when "starting"
         video.start! unless video.live?
       when "ended"
-        video.duration = payload["data"]["duration"] / 1_000
-        video.end_reason = payload["data"]["reason"]
+        video.duration = payload[:data][:duration] / 1_000
+        video.end_reason = payload[:data][:reason]
         video.end!
       when "on-demand"
         on_demand_payload(video, payload)
@@ -146,8 +150,27 @@ module Phenix
       end
     end
 
+    def self.rebroadcast(payload)
+      webhook_host = find_tag(payload, :webhookHost)
+
+      # If we match the same domain, don't keep calling ourselves!
+      return false if Phenix.primary_hostname == webhook_host
+
+      # Make sure that we are only calling a hostname in an approved origin
+      allowed_origins = %w[ngrok.io onrender.com veuelive.com veue.tv]
+      return false unless allowed_origins.any? do |origin|
+                            webhook_host.ends_with?(origin)
+                          end
+
+      Faraday.post(
+        Rails.application.routes.url_helpers.phenix_url(domain: webhook_host, port: nil, protocol: "https"),
+        body: payload.to_json,
+        "Content-Type": "application/json",
+      )
+    end
+
     def self.on_demand_payload(video, payload)
-      uri = payload["data"]["uri"]
+      uri = payload[:data][:uri]
       if uri.ends_with?("vod.m3u8")
         video.hls_url = uri
       elsif uri.ends_with?("vod.mpd")
@@ -156,6 +179,16 @@ module Phenix
 
       # We can do VOD now!
       video.finish!
+    end
+
+    def self.find_tag(payload, tag_name)
+      tag_name = "#{tag_name}:"
+      value = (payload[:data][:tags].find do |tag|
+        tag.start_with?(tag_name)
+      end)
+      return unless value
+
+      value[tag_name.length..]
     end
   end
 end
