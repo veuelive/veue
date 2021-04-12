@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     member do
       post "navigation_update"
       post "start"
+      post "stop"
       post "keepalive"
     end
 
@@ -55,11 +56,11 @@ Rails.application.routes.draw do
     resources :images, controller: :user_images, only: [:show]
   end
 
-  post "/mux/webhook", to: "mux_webhooks#index"
-
   scope module: :internal, path: "_/_/" do
     get 'health', to: "health_check#index"
     get 'cron', to: 'cron#trigger'
+
+    post 'phenix', to: "webhooks#phenix"
 
     mount Sidekiq::Web => 'sidekiq'
 

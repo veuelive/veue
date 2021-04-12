@@ -22,14 +22,11 @@ describe "Prerecorded Audience View" do
     end
 
     visit path_for_video(video)
-    expect(is_video_playing?).to be(true)
+    assert_video_is_playing
+    ensure_controls_visible
   end
 
   describe "When you move to the video scrubber to ~16 seconds" do
-    before :each do
-      find(".progress-bar-container").click
-    end
-
     it "should not show the very last chat message" do
       last_message = video.chat_messages.last
       expect(page).to have_no_css("#message-#{last_message.id}")

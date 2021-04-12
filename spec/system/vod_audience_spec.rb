@@ -17,7 +17,7 @@ describe "Prerecorded Audience View" do
     it "should have a video to play!" do
       visit path_for_video(video)
 
-      assert_video_is_playing(3)
+      assert_video_is_playing(5)
 
       expect(is_video_playing?).to eq(true)
 
@@ -90,7 +90,7 @@ describe "Prerecorded Audience View" do
 
   describe "Starting further into the video" do
     it "should show all chat messages" do
-      late_message.update!(timecode_ms: 9_999)
+      late_message.update!(timecode_ms: 8_999)
       visit path_for_video(video, t: 1)
       assert_video_is_playing(2)
       expect(page).to have_content(ChatMessage.first.payload["message"])
@@ -98,8 +98,8 @@ describe "Prerecorded Audience View" do
       expect(page).to have_no_content(late_message.payload["message"], wait: 0)
 
       # Seeking SHOULD have that message!
-      visit path_for_video(video, t: 10)
-      assert_video_is_playing(10)
+      visit path_for_video(video, t: 9)
+      assert_video_is_playing(9)
       # Messages from before stream should show
       first_message = ChatMessage.first
       expect(first_message.timecode_ms).to eq(0)
@@ -141,9 +141,12 @@ describe "Prerecorded Audience View" do
       video.update!(end_offset: end_offset, duration: 54)
 
       visit path_for_video(video)
+      assert_video_is_playing
 
       expect(page).to have_css("[data-end-offset='#{end_offset}']")
       expect(is_video_playing?).to be(true)
+
+      ensure_controls_visible
 
       # Use 26 to account for possible rounding issues.
       # Use a float because video durations on a video element are floats
@@ -163,7 +166,7 @@ describe "Prerecorded Audience View" do
     it "Should disappear when the user clicks the player control mute button" do
       visit path_for_video(video)
       expect(page).to have_css(".mute-banner")
-      find(".toggle-audio", visible: true).click
+      find(".mute-banner", visible: true).click
       expect(find(".mute-banner", visible: false)).to_not be_visible
     end
   end

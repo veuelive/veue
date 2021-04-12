@@ -101,7 +101,8 @@ class Video < ApplicationRecord
   # This is the primary way to start a broadcast
   def start_broadcast!(params)
     new_layout_event!(params[:video_layout])
-    BrowserNavigation.create_first_navigation!(self, params[:url])
+
+    BrowserNavigation.create_first_navigation!(self, params[:url]) if params[:url]
 
     # The actual state machine transition
     start!
@@ -150,6 +151,10 @@ class Video < ApplicationRecord
 
     send_ifttt!("#{user.display_name} went live!")
     send_broadcast_start_text!
+  end
+
+  def after_end
+    send_ifttt!("#{user.display_name} stopped streaming") if visibility.eql?("public")
   end
 
   def send_ifttt!(message)

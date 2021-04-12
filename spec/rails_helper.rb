@@ -53,7 +53,6 @@ RSpec.configure do |config|
   config.before(:each) do
     stub_const("Twilio::REST::Client", FakeTwilio)
     FakeTwilio.reset!
-    stub_const("MUX_SERVICE", FakeMuxService.new)
 
     WebMock.reset!
     setup_perspective_mocks!

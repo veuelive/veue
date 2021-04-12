@@ -34,6 +34,10 @@ class BroadcastsController < ApplicationController
     current_broadcast_video.start_broadcast!(params.permit(:video_layout, :url))
   end
 
+  def stop
+    current_broadcast_video.end!
+  end
+
   def navigation_update
     current_broadcast_video.browser_navigations.create!(
       input: {

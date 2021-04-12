@@ -40,7 +40,7 @@ export default class extends Controller {
   private browserUnderlayTarget!: HTMLDivElement;
 
   private videoMixer: VideoMixer;
-  private streamCapturer: StreamRecorder;
+  private streamRecorder: StreamRecorder;
   private metronome: Metronome;
   private eventManager: EventManagerInterface;
   private audioMixer: AudioMixer;
@@ -73,7 +73,11 @@ export default class extends Controller {
     );
     this.captureSourceManager.start();
 
-    this.streamCapturer = new StreamRecorder(this.videoMixer, this.audioMixer);
+    this.streamRecorder = new StreamRecorder(
+      this.videoMixer,
+      this.audioMixer,
+      this.element.dataset.phenixAuthToken
+    );
     this.metronome = new Metronome();
 
     ipcRenderer.invoke("getEnvironment").then(async (data) => {
@@ -121,7 +125,7 @@ export default class extends Controller {
     ipcRenderer.on("ffmpeg-error", () => {
       this.state = "failed";
       alert("Something went wrong with ffmpeg– contact hello@veue.tv");
-      this.streamCapturer.stop();
+      this.streamRecorder.stop();
     });
 
     this.eventManager = new LiveEventManager(false);
@@ -133,27 +137,17 @@ export default class extends Controller {
   }
 
   startStreaming(): void {
-    // TODO:: this mechanism of event is partially implemented, will
-    // be part of next PR.
-
-    // const titlePresent = this.element.dataset.videoTitle;
-    // if (!titlePresent) {
-    //   document.dispatchEvent(
-    //     new CustomEvent(ShowSettingsMenuEvent, {
-    //       detail: {
-    //         titlePresent,
-    //       },
-    //     })
-    //   );
-    // }
-
-    this.streamCapturer
-      .start(this.data.get("stream-key"))
+    this.streamRecorder
+      .start(
+        this.element.dataset.phenixChannelAlias,
+        this.element.dataset.phenixPublishToken
+      )
       .then(async () => {
         this.state = "starting";
         this.data.set("started-at", Date.now().toString());
 
-        await Promise.all([this.sendSnapshots(), this.sendStartingLayout()]);
+        await this.sendStartingLayout();
+        await this.sendSnapshots();
 
         this.state = "live";
         this.metronome.start();
@@ -169,7 +163,7 @@ export default class extends Controller {
   stopStreaming(): void {
     this.state = "finished";
     window.clearInterval(this.snapshotIntervalId);
-    this.streamCapturer.stop();
+    this.streamRecorder.stop();
   }
 
   async sendSnapshots(): Promise<void> {

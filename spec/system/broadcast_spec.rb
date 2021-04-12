@@ -6,6 +6,8 @@ require "system_helper"
 # within the rails app. This has to be combined with the real Electron App to get full / perfect results.
 describe "Broadcast View" do
   include BroadcastSystemHelpers
+  # These are useful for chat messages
+  include AudienceSpecHelpers
 
   let(:streamer) { create(:streamer) }
   let(:channel) { streamer.channels.first }
@@ -42,20 +44,6 @@ describe "Broadcast View" do
     expect_no_javascript_errors
   end
 
-  describe "before live streaming" do
-    it "should allow me to change my URL" do
-      navigate_to(url = "https://1982.com")
-
-      wait_for_broadcast_state("ready")
-      click_start_broadcast_button
-      find("*[data-broadcast-started-at]")
-
-      expect(video).to be_live
-      wait_for_broadcast_state("live")
-      expect(BrowserNavigation.published.last.payload["url"]).to eq(url)
-    end
-  end
-
   describe "start the broadcast" do
     before do
       5.times { create(:follow, user: create(:user), channel: channel) }
@@ -68,7 +56,6 @@ describe "Broadcast View" do
       wait_for_broadcast_state("ready")
 
       click_start_broadcast_button
-      expect(page).to have_content("Starting")
       wait_for_broadcast_state("live")
 
       server = Capybara.current_session.server
@@ -192,8 +179,6 @@ describe "Broadcast View" do
     end
 
     describe "chat message events" do
-      include AudienceSpecHelpers
-
       it "should display live messages on broadcaster view" do
         first_message = someone_chatted
         second_message_text = "Cowabunga!"
