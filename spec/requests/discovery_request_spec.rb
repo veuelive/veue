@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe DiscoverController do
   before :example do
-    @public_videos = create_list(:video, 5, {state: :finished})
+    @public_videos = create_list(:vod_video, 5, {state: :finished})
     @video = @public_videos.first
 
     @protected_videos = create_list(:protected_video, 3)
@@ -13,7 +13,7 @@ describe DiscoverController do
     @protected_video = @protected_videos.first
 
     @pending_video = create(:video, {state: :pending})
-    @live_video = create(:video, {state: :live})
+    @live_video = create(:live_video, {state: :live})
   end
 
   describe "index" do
