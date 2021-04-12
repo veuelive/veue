@@ -9,11 +9,31 @@
 }
 
 #video-show {
+  .primary-video {
+    &__overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: color.$black;
+      opacity: 0%;
+      z-index: 0;
+    }
+
+    @include large() {
+      &__overlay {
+        display: none;
+      }
+    }
+  }
+
   .primary-video:hover,
   &[data-audience-view-audio-state="muted"] {
     .player-controls,
     .mobile-controls {
       opacity: 1;
+    }
+    .primary-video__overlay {
+      opacity: 20%;
     }
   }
 
@@ -21,7 +41,6 @@
   .mobile-controls {
     a {
       margin: 0 0.25rem;
-      padding: 0.65rem 0.75rem;
       border-radius: 0.65rem;
       display: flex;
       align-items: center;
@@ -44,15 +63,10 @@
     .toggle-audio {
       display: flex;
       justify-content: center;
-      padding: 10px;
       flex: 0 0 auto;
     }
 
     // Makes the play button appear centered by nudging it 2px to the right
-    .toggle-play.play {
-      padding-left: 11px;
-      padding-right: 9px;
-    }
 
     .toggle-audio {
       background-color: rgba(color.$light-black, 0.5);
@@ -181,11 +195,11 @@
     .toggle-audio.mobile {
       display: flex;
       opacity: 1;
-      height: 20px;
-      width: 21px;
+      height: 40px;
+      width: 41px;
       img {
-        width: 17px;
-        height: 16px;
+        width: 15px;
+        height: 14px;
       }
     }
   }
@@ -236,6 +250,8 @@
       .toggle-audio.desktop,
       .toggle-play.desktop {
         margin: 0;
+        width: 41px;
+        height: 41px;
       }
     }
 
