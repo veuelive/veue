@@ -12,7 +12,6 @@
     = csrf_meta_tags
     = csp_meta_tag
 
-    %script{type: "module", src: "https://unpkg.com/@github/time-elements@latest?module"}
     = stylesheet_pack_tag 'application', media: 'all'
     = javascript_pack_tag 'application', async: true
     = yield :header if content_for?(:header)
