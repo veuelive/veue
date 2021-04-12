@@ -49,7 +49,7 @@ class Video < ApplicationRecord
 
   scope :stale,
         -> {
-          pending.where("updated_at < ?", 30.minutes.ago)
+          pending.where("updated_at <= ?", 30.minutes.ago).or(scheduled.where("scheduled_at <= ?", 1.hour.ago))
         }
 
   scope :most_recent,
