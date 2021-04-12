@@ -2,7 +2,9 @@
 
 class VideoView < ApplicationRecord
   belongs_to :user, optional: true
-  belongs_to :video, counter_cache: true
+
+  # We need to update our discover cache, so we set touch to true
+  belongs_to :video, counter_cache: true, touch: true
   belongs_to :user_joined_event, optional: true, dependent: :destroy
   has_many :video_view_minutes, dependent: :destroy
 
