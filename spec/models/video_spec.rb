@@ -16,6 +16,7 @@ RSpec.describe Video, type: :model do
       expect(video).to be_scheduled
       expect(Video.scheduled.count).to eq(1)
       expect(video.scheduled_at).to eq(tomorrow)
+      expect(Video.stale.count).to eq(0)
     end
 
     it "should you allow to cancel scheduling" do
@@ -25,6 +26,7 @@ RSpec.describe Video, type: :model do
       video.update!(scheduled_at: nil)
       expect(video).to_not be_scheduled
       expect(video.scheduled_at).to be_nil
+      expect(Video.stale.count).to eq(0)
     end
 
     it "should allow you to start a scheduled video" do
@@ -33,6 +35,7 @@ RSpec.describe Video, type: :model do
       video.start!
       expect(video.scheduled?).to be(false)
       expect(video.live?).to be(true)
+      expect(Video.stale.count).to eq(0)
     end
 
     it "should not allow you to schedule in the past" do
@@ -43,6 +46,20 @@ RSpec.describe Video, type: :model do
     it "should not allow you to schedule unschedulable videos" do
       video.finish!
       expect { video.update!(scheduled_at: 1.day.from_now) }.to raise_error(ActiveRecord::RecordInvalid)
+    end
+
+    it "should expire old scheduled videos" do
+      video.update!(scheduled_at: 1.minute.from_now)
+      Timecop.travel(40.minutes.from_now)
+      expect(Video.stale.count).to eq(0)
+      expect(Video.scheduled.count).to eq(1)
+
+      # Okay, we should be very stale now
+      Timecop.travel(1.hour.from_now)
+      expect(Video.stale.count).to eq(1)
+
+      # It's still scheduled as that's a state, but the CRON job will catch it if `stale`
+      expect(Video.scheduled.count).to eq(1)
     end
   end
 
