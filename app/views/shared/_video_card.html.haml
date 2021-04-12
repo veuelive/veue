@@ -18,7 +18,7 @@
           .video-card__image__svg
             = svg_tag "view"
           .video-card__image__count
-            = video.video_views.count
+            = video.video_views.size
         .video-card__image__secondary
           - if video.secondary_shot.attached?
             = image_tag video.secondary_shot.variant(resize_to_fill: [76, 61]), draggable: "false"

@@ -25,7 +25,7 @@
         .badge-message__body
           This stream happened on
           = current_video.created_at.strftime("%B %d, %Y")
-    - video_views = current_video.video_views.count
+    - video_views = current_video.video_views.size
     .widget{"data-views": video_views}
       .icon
         = svg_tag "view"
