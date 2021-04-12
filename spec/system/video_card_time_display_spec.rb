@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "system_helper"
 
 describe "Video Card time displays should display as relative" do
@@ -15,7 +17,6 @@ describe "Video Card time displays should display as relative" do
   let(:two_months_ago) { create(:vod_video, started_at_ms: 2.months.ago.utc.to_ms, channel: channel) }
   let(:one_year_ago) { create(:vod_video, started_at_ms: 12.months.ago.utc.to_ms, channel: channel) }
   let(:two_years_ago) { create(:vod_video, started_at_ms: 2.years.ago.utc.to_ms, channel: channel) }
-
 
   before(:each) do
     @videos = [

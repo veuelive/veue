@@ -67,5 +67,4 @@ describe "Discover View" do
       expect(page).to_not have_content("Featured Show")
     end
   end
-
 end
