@@ -46,20 +46,8 @@ class VideoDecorator < Draper::Decorator
     end
   end
 
-  def start_time_in_words(suffix="ago")
-    started_at =
-      if started_at_ms
-        Time.zone.at(started_at_ms / 1000)
-      else
-        created_at
-      end
-
-    time = helpers.time_ago_in_words(started_at)
-
-    # If its 'yesterday' we dont need to add the suffix
-    return time if time == I18n.t("datetime.distance_in_words.x_days.one")
-
-    "#{time} #{suffix}"
+  def start_time_tag
+    h.haml_tag("time-ago", datetime: Time.at(started_at_ms / 1000).utc.iso8601)
   end
 
   private
