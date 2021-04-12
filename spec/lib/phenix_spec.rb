@@ -53,7 +53,7 @@ describe Phenix do
       old_hostname = ENV["HOSTNAME"]
       ENV["HOSTNAME"] = "sushitown.ngrok.io"
       expect(Phenix.primary_hostname).to eq("sushitown.ngrok.io")
-      expect(Phenix::Webhooks.process({data: {tags: ["webhookHost:ushitown.ngrok.io"]}})).to eq(false)
+      expect(Phenix::Webhooks.process({data: {tags: ["webhookHost:sushitown.ngrok.io"]}})).to eq(false)
       ENV["HOSTNAME"] = old_hostname
     end
 
