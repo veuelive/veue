@@ -7219,10 +7219,9 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-phenix-edge-auth@^1.2.5:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/phenix-edge-auth/-/phenix-edge-auth-1.2.5.tgz#27eb6b793b59aed0513274b4cf8b72941d04bc3b"
-  integrity sha512-Ezc/G94dUxzBW+c7kK7SJ8uGyCdIsnnXmjhcawMsmZb92MjFOpNuoPrWbiArwG3xJ0hka/sjkJWkXpQ1+xvOlg==
+phenix-edge-auth@hcatlin/EdgeAuth.git#master:
+  version "0.0.0"
+  resolved "https://codeload.github.com/hcatlin/EdgeAuth/tar.gz/fb5d87b480fa0586e8a0a3acc1169b4c5050257f"
 
 phenix-web-sdk@^2021.0.9:
   version "2021.0.9"
