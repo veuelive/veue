@@ -95,4 +95,14 @@ RSpec.describe VideoView, type: :model do
       expect(view_at(12).video_view_minutes_count).to eq(3)
     end
   end
+
+  describe "updated_at of video" do
+    let(:video) { create(:vod_video) }
+
+    it "Should update the video updated_at time on video view" do
+      last_updated_at = video.updated_at
+      VideoView.process_view!(video, first_user, 1, fingerprint, true)
+      expect(video.reload.updated_at).to be > last_updated_at
+    end
+  end
 end
