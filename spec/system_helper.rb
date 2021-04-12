@@ -6,6 +6,9 @@ RSpec.configure do |config|
   config.include AuthenticationTestHelpers::SystemTestHelpers, type: :system
   config.include SystemSpecHelpers, type: :system
 
+  # allows use of dom_id()
+  config.include ActionView::RecordIdentifier, type: :system
+
   # This is for our tests as a Broadcaster
   Capybara.register_driver(:media_browser) do |app|
     options = %w[
