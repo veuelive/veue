@@ -23,6 +23,10 @@ describe Phenix do
   describe Phenix::Webhooks do
     it "should rebroadcast if no video found" do
       stub = stub_request(:post, "https://sushitown.ngrok.io/_/_/phenix")
+             .with(
+               body: "{\"data\":{\"tags\":[\"webhookHost:sushitown.ngrok.io\"]}}",
+             )
+             .to_return(status: 200, body: "", headers: {})
 
       expect(Phenix::Webhooks.process({data: {tags: ["webhookHost:sushitown.ngrok.io"]}})).to_not be_nil
       expect(stub).to have_been_requested.once

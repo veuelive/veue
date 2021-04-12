@@ -165,7 +165,7 @@ module Phenix
 
       Faraday.post(
         Rails.application.routes.url_helpers.phenix_url(host: webhook_host, port: nil, protocol: "https"),
-        body: payload.to_json,
+        payload.to_json,
         "Content-Type": "application/json",
       )
     end
