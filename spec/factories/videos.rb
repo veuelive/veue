@@ -13,6 +13,7 @@ FactoryBot.define do
     factory :vod_video do
       state { :finished }
       hls_url { "/__test/vod/playback.m3u8" }
+      started_at_ms { Time.now.utc.to_ms }
       after(:create) do |video|
         # It's important for some tests that we create the chat messages BEFORE we go live
         # as we need to make sure the video layout event fires
