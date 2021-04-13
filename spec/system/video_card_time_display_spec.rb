@@ -5,8 +5,8 @@ require "system_helper"
 describe "Video Card time displays should display as relative" do
   let(:channel) { create(:channel) }
   # These happen so fast, we have to go backwards in time a little to make them display properly in test
-  let(:one_minute_ago) { create(:vod_video, started_at_ms: 30.seconds.ago.utc.to_ms, channel: channel) }
-  let(:two_minutes_ago) { create(:vod_video, started_at_ms: 1.minute.ago.utc.to_ms, channel: channel) }
+  let(:one_minute_ago) { create(:vod_video, started_at_ms: 1.minute.ago.utc.to_ms, channel: channel) }
+  let(:two_minutes_ago) { create(:vod_video, started_at_ms: 2.minutes.ago.utc.to_ms, channel: channel) }
   let(:one_hour_ago) { create(:vod_video, started_at_ms: 1.hour.ago.utc.to_ms, channel: channel) }
   let(:two_hours_ago) { create(:vod_video, started_at_ms: 2.hours.ago.utc.to_ms, channel: channel) }
   let(:one_day_ago) { create(:vod_video, started_at_ms: 1.day.ago.utc.to_ms, channel: channel) }
@@ -33,6 +33,10 @@ describe "Video Card time displays should display as relative" do
       {video: one_year_ago, content: /12 months ago/},
       {video: two_years_ago, content: /2 years ago/},
     ]
+
+    # We stub these out because of inconsistencies in running times in the browser.
+    expect(one_minute_ago).to receive(:started_at_ms).and_return(1.minute.ago.utc.to_ms)
+    expect(two_minutes_ago).to receive(:started_at_ms).and_return(2.minutes.ago.utc.to_ms)
   end
 
   it "should show the proper relative times for each video on the discover page" do
