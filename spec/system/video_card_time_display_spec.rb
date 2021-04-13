@@ -57,6 +57,8 @@ describe "Video Card time displays should display as relative" do
   it "should show the proper relative times for each video on the discover page" do
     Timecop.freeze
 
+    # Not happy about these, but its the only way to ensure proper timings
+    # Timecop.freeze doesnt work in before(:each) blocks.
     one_minute_ago.update!(started_at_ms: 50.seconds.ago.utc.to_ms)
     one_minute_ago.reload
     two_minutes_ago.update!(started_at_ms: 2.minutes.ago.utc.to_ms)
