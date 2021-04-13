@@ -4,8 +4,8 @@ require "system_helper"
 
 describe "Video Card time displays should display as relative" do
   let(:channel) { create(:channel) }
-  # These happen so fast, we have to go backwards in time a little to make them display properly in test
-  let(:one_minute_ago) { create(:vod_video, started_at_ms: 50.seconds.ago.utc.to_ms, channel: channel) }
+  # These happen so fast, we have to go backwards forward in time a little to make them display properly in test
+  let(:one_minute_ago) { create(:vod_video, started_at_ms: 90.seconds.ago.utc.to_ms, channel: channel) }
   let(:two_minutes_ago) { create(:vod_video, started_at_ms: 2.minutes.ago.utc.to_ms, channel: channel) }
   let(:one_hour_ago) { create(:vod_video, started_at_ms: 1.hour.ago.utc.to_ms, channel: channel) }
   let(:two_hours_ago) { create(:vod_video, started_at_ms: 2.hours.ago.utc.to_ms, channel: channel) }
@@ -38,7 +38,7 @@ describe "Video Card time displays should display as relative" do
   it "should show the proper relative times for each video on the discover page" do
     Timecop.freeze
 
-    one_minute_ago.update!(started_at_ms: 50.seconds.ago.utc.to_ms)
+    one_minute_ago.update!(started_at_ms: 80.seconds.ago.utc.to_ms)
     one_minute_ago.reload
     two_minutes_ago.update!(started_at_ms: 2.minutes.ago.utc.to_ms)
     two_minutes_ago.reload
@@ -59,7 +59,7 @@ describe "Video Card time displays should display as relative" do
 
     # Not happy about these, but its the only way to ensure proper timings
     # Timecop.freeze doesnt work in before(:each) blocks.
-    one_minute_ago.update!(started_at_ms: 50.seconds.ago.utc.to_ms)
+    one_minute_ago.update!(started_at_ms: 80.seconds.ago.utc.to_ms)
     one_minute_ago.reload
     two_minutes_ago.update!(started_at_ms: 2.minutes.ago.utc.to_ms)
     two_minutes_ago.reload
