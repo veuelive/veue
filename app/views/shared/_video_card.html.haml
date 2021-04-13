@@ -33,6 +33,7 @@
         .video-card__below__details
           = video.user.display_name
 
-          = svg_tag "ellipse-2"
-          .video-card__below__details__broadcast__time
-            - video.start_time_tag
+          - if !video.pending?
+            = svg_tag "ellipse-2"
+            .video-card__below__details__broadcast__time
+              - video.start_time_tag
