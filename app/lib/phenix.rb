@@ -21,7 +21,7 @@ module Phenix
 
   module EdgeAuth
     def self.publishing_capabilities
-      %w[uhd streaming on-demand multi-bitrate xhd fhd].join(",")
+      %w[uhd on-demand multi-bitrate xhd fhd].join(",")
     end
 
     def self.auth_token(channel)
