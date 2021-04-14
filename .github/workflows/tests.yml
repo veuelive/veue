@@ -41,15 +41,6 @@ jobs:
           rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-check
-  eslint:
-    name: runner / eslint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: eslint
-        uses: reviewdog/action-eslint@v1
-        with:
-          eslint_flags: 'app/ spec/'
   jsLinters:
     name: runner / prettier
     runs-on: ubuntu-latest
