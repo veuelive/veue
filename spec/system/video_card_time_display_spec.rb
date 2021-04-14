@@ -9,7 +9,7 @@ describe "Video Card time displays should display as relative" do
   # Timecop and Rails' built in timecop do not affect the browser time, only the server time.
   # As it is, this is more of a visual regression test since the actual times are handled
   # by a web component.
-  let(:five_minutes_ago) { create(:vod_video, started_at_ms: 5.minutes.ago.to_ms, channel: channel) }
+  let(:five_minutes_ago) { create(:vod_video, started_at_ms: 20.minutes.ago.to_ms, channel: channel) }
   let(:one_hour_ago) { create(:vod_video, started_at_ms: 1.hour.ago.to_ms, channel: channel) }
   let(:two_hours_ago) { create(:vod_video, started_at_ms: 2.hours.ago.to_ms, channel: channel) }
   let(:one_day_ago) { create(:vod_video, started_at_ms: 1.day.ago.to_ms, channel: channel) }
