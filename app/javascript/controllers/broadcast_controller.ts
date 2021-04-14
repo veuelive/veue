@@ -71,7 +71,6 @@ export default class extends Controller {
       this.videoMixer,
       this.audioMixer
     );
-    this.captureSourceManager.start();
 
     this.streamRecorder = new StreamRecorder(
       this.videoMixer,
