@@ -50,4 +50,4 @@ blocks:
             - rspec_booster --job $SEMAPHORE_JOB_INDEX/$SEMAPHORE_JOB_COUNT
         - name: eslint
           commands:
-            - yarn eslint app/ spec/
+            - yarn eslint app/ spec/ 
