@@ -18,12 +18,11 @@
       opacity: 0%;
       z-index: z_index.$video-overlay;
       top: 0;
-      border-radius: 10px 10px 0 0;
     }
 
     @include large() {
       &__overlay {
-        display: none;
+        display: none !important;
       }
     }
   }
@@ -34,9 +33,16 @@
     .mobile-controls {
       opacity: 1;
     }
+    @include smallWide() {
+      .primary-video__overlay {
+        opacity: 0.2;
+      }
+    }
 
-    .primary-video__overlay {
-      opacity: 0.2;
+    @include smallTall() {
+      .primary-video__overlay {
+        opacity: 0.2;
+      }
     }
   }
 
