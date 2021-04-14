@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   include HttpAuthConcern
   include AuthenticationConcern
   include FingerprintConcern
-  include IpcMockConcern unless Rails.env.production?
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   rescue_from CanCan::AccessDenied do |exception|

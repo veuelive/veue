@@ -1,6 +1,7 @@
 import { CaptureSource } from "helpers/broadcast/capture_sources/base";
+import { AudioCaptureSource } from "helpers/broadcast/capture_sources/audio";
 
-export default class MicrophoneCaptureSource extends CaptureSource {
+export default class MicrophoneCaptureSource extends AudioCaptureSource {
   // Use this to initialize the object
   static async connect(deviceId?: string): Promise<MicrophoneCaptureSource> {
     const source = new MicrophoneCaptureSource(deviceId);
@@ -9,7 +10,7 @@ export default class MicrophoneCaptureSource extends CaptureSource {
   }
 
   get mediaDeviceType(): MediaDeviceKind {
-    throw "audioinput";
+    return "audioinput";
   }
 
   async start(): Promise<void> {

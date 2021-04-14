@@ -21,7 +21,7 @@ module Phenix
 
   module EdgeAuth
     def self.publishing_capabilities
-      %w[uhd streaming on-demand multi-bitrate xhd fhd].join(",")
+      %w[uhd on-demand multi-bitrate xhd fhd].join(",")
     end
 
     def self.auth_token(channel)
@@ -143,7 +143,7 @@ module Phenix
       when "ended"
         video.duration = payload[:data][:duration] / 1_000
         video.end_reason = payload[:data][:reason]
-        video.end!
+        video.end! if video.may_end?
       when "on-demand"
         on_demand_payload(video, payload)
       else
