@@ -54,9 +54,7 @@ module VideoStates
           after_end
         end
 
-        transitions from: :live, to: :ended
-        transitions from: :starting, to: :ended
-        transitions from: :ended, to: :ended
+        transitions from: %i[live starting ended], to: :ended
       end
 
       event :finish do
