@@ -106,6 +106,7 @@
       display: flex;
       justify-content: center;
       min-width: 0;
+      padding-top: 2vh;
 
       .content-area__primary {
         overflow-y: scroll;
@@ -186,9 +187,7 @@
     }
 
     .content-area {
-      // While I am loath to add an important, the padding
-      // here shows on mobile on a live broadcast when typing into chat
-      padding-top: 0 !important;
+      padding-top: 0;
       flex-direction: column;
       align-items: center;
     }
@@ -301,11 +300,16 @@
   // This is generally when your phone or small device is sideways...
   // We hide a lot of stuff to make the view very minimal
   @include smallWide() {
+    #main-container {
+      height: 100vh;
+    }
+
     .content-area {
       flex-direction: row;
       display: flex;
       justify-content: center;
       min-width: 0;
+      padding-top: 2vh;
     }
 
     .content-area__primary {
@@ -319,14 +323,13 @@
     }
 
     .content-area__secondary {
-      padding: env(safe-area-inset-top) calc(env(safe-area-inset-right) * 0.75)
-        0 0vw;
-      margin: 0 1vw 2vh 0;
+      margin: env(safe-area-inset-top) calc(env(safe-area-inset-right) + 17px) 0
+        0vw;
       background: white;
       display: flex;
       flex-direction: column;
-      height: 82vh;
-      min-width: 30vw;
+      width: 30vw;
+      height: 98vh;
     }
 
     header,
@@ -336,6 +339,14 @@
 
     .chat-section {
       font-size: calc(min(0.65rem, 5vh));
+    }
+
+    canvas.primary-canvas {
+      border-radius: 10px 10px 0 0;
+    }
+
+    canvas.fixed-secondary-canvas {
+      display: block;
     }
 
     canvas.pip-secondary-canvas {
