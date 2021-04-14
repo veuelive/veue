@@ -1,0 +1,71 @@
+@use "../utils/color";
+
+.browser_bar {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  &__controls {
+    display: flex;
+    padding-right: 12px;
+
+    a {
+      height: 19px;
+      width: 19px;
+      background: none;
+      border: 0;
+      padding: 0 11px;
+      cursor: pointer;
+
+      &:disabled * {
+        fill: #eee;
+      }
+
+      &:active {
+        /* Scaling button to 0.98 to its original size */
+        transform: scale(0.98);
+      }
+
+      &:focus {
+        border: 0;
+        outline: none;
+      }
+    }
+  }
+
+  /**
+   This works as a visibility toggle for the Browser Controller
+ */
+  &[data-broadcast--browser-visible="true"] {
+    .visible-false-svg {
+      display: none;
+    }
+  }
+  &[data-broadcast--browser-visible="false"] {
+    .visible-true-svg {
+      display: none;
+    }
+  }
+
+  &__address {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    height: 2.375rem;
+    padding-right: 1em;
+    border: 1px solid color.$gray-light;
+    border-radius: 0.625rem;
+    position: relative;
+    margin-right: 10px;
+    input {
+      border: none;
+      outline: none;
+      width: 100%;
+      padding-left: 1.2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      background-color: color.$white;
+      color: color.$gray-dark-2;
+    }
+  }
+}

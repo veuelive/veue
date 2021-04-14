@@ -143,7 +143,7 @@ module Phenix
       when "ended"
         video.duration = payload[:data][:duration] / 1_000
         video.end_reason = payload[:data][:reason]
-        video.end!
+        video.end! if video.may_end?
       when "on-demand"
         on_demand_payload(video, payload)
       else

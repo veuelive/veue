@@ -21,6 +21,7 @@ export const VideoEventProcessor = new (class VideoEventProcessor {
   clear() {
     this.dispatcher.dispatchEvent(ClearVideoEvent);
     this.events = [];
+    this.lastTimecode = 0;
   }
 
   addEvent(videoEvent: VideoEvent) {

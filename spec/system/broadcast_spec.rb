@@ -158,23 +158,11 @@ describe "Broadcast View" do
       expect(page).to have_content("Broadcast Complete")
     end
 
-    it "should show failed ffmpeg states" do
-      page.execute_script("globalThis.ipcRenderer.simulateFfmpegFailedEvent()")
-      page.accept_alert
-      expect(page).to have_content("Connection Error")
-    end
-
     describe "reload page" do
       it "should load with new video" do
         # Refreshing view while broadcasting live video
         page.refresh
         expect(find("#broadcast")["data-broadcast-video-state"]).to eq("pending")
-      end
-    end
-
-    describe "navigation events" do
-      it "should have an initial navigation event" do
-        expect(video.browser_navigations.published).to be_any
       end
     end
 
@@ -184,9 +172,6 @@ describe "Broadcast View" do
         second_message_text = "Cowabunga!"
 
         expect(video.chat_messages.count).to eq(1)
-
-        # VEUE-257 - Navigation events can throw off processing after being live
-        navigate_to("https://1982.com")
 
         expect(find(".message--left")).to have_content(first_message.text, wait: 10)
         expect(page).to_not have_content(second_message_text)

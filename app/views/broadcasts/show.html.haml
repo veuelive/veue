@@ -24,7 +24,7 @@
   .broadcast--content
     .content--left
       = render partial: "broadcast_controls"
-      = render partial: "browser"
+      = render partial: "broadcast_area"
     .content--right{data: {controller: "broadcast--settings", "broadcast--settings": { "type": "settings" }}}
       %video#webcam_preview{data: {target: "broadcast.webcamVideoElement"}}
       %canvas#audioCanvas

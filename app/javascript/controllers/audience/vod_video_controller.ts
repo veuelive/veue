@@ -13,7 +13,7 @@ export default class extends BaseController {
   element!: HTMLElement;
 
   connect(): void {
-    this.videoTarget.addEventListener(VideoSeekEvent, this.seekTo.bind(this));
+    document.addEventListener(VideoSeekEvent, this.seekTo.bind(this));
     this.eventManager = new VodEventManager(0);
 
     this.videoTarget.addEventListener("loadedmetadata", async () => {
@@ -34,10 +34,7 @@ export default class extends BaseController {
   }
 
   disconnect(): void {
-    this.videoTarget.removeEventListener(
-      VideoSeekEvent,
-      this.seekTo.bind(this)
-    );
+    document.removeEventListener(VideoSeekEvent, this.seekTo.bind(this));
   }
 
   seekTo(event: CustomEvent): Promise<void> {
