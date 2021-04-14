@@ -89,6 +89,7 @@ export function getTimecodeMs(): number {
 export function sendBroadcastLayoutUpdate(
   broadcastLayout: BroadcastVideoLayout
 ): void {
+  globalThis.broadcastLayout = broadcastLayout;
   if (isLive()) {
     const payload = {
       timecodeMs: getTimecodeMs(),

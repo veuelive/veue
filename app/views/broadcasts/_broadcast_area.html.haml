@@ -25,5 +25,10 @@
           \-:-:-
       %a.stop-btn{data: {action: "click->broadcast#stopStreaming", showOnState: "live"}, href: "javascript:void(0)"}
         = svg_tag "close"
-  .broadcast_area__content{data: {target: "broadcast.browserUnderlay"}}
+  .broadcast_area__content{
+    data: {
+      target: "broadcast.browserUnderlay broadcast--capture-sources.mediaDeck",
+      controller: "broadcast--capture-sources"
+    }
+  }
     %video#debug_output

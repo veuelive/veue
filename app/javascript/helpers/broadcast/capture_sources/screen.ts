@@ -1,8 +1,12 @@
-import { VideoCaptureSource } from "helpers/broadcast/capture_sources/base";
+import { VideoCaptureSource } from "helpers/broadcast/capture_sources/video";
 import { desktopCapturer } from "helpers/electron/desktop_capture";
-import VideoLayout from "types/video_layout";
+import VideoLayout, { VideoSourceType } from "types/video_layout";
 
 export class ScreenCaptureSource extends VideoCaptureSource {
+  get videoSourceType(): VideoSourceType {
+    return "screen";
+  }
+
   static async connect(videoLayout: VideoLayout): Promise<ScreenCaptureSource> {
     const windowTitle = "Veue Broadcaster";
     const deviceId = await ScreenCaptureSource.getWindowSource(windowTitle);
