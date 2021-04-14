@@ -1,4 +1,4 @@
-$desktop-min-width: 850px;
+$desktop-min-width: 992px;
 $mobile-max-width: $desktop-min-width;
 $aspect-ratio: "9/6";
 
@@ -9,7 +9,7 @@ $aspect-ratio: "9/6";
 }
 
 @mixin smallWide {
-  @media only screen and (max-width: $mobile-max-width) and (max-height: 400px) {
+  @media only screen and (max-width: $mobile-max-width) and (orientation: landscape) {
     @content;
   }
 }
