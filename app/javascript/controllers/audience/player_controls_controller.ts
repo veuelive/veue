@@ -274,7 +274,7 @@ export default class extends BaseController {
       bubbles: true,
       detail: { timecodeMs: currentTime },
     });
-    this.videoTarget.dispatchEvent(evt);
+    document.dispatchEvent(evt);
   }
 
   updateVideoTime(event: PointerEvent): void {

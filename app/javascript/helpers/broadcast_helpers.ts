@@ -1,6 +1,5 @@
 import { Rectangle } from "types/rectangle";
 import { postJson } from "util/fetch";
-import { NavigationUpdate } from "controllers/broadcast/browser_controller";
 import { electron, inElectronApp } from "helpers/electron/base";
 import VideoLayout, { BroadcastVideoLayout } from "types/video_layout";
 import { getChannelSlug } from "helpers/channel_helpers";
@@ -85,13 +84,6 @@ export function isLive(): boolean {
 export function getTimecodeMs(): number {
   console.log("Current timecode: ", globalThis.timecodeMs);
   return globalThis.timecodeMs;
-}
-
-export function sendNavigationUpdate(navigationUpdate: NavigationUpdate): void {
-  if (isLive()) {
-    navigationUpdate["timecodeMs"] = getTimecodeMs();
-    postJson("./navigation_update", navigationUpdate).then();
-  }
 }
 
 export function sendBroadcastLayoutUpdate(

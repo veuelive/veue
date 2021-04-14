@@ -4,7 +4,8 @@
 @use "layout";
 @use "../chat";
 @use "./chat_overrides";
-@use "browser";
+@use "browser_bar";
+@use "broadcast_area";
 @use "startup";
 @use "commands";
 @use '../components/modal';
