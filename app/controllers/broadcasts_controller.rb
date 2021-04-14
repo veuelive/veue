@@ -10,6 +10,7 @@ class BroadcastsController < ApplicationController
   end
 
   def show
+    current_broadcast_video.touch
     render
   end
 
@@ -31,7 +32,7 @@ class BroadcastsController < ApplicationController
   end
 
   def start
-    current_broadcast_video.start_broadcast!(params.permit(:video_layout, :url))
+    current_broadcast_video.start_broadcast!(params.permit(:video_layout))
   end
 
   def stop

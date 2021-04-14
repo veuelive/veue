@@ -4,7 +4,6 @@ import VideoMixer from "helpers/broadcast/mixers/video_mixer";
 import StreamRecorder from "helpers/broadcast/stream_recorder";
 import { calculateCaptureLayout } from "helpers/broadcast_helpers";
 import { postForm } from "util/fetch";
-import { getCurrentUrl } from "controllers/broadcast/browser_controller";
 import EventManagerInterface from "types/event_manager_interface";
 import LiveEventManager from "helpers/event/live_event_manager";
 import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
@@ -22,6 +21,7 @@ import {
 } from "helpers/broadcast/keyboard_listeners";
 import { getVideoId } from "helpers/video_helpers";
 import { getChannelId } from "helpers/channel_helpers";
+import { inElectronApp } from "helpers/electron/base";
 
 export const BroadcasterEnvironmentChangedEvent = "broadcastEnvironmentChanged";
 
@@ -80,6 +80,22 @@ export default class extends Controller {
     );
     this.metronome = new Metronome();
 
+    if (inElectronApp) {
+      this.setupElectronBroadcasting().then(() => (this.state = "ready"));
+    } else {
+      // we aren't in electron, so we are G2G
+      this.state = "ready";
+    }
+
+    this.eventManager = new LiveEventManager(false);
+  }
+
+  disconnect(): void {
+    this.eventManager?.disconnect();
+    removeKeyboardListeners(this.keyboardListener);
+  }
+
+  async setupElectronBroadcasting(): Promise<void> {
     ipcRenderer.invoke("getEnvironment").then(async (data) => {
       this.environment = data as BroadcasterEnvironment;
       console.log(this.environment);
@@ -95,9 +111,7 @@ export default class extends Controller {
       };
       const windowBounds = await ipcRenderer.invoke("wakeup", {
         mainWindow: windowSize,
-        rtmpUrl: `rtmps://global-live.mux.com/app/${this.data.get(
-          "stream-key"
-        )}`,
+        rtmpUrl: "", // no longer used
         sessionToken: this.data.get("session-token"),
       } as WakeupPayload);
       const browserArea = domRectToRect(
@@ -107,7 +121,7 @@ export default class extends Controller {
       await ipcRenderer.invoke("createBrowserView", {
         window: "main",
         bounds: browserArea,
-        url: "https://www.apple.com",
+        url: "https://www.veue.tv",
       } as CreateBrowserViewPayload);
       const broadcastArea = calculateCaptureLayout(
         windowBounds,
@@ -118,22 +132,7 @@ export default class extends Controller {
       console.log("broadcastArea", broadcastArea);
 
       await this.captureSourceManager.startBrowserCapture(broadcastArea);
-
-      this.state = "ready";
     });
-
-    ipcRenderer.on("ffmpeg-error", () => {
-      this.state = "failed";
-      alert("Something went wrong with ffmpeg– contact hello@veue.tv");
-      this.streamRecorder.stop();
-    });
-
-    this.eventManager = new LiveEventManager(false);
-  }
-
-  disconnect(): void {
-    this.eventManager?.disconnect();
-    removeKeyboardListeners(this.keyboardListener);
   }
 
   startStreaming(): void {
@@ -144,18 +143,19 @@ export default class extends Controller {
       )
       .then(async () => {
         this.state = "starting";
+        this.sendStartingLayout().then(() =>
+          console.log("Starting Layout Sent")
+        );
         this.data.set("started-at", Date.now().toString());
-
-        await this.sendStartingLayout();
-        await this.sendSnapshots();
-
-        this.state = "live";
         this.metronome.start();
 
         this.snapshotIntervalId = window.setInterval(
           this.sendSnapshots.bind(this),
           30_000
         );
+
+        await this.sendSnapshots();
+        this.state = "live";
       })
       .catch((e) => console.error(e));
   }
@@ -195,7 +195,6 @@ export default class extends Controller {
 
   async sendStartingLayout(): Promise<void> {
     const data = {
-      url: getCurrentUrl(),
       video_layout: JSON.stringify(this.videoMixer.broadcastLayout),
     };
 

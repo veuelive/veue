@@ -54,8 +54,6 @@ describe "Broadcaster" do
         expect(Video.count).to eq(1)
         visit broadcast_path(video)
 
-        # Since we are cancelled, we'll make a NEW video and load that
-        wait_for_broadcast_state("loading")
         # This will be the second video is ready
         wait_for_broadcast_state("ready")
 
