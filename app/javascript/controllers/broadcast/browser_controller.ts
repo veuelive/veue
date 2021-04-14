@@ -1,13 +1,12 @@
 import { Controller } from "stimulus";
 import { ipcRenderer } from "helpers/electron/ipc_renderer";
-import { sendNavigationUpdate } from "helpers/broadcast_helpers";
 import { autocorrectUrlEntry } from "util/address";
 import { TestPatternKeyEvent } from "types/keyboard_mapping";
-import debounce from "util/debounce";
 import {
   HideScreenCaptureEvent,
   ShowScreenCaptureEvent,
 } from "helpers/broadcast/capture_source_manager";
+import { inElectronApp } from "helpers/electron/base";
 
 export type NavigationUpdate = {
   eventName: string;
@@ -36,6 +35,11 @@ export default class extends Controller {
   private _visible = true;
 
   connect(): void {
+    if (!inElectronApp) {
+      // Seppuku the browser controller!
+      this.element.remove();
+      return;
+    }
     this.browserViewListener = (_, navigationUpdate: NavigationUpdate) => {
       this.updateState(navigationUpdate);
     };
@@ -69,7 +73,6 @@ export default class extends Controller {
       this.reloadButtonTarget.setAttribute("style", "display: initial;");
       this.stopButtonTarget.setAttribute("style", "display: none;");
     }
-    sendNavigationUpdate(navigationUpdate);
   }
 
   // Action!

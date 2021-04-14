@@ -1,6 +1,5 @@
 import MediaAccess from "helpers/media_access";
 import BaseController from "controllers/base_controller";
-import { ipcRenderer } from "helpers/electron/ipc_renderer";
 
 type Steps = "done" | "login" | "media";
 
@@ -19,25 +18,6 @@ export default class extends BaseController {
   connect(): void {
     this.runChecks();
     this.subscribeToAuthChange();
-    ipcRenderer.send("check_access");
-
-    ipcRenderer.on("access_status", (_, accessStatus) => {
-      if (!accessStatus.isCameraAccessible) {
-        this.videoAccessTarget.textContent = "✗";
-        this.userInstructionsModalTarget.setAttribute(
-          "style",
-          "display: block;"
-        );
-      }
-
-      if (!accessStatus.isMicrophoneAccessible) {
-        this.microphoneAccessTarget.textContent = "✗";
-        this.userInstructionsModalTarget.setAttribute(
-          "style",
-          "display: block;"
-        );
-      }
-    });
   }
 
   requestAccess(): void {

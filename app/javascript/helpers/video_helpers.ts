@@ -1,4 +1,4 @@
-export const VideoSeekEvent = "seek";
+export const VideoSeekEvent = "VideoSeekEvent";
 
 export function getVideoId(): string {
   return document
