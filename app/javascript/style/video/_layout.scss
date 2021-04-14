@@ -13,10 +13,6 @@
 
     // reset min-height
     min-height: auto;
-
-    .content-area {
-      padding-top: 2vh;
-    }
   }
 
   #video-show,
@@ -110,6 +106,7 @@
       display: flex;
       justify-content: center;
       min-width: 0;
+      padding-top: 2vh;
 
       .content-area__primary {
         overflow-y: scroll;
