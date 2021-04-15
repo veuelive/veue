@@ -31,8 +31,55 @@
         justify-content: center;
         img,
         svg {
-          width: 32px;
-          height: 32px;
+          width: 40px;
+          height: 40px;
+        }
+      }
+    }
+
+    @include smallTall() {
+      padding: 15px 10px;
+
+      &__info {
+        &__follow {
+          padding: 0px;
+          margin: 0px;
+        }
+
+        &__mobile__about {
+          display: block;
+        }
+
+        &__text {
+          margin: 0px;
+          overflow: hidden;
+        }
+
+        &__avatar {
+          margin: 0 10px 0 0;
+        }
+      }
+    }
+
+    @include smallWide() {
+      padding: 15px 10px;
+
+      &__info {
+        &__follow {
+          padding: 0px;
+          margin: 0px;
+        }
+
+        &__mobile__about {
+          display: block;
+        }
+
+        &__text {
+          margin: 0px;
+        }
+
+        &__avatar {
+          margin: 0 10px 0 0;
         }
       }
     }
@@ -51,8 +98,8 @@
         &__avatar {
           img,
           svg {
-            width: 64px;
-            height: 64px;
+            width: 40px;
+            height: 40px;
           }
         }
       }
