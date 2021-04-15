@@ -35,7 +35,7 @@ RSpec.describe UserJoinedEvent, type: :model do
     expect(video.user_joined_events.count).to eq(max_per_minute + 1)
 
     # All done!
-    Timecop.return
+    Timecop.unfreeze
   end
 
   def create_new_video_view
