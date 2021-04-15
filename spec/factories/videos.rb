@@ -11,6 +11,7 @@ FactoryBot.define do
     mux_playback_id { Faker::Alphanumeric.alphanumeric }
 
     factory :vod_video do
+      started_at_ms { 1.hour.ago.utc.to_ms }
       state { :finished }
       hls_url { "/__test/vod/playback.m3u8" }
       after(:create) do |video|
