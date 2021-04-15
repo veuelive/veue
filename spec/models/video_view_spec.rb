@@ -91,8 +91,9 @@ RSpec.describe VideoView, type: :model do
     it "should allow us to go backwards and count re-watches the next day" do
       expect(view_at(12).video_view_minutes_count).to eq(1)
       expect(view_at(9).video_view_minutes_count).to eq(2)
-      Timecop.travel(1.day.from_now)
-      expect(view_at(12).video_view_minutes_count).to eq(3)
+      Timecop.travel(1.day.from_now) do
+        expect(view_at(12).video_view_minutes_count).to eq(3)
+      end
     end
   end
 
