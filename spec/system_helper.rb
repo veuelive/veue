@@ -3,6 +3,9 @@
 require "rails_helper"
 
 RSpec.configure do |config|
+  # allows use of dom_id()
+  config.include ActionView::RecordIdentifier, type: :system
+
   config.include AuthenticationTestHelpers::SystemTestHelpers, type: :system
   config.include SystemSpecHelpers, type: :system
 
