@@ -50,16 +50,18 @@ RSpec.describe Video, type: :model do
 
     it "should expire old scheduled videos" do
       video.update!(scheduled_at: 1.minute.from_now)
-      Timecop.travel(40.minutes.from_now)
-      expect(Video.stale.count).to eq(0)
-      expect(Video.scheduled.count).to eq(1)
+      Timecop.travel(40.minutes.from_now) do
+        expect(Video.stale.count).to eq(0)
+        expect(Video.scheduled.count).to eq(1)
 
-      # Okay, we should be very stale now
-      Timecop.travel(1.hour.from_now)
-      expect(Video.stale.count).to eq(1)
+        # Okay, we should be very stale now
+        Timecop.travel(1.hour.from_now) do
+          expect(Video.stale.count).to eq(1)
 
-      # It's still scheduled as that's a state, but the CRON job will catch it if `stale`
-      expect(Video.scheduled.count).to eq(1)
+          # It's still scheduled as that's a state, but the CRON job will catch it if `stale`
+          expect(Video.scheduled.count).to eq(1)
+        end
+      end
     end
   end
 
