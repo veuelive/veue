@@ -22,7 +22,6 @@ describe "Video Card time displays should display as relative" do
 
   let!(:videos) {
     [
-      {video: five_minutes_ago, content: /\d+ minutes ago/},
       {video: one_hour_ago, content: /1 hour ago/},
       {video: two_hours_ago, content: /2 hours ago/},
       {video: one_day_ago, content: /yesterday/},
