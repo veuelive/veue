@@ -1,5 +1,5 @@
 import { BroadcastVideoLayout } from "types/video_layout";
-import { VideoCaptureSource } from "helpers/broadcast/capture_sources/base";
+import { VideoCaptureSource } from "helpers/broadcast/capture_sources/video";
 import Timecode from "util/timecode";
 import Mixer from "helpers/broadcast/mixers/mixer";
 import { buildBroadcastLayout } from "util/layout_packer";
@@ -98,6 +98,7 @@ export default class VideoMixer implements Mixer {
 
   addCaptureSource(captureSource: VideoCaptureSource): void {
     this.captureSources.push(captureSource);
+    console.log(this.captureSources);
     this.captureSources = this.captureSources.sort(
       (a, b) => a.layout.priority - b.layout.priority
     );
