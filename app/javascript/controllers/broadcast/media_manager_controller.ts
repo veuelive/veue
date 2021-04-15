@@ -29,7 +29,7 @@ export default class extends DropdownController {
     menuItem.setAttribute("data-media-id", device.deviceId);
     menuItem.addEventListener("click", () => {
       document.dispatchEvent(
-        new CustomEvent(AddDeviceAsCaptureSource, { detail: device })
+        new CustomEvent("ChangeMediaDeviceEvent", { detail: device })
       );
       this.dispatchMenuClose();
     });

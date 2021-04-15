@@ -1,4 +1,3 @@
-import { CaptureSource } from "helpers/broadcast/capture_sources/base";
 import { AudioCaptureSource } from "helpers/broadcast/capture_sources/audio";
 
 export default class MicrophoneCaptureSource extends AudioCaptureSource {
