@@ -1,6 +1,6 @@
 - video = video_card
 - cache [video, video.channel] do
-  .video-card.card{class: video.state}
+  .video-card.card{class: video.state, id: dom_id(video)}
     = link_to video_link_path(video), draggable: "false" do
       .video-card__image
         = image_tag video_card_image_url(video), draggable: "false"
@@ -33,7 +33,7 @@
         .video-card__below__details
           = video.user.display_name
 
-          - if !(current_page?("/") || current_page?("/discover"))
+          - if !video.pending?
             = svg_tag "ellipse-2"
             .video-card__below__details__broadcast__time
-              = video.start_time_in_words
+              - video.start_time_in_words
