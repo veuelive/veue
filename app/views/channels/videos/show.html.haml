@@ -36,7 +36,7 @@
       .primary-video__overlay
       = render partial: "channels/videos/partials/pip_area"
       = render partial: "channels/videos/partials/player_controls"
-    = render partial: "channels/videos/partials/streamer_profile"
+    = render partial: "channels/videos/partials/streamer_profile", locals: {video: current_video}
 
     = render partial: "channels/videos/partials/recent_broadcasts"
     = render partial: "layouts/footer"
