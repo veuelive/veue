@@ -1,6 +1,5 @@
 import { Rectangle, rectToBounds, Size } from "types/rectangle";
 import { BroadcastVideoLayout, VideoSourceType } from "types/video_layout";
-import { VideoCaptureInterface } from "helpers/broadcast/capture_sources/base";
 
 interface PackSection {
   size: Size;
@@ -8,6 +7,11 @@ interface PackSection {
   priority: number; // 1 is max, higher is less priority
   type: VideoSourceType;
   id: string;
+}
+
+interface VideoCaptureInterface extends Size {
+  id: string;
+  videoSourceType: VideoSourceType;
 }
 
 const MAX_VIDEO_PERCENTAGE = 0.9;
@@ -28,16 +32,16 @@ const MAX_VIDEO_PERCENTAGE = 0.9;
  *   - b) See which Candidate Area would require the least resizing to fit
  *   - c) Place and (maybe) resize VideoFeed into the top left of the chosen Candidate
  *   - d) Repeat until all are placed
- * 5) Convert internal PackSections to a standard VideoSection for the BroadcastVideoLayout
+ * 5) Convert internal PackSections to a standard VideoCaptureInterface for the BroadcastVideoLayout
  *
  * @param videoSize
- * @param videoCaptureSources
+ * @param videoSections
  */
 export function buildBroadcastLayout(
   videoSize: Size,
-  videoCaptureSources: Array<VideoCaptureInterface>
+  videoSections: Array<VideoCaptureInterface>
 ): BroadcastVideoLayout {
-  const packSections = videoCapturesToPackSections(videoCaptureSources);
+  const packSections = videoCapturesToPackSections(videoSections);
   packSections["timecode"] = {
     size: {
       width: 360,
