@@ -1,6 +1,6 @@
-import { VideoCaptureSource } from "helpers/broadcast/capture_sources/video";
 import { desktopCapturer } from "helpers/electron/desktop_capture";
 import VideoLayout, { VideoSourceType } from "types/video_layout";
+import { VideoCaptureSource } from "helpers/broadcast/capture_sources/video";
 
 export class ScreenCaptureSource extends VideoCaptureSource {
   get videoSourceType(): VideoSourceType {

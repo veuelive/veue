@@ -1,7 +1,3 @@
-import { LayoutSection, VideoSourceType } from "types/video_layout";
-import { Size } from "types/rectangle";
-import { WebcamCaptureSource } from "helpers/broadcast/capture_sources/webcam";
-
 /**
  * A CaptureSource is our generic representation of
  * a MediaStream/Device/Etc that we are actively using in the

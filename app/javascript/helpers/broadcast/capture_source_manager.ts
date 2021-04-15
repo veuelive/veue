@@ -6,8 +6,8 @@ import VideoMixer from "helpers/broadcast/mixers/video_mixer";
 import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
 import VideoLayout from "types/video_layout";
 import { inElectronApp } from "helpers/electron/base";
-import { VideoCaptureSource } from "helpers/broadcast/capture_sources/video";
 import { AudioCaptureSource } from "helpers/broadcast/capture_sources/audio";
+import { VideoCaptureSource } from "helpers/broadcast/capture_sources/video";
 
 export const HideScreenCaptureEvent = "HideScreenCaptureEvent";
 export const ShowScreenCaptureEvent = "ShowScreenCaptureEvent";
@@ -34,13 +34,18 @@ export default class CaptureSourceManager {
         await this.addCaptureSource(event.detail as CaptureSource);
       }
     );
+
+    document.addEventListener(
+      RemoveCaptureSourceEvent,
+      async (event: CustomEvent) => {
+        await this.removeCaptureSource(event.detail as CaptureSource);
+      }
+    );
   }
 
   addCaptureSource(captureSource: CaptureSource): void {
     globalThis.captureSources[captureSource.id] = captureSource;
-    document.dispatchEvent(
-      new CustomEvent(NewCaptureSourceEvent, { detail: captureSource })
-    );
+
     if (captureSource.mediaDeviceType === "videoinput") {
       this.videoMixer.addCaptureSource(captureSource as VideoCaptureSource);
     } else if (captureSource.mediaDeviceType === "audioinput") {
@@ -48,10 +53,9 @@ export default class CaptureSourceManager {
     }
   }
 
-  removeCaptureSource(id: string): void {
-    const captureSource = globalThis.captureSources[id];
+  removeCaptureSource(captureSource: CaptureSource): void {
     if (captureSource) {
-      delete globalThis.captureSources[id];
+      delete globalThis.captureSources[captureSource.id];
 
       if (captureSource.mediaDeviceType === "videoinput") {
         this.videoMixer.removeCaptureSource(
@@ -62,6 +66,8 @@ export default class CaptureSourceManager {
           captureSource as AudioCaptureSource
         );
       }
+
+      captureSource.stop();
     }
   }
 

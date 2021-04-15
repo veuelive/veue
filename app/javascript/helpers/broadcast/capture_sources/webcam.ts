@@ -1,5 +1,5 @@
-import { VideoCaptureSource } from "helpers/broadcast/capture_sources/video";
 import { VideoSourceType } from "types/video_layout";
+import { VideoCaptureSource } from "helpers/broadcast/capture_sources/video";
 
 export class WebcamCaptureSource extends VideoCaptureSource {
   get videoSourceType(): VideoSourceType {
