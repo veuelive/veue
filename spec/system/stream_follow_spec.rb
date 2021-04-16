@@ -9,6 +9,7 @@ RSpec.describe "Follow from VOD" do
 
   before :each do
     visit channel_path(channel)
+    resize_window_desktop
   end
 
   describe "an anonymous user" do
