@@ -26,12 +26,15 @@
       background: color.$white;
     }
     .messages {
-      max-width: scale.$content_secondary_width; // If this isnt here, chat breaks. #MamaShayBug
       min-height: 95%; // This keeps the messages taking up some space so that the first message is below
       position: relative;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
+
+      @mixin large() {
+        max-width: scale.$content_secondary_width; // If this isn't here, chat breaks. #MamaShayBug
+      }
 
       .user-reaction {
         margin-top: 10px;
