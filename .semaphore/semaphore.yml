@@ -51,3 +51,7 @@ blocks:
         - name: eslint
           commands:
             - yarn eslint app/ spec/
+      epilogue:
+        on_fail:
+          commands:
+            - artifact push job --expire-in 1w tmp/screenshots
