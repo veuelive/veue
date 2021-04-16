@@ -149,7 +149,7 @@
         margin: 0 1vw 2vh 0;
         background: white;
         min-width: 230px;
-        max-width: 30vw;
+        max-width: scale.$content_secondary_width;
         display: flex;
         overflow-y: hidden;
         flex-direction: column;
@@ -329,7 +329,7 @@
       background: white;
       display: flex;
       flex-direction: column;
-      width: 30vw;
+      width: scale.$content_secondary_width;
       height: 98vh;
     }
 

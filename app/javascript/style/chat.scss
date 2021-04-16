@@ -3,6 +3,7 @@
 @use 'utils/text';
 @use 'utils/reactions';
 @use "utils/breakpoints" as *;
+@use 'utils/scale';
 @use "utils/z_index";
 
 // Realtime chat section
@@ -25,7 +26,7 @@
       background: color.$white;
     }
     .messages {
-      max-width: 30vw; // If this isnt here, chat breaks. #MamaShayBug
+      max-width: scale.$content_secondary_width; // If this isnt here, chat breaks. #MamaShayBug
       min-height: 95%; // This keeps the messages taking up some space so that the first message is below
       position: relative;
       display: flex;
