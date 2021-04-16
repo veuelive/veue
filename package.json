@@ -21,7 +21,6 @@
     "activeadmin_addons": "^1.0.0",
     "commander": "^7.2.0",
     "croppie": "^2.6.5",
-    "handlebars": "^4.7.7",
     "hls.js": "^0.14.4",
     "intl-tel-input": "^17.0.3",
     "jest-fetch-mock": "^3.0.3",
