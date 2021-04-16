@@ -53,9 +53,11 @@ body#discover__index {
         &__grid {
           display: grid;
           justify-content: space-around;
+          place-items: center;
           grid-template-columns: minmax(0, 1fr);
           column-gap: 50px;
           row-gap: 25px;
+          margin-bottom: 20px;
         }
       }
 

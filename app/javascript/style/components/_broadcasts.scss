@@ -6,11 +6,12 @@
 .broadcasts {
   display: grid;
   justify-content: space-around;
-  align-items: center;
+  place-items: center;
   width: 100%;
   row-gap: 50px;
   column-gap: 50px;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  margin-bottom: 20px;
 
   &__header {
     font-family: font.$poppins;
