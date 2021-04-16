@@ -46,6 +46,11 @@ RSpec.configure do |config|
     end
   end
 
+  config.after(:each) do
+    # Clear timecop between each test
+    Timecop.return
+  end
+
   config.after(:suite) do
     ENV["TZ"] = ENV["_ORIGINAL_TZ"]
     ENV["_ORIGINAL_TZ"] = nil
