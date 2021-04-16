@@ -72,4 +72,8 @@ module VideosHelper
 
     [seconds / 3600, seconds / 60 % 60, seconds % 60].map { |t| t.to_s.rjust(2, "0") }.join(":")
   end
+
+  def show_video_title?
+    upcoming_stream? || current_video && !current_video.scheduled?
+  end
 end

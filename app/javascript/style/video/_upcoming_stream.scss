@@ -15,7 +15,6 @@
       border-radius: 10px 10px 0 0;
       padding-right: 0.2rem;
       padding-left: 0.2rem;
-      border-bottom: 1px solid color.$neutral-accents;
 
       &__header {
         background-color: color.$neutral-regular;
@@ -43,11 +42,9 @@
       max-width: 1280px;
       align-items: center;
       justify-content: center;
-      margin-bottom: 5px;
 
       // style
       background-color: color.$white;
-      border-radius: 0 0 10px 10px;
     }
 
     .no-webcam {

@@ -8,6 +8,9 @@
           = current_channel.name
           - if current_channel.verified?
             = svg_tag 'verified'
+      - if show_video_title?
+        .streamer-profile__info__text__broadcast-title
+          = current_video.title
       .streamer-profile__info__text__about
         = current_channel.about
     .streamer-profile__info__follow

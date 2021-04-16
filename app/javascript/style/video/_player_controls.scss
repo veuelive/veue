@@ -22,7 +22,7 @@
 
     @include large() {
       &__overlay {
-        display: none !important;
+        display: none;
       }
     }
   }
