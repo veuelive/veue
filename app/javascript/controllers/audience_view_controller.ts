@@ -79,6 +79,8 @@ export default class extends BaseController {
       this.sendViewedMessage();
     }, 60 * 1000);
 
+    this.sendViewedMessage();
+
     this.subscribeToAuthChange();
   }
 
