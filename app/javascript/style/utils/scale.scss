@@ -2,6 +2,8 @@ $header_height: 54px;
 $footer_mobile_height: 105px;
 $footer_desktop_height: 65px;
 
+$content_secondary_width: 30vw;
+
 @mixin aspect-ratio() {
   // https://css-tricks.com/aspect-ratio-boxes/
   &:before {
