@@ -20,7 +20,7 @@
   }
 }
   .content-area__primary{data: {controller: "canvas-size-observer"}}
-    .primary-video{"data": { controller: "audience--movable-pip" }}
+    .primary-video{"data": { controller: "audience--movable-pip", action: "click->audience--player-controls#setBadgeTimer", target: "audience--player-controls.videoContainer"}}
       = render partial: "channels/videos/partials/header"
       .mute-banner{style: "display: none;", data: { target: "audience--player-controls.muteBanner", action: "click->audience--player-controls#toggleAudio click->audience--player-controls#hideMuteBanner"}}
         = svg_tag("volume-mute", height: 14, width: 19)
@@ -35,7 +35,8 @@
       }
       .primary-video__overlay
       = render partial: "channels/videos/partials/pip_area"
-      = render partial: "channels/videos/partials/player_controls"
+      .player-controls-area
+        = render partial: "channels/videos/partials/player_controls"
     = render partial: "channels/videos/partials/streamer_profile"
 
     = render partial: "channels/videos/partials/recent_broadcasts"

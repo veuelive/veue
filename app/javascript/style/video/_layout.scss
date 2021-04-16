@@ -80,6 +80,18 @@
         }
       }
     }
+
+    @include smallWide() {
+      .hide-badges {
+        display: none;
+      }
+    }
+
+    @include smallTall() {
+      .hide-badges {
+        display: none;
+      }
+    }
   }
 
   .broadcasts__header {
