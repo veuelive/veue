@@ -21,3 +21,21 @@
     opacity: 0;
   }
 }
+
+@keyframes toZeroTop {
+  from {
+    top: -80px;
+  }
+  to {
+    top: 0;
+  }
+}
+
+@keyframes reduceTop {
+  from {
+    top: 0;
+  }
+  to {
+    top: -80px;
+  }
+}

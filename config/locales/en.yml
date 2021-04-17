@@ -96,6 +96,7 @@ en:
       next_live_at: "Next Live Show:"
   video:
     click_to_unmute: "Click to unmute"
+    tap_to_unmute: "Tap to unmute"
 
   call_to_action: "Want to host your own Veue stream?"
   discover:
