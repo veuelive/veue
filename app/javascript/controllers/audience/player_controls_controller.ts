@@ -113,7 +113,7 @@ export default class extends BaseController {
     }
   }
 
-  setBadgeState() {
+  setBadgeState(): void {
     this.videoPlayerState = "focused";
     this.setBadgeTimer();
   }
@@ -127,10 +127,11 @@ export default class extends BaseController {
     this.videoPlayerState = "unfocused";
   }
 
-  setBadgeTimer() {
+  setBadgeTimer(): void {
     if (this.videoPlayerState === "focused") {
       this.videoPlayerState = "unfocused";
-      this.videoContainerTarget.classList.add("hide-controllers");
+      this.videoContainerTarget.classList.add("hide-controls");
+      this.toggleStreamerProfile(false);
 
       this.badgeTimeoutId = window.setTimeout(
         this.hideBadges.bind(this),
@@ -138,6 +139,7 @@ export default class extends BaseController {
       );
     } else if (this.videoPlayerState === "unfocused") {
       this.videoPlayerState = "focused";
+
       if (this.badgeTimeoutId > -1) {
         clearTimeout(this.badgeTimeoutId);
       }
@@ -145,14 +147,26 @@ export default class extends BaseController {
     }
   }
 
-  hideBadges(event) {
+  hideBadges(event): void {
     this.badgeContainerTarget.classList.add("hide-badges");
     this.badgeTimeoutId = -1;
   }
 
-  showBadges() {
+  showBadges(): void {
     this.badgeContainerTarget.classList.remove("hide-badges");
-    this.videoContainerTarget.classList.remove("hide-controllers");
+    this.videoContainerTarget.classList.remove("hide-controls");
+    this.toggleStreamerProfile(true);
+  }
+
+  toggleStreamerProfile(display: boolean): void {
+    document
+      .querySelectorAll("*[data-show-when-video-focused]")
+      .forEach((element: HTMLElement) => {
+        element.setAttribute(
+          "style",
+          display ? "display: block;" : "display: none;"
+        );
+      });
   }
 
   set state(state: string) {
