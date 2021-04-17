@@ -39,6 +39,7 @@
 
     @include smallTall() {
       padding: 15px 10px;
+      height: 40px;
 
       &__info {
         &__follow {
@@ -63,6 +64,7 @@
 
     @include smallWide() {
       padding: 15px 10px;
+      height: 40px;
 
       &__info {
         &__follow {
