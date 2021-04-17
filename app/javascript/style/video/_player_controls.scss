@@ -27,7 +27,7 @@
     }
   }
 
-  .hide-controllers {
+  .hide-controls {
     @include smallWide() {
       .primary-video__overlay,
       .player-controls-area {

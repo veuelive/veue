@@ -1,4 +1,11 @@
-.streamer-profile{ data: {controller: "streamer-profile", target: "canvas-size-observer.resizable"}}
+.streamer-profile{
+  data:
+    {
+      controller: "streamer-profile",
+      target: "canvas-size-observer.resizable",
+      "show-when-video-focused": true
+    }
+  }
   .streamer-profile__info
     .streamer-profile__info__avatar
       %a{href: channel_path(current_channel)}
