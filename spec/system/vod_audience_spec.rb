@@ -170,4 +170,24 @@ describe "Prerecorded Audience View" do
       expect(find(".mute-banner", visible: false)).to_not be_visible
     end
   end
+
+  describe "Video controls visibility" do
+    before(:each) do
+      resize_window_to_mobile
+    end
+
+    it "should display video controls and overlay when clicked" do
+      visit path_for_video(video)
+      expect(find(".mute-banner")).to have_content(I18n.t("video.tap_to_unmute"))
+      find(".mute-banner").click
+      find(".primary-video").click
+      expect(page).to have_css("[data-audience--player-controls-video-player-state='unfocused']")
+      expect(page).to have_css(".primary-video__overlay", visible: false)
+
+      find(".primary-video").click
+      expect(page).to have_css("[data-audience--player-controls-video-player-state='focused']")
+      expect(page).to_not have_css(".hide-controls")
+      expect(page).to have_css(".primary-video__overlay", visible: true)
+    end
+  end
 end

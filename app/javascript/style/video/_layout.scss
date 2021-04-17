@@ -36,6 +36,7 @@
 
     canvas.primary-canvas {
       width: 100%;
+      z-index: z_index.$primary-video;
     }
 
     canvas.pip-secondary-canvas {
@@ -78,6 +79,18 @@
         &__text-mobile {
           display: none;
         }
+      }
+    }
+
+    @include smallWide() {
+      .hide-badges {
+        display: none;
+      }
+    }
+
+    @include smallTall() {
+      .hide-badges {
+        display: none;
       }
     }
   }
