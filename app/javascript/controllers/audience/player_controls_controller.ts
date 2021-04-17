@@ -162,10 +162,9 @@ export default class extends BaseController {
     document
       .querySelectorAll("*[data-show-when-video-focused]")
       .forEach((element: HTMLElement) => {
-        element.setAttribute(
-          "style",
-          display ? "display: block;" : "display: none;"
-        );
+        display
+          ? element.classList.remove("hide-element")
+          : element.classList.add("hide-element");
       });
   }
 

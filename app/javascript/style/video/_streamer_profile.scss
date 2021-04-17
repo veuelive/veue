@@ -1,14 +1,33 @@
 @use "../utils/color";
 @use "../utils/font";
+@use "../utils/z_index";
+@use "../utils/keyframes";
 @use "../utils/breakpoints" as *;
 
 #video-show,
 #upcoming-stream {
+  .profile-area {
+    position: relative;
+  }
+
   .streamer-profile {
     border-radius: 0;
     padding: 5px;
     border-top: 1px solid color.$neutral-accents;
     border-bottom: 1px solid color.$neutral-accents;
+    position: absolute;
+    z-index: z_index.$default;
+    top: 0px;
+    overflow: hidden;
+    width: -webkit-fill-available;
+    animation: toZeroTop ease 0.3s;
+
+    @include smallTall() {
+      &.hide-element {
+        top: -80px;
+        animation: reduceTop ease 0.3s;
+      }
+    }
 
     &__info {
       width: inherit;
