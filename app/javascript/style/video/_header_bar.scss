@@ -53,15 +53,15 @@
       font-size: 1.1rem;
       cursor: pointer;
       height: 28px;
-      width: 65px;
       margin-left: 5px;
       justify-content: center;
 
       .icon {
         height: 11.96px;
-        margin-right: 0.5rem;
-        magin-left: 5px;
+        margin-right: 5px;
+        padding-left: 10px;
         display: flex;
+
         svg {
           path {
             fill: color.$white;
@@ -74,6 +74,7 @@
         font-weight: 400;
         font-family: font.$nunito;
         color: color.$white;
+        padding-right: 10px;
       }
 
       &.live {
