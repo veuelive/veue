@@ -141,6 +141,9 @@ module Phenix
       when "starting"
         video.start! unless video.live?
       when "ended"
+        # video.duration ||= payload[:data][:duration] / 1_000
+        # video.end_reason ||= payload[:data][:reason]
+
         video.duration = payload[:data][:duration] / 1_000
         video.end_reason = payload[:data][:reason]
         video.end! if video.may_end?
@@ -164,7 +167,7 @@ module Phenix
                           end
 
       Faraday.post(
-        Rails.application.routes.url_helpers.phenix_url(host: webhook_host, port: nil, protocol: "https"),
+        Router.phenix_url(host: webhook_host, port: nil, protocol: "https"),
         payload.to_json,
         "Content-Type": "application/json",
       )
