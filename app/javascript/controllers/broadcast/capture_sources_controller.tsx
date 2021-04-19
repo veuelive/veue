@@ -7,6 +7,8 @@ import {
   RemoveCaptureSourceEvent,
 } from "helpers/broadcast/capture_source_manager";
 import { CaptureSource } from "helpers/broadcast/capture_sources/base";
+import { h, render } from "preact";
+import MediaDeck from "components/media_deck";
 
 export const ChangeMediaDeviceEvent = "ChangeMediaDeviceEvent";
 
@@ -20,7 +22,6 @@ export default class extends BaseController {
 
   connect(): void {
     this.connectDefaultDevices().then(() => {
-      console.log("Capture Sources Ready");
       console.log(this.audioCaptureSource);
     });
 
@@ -28,6 +29,8 @@ export default class extends BaseController {
       ChangeMediaDeviceEvent,
       this.swapMediaDevice.bind(this)
     );
+
+    render(<MediaDeck />, this.mediaDeckTarget);
   }
 
   async connectDefaultDevices(): Promise<void> {
@@ -47,6 +50,7 @@ export default class extends BaseController {
     let captureSource;
     if (mediaDeviceInfo.kind === "audioinput") {
       if (this.audioCaptureSource) {
+        this.audioCaptureSource.stop();
         this.removeCaptureSource(this.audioCaptureSource);
       }
       captureSource = this.audioCaptureSource = await MicrophoneCaptureSource.connect(
@@ -54,6 +58,7 @@ export default class extends BaseController {
       );
     } else if (mediaDeviceInfo.kind === "videoinput") {
       this.removeCaptureSource(this.cameraCaptureSource);
+      this.cameraCaptureSource.stop();
       captureSource = this.cameraCaptureSource = await WebcamCaptureSource.connect(
         mediaDeviceInfo.deviceId
       );
@@ -63,7 +68,7 @@ export default class extends BaseController {
     );
   }
 
-  swapMediaDevice(event: CustomEvent) {
+  swapMediaDevice(event: CustomEvent): void {
     const mediaDeviceInfo = event.detail as MediaDeviceInfo;
     this.addCaptureSource(mediaDeviceInfo);
   }

@@ -20,11 +20,17 @@ export abstract class VideoCaptureSource extends CaptureSource implements Size {
 
   abstract get videoSourceType(): VideoSourceType;
 
-  processMediaStream(mediaStream: MediaStream): Promise<HTMLVideoElement> {
+  processMediaStream(
+    mediaStream: MediaStream,
+    videoElement?: HTMLVideoElement
+  ): Promise<HTMLVideoElement> {
     const track = mediaStream.getVideoTracks()[0];
     this.deviceId = track.getSettings().deviceId;
-    this.element = this.createVideoElement();
+    this.element = videoElement || this.createVideoElement();
     this.element.muted = true;
+    // this.element.addEventListener("resize", () => {
+    //   this.updateLayoutSize();
+    // });
     this.element.srcObject = mediaStream;
     return new Promise((resolve) => {
       this.element.addEventListener("loadedmetadata", async () => {
