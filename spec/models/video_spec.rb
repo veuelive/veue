@@ -88,4 +88,39 @@ RSpec.describe Video, type: :model do
       end
     end
   end
+
+  describe "Webhooks" do
+    let(:payload_fixture) { File.read(Rails.root.join("spec/support/webhooks/1596476546-live_stream_completed.json")) }
+    let(:payload) { JSON.parse(payload_fixture, symbolize_names: true) }
+
+    it "should add a duration to a video on successfully ending a video" do
+      expect(video.duration).to be_nil
+      Phenix::Webhooks.ended_payload(video, payload)
+
+      duration = (payload.dig(:data, :duration) / 1000).ceil
+      expect(video.duration).to eq(duration)
+    end
+
+    it "does not rewrite the duration with nil" do
+      duration = 45
+      video.update!(duration: duration)
+      payload[:data][:duration] = nil
+      Phenix::Webhooks.ended_payload(video, payload)
+      expect(video.duration).to eq(duration)
+    end
+
+    it "should add an end_reason on successfully ending a video" do
+      expect(video.end_reason).to be_nil
+      Phenix::Webhooks.ended_payload(video, payload)
+      expect(video.end_reason).to eq(payload.dig(:data, :end_reason))
+    end
+
+    it "should not overwrite an end_reason with nil" do
+      reason = "stream stopped"
+      video.update!(end_reason: reason)
+      payload[:data][:end_reason] = nil
+      Phenix::Webhooks.ended_payload(video, payload)
+      expect(video.end_reason).to eq(reason)
+    end
+  end
 end
