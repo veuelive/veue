@@ -114,7 +114,7 @@ describe "Prerecorded Audience View" do
       visit path_for_video(video)
 
       expect(page).to have_css("[data-start-offset='#{start_offset}']")
-      assert_video_is_playing(11)
+      assert_video_is_playing(15)
 
       # We actually have no clue where in the time code we'll be, but its safe
       # to assume we'll be greater than 0.
@@ -126,7 +126,7 @@ describe "Prerecorded Audience View" do
       video.update!(start_offset: start_offset, duration: 30)
 
       visit path_for_video(video, t: 25)
-      assert_video_is_playing(30)
+      assert_video_is_playing(35)
 
       expect(page).to have_css("[data-start-offset='#{start_offset}']")
       expect(is_video_playing?).to be(true)
