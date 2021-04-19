@@ -104,8 +104,8 @@
     align-items: center;
 
     @include large() {
-      padding: 0.5rem;
-      border-radius: 1rem;
+      padding: 8px;
+      border-radius: 16px;
       height: inherit;
     }
 
