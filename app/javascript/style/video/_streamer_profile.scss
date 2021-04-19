@@ -30,7 +30,8 @@
         align-items: center;
         justify-content: center;
         img,
-        svg {
+        svg,
+        a {
           width: 40px;
           height: 40px;
         }
@@ -39,6 +40,7 @@
 
     @include smallTall() {
       padding: 15px 10px;
+      height: 40px;
 
       &__info {
         &__follow {
@@ -63,6 +65,7 @@
 
     @include smallWide() {
       padding: 15px 10px;
+      height: 40px;
 
       &__info {
         &__follow {

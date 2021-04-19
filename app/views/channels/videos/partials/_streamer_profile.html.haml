@@ -1,7 +1,8 @@
 .streamer-profile{ data: {controller: "streamer-profile", target: "canvas-size-observer.resizable"}}
   .streamer-profile__info
     .streamer-profile__info__avatar
-      = current_channel.profile_image_circle(160)
+      %a{href: channel_path(current_channel)}
+        = current_channel.profile_image_circle(160)
     .streamer-profile__info__text
       .streamer-profile__info__text__name
         %a{href: channel_path(current_channel)}

@@ -203,7 +203,7 @@
       display: flex;
       -webkit-flex-flow: column wrap;
       flex-flow: column wrap;
-      border-top: 1px solid rgba(0, 0, 0, 20%);
+      box-shadow: 0px -1px 0 color.$neutral-accents;
     }
 
     canvas.fixed-secondary-canvas {

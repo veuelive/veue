@@ -84,17 +84,17 @@
     }
 
     .active-icon {
-      background-color: color.$cornflower;
+      background-color: color.$veue-corporate;
       opacity: 1;
     }
   }
 
   .player-controls {
     opacity: 0;
-    padding: 0.5rem;
+    height: 34px;
     color: white;
     transition: 100ms opacity;
-    border-radius: 1rem;
+    border-radius: 10px;
     background-color: rgba(color.$black, 0.5);
     position: absolute;
     bottom: 0;
@@ -103,13 +103,24 @@
     transform: translate(-50%, -50%);
     align-items: center;
 
+    @include large() {
+      padding: 8px;
+      border-radius: 16px;
+      height: inherit;
+    }
+
     .time-display {
       display: none;
-      text-align: center;
-      font-size: 14px;
-      margin: 0 5px;
-      min-width: 70px;
-      padding: 0;
+      font-size: 10px;
+      padding: 0 10px;
+
+      @include large() {
+        text-align: center;
+        margin: 0 5px;
+        min-width: 70px;
+        padding: 0;
+        font-size: 14px;
+      }
     }
 
     .progress-bar-container {
@@ -117,7 +128,7 @@
       position: relative;
       display: none;
       align-items: center;
-      background: color.$neutral-middle;
+      background: color.$neutral-soft;
       min-width: 100px;
       width: 80%;
       height: 10px;
@@ -208,7 +219,7 @@
       height: 40px;
       width: 41px;
       img {
-        width: 15px;
+        width: 19px;
         height: 14px;
       }
     }
@@ -247,7 +258,11 @@
 
   @include vod {
     .player-controls {
-      width: 80%;
+      width: 96%;
+
+      @include large() {
+        width: 80%;
+      }
     }
 
     .time-display {
