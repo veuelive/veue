@@ -1,6 +1,11 @@
-import { VideoCaptureSource } from "helpers/broadcast/capture_sources/base";
+import { VideoSourceType } from "types/video_layout";
+import { VideoCaptureSource } from "helpers/broadcast/capture_sources/video";
 
 export class WebcamCaptureSource extends VideoCaptureSource {
+  get videoSourceType(): VideoSourceType {
+    return "camera";
+  }
+
   static async connect(deviceId?: string): Promise<WebcamCaptureSource> {
     const source = new WebcamCaptureSource(deviceId);
     await source.start();

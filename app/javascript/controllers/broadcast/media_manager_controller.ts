@@ -1,5 +1,5 @@
 import DropdownController from "./dropdown_controller";
-import { changeMediaSource } from "helpers/broadcast/change_media_initializer";
+import { AddDeviceAsCaptureSource } from "helpers/broadcast/capture_source_manager";
 
 export default class extends DropdownController {
   async showHideMenu(): Promise<void> {
@@ -28,7 +28,9 @@ export default class extends DropdownController {
     menuItem.innerText = device.label;
     menuItem.setAttribute("data-media-id", device.deviceId);
     menuItem.addEventListener("click", () => {
-      changeMediaSource(device);
+      document.dispatchEvent(
+        new CustomEvent("ChangeMediaDeviceEvent", { detail: device })
+      );
       this.dispatchMenuClose();
     });
 

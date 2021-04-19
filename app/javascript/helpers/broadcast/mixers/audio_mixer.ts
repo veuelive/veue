@@ -1,5 +1,5 @@
-import { CaptureSource } from "helpers/broadcast/capture_sources/base";
 import Mixer from "helpers/broadcast/mixers/mixer";
+import { AudioCaptureSource } from "helpers/broadcast/capture_sources/audio";
 
 /**
  * The AudioMixer is responsible for mixing together multiple audio streams
@@ -7,7 +7,7 @@ import Mixer from "helpers/broadcast/mixers/mixer";
  */
 export default class AudioMixer implements Mixer {
   _audioContext: AudioContext;
-  audioSources: Map<CaptureSource, AudioNode> = new Map();
+  audioSources: Map<AudioCaptureSource, AudioNode> = new Map();
   _destinationNode: MediaStreamAudioDestinationNode;
   private analyser: AnalyserNode;
   private canvas: HTMLCanvasElement;
@@ -19,7 +19,7 @@ export default class AudioMixer implements Mixer {
     this.renderCanvas();
   }
 
-  public addCaptureSource(audioSource: CaptureSource): void {
+  public addCaptureSource(audioSource: AudioCaptureSource): void {
     const sourceNode = this.audioContext.createMediaStreamSource(
       audioSource.mediaStream
     );
@@ -29,7 +29,7 @@ export default class AudioMixer implements Mixer {
     this.audioSources.set(audioSource, sourceNode);
   }
 
-  public removeCaptureSource(captureSource: CaptureSource): void {
+  public removeCaptureSource(captureSource: AudioCaptureSource): void {
     const node = this.audioSources.get(captureSource);
     node?.disconnect();
     this.audioSources.delete(captureSource);
