@@ -51,6 +51,14 @@
         svg {
           width: 14px;
           height: 14px;
+          position: absolute;
+          padding-top: 6px;
+          padding-left: 5px;
+
+          @include large() {
+            position: inherit;
+            padding: 0;
+          }
         }
       }
 
