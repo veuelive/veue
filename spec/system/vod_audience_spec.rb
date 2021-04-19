@@ -114,7 +114,7 @@ describe "Prerecorded Audience View" do
       visit path_for_video(video)
 
       expect(page).to have_css("[data-start-offset='#{start_offset}']")
-      assert_video_is_playing(11)
+      assert_video_is_playing(15)
 
       # We actually have no clue where in the time code we'll be, but its safe
       # to assume we'll be greater than 0.
@@ -126,7 +126,7 @@ describe "Prerecorded Audience View" do
       video.update!(start_offset: start_offset, duration: 30)
 
       visit path_for_video(video, t: 25)
-      assert_video_is_playing(30)
+      assert_video_is_playing(35)
 
       expect(page).to have_css("[data-start-offset='#{start_offset}']")
       expect(is_video_playing?).to be(true)
@@ -168,6 +168,26 @@ describe "Prerecorded Audience View" do
       expect(page).to have_css(".mute-banner")
       find(".mute-banner", visible: true).click
       expect(find(".mute-banner", visible: false)).to_not be_visible
+    end
+  end
+
+  describe "Video controls visibility" do
+    before(:each) do
+      resize_window_to_mobile
+    end
+
+    it "should display video controls and overlay when clicked" do
+      visit path_for_video(video)
+      expect(find(".mute-banner")).to have_content(I18n.t("video.tap_to_unmute"))
+      find(".mute-banner").click
+      find(".primary-video").click
+      expect(page).to have_css("[data-audience--player-controls-video-player-state='unfocused']")
+      expect(page).to have_css(".primary-video__overlay", visible: false)
+
+      find(".primary-video").click
+      expect(page).to have_css("[data-audience--player-controls-video-player-state='focused']")
+      expect(page).to_not have_css(".hide-controls")
+      expect(page).to have_css(".primary-video__overlay", visible: true)
     end
   end
 end

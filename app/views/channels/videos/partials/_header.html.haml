@@ -1,13 +1,13 @@
 .video-header{
   data: {
-    target: "canvas-size-observer.resizable"
+    target: "canvas-size-observer.resizable audience--player-controls.badgeContainer"
   },
 }
   - if current_video.live?
-    .widget.live
+    .widget.live{data: { target: "audience-view.liveButton", timeout_var: 'not yet'}}
       .widget-live__desktop
         LIVE
-    .widget
+    .widget{data: { target: "audience-view.viewerButton"}}
       .icon
         = svg_tag "view"
       #active-viewers{
