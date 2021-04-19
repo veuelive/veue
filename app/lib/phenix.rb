@@ -141,12 +141,7 @@ module Phenix
       when "starting"
         video.start! unless video.live?
       when "ended"
-        # video.duration ||= payload[:data][:duration] / 1_000
-        # video.end_reason ||= payload[:data][:reason]
-
-        video.duration = payload[:data][:duration] / 1_000
-        video.end_reason = payload[:data][:reason]
-        video.end! if video.may_end?
+        ended_payload(video, payload)
       when "on-demand"
         on_demand_payload(video, payload)
       else
@@ -183,6 +178,21 @@ module Phenix
 
       # We can do VOD now!
       video.finish!
+    end
+
+    def self.ended_payload(video, payload)
+      # durations are provided in milliseconds
+      # https://phenixrts.com/docs/api/#stream-ended-notification
+      duration = payload.dig(:data, :duration)
+      end_reason = payload.dig(:data, :reason)
+
+      attrs = {}
+      attrs[:duration] = (duration / 1_000).ceil if duration
+      attrs[:end_reason] = end_reason if end_reason
+
+      video.update!(attrs)
+
+      video.end! if video.may_end?
     end
 
     def self.find_tag(payload, tag_name)
