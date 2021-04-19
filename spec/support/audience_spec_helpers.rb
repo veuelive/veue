@@ -31,7 +31,7 @@ module AudienceSpecHelpers
 
   def assert_video_is_playing(seconds=1)
     expect(page).to have_css("*[data-audience--player-controls-state='playing']")
-    expect(page).to have_content(:all, /00:00:\d[#{seconds}-9]+/, wait: 10)
+    expect(page).to have_content(:all, /00:00:\d[#{seconds}-9]+/, wait: 15)
   end
 
   def ensure_controls_visible
