@@ -43,6 +43,7 @@ describe Phenix do
           data: {
             tags: %W[webhookHost:sushitown.com videoId:#{video.id}],
             duration: 5000,
+            reason: "video stopped",
             uri: "vod.m3u8",
           },
         },
@@ -50,6 +51,24 @@ describe Phenix do
       video.reload
 
       expect(video.duration).to eq(5)
+      expect(video.end_reason).to eq("video stopped")
+      expect(video).to be_ended
+
+      # Sometimes the end request gets sent twice. Lets handle null durations and end_reasons
+      Phenix::Webhooks.process({
+        what: "ended",
+        data: {
+          tags: %W[webhookHost:sushitown.com videoId:#{video.id}],
+          reason: nil,
+          duration: nil,
+          uri: "vod.m3u8",
+        }
+      })
+
+      video.reload
+
+      expect(video.duration).to eq(5)
+      expect(video.end_reason).to eq("video stopped")
       expect(video).to be_ended
     end
 
