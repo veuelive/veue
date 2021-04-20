@@ -13,6 +13,9 @@ $default: next-z-index();
 // This is the chat entry so the chat reaction can hide behind chat
 $chat-text-entry: next-z-index();
 
+// This is floating streamer profile having animation in mobile view
+$streamer-profile: next-z-index();
+
 // This is the reaction on chat (heart+name)
 $chat-reaction: next-z-index();
 

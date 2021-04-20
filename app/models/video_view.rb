@@ -33,20 +33,22 @@ class VideoView < ApplicationRecord
   end
 
   def add_minute!(minute, is_live)
-    self.last_seen_at = Time.zone.now
+    VideoView.transaction do
+      self.last_seen_at = Time.zone.now
 
-    minute = Integer(minute, 10) unless minute.is_a?(Integer)
+      minute = Integer(minute, 10) unless minute.is_a?(Integer)
 
-    # Ensure that we don't double count viewing the same minute more than a day apart
-    if video_view_minutes
-       .where("created_at > ?", 1.day.ago)
-       .where(minute: minute)
-       .none?
+      # Ensure that we don't double count viewing the same minute more than a day apart
+      if video_view_minutes
+         .where("created_at > ?", 1.day.ago)
+         .where(minute: minute)
+         .none?
 
-      video_view_minutes.build(minute: minute, is_live: is_live)
+        video_view_minutes.build(minute: minute, is_live: is_live)
+      end
+
+      save!
     end
-
-    save!
   end
 
   private
