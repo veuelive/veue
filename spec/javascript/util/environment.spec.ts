@@ -4,7 +4,7 @@ import {
   isProduction,
 } from "../../../app/javascript/util/environment";
 
-export const SOME_TOKEN = "SOME_TOKEN";
+const SOME_TOKEN = "SOME_TOKEN";
 
 beforeEach(() => {
   document.head.innerHTML = `<meta name='csrf-token' content='${SOME_TOKEN}'>`;
