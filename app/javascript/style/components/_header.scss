@@ -14,6 +14,15 @@ header {
   align-items: center;
   padding: 0 10px;
   justify-content: space-between;
+  margin-top: 0;
+  animation: toZeroTopHeader ease 0.3s;
+
+  @include smallTall() {
+    &.hide-element {
+      margin-top: -48px;
+      animation: reduceTopHeader ease 0.3s;
+    }
+  }
 
   @include large() {
     height: $desktop-height;
