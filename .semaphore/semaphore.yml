@@ -19,16 +19,16 @@ blocks:
   - name: Setup
     dependencies: []
     task:
-      - jobs:
-          - name: Setup
-            commands:
-              - sem-version ruby 2.7.3
-              - sem-version node 14.16.0
-              - bundle config set deployment 'true'
-              - bundle config set path 'vendor/bundle'
-              - bundle install
-              - yarn install --frozen-lockfile
-              - cache store
+      jobs:
+        - name: Setup
+          commands:
+            - sem-version ruby 2.7.3
+            - sem-version node 14.16.0
+            - bundle config set deployment 'true'
+            - bundle config set path 'vendor/bundle'
+            - bundle install
+            - yarn install --frozen-lockfile
+            - cache store
   - name: Rspec
     dependencies: ["Setup"]
     task:
