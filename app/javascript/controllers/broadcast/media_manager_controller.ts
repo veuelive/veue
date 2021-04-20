@@ -1,5 +1,4 @@
 import DropdownController from "./dropdown_controller";
-import { AddDeviceAsCaptureSource } from "helpers/broadcast/capture_source_manager";
 
 export default class extends DropdownController {
   async showHideMenu(): Promise<void> {
