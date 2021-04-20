@@ -9,8 +9,28 @@ auto_cancel:
   running:
     when: "branch != 'main'"
 
+global_job_config:
+  prologue:
+    commands:
+      - checkout
+      - cache restore
+
 blocks:
+  - name: Setup
+    dependencies: []
+    task:
+      - jobs:
+          - name: Setup
+            commands:
+              - sem-version ruby 2.7.3
+              - sem-version node 14.16.0
+              - bundle config set deployment 'true'
+              - bundle config set path 'vendor/bundle'
+              - bundle install
+              - yarn install --frozen-lockfile
+              - cache store
   - name: Rspec
+    dependencies: ["Setup"]
     task:
       env_vars:
         - name: DATABASE_URL
@@ -21,26 +41,8 @@ blocks:
           value: 'true'
       prologue:
         commands:
-          # Checkout code from Git repository. This step is mandatory if the
-          # job is to work with your code.
-          # Optionally you may use --use-cache flag to avoid roundtrip to
-          # remote repository.
-          # See https://docs.semaphoreci.com/article/54-toolbox-reference#checkout
-          - checkout
-          # Restore dependencies from cache.
-          # Read about caching: https://docs.semaphoreci.com/article/149-caching
-          - cache restore
-
-          - git -C /home/semaphore/.rbenv/plugins/ruby-build pull
-          - sem-version ruby 2.7.3
-          - sem-version node 14.16.0
-          - bundle config set deployment 'true'
-          - bundle config set path 'vendor/bundle'
-          - bundle install
-          - yarn install
           - 'bundle exec rake webpacker:compile'
           - gem install semaphore_test_boosters
-          - cache store
           - sem-service start postgres 11
           - 'bundle exec rake db:setup'
       jobs:
@@ -48,10 +50,18 @@ blocks:
           parallelism: 5
           commands:
             - rspec_booster --job $SEMAPHORE_JOB_INDEX/$SEMAPHORE_JOB_COUNT
-        - name: eslint
-          commands:
-            - yarn eslint app/ spec/
+
       epilogue:
         on_fail:
           commands:
             - artifact push job --expire-in 1w tmp/screenshots
+  - name: Javascript
+    dependencies: ["Setup"]
+    task:
+      jobs:
+        - name: ESlint
+          commands:
+            - yarn eslint app/ spec/
+        - name: Jest
+          commands:
+            - yarn jest
