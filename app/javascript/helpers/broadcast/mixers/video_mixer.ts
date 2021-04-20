@@ -51,6 +51,8 @@ export default class VideoMixer implements Mixer {
       .filter((videoSource) => videoSource.element.isConnected)
       .sort((a, b) => a.layout.priority - b.layout.priority);
 
+    this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
     this.broadcastLayout.sections
       .sort((a, b) => a.priority - b.priority)
       .forEach((broadcastPosition, index) => {
@@ -73,7 +75,6 @@ export default class VideoMixer implements Mixer {
 
     this.drawTimecode();
     setTimeout(this.computeFrame.bind(this), 5);
-    // requestAnimationFrame(() => this.computeFrame());
   }
 
   private drawTimecode() {
