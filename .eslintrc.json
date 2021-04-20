@@ -5,7 +5,11 @@
     "webextensions": true,
     "node": true
   },
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "extends": [
+    "preact",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 11,
@@ -15,5 +19,8 @@
   "globals": {
     "chrome": true
   },
-  "rules": {}
+  "rules": {
+    "react/display-name": [0],
+    "react/prefer-stateless-function": [0]
+  }
 }
