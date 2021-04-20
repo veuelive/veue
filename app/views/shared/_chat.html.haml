@@ -49,6 +49,7 @@
             "message-key": SecureRandom.uuid
           }
         }
+        = render "shared/link_share"
         = render "shared/reaction_button"
         .message-write__send{
           data: {
@@ -67,5 +68,6 @@
         .write-area{
           placeholder: 'Send a message'
         }
+        = render "shared/link_share"
         .reaction-button-area
           = svg_tag "heart"

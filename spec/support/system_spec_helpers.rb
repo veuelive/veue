@@ -15,4 +15,50 @@ module SystemSpecHelpers
   def find_test_id(str, **options)
     find("[data-test-id='#{str}']", **options)
   end
+
+  def grant_clipboard_permissions
+    page.driver.browser.execute_cdp(
+      "Browser.setPermission",
+      origin: page.server_url,
+      permission: { name: "clipboard-read" },
+      setting: "granted",
+    )
+
+    page.driver.browser.execute_cdp(
+      "Browser.setPermission",
+      origin: page.server_url,
+      permission: { name: "clipboard-write" },
+      setting: "granted",
+    )
+  end
+
+  def revoke_clipboard_permissions
+    page.driver.browser.execute_cdp(
+      "Browser.setPermission",
+      origin: page.server_url,
+      permission: { name: "clipboard-read" },
+      setting: "denied",
+    )
+
+    page.driver.browser.execute_cdp(
+      "Browser.setPermission",
+      origin: page.server_url,
+      permission: { name: "clipboard-write" },
+      setting: "denied",
+    )
+  end
+
+  def read_clipboard_text
+    page.evaluate_async_script("navigator.clipboard.readText().then(arguments[0])")
+  end
+
+  def channel_share_link(channel)
+    server = Capybara.current_session.server
+    channel_url(channel, host: server.host, port: server.port)
+  end
+
+  def private_channel_share_link(channel)
+    server = Capybara.current_session.server
+    channel_video_url(channel, channel.active_video, host: server.host, port: server.port)
+  end
 end

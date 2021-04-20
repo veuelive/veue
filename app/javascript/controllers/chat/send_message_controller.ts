@@ -5,8 +5,14 @@ import { currentUserId } from "helpers/authentication_helpers";
 import { displayChatMessage } from "helpers/chat_helpers";
 
 export default class extends Controller {
-  static targets = ["messageInput", "messageSend", "messageReaction"];
+  static targets = [
+    "messageInput",
+    "messageSend",
+    "messageReaction",
+    "linkShare",
+  ];
   element: HTMLElement;
+  private linkShareTarget!: HTMLElement;
   private messageInputTarget!: HTMLInputElement;
   private messageSendTarget!: HTMLDivElement;
   private messageReactionTarget!: HTMLDivElement;
@@ -72,8 +78,10 @@ export default class extends Controller {
     const textAreaElement = this.messageInputTarget;
     const message = textAreaElement.innerText;
     if (message.trim() === "") {
+      this.showLinkShareIcon();
       this.showReactionIcon();
     } else {
+      this.hideLinkShareIcon();
       this.showSendIcon();
     }
   }
@@ -90,6 +98,14 @@ export default class extends Controller {
     } else {
       this.messageReactionTarget.style.display = "flex";
     }
+  }
+
+  hideLinkShareIcon(): void {
+    this.linkShareTarget.style.display = "none";
+  }
+
+  showLinkShareIcon(): void {
+    this.linkShareTarget.style.display = "flex";
   }
 
   private chatLimitExceeds(): boolean {

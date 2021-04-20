@@ -9,6 +9,7 @@ describe "Broadcast Commands" do
 
   before :example do
     use_media_browser
+    resize_window_desktop
   end
 
   before :each do
@@ -18,31 +19,20 @@ describe "Broadcast Commands" do
     find("body").click
   end
 
-  def channel_share_link
-    server = Capybara.current_session.server
-    channel_url(channel, host: server.host, port: server.port)
-  end
-
-  def private_share_link
-    server = Capybara.current_session.server
-    channel_video_url(channel, channel.active_video, host: server.host, port: server.port)
-  end
-
   describe "share features" do
     it "can copy the stream URL to the clipboard while streaming" do
-      page.driver.browser.execute_cdp(
-        "Browser.grantPermissions",
-        origin: page.server_url,
-        permissions: ["clipboardReadWrite"],
-      )
+      grant_clipboard_permissions
       find(".btn#share-btn").hover
       expect(page).to have_content("Share")
       find(".btn#share-btn").click
       expect(find(".select-menu--content")).to have_content("Copy")
       find(".select-menu--content__body__item.copy").click
+
+      byebug
       accept_alert
-      clip_text = page.evaluate_async_script("navigator.clipboard.readText().then(arguments[0])")
-      expect(clip_text).to eq(channel_share_link)
+
+      clip_text = read_clipboard_text
+      expect(clip_text).to eq(channel_share_link(channel))
       expect(clip_text).to include(channel.slug)
     end
 
@@ -54,7 +44,7 @@ describe "Broadcast Commands" do
           find(".select-menu--content__body__item.open").click
         end
       switch_to_window audience_window
-      expect(current_url).to eq(channel_share_link)
+      expect(current_url).to eq(channel_share_link(channel))
     end
 
     describe "Change urls when private or protected" do
@@ -62,20 +52,16 @@ describe "Broadcast Commands" do
         it "should copy the private / protected link" do
           update_video_visibility(visibility)
 
-          page.driver.browser.execute_cdp(
-            "Browser.grantPermissions",
-            origin: page.server_url,
-            permissions: ["clipboardReadWrite"],
-          )
+          grant_clipboard_permissions
           find(".btn#share-btn").hover
           expect(page).to have_content("Share")
           find(".btn#share-btn").click
           expect(find(".select-menu--content")).to have_content("Copy")
           find(".select-menu--content__body__item.copy").click
           accept_alert
-          clip_text = page.evaluate_async_script("navigator.clipboard.readText().then(arguments[0])")
+          clip_text = read_clipboard_text
 
-          expect(clip_text).to eq(private_share_link)
+          expect(clip_text).to eq(private_channel_share_link(channel))
           expect(clip_text).to include(channel.slug)
           expect(clip_text).to include(channel.active_video.id)
         end
@@ -92,7 +78,7 @@ describe "Broadcast Commands" do
               find(".select-menu--content__body__item.open").click
             end
           switch_to_window audience_window
-          expect(current_url).to eq(private_share_link)
+          expect(current_url).to eq(private_channel_share_link(channel))
         end
       end
     end
