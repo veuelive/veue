@@ -98,7 +98,12 @@ en:
     click_to_unmute: "Click to unmute"
     tap_to_unmute: "Tap to unmute"
 
+  link_copy:
+    success: "Link copied to clipboard"
+    failure: "Unable to copy link to clipboard"
+
   call_to_action: "Want to host your own Veue stream?"
+
   discover:
     our_streamers: "Our Streamers"
     recent: "Recent Live Streams"

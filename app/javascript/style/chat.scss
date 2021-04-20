@@ -169,6 +169,7 @@
           }
         }
       }
+      .link-share,
       .reaction-button-area {
         display: flex;
         border: 1px solid color.$neutral-middle;
@@ -180,14 +181,39 @@
         }
       }
       .reaction-button-area,
-      .message-write__send {
+      .message-write__send,
+      .link-share {
         align-items: center;
         border-radius: 10px;
-        margin-left: 10px;
         width: 42px;
         height: 42px;
         cursor: pointer;
         align-self: flex-end;
+
+        svg {
+          width: 18px;
+          height: 18px;
+          padding: 10px;
+          flex-shrink: 0;
+        }
+      }
+
+      .link-share {
+        // For some reason, the link share is missing an extra 2px to align it properly.
+        font-size: 14px;
+        width: 44px;
+        height: 44px;
+        margin-left: 10px;
+
+        svg {
+          // width: 20px;
+          // height: 20px;
+        }
+      }
+
+      .reaction-button-area,
+      .message-write__send {
+        margin-left: 5px;
         svg {
           width: 18px;
           height: 18px;
