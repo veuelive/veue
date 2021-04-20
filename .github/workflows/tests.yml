@@ -57,14 +57,8 @@ jobs:
     name: jest
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.16.0
-      - name: Install packages
-        run: |
-          yarn install --pure-lockfile
-      - name: Run Jest Tests
-        run: yarn jest
+      - uses: actions/checkout@v2
+      - name: Install modules
+        run: yarn
+      - name: Run tests
+        run: yarn test
