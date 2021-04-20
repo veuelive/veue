@@ -53,12 +53,3 @@ jobs:
           node-version: 14.10.0
       - name: Prettier
         run: npx prettier -c app spec
-  jest:
-    name: jest
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install modules
-        run: yarn
-      - name: Run tests
-        run: yarn test
