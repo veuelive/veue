@@ -1,4 +1,3 @@
-import { desktopCapturer } from "helpers/electron/desktop_capture";
 import { VideoCaptureSource } from "helpers/broadcast/capture_sources/video";
 import { VideoSourceType } from "types/video_layout";
 

@@ -32,9 +32,8 @@ export class WebcamCaptureSource extends VideoCaptureSource {
       return device;
     } else if (videoDevices.length > 0) {
       return videoDevices[0];
-    } else {
-      return Promise.reject("No video media device found");
     }
+    return Promise.reject("No video media device found");
   }
 
   async getCapabilities(): Promise<MediaTrackCapabilities> {

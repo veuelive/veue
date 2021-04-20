@@ -1,7 +1,4 @@
 import { CaptureSource } from "helpers/broadcast/capture_sources/base";
-import { WebcamCaptureSource } from "helpers/broadcast/capture_sources/webcam";
-import MicrophoneCaptureSource from "helpers/broadcast/capture_sources/microphone";
-import { ScreenCaptureSource } from "helpers/broadcast/capture_sources/screen";
 import VideoMixer from "helpers/broadcast/mixers/video_mixer";
 import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
 import VideoLayout from "types/video_layout";
