@@ -1,13 +1,11 @@
 import { CaptureSource } from "helpers/broadcast/capture_sources/base";
-import { WebcamCaptureSource } from "helpers/broadcast/capture_sources/webcam";
-import MicrophoneCaptureSource from "helpers/broadcast/capture_sources/microphone";
-import { ScreenCaptureSource } from "helpers/broadcast/capture_sources/screen";
 import VideoMixer from "helpers/broadcast/mixers/video_mixer";
 import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
 import VideoLayout from "types/video_layout";
 import { inElectronApp } from "helpers/electron/base";
 import { AudioCaptureSource } from "helpers/broadcast/capture_sources/audio";
 import { VideoCaptureSource } from "helpers/broadcast/capture_sources/video";
+import ElectronCaptureSource from "helpers/broadcast/capture_sources/electron";
 
 export const HideScreenCaptureEvent = "HideScreenCaptureEvent";
 export const ShowScreenCaptureEvent = "ShowScreenCaptureEvent";
@@ -66,8 +64,6 @@ export default class CaptureSourceManager {
           captureSource as AudioCaptureSource
         );
       }
-
-      captureSource.stop();
     }
   }
 
@@ -75,6 +71,6 @@ export default class CaptureSourceManager {
     if (!inElectronApp) {
       return;
     }
-    this.addCaptureSource(await ScreenCaptureSource.connect(captureLayout));
+    this.addCaptureSource(await ElectronCaptureSource.connect(captureLayout));
   }
 }

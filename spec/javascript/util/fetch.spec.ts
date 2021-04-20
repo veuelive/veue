@@ -8,7 +8,7 @@ import {
 } from "../../../app/javascript/util/fetch";
 import fetch from "jest-fetch-mock";
 
-import { SOME_TOKEN } from "./environment.spec";
+const SOME_TOKEN = "SOME_TOKEN";
 const SOME_PATH = "/api/test";
 
 beforeEach(() => {
