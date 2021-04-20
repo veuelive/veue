@@ -57,8 +57,10 @@ export default class extends BaseController {
         mediaDeviceInfo.deviceId
       );
     } else if (mediaDeviceInfo.kind === "videoinput") {
-      this.removeCaptureSource(this.cameraCaptureSource);
-      this.cameraCaptureSource.stop();
+      if (this.cameraCaptureSource) {
+        this.removeCaptureSource(this.cameraCaptureSource);
+        this.cameraCaptureSource.stop();
+      }
       captureSource = this.cameraCaptureSource = await WebcamCaptureSource.connect(
         mediaDeviceInfo.deviceId
       );

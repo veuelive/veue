@@ -22,13 +22,7 @@ global_job_config:
       - yarn install --frozen-lockfile
 
 blocks:
-  - name: Save Cache
-    task:
-      jobs:
-        - name: Setup
-          commands:
-            - cache store
-  - name: Rspec
+  - name: Tests
     task:
       env_vars:
         - name: DATABASE_URL
@@ -37,28 +31,26 @@ blocks:
           value: test
         - name: DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL
           value: 'true'
-      prologue:
-        commands:
-          - 'bundle exec rake webpacker:compile'
-          - gem install semaphore_test_boosters
-          - sem-service start postgres 11
-          - 'bundle exec rake db:setup'
       jobs:
         - name: Rspec Tests
           parallelism: 5
           commands:
+            - 'bundle exec rake webpacker:compile'
+            - gem install semaphore_test_boosters
+            - sem-service start postgres 11
+            - 'bundle exec rake db:setup'
             - rspec_booster --job $SEMAPHORE_JOB_INDEX/$SEMAPHORE_JOB_COUNT
-
-      epilogue:
-        on_fail:
+        - name: Cache Store
           commands:
-            - artifact push job --expire-in 1w tmp/screenshots
-  - name: Javascript
-    task:
-      jobs:
+            - cache store
         - name: ESlint
-          commands:
-            - yarn eslint app/ spec/
+            commands:
+              - yarn eslint app/ spec/
         - name: Jest
           commands:
             - yarn jest
+      epilogue:
+        on_fail:
+          commands:
+            - artifact push job --expire-in 1w tmp
+
