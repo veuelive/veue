@@ -6,10 +6,8 @@ import {
 } from "helpers/broadcast/capture_source_manager";
 import { dispatch } from "dispatch_helpers";
 
-export default class ScreenShare extends Component<
-  unknown,
-  { isVisible: boolean; screenCaptureSource: ScreenCaptureSource }
-> {
+type State = { isVisible: boolean; screenCaptureSource: ScreenCaptureSource };
+export default class ScreenShare extends Component<unknown, State> {
   private videoTag: HTMLVideoElement;
 
   constructor() {
