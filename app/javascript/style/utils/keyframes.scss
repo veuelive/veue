@@ -39,3 +39,21 @@
     top: -80px;
   }
 }
+
+@keyframes toZeroTopHeader {
+  from {
+    margin-top: -48px;
+  }
+  to {
+    margin-top: 0;
+  }
+}
+
+@keyframes reduceTopHeader {
+  from {
+    margin-top: 0;
+  }
+  to {
+    margin-top: -48px;
+  }
+}
