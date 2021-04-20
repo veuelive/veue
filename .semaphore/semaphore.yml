@@ -22,7 +22,7 @@ global_job_config:
       - yarn install --frozen-lockfile
 
 blocks:
-  - name: Tests
+  - name: CI
     task:
       env_vars:
         - name: DATABASE_URL
@@ -44,8 +44,8 @@ blocks:
           commands:
             - cache store
         - name: ESlint
-            commands:
-              - yarn eslint app/ spec/
+          commands:
+            - yarn eslint app/ spec/
         - name: Jest
           commands:
             - yarn jest
