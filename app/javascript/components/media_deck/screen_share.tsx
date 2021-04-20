@@ -1,4 +1,4 @@
-import { Component, createRef, h, VNode } from "preact";
+import { Component, h, VNode } from "preact";
 import { ScreenCaptureSource } from "helpers/broadcast/capture_sources/screen";
 import {
   NewCaptureSourceEvent,

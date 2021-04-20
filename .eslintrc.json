@@ -21,6 +21,7 @@
   },
   "rules": {
     "react/display-name": [0],
-    "react/prefer-stateless-function": [0]
+    "react/prefer-stateless-function": [0],
+    "jest/expect-expect": ["error", { "assertFunctionNames": ["*expect*"] }]
   }
 }
