@@ -40,6 +40,7 @@ module.exports = function (api) {
       "babel-plugin-macros",
       "@babel/plugin-syntax-dynamic-import",
       isTestEnv && "babel-plugin-dynamic-import-node",
+      ["transform-react-jsx", { pragma: "h" }],
       "@babel/plugin-transform-destructuring",
       [
         "@babel/plugin-proposal-class-properties",
