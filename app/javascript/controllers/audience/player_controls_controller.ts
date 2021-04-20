@@ -22,6 +22,8 @@ export default class extends BaseController {
     "timePreview",
     "toggleAudio",
     "togglePlay",
+    "badgeContainer",
+    "videoContainer",
   ];
 
   readonly videoTarget!: HTMLVideoElement;
@@ -37,11 +39,17 @@ export default class extends BaseController {
   readonly progressBarButtonTarget!: HTMLButtonElement;
   readonly togglePlayTargets!: HTMLElement[];
   readonly toggleAudioTargets!: HTMLElement[];
+  readonly badgeContainerTarget!: HTMLElement;
+  readonly videoContainerTarget!: HTMLElement;
 
   private pointerIsDown: boolean;
+  private badgeTimeoutId: number;
   element!: HTMLElement;
 
   connect(): void {
+    this.videoPlayerState = "not ready";
+    this.badgeTimeoutId = -1;
+
     this.videoTarget.addEventListener(
       "loadedmetadata",
       this.handleLoadedMetadata.bind(this)
@@ -70,6 +78,8 @@ export default class extends BaseController {
   }
 
   togglePlay(): void {
+    window.event.stopImmediatePropagation();
+
     if (this.state === "ended") {
       this.videoTarget.currentTime = 0;
     }
@@ -77,7 +87,15 @@ export default class extends BaseController {
     if (this.state !== "playing") {
       this.videoTarget
         .play()
-        .then(() => (this.state = "playing"))
+        .then(() => {
+          this.state = "playing";
+          if (
+            this.videoPlayerState === "not ready" &&
+            this.audioState !== "muted"
+          ) {
+            this.setBadgeState();
+          }
+        })
         .catch(() => {
           this.state = "paused";
           this.audioState = "muted";
@@ -95,12 +113,59 @@ export default class extends BaseController {
     }
   }
 
+  setBadgeState(): void {
+    this.videoPlayerState = "focused";
+    this.setBadgeTimer();
+  }
+
   showMuteBanner(): void {
     this.muteBannerTarget.style.display = "flex";
   }
 
   hideMuteBanner(): void {
     this.muteBannerTarget.style.display = "none";
+    this.videoPlayerState = "unfocused";
+  }
+
+  setBadgeTimer(): void {
+    if (this.videoPlayerState === "focused") {
+      this.videoPlayerState = "unfocused";
+      this.videoContainerTarget.classList.add("hide-controls");
+      this.toggleStreamerProfile(false);
+
+      this.badgeTimeoutId = window.setTimeout(
+        this.hideBadges.bind(this),
+        120000
+      );
+    } else if (this.videoPlayerState === "unfocused") {
+      this.videoPlayerState = "focused";
+
+      if (this.badgeTimeoutId > -1) {
+        clearTimeout(this.badgeTimeoutId);
+      }
+      this.showBadges();
+    }
+  }
+
+  hideBadges(event): void {
+    this.badgeContainerTarget.classList.add("hide-badges");
+    this.badgeTimeoutId = -1;
+  }
+
+  showBadges(): void {
+    this.badgeContainerTarget.classList.remove("hide-badges");
+    this.videoContainerTarget.classList.remove("hide-controls");
+    this.toggleStreamerProfile(true);
+  }
+
+  toggleStreamerProfile(display: boolean): void {
+    document
+      .querySelectorAll("*[data-show-when-video-focused]")
+      .forEach((element: HTMLElement) => {
+        display
+          ? element.classList.remove("hide-element")
+          : element.classList.add("hide-element");
+      });
   }
 
   set state(state: string) {
@@ -149,6 +214,13 @@ export default class extends BaseController {
 
   get audioState(): string {
     return this.data.get("audioState");
+  }
+
+  set videoPlayerState(playerState: string) {
+    this.data.set("videoPlayerState", playerState);
+  }
+  get videoPlayerState(): string {
+    return this.data.get("videoPlayerState");
   }
 
   handleLoadedMetadata(): void {
