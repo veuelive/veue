@@ -25,7 +25,7 @@ export default class MessagesController extends BaseController {
 
   connect(): void {
     this.chatMessageCallbackHandler = (event) => {
-      this.showChatMessage(event.detail.data);
+      this.showChatMessage(event.detail.data, event.detail.timecodeMs);
     };
     VideoEventProcessor.subscribeTo(
       "ChatMessage",
@@ -100,10 +100,10 @@ export default class MessagesController extends BaseController {
     this.lastMessageFromUserId = null;
   }
 
-  private showChatMessage(message: ChatMessage) {
+  private showChatMessage(message: ChatMessage, timecodeMs: number) {
     const isSameUser = message.userId === this.lastMessageFromUserId;
 
-    displayChatMessage(message, isSameUser);
+    displayChatMessage(message, isSameUser, timecodeMs);
 
     this.lastMessageFromUserId = message.userId;
   }
