@@ -9,6 +9,7 @@ class ChatMessage < VideoEvent
       message: input["message"],
       userId: user.to_param,
       byStreamer: video.user_id == user.to_param,
+      time: Time.now
     }
   end
 
