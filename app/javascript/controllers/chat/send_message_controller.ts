@@ -59,7 +59,7 @@ export default class extends Controller {
       }).then((response: Response) => {
         response.json().then((data: JSON) => {
           const messageData = data["message"]["data"];
-          displayChatMessage(messageData, isSameUser, 0);
+          displayChatMessage(messageData, isSameUser);
           this.lastMessageFromUserId = messageData.userId;
           this.toggleIcon();
         });
