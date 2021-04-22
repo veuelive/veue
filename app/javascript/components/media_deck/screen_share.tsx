@@ -4,6 +4,7 @@ import {
   NewCaptureSourceEvent,
   RemoveCaptureSourceEvent,
 } from "helpers/broadcast/capture_source_manager";
+import hiddenIcon from "images/visible-false.svg";
 import { dispatch } from "dispatch_helpers";
 
 type State = { isVisible: boolean; screenCaptureSource: ScreenCaptureSource };
@@ -41,22 +42,40 @@ export default class ScreenShare extends Component<unknown, State> {
         </button>
       );
     }
-    return <button onClick={() => this.disconnect()}>Remove Share</button>;
+    return <button onClick={() => this.stopSharing()}>Stop Sharing</button>;
   }
 
-  renderControls(): Array<VNode> {
-    return [this.renderVisibilityControls(), this.renderStartStopControls()];
+  renderControls(): VNode {
+    return (
+      <div class="MediaDeck__controls">
+        {this.renderVisibilityControls()}
+        {this.renderStartStopControls()}
+      </div>
+    );
   }
 
   render(): VNode {
     return (
-      <div>
-        <div class="MediaDeck__video-preview">
-          <video
-            ref={(videoTag) => {
-              this.videoTag = videoTag;
-            }}
-          />
+      <div class="MediaDeck">
+        <div
+          class="MediaDeck__screen-share"
+          onClick={() => {
+            this.toggleVisibility();
+          }}
+        >
+          {this.state.isVisible ? null : (
+            <div class="MediaDeck__screen-share__hidden-cover">
+              <img src={hiddenIcon} alt="hidden icon" />
+            </div>
+          )}
+          <div class="MediaDeck__screen-share__video">
+            <video
+              data-connected={!!this.state.screenCaptureSource}
+              ref={(videoTag) => {
+                this.videoTag = videoTag;
+              }}
+            />
+          </div>
         </div>
         {this.renderControls()}
       </div>
@@ -67,24 +86,28 @@ export default class ScreenShare extends Component<unknown, State> {
     const screenCaptureSource = await ScreenCaptureSource.connect(
       this.videoTag
     );
-    dispatch(NewCaptureSourceEvent, screenCaptureSource);
     this.setState({
+      isVisible: false,
       screenCaptureSource,
     });
   }
 
-  private disconnect() {
+  private stopSharing() {
     dispatch(RemoveCaptureSourceEvent, this.state.screenCaptureSource);
-    this.setState({ screenCaptureSource: null });
+    this.state.screenCaptureSource.stop();
+    this.videoTag.srcObject = null;
+    this.setState({ screenCaptureSource: null, isVisible: true });
   }
 
   private toggleVisibility() {
-    if (this.state.isVisible) {
-      dispatch(RemoveCaptureSourceEvent, this.state.screenCaptureSource);
-      this.setState({ isVisible: false });
-    } else {
-      dispatch(NewCaptureSourceEvent, this.state.screenCaptureSource);
-      this.setState({ isVisible: true });
+    if (this.state.screenCaptureSource) {
+      if (this.state.isVisible) {
+        dispatch(RemoveCaptureSourceEvent, this.state.screenCaptureSource);
+        this.setState({ isVisible: false });
+      } else {
+        dispatch(NewCaptureSourceEvent, this.state.screenCaptureSource);
+        this.setState({ isVisible: true });
+      }
     }
   }
 }

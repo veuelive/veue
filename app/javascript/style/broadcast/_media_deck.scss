@@ -1,16 +1,62 @@
+@use "../utils/color";
+@use "../utils/z_index";
+
 // This is a Preact component
 .MediaDeck {
-  &__video-preview {
-    max-width: 300px;
-    max-height: 140px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background: color.$neutral-soft;
+
+  &__screen-share {
+    flex: 1;
+    position: relative;
+    display: flex;
     width: 100%;
-    height: 100%;
-    video {
-      border: 1px solid;
-      width: 100%;
-      height: 100%;
-      max-width: 300px;
-      max-height: 140px;
+
+    &__video {
+      flex: 1;
+      position: relative;
+      video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: fill-available;
+        height: fill-available;
+
+        z-index: z_index.$primary-video;
+      }
+    }
+
+    &__hidden-cover {
+      z-index: z_index.$video-overlay;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      background: color.$gray-darker;
+      opacity: 50%;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 40px;
+      }
+    }
+  }
+
+  &__controls {
+    button {
+      margin: 10px;
     }
   }
 }
