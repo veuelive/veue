@@ -17,6 +17,8 @@ export default class CaptureSourceManager {
   private readonly videoMixer: VideoMixer;
   private readonly audioMixer: AudioMixer;
   private readonly mediaChangeListener: (event: CustomEvent) => Promise<void>;
+  // This can be removed after the Broadcaster is decommissioned
+  private electronCaptureSource: CaptureSource;
 
   constructor(videoMixer: VideoMixer, audioMixer: AudioMixer) {
     this.videoMixer = videoMixer;
@@ -39,6 +41,14 @@ export default class CaptureSourceManager {
         await this.removeCaptureSource(event.detail as CaptureSource);
       }
     );
+
+    document.addEventListener(HideScreenCaptureEvent, async () => {
+      await this.removeCaptureSource(this.electronCaptureSource);
+    });
+
+    document.addEventListener(ShowScreenCaptureEvent, async () => {
+      await this.addCaptureSource(this.electronCaptureSource);
+    });
   }
 
   addCaptureSource(captureSource: CaptureSource): void {
@@ -71,6 +81,9 @@ export default class CaptureSourceManager {
     if (!inElectronApp) {
       return;
     }
-    this.addCaptureSource(await ElectronCaptureSource.connect(captureLayout));
+    this.electronCaptureSource = await ElectronCaptureSource.connect(
+      captureLayout
+    );
+    this.addCaptureSource(this.electronCaptureSource);
   }
 }
