@@ -153,7 +153,7 @@ describe "Prerecorded Audience View" do
       assert_video_is_playing(2)
       visit path_for_video(video, t: 9)
       assert_video_is_playing(9)
-      time = Time.at(late_message.timecode_ms).utc.strftime "%M:%S"
+      time = Time.at(late_message.timecode_ms).utc.strftime("%M:%S")
       expect(page).to have_content(time)
     end
   end
