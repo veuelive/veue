@@ -8,8 +8,7 @@ describe "Broadcast Commands" do
   let(:channel) { create(:channel) }
 
   before :example do
-    driven_by :media_browser
-    resize_window_desktop
+    use_media_browser
   end
 
   before :each do
