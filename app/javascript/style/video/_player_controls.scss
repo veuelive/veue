@@ -18,6 +18,10 @@
       opacity: 0.2;
       z-index: z_index.$video-overlay;
       top: 0;
+
+      @include smallWide() {
+        border-radius: 10px 10px 0 0;
+      }
     }
 
     @include large() {
