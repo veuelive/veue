@@ -152,6 +152,16 @@ describe "Prerecorded Audience View" do
       # Use a float because video durations on a video element are floats
       expect(Float(find("#duration-time-display")["data-duration"])).to be <= 26.0
     end
+
+    it "should show timebase time" do
+      late_message.update!(timecode_ms: 8_999)
+      visit path_for_video(video, t: 1)
+      assert_video_is_playing(2)
+      visit path_for_video(video, t: 9)
+      assert_video_is_playing(9)
+      time = Time.at(late_message.timecode_ms).utc.strftime "%M:%S"
+      expect(page).to have_content(time)
+    end
   end
 
   describe "Unmute banner" do

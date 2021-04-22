@@ -99,13 +99,13 @@ function userMessage(
 }
 
 function renderName(message: ChatMessage, timecodeMs: number) {
-  var date;
-  var today;
-  if (timecodeMs > 0) {
+  let date;
+  let today;
+
+  if (videoState() !== "live") {
     today = displayMessageTime(timecodeMs);
   } else {
-    date =
-      message.time !== undefined ? new Date(message.time) : (date = new Date());
+    date = new Date(message.time);
     today = date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   }
 
@@ -117,4 +117,8 @@ function renderAvatar(message: ChatMessage, position: string) {
     <div class="message__content__avatar message__content__avatar--${position}">
       <img src="/users/${message.userId}/images/thumbnail.png" />
     </div>`;
+}
+
+function videoState(): string {
+  return document.getElementById("video-show").dataset.audienceViewStreamType;
 }

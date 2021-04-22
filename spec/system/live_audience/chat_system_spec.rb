@@ -181,5 +181,14 @@ describe "chat during live video" do
 
       expect(page).to have_css("#phone_number_input")
     end
+
+    it "should have comment time of someone else" do
+      login_as user
+      visit channel_path(channel)
+      write_chat_message =  "sending time!"
+      someone_chatted(write_chat_message)
+      time = Time.parse(video.chat_messages.last.payload["time"]).strftime('%H:%M')
+      expect(page).to have_content(time)
+    end
   end
 end
