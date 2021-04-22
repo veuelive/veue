@@ -26,8 +26,8 @@
         left: 0;
         right: 0;
         bottom: 0;
-        width: fill-available;
-        height: fill-available;
+        width: stretch;
+        height: stretch;
 
         z-index: z_index.$primary-video;
       }
