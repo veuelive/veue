@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 module BroadcastSystemHelpers
+  def use_media_browser
+    driven_by(:media_browser)
+    resize_window_desktop
+  end
+
   def navigate_to(url)
     bar = find("input[data-target='broadcast--browser.addressBar']")
     bar.set(url)
@@ -56,5 +61,18 @@ module BroadcastSystemHelpers
   #   # will find <option id="time-0:15">00:15</option>
   def find_time_option(hours, minutes)
     find("#scheduled-time-#{hours}-#{minutes}")
+  end
+
+  def active_capture_sources
+    evaluate_script("globalThis.captureSources")
+  end
+
+  def expect_video_capture_source_count(count, *types)
+    types = %w[camera screen] if types.empty?
+    sources =
+      active_capture_sources.select do |_device_id, capture_source|
+        types.include?(capture_source.dig("layout", "type"))
+      end
+    expect(sources.count).to eq(count)
   end
 end
