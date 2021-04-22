@@ -65,7 +65,7 @@ describe "Broadcaster Media Deck" do
     click_on("Stop Sharing")
 
     expect(page).to_not have_css(hidden_overlay_css)
-    expect(page).to_not have_css("video:not([data-connected=true])")
+    expect(page).to_not have_css("video[data-connected=true]")
 
     expect_video_capture_source_count(1, "camera")
     expect_video_capture_source_count(0, "screen")
