@@ -52,5 +52,5 @@ blocks:
       epilogue:
         on_fail:
           commands:
-            - artifact push job --expire-in 1w tmp
+            - artifact push job /home/semaphore/veue/tmp --expire-in 1w
 
