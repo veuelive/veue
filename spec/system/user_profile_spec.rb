@@ -16,6 +16,7 @@ describe "user profile" do
     before do
       login_as(user)
       visit root_path
+      resize_window_desktop
     end
 
     it "should have access to profile" do
@@ -40,6 +41,8 @@ describe "user profile" do
       user.reload
 
       expect(user.email).to eq("test@user.com")
+
+      find(".menu-area").hover
 
       # it "should show help tab" do
       find("#help-link").click
