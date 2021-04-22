@@ -135,6 +135,7 @@
         }
 
         .primary-video {
+          display: flex;
           // If you don't specify the line height as 0
           // then there is spacing on the bottom of the canvas
           // but we don't want this to cascade into the header so
