@@ -10,6 +10,7 @@ describe "chat during live video" do
   let(:channel) { video.channel }
 
   before :example do
+    driven_by :debug_browser
     resize_window_desktop
   end
 
@@ -181,14 +182,29 @@ describe "chat during live video" do
 
       expect(page).to have_css("#phone_number_input")
     end
+  end
+
+  describe "chat message time" do
+    before do
+      Time.zone = "Europe/Stockholm"
+    end
+
+    after do
+      Time.zone = "UTC"
+    end
 
     it "should have comment time of someone else" do
+      expect(page).not_to(have_selector(".message-write"))
+
       login_as user
       visit channel_path(channel)
-      write_chat_message = "sending time!"
-      someone_chatted(write_chat_message)
-      time = Time.zone.parse(video.chat_messages.last.payload["time"]).strftime("%H:%M")
-      expect(page).to have_content(time)
+
+      write_chat_message("sending time!")
+      expect(page).to have_css(".message__content").once
+      expect(page).to have_content("sending time!")
+
+      time = Time.zone.parse(ChatMessage.last.payload["time"]).strftime("%H:%M")
+      expect(page).to have_content(time).once
     end
   end
 end
