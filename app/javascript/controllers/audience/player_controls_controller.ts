@@ -51,7 +51,7 @@ export default class extends BaseController {
     this.badgeTimeoutId = -1;
 
     this.videoTarget.addEventListener(
-      "loadedmetadata",
+      "canplay",
       this.handleLoadedMetadata.bind(this)
     );
 
@@ -68,7 +68,7 @@ export default class extends BaseController {
     );
 
     this.videoTarget.removeEventListener(
-      "loadedmetadata",
+      "canplay",
       this.handleLoadedMetadata.bind(this)
     );
   }
