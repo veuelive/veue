@@ -113,15 +113,8 @@ function userMessage(
 }
 
 function renderName(message: ChatMessage, timecodeMs: number, ellipse: string) {
-  let today;
-  if (videoState() !== "live") {
-    today = displayMessageTime(timecodeMs);
-  } else {
-    const date = new Date(message.time);
-    today = date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  }
-
-  return `<div class="message__content__user__name">${message.name} <img src="${ellipse}"/> ${today}</div>`;
+  const timeStamp = todayTimestamp(message.time, timecodeMs);
+  return `<div class="message__content__user__name">${message.name} <img src="${ellipse}"/> ${timeStamp}</div>`;
 }
 
 function renderAvatar(message: ChatMessage, position: string) {
@@ -131,9 +124,21 @@ function renderAvatar(message: ChatMessage, position: string) {
     </div>`;
 }
 
-function videoState(): string {
-  const element = document.querySelector(
-    "*[data-audience-view-stream-type]"
-  ) as HTMLElement;
-  return element.dataset.audienceViewStreamType;
+function todayTimestamp(messageTime: string, timecodeMs: number): string {
+  const videoState = getStreamType();
+  const statesValid = ["live", "upcoming", "pending", "scheduled", "starting"];
+
+  if (statesValid.includes(videoState)) {
+    const date = new Date(messageTime);
+    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  } else {
+    return displayMessageTime(timecodeMs);
+  }
+}
+
+function getStreamType(): string {
+  const element = document.querySelector("*[data-video-id]") as HTMLElement;
+  return element.dataset.audienceViewStreamType
+    ? element.dataset.audienceViewStreamType
+    : element.dataset.broadcastVideoState;
 }
