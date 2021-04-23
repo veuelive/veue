@@ -9,7 +9,7 @@ $aspect-ratio: "9/6";
 }
 
 @mixin smallWide {
-  @media only screen and (max-width: $mobile-max-width) and (orientation: landscape) {
+  @media only screen and (max-width: $mobile-max-width) and (max-height: 400px) and (orientation: landscape) {
     @content;
   }
 }
