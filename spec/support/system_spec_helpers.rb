@@ -20,14 +20,14 @@ module SystemSpecHelpers
     page.driver.browser.execute_cdp(
       "Browser.setPermission",
       origin: page.server_url,
-      permission: { name: "clipboard-read" },
+      permission: {name: "clipboard-read"},
       setting: "granted",
     )
 
     page.driver.browser.execute_cdp(
       "Browser.setPermission",
       origin: page.server_url,
-      permission: { name: "clipboard-write" },
+      permission: {name: "clipboard-write"},
       setting: "granted",
     )
   end
@@ -36,14 +36,14 @@ module SystemSpecHelpers
     page.driver.browser.execute_cdp(
       "Browser.setPermission",
       origin: page.server_url,
-      permission: { name: "clipboard-read" },
+      permission: {name: "clipboard-read"},
       setting: "denied",
     )
 
     page.driver.browser.execute_cdp(
       "Browser.setPermission",
       origin: page.server_url,
-      permission: { name: "clipboard-write" },
+      permission: {name: "clipboard-write"},
       setting: "denied",
     )
   end
