@@ -1,0 +1,15 @@
+%button.link-share{tabindex: "0", data: {
+    target: "chat--send-message.linkShare authentication.linkShare",
+    controller: "chat--link-share",
+    action: "chat--link-share#copy keydown->chat--link-share#copy"
+  }
+}
+  .link-share__success.link-share--hidden{data: { target: "chat--link-share.success" }}
+    = svg_tag "check"
+    = t("link_copy.success")
+  .link-share__failure.link-share--hidden{data: { target: "chat--link-share.failure" }}
+    = svg_tag "delete"
+    = t("link_copy.failure")
+  %input.link-share__source.link-share--hidden{value: "#{channel_url(current_channel)}", data: { target: "chat--link-share.source" }}
+
+  = svg_tag "share", class: "link-share__image"

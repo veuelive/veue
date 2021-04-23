@@ -19,7 +19,7 @@
     z-index: z_index.$streamer-profile;
     top: 0px;
     overflow: hidden;
-    width: fill-available;
+    width: stretch;
     animation: toZeroTop ease 0.3s;
 
     @include smallTall() {
