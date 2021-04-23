@@ -11,8 +11,10 @@ export default class extends BaseController {
     "form",
     "secretCodeInput",
     "nameInput",
+    "linkShare",
   ];
 
+  readonly linkShareTargets!: HTMLElement[];
   readonly modalTarget!: HTMLElement;
   readonly submitButtonTarget!: HTMLButtonElement;
   readonly formTarget!: HTMLFormElement;
@@ -41,7 +43,16 @@ export default class extends BaseController {
     }
   }
 
-  showModal(): void {
+  showModal(event: MouseEvent): void {
+    // Allow copying the link share without logging in and triggering the login modal
+    if (
+      this.linkShareTargets.some((element) =>
+        element.contains(event.target as Node)
+      )
+    ) {
+      return;
+    }
+
     this.modalTarget.style.display = "block";
     this.scrollToFocus();
   }

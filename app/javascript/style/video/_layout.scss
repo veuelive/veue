@@ -306,7 +306,8 @@
       .chat-section {
         div,
         textarea {
-          font-size: 1rem;
+          // Our font-size breaks down on smaller viewports ~260-290px range. Lets fix that.
+          font-size: clamp(0.85rem, calc(0.5rem + 1vw), 1rem);
         }
       }
     }

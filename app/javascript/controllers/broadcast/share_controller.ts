@@ -1,7 +1,6 @@
 import DropdownController from "./dropdown_controller";
 import { getVideoVisibility } from "helpers/video_helpers";
 import {
-  copyToClipboard,
   openLinkInBrowser,
   publicVideoLink,
   privateVideoLink,
@@ -29,8 +28,8 @@ export default class extends DropdownController {
     const copyLink = document.createElement("div");
     copyLink.classList.add("select-menu--content__body__item", "copy");
     copyLink.innerText = "Copy Link";
-    copyLink.addEventListener("click", (event: Event) => {
-      this.copyLink(event);
+    copyLink.addEventListener("click", async (event: Event) => {
+      await this.copyLink(event);
       this.dispatchMenuClose();
     });
     this.appendElement(copyLink);
@@ -42,10 +41,14 @@ export default class extends DropdownController {
     openLinkInBrowser(this.getVideoLink());
   }
 
-  copyLink(event: Event): void {
-    event.stopPropagation();
-    copyToClipboard(this.getVideoLink());
-    alert("Link Copied to Clipboard!");
+  async copyLink(event: Event): Promise<void> {
+    // event.stopPropagation();
+    try {
+      await window.navigator.clipboard.writeText(this.getVideoLink());
+      alert("Link Copied to Clipboard!");
+    } catch (err) {
+      console.warn(err);
+    }
   }
 
   private getVideoLink(): string {
