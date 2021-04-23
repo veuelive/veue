@@ -109,27 +109,21 @@ describe "Prerecorded Audience View" do
 
     it "should start the video later if an offset is defined for the video" do
       start_offset = 10
-      video.update!(start_offset: start_offset, duration: 30)
+      video.update!(start_offset: start_offset)
 
       visit path_for_video(video)
 
       expect(page).to have_css("[data-start-offset='#{start_offset}']")
-      assert_video_is_playing(15)
+      assert_video_is_playing
 
       # We actually have no clue where in the time code we'll be, but its safe
       # to assume we'll be greater than 0.
-      expect(current_timecode).to be > 0
-    end
+      expect(current_timecode).to be >= 10
 
-    it "should use the timecode provided by ?t=x instead of user defined timecode" do
-      start_offset = 10
-      video.update!(start_offset: start_offset, duration: 30)
-
+      # We can override this value by passing ?t=S where S is the number of seconds
       visit path_for_video(video, t: 25)
-      assert_video_is_playing(35)
-
-      expect(page).to have_css("[data-start-offset='#{start_offset}']")
-      expect(is_video_playing?).to be(true)
+      # If this is failing, DO NOT make this wait longer, it will break the rest of the test!
+      assert_video_is_playing
 
       # Use 24 in case of any rounding issues, its a safe number that is close
       # enough to 't' and far enough from the start offset
