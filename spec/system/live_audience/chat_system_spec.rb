@@ -105,17 +105,20 @@ describe "chat during live video" do
       expect(div.text.length).to eq(181)
     end
 
-    it "should toggle between the reaction button and send message icon" do
+    it "should toggle between the reaction button + link share and send message icon" do
       expect(page).to have_css(".reaction-button-area")
+      expect(page).to have_css(".link-share")
       expect(page).to have_no_css(".message-write__send")
 
       write_chat_message "Cowabunga!"
       expect(page).to have_css(".reaction-button-area")
+      expect(page).to have_css(".link-share")
       expect(page).to have_no_css(".message-write__send")
 
       type_message "Cowabunga!"
       expect(page).to have_css(".message-write__send")
       expect(page).to have_no_css(".reaction-button-area")
+      expect(page).to have_no_css(".link-share")
     end
   end
 
