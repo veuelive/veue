@@ -33,9 +33,16 @@
       }
 
       &__name {
-        color: color.$neutral-middle;
+        font-size: 14px;
+        color: color.$neutral-regular;
         line-height: 1;
         margin-bottom: 2px;
+
+        img {
+          height: 4px;
+          width: 4px;
+          padding-bottom: 2px;
+        }
 
         .message--highlighted & {
           color: color.$veue-corporate;
@@ -68,6 +75,7 @@
       border: 1px solid color.$neutral-accents;
       padding: 8px 15px;
       width: inherit;
+      font-size: 15px;
 
       .message--highlighted & {
         background-color: color.$veue-corporate;
