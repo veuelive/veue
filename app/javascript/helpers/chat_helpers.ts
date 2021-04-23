@@ -132,5 +132,8 @@ function renderAvatar(message: ChatMessage, position: string) {
 }
 
 function videoState(): string {
-  return document.getElementById("video-show").dataset.audienceViewStreamType;
+  const element = document.querySelector(
+    "*[data-audience-view-stream-type]"
+  ) as HTMLElement;
+  return element.dataset.audienceViewStreamType;
 }
