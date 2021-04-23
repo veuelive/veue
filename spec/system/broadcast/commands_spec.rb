@@ -28,7 +28,6 @@ describe "Broadcast Commands" do
       expect(find(".select-menu--content")).to have_content("Copy")
       find(".select-menu--content__body__item.copy").click
 
-      byebug
       accept_alert
 
       clip_text = read_clipboard_text
