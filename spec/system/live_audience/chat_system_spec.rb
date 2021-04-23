@@ -182,4 +182,28 @@ describe "chat during live video" do
       expect(page).to have_css("#phone_number_input")
     end
   end
+
+  describe "chat message time" do
+    before do
+      Time.zone = "Europe/Stockholm"
+    end
+
+    after do
+      Time.zone = "UTC"
+    end
+
+    it "should have comment time of someone else" do
+      expect(page).not_to(have_selector(".message-write"))
+
+      login_as user
+      visit channel_path(channel)
+
+      write_chat_message("sending time!")
+      expect(page).to have_css(".message__content").once
+      expect(page).to have_content("sending time!")
+
+      time = Time.zone.parse(ChatMessage.last.payload["time"]).strftime("%H:%M")
+      expect(page).to have_content(time).once
+    end
+  end
 end
