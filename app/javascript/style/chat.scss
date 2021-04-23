@@ -22,8 +22,14 @@
     height: 0;
     word-break: break-word;
     overflow-wrap: break-word;
-    &::-webkit-scrollbar-track {
-      background: color.$white;
+
+    .simplebar-content-wrapper {
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+    .simplebar-scrollbar::before {
+      width: 3px;
     }
     .messages {
       min-height: 95%; // This keeps the messages taking up some space so that the first message is below
@@ -91,12 +97,13 @@
 
     // style
     cursor: pointer;
-    border-radius: 10px;
-    background-color: color.$white;
-    border: 1px solid color.$neutral-regular;
+    border-radius: 100%;
+    background-color: color.$neutral-background;
+    border: 2px solid color.$white;
 
     svg {
       fill: color.$neutral-regular;
+      height: 14px;
     }
 
     // @include smallTall() {
