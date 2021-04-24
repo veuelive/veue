@@ -147,11 +147,18 @@ describe "Prerecorded Audience View" do
       expect(Float(find("#duration-time-display")["data-duration"])).to be <= 26.0
     end
 
-    it "should show timebase time" do
+    it "should show time in chat message" do
       late_message.update!(timecode_ms: 8_999)
       visit path_for_video(video, t: 9)
       assert_video_is_playing(9)
-      time = Time.at(late_message.timecode_ms).utc.strftime("%M:%S")
+
+      # calculate displayed time from timecode_ms
+      seconds = late_message.timecode_ms / 1000
+      hours = seconds / 3600
+      minutes = (hours < 1 ? seconds : seconds % 3600) / 60
+      time = ["%02d" % minutes, "%02d" % seconds].join(":")
+      time = "'%02d' % #{hours}:#{time}" if hours > 1
+
       expect(page).to have_content(time)
     end
   end
