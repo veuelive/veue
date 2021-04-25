@@ -1,15 +1,16 @@
-$desktop-min-width: 992px;
-$mobile-max-width: $desktop-min-width;
+$desktop-min-width: 768px;
+$mobile-max-width: 768px;
+$mobile-max-width-landscape: 992px;
 $aspect-ratio: "9/6";
 
 @mixin smallTall {
-  @media only screen and (max-width: $mobile-max-width) and (min-height: 400px) {
+  @media only screen and (max-width: $mobile-max-width - 1) and (min-height: 400px) {
     @content;
   }
 }
 
 @mixin smallWide {
-  @media only screen and (max-width: $mobile-max-width) and (max-height: 400px) and (orientation: landscape) {
+  @media only screen and (max-width: $mobile-max-width-landscape) and (max-height: 400px) and (orientation: landscape) {
     @content;
   }
 }
