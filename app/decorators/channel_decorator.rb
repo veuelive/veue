@@ -12,6 +12,14 @@ class ChannelDecorator < ApplicationDecorator
     end
   end
 
+  def channel_icon_circle(size=64)
+    if channel_icon.attached?
+      h.circle_image_tag(channel_icon, size)
+    else
+      h.svg_tag("logo-circular", width: size.to_s, height: size.to_s)
+    end
+  end
+
   def social_image(width, height)
     return unless profile_image.attached?
 

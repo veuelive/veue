@@ -15,6 +15,15 @@ class Channel < ApplicationRecord
            through: :follows,
            source: :user
   has_many :mux_webhooks, dependent: :destroy
+  has_many :hosts, dependent: :destroy
+  has_many :users, through: :hosts, dependent: :destroy
+
+  has_one_attached :channel_icon, dependent: :destroy
+  validates :channel_icon,
+            blob: {
+              content_type: %w[image/png image/jpg image/jpeg],
+              size_range: 1..5.megabytes,
+            }
 
   validates :name,
             uniqueness: true,
