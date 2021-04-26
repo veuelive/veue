@@ -16,8 +16,6 @@ interface User {
 }
 
 export default class MessagesController extends BaseController {
-  element!: HTMLElement;
-
   private myUserId: string;
   private lastMessageFromUserId: string;
 
