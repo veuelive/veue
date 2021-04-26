@@ -1,4 +1,3 @@
-import TimecodeSynchronizer from "./timecode_synchronizer";
 import { BroadcastVideoLayout, LayoutSection } from "types/video_layout";
 import { Rectangle } from "types/rectangle";
 import { VideoEventProcessor } from "helpers/event/event_processor";
@@ -7,14 +6,12 @@ import { DefaultVideoLayout } from "types/sizes";
 export default class VideoDemixer {
   private canvasContextGroups: Array<Array<CanvasRenderingContext2D>>;
   private videoElement: HTMLVideoElement;
-  private timecodeSynchronizer: TimecodeSynchronizer;
   private _videoLayout: BroadcastVideoLayout;
   private sectionsByPriority: Array<LayoutSection>;
 
   constructor(
     videoElement: HTMLVideoElement,
-    canvasesByPriority: HTMLCanvasElement[][],
-    timecodeSynchronizer: TimecodeSynchronizer
+    canvasesByPriority: HTMLCanvasElement[][]
   ) {
     this.canvasContextGroups = canvasesByPriority.map((canvasGroup) =>
       canvasGroup.map((canvas) => canvas.getContext("2d"))
@@ -25,7 +22,6 @@ export default class VideoDemixer {
       this.videoLayout = event.detail.data;
     });
     this.videoElement = videoElement;
-    this.timecodeSynchronizer = timecodeSynchronizer;
 
     this.drawFrame();
   }
@@ -70,12 +66,6 @@ export default class VideoDemixer {
           }
         }
       }
-
-      this.drawSection(
-        this.timecodeSynchronizer.canvasCtx,
-        pixelDensity,
-        this.videoLayout.timecode
-      );
     }
 
     requestAnimationFrame(() => this.drawFrame());

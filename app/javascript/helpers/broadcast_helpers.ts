@@ -70,7 +70,6 @@ export function isLive(): boolean {
 }
 
 export function getTimecodeMs(): number {
-  console.log("Current timecode: ", globalThis.timecodeMs);
   return globalThis.timecodeMs;
 }
 
