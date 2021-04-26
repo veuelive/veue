@@ -1,5 +1,4 @@
 import { displayTime } from "util/time";
-import TimecodeSynchronizer from "helpers/audience/timecode_synchronizer";
 import VideoDemixer from "helpers/audience/video_demixer";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import EventManagerInterface from "types/event_manager_interface";
@@ -13,8 +12,6 @@ import PhenixMediaProvider from "helpers/remote_media_providers/phenix_media_pro
 import RemoteMediaProvider from "helpers/remote_media_providers/remote_media_provider";
 
 export default class extends BaseController {
-  element: HTMLElement;
-
   static targets = [
     "video",
     "primaryCanvas",
@@ -31,7 +28,6 @@ export default class extends BaseController {
   readonly timeDisplayTarget!: HTMLElement;
 
   private broadcastLayout: BroadcastVideoLayout;
-  private timecodeSynchronizer: TimecodeSynchronizer;
   private videoDemixer: VideoDemixer;
   private eventManager: EventManagerInterface;
   private viewedPoller: number;
@@ -62,18 +58,10 @@ export default class extends BaseController {
         throw error;
       });
 
-    this.timecodeSynchronizer = new TimecodeSynchronizer(() => {
-      this.timecodeChanged();
-    });
-
-    this.videoDemixer = new VideoDemixer(
-      this.videoTarget,
-      [
-        [this.primaryCanvasTarget],
-        [this.pipSecondaryCanvasTarget, this.fixedSecondaryCanvasTarget],
-      ],
-      this.timecodeSynchronizer
-    );
+    this.videoDemixer = new VideoDemixer(this.videoTarget, [
+      [this.primaryCanvasTarget],
+      [this.pipSecondaryCanvasTarget, this.fixedSecondaryCanvasTarget],
+    ]);
 
     this.viewedPoller = window.setInterval(() => {
       this.sendViewedMessage();
@@ -84,6 +72,10 @@ export default class extends BaseController {
     this.subscribeToAuthChange();
   }
 
+  disconnect(): void {
+    window.clearInterval(this.viewedPoller);
+  }
+
   authChanged(): void {
     this.sendViewedMessage();
   }
@@ -92,17 +84,5 @@ export default class extends BaseController {
   sendViewedMessage(): void {
     const minute = Math.ceil(this.videoTarget.currentTime / 60);
     postForm("./viewed", { minute });
-  }
-
-  disconnect(): void {
-    window.clearInterval(this.viewedPoller);
-  }
-
-  timecodeChanged(): void {
-    this.data.set("timecode", this.timecodeSynchronizer.timecodeMs.toString());
-    VideoEventProcessor.syncTime(this.timecodeSynchronizer.timecodeMs);
-
-    const seconds = this.timecodeSynchronizer.timecodeSeconds;
-    this.timeDisplayTarget.innerHTML = displayTime(seconds);
   }
 }
