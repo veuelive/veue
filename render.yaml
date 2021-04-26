@@ -6,9 +6,8 @@ databases:
 services:
   - type: web
     name: veue
-    env: ruby
-    buildCommand: "./bin/render-build.sh"
-    startCommand: "bundle exec puma -C config/puma.rb"
+    env: docker
+    # dockerCommand is optional.
     envVars:
       - key: DATABASE_URL
         fromDatabase:
