@@ -49,8 +49,8 @@ export class WebcamCaptureSource extends VideoCaptureSource {
     this.mediaStream = await navigator.mediaDevices.getUserMedia({
       video: {
         deviceId: this.deviceId || "default",
-        height: capabilities.height.max,
-        width: capabilities.width.max,
+        height: 1440,
+        width: 1080,
       },
       audio: false,
     });
