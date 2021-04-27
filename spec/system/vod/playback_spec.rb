@@ -17,7 +17,6 @@ describe "Prerecorded Audience View" do
       # Creates 0, 16s, and 24s time stamped events
       timecode = x * 16_000
 
-      create(:browser_navigation, video: video, timecode_ms: timecode)
       create(:chat_message, video: video, timecode_ms: timecode)
     end
 

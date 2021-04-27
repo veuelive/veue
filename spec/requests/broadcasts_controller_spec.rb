@@ -42,31 +42,6 @@ describe BroadcastsController do
     end
   end
 
-  describe "during broadcast" do
-    it "should create page views" do
-      pdp_page = "https://abracadabranyc.com/collections/magic/products/fire-wallet-by-premium-magic"
-
-      post navigation_update_broadcast_path(id: video.to_param),
-           as: :json,
-           params: {
-             url: pdp_page,
-             canGoBack: false,
-             canGoForward: true,
-             isLoading: false,
-             timecodeMs: 100,
-           }
-
-      # No content sent!
-      expect(response.status).to eq(204)
-
-      video.reload
-      expect(video.video_events.published).to_not be_empty
-      page_visit = video.browser_navigations.published.last
-      expect(page_visit.payload["url"]).to eq(pdp_page)
-      expect(page_visit.timecode_ms).to eq(100)
-    end
-  end
-
   describe "should allow keepalive updates" do
     it "should update the updated_at and avoid staleness" do
       original_updated_at = video.updated_at

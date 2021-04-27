@@ -11,7 +11,6 @@ class Video < ApplicationRecord
   belongs_to :user
 
   has_many :chat_messages, dependent: :destroy
-  has_many :browser_navigations, dependent: :destroy
   has_many :user_joined_events, dependent: :destroy
   has_many :pin_events, dependent: :destroy
   has_many :video_events, dependent: :destroy
@@ -84,7 +83,7 @@ class Video < ApplicationRecord
 
   def recent_timecode_sorted_events
     layout_events = video_layout_events.order("created_at").limit(10)
-    (browser_navigations.published.order("created_at DESC").limit(100) + pin_events.published + layout_events.published)
+    (pin_events.published + layout_events.published)
       .sort_by(&:timecode_ms)
   end
 

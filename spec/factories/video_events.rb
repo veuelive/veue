@@ -24,17 +24,4 @@ FactoryBot.define do
     user { create(:user) }
     input { {message: Faker::Alphanumeric.unique.alpha(number: 20)} }
   end
-
-  factory :browser_navigation do
-    video { create(:video) }
-    user { create(:user) }
-    input {
-      {
-        url: Faker::Internet.url,
-        canGoBack: random_boolean,
-        canGoForward: random_boolean,
-        isLoading: random_boolean,
-      }
-    }
-  end
 end
