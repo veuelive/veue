@@ -24,11 +24,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ENV APP_PATH /opt/app/veue
 RUN mkdir -p $APP_PATH
 
+# Install Datadog
+RUN DD_AGENT_MAJOR_VERSION=7 DD_API_KEY=1b7334aac68d79bf37f312b422ff545c DD_SITE="datadoghq.com" bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
+
 WORKDIR $APP_PATH
 COPY . .
 RUN gem install bundler
 RUN bundle config --local gems.contribsys.com ab21b078:c8a6ea8f
-RUN bundle install
 RUN yarn install
 RUN chown -R user:user /opt/app
 
