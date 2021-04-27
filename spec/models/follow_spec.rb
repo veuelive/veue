@@ -3,9 +3,12 @@
 require "rails_helper"
 
 RSpec.describe Follow, type: :model do
+  let(:user) { create(:user) }
+  let(:user_two) { create(:user) }
   let(:channel_one) { create(:channel) }
   let(:channel_two) { create(:channel) }
-  let(:user) { create(:user) }
+  let(:host_one) { create(:host, channel: channel_one, user: user_two) }
+  let(:host_two) { create(:host, channel: channel_two, user: user) }
   let!(:follow) { create(:follow, user: user, channel: channel_one) }
 
   it "Cannot follow the same channel twice" do

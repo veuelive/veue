@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  has_many :channels, dependent: :destroy
+  has_many :hosts, dependent: :destroy
+  has_many :channels, through: :hosts, dependent: :destroy
   has_many :video_events, dependent: :destroy
   has_many :chat_messages, dependent: :destroy
   has_many :session_tokens, dependent: :nullify
