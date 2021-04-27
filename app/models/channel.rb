@@ -5,7 +5,6 @@ class Channel < ApplicationRecord
 
   before_save :normalize_name
 
-  belongs_to :user
   has_many :videos, dependent: :destroy
   has_many :follows,
            -> { where(unfollowed_at: nil) },
@@ -77,5 +76,10 @@ class Channel < ApplicationRecord
 
   def about
     user.about_me
+  end
+
+  def user
+    Rails.logger.warn "This method is deprecated"
+    users.first
   end
 end

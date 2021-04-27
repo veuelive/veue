@@ -59,7 +59,6 @@ ActiveRecord::Schema.define(version: 2021_04_27_160542) do
   end
 
   create_table "channels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id"
     t.string "name", null: false
     t.string "slug", null: false
     t.string "mux_live_stream_id"
