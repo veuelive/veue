@@ -39,20 +39,6 @@ class BroadcastsController < ApplicationController
     current_broadcast_video.end!
   end
 
-  def navigation_update
-    current_broadcast_video.browser_navigations.create!(
-      input: {
-        url: params["url"],
-        canGoBack: params["canGoBack"],
-        canGoForward: params["canGoForward"],
-        isLoading: params["isLoading"],
-      },
-      user: current_user,
-      timecode_ms: params["timecodeMs"],
-    )
-    head(:no_content)
-  end
-
   def blank
     render(layout: false)
   end
