@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   build-essential \
   postgresql-client \
   yarn \
-  node
+  nodejs
 
 RUN node --version
 RUN yarn --version
