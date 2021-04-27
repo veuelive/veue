@@ -56,7 +56,7 @@ describe "Scrubber previews" do
 
       query = ".progress-bar__video-preview__image[src*='/#{video.channel.slug}/videos/#{video.id}/snapshots/1.jpg'"
       # Make sure the image has the timecode of 1
-      expect(page).to have_css(query)
+      expect(page).to have_css(query, wait: 15)
     end
   end
 
