@@ -8,6 +8,8 @@ services:
     name: veue
     env: docker
     # dockerCommand is optional.
+    branch: main
+    healthCheckPath: /_/_/health
     envVars:
       - key: DATABASE_URL
         fromDatabase:
