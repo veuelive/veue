@@ -3,8 +3,8 @@
 # You have been warned.
 FROM ruby:2.7 AS veue-rails
 
-ARG USER_ID=rails
-ARG GROUP_ID=rails
+ARG USER_ID=1982
+ARG GROUP_ID=1987
 
 RUN addgroup --gid $GROUP_ID user
 RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID render
