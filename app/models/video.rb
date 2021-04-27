@@ -140,6 +140,19 @@ class Video < ApplicationRecord
     end
   end
 
+  def attach_primary_shot!(snapshot)
+    primary_shot.attach(snapshot.image.blob)
+  end
+
+  def attach_secondary_shot!(snapshot)
+    secondary_shot.attach(snapshot.image.blob)
+  end
+
+  def attach_initial_shot!(snapshot)
+    attach_primary_shot!(snapshot) if snapshot.priority == 1
+    attach_secondary_shot!(snapshot) if snapshot.priority == 2
+  end
+
   private
 
   def after_go_live
