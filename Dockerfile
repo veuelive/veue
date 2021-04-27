@@ -27,7 +27,8 @@ RUN mkdir -p $APP_PATH
 WORKDIR $APP_PATH
 COPY . .
 RUN rm -rf node_modules vendor
-RUN gem install rails bundler
+RUN gem install bundler
+RUN bundle config --local gems.contribsys.com ab21b078:c8a6ea8f
 RUN bundle install
 RUN yarn install
 RUN chown -R user:user /opt/app
