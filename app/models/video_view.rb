@@ -14,14 +14,16 @@ class VideoView < ApplicationRecord
 
   # This is the main method we use to track new views and build the logic around how we find them
   def self.process_view!(video, user, minute, fingerprint, is_live)
-    # If you are the video creator, your views don't matter... MUWAHAHAHAHAH!
-    return if video.user_id == user&.id
+    VideoView.transaction do
+      # If you are the video creator, your views don't matter... MUWAHAHAHAHAH!
+      return if video.user_id == user&.id
 
-    video_view = find_existing(video, user, fingerprint) || video.video_views.build
-    video_view.user ||= user
-    video_view.fingerprint = fingerprint
-    video_view.add_minute!(minute, is_live)
-    video_view
+      video_view = find_existing(video, user, fingerprint) || video.video_views.build
+      video_view.user ||= user
+      video_view.fingerprint = fingerprint
+      video_view.add_minute!(minute, is_live)
+      video_view
+    end
   end
 
   def self.find_existing(video, user, fingerprint)
@@ -33,22 +35,20 @@ class VideoView < ApplicationRecord
   end
 
   def add_minute!(minute, is_live)
-    VideoView.transaction do
-      self.last_seen_at = Time.zone.now
+    self.last_seen_at = Time.zone.now
 
-      minute = Integer(minute, 10) unless minute.is_a?(Integer)
+    minute = Integer(minute, 10) unless minute.is_a?(Integer)
 
-      # Ensure that we don't double count viewing the same minute more than a day apart
-      if video_view_minutes
-         .where("created_at > ?", 1.day.ago)
-         .where(minute: minute)
-         .none?
+    # Ensure that we don't double count viewing the same minute more than a day apart
+    if video_view_minutes
+       .where("created_at > ?", 1.day.ago)
+       .where(minute: minute)
+       .none?
 
-        video_view_minutes.build(minute: minute, is_live: is_live)
-      end
-
-      save!
+      video_view_minutes.build(minute: minute, is_live: is_live)
     end
+
+    save!
   end
 
   private
