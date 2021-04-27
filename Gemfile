@@ -101,6 +101,9 @@ group :production do
 
   # Our APM and alerting provider
   gem "appsignal"
+
+  # Datadog APM, Etc
+  gem "ddtrace", require: "ddtrace/auto_instrument"
 end
 
 group :development, :test do
