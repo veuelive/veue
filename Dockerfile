@@ -7,7 +7,7 @@ ARG USER_ID
 ARG GROUP_ID
 
 RUN addgroup --gid $GROUP_ID user
-RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user
+RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID render
 
 # Install yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg -o /root/yarn-pubkey.gpg && apt-key add /root/yarn-pubkey.gpg
@@ -26,8 +26,8 @@ RUN mkdir -p $APP_PATH
 
 WORKDIR $APP_PATH
 COPY . .
-RUN rm -rf node_modules vendor
-RUN gem install rails bundler
+RUN gem install bundler
+RUN bundle config --local gems.contribsys.com ab21b078:c8a6ea8f
 RUN bundle install
 RUN yarn install
 RUN chown -R user:user /opt/app
