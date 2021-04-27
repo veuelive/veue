@@ -6,6 +6,8 @@
     "@appsignal/javascript": "^1.3.12",
     "@appsignal/plugin-breadcrumbs-console": "^1.1.12",
     "@appsignal/stimulus": "^1.0.6",
+    "@babel/plugin-proposal-decorators": "^7.13.15",
+    "@babel/preset-typescript": "^7.13.0",
     "@github/time-elements": "^3.1.1",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
@@ -34,7 +36,6 @@
     "sass": "^1.26.10",
     "simplebar": "^5.3.0",
     "stimulus": "^1.1.1",
-    "ts-loader": "^8.0.2",
     "typescript": "^4.2.3"
   },
   "version": "0.1.0",
