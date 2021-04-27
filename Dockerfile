@@ -16,16 +16,21 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.lis
 # Adds nodejs and upgrade yarn
 RUN apt-get update && apt-get install -y --no-install-recommends \
   build-essential \
-  nodejs \
-  yarn \
   postgresql-client \
-  && rm -rf /var/lib/apt/lists/*
+  libssl-dev \
+  curl \
+
+RUN curl https://deb.nodesource.com/setup_12.x | bash \
+&& curl https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+&& echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
 ENV APP_PATH /opt/app/veue
 RUN mkdir -p $APP_PATH
 
 # Install Datadog
 RUN DD_AGENT_MAJOR_VERSION=7 DD_API_KEY=1b7334aac68d79bf37f312b422ff545c DD_SITE="datadoghq.com" bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
+
+RUN rm -rf /var/lib/apt/lists/*
 
 WORKDIR $APP_PATH
 COPY . .
