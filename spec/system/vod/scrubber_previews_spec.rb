@@ -8,6 +8,7 @@ describe "Scrubber previews" do
 
   before(:each) do
     driven_by :media_browser
+    resize_window_desktop
     visit path_for_video(video)
     assert_video_is_playing
     ensure_controls_visible
@@ -56,7 +57,7 @@ describe "Scrubber previews" do
 
       query = ".progress-bar__video-preview__image[src*='/#{video.channel.slug}/videos/#{video.id}/snapshots/1.jpg'"
       # Make sure the image has the timecode of 1
-      expect(page).to have_css(query)
+      expect(page).to have_css(query, wait: 15)
     end
   end
 
