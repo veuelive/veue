@@ -5,7 +5,6 @@ class Channel < ApplicationRecord
 
   before_save :normalize_name
 
-  belongs_to :user
   has_many :videos, dependent: :destroy
   has_many :follows,
            -> { where(unfollowed_at: nil) },
@@ -15,6 +14,15 @@ class Channel < ApplicationRecord
            through: :follows,
            source: :user
   has_many :mux_webhooks, dependent: :destroy
+  has_many :hosts, dependent: :destroy
+  has_many :users, through: :hosts, dependent: :destroy
+
+  has_one_attached :channel_icon, dependent: :destroy
+  validates :channel_icon,
+            blob: {
+              content_type: %w[image/png image/jpg image/jpeg],
+              size_range: 1..5.megabytes,
+            }
 
   validates :name,
             uniqueness: true,
@@ -68,5 +76,16 @@ class Channel < ApplicationRecord
 
   def about
     user.about_me
+  end
+
+  # So we changed users and channel tables to many-to-may using
+  # hosts table but for existing legacy implementation based on
+  # belongs_to we have this function until we changed it at all
+  # places.
+  def user
+    Rails.logger.warn(
+      "This method is deprecated due to changes in channels and users relation from on-to-many to many-to-many",
+    )
+    users.first
   end
 end

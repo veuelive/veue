@@ -13,7 +13,7 @@ class Follow < ApplicationRecord
   validate :cannot_follow_self
 
   def cannot_follow_self
-    errors.add(:user_id, "You can't follow yourself") if channel.user_id == user_id
+    errors.add(:user_id, "You can't follow yourself") if channel.users.include?(user)
   end
 
   def unfollow!
