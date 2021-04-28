@@ -191,6 +191,15 @@ describe "Broadcast View" do
 
         write_chat_message "Pizza time!"
         expect(page).to have_content("Pizza time!", wait: 10).once
+
+        accept_confirm do
+          # Secondary test, skipping a lot of the setup
+          # IT should end the broadcast when there is a full connection failure
+          evaluate_script("document.dispatchEvent(new CustomEvent('StreamDisconnectErrorEvent'))")
+        end
+
+        expect(page).to have_content("Go Live")
+        expect(page).to_not have_content("Cowabunga!")
       end
     end
 
