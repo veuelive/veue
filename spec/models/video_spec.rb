@@ -123,4 +123,23 @@ RSpec.describe Video, type: :model do
       expect(video.end_reason).to eq(reason)
     end
   end
+
+  describe "Snapshots" do
+    let(:snapshot_one) { create(:video_snapshot, priority: 1) }
+    let(:snapshot_two) { create(:video_snapshot, priority: 2) }
+
+    it "Should attach priorty 1 snapshots as primary" do
+      video.attach_initial_shot!(snapshot_one)
+
+      expect(video.primary_shot.blob).to eq(snapshot_one.image.blob)
+      expect(video.secondary_shot.blob).to be_nil
+    end
+
+    it "Should only attach priority 2 snapshots as secondary" do
+      video.attach_initial_shot!(snapshot_two)
+
+      expect(video.secondary_shot.blob).to eq(snapshot_two.image.blob)
+      expect(video.primary_shot.blob).to be_nil
+    end
+  end
 end
