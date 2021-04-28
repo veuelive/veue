@@ -78,8 +78,14 @@ class Channel < ApplicationRecord
     user.about_me
   end
 
+  # So we changed users and channel tables to many-to-may using
+  # hosts table but for existing legacy implementation based on
+  # belongs_to we have this function until we changed it at all
+  # places.
   def user
-    Rails.logger.warn "This method is deprecated"
+    Rails.logger.warn(
+      "This method is deprecated due to changes in channels and users relation from on-to-many to many-to-many",
+    )
     users.first
   end
 end

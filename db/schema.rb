@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(version: 2021_04_26_142025) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "followers_count", default: 0
     t.boolean "verified", default: false
+    t.uuid "legacy_user_id"
+    t.index ["legacy_user_id"], name: "index_channels_on_legacy_user_id"
     t.index ["mux_live_stream_id"], name: "index_channels_on_mux_live_stream_id", unique: true
     t.index ["name"], name: "index_channels_on_name", unique: true
     t.index ["slug"], name: "index_channels_on_slug", unique: true
@@ -89,6 +91,7 @@ ActiveRecord::Schema.define(version: 2021_04_26_142025) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["channel_id"], name: "index_hosts_on_channel_id"
+    t.index ["user_id", "channel_id"], name: "index_hosts_on_user_id_and_channel_id"
     t.index ["user_id"], name: "index_hosts_on_user_id"
   end
 
