@@ -13,11 +13,7 @@ module Channels
 
       snapshot = VideoSnapshot.create!(snapshot_params.except(:channel_id))
 
-      if !current_video.primary_shot.attached?
-        attach_primary_shot(snapshot)
-      elsif !current_video.secondary_shot.attached?
-        attach_secondary_shot(snapshot)
-      end
+      current_video.attach_initial_shot!(snapshot)
 
       render(json: {success: true})
     end
@@ -58,15 +54,7 @@ module Channels
     private
 
     def snapshot_params
-      params.permit(:timecode, :image, :device_type, :device_id, :video_id, :channel_id)
-    end
-
-    def attach_primary_shot(snapshot)
-      current_video.primary_shot.attach(snapshot.image.blob)
-    end
-
-    def attach_secondary_shot(snapshot)
-      current_video.secondary_shot.attach(snapshot.image.blob)
+      params.permit(:timecode, :image, :device_type, :device_id, :priority, :video_id, :channel_id)
     end
   end
 end
