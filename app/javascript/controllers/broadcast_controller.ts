@@ -160,10 +160,13 @@ export default class extends Controller {
           30_000
         );
 
-        await this.sendSnapshots();
-
+        // HC: It doesn't make me happy to document this,
+        // but having this here typically gives enough time for the
+        // video to end up in sync.
         this.data.set("started-at", Date.now().toString());
         this.metronome.start();
+
+        await this.sendSnapshots();
 
         this.state = "live";
       })
