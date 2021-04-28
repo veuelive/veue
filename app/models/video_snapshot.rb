@@ -3,8 +3,8 @@
 class VideoSnapshot < ApplicationRecord
   belongs_to :video
 
-  validates :priority, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
-  validates :timecode, numericality: { only_integer: true, greater_than_or_equal_to: -1 }
+  validates :priority, numericality: {only_integer: true, greater_than_or_equal_to: 1}
+  validates :timecode, numericality: {only_integer: true, greater_than_or_equal_to: -1}
 
   has_one_attached :image
 
