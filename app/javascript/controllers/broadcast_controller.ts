@@ -145,8 +145,6 @@ export default class extends Controller {
         this.sendStartingLayout().then(() =>
           console.log("Starting Layout Sent")
         );
-        this.data.set("started-at", Date.now().toString());
-        this.metronome.start();
 
         this.snapshotIntervalId = window.setInterval(
           this.sendSnapshots.bind(this),
@@ -154,6 +152,10 @@ export default class extends Controller {
         );
 
         await this.sendSnapshots();
+
+        this.data.set("started-at", Date.now().toString());
+        this.metronome.start();
+
         this.state = "live";
       })
       .catch((e) => console.error(e));
