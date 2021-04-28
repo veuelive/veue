@@ -10,7 +10,7 @@ describe "Scrubber previews" do
     driven_by :media_browser
     resize_window_desktop
     visit path_for_video(video)
-    assert_video_is_playing
+    assert_video_is_playing(10)
     ensure_controls_visible
   end
 
@@ -43,7 +43,7 @@ describe "Scrubber previews" do
         const container = document.querySelector(".progress-bar-container")
         const { width, x, y } = container.getBoundingClientRect()
         // Approximate guess of 30 seconds
-        const offset = (width / 2) + 100
+        const offset = (width / 1.5)
         container.dispatchEvent(new PointerEvent("pointerenter", {clientX: x + offset, clientY: y, view: window}))
       JS
 
@@ -57,7 +57,7 @@ describe "Scrubber previews" do
 
       query = ".progress-bar__video-preview__image[src*='/#{video.channel.slug}/videos/#{video.id}/snapshots/1.jpg'"
       # Make sure the image has the timecode of 1
-      expect(page).to have_css(query, wait: 15)
+      expect(page).to have_css(query, wait: 10)
     end
   end
 
