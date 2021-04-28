@@ -1,6 +1,6 @@
 - submit_form = "click->video-snapshots#submitForm keydown->video-snapshots#submitForm"
 - if video_snapshot.image.attached?
-  .video-snapshot
+  .video-snapshot{id: "#{dom_id(video_snapshot)}"}
     = image_tag video_snapshot.image, alt: "Video snapshot"
     = form_with model: video_snapshot, url: channel_video_video_snapshot_path(current_channel, current_video, video_snapshot), data: { controller: "video-snapshots" } do |form|
       = form.button "Set Primary", name: :commit, value: "primary",
