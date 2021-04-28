@@ -8,6 +8,7 @@ describe "Scrubber previews" do
 
   before(:each) do
     driven_by :media_browser
+    resize_window_desktop
     visit path_for_video(video)
     assert_video_is_playing
     ensure_controls_visible
