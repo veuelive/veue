@@ -20,6 +20,7 @@ RSpec.describe "VideoSnapshots", type: :request do
            params: {
              image: image,
              timecode: 0,
+             priority: 1,
              device_id: SecureRandom.uuid,
              device_type: "screen",
            }
@@ -39,6 +40,7 @@ RSpec.describe "VideoSnapshots", type: :request do
              params: {
                image: image,
                timecode: 0,
+               priority: 1,
                device_id: SecureRandom.uuid,
                device_type: "screen",
              }
