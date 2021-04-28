@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_08_204317) do
+ActiveRecord::Schema.define(version: 2021_04_26_142025) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -59,7 +59,6 @@ ActiveRecord::Schema.define(version: 2021_04_08_204317) do
   end
 
   create_table "channels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id"
     t.string "name", null: false
     t.string "slug", null: false
     t.string "mux_live_stream_id"
@@ -68,6 +67,8 @@ ActiveRecord::Schema.define(version: 2021_04_08_204317) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "followers_count", default: 0
     t.boolean "verified", default: false
+    t.uuid "legacy_user_id"
+    t.index ["legacy_user_id"], name: "index_channels_on_legacy_user_id"
     t.index ["mux_live_stream_id"], name: "index_channels_on_mux_live_stream_id", unique: true
     t.index ["name"], name: "index_channels_on_name", unique: true
     t.index ["slug"], name: "index_channels_on_slug", unique: true
@@ -82,6 +83,16 @@ ActiveRecord::Schema.define(version: 2021_04_08_204317) do
     t.uuid "channel_id"
     t.index ["channel_id"], name: "index_follows_on_channel_id"
     t.index ["user_id", "channel_id", "unfollowed_at"], name: "index_follows_on_user_id_and_channel_id_and_unfollowed_at", unique: true
+  end
+
+  create_table "hosts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "channel_id"
+    t.uuid "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["channel_id"], name: "index_hosts_on_channel_id"
+    t.index ["user_id", "channel_id"], name: "index_hosts_on_user_id_and_channel_id"
+    t.index ["user_id"], name: "index_hosts_on_user_id"
   end
 
   create_table "moderation_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -288,6 +299,8 @@ ActiveRecord::Schema.define(version: 2021_04_08_204317) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "categories", "categories"
+  add_foreign_key "hosts", "channels"
+  add_foreign_key "hosts", "users"
   add_foreign_key "video_categories", "categories"
   add_foreign_key "video_categories", "videos"
   add_foreign_key "video_snapshots", "videos"

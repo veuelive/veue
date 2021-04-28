@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :video do
-    channel factory: :channel
+    channel { create :channel }
     user { channel.user }
     state { :pending }
     title { Faker::Company.bs }
