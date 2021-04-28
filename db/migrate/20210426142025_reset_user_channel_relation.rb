@@ -4,14 +4,10 @@ class ResetUserChannelRelation < ActiveRecord::Migration[6.1]
       channel.users << User.find(channel.user_id)
     end
 
-    remove_column :channels, :user_id
+    rename_column :channels, :user_id, :legacy_user_id
   end
 
   def down
-    add_reference :channels, :user, type: :uuid
-
-    Channel.all.each do |channel|
-      channel.update(user_id: channel.users.first.id)
-    end
+    rename_column :channels, :legacy_user_id, :user_id
   end
 end

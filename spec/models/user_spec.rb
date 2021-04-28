@@ -39,4 +39,15 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe "setup as streamer" do
+    let(:user) { create(:user) }
+
+    it "should have user setup as streamer" do
+      user.setup_as_streamer!
+      channels = user.channels
+      expect(channels.count).to eq(1)
+      expect(channels.first.name).to eq(user.display_name)
+    end
+  end
 end
