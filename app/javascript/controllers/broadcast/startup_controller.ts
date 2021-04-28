@@ -80,7 +80,7 @@ export default class extends BaseController {
       .forEach((e) => (e["style"] = "display: block;"));
 
     // We start in a hidden state, and only by this point do we know if we should display at all...
-    this.element["style"] = "display: flex;";
+    this.element.style.display = "flex";
   }
 
   private endSetup() {

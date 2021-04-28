@@ -6,6 +6,7 @@ import { inElectronApp } from "helpers/electron/base";
 import { AudioCaptureSource } from "helpers/broadcast/capture_sources/audio";
 import { VideoCaptureSource } from "helpers/broadcast/capture_sources/video";
 import ElectronCaptureSource from "helpers/broadcast/capture_sources/electron";
+import EventBus from "event_bus";
 
 export const HideScreenCaptureEvent = "HideScreenCaptureEvent";
 export const ShowScreenCaptureEvent = "ShowScreenCaptureEvent";
@@ -28,25 +29,25 @@ export default class CaptureSourceManager {
     // controllers and non-controllers
     globalThis.captureSources = {};
 
-    document.addEventListener(
+    EventBus.subscribe(
       NewCaptureSourceEvent,
-      async (event: CustomEvent) => {
-        await this.addCaptureSource(event.detail as CaptureSource);
+      async (captureSource: CaptureSource) => {
+        await this.addCaptureSource(captureSource);
       }
     );
 
-    document.addEventListener(
+    EventBus.subscribe(
       RemoveCaptureSourceEvent,
-      async (event: CustomEvent) => {
-        await this.removeCaptureSource(event.detail as CaptureSource);
+      async (captureSource: CaptureSource) => {
+        await this.removeCaptureSource(captureSource);
       }
     );
 
-    document.addEventListener(HideScreenCaptureEvent, async () => {
+    EventBus.subscribe(HideScreenCaptureEvent, async () => {
       await this.removeCaptureSource(this.electronCaptureSource);
     });
 
-    document.addEventListener(ShowScreenCaptureEvent, async () => {
+    EventBus.subscribe(ShowScreenCaptureEvent, async () => {
       await this.addCaptureSource(this.electronCaptureSource);
     });
   }

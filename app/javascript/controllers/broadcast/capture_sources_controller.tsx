@@ -10,6 +10,7 @@ import { CaptureSource } from "helpers/broadcast/capture_sources/base";
 import { h, render } from "preact";
 import MediaDeck from "components/media_deck";
 import { inElectronApp } from "helpers/electron/base";
+import EventBus from "event_bus";
 
 export const ChangeMediaDeviceEvent = "ChangeMediaDeviceEvent";
 
@@ -69,9 +70,7 @@ export default class extends BaseController {
         mediaDeviceInfo.deviceId
       );
     }
-    document.dispatchEvent(
-      new CustomEvent(NewCaptureSourceEvent, { detail: captureSource })
-    );
+    EventBus.dispatch(NewCaptureSourceEvent, captureSource);
   }
 
   swapMediaDevice(event: CustomEvent): void {
@@ -80,8 +79,6 @@ export default class extends BaseController {
   }
 
   private removeCaptureSource(captureSource: CaptureSource) {
-    document.dispatchEvent(
-      new CustomEvent(RemoveCaptureSourceEvent, { detail: captureSource })
-    );
+    EventBus.dispatch(RemoveCaptureSourceEvent, captureSource);
   }
 }
