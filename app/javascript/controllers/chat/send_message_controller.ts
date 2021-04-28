@@ -105,6 +105,11 @@ export default class extends Controller {
   }
 
   showLinkShareIcon(): void {
+    // dont show in broadcaster!
+    if (document.querySelector("#broadcast")) {
+      return;
+    }
+
     this.linkShareTarget.style.display = "flex";
   }
 
