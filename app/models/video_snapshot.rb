@@ -37,7 +37,18 @@ class VideoSnapshot < ApplicationRecord
     image.blob == video.secondary_shot.blob
   end
 
+  # Processed the image variant
+  def processed_preview
+    image.variant(resize_to_limit: [112, 200]).processed
+  end
+
   def preview_url
-    Router.url_for(image.variant(resize_to_limit: [200, 112]))
+    if Rails.application.config.active_storage.service == :amazon
+      # if using S3, use the S3 url directly
+      processed_preview.url
+    else
+      # this is for test / local envs.
+      Router.url_for(processed_preview)
+    end
   end
 end
