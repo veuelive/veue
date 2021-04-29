@@ -166,6 +166,9 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
+    ddtrace (0.48.0)
+      ffi (~> 1.0)
+      msgpack
     diff-lcs (1.4.4)
     draper (4.0.1)
       actionpack (>= 5.0)
@@ -434,10 +437,7 @@ GEM
       ethon (>= 0.9.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
-    tzinfo-data (1.2021.1)
-      tzinfo (>= 1.0.0)
     unicode-display_width (2.0.0)
-    wdm (0.1.1)
     web-console (4.1.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -486,6 +486,7 @@ DEPENDENCIES
   cancancan
   capybara (>= 2.15)
   database_cleaner-active_record
+  ddtrace
   draper
   factory_bot_rails
   faker
