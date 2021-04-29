@@ -4,6 +4,7 @@ import Croppie from "croppie";
 import "croppie/croppie.css";
 
 export const UploadImageEvent = "UploadImage";
+export const UploadChannelIconEvent = "ChannelIcon";
 
 export default class extends Controller {
   static targets = [
@@ -61,10 +62,29 @@ export default class extends Controller {
     );
     const html = await response.text();
 
-    const uploadImageEvent = new CustomEvent(UploadImageEvent, {
-      detail: { html },
+    this.dispatchUploadImageEvent(UploadImageEvent, html);
+
+    this.closeCropper();
+  }
+
+  async submitChannelIcon(): Promise<void> {
+    const channel_icon = await this.croppie.result({
+      type: "blob",
+      size: "original",
+      format: "png",
+      quality: 1,
+      circle: false,
     });
-    document.dispatchEvent(uploadImageEvent);
+
+    const response = await putForm(
+      `/channels/${this.element.dataset.id}/upload_image`,
+      {
+        channel_icon,
+      }
+    );
+    const html = await response.text();
+
+    this.dispatchUploadImageEvent(UploadChannelIconEvent, html);
 
     this.closeCropper();
   }
@@ -80,9 +100,22 @@ export default class extends Controller {
     );
     const html = await response.text();
 
-    const uploadImageEvent = new CustomEvent(UploadImageEvent, {
+    this.dispatchUploadImageEvent(UploadImageEvent, html);
+  }
+
+  async removeChannelIcon(): Promise<void> {
+    const response = await destroy(
+      `/channels/${this.element.dataset.id}/destroy_image`
+    );
+    const html = await response.text();
+
+    this.dispatchUploadImageEvent(UploadChannelIconEvent, html);
+  }
+
+  dispatchUploadImageEvent(UploadEvent, html): void {
+    const uploadEvent = new CustomEvent(UploadEvent, {
       detail: { html },
     });
-    document.dispatchEvent(uploadImageEvent);
+    document.dispatchEvent(uploadEvent);
   }
 }

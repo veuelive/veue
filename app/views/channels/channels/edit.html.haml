@@ -1,1 +1,12 @@
-Hello from the editing world
+= content_for :title do
+  Veue - Channel Edit
+.content-area{
+  data: {
+    controller: "channel-edit"
+  }
+}
+  .channel-content
+    .channel-content__menu
+      = render partial: "channels/channels/partials/side_bar"
+    .channel-content__primary
+      = render partial: "channels/channels/partials/channel_edit"
