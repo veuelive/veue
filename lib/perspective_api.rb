@@ -32,8 +32,6 @@
 module PerspectiveApi
   extend self
 
-  require "appsignal"
-
   class Error < StandardError; end
 
   attr_accessor :key, :enabled, :threshold
@@ -76,7 +74,6 @@ module PerspectiveApi
 
   def handle_error(result_with_error)
     Rails.logger.error(result_with_error)
-    Appsignal.set_error(Error.new(result_with_error["error"]["message"]))
     [-1, {}]
   end
 end

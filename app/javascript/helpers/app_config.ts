@@ -13,9 +13,6 @@ interface AppConfig {
     name: string;
     pod: string;
   };
-  appsignal: {
-    key: string;
-  };
 }
 
 export const AppConfig = globalThis.appConfig as AppConfig;
