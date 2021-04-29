@@ -115,8 +115,6 @@ GEM
       zeitwerk (~> 2.3)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
-    appsignal (3.0.2)
-      rack
     arbre (1.4.0)
       activesupport (>= 3.0.0, < 6.2)
       ruby2_keywords (>= 0.0.2, < 1.0)
@@ -166,6 +164,9 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
+    ddtrace (0.48.0)
+      ffi (~> 1.0)
+      msgpack
     diff-lcs (1.4.4)
     draper (4.0.1)
       actionpack (>= 5.0)
@@ -476,7 +477,6 @@ DEPENDENCIES
   activeadmin_addons
   activerecord-pg_enum
   activestorage-validator
-  appsignal
   aws-sdk-s3
   blind_index
   bootsnap (>= 1.4.2)
@@ -486,6 +486,7 @@ DEPENDENCIES
   cancancan
   capybara (>= 2.15)
   database_cleaner-active_record
+  ddtrace
   draper
   factory_bot_rails
   faker
