@@ -166,6 +166,9 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
+    ddtrace (0.48.0)
+      ffi (~> 1.0)
+      msgpack
     diff-lcs (1.4.4)
     draper (4.0.1)
       actionpack (>= 5.0)
@@ -486,6 +489,7 @@ DEPENDENCIES
   cancancan
   capybara (>= 2.15)
   database_cleaner-active_record
+  ddtrace
   draper
   factory_bot_rails
   faker
