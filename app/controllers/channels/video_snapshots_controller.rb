@@ -31,7 +31,7 @@ module Channels
       authorize!(:manage, current_snapshot)
 
       current_video.attach_primary_shot!(current_snapshot) if params[:commit] == "primary"
-      current_video.attach_secondary_shot!(current_snapshot) if params[:commit] == "secondary"
+      current_video.purge_or_attach_secondary_shot!(current_snapshot) if params[:commit] == "secondary"
 
       render(action: "index", layout: false)
     end

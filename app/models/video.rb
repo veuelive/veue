@@ -152,6 +152,12 @@ class Video < ApplicationRecord
     attach_secondary_shot!(snapshot) if snapshot.priority == 2
   end
 
+  def purge_or_attach_secondary_shot!(snapshot)
+    return secondary_shot.purge if snapshot.secondary_shot?(self)
+
+    attach_secondary_shot!(snapshot)
+  end
+
   private
 
   def after_go_live
