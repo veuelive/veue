@@ -1,11 +1,10 @@
 const { environment } = require("@rails/webpacker");
-const typescript = require("./loaders/typescript");
+
+environment.loaders.delete("nodeModules");
+
 const jquery = require("./plugins/jquery");
 
 environment.plugins.prepend("jquery", jquery);
-environment.loaders.prepend("typescript", typescript);
-
-environment.loaders.delete("nodeModules");
 
 // Get the actual sass-loader config
 const sassLoader = environment.loaders.get("sass");
