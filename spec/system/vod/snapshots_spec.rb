@@ -18,7 +18,7 @@ describe "adding snapshots to videos" do
   it "should allow you to set a priority 2 shot as priority 1 and vice versa" do
     within(snapshot_one_query) do
       click_button("Set Secondary")
-      expect(page).to have_button("Set Secondary", disabled: true)
+      expect(page).to have_button("Remove Secondary")
       expect(video.secondary_shot.blob).to eq(snapshot_one.image.blob)
     end
 
@@ -26,6 +26,18 @@ describe "adding snapshots to videos" do
       click_button("Set Primary")
       expect(page).to have_button("Set Primary", disabled: true)
       expect(video.primary_shot.blob).to eq(snapshot_two.image.blob)
+    end
+  end
+
+  it "should allow you to remove a secondary screenshot" do
+    within(snapshot_one_query) do
+      click_button("Set Secondary")
+      expect(page).to have_button("Remove Secondary")
+      expect(snapshot_one.secondary_shot?(video)).to eq(true)
+
+      click_button("Remove Secondary")
+      expect(page).to have_button("Set Secondary")
+      expect(snapshot_one.secondary_shot?(video.reload)).to eq(false)
     end
   end
 end
