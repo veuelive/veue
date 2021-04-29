@@ -75,7 +75,6 @@
     <orderEntry type="library" scope="PROVIDED" name="activestorage-validator (v0.1.3, RVM: ruby-2.7.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activesupport (v6.1.3.1, RVM: ruby-2.7.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="addressable (v2.7.0, RVM: ruby-2.7.3) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="appsignal (v3.0.2, RVM: ruby-2.7.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="arbre (v1.4.0, RVM: ruby-2.7.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="argon2-kdf (v0.1.6, RVM: ruby-2.7.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ast (v2.4.2, RVM: ruby-2.7.3) [gem]" level="application" />

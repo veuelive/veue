@@ -3,9 +3,6 @@
   "private": true,
   "dependencies": {
     "@activeadmin/activeadmin": "^2.7.0",
-    "@appsignal/javascript": "^1.3.12",
-    "@appsignal/plugin-breadcrumbs-console": "^1.1.12",
-    "@appsignal/stimulus": "^1.0.6",
     "@babel/plugin-proposal-decorators": "^7.13.15",
     "@babel/preset-typescript": "^7.13.0",
     "@github/time-elements": "^3.1.1",
