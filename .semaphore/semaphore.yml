@@ -15,7 +15,7 @@ global_job_config:
       - checkout
       - cache restore
       - sem-version ruby 2.7.3
-      - sem-version node 14.16.0
+      - sem-version node 16.0.0
       - bundle config set deployment 'true'
       - bundle config set path 'vendor/bundle'
       - bundle install
@@ -52,5 +52,6 @@ blocks:
       epilogue:
         on_fail:
           commands:
-            - artifact push job /home/semaphore/veue/tmp --expire-in 1w
+            - du -sh /home/semaphore/veue/tmp
+            - artifact push job /home/semaphore/veue/tmp/screenshots --expire-in 1w
 
