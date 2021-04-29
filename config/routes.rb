@@ -79,13 +79,20 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   scope module: :channels do
-    resources :channels, only: %i[index]
+    resources :channels, only: %i[index] do
+      member do
+        put :upload_image
+        delete :destroy_image
+      end
+    end
   end
 
   # CATCHALL AFTER THESE OTHER ROUTES!
   scope module: :channels, path: ":channel_id", as: "channel" do
     get "/" => "channels#show"
     get "/edit" => "channels#edit"
+    put "/" => "channels#update"
+    put "/edit" => "channels#edit"
     post "viewed" => "channels#viewed"
 
     resource :follow, only: %i[show create destroy]

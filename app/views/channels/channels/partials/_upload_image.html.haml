@@ -1,0 +1,23 @@
+.channel-update__field.image-field{data: { controller: "crop-image", id: @channel.id } }
+  .channel-avatar
+    = render partial: "channels/channels/partials/channel_icon", locals: { channel: @channel }
+    .channel-avatar__info
+      %div JPG, JPEG or PNG
+      %div (Max. 5 MB.)
+  .upload-image
+    .upload-option
+      .upload-option__button
+        %input{type: "file", accept: 'image/png, image/jpg, image/jpeg', data: { target: "crop-image.imageField", action: "change->crop-image#processImage"}
+        }
+        %span Upload
+        %span Image
+      .upload-option__delete{data: {action: "click->crop-image#removeChannelIcon"}}
+        = svg_tag "delete-icon"
+    .error-message{ "data-target": "crop-image.imageMessage" }
+      Invalid Image
+    .croppie-wrapper{"data-target": "crop-image.croppieWrapper"}
+      .croppie-wrapper__body.crop-area{"data-target": "crop-image.croppieField"}
+      .croppie-wrapper__action.crop-area
+        %button{type: "button", "data-action": "click->crop-image#submitChannelIcon"} Submit
+        %button.cancel-button{type: "button", "data-action": "click->crop-image#closeCropper"} Discard
+
