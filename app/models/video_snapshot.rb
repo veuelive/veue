@@ -29,6 +29,14 @@ class VideoSnapshot < ApplicationRecord
     find_all_between(min: min, max: max).first
   end
 
+  def primary_shot?(video)
+    image.blob == video.primary_shot.blob
+  end
+
+  def secondary_shot?(video)
+    image.blob == video.secondary_shot.blob
+  end
+
   def preview_url
     Router.url_for(image.variant(resize_to_limit: [200, 112]))
   end

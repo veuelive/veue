@@ -141,5 +141,15 @@ RSpec.describe Video, type: :model do
       expect(video.secondary_shot.blob).to eq(snapshot_two.image.blob)
       expect(video.primary_shot.blob).to be_nil
     end
+
+    it "should allow you to remove a secondary screenshot" do
+      video.attach_secondary_shot!(snapshot_two)
+
+      expect(snapshot_two.secondary_shot?(video)).to eq(true)
+
+      video.purge_or_attach_secondary_shot!(snapshot_two)
+
+      expect(snapshot_two.secondary_shot?(video)).to eq(false)
+    end
   end
 end
