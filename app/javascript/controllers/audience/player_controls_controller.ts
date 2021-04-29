@@ -253,7 +253,6 @@ export default class extends BaseController {
       const img = new Image();
       img.src = `${urlPrefix}/${i}.jpg`;
       img.style.display = "none";
-      // document.body.appendChild(img);
     }
   }
 
