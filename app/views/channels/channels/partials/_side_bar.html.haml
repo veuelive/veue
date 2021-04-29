@@ -1,0 +1,24 @@
+.channel-menu{
+  "data-target": "channel-edit.channelMenu"
+}
+  .channel-menu__text
+    Channels
+  %ul{ role: "menubar" }
+    %li.channel-menu__name
+      Select a channel
+    - @channels.each do |channel|
+      %li.privacy-link.channel-menu__item{
+        role: "menuitem",
+        class:
+          channel == @channel ? "active" : "",
+          data: {
+          target: "channel-edit.channelTabs",
+          action: "click->channel-edit#selectChannel",
+          url: channel_edit_path(channel.id)
+        }
+      }
+        %a{href: "javascript:void(0)", draggable: "false"}
+          %span
+            = channel.name
+          = svg_tag "forward"
+
