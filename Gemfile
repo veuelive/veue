@@ -99,9 +99,6 @@ group :production do
   # TEMPORARY due to https://github.com/logdna/ruby/issues/30
   gem "logdna", github: "logdna/ruby", branch: "master"
 
-  # Our APM and alerting provider
-  gem "appsignal"
-
   # Datadog APM, Etc
   gem "ddtrace", require: "ddtrace/auto_instrument"
 end

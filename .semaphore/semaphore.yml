@@ -15,7 +15,7 @@ global_job_config:
       - checkout
       - cache restore
       - sem-version ruby 2.7.3
-      - sem-version node 16.0.0
+      - sem-version node 14.6.0
       - bundle config set deployment 'true'
       - bundle config set path 'vendor/bundle'
       - bundle install
