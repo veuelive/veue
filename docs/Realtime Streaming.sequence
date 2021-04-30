@@ -1,0 +1,98 @@
+// This document works on https://sequencediagram.org
+
+title Live Streaming V4
+
+bottomparticipants
+
+actor Streamer
+participant Web Browser
+participant Veue
+participant Phenix
+participant SSE
+participant Audience
+
+Streamer->Web Browser: Load Broadcasts Page
+activate Web Browser
+
+Web Browser->Veue: GET\n /broadcasts
+activate Veue
+Veue->Veue: Create new Video\n as Pending
+Veue->Web Browser: Redirect to\n /broadcasts/:video_id
+deactivate Veue
+Web Browser->Veue: GET\n/broadcasts/:video_id
+activate Veue
+Veue->Veue: Sign and \nGenerate Phenix \nPublishToken &\nAuthToken
+Veue->Web Browser: Return HTML & JS\nIncluding signed EdgeTokens
+deactivate Veue
+
+Web Browser->Web Browser:Start \nWebcam\nCapture
+
+Web Browser->Web Browser: new MediaStream(\n  {videoMixer, audioMixer}\n)
+
+Web Browser->SSE:Start Listening to "/:channel_id"
+activate SSE
+
+Web Browser->Phenix: new express.ChannelExpress(     \n     {authToken}\n);
+
+activate Phenix
+
+Phenix->Phenix: Check AuthToken\nSignature is valid
+
+Phenix->Web Browser: Session Created
+
+Streamer->Web Browser: Click "Go Live"
+
+Web Browser->Phenix: channelExpress.publish({publishToken, mediaStream})
+
+Phenix->Phenix:Creates Channel\nBegins Recording
+
+Phenix->Veue: Starting Webhook\nw/ Tag
+activate Veue
+Veue->Veue: Transition Video to\ Starting
+deactivate Veue
+
+Phenix-->Web Browser:WebRTC Connection!
+activate Web Browser
+
+note right of Web Browser: WebRTC Connection
+
+Web Browser->Veue: POST /broadcasts/:id/start\nw/ Initial Layout
+activate Veue
+Veue->SSE: Emit Start Event
+Veue->Web Browser: OK
+deactivate Veue
+SSE->Web Browser: Recieve Start Event
+SSE->Audience: Recieve Start Event
+Audience->Veue: GET /:channel_id
+activate Veue
+Veue->Veue: Sign AuthToken &\nStreamToken
+Veue->Audience: HTML, JS, and the 2 EdgeTokens
+deactivate Veue
+
+
+activate Audience
+
+Audience->Phenix: new express.ChannelExpress(     \n     {authToken}\n);
+
+Audience->Phenix: channelExpress.subscribe(     \n     {streamToken}\n);
+
+Phenix-->Audience: WebRTC Connection
+
+loop until stream ends
+Web Browser->Phenix:WebRTC Video and Audio
+Phenix->Web Browser:Various Communications
+Phenix->Audience:Video & Audio Data
+Web Browser-->>Veue: Any Events
+Audience-->>Veue: Any Events
+Veue->SSE:Emit Any Events
+SSE->Web Browser: Event Broadcast
+SSE->Audience: Event Broadcast
+end
+
+Streamer->Web Browser:Click "Stop Broadcast"
+
+Web Browser->Phenix: publisher.stop()
+deactivate Web Browser
+Web Browser->Veue: POST /broadcasts/:id/stop
+
+Web Browser
