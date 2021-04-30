@@ -195,7 +195,7 @@ describe "Broadcast View" do
         accept_confirm do
           # Secondary test, skipping a lot of the setup
           # IT should end the broadcast when there is a full connection failure
-          evaluate_script("document.dispatchEvent(new CustomEvent('StreamDisconnectErrorEvent'))")
+          execute_script("document.dispatchEvent(new CustomEvent('StreamDisconnectErrorEvent'))")
         end
 
         expect(page).to have_content("Go Live")
