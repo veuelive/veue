@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_27_160542) do
+ActiveRecord::Schema.define(version: 2021_04_30_043532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 2021_04_27_160542) do
     t.boolean "verified", default: false
     t.uuid "legacy_user_id"
     t.index ["legacy_user_id"], name: "index_channels_on_legacy_user_id"
+    t.text "bio"
     t.index ["mux_live_stream_id"], name: "index_channels_on_mux_live_stream_id", unique: true
     t.index ["name"], name: "index_channels_on_name", unique: true
     t.index ["slug"], name: "index_channels_on_slug", unique: true
