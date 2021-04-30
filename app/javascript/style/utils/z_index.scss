@@ -28,7 +28,10 @@ $video-overlay: next-z-index();
 // Video areas that might appear on top of the primary video such as PIP
 $secondary-video: next-z-index();
 
-// The unmuted banner that flashes in front of the primary video
+// Mobile video controls
+$mobile-video-controls: next-z-index();
+
+// video controls (needs to be in front of mobile controls for video previews to work)
 $video-controls: next-z-index();
 
 // General index for dropdowns, should cover most things
