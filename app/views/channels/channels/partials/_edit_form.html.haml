@@ -1,26 +1,28 @@
 = form_for(@channel, html: { data:{target: "channel-edit.form" } }) do |f|
   .channel-edit__header
-    .channel-edit__header__name{
-      "data-action": "click->channel-edit#openMenu"
-    }
-      = svg_tag "back"
-      Edit Channel
+    .channel-edit__header__name
+      = @channel.name
     .channel-edit__header__actions
       %button.action-button{"data-action": "click->channel-edit#doSubmit"} Save Changes
   .channel-edit__body
     .channel-update
       .channel-update__heading
-        Channel Icon
+        Channel Image
         .heading-info
-          Visible to other members
+          Public Visible
       = render partial: "channels/channels/partials/upload_image"
     .channel-update
       .channel-update__heading
         %label{for: "channel_name"} Channel Name
-        .heading-info
-          Real People, Real Names
       .channel-update__field
         = f.text_field :name, class: 'input-field', placeholder: 'Enter your name', maxlength: "20", data: {target: 'channel-edit.channelName'}
+    .channel-update
+      .channel-update__heading
+        %label{for: "channel_bio"} Channel Bio
+        .heading-info
+          Introduce to your viewers
+      .channel-update__field
+        = f.text_area :bio, class: 'input-field', maxlength: "160"
   .channel-edit__footer
     %button{"data-action": "click->channel-edit#doSubmit"} Save Changes
     %div Discard

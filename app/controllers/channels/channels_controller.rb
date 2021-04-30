@@ -83,7 +83,7 @@ module Channels
     end
 
     def permitted_parameters
-      params.require(:channel).permit(:name)
+      params.require(:channel).permit(:name, :bio)
     end
   end
 end
