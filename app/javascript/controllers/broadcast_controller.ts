@@ -1,7 +1,9 @@
 import { Controller } from "stimulus";
 import { ipcRenderer } from "helpers/electron/ipc_renderer";
 import VideoMixer from "helpers/broadcast/mixers/video_mixer";
-import StreamRecorder from "helpers/broadcast/stream_recorder";
+import StreamRecorder, {
+  StreamDisconnectErrorEvent,
+} from "helpers/broadcast/stream_recorder";
 import { calculateCaptureLayout } from "helpers/broadcast_helpers";
 import { postForm } from "util/fetch";
 import EventManagerInterface from "types/event_manager_interface";
@@ -85,6 +87,13 @@ export default class extends Controller {
       // we aren't in electron, so we are G2G
       this.state = "ready";
     }
+
+    document.addEventListener(StreamDisconnectErrorEvent, () => {
+      window.confirm(
+        `There was a connection failure, please check your connection– then click OK to restart your stream, your audience will join you automatically.`
+      );
+      document.location.pathname = "/broadcasts";
+    });
 
     this.eventManager = new LiveEventManager(false);
   }
