@@ -4,7 +4,6 @@ import Croppie from "croppie";
 import "croppie/croppie.css";
 
 export const UploadImageEvent = "UploadImage";
-export const UploadChannelIconEvent = "ChannelIcon";
 
 export default class extends Controller {
   static targets = [
@@ -84,7 +83,7 @@ export default class extends Controller {
     );
     const html = await response.text();
 
-    this.dispatchUploadImageEvent(UploadChannelIconEvent, html);
+    this.dispatchUploadImageEvent(this.element.dataset.id, html);
 
     this.closeCropper();
   }
@@ -109,7 +108,7 @@ export default class extends Controller {
     );
     const html = await response.text();
 
-    this.dispatchUploadImageEvent(UploadChannelIconEvent, html);
+    this.dispatchUploadImageEvent(this.element.dataset.id, html);
   }
 
   dispatchUploadImageEvent(UploadEvent, html): void {

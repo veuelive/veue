@@ -2,7 +2,7 @@
   "data-target": "channel-edit.channelMenu"
 }
   .channel-menu__text
-    Channels
+    My Channels
   %ul{ role: "menubar" }
     %li.channel-menu__name
       Select a channel
@@ -17,8 +17,9 @@
           url: channel_edit_path(channel.id)
         }
       }
+        = render partial: "channels/channels/partials/channel_icon", locals: { channel: channel }
         %a{href: "javascript:void(0)", draggable: "false"}
-          %span
+          %span.channel-menu__item__name
             = channel.name
           = svg_tag "forward"
 
