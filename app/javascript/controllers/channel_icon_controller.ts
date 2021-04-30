@@ -1,5 +1,4 @@
 import { Controller } from "stimulus";
-import { UploadChannelIconEvent } from "./crop_image_controller";
 
 export default class extends Controller {
   element!: HTMLElement;
@@ -12,14 +11,14 @@ export default class extends Controller {
     };
 
     document.addEventListener(
-      UploadChannelIconEvent,
+      this.element.dataset.channelId,
       this.channelIconUpdateHandler
     );
   }
 
   disconnect(): void {
     document.removeEventListener(
-      UploadChannelIconEvent,
+      this.element.dataset.channelId,
       this.channelIconUpdateHandler
     );
   }
