@@ -58,8 +58,6 @@
 
   .player-controls,
   .mobile-controls {
-    z-index: z_index.$video-controls;
-
     a {
       margin: 0 0.25rem;
       border-radius: 0.65rem;
@@ -112,6 +110,7 @@
     display: flex;
     transform: translate(-50%, -50%);
     align-items: center;
+    z-index: z_index.$video-controls;
 
     @include large() {
       padding: 8px;
@@ -169,7 +168,6 @@
     .progress-bar__time-preview {
       // layout
       position: absolute;
-      z-index: z_index.$video-controls;
 
       // style
       opacity: 0.9;
@@ -222,6 +220,7 @@
     bottom: 50%;
     left: 50%;
     transform: translate(-50%, 50%);
+    z-index: z_index.$mobile-video-controls;
 
     .toggle-play.mobile,
     .toggle-audio.mobile {
