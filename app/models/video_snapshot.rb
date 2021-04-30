@@ -6,7 +6,9 @@ class VideoSnapshot < ApplicationRecord
   validates :priority, numericality: {only_integer: true, greater_than_or_equal_to: 1}
   validates :timecode, numericality: {only_integer: true, greater_than_or_equal_to: -1}
 
-  has_one_attached :image
+  has_one_attached :image do |attachable|
+    attachable.variant :preview, resize: "112x200"
+  end
 
   scope :future_snapshots, ->(timecode) { where("timecode >= ?", timecode) }
   scope :past_snapshots, ->(timecode) { where("timecode < ?", timecode) }
@@ -37,7 +39,18 @@ class VideoSnapshot < ApplicationRecord
     image.blob == video.secondary_shot.blob
   end
 
+  # Processed the image variant
+  def processed_preview
+    image.variant(:preview).processed
+  end
+
   def preview_url
-    Router.url_for(image.variant(resize_to_limit: [200, 112]))
+    if Rails.application.config.active_storage.service == :amazon
+      # if using S3, use the S3 url directly
+      processed_preview.url
+    else
+      # this is for test / local envs.
+      Router.url_for(processed_preview)
+    end
   end
 end

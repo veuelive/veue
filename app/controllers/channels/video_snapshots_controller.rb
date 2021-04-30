@@ -13,6 +13,9 @@ module Channels
 
       snapshot = VideoSnapshot.create!(snapshot_params.except(:channel_id))
 
+      # Preprocess the image so we can pull it from S3 in the future.
+      snapshot.processed_preview
+
       current_video.attach_initial_shot!(snapshot)
 
       render(json: {success: true})
