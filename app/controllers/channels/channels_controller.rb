@@ -12,7 +12,7 @@ module Channels
 
     def edit
       @channel = current_user.channels.find(params[:channel_id])
-      if request.xhr? || request.format.js?
+      if xhr_request?
         render(template: "channels/channels/partials/_edit_form", layout: false)
       else
         @channels = current_user.channels
