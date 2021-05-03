@@ -5,7 +5,7 @@ import {
   RemoveCaptureSourceEvent,
 } from "helpers/broadcast/capture_source_manager";
 import hiddenIcon from "images/visible-false.svg";
-import { dispatch } from "dispatch_helpers";
+import EventBus from "event_bus";
 
 type State = { isVisible: boolean; screenCaptureSource: ScreenCaptureSource };
 export default class ScreenShare extends Component<unknown, State> {
@@ -93,7 +93,7 @@ export default class ScreenShare extends Component<unknown, State> {
   }
 
   private stopSharing() {
-    dispatch(RemoveCaptureSourceEvent, this.state.screenCaptureSource);
+    EventBus.dispatch(RemoveCaptureSourceEvent, this.state.screenCaptureSource);
     this.state.screenCaptureSource.stop();
     this.videoTag.srcObject = null;
     this.setState({ screenCaptureSource: null, isVisible: true });
@@ -102,10 +102,16 @@ export default class ScreenShare extends Component<unknown, State> {
   private toggleVisibility() {
     if (this.state.screenCaptureSource) {
       if (this.state.isVisible) {
-        dispatch(RemoveCaptureSourceEvent, this.state.screenCaptureSource);
+        EventBus.dispatch(
+          RemoveCaptureSourceEvent,
+          this.state.screenCaptureSource
+        );
         this.setState({ isVisible: false });
       } else {
-        dispatch(NewCaptureSourceEvent, this.state.screenCaptureSource);
+        EventBus.dispatch(
+          NewCaptureSourceEvent,
+          this.state.screenCaptureSource
+        );
         this.setState({ isVisible: true });
       }
     }

@@ -1,7 +1,7 @@
 import VideoMixer from "./mixers/video_mixer";
 import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
 import { express } from "phenix-web-sdk";
-import { dispatch } from "dispatch_helpers";
+import EventBus from "event_bus";
 
 // For some reason, the standard HTMLCanvasElement doesn't include
 // the one method we actually do use... so here, we just force it
@@ -78,7 +78,7 @@ export default class StreamRecorder {
               console.log(response.status);
 
               if (response.status === "client-side-failure") {
-                dispatch(StreamDisconnectErrorEvent, response.status);
+                EventBus.dispatch(StreamDisconnectErrorEvent, response.status);
               }
 
               if (response.retry) {

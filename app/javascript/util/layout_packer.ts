@@ -1,5 +1,5 @@
 import { Rectangle, rectToBounds, Size } from "types/rectangle";
-import { BroadcastVideoLayout, VideoSourceType } from "types/video_layout";
+import VideoLayout, { VideoSourceType } from "types/video_layout";
 
 interface PackSection {
   size: Size;
@@ -40,34 +40,20 @@ const MAX_VIDEO_PERCENTAGE = 0.9;
 export function buildBroadcastLayout(
   videoSize: Size,
   videoSections: Array<VideoCaptureInterface>
-): BroadcastVideoLayout {
+): VideoLayout {
   const packSections = videoCapturesToPackSections(videoSections);
-  packSections["timecode"] = {
-    size: {
-      width: 360,
-      height: 10,
-    },
-    resizable: false,
-    priority: 0,
-    type: "timecode",
-    id: "timecode",
-  };
   const packedSections = performPacking(videoSize, Object.values(packSections));
   const result = { ...videoSize, sections: [] };
   for (const id in packedSections) {
     const section = packSections[id];
     const rect = packedSections[id];
-    if (section.type == "timecode") {
-      result["timecode"] = { ...rect, digits: 12 };
-    } else {
-      result.sections.push({
-        ...rect,
-        type: section.type,
-        priority: section.priority,
-      });
-    }
+    result.sections.push({
+      ...rect,
+      type: section.type,
+      priority: section.priority,
+    });
   }
-  return result as BroadcastVideoLayout;
+  return result as VideoLayout;
 }
 
 /**

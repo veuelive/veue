@@ -29,7 +29,6 @@ describe BroadcastsController do
           {type: "screen", priority: 1, width: 1200, height: 740, x: 0, y: 0},
           {type: "camera", priority: 2, width: 420, height: 340, y: 740, x: 0},
         ],
-        timecode: {digits: 12, width: 360, height: 10, y: 1070, x: 920},
       }.to_json
 
       post(start_broadcast_path(video), params: {url: "https://apple.com", video_layout: video_layout_payload})

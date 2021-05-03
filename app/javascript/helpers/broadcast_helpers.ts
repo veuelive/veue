@@ -1,7 +1,7 @@
 import { Rectangle } from "types/rectangle";
 import { postJson } from "util/fetch";
 import { electron, inElectronApp } from "helpers/electron/base";
-import VideoLayout, { BroadcastVideoLayout } from "types/video_layout";
+import VideoLayout from "types/video_layout";
 import { getChannelSlug } from "helpers/channel_helpers";
 import { getVideoId } from "helpers/video_helpers";
 import { origin } from "helpers/app_config";
@@ -70,13 +70,10 @@ export function isLive(): boolean {
 }
 
 export function getTimecodeMs(): number {
-  console.log("Current timecode: ", globalThis.timecodeMs);
   return globalThis.timecodeMs;
 }
 
-export function sendBroadcastLayoutUpdate(
-  broadcastLayout: BroadcastVideoLayout
-): void {
+export function sendBroadcastLayoutUpdate(broadcastLayout: VideoLayout): void {
   globalThis.broadcastLayout = broadcastLayout;
   if (isLive()) {
     const payload = {

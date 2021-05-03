@@ -1,6 +1,5 @@
-import { BroadcastVideoLayout } from "types/video_layout";
+import VideoLayout from "types/video_layout";
 import { VideoCaptureSource } from "helpers/broadcast/capture_sources/video";
-import Timecode from "util/timecode";
 import Mixer from "helpers/broadcast/mixers/mixer";
 import { buildBroadcastLayout } from "util/layout_packer";
 import { sendBroadcastLayoutUpdate } from "helpers/broadcast_helpers";
@@ -19,7 +18,7 @@ export default class VideoMixer implements Mixer {
   canvas: HTMLCanvasElement;
 
   private canvasContext: CanvasRenderingContext2D;
-  public broadcastLayout: BroadcastVideoLayout;
+  public broadcastLayout: VideoLayout;
   private captureSources: VideoCaptureSource[] = [];
 
   constructor() {
@@ -73,28 +72,7 @@ export default class VideoMixer implements Mixer {
         }
       });
 
-    this.drawTimecode();
     setTimeout(this.computeFrame.bind(this), 5);
-  }
-
-  private drawTimecode() {
-    const timecodeLayout = this.broadcastLayout.timecode;
-    const colorSequence = Timecode.numberToColors(
-      globalThis.timecodeMs || 0,
-      timecodeLayout.digits
-    );
-
-    const digitWidth = timecodeLayout.width / colorSequence.length;
-
-    colorSequence.reverse().forEach((color, index) => {
-      this.canvasContext.fillStyle = color;
-      this.canvasContext.fillRect(
-        timecodeLayout.x + digitWidth * index,
-        timecodeLayout.y,
-        digitWidth,
-        timecodeLayout.height
-      );
-    });
   }
 
   addCaptureSource(captureSource: VideoCaptureSource): void {
