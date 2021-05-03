@@ -1,0 +1,12 @@
+.channel-icon{
+ data: {
+    controller: "channel-icon",
+    "channel-icon": {
+      id: channel.id
+    }
+  }
+}
+  - if channel.channel_icon.attached?
+    = circle_image_tag(channel.channel_icon, 128)
+  - else
+    = svg_tag "logo-circular"
