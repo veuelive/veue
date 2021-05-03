@@ -149,8 +149,6 @@ describe "Prerecorded Audience View" do
 
     it "should show timebase time" do
       late_message.update!(timecode_ms: 8_999)
-      visit path_for_video(video, t: 1)
-      assert_video_is_playing(2)
       visit path_for_video(video, t: 9)
       assert_video_is_playing(9)
       time = Time.at(late_message.timecode_ms).utc.strftime("%M:%S")
