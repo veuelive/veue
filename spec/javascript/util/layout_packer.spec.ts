@@ -261,18 +261,11 @@ describe("Layout Packing", () => {
             width: 420,
             height: 360,
             x: 0,
-            y: 10,
+            y: 0,
             type: "camera",
             priority: 2,
           },
         ],
-        timecode: {
-          width: 360,
-          height: 10,
-          x: 0,
-          y: 0,
-          digits: 12,
-        },
       });
     });
 
@@ -307,32 +300,25 @@ describe("Layout Packing", () => {
             type: "screen",
             width: 1152,
             x: 0,
-            y: 10,
+            y: 0,
           },
           {
-            height: 233,
+            height: 243,
             priority: 2,
             type: "camera",
-            width: 341,
+            width: 355,
             x: 0,
-            y: 847,
+            y: 837,
           },
           {
             height: 140,
             priority: 2,
             type: "camera",
             width: 260,
-            x: 341,
-            y: 847,
+            x: 355,
+            y: 837,
           },
         ],
-        timecode: {
-          digits: 12,
-          height: 10,
-          width: 360,
-          x: 0,
-          y: 0,
-        },
         width: 1280,
       });
     });
