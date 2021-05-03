@@ -29,26 +29,28 @@ export default class extends Controller {
   }
 
   selectChannel(event: Event): void {
-    console.log("reached here");
     this.channelTabsTargets.forEach((element) => {
-      if (element == event.currentTarget) {
-        if (!element.classList.contains("active")) {
-          this.openChannel(element);
-        }
-      } else if (element.classList.contains("active")) {
+      if (
+        element == event.currentTarget &&
+        !element.classList.contains("active")
+      ) {
+        this.openChannel(element);
+      } else {
         element.classList.remove("active");
       }
     });
   }
 
-  async openChannel(element): Promise<void> {
-    const response = await putForm(element.dataset["url"], {});
+  async openChannel(element: HTMLElement): Promise<void> {
+    const requestUrl = `/${element.dataset["channelId"]}/edit`;
+    const response = await putForm(requestUrl, {});
     const html = await response.text();
     this.formTarget.parentElement.innerHTML = html;
+
     window.history.replaceState(
       window.location.href,
       document.title,
-      element.dataset["url"]
+      requestUrl
     );
     element.classList.add("active");
   }

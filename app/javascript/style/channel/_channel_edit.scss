@@ -211,7 +211,7 @@
       background-color: color.$white;
       border-radius: 10px;
       padding: 22px;
-      .channel-update {
+      &__field {
         @include smallTall {
           margin-top: 20px;
         }
@@ -220,7 +220,7 @@
           justify-content: space-between;
           padding: 10px 0;
         }
-        &__heading {
+        &__title {
           color: color.$neutral-dark;
           @include large() {
             width: 30%;
@@ -230,7 +230,7 @@
             color: color.$neutral-middle;
           }
         }
-        &__field {
+        &__input {
           padding-top: 10px;
           @include large() {
             width: 70%;
@@ -309,6 +309,7 @@
                 cursor: pointer;
               }
             }
+
             .croppie-wrapper {
               position: fixed;
               top: 0;
@@ -390,6 +391,7 @@
             display: none;
           }
         }
+
         .image-field {
           display: flex;
           justify-content: space-between;
