@@ -53,7 +53,8 @@ body#discover__index {
         &__grid {
           display: grid;
           justify-content: space-around;
-          place-items: center;
+          justify-items: center;
+          align-items: self-start;
           grid-template-columns: minmax(0, 1fr);
           column-gap: 50px;
           row-gap: 25px;
