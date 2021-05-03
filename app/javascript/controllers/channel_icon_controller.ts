@@ -1,4 +1,5 @@
 import { Controller } from "stimulus";
+import { UploadIconEvent } from "./crop/channel_icon_controller";
 
 export default class extends Controller {
   element!: HTMLElement;
@@ -7,18 +8,17 @@ export default class extends Controller {
 
   connect(): void {
     this.channelIconUpdateHandler = (event) => {
-      this.element.outerHTML = event.detail.html;
+      if (event.detail.id === this.data.get("id")) {
+        this.element.outerHTML = event.detail.html;
+      }
     };
 
-    document.addEventListener(
-      this.element.dataset.channelId,
-      this.channelIconUpdateHandler
-    );
+    document.addEventListener(UploadIconEvent, this.channelIconUpdateHandler);
   }
 
   disconnect(): void {
     document.removeEventListener(
-      this.element.dataset.channelId,
+      UploadIconEvent,
       this.channelIconUpdateHandler
     );
   }

@@ -1,5 +1,5 @@
 import { Controller } from "stimulus";
-import { UploadImageEvent } from "./crop_image_controller";
+import { UploadImageEvent } from "./crop/profile_image_controller";
 
 export default class extends Controller {
   element!: HTMLElement;
