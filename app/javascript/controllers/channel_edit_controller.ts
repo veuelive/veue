@@ -21,9 +21,10 @@ export default class extends Controller {
     const html = await response.text();
     this.formTarget.parentElement.innerHTML = html;
 
-    document.querySelector(
-      ".active"
-    ).children[1].children[0].innerHTML = this.channelNameTarget.value;
+    const hilightedElement = document
+      .querySelector(".channel-menu__item.active")
+      .getElementsByClassName("channel-menu__item__name")[0];
+    hilightedElement.innerHTML = this.channelNameTarget.value;
 
     showNotification("Your channel was successfully updated");
   }
