@@ -20,12 +20,6 @@
   }
 }
   .content-area__primary{data: {controller: "canvas-size-observer"}}
-    %video.player__video.viewer{
-      "data-target": "audience--#{current_video.stream_type}-video.video audience--player-controls.video audience-view.video audience--time.video",
-      crossorigin: "anonymous",
-      style: "width: 0px; height: 0;",
-      playsinline: "playsinline",
-    }
     .primary-video{"data": { controller: "audience--movable-pip", action: "click->audience--player-controls#setBadgeTimer", target: "audience--player-controls.videoContainer"}}
       = render partial: "channels/videos/partials/header"
       .mute-banner{style: "display: none;", data: { target: "audience--player-controls.muteBanner", action: "click->audience--player-controls#toggleAudio click->audience--player-controls#hideMuteBanner"}}
@@ -49,6 +43,12 @@
 
     = render partial: "channels/videos/partials/recent_broadcasts"
     = render partial: "layouts/footer"
+    %video.player__video.viewer{
+      "data-target": "audience--#{current_video.stream_type}-video.video audience--player-controls.video audience-view.video audience--time.video",
+      crossorigin: "anonymous",
+      style: "width: 0px; height: 0;",
+      playsinline: "playsinline",
+    }
 
   .content-area__secondary
     %canvas.fixed-secondary-canvas{
