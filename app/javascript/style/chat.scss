@@ -91,9 +91,9 @@
 
     // style
     cursor: pointer;
-    border-radius: 10px;
-    background-color: color.$white;
-    border: 1px solid color.$neutral-regular;
+    border-radius: 100%;
+    background-color: color.$neutral-background;
+    border: 2px solid color.$white;
 
     svg {
       fill: color.$neutral-regular;
