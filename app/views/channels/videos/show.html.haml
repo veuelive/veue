@@ -2,7 +2,7 @@
   = "#{current_video.title || 'Video'} - #{current_channel.name} - Veue"
 .content-area#video-show{
   "data": {
-    "controller": "audience-view audience--player-controls audience--#{current_video.stream_type}-video",
+    "controller": "audience-view audience--player-controls audience--#{current_video.stream_type}-video audience--progress-bar audience--time",
     "video-id": current_video.id,
     "audience-view": {
       "stream-type": current_video.stream_type
@@ -20,6 +20,12 @@
   }
 }
   .content-area__primary{data: {controller: "canvas-size-observer"}}
+    %video.player__video.viewer{
+      "data-target": "audience--#{current_video.stream_type}-video.video audience--player-controls.video audience-view.video audience--time.video",
+      crossorigin: "anonymous",
+      style: "width: 0px; height: 0;",
+      playsinline: "playsinline",
+    }
     .primary-video{"data": { controller: "audience--movable-pip", action: "click->audience--player-controls#setBadgeTimer", target: "audience--player-controls.videoContainer"}}
       = render partial: "channels/videos/partials/header"
       .mute-banner{style: "display: none;", data: { target: "audience--player-controls.muteBanner", action: "click->audience--player-controls#toggleAudio click->audience--player-controls#hideMuteBanner"}}
@@ -33,6 +39,7 @@
         width: 1200,
         height: 740,
       }
+
       .primary-video__overlay
       = render partial: "channels/videos/partials/pip_area"
       .player-controls-area
@@ -48,11 +55,5 @@
       "data-target": "audience-view.fixedSecondaryCanvas",
       width: 420,
       height: 340
-    }
-    %video.player__video.viewer{
-      "data-target": "audience--#{current_video.stream_type}-video.video audience--player-controls.video audience-view.video",
-      crossorigin: "anonymous",
-      style: "width: 0px; height: 0;",
-      playsinline: "playsinline",
     }
     = render partial: "shared/chat", locals: { video: current_video }

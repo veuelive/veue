@@ -16,15 +16,3 @@ export default interface VideoLayout {
   height: number;
   sections: Array<LayoutSection>;
 }
-
-export interface TimecodeSection extends Rectangle {
-  digits: number;
-}
-
-/**
- * This is an extension of the VideoLayout that's used for demixing broadcasts
- * with a timecode embedded in them.
- */
-export interface BroadcastVideoLayout extends VideoLayout {
-  timecode: TimecodeSection;
-}

@@ -154,15 +154,20 @@ export default class extends Controller {
         this.sendStartingLayout().then(() =>
           console.log("Starting Layout Sent")
         );
-        this.data.set("started-at", Date.now().toString());
-        this.metronome.start();
 
         this.snapshotIntervalId = window.setInterval(
           this.sendSnapshots.bind(this),
           30_000
         );
 
+        // HC: It doesn't make me happy to document this,
+        // but having this here typically gives enough time for the
+        // video to end up in sync.
+        this.data.set("started-at", Date.now().toString());
+        this.metronome.start();
+
         await this.sendSnapshots();
+
         this.state = "live";
       })
       .catch((e) => console.error(e));
