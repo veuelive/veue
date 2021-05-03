@@ -103,6 +103,7 @@ Rails.application.routes.draw do
 
       resources :video_snapshots, path: "snapshots", only: %i[create index update]
       get 'snapshots/:timecode', to: 'video_snapshots#show'
+      get 'social_image', to: 'social_images#index'
     end
 
     # These are the routes related to the "Streamers" profile page
