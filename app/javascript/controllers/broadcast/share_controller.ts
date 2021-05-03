@@ -28,8 +28,8 @@ export default class extends DropdownController {
     const copyLink = document.createElement("div");
     copyLink.classList.add("select-menu--content__body__item", "copy");
     copyLink.innerText = "Copy Link";
-    copyLink.addEventListener("click", async (event: Event) => {
-      await this.copyLink(event);
+    copyLink.addEventListener("click", async () => {
+      await this.copyLink();
       this.dispatchMenuClose();
     });
     this.appendElement(copyLink);
