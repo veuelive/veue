@@ -1,15 +1,13 @@
-import { displayTime } from "util/time";
 import VideoDemixer from "helpers/audience/video_demixer";
-import { VideoEventProcessor } from "helpers/event/event_processor";
 import EventManagerInterface from "types/event_manager_interface";
 import BaseController from "controllers/base_controller";
 import { startMuxData } from "controllers/audience/mux_integration";
 import { isProduction } from "util/environment";
 import { postForm } from "util/fetch";
-import { BroadcastVideoLayout } from "types/video_layout";
 import HlsMediaProvider from "helpers/remote_media_providers/hls_media_provider";
 import PhenixMediaProvider from "helpers/remote_media_providers/phenix_media_provider";
 import RemoteMediaProvider from "helpers/remote_media_providers/remote_media_provider";
+import VideoLayout from "types/video_layout";
 
 export default class extends BaseController {
   static targets = [
@@ -27,7 +25,7 @@ export default class extends BaseController {
   readonly pipSecondaryCanvasTarget!: HTMLCanvasElement;
   readonly timeDisplayTarget!: HTMLElement;
 
-  private broadcastLayout: BroadcastVideoLayout;
+  private broadcastLayout: VideoLayout;
   private videoDemixer: VideoDemixer;
   private eventManager: EventManagerInterface;
   private viewedPoller: number;

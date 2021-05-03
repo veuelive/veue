@@ -5,7 +5,6 @@ import playSvg from "images/play.svg";
 import pauseSvg from "images/pause.svg";
 import mutedSvg from "images/volume-mute.svg";
 import unmutedSvg from "images/volume-max.svg";
-import { getTimecodeMs } from "helpers/broadcast_helpers";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 
 export default class extends BaseController {
@@ -154,7 +153,7 @@ export default class extends BaseController {
     }
   }
 
-  hideBadges(event): void {
+  hideBadges(): void {
     this.badgeContainerTarget.classList.add("hide-badges");
     this.badgeTimeoutId = -1;
   }
@@ -360,8 +359,9 @@ export default class extends BaseController {
     if (this.state === "playing") {
       const timeSinceLastUpdate = Date.now() - this.videoTimeLastUpdatedAt;
       if (timeSinceLastUpdate < 1000) {
-        const timecodeMs =
-          timeSinceLastUpdate + this.videoTarget.currentTime * 1000;
+        const timecodeMs = Math.floor(
+          timeSinceLastUpdate + this.videoTarget.currentTime * 1000
+        );
         globalThis.timecodeMs = timecodeMs;
         VideoEventProcessor.syncTime(timecodeMs);
         this.timeDisplayTarget.innerHTML = displayTime(timecodeMs / 1000);

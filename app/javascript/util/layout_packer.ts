@@ -1,5 +1,5 @@
 import { Rectangle, rectToBounds, Size } from "types/rectangle";
-import { BroadcastVideoLayout, VideoSourceType } from "types/video_layout";
+import VideoLayout, { VideoSourceType } from "types/video_layout";
 
 interface PackSection {
   size: Size;
@@ -40,7 +40,7 @@ const MAX_VIDEO_PERCENTAGE = 0.9;
 export function buildBroadcastLayout(
   videoSize: Size,
   videoSections: Array<VideoCaptureInterface>
-): BroadcastVideoLayout {
+): VideoLayout {
   const packSections = videoCapturesToPackSections(videoSections);
   const packedSections = performPacking(videoSize, Object.values(packSections));
   const result = { ...videoSize, sections: [] };
@@ -53,7 +53,7 @@ export function buildBroadcastLayout(
       priority: section.priority,
     });
   }
-  return result as BroadcastVideoLayout;
+  return result as VideoLayout;
 }
 
 /**

@@ -1,4 +1,4 @@
-import { BroadcastVideoLayout, LayoutSection } from "types/video_layout";
+import VideoLayout, { LayoutSection } from "types/video_layout";
 import { Rectangle } from "types/rectangle";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import { DefaultVideoLayout } from "types/sizes";
@@ -6,7 +6,7 @@ import { DefaultVideoLayout } from "types/sizes";
 export default class VideoDemixer {
   private canvasContextGroups: Array<Array<CanvasRenderingContext2D>>;
   private videoElement: HTMLVideoElement;
-  private _videoLayout: BroadcastVideoLayout;
+  private _videoLayout: VideoLayout;
   private sectionsByPriority: Array<LayoutSection>;
 
   constructor(
@@ -26,7 +26,7 @@ export default class VideoDemixer {
     this.drawFrame();
   }
 
-  set videoLayout(videoLayout: BroadcastVideoLayout) {
+  set videoLayout(videoLayout: VideoLayout) {
     this._videoLayout = videoLayout;
     this.sectionsByPriority = this.videoLayout.sections.sort(
       (a, b) => a.priority - b.priority
@@ -48,7 +48,7 @@ export default class VideoDemixer {
     }
   }
 
-  get videoLayout(): BroadcastVideoLayout {
+  get videoLayout(): VideoLayout {
     return this._videoLayout;
   }
 

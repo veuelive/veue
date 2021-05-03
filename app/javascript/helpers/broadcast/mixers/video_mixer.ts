@@ -1,4 +1,4 @@
-import { BroadcastVideoLayout } from "types/video_layout";
+import VideoLayout from "types/video_layout";
 import { VideoCaptureSource } from "helpers/broadcast/capture_sources/video";
 import Mixer from "helpers/broadcast/mixers/mixer";
 import { buildBroadcastLayout } from "util/layout_packer";
@@ -18,7 +18,7 @@ export default class VideoMixer implements Mixer {
   canvas: HTMLCanvasElement;
 
   private canvasContext: CanvasRenderingContext2D;
-  public broadcastLayout: BroadcastVideoLayout;
+  public broadcastLayout: VideoLayout;
   private captureSources: VideoCaptureSource[] = [];
 
   constructor() {

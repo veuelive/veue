@@ -41,7 +41,7 @@ export default class extends DropdownController {
     openLinkInBrowser(this.getVideoLink());
   }
 
-  async copyLink(event: Event): Promise<void> {
+  async copyLink(): Promise<void> {
     // event.stopPropagation();
     try {
       await window.navigator.clipboard.writeText(this.getVideoLink());
