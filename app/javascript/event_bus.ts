@@ -1,5 +1,3 @@
-import { isDev } from "util/environment";
-
 export default class EventBus {
   static prefix = "event-bus--";
 
