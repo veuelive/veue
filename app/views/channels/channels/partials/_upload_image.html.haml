@@ -1,4 +1,11 @@
-.channel-update__field.image-field{data: { controller: "crop-image", id: @channel.id } }
+.channel-edit__body__field__input.image-field{
+  data: {
+    controller: "crop--channel-icon",
+    "crop--channel-icon": {
+      id: @channel.id
+    }
+  }
+}
   .channel-avatar
     = render partial: "channels/channels/partials/channel_icon", locals: { channel: @channel }
     .channel-avatar__info
@@ -7,17 +14,16 @@
   .upload-image
     .upload-option
       .upload-option__button
-        %input{type: "file", accept: 'image/png, image/jpg, image/jpeg', data: { target: "crop-image.imageField", action: "change->crop-image#processImage"}
+        %input{type: "file", accept: 'image/png, image/jpg, image/jpeg', data: { target: "crop--channel-icon.imageField", action: "change->crop--channel-icon#processImage"}
         }
         %span Upload
         %span Image
-      .upload-option__delete{data: {action: "click->crop-image#removeChannelIcon"}}
+      .upload-option__delete{data: {action: "click->crop--channel-icon#removeIcon"}}
         = svg_tag "delete-icon"
-    .error-message{ "data-target": "crop-image.imageMessage" }
+    .error-message{data: {target: "crop--channel-icon.imageMessage"}}
       Invalid Image
-    .croppie-wrapper{"data-target": "crop-image.croppieWrapper"}
-      .croppie-wrapper__body.crop-area{"data-target": "crop-image.croppieField"}
+    .croppie-wrapper{data: {target: "crop--channel-icon.croppieWrapper"}}
+      .croppie-wrapper__body.crop-area{data: {target: "crop--channel-icon.croppieField"}}
       .croppie-wrapper__action.crop-area
-        %button{type: "button", "data-action": "click->crop-image#submitChannelIcon"} Submit
-        %button.cancel-button{type: "button", "data-action": "click->crop-image#closeCropper"} Discard
-
+        %button{type: "button", data: {action: "click->crop--channel-icon#submitIcon"}} Submit
+        %button.cancel-button{type: "button", data: {action: "click->crop--channel-icon#closeCropper"}} Discard

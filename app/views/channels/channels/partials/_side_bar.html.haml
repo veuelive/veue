@@ -12,9 +12,9 @@
         class:
           channel == @channel ? "active" : "",
           data: {
-          target: "channel-edit.channelTabs",
-          action: "click->channel-edit#selectChannel",
-          url: channel_edit_path(channel.id)
+            target: "channel-edit.channelTabs",
+            action: "click->channel-edit#selectChannel",
+            "channel-id": channel.id
         }
       }
         = render partial: "channels/channels/partials/channel_icon", locals: { channel: channel }
