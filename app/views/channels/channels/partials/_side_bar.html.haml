@@ -6,7 +6,7 @@
   %ul{ role: "menubar" }
     %li.channel-menu__name
       Select a channel
-    - @channels.each do |channel|
+    - user_channels.each do |channel|
       %li.privacy-link.channel-menu__item{
         role: "menuitem",
         class:
