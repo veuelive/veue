@@ -31,7 +31,6 @@ class User < ApplicationRecord
             }
 
   after_create :trigger_user_created_events
-  after_commit :update_channel_names, on: %i[update]
 
   # TODO: Remove this in future! Moved to Channel model
   encrypts :mux_stream_key
@@ -58,12 +57,6 @@ class User < ApplicationRecord
   def send_consent_instructions!(channel)
     instructions_sent!
     SendConsentTextJob.perform_later(self, channel)
-  end
-
-  def update_channel_names
-    channels&.each do |channel|
-      channel.update!(name: display_name) if channel.name != display_name
-    end
   end
 
   def follows?(channel)

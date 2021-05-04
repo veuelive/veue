@@ -1,0 +1,23 @@
+.channel-menu{
+  "data-target": "channel-edit.channelMenu"
+}
+  .channel-menu__text
+    = t("channels.text.my_channel")
+  %ul{ role: "menubar" }
+    %li.channel-menu__name
+      = t("channels.text.select_channel")
+    - user_channels.each do |channel|
+      %li.privacy-link.channel-menu__item{
+        role: "menuitem",
+        class:
+          channel == @channel ? "active" : "",
+          data: {
+            target: "channel-edit.channelTabs",
+            action: "click->channel-edit#selectChannel",
+            "channel-id": channel.id
+        }
+      }
+        = render partial: "channels/channels/partials/channel_icon", locals: { channel: channel }
+        %a{href: "javascript:void(0)", draggable: "false"}
+          %span.channel-menu__item__name
+            = channel.name
