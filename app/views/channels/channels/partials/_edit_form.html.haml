@@ -24,5 +24,13 @@
             Introduce to your viewers
         .channel-edit__body__field__input
           = f.text_area :bio, class: 'input-field', maxlength: "160"
+    .channel-edit__preview
+      .channel-edit__preview-heading
+        = t("channels.preview.content.heading")
+      .channel-edit__preview-url
+        = channel_url(@channel)
+      .channel-edit__preview-cta
+        %a{ href: channel_url(@channel)}
+          Visit Channel
     .channel-edit__footer
       %button{"data-action": "click->channel-edit#doSubmit"} Save Changes
