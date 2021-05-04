@@ -429,14 +429,19 @@
       margin-top: 10px;
       background-color: color.$white;
       border-radius: 10px;
-      padding: 22px;
+      padding: 20px;
       display: flex;
+      font-weight: 400px;
+      font-size: 16px;
+      line-height: 22px;
 
       @include smallTall() {
         flex-direction: column;
-        &-url,
+        &-url {
+          margin-top: 5px;
+        }
         &-cta {
-          padding-top: 8px;
+          margin-top: 8px;
         }
       }
 
@@ -449,7 +454,7 @@
         color: color.$neutral-regular;
       }
       &-cta {
-        display: inline-block;
+        display: flex;
         a {
           color: color.$veue-corporate;
           border: 1px solid color.$veue-corporate;

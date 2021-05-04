@@ -3,26 +3,18 @@ import { putForm } from "util/fetch";
 import { showNotification } from "util/notifications";
 
 export default class extends Controller {
-  static targets = [
-    "form",
-    "channelName",
-    "channelTabs",
-    "channelMenu",
-    "editableContent",
-  ];
+  static targets = ["form", "channelName", "channelTabs", "editableContent"];
 
   readonly formTarget!: HTMLFormElement;
   readonly channelNameTarget!: HTMLInputElement;
   readonly channelTabsTargets!: HTMLElement[];
   readonly editableContentTarget!: HTMLElement;
-  readonly channelMenuTarget!: HTMLElement;
-  readonly channelTabTarget!: HTMLElement;
 
   async doSubmit(event: Event): Promise<void> {
     event.preventDefault();
     const submitButton = event.target as HTMLButtonElement;
-
     submitButton.disabled = true;
+
     const response = await putForm(
       `/${this.currentChannelId}`,
       this.formTarget
@@ -31,9 +23,9 @@ export default class extends Controller {
     const html = await response.text();
     this.editableContentTarget.innerHTML = html;
 
-    const hilightedElement = document
-      .querySelector(".channel-menu__item.active")
-      .getElementsByClassName("channel-menu__item__name")[0];
+    const hilightedElement = document.querySelector(
+      ".channel-menu__item.active .channel-menu__item__name"
+    );
     hilightedElement.innerHTML = this.channelNameTarget.value;
 
     showNotification("Your channel was successfully updated");
@@ -41,10 +33,7 @@ export default class extends Controller {
 
   selectChannel(event: Event): void {
     this.channelTabsTargets.forEach((element) => {
-      if (
-        element == event.currentTarget &&
-        !element.classList.contains("active")
-      ) {
+      if (element == event.currentTarget) {
         this.openChannel(element);
       } else {
         element.classList.remove("active");
@@ -53,10 +42,9 @@ export default class extends Controller {
   }
 
   async openChannel(element: HTMLElement): Promise<void> {
-    const channelId = element.dataset["channelId"];
-    this.currentChannelId = channelId;
+    this.currentChannelId = element.dataset["channelId"];
 
-    const requestUrl = `/${channelId}/edit`;
+    const requestUrl = `/${this.currentChannelId}/edit`;
     const response = await putForm(requestUrl, {});
     const html = await response.text();
 

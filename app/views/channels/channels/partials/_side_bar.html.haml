@@ -2,10 +2,10 @@
   "data-target": "channel-edit.channelMenu"
 }
   .channel-menu__text
-    My Channels
+    = t("channels.text.my_channel")
   %ul{ role: "menubar" }
     %li.channel-menu__name
-      Select a channel
+      = t("channels.text.select_channel")
     - user_channels.each do |channel|
       %li.privacy-link.channel-menu__item{
         role: "menuitem",

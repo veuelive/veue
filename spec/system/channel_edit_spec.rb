@@ -40,6 +40,14 @@ describe "channel edit" do
 
       expect(page).to have_content(channel.name)
       expect(page).to have_content(channel_two.name)
+
+      click_link(channel.name)
+      fill_in "Channel Name", with: "Test Updated"
+      click_on "Save Changes"
+      expect(page).to have_content("Your channel was successfully updated")
+
+      channel.reload
+      expect(channel.name).to eq("Test Updated")
     end
   end
 end
