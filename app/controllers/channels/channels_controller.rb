@@ -7,16 +7,12 @@ module Channels
     before_action :authenticate_user!, only: %i[index edit]
 
     def index
-      @channels = current_user.channels
+      @channel = user_channels.first
     end
 
     def edit
       @channel = current_user.channels.find(params[:channel_id])
-      if xhr_request?
-        render(template: "channels/channels/partials/_edit_form", layout: false)
-      else
-        @channels = current_user.channels
-      end
+      render(template: "channels/channels/partials/_edit_form", layout: false) if xhr_request?
     end
 
     def update
@@ -81,6 +77,11 @@ module Channels
       @seo_title = I18n.t("channels.seo.title", name: current_channel.name)
       @seo_description = current_channel.about.presence
     end
+
+    def user_channels
+      @user_channels ||= current_user.channels.each(&:decorate)
+    end
+    helper_method :user_channels
 
     def permitted_parameters
       params.require(:channel).permit(:name, :bio)

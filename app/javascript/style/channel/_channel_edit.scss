@@ -9,7 +9,8 @@
   }
 }
 
-#channels__edit {
+#channels__edit,
+#channels__index {
   /**
   Put any main responsive layout code for ONLY desktop here... this does not count elements that scale to their
   surroundings
@@ -37,6 +38,28 @@
       margin: 15px 8px;
       height: 50px;
       width: 50px;
+    }
+
+    .channel-icon {
+      position: relative;
+    }
+
+    .highlight-icon {
+      display: none;
+      top: 11px;
+      left: 4px;
+      height: 54px;
+      border-radius: 50%;
+      width: 54px;
+      background: transparent;
+      position: absolute;
+      border: 2px solid #6460f1;
+    }
+
+    a.active {
+      .highlight-icon {
+        display: block;
+      }
     }
   }
 

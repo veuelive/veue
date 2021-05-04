@@ -1,2 +1,16 @@
-.channels
-  = render collection: current_user.channels, partial: "channels/channels/channel"
+= content_for :title do
+  Veue - Channels
+.content-area{
+  data: {
+    controller: "channel-edit",
+    "channel-edit": {
+      "channel-id": @channel.id
+    }
+  }
+}
+  = render partial: "channels/channels/partials/channel_header"
+  .channel-content
+    .channel-content__menu
+      = render partial: "channels/channels/partials/side_bar"
+    .channel-content__primary{ data: { target: "channel-edit.editableContent"}}
+      = render partial: "channels/channels/partials/edit_form"
