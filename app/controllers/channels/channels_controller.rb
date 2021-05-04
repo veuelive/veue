@@ -4,7 +4,7 @@ module Channels
   class ChannelsController < ApplicationController
     include ChannelConcern
 
-    before_action :authenticate_user!, only: %i[index edit]
+    before_action :authenticate_user!, only: %i[index edit update]
 
     def index
       @channel = user_channels.first
