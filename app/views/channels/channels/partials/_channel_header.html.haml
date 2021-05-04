@@ -1,0 +1,13 @@
+.channel-mobile-header
+  - user_channels.each do |channel|
+    %a{
+      href: "javascript:void(0)",
+      draggable: "false",
+      class: channel == @channel ? "active" : "",
+      data: {
+        target: "channel-edit.channelTabs",
+        action: "click->channel-edit#selectChannel",
+        "channel-id": channel.id
+      }
+    }
+      = render partial: "channels/channels/partials/channel_icon", locals: { channel: channel }
