@@ -287,6 +287,9 @@
                 width: 64px;
                 height: 64px;
               }
+              .highlight-icon {
+                display: none;
+              }
             }
             &__info {
               margin-left: 20px;
@@ -419,6 +422,39 @@
           display: flex;
           justify-content: space-between;
           align-items: center;
+        }
+      }
+    }
+    &__preview {
+      margin-top: 10px;
+      background-color: color.$white;
+      border-radius: 10px;
+      padding: 22px;
+      display: flex;
+
+      @include smallTall() {
+        flex-direction: column;
+        &-url,
+        &-cta {
+          padding-top: 8px;
+        }
+      }
+
+      justify-content: space-between;
+
+      &-heading {
+        color: color.$neutral-dark;
+      }
+      &-url {
+        color: color.$neutral-regular;
+      }
+      &-cta {
+        display: inline-block;
+        a {
+          color: color.$veue-corporate;
+          border: 1px solid color.$veue-corporate;
+          border-radius: 10px;
+          padding: 6px 10px;
         }
       }
     }

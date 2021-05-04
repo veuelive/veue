@@ -94,6 +94,9 @@ en:
     scheduled:
       cta: "Follow %{name} to get notified when they are on-air!"
       next_live_at: "Next Live Show:"
+    preview:
+      content:
+        heading: "Channel Url"
   video:
     click_to_unmute: "Click to unmute"
     tap_to_unmute: "Tap to unmute"
