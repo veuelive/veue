@@ -98,7 +98,7 @@ describe "VOD Player Controls" do
         expect(is_video_paused?).to be(false)
       end
 
-      it "should mute / umuted on button click" do
+      it "should mute / unmute on button click" do
         find(".primary-video").hover
 
         audio_class = ".toggle-audio.mobile"
