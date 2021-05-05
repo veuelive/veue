@@ -79,7 +79,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   scope module: :channels do
-    resources :channels, only: %i[index] do
+    resources :channels, only: %i[index edit update] do
       member do
         put :upload_image
         delete :destroy_image

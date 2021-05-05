@@ -6,7 +6,7 @@
   %ul{ role: "menubar" }
     %li.channel-menu__name
       = t("channels.text.select_channel")
-    - user_channels.each do |channel|
+    - current_user_channels.each do |channel|
       %li.privacy-link.channel-menu__item{
         role: "menuitem",
         class:
@@ -19,5 +19,5 @@
       }
         = render partial: "channels/channels/partials/channel_icon", locals: { channel: channel }
         %a{href: "javascript:void(0)", draggable: "false"}
-          %span.channel-menu__item__name
+          %span.channel-menu__item__name{data: { target: "channe-edit.channelNames" }}
             = channel.name
