@@ -8,7 +8,7 @@ module Channels
     def show
       authorize!(:read, current_video)
 
-      primary_shot = current_video.primary_shot.variant(resize_and_pad: [500, 500, {background: "black"}]).processed
+      primary_shot = current_video.primary_shot.variant(resize: [500, 500]).processed
 
       # Social vars
       @og_image = @twitter_image = Router.url_for_variant(primary_shot)
