@@ -22,11 +22,9 @@ export class CropImageHelper {
   }
 
   bindURL(): void {
-    console.log("bindURL");
     this.croppie.bind({
       url: window.URL.createObjectURL(this.imageFile),
     });
-    console.log(this.croppie);
   }
 
   resultantImage(): Promise<void> {

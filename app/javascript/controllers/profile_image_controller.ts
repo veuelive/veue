@@ -1,5 +1,6 @@
 import { Controller } from "stimulus";
-import { UploadImageEvent } from "./crop/profile_image_controller";
+import { UploadImageEvent } from "./crop_image_controller";
+import EventBus from "event_bus";
 
 export default class extends Controller {
   element!: HTMLElement;
@@ -7,11 +8,11 @@ export default class extends Controller {
   private profileImageUpdateHandler: (event) => void;
 
   connect(): void {
-    this.profileImageUpdateHandler = (event) => {
-      this.element.outerHTML = event.detail.html;
+    this.profileImageUpdateHandler = (payload) => {
+      this.element.outerHTML = payload.html;
     };
 
-    document.addEventListener(UploadImageEvent, this.profileImageUpdateHandler);
+    EventBus.subscribe(UploadImageEvent, this.profileImageUpdateHandler);
   }
 
   disconnect(): void {
