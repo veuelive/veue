@@ -43,12 +43,6 @@ class VideoSnapshot < ApplicationRecord
   end
 
   def preview_url
-    if Rails.application.config.active_storage.service == :amazon
-      # if using S3, use the S3 url directly
-      processed_preview.url
-    else
-      # this is for test / local envs.
-      Router.url_for(processed_preview)
-    end
+    Router.url_for_variant(processed_preview)
   end
 end
