@@ -29,7 +29,7 @@
 
             - if channel_slug = current_user.channels.select(:slug).first
               %li.user-menu__item{role: "menuitem", data: { "test-id" => "user-menu-channel" }}
-                = link_to "My Channels", channels_path, draggable: false
+                = link_to "My Channels", edit_channel_path(current_user.channels.first.id), draggable: false
 
             -# Swap to this when the user / channel relationship is fixed
               %li.user-menu__item{role: "menuitem", data: { "test-id" => "user-menu-channel" }}

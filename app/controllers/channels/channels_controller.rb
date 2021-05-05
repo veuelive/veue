@@ -6,18 +6,15 @@ module Channels
 
     before_action :authenticate_user!, only: %i[index edit update]
 
-    def index
-      @channel = user_channels.first
-    end
+    load_and_authorize_resource only: %i[edit update upload_image destroy_image]
+
+    def index; end
 
     def edit
-      @channel = current_user.channels.find(params[:channel_id])
-      render(template: "channels/channels/partials/_edit_form", layout: false) if xhr_request?
+      render(template: "channels/channels/partials/_edit_form", layout: false) && return if xhr_request?
     end
 
     def update
-      @channel = current_user.channels.find(params[:channel_id])
-
       if @channel.update(permitted_parameters)
         render(status: :accepted, template: "channels/channels/partials/_edit_form", layout: false)
       else
@@ -26,8 +23,6 @@ module Channels
     end
 
     def upload_image
-      @channel = current_user.channels.find(params[:id])
-
       if @channel.update(params.permit(:channel_icon))
         render(partial: "channels/channels/partials/channel_icon", locals: {channel: @channel})
       else
@@ -36,8 +31,6 @@ module Channels
     end
 
     def destroy_image
-      @channel = current_user.channels.find(params[:id])
-
       @channel.channel_icon.purge
       render(partial: "channels/channels/partials/channel_icon", locals: {channel: @channel})
     end
@@ -78,10 +71,10 @@ module Channels
       @seo_description = current_channel.about.presence
     end
 
-    def user_channels
+    def current_user_channels
       @user_channels ||= current_user.channels.each(&:decorate)
     end
-    helper_method :user_channels
+    helper_method :current_user_channels
 
     def permitted_parameters
       params.require(:channel).permit(:name, :bio)
