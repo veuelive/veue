@@ -50,4 +50,8 @@ module ApplicationHelper
   def circle_image_tag(image, size=64, draggable: "false")
     image_tag(image.variant(resize_to_fill: [size, size]), style: "border-radius: 50%;", draggable: draggable)
   end
+
+  def image_url_for(image)
+    Router.url_for(image)
+  end
 end

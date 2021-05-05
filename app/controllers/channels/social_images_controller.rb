@@ -5,10 +5,8 @@ module Channels
 
       return unless primary_shot
 
-      profile_image = current_video.user.profile_image
-
       respond_to do |fmt|
-        fmt.png { redirect_to(preview_image_url(snapshot: primary_shot, profile_image: profile_image)) }
+        fmt.png { redirect_to(preview_image_url(snapshot: primary_shot)) }
       end
     end
 
@@ -24,13 +22,8 @@ module Channels
 
     private
 
-    def preview_image_url(snapshot:, profile_image:)
-      profile_image_variant = profile_image.variant(resize_and_pad: [200, 200, {background: "red"}])
-      snapshot_variant = snapshot.variant(resize_and_pad: [500, 500, {background: "blue"}],
-                                          composite: [profile_image_variant, {geometry: "+5+10"}])
-
-      # snapshot_variant = snapshot.variant(combine: profile_image_variant)
-      Router.url_for(snapshot_variant)
+    def preview_image_url(snapshot:)
+      image_url_for(snapshot.variant(resize_to_limit: [500, 500]).processed)
     end
   end
 end
