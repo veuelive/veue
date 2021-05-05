@@ -1,6 +1,7 @@
 import { Controller } from "stimulus";
 import { putForm, destroy } from "util/fetch";
 import { CropImageHelper } from "helpers/crop_image_helper";
+import EventBus from "event_bus";
 
 export const UploadIconEvent = "UploadIcon";
 
@@ -65,12 +66,9 @@ export default class extends Controller {
   }
 
   dispatchUploadImageEvent(html): void {
-    const uploadEvent = new CustomEvent(UploadIconEvent, {
-      detail: {
-        html,
-        id: this.data.get("id"),
-      },
+    EventBus.dispatch(UploadIconEvent, {
+      html,
+      id: this.data.get("id"),
     });
-    document.dispatchEvent(uploadEvent);
   }
 }

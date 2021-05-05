@@ -13,7 +13,7 @@ describe Channels::ChannelsController do
       name_text = "My Favorite Channel"
       bio_text = "My Channel Bio"
 
-      put "/#{channel.id}", params: {channel: {name: name_text, bio: bio_text}}
+      put "/channels/#{channel.id}", params: {channel: {name: name_text, bio: bio_text}}
 
       expect(channel.reload.name).to eq(name_text)
       expect(channel.reload.bio).to eq(bio_text)

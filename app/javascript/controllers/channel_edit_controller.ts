@@ -1,14 +1,21 @@
 import { Controller } from "stimulus";
-import { putForm } from "util/fetch";
+import { putForm, secureFetch } from "util/fetch";
 import { showNotification } from "util/notifications";
 
 export default class extends Controller {
-  static targets = ["form", "channelName", "channelTabs", "editableContent"];
+  static targets = [
+    "form",
+    "channelName",
+    "channelTabs",
+    "editableContent",
+    "channelNames",
+  ];
 
   readonly formTarget!: HTMLFormElement;
   readonly channelNameTarget!: HTMLInputElement;
   readonly channelTabsTargets!: HTMLElement[];
   readonly editableContentTarget!: HTMLElement;
+  readonly channelNamesTargets!: HTMLElement[];
 
   async doSubmit(event: Event): Promise<void> {
     event.preventDefault();
@@ -16,18 +23,14 @@ export default class extends Controller {
     submitButton.disabled = true;
 
     const response = await putForm(
-      `/${this.currentChannelId}`,
+      `/channels/${this.currentChannelId}`,
       this.formTarget
     );
 
     const html = await response.text();
     this.editableContentTarget.innerHTML = html;
 
-    const hilightedElement = document.querySelector(
-      ".channel-menu__item.active .channel-menu__item__name"
-    );
-    hilightedElement.innerHTML = this.channelNameTarget.value;
-
+    this.updateTabItemName();
     showNotification("Your channel was successfully updated");
   }
 
@@ -44,12 +47,24 @@ export default class extends Controller {
   async openChannel(element: HTMLElement): Promise<void> {
     this.currentChannelId = element.dataset["channelId"];
 
-    const requestUrl = `/${this.currentChannelId}/edit`;
-    const response = await putForm(requestUrl, {});
+    const requestUrl = `/channels/${this.currentChannelId}/edit`;
+    const response = await secureFetch(requestUrl);
     const html = await response.text();
 
     this.editableContentTarget.innerHTML = html;
     element.classList.add("active");
+  }
+
+  private updateTabItemName(): void {
+    this.channelTabsTargets.forEach((tab: HTMLElement) => {
+      if (tab.classList.contains("active")) {
+        const highlightedElement = tab.querySelector(
+          ".channel-menu__item__name"
+        );
+        if (highlightedElement)
+          highlightedElement.innerHTML = this.channelNameTarget.value;
+      }
+    });
   }
 
   set currentChannelId(channelId: string) {

@@ -7,27 +7,28 @@ describe "channel edit" do
 
   describe "logged out user" do
     it "should not access channels edit page" do
-      visit channels_path
+      visit edit_channel_path(channel.id)
       expect(page).not_to(have_css("#channels_index"))
     end
   end
 
   describe "user logged in" do
     before do
+      # driven_by(:debug_browser)
       resize_window_desktop
       login_as(channel.user)
-      visit channels_path
+      visit edit_channel_path(channel.id)
     end
 
     it "should be able to edit channel information" do
-      expect(page).to have_css("#channels__index")
+      expect(page).to have_css("#channels__edit")
       text = "channel"
       long_text = "channel bio text! " * 100
 
+      fill_in "Channel Name", with: ""
       fill_in "Channel Name", with: text
       fill_in "Bio", with: long_text
       click_on "Save Changes"
-
       expect(page).to have_content("Your channel was successfully updated")
     end
 
@@ -37,11 +38,13 @@ describe "channel edit" do
       user.channels << channel_two
 
       page.refresh
+      expect(page).to have_css("#channels__edit")
 
       expect(page).to have_content(channel.name)
       expect(page).to have_content(channel_two.name)
 
       click_link(channel.name)
+      fill_in "Channel Name", with: ""
       fill_in "Channel Name", with: "Test Updated"
       click_on "Save Changes"
       expect(page).to have_content("Your channel was successfully updated")

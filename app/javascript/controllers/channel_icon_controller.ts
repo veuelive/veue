@@ -1,25 +1,21 @@
 import { Controller } from "stimulus";
 import { UploadIconEvent } from "./crop/channel_icon_controller";
+import EventBus from "event_bus";
 
 export default class extends Controller {
-  element!: HTMLElement;
-
-  private channelIconUpdateHandler: (event) => void;
+  private channelIconUpdateHandler: (payload) => void;
 
   connect(): void {
-    this.channelIconUpdateHandler = (event) => {
-      if (event.detail.id === this.data.get("id")) {
-        this.element.outerHTML = event.detail.html;
+    this.channelIconUpdateHandler = (payload) => {
+      if (payload.id === this.data.get("id")) {
+        this.element.outerHTML = payload.html;
       }
     };
 
-    document.addEventListener(UploadIconEvent, this.channelIconUpdateHandler);
+    EventBus.subscribe(UploadIconEvent, this.channelIconUpdateHandler);
   }
 
   disconnect(): void {
-    document.removeEventListener(
-      UploadIconEvent,
-      this.channelIconUpdateHandler
-    );
+    EventBus.unsubscribe(UploadIconEvent, this.channelIconUpdateHandler);
   }
 }
