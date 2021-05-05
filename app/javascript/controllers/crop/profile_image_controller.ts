@@ -1,7 +1,6 @@
 import { Controller } from "stimulus";
 import { putForm, destroy } from "util/fetch";
-import Croppie from "croppie";
-import "croppie/croppie.css";
+import { CropImageHelper } from "helpers/crop_image_helper";
 
 export const UploadImageEvent = "UploadImage";
 
@@ -19,39 +18,26 @@ export default class extends Controller {
   readonly imageFieldTarget!: HTMLInputElement;
   readonly imageMessageTarget!: HTMLElement;
 
-  private croppie: Croppie;
+  private cropper;
 
   connect(): void {
-    console.log(this.element.dataset);
-    this.croppie = new Croppie(this.croppieFieldTarget, {
-      viewport: { width: 200, height: 200, type: "circle" },
-      boundary: { width: 300, height: 300 },
-      showZoomer: true,
-    });
+    this.cropper = new CropImageHelper(this.croppieFieldTarget);
   }
 
   processImage(): void {
-    const image = this.imageFieldTarget.files[0];
-    const isValid = image.size / 1048576 <= 5;
+    this.cropper.fetchImageFile(this.imageFieldTarget);
+    const isValid = this.cropper.isValidImage();
 
     this.imageMessageTarget.style.display = isValid ? "none" : "block";
 
     if (isValid) {
       this.croppieWrapperTarget.style.display = "flex";
-      this.croppie.bind({
-        url: window.URL.createObjectURL(image),
-      });
+      this.cropper.bindURL();
     }
   }
 
   async submitImage(): Promise<void> {
-    const profile_image = await this.croppie.result({
-      type: "blob",
-      size: "original",
-      format: "png",
-      quality: 1,
-      circle: false,
-    });
+    const profile_image = await this.cropper.resultantImage();
 
     const response = await putForm(
       `/users/${this.element.dataset.id}/upload_image`,
@@ -61,10 +47,7 @@ export default class extends Controller {
     );
     const html = await response.text();
 
-    const uploadImageEvent = new CustomEvent(UploadImageEvent, {
-      detail: { html },
-    });
-    document.dispatchEvent(uploadImageEvent);
+    this.dispatchUploadImageEvent(html);
 
     this.closeCropper();
   }
@@ -80,9 +63,13 @@ export default class extends Controller {
     );
     const html = await response.text();
 
-    const uploadImageEvent = new CustomEvent(UploadImageEvent, {
+    this.dispatchUploadImageEvent(html);
+  }
+
+  dispatchUploadImageEvent(html): void {
+    const uploadEvent = new CustomEvent(UploadImageEvent, {
       detail: { html },
     });
-    document.dispatchEvent(uploadImageEvent);
+    document.dispatchEvent(uploadEvent);
   }
 }
