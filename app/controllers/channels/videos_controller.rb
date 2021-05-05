@@ -8,13 +8,12 @@ module Channels
     def show
       authorize!(:read, current_video)
 
-      primary_shot = current_video.primary_shot.variant(resize_to_limit: [500, 500]).processed
+      primary_shot = current_video.primary_shot.variant(resize_and_pad: [500, 500, {background: "black"}]).processed
 
       # Social vars
       @og_image = @twitter_image = Router.url_for_variant(primary_shot)
       @og_title = @twitter_title = current_video.title
       @og_description = @twitter_description = current_video.description
-
 
       # have to decorate after authorizing
       @current_video = @current_video.decorate
