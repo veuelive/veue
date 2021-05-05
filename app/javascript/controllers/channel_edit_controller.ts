@@ -52,6 +52,12 @@ export default class extends Controller {
     const html = await response.text();
 
     this.editableContentTarget.innerHTML = html;
+
+    window.history.replaceState(
+      window.location.href,
+      document.title,
+      requestUrl
+    );
     element.classList.add("active");
   }
 

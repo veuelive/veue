@@ -1,5 +1,5 @@
 import { Controller } from "stimulus";
-import { UploadIconEvent } from "./crop/channel_icon_controller";
+import { UploadIconEvent } from "./crop_image_controller";
 import EventBus from "event_bus";
 
 export default class extends Controller {

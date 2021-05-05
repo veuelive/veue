@@ -1,8 +1,10 @@
 import { Controller } from "stimulus";
 import { putForm, destroy } from "util/fetch";
 import { CropImageHelper } from "helpers/crop_image_helper";
+import EventBus from "event_bus";
 
 export const UploadImageEvent = "UploadImage";
+export const UploadIconEvent = "UploadIcon";
 
 export default class extends Controller {
   static targets = [
@@ -37,14 +39,13 @@ export default class extends Controller {
   }
 
   async submitImage(): Promise<void> {
-    const profile_image = await this.cropper.resultantImage();
+    const image = await this.cropper.resultantImage();
+    const data =
+      this.cropType === "channel"
+        ? { channel_icon: image }
+        : { profile_image: image };
 
-    const response = await putForm(
-      `/users/${this.element.dataset.id}/upload_image`,
-      {
-        profile_image,
-      }
-    );
+    const response = await putForm(this.uploadImagePath, data);
     const html = await response.text();
 
     this.dispatchUploadImageEvent(html);
@@ -58,18 +59,37 @@ export default class extends Controller {
   }
 
   async removeImage(): Promise<void> {
-    const response = await destroy(
-      `/users/${this.element.dataset.id}/destroy_image`
-    );
+    const response = await destroy(this.destroyImagePath);
     const html = await response.text();
 
     this.dispatchUploadImageEvent(html);
   }
 
   dispatchUploadImageEvent(html): void {
-    const uploadEvent = new CustomEvent(UploadImageEvent, {
-      detail: { html },
-    });
-    document.dispatchEvent(uploadEvent);
+    let payload = {};
+    let eventType = UploadImageEvent;
+
+    if (this.cropType === "channel") {
+      payload = {
+        html,
+        id: this.data.get("id"),
+      };
+      eventType = UploadIconEvent;
+    } else {
+      payload = { html };
+    }
+    EventBus.dispatch(eventType, payload);
+  }
+
+  get uploadImagePath(): string {
+    return this.data.get("uploadImagePath");
+  }
+
+  get destroyImagePath(): string {
+    return this.data.get("destroyImagePath");
+  }
+
+  get cropType(): string {
+    return this.data.get("cropType");
   }
 }

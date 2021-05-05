@@ -1,4 +1,14 @@
-.profile-update__field.image-field{data: { controller: "crop--profile-image", id: @user.id } }
+.profile-update__field.image-field{
+  data: {
+    controller: "crop-image",
+    "crop-image": {
+      id: @user.id,
+      "upload-image-path": upload_image_user_path(current_user.id),
+      "remove-image-path": destroy_image_user_path(current_user.id),
+      "crop-type": "profile"
+    }
+  }
+}
   .user-avatar
     = render partial: "users/partials/profile_image", locals: { user: @user }
     .user-avatar__info
@@ -7,16 +17,16 @@
   .upload-image
     .upload-option
       .upload-option__button
-        %input{type: "file", accept: 'image/png, image/jpg, image/jpeg', data: { target: "crop--profile-image.imageField", action: "change->crop--profile-image#processImage" }
+        %input{type: "file", accept: 'image/png, image/jpg, image/jpeg', data: { target: "crop-image.imageField", action: "change->crop-image#processImage" }
         }
         %span Upload
         %span Image
-      .upload-option__delete{data: {action: "click->crop--profile-image#removeImage"}}
+      .upload-option__delete{data: {action: "click->crop-image#removeImage"}}
         = svg_tag "delete-icon"
-    .error-message{ "data-target": "crop--profile-image.imageMessage" }
+    .error-message{ "data-target": "crop-image.imageMessage" }
       Invalid Image
-    .croppie-wrapper{"data-target": "crop--profile-image.croppieWrapper"}
-      .croppie-wrapper__body.crop-area{"data-target": "crop--profile-image.croppieField"}
+    .croppie-wrapper{"data-target": "crop-image.croppieWrapper"}
+      .croppie-wrapper__body.crop-area{"data-target": "crop-image.croppieField"}
       .croppie-wrapper__action.crop-area
-        %button{type: "button", "data-action": "click->crop--profile-image#submitImage"} Submit
-        %button.cancel-button{type: "button", "data-action": "click->crop--profile-image#closeCropper"} Discard
+        %button{type: "button", "data-action": "click->crop-image#submitImage"} Submit
+        %button.cancel-button{type: "button", "data-action": "click->crop-image#closeCropper"} Discard
