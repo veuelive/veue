@@ -1,9 +1,19 @@
-.profile-update__field.image-field{data: { controller: "crop-image", id: @user.id } }
+.profile-update__field.image-field{
+  data: {
+    controller: "crop-image",
+    "crop-image": {
+      id: @user.id,
+      "upload-image-path": upload_image_user_path(current_user.id),
+      "remove-image-path": destroy_image_user_path(current_user.id),
+      "crop-type": "profile"
+    }
+  }
+}
   .user-avatar
     = render partial: "users/partials/profile_image", locals: { user: @user }
     .user-avatar__info
-      %div JPG, JPEG or PNG 
-      %div (Max. 5 MB.)   
+      %div JPG, JPEG or PNG
+      %div (Max. 5 MB.)
   .upload-image
     .upload-option
       .upload-option__button
@@ -20,4 +30,3 @@
       .croppie-wrapper__action.crop-area
         %button{type: "button", "data-action": "click->crop-image#submitImage"} Submit
         %button.cancel-button{type: "button", "data-action": "click->crop-image#closeCropper"} Discard
-

@@ -42,7 +42,6 @@ RSpec.describe "Users", type: :request do
       put "/users/#{user.id}", params: {user: {display_name: new_name}}
 
       expect(user.reload.display_name).to eq(new_name)
-      expect(user.channels.first.name).to eq(new_name)
     end
 
     it "should not update user with an improper display name but still create a moderation item" do
