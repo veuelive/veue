@@ -3,10 +3,12 @@
 @use "../utils/font.scss";
 @use "../utils/z_index.scss";
 
+$max-width: 350px;
+
 .video-card {
   @include scale.aspect-ratio();
 
-  max-width: 350px;
+  max-width: $max-width;
 
   &:hover,
   &:focus {
@@ -120,6 +122,13 @@
       color: color.$white;
       font-size: 13px;
       margin: 5px 10px 5px 5px;
+    }
+
+    &__placeholder {
+      min-height: 221px;
+      min-width: $max-width;
+      background: hsla(0, 0, 0, 0.1);
+      border-radius: 10px;
     }
   }
 
