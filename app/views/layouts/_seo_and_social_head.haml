@@ -7,7 +7,7 @@
     = I18n.t('header.seo.default_title')
 %meta{name: "description", info: @seo_description || I18n.t('header.seo.default_description')}
 
-%meta{name: "twitter:card", content: "summary"}
+%meta{name: "twitter:card", content: @twitter_card || "summary"}
 %meta{name: "twitter:site", content: "@veuelive"}
 %meta{name: "twitter:title", content: @twitter_title || @seo_title || I18n.t('header.twitter.default_title')}
 %meta{name: "twitter:description", content: @twitter_description || @seo_description || I18n.t('header.twitter.default_description')}
