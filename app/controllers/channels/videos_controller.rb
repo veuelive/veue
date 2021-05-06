@@ -8,7 +8,7 @@ module Channels
     def show
       authorize!(:read, current_video)
 
-      generate_social_markup
+      create_social_variables
 
       # have to decorate after authorizing
       @current_video = @current_video.decorate
@@ -33,27 +33,19 @@ module Channels
     private
 
     # Generate social media variables
-    def generate_social_markup
-      images = generate_social_images
+    def create_social_variables
+      images = current_video.social_image_hash
 
-      @twitter_card = "summary_large_image"
-      @twitter_image = Router.url_for_variant(big_image)
-      @og_image = Router.url_for_variant(thumbnail)
+      if images[:big_image]
+        @twitter_card = "summary_large_image"
+        @twitter_image = images[:big_image]
+      else
+        @twitter_image = images[:thumbnail]
+      end
+
+      @og_image = images[:thumbnail]
       @og_title = @twitter_title = current_video.title
       @og_description = @twitter_description = "Watch #{current_channel.name} on Veue!"
-    end
-
-    def generate_social_images
-      hash = {}
-
-      primary_shot = current_video.primary_shot
-
-      if primary_shot
-        thumbnail = current_video.primary_shot.variant(resize_and_pad: [500, 500, {background: "black"}]).processed
-        big_image = current_video.primary_shot.variant(resize_to_limit: [500, 500]).processed
-      else
-        thumbnail = asset_pack_path("media/images/large-card-logo.png")
-      end
     end
   end
 end

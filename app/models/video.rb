@@ -158,6 +158,17 @@ class Video < ApplicationRecord
     attach_secondary_shot!(snapshot)
   end
 
+  # @return {Hash{:thumbnail => String}, {:big_image => String, nil}}
+  def social_image_hash
+    if primary_shot
+      primary_social_image_hash
+    elsif channel.profile_image
+      secondary_social_image_hash
+    else
+      fallback_social_images
+    end
+  end
+
   private
 
   def after_go_live
@@ -180,5 +191,32 @@ class Video < ApplicationRecord
 
   def send_broadcast_start_text!
     SendBroadcastStartTextJob.perform_later(channel)
+  end
+
+  # Uses the videos primary shot for both +:big_image+ and +:thumbnail+
+  # @return {Hash{:thumbnail => String, :big_image => String}}
+  def primary_social_image_hash
+    thumbnail = primary_shot.variant(resize_and_pad: [500, 500, {background: "black"}]).processed
+    big_image = primary_shot.variant(resize_to_limit: [500, 500]).processed
+
+    {thumbnail: Router.url_for_variant(thumbnail), big_image: Router.url_for_variant(big_image)}
+  end
+
+  # Use a channels profile image as the +:thumbnail+, no +:big_image+ defined.
+  # @return {Hash{:thumbnail => String, :big_image => nil}}
+  def secondary_social_image_hash
+    thumbnail = channel.profile_image.variant(resize_and_pad: [100, 100]).processed
+
+    {thumbnail: Router.url_for_variant(thumbnail)}
+  end
+
+  # Uses the default social media logo for the +:big_image+ and +:thumbnail+.
+  # @return {Hash{:thumbnail => String, :big_image => String}}
+  def fallback_social_image_hash
+    # removes trailing slash
+    url = Router.root_url.slice(0...-1)
+    thumbnail = url + asset_pack_path("media/images/small-social-logo.png")
+    big_image = url + asset_pack_path("media/images/large-social-logo.png")
+    {thumbnail: thumbnail, big_image: big_image}
   end
 end

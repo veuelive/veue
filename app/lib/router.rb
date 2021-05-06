@@ -25,6 +25,8 @@ module Router
   #   image = video.primary_shot.variant(resize_to_limit: [500, 500]).processed
   #   Router.url_for_variant(image)
   def self.url_for_variant(image)
+    return nil unless image
+
     if Rails.application.config.active_storage.service == :amazon
       # if using S3, use the S3 url directly
       image.url
