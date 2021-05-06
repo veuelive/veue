@@ -1,0 +1,38 @@
+@use "../utils/breakpoints" as *;
+@use "../utils/color";
+
+@mixin headerStyles() {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &__name {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    font-family: "Poppins", Helvetica, Sans-Serif, serif;
+    svg {
+      width: 12px;
+      margin-right: 12px;
+      @include large() {
+        display: none;
+      }
+    }
+  }
+  &__actions {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    @include smallTall() {
+      display: none;
+    }
+    .action-link {
+      margin-right: 20px;
+      color: color.$neutral-regular;
+    }
+    .action-button {
+      padding: 7px 15px;
+      color: color.$white;
+      border-radius: 10px;
+    }
+  }
+}
