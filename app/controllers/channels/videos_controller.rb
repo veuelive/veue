@@ -34,15 +34,26 @@ module Channels
 
     # Generate social media variables
     def generate_social_markup
-      thumbnail = current_video.primary_shot.variant(resize_and_pad: [500, 500, {background: "black"}]).processed
-      big_image = current_video.primary_shot.variant(resize_to_limit: [500, 500]).processed
+      images = generate_social_images
 
-      # Social vars
       @twitter_card = "summary_large_image"
       @twitter_image = Router.url_for_variant(big_image)
       @og_image = Router.url_for_variant(thumbnail)
       @og_title = @twitter_title = current_video.title
       @og_description = @twitter_description = "Watch #{current_channel.name} on Veue!"
+    end
+
+    def generate_social_images
+      hash = {}
+
+      primary_shot = current_video.primary_shot
+
+      if primary_shot
+        thumbnail = current_video.primary_shot.variant(resize_and_pad: [500, 500, {background: "black"}]).processed
+        big_image = current_video.primary_shot.variant(resize_to_limit: [500, 500]).processed
+      else
+        thumbnail = asset_pack_path("media/images/large-card-logo.png")
+      end
     end
   end
 end
