@@ -1,0 +1,58 @@
+@use "../utils/breakpoints" as *;
+@use "../utils/color";
+
+@mixin menuStyling() {
+  @include smallTall() {
+    display: none;
+  }
+
+  &__text {
+    display: flex;
+    align-items: center;
+    color: color.$veue-corporate;
+    font-size: 20px;
+    height: 34px;
+    font-family: "Poppins", Helvetica, Sans-Serif, serif;
+  }
+
+  &__item {
+    margin-top: 10px;
+    a,
+    a:hover,
+    a:visited {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 15px 6px;
+      @include smallTall() {
+        padding: 20px;
+      }
+      svg {
+        display: block;
+        width: 12px;
+        color: color.$neutral-regular;
+        @include large() {
+          display: none;
+        }
+      }
+    }
+
+    @include smallTall() {
+      margin-top: 0;
+      border-radius: 0;
+      border-top: 1px solid color.$neutral-soft;
+      background-color: color.$white;
+    }
+  }
+  &__name {
+    font-family: "Poppins", Helvetica, Sans-Serif, serif;
+    padding: 20px;
+    font-size: 20px;
+    color: color.$veue-corporate;
+    background-color: color.$white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    @include large() {
+      display: none;
+    }
+  }
+}
