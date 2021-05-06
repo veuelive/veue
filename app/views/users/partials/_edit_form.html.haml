@@ -8,37 +8,37 @@
     .user-profile__header__actions
       %button.action-button{"data-action": "click->profile-edit#doSubmit"} Save Changes
   .user-profile__body
-    .profile-update
-      .profile-update__heading
+    .user-profile__body__field
+      .user-profile__body__field__title
         Profile Image
         .heading-info
           Visible to other members
       = render partial: "users/partials/upload_image"
-    .profile-update
-      .profile-update__heading
+    .user-profile__body__field
+      .user-profile__body__field__title
         %label{for: "user_display_name"} Public Name
         .heading-info
           Real People, Real Names
-      .profile-update__field
+      .user-profile__body__field__input
         = f.text_field :display_name, class: 'input-field', placeholder: 'Enter your name', maxlength: "20"
-    .profile-update
-      .profile-update__heading
+    .user-profile__body__field
+      .user-profile__body__field__title
         %label{for: "user_about_me"} Bio
         .heading-info
           Let us know about you
-      .profile-update__field
+      .user-profile__body__field__input
         = f.text_area :about_me, class: 'input-field', maxlength: "160"
-    .profile-update
-      .profile-update__heading
+    .user-profile__body__field
+      .user-profile__body__field__title
         Phone Number
-      .profile-update__field
+      .user-profile__body__field__input
         = f.text_field :masked_phone_number, class: 'input-field', :disabled => true
-    .profile-update
-      .profile-update__heading
+    .user-profile__body__field
+      .user-profile__body__field__title
         %label{for: "user_email"} Email
         .heading-info
           Add your email for notifications
-      .profile-update__field
+      .user-profile__body__field__input
         = f.text_field :email, data: { action: "blur->profile-edit#checkEmailValidity", target: "profile-edit.emailField" }, class: 'input-field', placeholder: "Enter your email address"
         .error-message{ "data-target": "profile-edit.emailMessage" }
           Invalid Email
