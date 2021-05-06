@@ -18,4 +18,21 @@ module Router
   def self.default_url_options
     Rails.application.routes.default_url_options
   end
+
+  # Workaround for processed image urls. It uses url_for in dev, and the s3 url in prod.
+  # @param {ActiveStorage::Variant} image - A processed variant
+  # @example
+  #   image = video.primary_shot.variant(resize_to_limit: [500, 500]).processed
+  #   Router.url_for_variant(image)
+  def self.url_for_variant(image)
+    return nil unless image
+
+    if Rails.application.config.active_storage.service == :amazon
+      # if using S3, use the S3 url directly
+      image.url
+    else
+      # this is for test / local envs.
+      Router.url_for(image)
+    end
+  end
 end
