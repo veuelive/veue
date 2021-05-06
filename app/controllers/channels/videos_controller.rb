@@ -13,7 +13,7 @@ module Channels
       # Social vars
       @og_image = @twitter_image = Router.url_for_variant(primary_shot)
       @og_title = @twitter_title = current_video.title
-      @og_description = @twitter_description = current_video.description
+      @og_description = @twitter_description = "Watch #{current_channel.name} on Veue!"
 
       # have to decorate after authorizing
       @current_video = @current_video.decorate
