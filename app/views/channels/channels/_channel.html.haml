@@ -1,4 +1,7 @@
 .channel{id: dom_id(channel)}
   .channel__name
-    = link_to channel.name, channel_path(channel)
+    = channel.name
+  .channel-card.card
+    %a{href: channel_edit_path(channel.id), draggable: "false"}
+      = channel.decorate.profile_image_circle(200)
   .channel__description
