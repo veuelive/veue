@@ -16,9 +16,9 @@ export default class SettingsController extends DropdownController {
   connect(): void {
     super.connect();
 
-    if (!inElectronApp) {
-      this.settingsTabTarget.remove();
-    }
+    // if (!inElectronApp) {
+    //   this.settingsTabTarget.remove();
+    // }
 
     document.addEventListener(
       ShowSettingsMenuEvent,
