@@ -25,8 +25,6 @@ export default class extends Controller {
 
   private async showMenuHandler(event: CustomEvent): Promise<void> {
     const data = event.detail;
-    console.log(data.type);
-    console.log(this.type);
 
     if (data.type === this.type) {
       this.closeMenu();
