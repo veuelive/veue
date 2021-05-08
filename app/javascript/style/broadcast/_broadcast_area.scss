@@ -92,8 +92,21 @@
     position: relative;
 
     &__title {
+      position: relative;
       margin-right: 30px;
+      span {
+        position: absolute;
+        top: 7px;
+        right: 10px;
+        display: none;
+
+        svg {
+          width: 15px;
+          height: 15px;
+        }
+      }
     }
+
     .title_input,
     &__select-broadcast {
       padding: 5px 15px;
@@ -140,8 +153,23 @@
         border-right-color: color.$neutral-soft;
         border-top-color: color.$neutral-soft;
       }
+
+      &__checkbox,
+      &__day,
+      &__time {
+        margin-bottom: 10px;
+
+        select {
+          width: 100%;
+          padding: 10px;
+          border-radius: 10px;
+          border: 1px solid color.$neutral-soft;
+          text-overflow: elipsis;
+        }
+      }
     }
 
+    select:focus-visible,
     input:focus-visible {
       outline: none;
     }
