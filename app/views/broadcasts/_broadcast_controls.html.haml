@@ -1,19 +1,20 @@
 .broadcast-controls{ data: { controller: "broadcast--controls" }}
   .broadcast-controls__title
-    %input.title_input{ name: "channels[title]", placeholder: "Enter broadcast title"}
+    %input.title_input{ placeholder: "Enter broadcast title", value: current_broadcast_video.title, data: { target: "broadcast--controls.titleInput", action: "keyup->broadcast--controls#saveTitle"}}
   .broadcast-controls__select-broadcast
     %div{ data: { action: "click->broadcast--controls#toggleScheduleMenu"}}
       %span Schedule Broadcast
       = svg_tag "chevron"
   .broadcast-controls__scheduled{ data: { target: "broadcast--controls.scheduleMenu", controller: "video-scheduling" }}
-    %input.hidden_field{ type: "hidden", name: "channels[scheduled_at]", data: { target: "video-scheduling.scheduledAt" }, value: current_broadcast_video.scheduled_at&.iso8601}
+    %input.hidden_field{ type: "hidden", data: { target: "video-scheduling.scheduledAt broadcast--controls.scheduledAtInput" }, value: current_broadcast_video.scheduled_at&.iso8601}
 
     .broadcast-controls__scheduled__checkbox
       %label{ for: "video[scheduled_checkbox]" }
         %input{ id: "video_scheduled_checkbox", name: "video_scheduled_checkbox", type: "checkbox", checked: current_broadcast_video.scheduled?, data: { target: "video-scheduling.checkbox", action: "change->video-scheduling#toggleScheduling change->video-scheduling#updateScheduledAt" }}
         = "Upcoming Stream"
-
     .broadcast-controls__scheduled__day
       %select{ id: "video[scheduled_day]", name: "video[scheduled_day]", class: "select video--scheduled video--scheduled__time", data: { target: "video-scheduling.daySelect", action: "change->video-scheduling#updateScheduledAt change->video-scheduling#modifyTimeOptions" }}
     .broadcast-controls__scheduled__time
       %select{ id: "video[scheduled_time]", name: "video[scheduled_time]", class: "select video--scheduled video--scheduled__time", data: {target: "video-scheduling.timeSelect", action: "change->video-scheduling#updateScheduledAt"}}
+    .broadcast-controls__scheduled_submit
+      %button{ data: { action: "click->broadcast--controls#submitSchedule"}} Submit
