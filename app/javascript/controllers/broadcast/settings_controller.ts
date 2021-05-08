@@ -2,17 +2,23 @@ import DropdownController from "./dropdown_controller";
 import { secureFetch, putForm } from "util/fetch";
 import { Visibility, setVideoVisibility } from "../../helpers/video_helpers";
 import { flash } from "../../helpers/flash_helpers";
+import { inElectronApp } from "helpers/electron/base";
 
 export const ShowSettingsMenuEvent = "ShowSettingsMenu";
 
 export default class SettingsController extends DropdownController {
-  static targets = ["form", "visibility"];
+  static targets = ["form", "visibility", "settingsTab"];
 
   private readonly formTarget!: HTMLFormElement;
   private readonly visibilityTarget!: HTMLSelectElement;
+  private readonly settingsTabTarget!: HTMLElement;
 
   connect(): void {
     super.connect();
+
+    if (!inElectronApp) {
+      this.settingsTabTarget.remove();
+    }
 
     document.addEventListener(
       ShowSettingsMenuEvent,

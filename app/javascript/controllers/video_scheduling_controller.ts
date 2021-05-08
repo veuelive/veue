@@ -14,7 +14,8 @@ export default class extends Controller {
   scheduledAtTarget!: HTMLInputElement;
   checkboxTarget!: HTMLInputElement;
 
-  submitTarget!: HTMLInputElement;
+  submitTarget: HTMLInputElement;
+  hasSubmitTarget!: boolean;
 
   daySelectTarget!: HTMLSelectElement;
   timeSelectTarget!: HTMLSelectElement;
@@ -58,12 +59,12 @@ export default class extends Controller {
         hours,
         minutes
       ).toISOString();
-      this.submitTarget.disabled = false;
+      if (this.hasSubmitTarget) this.submitTarget.disabled = false;
       return;
     }
 
     this.scheduledAtTarget.value = "";
-    this.submitTarget.disabled = true;
+    if (this.hasSubmitTarget) this.submitTarget.disabled = true;
   }
 
   fillInKnownData(): void {
