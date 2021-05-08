@@ -1,8 +1,4 @@
-.broadcast-commands{
-  data: {
-    controller: "broadcast--commands"
-  }
-}
+.broadcast-commands
   .broadcast-commands__left
     .btn{data: {controller: "broadcast--media-manager", action: "click->broadcast--media-manager#showHideMenu", "broadcast--media-manager": {"type": "audio"}}}
       = svg_tag "volume"
@@ -17,7 +13,7 @@
       = svg_tag "share"
       .btn--tooltip
         Share Broadcast
-    .btn#settings-btn{ data: { action: "click->broadcast--settings#showHideMenu" }}
+    .btn#settings-btn{ data: { target: "broadcast--settings.settingsTab", action: "click->broadcast--settings#showHideMenu" }}
       = svg_tag "gear"
       .btn--tooltip
         Settings

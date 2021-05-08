@@ -83,5 +83,74 @@
     border-radius: 0.4375rem;
     vertical-align: middle;
     background-color: color.$white;
+    position: relative;
+  }
+
+  .broadcast-controls {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+
+    &__title {
+      margin-right: 30px;
+    }
+    .title_input,
+    &__select-broadcast {
+      padding: 5px 15px;
+      border-radius: 10px;
+      border: 1px solid color.$neutral-accents;
+      font-size: 16px;
+      cursor: pointer;
+      color: color.$neutral-regular;
+
+      div {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    &__scheduled {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 50px;
+      background: color.$white;
+      border: 1px solid color.$neutral-soft;
+      padding: 20px;
+      border-radius: 10px;
+      z-index: 6;
+
+      &:before {
+        border-radius: 2px;
+        border-style: solid;
+        border-width: 1px 1px 0 0;
+        display: inline-block;
+
+        top: -8px;
+        right: 20px;
+        height: 0.85rem;
+        width: 0.85rem;
+        transform: rotate(-45deg);
+
+        vertical-align: top;
+        content: "";
+        position: absolute;
+
+        background: color.$white;
+        border-right-color: color.$neutral-soft;
+        border-top-color: color.$neutral-soft;
+      }
+    }
+
+    input:focus-visible {
+      outline: none;
+    }
+
+    .chevron {
+      margin-left: 15px;
+      fill: #9595a5;
+      transform: rotate(0);
+      transition: all 250ms;
+    }
   }
 }
