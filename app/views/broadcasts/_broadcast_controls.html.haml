@@ -1,6 +1,8 @@
 .broadcast-controls{ data: { controller: "broadcast--controls" }}
   .broadcast-controls__title
     %input.title_input{ placeholder: "Enter broadcast title", value: current_broadcast_video.title, data: { target: "broadcast--controls.titleInput", action: "keyup->broadcast--controls#saveTitle"}}
+    %span{ data: { target: "broadcast--controls.loading"}}
+      = svg_tag "loading-animation"
   .broadcast-controls__select-broadcast
     %div{ data: { action: "click->broadcast--controls#toggleScheduleMenu"}}
       %span Schedule Broadcast
