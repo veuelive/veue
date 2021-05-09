@@ -108,18 +108,15 @@
     }
 
     .title_input,
-    &__select-broadcast {
+    &__select {
       padding: 5px 15px;
       border-radius: 10px;
       border: 1px solid color.$neutral-accents;
       font-size: 16px;
       cursor: pointer;
       color: color.$neutral-regular;
-
-      div {
-        display: flex;
-        align-items: center;
-      }
+      display: flex;
+      align-items: center;
     }
 
     &__scheduled {
