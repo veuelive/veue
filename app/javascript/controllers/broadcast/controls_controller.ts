@@ -1,6 +1,7 @@
 import { Controller } from "stimulus";
 import debounce from "util/debounce";
 import { putForm } from "util/fetch";
+import { showNotification } from "util/notifications";
 
 export default class extends Controller {
   static targets = [
@@ -38,10 +39,10 @@ export default class extends Controller {
   async submitSchedule(): Promise<void> {
     this.toggleScheduleMenu();
     const value = this.scheduledAtInputTarget.value;
-    console.log(value);
     const dataObj = {};
 
     dataObj["video[scheduled_at]"] = value;
     const response = await putForm("./", dataObj);
+    showNotification("Scheduling time saved successfully.");
   }
 }
