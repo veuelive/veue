@@ -2,6 +2,7 @@ import { Controller } from "stimulus";
 import debounce from "util/debounce";
 import { putForm } from "util/fetch";
 import { showNotification } from "util/notifications";
+import { inElectronApp } from "helpers/electron/base";
 
 export default class extends Controller {
   static targets = [
@@ -17,6 +18,12 @@ export default class extends Controller {
   readonly scheduledAtInputTarget!: HTMLInputElement;
 
   private menuVisible = false;
+
+  connect(): void {
+    if (inElectronApp) {
+      this.element.remove();
+    }
+  }
 
   toggleScheduleMenu(): void {
     this.menuVisible = !this.menuVisible;
