@@ -5,29 +5,16 @@ import { showNotification } from "util/notifications";
 import { inElectronApp } from "helpers/electron/base";
 
 export default class extends Controller {
-  static targets = [
-    "loading",
-    "titleInput",
-    "scheduledAtInput",
-    "scheduleMenu",
-  ];
+  static targets = ["loading", "titleInput", "visibility"];
 
   readonly loadingTarget!: HTMLElement;
-  readonly scheduleMenuTarget!: HTMLElement;
   readonly titleInputTarget!: HTMLInputElement;
-  readonly scheduledAtInputTarget!: HTMLInputElement;
-
-  private menuVisible = false;
+  readonly visibilityTarget!: HTMLSelectElement;
 
   connect(): void {
     if (inElectronApp) {
       this.element.remove();
     }
-  }
-
-  toggleScheduleMenu(): void {
-    this.menuVisible = !this.menuVisible;
-    this.scheduleMenuTarget.style.display = this.menuVisible ? "block" : "none";
   }
 
   @debounce(100)
@@ -43,13 +30,12 @@ export default class extends Controller {
     setTimeout(() => (this.loadingTarget.style.display = "none"), 300);
   }
 
-  async submitSchedule(): Promise<void> {
-    this.toggleScheduleMenu();
-    const value = this.scheduledAtInputTarget.value;
+  async updateVisibility(): Promise<void> {
+    const value = this.visibilityTarget.value;
     const dataObj = {};
 
-    dataObj["video[scheduled_at]"] = value;
+    dataObj["video[visibility]"] = value;
     const response = await putForm("./", dataObj);
-    showNotification("Scheduling time saved successfully.");
+    showNotification("Broadcast visibility updated successfully.");
   }
 }
