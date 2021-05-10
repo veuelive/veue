@@ -83,5 +83,58 @@
     border-radius: 0.4375rem;
     vertical-align: middle;
     background-color: color.$white;
+    position: relative;
+  }
+
+  .broadcast-controls {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+
+    &__title {
+      position: relative;
+      margin-right: 30px;
+      span {
+        position: absolute;
+        top: 7px;
+        right: 10px;
+        display: none;
+
+        svg {
+          width: 15px;
+          height: 15px;
+        }
+      }
+      input {
+        padding: 5px 15px;
+      }
+    }
+
+    .select {
+      padding: 7px 15px;
+    }
+
+    .title_input,
+    .select {
+      border-radius: 10px;
+      border: 1px solid color.$neutral-accents;
+      font-size: 16px;
+      cursor: pointer;
+      color: color.$neutral-regular;
+      display: flex;
+      align-items: center;
+    }
+
+    select:focus-visible,
+    input:focus-visible {
+      outline: none;
+    }
+
+    .chevron {
+      margin-left: 15px;
+      fill: #9595a5;
+      transform: rotate(0);
+      transition: all 250ms;
+    }
   }
 }

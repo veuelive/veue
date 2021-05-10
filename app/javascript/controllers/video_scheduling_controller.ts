@@ -14,7 +14,7 @@ export default class extends Controller {
   scheduledAtTarget!: HTMLInputElement;
   checkboxTarget!: HTMLInputElement;
 
-  submitTarget!: HTMLInputElement;
+  submitTarget: HTMLInputElement;
 
   daySelectTarget!: HTMLSelectElement;
   timeSelectTarget!: HTMLSelectElement;
