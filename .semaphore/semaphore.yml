@@ -12,6 +12,7 @@ auto_cancel:
 global_job_config:
   prologue:
     commands:
+      - sudo swapoff -a && sudo fallocate -l 2G /swapfile && sudo mkswap /swapfile && sudo swapon /swapfile
       - checkout
       - cache restore
       - sem-version ruby 2.7.3
@@ -52,5 +53,6 @@ blocks:
       epilogue:
         on_fail:
           commands:
-            - artifact push job /home/semaphore/veue/tmp --expire-in 1w
+            - tree -apug /home/semaphore/veue/tmp
+            - artifact push job /home/semaphore/veue/tmp --expire-in 1w -v
 
