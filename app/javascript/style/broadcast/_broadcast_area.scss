@@ -1,87 +1,157 @@
 @use "../utils/color";
 
-.broadcast_area {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: stretch;
-
-  &__content {
-    flex: 1;
-    background: color.$gray-dark;
-  }
-
-  &__header {
-    background-color: color.$white;
-    box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
-    border-bottom: 1px solid color.$neutral-accents;
+#broadcast {
+  .broadcast_area {
     display: flex;
-    align-items: center;
-    padding: 15px 10px;
+    flex: 1;
+    flex-direction: column;
+    align-items: stretch;
 
-    justify-content: space-between;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-
-    &__logo {
-      display: flex;
-      padding: 0 15px;
-      svg {
-        width: 26px;
-      }
+    &__content {
+      flex: 1;
+      background: color.$gray-dark;
     }
 
-    &__actions {
-      a {
-        background: color.$veue-corporate;
-        color: color.$white;
-        padding: 9px 11px;
-        border-radius: 10px;
-        cursor: pointer;
+    &__header {
+      background-color: color.$white;
+      box-shadow: 0 0 2.8125rem 0 rgba(142, 142, 142, 0.15);
+      border-bottom: 1px solid color.$neutral-accents;
+      display: flex;
+      align-items: center;
+      padding: 15px 10px;
+
+      justify-content: space-between;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+
+      &__logo {
+        display: flex;
+        flex-grow: 0.1;
+        padding: 0 15px;
         svg {
-          width: 19px;
-          height: 12px;
-          fill: color.$white;
+          width: 26px;
+        }
+      }
+
+      &__actions {
+        display: flex;
+        a {
+          background: color.$veue-corporate;
+          color: color.$white;
+          padding: 9px 11px;
+          border-radius: 10px;
+          cursor: pointer;
+          svg {
+            width: 19px;
+            height: 12px;
+            fill: color.$white;
+          }
+        }
+      }
+
+      .widget {
+        margin-right: 5px;
+        background: color.$veue-lilac;
+        color: color.$veue-corporate;
+        svg {
+          path {
+            fill: color.$veue-corporate;
+          }
         }
       }
     }
 
-    .widget {
+    .time-area {
+      padding: 9px 11px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      background-color: color.$red-highlight;
       margin-right: 5px;
-      background: color.$veue-lilac;
-      color: color.$veue-corporate;
+    }
+
+    .stop-btn {
+      background-color: color.$red-highlight;
       svg {
         path {
-          fill: color.$veue-corporate;
+          fill: #fff;
         }
       }
     }
-  }
 
-  .time-area {
-    padding: 9px 11px;
-    border: none;
-    border-radius: 10px;
-    font-weight: 600;
-    background-color: color.$red-highlight;
-    margin-right: 5px;
-  }
+    .time-dot {
+      width: 0.4375rem;
+      height: 0.4375rem;
+      display: inline-block;
+      border-radius: 0.4375rem;
+      vertical-align: middle;
+      background-color: color.$white;
+      position: relative;
+    }
 
-  .stop-btn {
-    background-color: color.$red-highlight;
-    svg {
-      path {
-        fill: #fff;
+    .broadcast-controls {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      flex-grow: 2;
+
+      &__title {
+        flex-grow: 1;
+        width: inherit;
+        position: relative;
+        margin-right: 30px;
+        span {
+          position: absolute;
+          top: 7px;
+          right: 10px;
+          display: none;
+
+          svg {
+            width: 15px;
+            height: 15px;
+          }
+        }
+        input {
+          width: 95%;
+          padding: 5px 15px;
+        }
+      }
+
+      &__title,
+      &__visibility {
+        margin-right: 30px;
+      }
+
+      &__visibility-select {
+        padding: 7px 15px;
+        cursor: pointer;
+      }
+
+      &__visibility-select,
+      &__title-input {
+        border-radius: 10px;
+        border: 1px solid color.$neutral-accents;
+        font-size: 18px;
+        color: color.$neutral-regular;
+        display: flex;
+        align-items: center;
+      }
+
+      select:focus-visible,
+      input:focus-visible {
+        outline: none;
+      }
+
+      input:focus {
+        font-weight: bold;
+      }
+
+      .chevron {
+        margin-left: 15px;
+        fill: #9595a5;
+        transform: rotate(0);
+        transition: all 250ms;
       }
     }
-  }
-
-  .time-dot {
-    width: 0.4375rem;
-    height: 0.4375rem;
-    display: inline-block;
-    border-radius: 0.4375rem;
-    vertical-align: middle;
-    background-color: color.$white;
   }
 }
