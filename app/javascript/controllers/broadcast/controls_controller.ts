@@ -21,11 +21,11 @@ export default class extends Controller {
   @debounce(100)
   async saveTitle(): Promise<void> {
     this.loadingTarget.style.display = "block";
-    const value = this.titleInputTarget.value;
-    const dataObj = {};
+    const title = this.titleInputTarget.value;
 
-    dataObj["video[title]"] = value;
-    const response = await putForm("./", dataObj);
+    const response = await putForm("./", {
+      "video[title]": title,
+    });
 
     // Hide loading animation with delay
     setTimeout(() => (this.loadingTarget.style.display = "none"), 300);
@@ -37,14 +37,12 @@ export default class extends Controller {
   }
 
   async updateVisibility(): Promise<void> {
-    const value = this.visibilityTarget.value;
-    const dataObj = {};
-    dataObj["video[visibility]"] = value;
-    const response = await putForm("./", dataObj);
-
     const visibility = this.visibilityTarget.value as Visibility;
-    setVideoVisibility(visibility);
+    const response = await putForm("./", {
+      "video[visibility]": visibility,
+    });
 
+    setVideoVisibility(visibility);
     showNotification("Broadcast visibility updated successfully.");
   }
 }
