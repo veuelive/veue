@@ -1,10 +1,10 @@
 .broadcast-controls{ data: { controller: "broadcast--controls" }}
   .broadcast-controls__title
-    %input#title.title_input{ placeholder: "Enter broadcast title", value: current_broadcast_video.title, data: { target: "broadcast--controls.titleInput", action: "keyup->broadcast--controls#saveTitle"}}
+    %input#title.broadcast-controls__title-input{name: "video_title", placeholder: "Enter broadcast title", value: current_broadcast_video.title, maxlength: 60, data: { target: "broadcast--controls.titleInput", action: "keyup->broadcast--controls#saveTitle"}}
     %span{ data: { target: "broadcast--controls.loading"}}
       = svg_tag "loading-animation"
   .broadcast-controls__visibility#visibility
-    %select#select-visibility{ data: { target: "broadcast--controls.visibility", action: "change->broadcast--controls#updateVisibility" }}
+    %select.broadcast-controls__visibility-select{data: { target: "broadcast--controls.visibility", action: "change->broadcast--controls#updateVisibility" }}
       - Video.visibilities_legend.map do |value, text|
         %option{value: value}
           = text

@@ -1,20 +1,6 @@
 @use "../utils/color";
 
 #broadcast {
-  &[data-broadcast-state="starting"],
-  &[data-broadcast-state="live"],
-  &[data-broadcast-state="finished"] {
-    .broadcast-controls {
-      width: 67%;
-    }
-  }
-
-  &[data-broadcast-state="ready"] {
-    .broadcast-controls {
-      width: 80%;
-    }
-  }
-
   .broadcast_area {
     display: flex;
     flex: 1;
@@ -40,6 +26,7 @@
 
       &__logo {
         display: flex;
+        flex-grow: 0.1;
         padding: 0 15px;
         svg {
           width: 26px;
@@ -47,6 +34,7 @@
       }
 
       &__actions {
+        display: flex;
         a {
           background: color.$veue-corporate;
           color: color.$white;
@@ -105,8 +93,10 @@
       display: flex;
       justify-content: space-between;
       position: relative;
+      flex-grow: 2;
 
       &__title {
+        flex-grow: 1;
         width: inherit;
         position: relative;
         margin-right: 30px;
@@ -127,13 +117,18 @@
         }
       }
 
-      #select-visibility {
+      &__title,
+      &__visibility {
+        margin-right: 30px;
+      }
+
+      &__visibility-select {
         padding: 7px 15px;
         cursor: pointer;
       }
 
-      #select-visibility,
-      .title_input {
+      &__visibility-select,
+      &__title-input {
         border-radius: 10px;
         border: 1px solid color.$neutral-accents;
         font-size: 18px;
