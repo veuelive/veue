@@ -58,17 +58,15 @@ export default class extends BaseController {
         this.audioCaptureSource.stop();
         this.removeCaptureSource(this.audioCaptureSource);
       }
-      captureSource = this.audioCaptureSource = await MicrophoneCaptureSource.connect(
-        mediaDeviceInfo.deviceId
-      );
+      captureSource = this.audioCaptureSource =
+        await MicrophoneCaptureSource.connect(mediaDeviceInfo.deviceId);
     } else if (mediaDeviceInfo.kind === "videoinput") {
       if (this.cameraCaptureSource) {
         this.removeCaptureSource(this.cameraCaptureSource);
         this.cameraCaptureSource.stop();
       }
-      captureSource = this.cameraCaptureSource = await WebcamCaptureSource.connect(
-        mediaDeviceInfo.deviceId
-      );
+      captureSource = this.cameraCaptureSource =
+        await WebcamCaptureSource.connect(mediaDeviceInfo.deviceId);
     }
     EventBus.dispatch(NewCaptureSourceEvent, captureSource);
   }

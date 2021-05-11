@@ -65,9 +65,8 @@ function videoCapturesToPackSections(
 ): Record<string, PackSection> {
   const packSections = {};
   sources.forEach((videoCaptureSource) => {
-    packSections[videoCaptureSource.id] = videoCaptureToPackSection(
-      videoCaptureSource
-    );
+    packSections[videoCaptureSource.id] =
+      videoCaptureToPackSection(videoCaptureSource);
   });
   return packSections;
 }
