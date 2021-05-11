@@ -392,8 +392,8 @@ export default class extends BaseController {
     event: PointerEvent,
     currentTime: number
   ): void {
-    const containerOffset = this.progressBarContainerTarget.getBoundingClientRect()
-      .x;
+    const containerOffset =
+      this.progressBarContainerTarget.getBoundingClientRect().x;
     const timePreviewOffset =
       this.timePreviewTarget.getBoundingClientRect().width / 2;
 
