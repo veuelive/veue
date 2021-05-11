@@ -1,6 +1,6 @@
 import { throttle } from "../../../app/javascript/util/debounce";
 
-describe(debounce, () => {
+describe(throttle, () => {
   const LONG_TIMEOUT = 50000;
 
   let counter;
