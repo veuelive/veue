@@ -41,7 +41,7 @@ export class WebcamCaptureSource extends VideoCaptureSource {
 
     // Typescript is convinced that this API doesn't exist, but it DOES in electron
     // so here we are casting this to a MediaStreamTrack, even though it isn't one.
-    return ((mediaDeviceInfo as unknown) as MediaStreamTrack).getCapabilities();
+    return (mediaDeviceInfo as unknown as MediaStreamTrack).getCapabilities();
   }
 
   async start(): Promise<void> {

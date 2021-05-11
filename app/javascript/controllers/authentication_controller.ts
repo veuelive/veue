@@ -32,9 +32,8 @@ export default class extends BaseController {
    * This takes the normal <input> field and makes it extra spicy and nice!
    */
   attachPhoneNumberField(): void {
-    const phoneInputElement = this.modalTarget.querySelector(
-      "input[type='tel']"
-    );
+    const phoneInputElement =
+      this.modalTarget.querySelector("input[type='tel']");
     if (phoneInputElement) {
       this.iti = IntlTelInput(phoneInputElement, {
         utilsScript: "/static/intl-tel-utils.js",
