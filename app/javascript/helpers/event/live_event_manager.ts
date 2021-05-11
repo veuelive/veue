@@ -48,7 +48,7 @@ export default class LiveEventManager implements EventManagerInterface {
     if (this.allowRemoteReload && data.state === "live") {
       await this.reload();
     }
-    VideoEventProcessor.addEvent(data);
+    VideoEventProcessor.dispatch(data);
     if (data.viewers) {
       document.dispatchEvent(
         new CustomEvent(ViewerCountUpdateEvent, { detail: data.viewers })
