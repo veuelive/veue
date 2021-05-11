@@ -210,7 +210,7 @@ describe "Broadcast View" do
         expect(video.title).not_to(eq(new_title))
         expect(video.visibility).not_to(eq(new_visibility))
 
-        fill_in("title", with: new_title)
+        fill_in("video_title", with: new_title)
         find("[value='#{new_visibility}']").select_option
 
         expect(page).to have_css("svg.loading")
@@ -219,13 +219,6 @@ describe "Broadcast View" do
         video.reload
         expect(video.title).to eq(new_title)
         expect(video.visibility).to eq(new_visibility)
-      end
-
-      it "properly displays flash message on save" do
-        new_title = "*" * 65
-        fill_in("title", with: new_title)
-
-        expect(page).to have_content("Title updation failed.")
       end
     end
   end
