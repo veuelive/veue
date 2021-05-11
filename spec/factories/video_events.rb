@@ -14,7 +14,6 @@ FactoryBot.define do
         sections: [
           {x: 0, y: 10, type: "camera", width: 1728, height: 972, priority: 2},
         ],
-        timecode: {x: 0, y: 0, width: 360, digits: 12, height: 10},
       }
     }
   end

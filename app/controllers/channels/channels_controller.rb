@@ -4,9 +4,36 @@ module Channels
   class ChannelsController < ApplicationController
     include ChannelConcern
 
+    before_action :authenticate_user!, only: %i[index edit update]
+
+    load_and_authorize_resource only: %i[edit update upload_image destroy_image]
+
     def index; end
 
-    def edit; end
+    def edit
+      render(template: "channels/channels/partials/_edit_form", layout: false) && return if xhr_request?
+    end
+
+    def update
+      if @channel.update(permitted_parameters)
+        render(status: :accepted, template: "channels/channels/partials/_edit_form", layout: false)
+      else
+        render(status: :bad_request, template: "channels/channels/partials/_edit_form", layout: false)
+      end
+    end
+
+    def upload_image
+      if @channel.update(params.permit(:channel_icon))
+        render(partial: "channels/channels/partials/channel_icon", locals: {channel: @channel})
+      else
+        render(status: :bad_request, json: "")
+      end
+    end
+
+    def destroy_image
+      @channel.channel_icon.purge
+      render(partial: "channels/channels/partials/channel_icon", locals: {channel: @channel})
+    end
 
     def show
       setup_tags
@@ -42,6 +69,15 @@ module Channels
     def setup_seo_tags
       @seo_title = I18n.t("channels.seo.title", name: current_channel.name)
       @seo_description = current_channel.about.presence
+    end
+
+    def current_user_channels
+      @current_user_channels ||= current_user.channels.each(&:decorate)
+    end
+    helper_method :current_user_channels
+
+    def permitted_parameters
+      params.require(:channel).permit(:name, :bio)
     end
   end
 end

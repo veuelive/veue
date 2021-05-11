@@ -5,6 +5,7 @@ import playSvg from "images/play.svg";
 import pauseSvg from "images/pause.svg";
 import mutedSvg from "images/volume-mute.svg";
 import unmutedSvg from "images/volume-max.svg";
+import { VideoEventProcessor } from "helpers/event/event_processor";
 
 export default class extends BaseController {
   static targets = [
@@ -44,7 +45,8 @@ export default class extends BaseController {
 
   private pointerIsDown: boolean;
   private badgeTimeoutId: number;
-  element!: HTMLElement;
+  private videoTimeLastUpdatedAt: number;
+  private tickTimeoutId: number;
 
   connect(): void {
     this.videoPlayerState = "not ready";
@@ -59,6 +61,8 @@ export default class extends BaseController {
       "timeupdate",
       this.handleTimeUpdate.bind(this)
     );
+
+    this.tick();
   }
 
   disconnect(): void {
@@ -71,6 +75,8 @@ export default class extends BaseController {
       "canplay",
       this.handleLoadedMetadata.bind(this)
     );
+
+    clearTimeout(this.tickTimeoutId);
   }
 
   toggleAudio(): void {
@@ -147,7 +153,7 @@ export default class extends BaseController {
     }
   }
 
-  hideBadges(event): void {
+  hideBadges(): void {
     this.badgeContainerTarget.classList.add("hide-badges");
     this.badgeTimeoutId = -1;
   }
@@ -239,6 +245,7 @@ export default class extends BaseController {
 
     const width = Math.floor((video.currentTime / this.duration) * 100) + 1;
     progress.style.width = `${width}%`;
+    this.videoTimeLastUpdatedAt = Date.now();
 
     if (video.currentTime >= this.duration) {
       video.dispatchEvent(new Event("ended"));
@@ -253,7 +260,6 @@ export default class extends BaseController {
       const img = new Image();
       img.src = `${urlPrefix}/${i}.jpg`;
       img.style.display = "none";
-      // document.body.appendChild(img);
     }
   }
 
@@ -349,10 +355,27 @@ export default class extends BaseController {
     document.dispatchEvent(evt);
   }
 
+  tick(): void {
+    if (this.state === "playing") {
+      const timeSinceLastUpdate = Date.now() - this.videoTimeLastUpdatedAt;
+      if (timeSinceLastUpdate < 1000) {
+        const timecodeMs = Math.floor(
+          timeSinceLastUpdate + this.videoTarget.currentTime * 1000
+        );
+        globalThis.timecodeMs = timecodeMs;
+        VideoEventProcessor.syncTime(timecodeMs);
+        this.timeDisplayTarget.innerHTML = displayTime(timecodeMs / 1000);
+        this.element.dataset.timecode = `${timecodeMs}`;
+      }
+    }
+    this.tickTimeoutId = window.setTimeout(this.tick.bind(this), 200);
+  }
+
   updateVideoTime(event: PointerEvent): void {
     const currentTime = this.getPointerLocationTime(event);
     this.timeDisplayTarget.innerHTML = displayTime(currentTime);
     this.videoTarget.currentTime = currentTime;
+    this.videoTimeLastUpdatedAt = Date.now();
     this.handleTimeUpdate();
   }
 

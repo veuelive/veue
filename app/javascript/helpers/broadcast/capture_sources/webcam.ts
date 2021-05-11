@@ -45,7 +45,6 @@ export class WebcamCaptureSource extends VideoCaptureSource {
   }
 
   async start(): Promise<void> {
-    const capabilities = await this.getCapabilities();
     this.mediaStream = await navigator.mediaDevices.getUserMedia({
       video: {
         deviceId: this.deviceId || "default",
@@ -56,7 +55,6 @@ export class WebcamCaptureSource extends VideoCaptureSource {
     });
     console.log(this.mediaStream);
     await this.processMediaStream(this.mediaStream);
-    console.log("Video element", this.element);
     this.layout = {
       width: this.element.videoWidth,
       height: this.element.videoHeight,

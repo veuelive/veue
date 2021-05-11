@@ -5,10 +5,12 @@ export interface ChatMessage {
   name: string;
   byStreamer: boolean;
   avatarAttached: boolean;
+  time: string;
 }
 
 export interface RenderChatMessageToString {
   message: ChatMessage;
   isThread: boolean;
   currentUserId: string;
+  timecodeMs: number;
 }

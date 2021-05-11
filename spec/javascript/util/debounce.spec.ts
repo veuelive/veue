@@ -1,6 +1,6 @@
-import debounce from "../../../app/javascript/util/debounce";
+import { throttle } from "../../../app/javascript/util/debounce";
 
-describe(debounce, () => {
+describe(throttle, () => {
   const LONG_TIMEOUT = 50000;
 
   let counter;
@@ -13,13 +13,13 @@ describe(debounce, () => {
     }
 
     // Default 1 second debounce
-    @debounce()
+    @throttle()
     debouncedIncrement() {
       this.increment();
     }
 
     // Set custom debounce
-    @debounce(LONG_TIMEOUT)
+    @throttle(LONG_TIMEOUT)
     longDebounceIncrement() {
       this.increment();
     }

@@ -35,7 +35,8 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     ENV["_ORIGINAL_TZ"] = ENV["TZ"]
-    ENV["TZ"] = ActiveSupport::TimeZone::MAPPING.values.sample
+    ENV["TZ"] = "UTC"
+    Time.zone = ENV["TZ"]
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
