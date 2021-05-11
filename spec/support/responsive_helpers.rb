@@ -2,7 +2,7 @@
 
 module ResponsiveHelpers
   def resize_window_to_mobile
-    resize_window_by({width: 640, height: 480})
+    resize_window_by({width: 640, height: 980})
   end
 
   def resize_window_desktop
