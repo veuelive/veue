@@ -2,6 +2,7 @@
   .broadcast_area__header
     .broadcast_area__header__logo
       = svg_tag "logo"
+    = render partial: "broadcast_controls"
     = render partial: "browser_bar"
     .broadcast_area__header__actions
       %a.widget{data: {showOnState: "live"}}
