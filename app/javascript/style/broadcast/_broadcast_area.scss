@@ -87,11 +87,13 @@
   }
 
   .broadcast-controls {
+    width: 80%;
     display: flex;
     justify-content: space-between;
     position: relative;
 
     &__title {
+      width: inherit;
       position: relative;
       margin-right: 30px;
       span {
@@ -106,20 +108,21 @@
         }
       }
       input {
+        width: 95%;
         padding: 5px 15px;
       }
     }
 
     .select {
       padding: 7px 15px;
+      cursor: pointer;
     }
 
     .title_input,
     .select {
       border-radius: 10px;
       border: 1px solid color.$neutral-accents;
-      font-size: 16px;
-      cursor: pointer;
+      font-size: 18px;
       color: color.$neutral-regular;
       display: flex;
       align-items: center;
@@ -128,6 +131,10 @@
     select:focus-visible,
     input:focus-visible {
       outline: none;
+    }
+
+    input:focus {
+      font-weight: bold;
     }
 
     .chevron {

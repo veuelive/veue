@@ -12,7 +12,6 @@ describe "Broadcast View" do
   let(:streamer) { create(:streamer) }
   let(:channel) { streamer.channels.first }
   let(:video) { channel.active_video }
-  let(:settings_form) { ".broadcast-settings__form" }
 
   before :example do
     driven_by :media_browser
@@ -204,12 +203,6 @@ describe "Broadcast View" do
     end
 
     describe "update title and visibility feature" do
-      before :each do
-        # Open up the form
-        find("#settings-btn").click
-        expect(page).to have_css(settings_form)
-      end
-
       it "updates the broadcast title and visibility on button click" do
         new_title = "super cool new title"
         new_visibility = "protected"
@@ -217,13 +210,11 @@ describe "Broadcast View" do
         expect(video.title).not_to(eq(new_title))
         expect(video.visibility).not_to(eq(new_visibility))
 
-        within(settings_form) do
-          fill_in("video_title", with: new_title)
-          find("[value='#{new_visibility}']").select_option
-          click_button("Update")
-        end
+        fill_in("title", with: new_title)
+        find("[value='#{new_visibility}']").select_option
 
-        expect(page).to have_css(".flash-success")
+        expect(page).to have_css("svg.loading")
+        expect(page).to have_css(".notification-wrapper", wait: 5)
 
         video.reload
         expect(video.title).to eq(new_title)
@@ -232,12 +223,9 @@ describe "Broadcast View" do
 
       it "properly displays flash message on save" do
         new_title = "*" * 65
-        within(settings_form) do
-          fill_in("video_title", with: new_title)
-          click_button("Update")
-        end
+        fill_in("title", with: new_title)
 
-        expect(page).to have_css(".flash-error")
+        expect(page).to have_content("Title updation failed.")
       end
     end
   end
