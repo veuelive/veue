@@ -62,9 +62,9 @@ class Video < ApplicationRecord
 
   def self.visibilities_legend
     {
+      public: "Everyone can view",
       private: "Only you can view",
       protected: "Only viewable with link",
-      public: "Everyone can view",
     }
   end
 
