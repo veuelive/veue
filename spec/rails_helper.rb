@@ -25,14 +25,15 @@ rescue ActiveRecord::PendingMigrationError => e
   exit(1)
 end
 
-# Return release urls of webdrivers used in selenium
-driver_urls = Webdrivers::Common.subclasses.map { |driver| driver.public_send(:base_url) }
-
 # https://thoughtbot.com/blog/how-to-stub-external-services-in-tests
 require "webmock/rspec"
 WebMock.disable_net_connect!(
   allow_localhost: true,
-  allow: [*driver_urls, Regexp.new(GripBroadcaster.base_url)],
+  allow: [
+    %(https://chromedriver.storage.googleapis.com),
+    %(https://github.com/mozilla/geckodriver/releases/latest),
+    Regexp.new(GripBroadcaster.base_url),
+  ],
 )
 
 RSpec.configure do |config|
