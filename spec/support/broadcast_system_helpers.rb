@@ -14,11 +14,7 @@ module BroadcastSystemHelpers
   end
 
   def update_video_visibility(visibility)
-    find("#settings-btn").click
-    within(".broadcast-settings__form") do
-      find("[value='#{visibility}']").select_option
-      click_button("Update")
-    end
+    find("[value='#{visibility}']").select_option
 
     expect(page).to have_css("[data-video-visibility='#{visibility}']")
   end
