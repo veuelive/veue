@@ -100,6 +100,7 @@
         width: inherit;
         position: relative;
         margin-right: 30px;
+
         span {
           position: absolute;
           top: 7px;
@@ -117,14 +118,13 @@
         }
       }
 
-      &__title,
       &__visibility {
-        margin-right: 30px;
-      }
+        margin-right: 15px;
 
-      &__visibility__select {
-        padding: 7px 15px;
-        cursor: pointer;
+        select {
+          padding: 7px 15px;
+          cursor: pointer;
+        }
       }
 
       &__visibility__select,
