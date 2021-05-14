@@ -6,7 +6,7 @@ require "support/audience_spec_helpers"
 describe "Browser Broadcaster Startup Flow" do
   describe "browser startup" do
     before :example do
-      driven_by(:selenium, using: :headless_firefox)
+      driven_by(:selenium, using: :firefox)
     end
 
     it "should display warning if not on chrome" do
