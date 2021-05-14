@@ -14,6 +14,7 @@ module DiscoverableComponent
       @type = component.type
     end
 
+    # Determines the uniqueness of our model for caching since theyre "db-less"
     def cache_key
       Digest::MD5.hexdigest("#{self.class}-#{@component}-#{@fields}")
     end
