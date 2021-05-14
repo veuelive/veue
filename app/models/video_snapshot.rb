@@ -37,7 +37,12 @@ class VideoSnapshot < ApplicationRecord
     image.blob == video.secondary_shot.blob
   end
 
+  # Processed the image variant
+  def processed_preview
+    image.variant(resize_to_limit: [112, 200]).processed
+  end
+
   def preview_url
-    Router.url_for(image.variant(resize_to_limit: [200, 112]))
+    Router.url_for_variant(processed_preview)
   end
 end

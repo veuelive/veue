@@ -40,7 +40,7 @@ module AudienceSpecHelpers
   end
 
   def current_timecode
-    Integer(find("*[data-audience-view-timecode]")["data-audience-view-timecode"], 10)
+    Integer(find("*[data-timecode]")["data-timecode"], 10)
   end
 
   def someone_chatted(message=Faker::Quote.unique.most_interesting_man_in_the_world, timecode_ms=0)

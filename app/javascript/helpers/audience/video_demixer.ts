@@ -1,5 +1,4 @@
-import TimecodeSynchronizer from "./timecode_synchronizer";
-import { BroadcastVideoLayout, LayoutSection } from "types/video_layout";
+import VideoLayout, { LayoutSection } from "types/video_layout";
 import { Rectangle } from "types/rectangle";
 import { VideoEventProcessor } from "helpers/event/event_processor";
 import { DefaultVideoLayout } from "types/sizes";
@@ -7,14 +6,12 @@ import { DefaultVideoLayout } from "types/sizes";
 export default class VideoDemixer {
   private canvasContextGroups: Array<Array<CanvasRenderingContext2D>>;
   private videoElement: HTMLVideoElement;
-  private timecodeSynchronizer: TimecodeSynchronizer;
-  private _videoLayout: BroadcastVideoLayout;
+  private _videoLayout: VideoLayout;
   private sectionsByPriority: Array<LayoutSection>;
 
   constructor(
     videoElement: HTMLVideoElement,
-    canvasesByPriority: HTMLCanvasElement[][],
-    timecodeSynchronizer: TimecodeSynchronizer
+    canvasesByPriority: HTMLCanvasElement[][]
   ) {
     this.canvasContextGroups = canvasesByPriority.map((canvasGroup) =>
       canvasGroup.map((canvas) => canvas.getContext("2d"))
@@ -25,12 +22,11 @@ export default class VideoDemixer {
       this.videoLayout = event.detail.data;
     });
     this.videoElement = videoElement;
-    this.timecodeSynchronizer = timecodeSynchronizer;
 
     this.drawFrame();
   }
 
-  set videoLayout(videoLayout: BroadcastVideoLayout) {
+  set videoLayout(videoLayout: VideoLayout) {
     this._videoLayout = videoLayout;
     this.sectionsByPriority = this.videoLayout.sections.sort(
       (a, b) => a.priority - b.priority
@@ -52,7 +48,7 @@ export default class VideoDemixer {
     }
   }
 
-  get videoLayout(): BroadcastVideoLayout {
+  get videoLayout(): VideoLayout {
     return this._videoLayout;
   }
 
@@ -70,12 +66,6 @@ export default class VideoDemixer {
           }
         }
       }
-
-      this.drawSection(
-        this.timecodeSynchronizer.canvasCtx,
-        pixelDensity,
-        this.videoLayout.timecode
-      );
     }
 
     requestAnimationFrame(() => this.drawFrame());

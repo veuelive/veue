@@ -1,0 +1,217 @@
+@use "../utils/breakpoints" as *;
+@use "../utils/color";
+@use "../user_profile/menu_shared" as *;
+@use "../user_profile/edit_header_shared" as *;
+@use "../user_profile/edit_body_shared" as *;
+
+#channels__edit {
+  /**
+  Put any main responsive layout code for ONLY desktop here... this does not count elements that scale to their
+  surroundings
+   */
+
+  .content-area {
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .channel-mobile-header {
+    background: color.$white;
+    width: 100%;
+    height: 80px;
+    z-index: 0;
+    display: flex;
+    border-bottom: 1px solid color.$neutral-soft;
+    border-top: 1px solid color.$neutral-soft;
+    padding: 0 10px;
+    margin-bottom: 20px;
+
+    svg,
+    img {
+      margin: 15px 8px;
+      height: 50px;
+      width: 50px;
+    }
+
+    .channel-icon {
+      position: relative;
+    }
+
+    .highlight-icon {
+      display: none;
+      top: 11px;
+      left: 4px;
+      height: 54px;
+      border-radius: 50%;
+      width: 54px;
+      background: transparent;
+      position: absolute;
+      border: 2px solid #6460f1;
+    }
+
+    a.active {
+      .highlight-icon {
+        display: block;
+      }
+    }
+  }
+
+  @include large() {
+    .channel-content {
+      padding-top: 32px;
+      flex-direction: row;
+      display: flex;
+      justify-content: space-between;
+      width: 85%;
+      max-width: 1400px;
+      margin: 0 auto;
+      &__menu {
+        width: 235px;
+        margin-left: 28px;
+      }
+      &__primary {
+        width: 74%;
+      }
+    }
+
+    .channel-mobile-header {
+      display: none;
+    }
+  }
+
+  /**
+    This is the primary Setting layout for portrait mobile views
+    */
+  @include smallTall() {
+    .channel-content {
+      padding: 0 20px;
+      width: 89%;
+    }
+  }
+  .channel-menu {
+    ul {
+      margin-top: 20px;
+      li {
+        height: 34px;
+      }
+    }
+    &__item {
+      border-radius: 100px 60px 60px 100px;
+      margin-top: 10px;
+      margin-right: 20px;
+
+      &__name {
+        color: color.$neutral-dark;
+      }
+
+      .channel-icon {
+        svg,
+        img {
+          position: relative;
+          width: 34px;
+          height: 34px;
+          background: color.$white;
+          float: left;
+          right: 1px;
+          bottom: 3px;
+          border-radius: 100%;
+          border: 2px solid color.$neutral-background;
+        }
+      }
+    }
+    @include large() {
+      .active {
+        background-color: color.$veue-corporate;
+        a,
+        a:hover,
+        a:visited {
+          .channel-menu__item__name {
+            color: color.$white;
+          }
+        }
+      }
+    }
+
+    @include menuStyling;
+  }
+
+  .channel-edit {
+    &__header {
+      font-size: 20px;
+      line-height: 30px;
+      margin-bottom: 20px;
+      color: color.$neutral-dark;
+
+      @include headerStyles;
+    }
+
+    &__body {
+      // will be moved to mixin
+      @include bodyStyles;
+
+      &__field {
+        &__title {
+          color: color.$neutral-dark;
+        }
+        &__input {
+          .channel-avatar {
+            display: flex;
+            align-items: center;
+            .channel-icon {
+              * {
+                width: 64px;
+                height: 64px;
+              }
+              .highlight-icon {
+                display: none;
+              }
+            }
+          }
+          @include uploadImageStyles;
+        }
+      }
+    }
+
+    &__preview {
+      margin-top: 10px;
+      background-color: color.$white;
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      font-weight: 400px;
+      font-size: 16px;
+      line-height: 22px;
+
+      @include smallTall() {
+        flex-direction: column;
+        &-url {
+          margin-top: 5px;
+        }
+        &-cta {
+          margin-top: 8px;
+        }
+      }
+
+      justify-content: space-between;
+
+      &-heading {
+        color: color.$neutral-dark;
+      }
+      &-url {
+        color: color.$neutral-regular;
+      }
+      &-cta {
+        display: flex;
+        a {
+          color: color.$veue-corporate;
+          border: 1px solid color.$veue-corporate;
+          border-radius: 10px;
+          padding: 6px 10px;
+        }
+      }
+    }
+
+    @include editFooterStyles;
+  }
+}

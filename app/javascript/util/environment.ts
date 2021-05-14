@@ -20,3 +20,7 @@ export function isProduction(
   const { hostname } = location;
   return hostname == "veue.tv" || hostname == "www.veue.tv";
 }
+
+export function isDev(): boolean {
+  return globalThis.appConfig.environment === "development";
+}

@@ -10,6 +10,7 @@ import { CaptureSource } from "helpers/broadcast/capture_sources/base";
 import { h, render } from "preact";
 import MediaDeck from "components/media_deck";
 import { inElectronApp } from "helpers/electron/base";
+import EventBus from "event_bus";
 
 export const ChangeMediaDeviceEvent = "ChangeMediaDeviceEvent";
 
@@ -57,21 +58,17 @@ export default class extends BaseController {
         this.audioCaptureSource.stop();
         this.removeCaptureSource(this.audioCaptureSource);
       }
-      captureSource = this.audioCaptureSource = await MicrophoneCaptureSource.connect(
-        mediaDeviceInfo.deviceId
-      );
+      captureSource = this.audioCaptureSource =
+        await MicrophoneCaptureSource.connect(mediaDeviceInfo.deviceId);
     } else if (mediaDeviceInfo.kind === "videoinput") {
       if (this.cameraCaptureSource) {
         this.removeCaptureSource(this.cameraCaptureSource);
         this.cameraCaptureSource.stop();
       }
-      captureSource = this.cameraCaptureSource = await WebcamCaptureSource.connect(
-        mediaDeviceInfo.deviceId
-      );
+      captureSource = this.cameraCaptureSource =
+        await WebcamCaptureSource.connect(mediaDeviceInfo.deviceId);
     }
-    document.dispatchEvent(
-      new CustomEvent(NewCaptureSourceEvent, { detail: captureSource })
-    );
+    EventBus.dispatch(NewCaptureSourceEvent, captureSource);
   }
 
   swapMediaDevice(event: CustomEvent): void {
@@ -80,8 +77,6 @@ export default class extends BaseController {
   }
 
   private removeCaptureSource(captureSource: CaptureSource) {
-    document.dispatchEvent(
-      new CustomEvent(RemoveCaptureSourceEvent, { detail: captureSource })
-    );
+    EventBus.dispatch(RemoveCaptureSourceEvent, captureSource);
   }
 }
