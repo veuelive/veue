@@ -32,7 +32,7 @@ export default class extends Controller {
 
     const status = response.status;
     if (status >= 400 && status <= 499) {
-      showNotification("Title updation failed.");
+      showNotification("Title update failed.");
     }
   }
 

@@ -16,7 +16,7 @@ export default class extends Controller {
       setTimeout(() => {
         this.messageTarget.innerText = "";
         this.element.style.display = "none";
-      }, 10000);
+      }, 1500);
     };
 
     document.addEventListener(ShowNotificationEvent, this.notificationHandler);
