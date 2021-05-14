@@ -4,10 +4,6 @@ class VideoDecorator < Draper::Decorator
   delegate_all
   decorates_association :channel
 
-  def thumbnail_url
-    "https://image.mux.com/#{object.mux_playback_id}/thumbnail.png"
-  end
-
   def stream_type
     case state
     when "live"

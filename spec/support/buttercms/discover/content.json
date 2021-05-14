@@ -1,0 +1,20 @@
+{
+  "data": {
+    "slug": "konnor",
+    "name": "Konnor Super Awesome Curation",
+    "published": "2021-05-10T16:00:30.085370Z",
+    "updated": "2021-05-12T21:27:03.998602Z",
+    "page_type": "discover_page",
+    "fields": {
+      "seo_title": "Konnors Curation",
+      "components": [
+        {
+          "type": "content",
+          "fields": {
+            "body": "<p>I like to move it move it. you like to move it move it. We like to....move it!</p>"
+          }
+        }
+      ]
+    }
+  }
+}
