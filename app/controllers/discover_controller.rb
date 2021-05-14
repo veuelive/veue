@@ -38,7 +38,7 @@ class DiscoverController < ApplicationController
 
   def fetch_cms_data
     page_slug = "homepage-en"
-    # page_slug = ERB::Util.html_escape(params[:page_slug]) if params[:page_slug]
+    page_slug = ERB::Util.html_escape(params[:page_slug]) if params[:page_slug]
     # locale = ERB::Util.html_escape(params[:locale])
 
     Rails.cache.fetch("butter-cms-#{page_slug}", expires_in: 10.minutes) do
