@@ -152,4 +152,12 @@ RSpec.describe Video, type: :model do
       expect(snapshot_two.secondary_shot?(video)).to eq(false)
     end
   end
+
+  describe "popular queries" do
+    let(:video_one) { }
+    let(:video_two) { }
+    let(:video_three) { }
+    let(:video_four) { }
+    let(:video_five) { }
+  end
 end
