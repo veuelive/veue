@@ -26,11 +26,15 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 # https://thoughtbot.com/blog/how-to-stub-external-services-in-tests
-require "webmock/rspec"
-WebMock.disable_net_connect!(
-  allow_localhost: true,
-  allow: [%(https://chromedriver.storage.googleapis.com), Regexp.new(GripBroadcaster.base_url)],
-)
+# require "webmock/rspec"
+# WebMock.disable_net_connect!(
+#   allow_localhost: true,
+#   allow: [
+#     %(https://chromedriver.storage.googleapis.com),
+#     %(https://github.com/mozilla/geckodriver),
+#     Regexp.new(GripBroadcaster.base_url),
+#   ],
+# )
 
 RSpec.configure do |config|
   # Allows you to do things like *_url(<model>)
@@ -50,25 +54,25 @@ RSpec.configure do |config|
     ENV["IFTTT_PUSH_KEY"] = ENV.fetch("IFTTT_PUSH_KEY", "1234")
   end
 
-  config.before(:each) do
-    stub_const("Twilio::REST::Client", FakeTwilio)
-    FakeTwilio.reset!
+  # config.before(:each) do
+  #   stub_const("Twilio::REST::Client", FakeTwilio)
+  #   FakeTwilio.reset!
 
-    WebMock.reset!
-    setup_perspective_mocks!
-    # setup_sse_mocks!
+  #   WebMock.reset!
+  #   setup_perspective_mocks!
+  #   # setup_sse_mocks!
 
-    stub_request(:post, /#{IfThisThenThatJob.post_url}/)
-      .to_return(status: 200, body: "stubbed response", headers: {})
+  #   stub_request(:post, /#{IfThisThenThatJob.post_url}/)
+  #     .to_return(status: 200, body: "stubbed response", headers: {})
 
-    stub_request(:get, "https://api.buttercms.com/v2/pages/*/homepage-en/?auth_token=TEST_TOKEN&preview")
-      .with(
-        headers: {
-          Accept: "application/json",
-        },
-      )
-      .to_return(status: 404, body: {detail: "Page not found."}.to_json, headers: {})
-  end
+  #   stub_request(:get, "https://api.buttercms.com/v2/pages/*/homepage-en/?auth_token=TEST_TOKEN&preview")
+  #     .with(
+  #       headers: {
+  #         Accept: "application/json",
+  #       },
+  #     )
+  #     .to_return(status: 404, body: {detail: "Page not found."}.to_json, headers: {})
+  # end
 
   Capybara.default_max_wait_time = 2
 
