@@ -1,5 +1,5 @@
 import { Controller } from "stimulus";
-import debounce from "util/debounce";
+import { debounce } from "util/debounce";
 
 export default class extends Controller {
   static targets = ["area", "menu"];
