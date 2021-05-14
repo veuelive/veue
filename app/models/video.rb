@@ -56,6 +56,26 @@ class Video < ApplicationRecord
           order("started_at_ms DESC")
         }
 
+  scope :most_viewed,
+        -> {
+          order("video_views_count DESC")
+        }
+
+  scope :popular_from_date,
+        ->(date) {
+          Video.joins(:video_views).group(:id).where(
+            "video_views.created_at >= ?",
+            date,
+          ).order("COUNT(video_views.id) DESC")
+        }
+
+  scope :popular_this_week, -> { popular_from_date(1.week.ago) }
+  scope :popular_this_month, -> { popular_from_date(1.month.ago) }
+  scope :popular_all_time, -> { most_viewed }
+
+  scope :trending_this_week, -> { popular_this_week }
+  scope :trending_this_month, -> { popular_this_month }
+
   scope :private_videos, -> { where(visibility: "private") }
   scope :public_videos, -> { where(visibility: "public") }
   scope :protected_videos, -> { where(visibility: "protected") }

@@ -11,7 +11,9 @@ RESERVED_WORDS = %w[
   delete
   channel
   channels
-].freeze
+  content
+  discover
+].concat(DiscoverController::SUPPORTED_LOCALES).freeze
 
 FriendlyId.defaults do |config|
   config.use(:reserved)
