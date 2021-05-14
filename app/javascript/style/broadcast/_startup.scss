@@ -2,17 +2,24 @@
 @use "../utils/font";
 
 #startup {
-  display: flex;
   height: 100vh;
-  justify-content: center;
-  align-items: center;
-  font-weight: font.$heavy-weight;
+  font-weight: font.$normal-weight;
   font-size: 1.5rem;
+  .browser-warning {
+    display: none;
+    font-size: 18px;
+    padding: 5px 15px;
+    border: 1px solid color.$red-light;
+    color: color.$white;
+    background: color.$red-highlight;
+    border-radius: 10px;
+  }
   .wrapper {
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    height: 100%;
     .logo {
       width: 100px;
       float: left;
