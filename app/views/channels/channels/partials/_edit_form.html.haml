@@ -1,0 +1,36 @@
+.channel-edit#channel-tab
+  .channel-edit__header
+    .channel-edit__header__name
+      = @channel.name.titleize
+    .channel-edit__header__actions
+      %button.action-button{"data-action": "click->channel-edit#doSubmit"} Save Changes
+  = form_for(@channel, html: { data:{target: "channel-edit.form" } }) do |f|
+    .channel-edit__body
+      .channel-edit__body__field
+        .channel-edit__body__field__title
+          Channel Image
+          .heading-info
+            Public Visible
+        = render partial: "channels/channels/partials/upload_image"
+      .channel-edit__body__field
+        .channel-edit__body__field__title
+          %label{for: "channel_name"} Channel Name
+        .channel-edit__body__field__input
+          = f.text_field :name, class: 'input-field', placeholder: 'Enter your name', maxlength: "20", data: {target: 'channel-edit.channelName'}
+      .channel-edit__body__field
+        .channel-edit__body__field__title
+          %label{for: "channel_bio"} Channel Bio
+          .heading-info
+            Introduce to your viewers
+        .channel-edit__body__field__input
+          = f.text_area :bio, class: 'input-field', maxlength: "160"
+    .channel-edit__preview
+      .channel-edit__preview-heading
+        = t("channels.preview.content.heading")
+      .channel-edit__preview-url
+        = channel_url(@channel)
+      .channel-edit__preview-cta
+        %a{ href: channel_url(@channel)}
+          Visit Channel
+    .channel-edit__footer
+      %button{"data-action": "click->channel-edit#doSubmit"} Save Changes

@@ -48,12 +48,12 @@ describe "chat during live video" do
       # it will have profile image of user for once in thread
       # We cant control when the interaction occurs, so lets check both in case user join happens after
       # the chat message
-      expect(page).to have_css(".message__content__avatar", minimum: 1, maximum: 2)
+      expect(page).to have_css(".message__avatar", minimum: 1, maximum: 2)
 
       # Check that message threads work properly
       write_chat_message "Cowabunga!"
       expect(page).to have_content(/Cowabunga!/, count: 3)
-      expect(page).to have_css(".message__content__avatar", minimum: 1, maximum: 2)
+      expect(page).to have_css(".message__avatar", minimum: 1, maximum: 2)
     end
 
     it "should show that you joined the chat" do
@@ -81,7 +81,7 @@ describe "chat during live video" do
         write_chat_message "Cowabunga!"
         expect(page).to have_css(".message", count: i + 1, wait: 5)
       end
-      expect(page).to have_css(".message__content__avatar").once
+      expect(page).to have_css(".message__avatar").once
 
       chat_message = first(".message")
       scroll_to(chat_message)
@@ -183,6 +183,29 @@ describe "chat during live video" do
       find(".message-login-prompt").click
 
       expect(page).to have_css("#phone_number_input")
+    end
+  end
+
+  describe "chat message time" do
+    it "should have comment time of someone else" do
+      expect(page).not_to(have_selector(".message-write"))
+
+      login_as user
+      visit channel_path(channel)
+
+      write_chat_message("sending time!")
+      expect(page).to have_css(".message__content").once
+      expect(page).to have_content("sending time!")
+
+      time = Time.zone.now
+      message = ChatMessage.last
+      message.payload["time"] = time
+      message.save!
+
+      # force this to be America/New_York so the formatting is fixed
+      # it's specified in spec_helper.rb
+      time_on_page = time.strftime("%l:%M")
+      expect(page).to have_content(time_on_page.strip).once
     end
   end
 end

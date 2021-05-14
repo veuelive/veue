@@ -44,20 +44,10 @@ We use the following Third-Party services:
 
 ## Developer Setup
 
-### 1. Setup Mux Account
+### 1. Setup Phenix Account
 
-You should get an invite to Mux, and if you haven't, ask someone for one! Once you are signed up, go to the
-[Environments page](https://dashboard.mux.com/environments) and create an Environment for yourself.
-
-Once there, you should be able to "Add Environment" on the "Environments" page
-
-Put in your full name and select it as a "Development" environment. It
-will also ask you about `Video` and `Data`. Give yourself `Full Access`
-for Video, and leave the `Read` access for `Data` unchecked.
-
-Once you have created the Environment, go to settings and create an API Token.
-
-In your local copy of this repo, generate a file `config/application.yml` with the following properties:
+In your local copy of this repo, generate a file `config/application.yml` with values that another team member
+can share with you.
 
 ```yaml
 # config/application.yml
@@ -127,7 +117,7 @@ In your `config/application.yml` file add the following line replacing with your
 HOSTNAME: https://username.ngrok.io
 ```
 
-### 6. Webpacker (RECOMMENDED)
+### 6. Webpack Dev Server
 
 To speed up development of TS files
 (from root of the project in a new shell)
@@ -136,30 +126,9 @@ To speed up development of TS files
 ./bin/webpack-dev-server
 ```
 
-### 7. Setup Broadcaster
-
-"Broadcaster" is the name we give to the Electron.js app that we have for streamers. It's in the folder
-`broadcaster` (duh) and you can start it up with a quick `yarn start`.
-
-_You need to be running Ngrok AND the Rails app for this to work!_
-
-From root of the project in a new shell
-
-```bash
-cd broadcaster/
-yarn install
-yarn start
-```
-
-An Electron app will launch. By default, the app opens with the Chrome debugging tools shown, making the layout
-look awkward. Close them using the X in the top-right of the window.
-
-If you successfully login using the Broadcaster, it means that everything is working... NGrok, Mux, etc.
-
 ### Your Own Data?
 
-To make the site work locally, you should follow the directions for how to do a Broadcast with the
-Broadcaster and make your own data.
+To make the site work locally, you should follow the directions for how to do a Broadcast.
 
 ### Troubleshooting
 
@@ -180,14 +149,6 @@ gem install puma:4.3.5 -- --with-cflags="-Wno-error=implicit-function-declaratio
 Then re-run `bundle install` and it should run through cleanly now.
 
 for more info see https://thoughtfulapps.com/articles/rails/puma-implicitly-declaring-library-function-error
-
-#### MuxRuby::UnauthorizedError
-
-```
-MuxRuby::UnauthorizedError in BroadcastsController
-```
-
-If you see this, then your MUX tokens aren't setup correctly!
 
 ## Checks
 
@@ -227,10 +188,20 @@ The full docs are here: https://docs.rubocop.org/rubocop/1.3/index.html
 
 ## Streaming Architecture
 
-This is the sequence diagram for how the Electron JS app works with other components and how we setup a
-streamer session.
+There are several goals of our Streaming Architecture:
 
-![Sequence Diagram](docs/Streamer%20Sequence%20Diagram.png)
+- Low Latency
+- Replay Enabled
+- Sycnchronized Events
+- Browser-Based
+
+There are three main components to how a stream works.
+
+- Publishing / Ingest - The "streamer" is uploading a video stream to our system and we both record it and send it to live audience members.
+- Live Viewing - When the video is live, we need to get the video to the audience member as quickly as possible
+- Replay Viewing / VOD - After the broadcast is completed, audience members can re-watch the recording with synchronized events.
+
+![Sequence Diagram](docs/Realtime%20Streaming.png)
 
 The source for this image can be found in the `docs` folder. Please update whenever you can!
 

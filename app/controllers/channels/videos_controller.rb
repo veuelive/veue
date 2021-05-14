@@ -8,6 +8,8 @@ module Channels
     def show
       authorize!(:read, current_video)
 
+      create_social_variables
+
       # have to decorate after authorizing
       @current_video = @current_video.decorate
 
@@ -27,5 +29,23 @@ module Channels
       current_video.channel.decorate
     end
     helper_method :current_channel
+
+    private
+
+    # Generate social media variables
+    def create_social_variables
+      images = current_video.decorate.social_image_hash
+
+      if images[:big_image]
+        @twitter_card = "summary_large_image"
+        @twitter_image = images[:big_image]
+      else
+        @twitter_image = images[:thumbnail]
+      end
+
+      @og_image = images[:thumbnail]
+      @og_title = @twitter_title = current_video.title
+      @og_description = @twitter_description = "Watch #{current_channel.name} on Veue!"
+    end
   end
 end

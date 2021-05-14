@@ -1,5 +1,5 @@
 import { Size } from "types/rectangle";
-import { BroadcastVideoLayout } from "types/video_layout";
+import VideoLayout from "types/video_layout";
 
 export default class Sizes {
   public static fullCanvas: Size = { width: 1280, height: 1080 };
@@ -28,11 +28,4 @@ export const DefaultVideoLayout = {
       x: 0,
     },
   ],
-  timecode: {
-    digits: 12,
-    width: 360,
-    height: 10,
-    y: Sizes.fullCanvas.height - 10,
-    x: Sizes.fullCanvas.width - 360,
-  },
-} as BroadcastVideoLayout;
+} as VideoLayout;

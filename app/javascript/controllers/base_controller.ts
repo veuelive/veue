@@ -1,6 +1,8 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
+  element!: HTMLElement;
+
   private authChangeListener = () => this.authChanged();
 
   subscribeToAuthChange(): void {
