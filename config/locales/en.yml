@@ -109,6 +109,7 @@ en:
     recent: "Recent Live Streams"
     live: "LIVE Broadcasts!"
     upcoming: "Upcoming Live Streams"
+    browser_warning: "The Veue Broadcaster is Optimized for the Chrome Browser, please use Chrome for Streaming."
   scheduling:
     scheduled_today: "Today at "
     very_soon: "Starting"
