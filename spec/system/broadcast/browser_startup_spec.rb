@@ -10,6 +10,8 @@ describe "Browser Broadcaster Startup Flow" do
 
   describe "browser startup" do
     it "should display warning if not on chrome" do
+      puts "-=-=-=-=-=-=\n"*8
+      puts page.driver.browser
       visit "/broadcasts/startup"
       expect(page).to have_content(I18n.t("discover.browser_warning"))
     end
