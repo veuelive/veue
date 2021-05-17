@@ -153,13 +153,13 @@ RSpec.describe Video, type: :model do
     end
   end
 
-  describe "popular queries" do
+  describe "popular / trending queries" do
     let!(:video_one) { create(:vod_video_with_video_views, video_views_count: 2) }
     let!(:video_two) { create(:vod_video_with_video_views, video_views_count: 1) }
     let!(:video_three) { create(:vod_video_with_video_views, video_views_count: 5) }
     let!(:video_four) { create(:vod_video_with_video_views, video_views_count: 4) }
 
-    it "should sort by most popular all time based on views" do
+    it "should sort by most popular all time based on view count" do
       correct_order = [video_three, video_four, video_one, video_two]
       popular_all_time = Video.popular_all_time
 
@@ -193,6 +193,42 @@ RSpec.describe Video, type: :model do
 
       correct_order.each_with_index do |video, index|
         expect(video).to eq(popular_this_month[index])
+      end
+    end
+
+    it "should sort by trending this week based on video view minutes this month" do
+      correct_order = [video_three, video_four, video_one, video_two]
+
+      create_list(:video_view_minute, 5, video_view: video_three.video_views.first)
+      create_list(:video_view_minute, 3, video_view: video_four.video_views.first)
+      create_list(:video_view_minute, 2, video_view: video_one.video_views.first)
+      create_list(:video_view_minute, 10, video_view: video_two.video_views.first, created_at: 2.weeks.ago)
+
+      # have to add one view minute so it shows up in the query.
+      create_list(:video_view_minute, 1, video_view: video_two.video_views.first)
+
+      trending_this_week = Video.trending_this_week
+
+      correct_order.each_with_index do |video, index|
+        expect(video).to eq(trending_this_week[index])
+      end
+    end
+
+    it "should sort by trending this month based on video view minutes this month" do
+      correct_order = [video_three, video_four, video_one, video_two]
+
+      create_list(:video_view_minute, 5, video_view: video_three.video_views.first)
+      create_list(:video_view_minute, 3, video_view: video_four.video_views.first)
+      create_list(:video_view_minute, 2, video_view: video_one.video_views.first, created_at: 2.weeks.ago)
+      create_list(:video_view_minute, 10, video_view: video_two.video_views.first, created_at: 2.months.ago)
+
+      # have to add one view minute so it shows up in the query.
+      create_list(:video_view_minute, 1, video_view: video_two.video_views.first)
+
+      trending_this_month = Video.trending_this_month
+
+      correct_order.each_with_index do |video, index|
+        expect(video).to eq(trending_this_month[index])
       end
     end
   end
