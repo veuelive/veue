@@ -58,7 +58,15 @@ body#discover__index {
           grid-template-columns: minmax(0, 1fr);
           column-gap: 50px;
           row-gap: 25px;
-          margin-bottom: 20px;
+        }
+
+        &__hero {
+          margin-top: 2rem;
+          width: 100%;
+
+          img {
+            width: 100%;
+          }
         }
       }
 
@@ -71,7 +79,7 @@ body#discover__index {
 
   @include large() {
     .discover {
-      margin: 0 140px;
+      margin: 0 140px 20px 140px;
 
       &__grid {
         // This overrides the default value
