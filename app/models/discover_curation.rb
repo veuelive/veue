@@ -51,30 +51,30 @@ class DiscoverCuration
   # Make these procs so they dont trigger when placed in a hash
 
   def most_recent
-    proc { videos.finished.most_recent.limit(limit) }
+    proc { public_videos.finished.most_recent.limit(limit) }
   end
 
   def live
-    proc { videos.live.limit(limit) }
+    proc { public_videos.live.limit(limit) }
   end
 
   def trending_this_week
-    proc { videos.finished.trending_this_week.limit(limit) }
+    proc { public_videos.finished.trending_this_week.limit(limit) }
   end
 
   def trending_this_month
-    proc { videos.finished.trending_this_month.limit(limit) }
+    proc { public_videos.finished.trending_this_month.limit(limit) }
   end
 
   def popular_this_week
-    proc { videos.finished.popular_this_week.limit(limit) }
+    proc { public_videos.finished.popular_this_week.limit(limit) }
   end
 
   def popular_this_month
-    proc { videos.finished.popular_this_month.limit(limit) }
+    proc { public_videos.finished.popular_this_month.limit(limit) }
   end
 
   def popular_all_time
-    proc { videos.finished.popular_all_time.limit(limit) }
+    proc { public_videos.finished.popular_all_time.limit(limit) }
   end
 end
