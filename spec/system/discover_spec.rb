@@ -26,6 +26,8 @@ describe "Discover View" do
 
   describe "kitchensink" do
     let!(:vod_videos) { create_list(:vod_video, 5) }
+    let!(:trending_videos) { create_list(:vod_video_with_video_views, 5, video_views_count: 5) }
+    let!(:popular_videos) { create_list(:vod_video_with_video_views, 5, video_views_count: 5) }
     let!(:live_videos) { create_list(:live_video, 5) }
     let(:json_data) { read_file("kitchensink.json") }
 
@@ -34,6 +36,10 @@ describe "Discover View" do
         {slug: "homepage-en", app_path: root_path},
         {slug: "konnor", app_path: "/en/konnor"},
       ]
+
+      trending_videos.each do |video|
+        create_list(:video_view_minute, 5, video_view: video.video_views.first)
+      end
 
       paths.each do |hash|
         stub_butter(slug: hash[:slug], data: json_data)
