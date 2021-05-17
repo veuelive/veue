@@ -1,0 +1,63 @@
+{
+  "data": {
+    "slug": "konnor",
+    "name": "Konnor Super Awesome Curation",
+    "published": "2021-05-10T16:00:30.085370Z",
+    "updated": "2021-05-12T21:27:03.998602Z",
+    "page_type": "discover_page",
+    "fields": {
+      "seo_title": "Konnors Curation",
+      "components": [
+        {
+          "type": "hero_image",
+          "fields": {
+            "image": "https://cdn.buttercms.com/7XWI7ZbTTk2a0ckohjdr",
+            "link": "https://example.com"
+          }
+        },
+        {
+          "type": "static_curation",
+          "fields": {
+            "title": "Static",
+            "videos": [
+              {
+                "title": "Super cool video",
+                "video_id": "60cf03a2-9e7a-4f20-95c1-82480b4fe50b"
+              }
+            ]
+          }
+        },
+        {
+          "type": "dynamic_curation",
+          "fields": {
+            "title": "Live NOW!",
+            "max_size": 5.0,
+            "type": "live"
+          }
+        },
+        {
+          "type": "dynamic_curation",
+          "fields": {
+            "title": "Super crazy awesome videos",
+            "max_size": 10.0,
+            "type": "trending-this-week"
+          }
+        },
+        {
+          "type": "dynamic_curation",
+          "fields": {
+            "title": "Most Watched",
+            "max_size": 20.0,
+            "type": "popular-all-time"
+          }
+        },
+        {
+          "type": "content",
+          "fields": {
+            "body": "<p>I like to move it move it. you like to move it move it. We like to....move it!</p>"
+          }
+        }
+      ]
+    }
+  }
+}
