@@ -7,9 +7,6 @@ module VideoStates
     aasm column: "state" do
       state :pending, initial: true
 
-      # The stream is scheduled to take place some point in the future
-      state :scheduled
-
       # The streamer has started, but MUX isn't yet fully live via RTMP. Their clock has started though
       # LEGACY for old Mux streams
       state :starting
@@ -36,16 +33,10 @@ module VideoStates
           after_go_live
         end
 
-        transitions from: %i[pending scheduled], to: :live
-        transitions from: :live, to: :live
-      end
-
-      event :schedule do
-        transitions from: %i[pending scheduled], to: :scheduled
+        transitions from: %i[pending live], to: :live
       end
 
       event :cancel do
-        transitions from: :scheduled, to: :pending
         transitions from: :pending, to: :cancelled
       end
 

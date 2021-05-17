@@ -11,7 +11,7 @@ class DiscoverController < ApplicationController
     @live_videos = public_videos.live.limit(3).decorate
     @recent_videos = public_videos.finished.decorate
     @popular_channels = Channel.most_popular.limit(8).decorate
-    @upcoming_videos = public_videos.scheduled.order("scheduled_at asc").limit(12).decorate
+    @scheduled_shows = Channel.where("next_show_at IS NOT NULL").order(:next_show_at).limit(20).decorate
   end
 
   def load_curations

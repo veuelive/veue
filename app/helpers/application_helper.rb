@@ -47,7 +47,8 @@ module ApplicationHelper
     )
   end
 
-  def circle_image_tag(image, size=64, draggable: "false")
-    image_tag(image.variant(resize_to_fill: [size, size]), style: "border-radius: 50%;", draggable: draggable)
+  def circle_image_tag(image, size=64, options={})
+    options = options.merge(style: "border-radius: 50%;", draggable: "false")
+    image_tag(image.variant(resize_to_fill: [size, size]), options)
   end
 end

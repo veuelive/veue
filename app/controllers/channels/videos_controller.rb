@@ -3,6 +3,7 @@
 module Channels
   class VideosController < ApplicationController
     include ChannelConcern
+    load_and_authorize_resource
 
     # GET /videos/1
     def show

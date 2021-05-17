@@ -67,6 +67,9 @@ gem "cancancan"
 # A decorator pattern for our models
 gem "draper"
 
+# Allows Draper and CanCanCan to work together
+gem 'draper-cancancan'
+
 # HTTP Client for building API calls
 gem "faraday"
 

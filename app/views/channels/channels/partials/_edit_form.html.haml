@@ -19,11 +19,41 @@
           = f.text_field :name, class: 'input-field', placeholder: 'Enter your name', maxlength: "20", data: {target: 'channel-edit.channelName'}
       .channel-edit__body__field
         .channel-edit__body__field__title
-          %label{for: "channel_bio"} Channel Bio
+          %label{for: "channel_tagline"} Tagline
           .heading-info
-            Introduce to your viewers
+            Keep it pithy!
         .channel-edit__body__field__input
-          = f.text_area :bio, class: 'input-field', maxlength: "160"
+          = f.text_field :tagline, class: 'input-field', maxlength: "40"
+      .channel-edit__body__field
+        .channel-edit__body__field__title
+          %label{for: "channel_description"} Description
+          .heading-info
+            What is the show about?
+        .channel-edit__body__field__input
+          = f.text_area :description, class: 'input-field', maxlength: "160"
+      %h3 Schedule
+      .channel-edit__body__field
+        .channel-edit__body__field__title
+          %label{for: "schedule_type"} Type
+          .heading-info
+            What type of schedule is this on?
+        .channel-edit__body__field__input
+          = f.select :schedule_type, Schedulatron.types
+      .channel-edit__body__field
+        .channel-edit__body__field__title
+          %label{for: "schedule_day"} Airing Day
+          .heading-info
+            If weekly, what day of the week is this on?
+        .channel-edit__body__field__input
+          = f.select :schedule_day, Date::DAYNAMES
+      .channel-edit__body__field
+        .channel-edit__body__field__title
+          %label{for: "schedule_minutes"} Time of Day
+          .heading-info
+            What time does this air?
+        .channel-edit__body__field__input
+          = f.select :schedule_minutes, minutes_of_day_for_select
+          = f.select :schedule_timezone, custom_timezone_options, {include_blank: true}, {data: {controller: "util--timezone"}}
     .channel-edit__preview
       .channel-edit__preview-heading
         = t("channels.preview.content.heading")

@@ -3,10 +3,7 @@
 module Channels
   class ChannelsController < ApplicationController
     include ChannelConcern
-
-    before_action :authenticate_user!, only: %i[index edit update]
-
-    load_and_authorize_resource only: %i[edit update upload_image destroy_image]
+    load_and_authorize_resource
 
     def index; end
 
@@ -77,7 +74,7 @@ module Channels
     helper_method :current_user_channels
 
     def permitted_parameters
-      params.require(:channel).permit(:name, :bio)
+      params.require(:channel).permit(:name, :description, :tagline, :schedule_day, :schedule_type, :schedule_timezone, :schedule_minutes)
     end
   end
 end

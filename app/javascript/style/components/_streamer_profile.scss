@@ -132,13 +132,6 @@
       }
 
       .follow-btn {
-        color: color.$white;
-        background: color.$veue-corporate;
-        svg {
-          margin-right: 5px;
-          height: 10px;
-          width: 10px;
-        }
       }
 
       .unfollow-btn {
@@ -146,13 +139,19 @@
         background: color.$veue-lilac;
       }
 
-      .follow-btn,
-      .unfollow-btn {
+      button {
+        color: color.$white;
         font-size: 14px;
         font-weight: 500;
         font-family: font.$poppins;
-        width: 106px;
         height: 40px;
+        background: color.$veue-corporate;
+        margin-right: 5px;
+
+        svg {
+          height: 10px;
+          width: 10px;
+        }
       }
     }
   }
