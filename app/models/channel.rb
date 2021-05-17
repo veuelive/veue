@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Channel < ApplicationRecord
+  include ChannelScheduleConcern
   extend FriendlyId
 
   before_save :normalize_name
@@ -29,7 +30,7 @@ class Channel < ApplicationRecord
             allow_blank: false,
             length: {minimum: 2, maximum: 20}
 
-  friendly_id :slug_candidates, use: :slugged
+  friendly_id :slug_candidates, use: [:slugged, :finders]
   encrypts :mux_stream_key
   delegate :profile_image, to: :user
 

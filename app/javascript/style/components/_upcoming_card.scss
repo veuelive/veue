@@ -5,22 +5,43 @@
 
   svg,
   img {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 20px;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 10px;
+  }
+
+  .profile-image {
+    width: 20px;
+    height: 20px;
+    margin: 0 5px 0 0;
   }
 
   h3 {
+    font-size: 24px;
     line-height: 24px;
+    margin-bottom: 5px;
   }
 
-  & > div {
+  &__tagline {
+    color: color.$neutral-regular;
+    font-style: italic;
+  }
+
+  &__time {
+    color: color.$dark-text;
+    font-weight: 600;
+    margin: 5px 0 5px;
+  }
+
+  &__channel {
+    display: flex;
+    align-items: center;
     color: color.$neutral-regular;
     font-size: 14px;
     line-height: 19px;
+  }
 
-    a:hover & {
-      color: inherit;
-    }
+  a:hover & {
+    color: inherit;
   }
 }

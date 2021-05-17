@@ -13,16 +13,23 @@
 #
 
 module Schedulatron
+  def self.types
+    %w[none weekly]
+  end
+
   def self.upcoming_shows(schedule)
-    schedule.flat_map do |repeater|
-      repeater.symbolize_keys!
-      Time.use_zone(repeater[:timezone]) do
-        repeater[:days_of_the_week].map do |week_day|
-          date = Time.zone.parse(week_day)
-          date = date.advance(minutes: repeater[:minute_of_day])
-          date = date.advance(weeks: 1) if date.past?
-          date
-        end
+    schedule.symbolize_keys!
+    return [] unless schedule[:type] == "weekly"
+    return [] unless schedule[:timezone]
+    return [] unless schedule[:days_of_the_week]
+    return [] unless schedule[:minute_of_day]
+
+    Time.use_zone(schedule[:timezone]) do
+      schedule[:days_of_the_week].map do |week_day|
+        date = Date.parse(week_day).in_time_zone(schedule[:timezone])
+        date = date.advance(minutes: schedule[:minute_of_day])
+        date = date.advance(weeks: 1) if date.past?
+        date
       end
     end
   end

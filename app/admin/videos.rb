@@ -28,7 +28,7 @@ ActiveAdmin.register(Video) do
     column :title
     state_column :state
     column :visibility
-    column "Scheduled at (UTC)", :scheduled_at
+    column :created_at
   end
 
   # /:id/show
@@ -39,12 +39,9 @@ ActiveAdmin.register(Video) do
       end
       row :channel
       row :title
-      row :description
       state_row :state
       row :visibility
-      row :scheduled_at do |video|
-        text_node video.scheduled_at.to_s
-      end
+      row :started_at
     end
     active_admin_comments
   end
@@ -56,15 +53,6 @@ ActiveAdmin.register(Video) do
       f.input(:title)
       f.input(:description, input_html: {rows: "5"})
       f.input(:visibility, as: :select, include_blank: false)
-      f.input(
-        :scheduled_at,
-        as: :date_time_picker,
-        picker_options: {
-          format: "d-m-Y H:i",
-          step: 30,
-        },
-        label: "Scheduled At (UTC Time)",
-      )
 
       # display current state as disabled to avoid modifying it directly
       f.input(:state, input_html: {disabled: true}, label: "Current state")

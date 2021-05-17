@@ -3,6 +3,7 @@
 # CanCanCan's top level module for authorization
 class Ability
   include CanCan::Ability
+  prepend Draper::CanCanCan
 
   def initialize(user)
     can(:read, [Channel, User, VideoSnapshot])

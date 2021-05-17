@@ -32,6 +32,10 @@ en:
   text_messages:
     follow_consent: "By following %{display_name}, we will message you every time someone you follow goes live. Text STOP unsubscribe from all future notifications"
 
+  time:
+    formats:
+      short: "%-I:%M%P"
+
   datetime:
     # This is used for helpers like +#time_ago_in_words+
     distance_in_words:
