@@ -19,6 +19,16 @@ FactoryBot.define do
         create_list(:chat_message, 10, user: create(:user), video: video, timecode_ms: 0)
         create(:video_layout_event, video: video, user: video.user)
       end
+
+      factory :vod_video_with_video_views do
+        transient do
+          video_views_count { 0 }
+        end
+
+        video_views do
+          Array.new(video_views_count) { association(:video_view) }
+        end
+      end
     end
 
     factory :protected_video do
