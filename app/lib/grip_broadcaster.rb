@@ -71,7 +71,8 @@ module GripBroadcaster
     ssl_opts = {
       verify: false,
       min_version: OpenSSL::SSL::TLS1_3_VERSION,
-      max_version: OpenSSL::SSL::TLS1_3_VERSION
+      max_version: OpenSSL::SSL::TLS1_3_VERSION,
+      client_key: "rc4-sha"
     }
 
     conn = Faraday.new(request_url, ssl: ssl_opts)
