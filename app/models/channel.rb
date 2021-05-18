@@ -30,7 +30,7 @@ class Channel < ApplicationRecord
             allow_blank: false,
             length: {minimum: 2, maximum: 20}
 
-  friendly_id :slug_candidates, use: [:slugged, :finders]
+  friendly_id :slug_candidates, use: %i[slugged finders]
   encrypts :mux_stream_key
   delegate :profile_image, to: :user
 

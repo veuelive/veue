@@ -68,7 +68,7 @@ gem "cancancan"
 gem "draper"
 
 # Allows Draper and CanCanCan to work together
-gem 'draper-cancancan'
+gem "draper-cancancan"
 
 # HTTP Client for building API calls
 gem "faraday"

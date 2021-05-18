@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ChannelHelper
   def minutes_of_day_for_select
     entries = []

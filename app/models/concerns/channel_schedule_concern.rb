@@ -22,7 +22,7 @@ module ChannelScheduleConcern
   def schedule_type=(type)
     return unless Schedulatron.types.include?(type)
 
-    schedule['type'] = type
+    schedule["type"] = type
   end
 
   def schedule_day
@@ -40,7 +40,7 @@ module ChannelScheduleConcern
   end
 
   def schedule_minutes=(minutes)
-    schedule["minute_of_day"] = minutes.to_i
+    schedule["minute_of_day"] = Integer(minutes, 10)
   end
 
   def schedule_timezone

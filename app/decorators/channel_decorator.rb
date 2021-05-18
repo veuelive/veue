@@ -67,6 +67,6 @@ class ChannelDecorator < ApplicationDecorator
       minute: "numeric",
       hour: "numeric",
       datetime: next_show_at.iso8601,
-      )
+    )
   end
 end

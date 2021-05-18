@@ -27,7 +27,7 @@ describe "channel edit" do
 
       fill_in "Channel Name", with: ""
       fill_in "Channel Name", with: text
-      fill_in "Bio", with: long_text
+      fill_in "Description", with: long_text
       click_on "Save Changes"
       expect(page).to have_content("Your channel was successfully updated")
     end
