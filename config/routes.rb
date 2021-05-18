@@ -8,9 +8,11 @@ Rails.application.routes.draw do
     root "discover#index"
   end
 
-  get "/discover", to: "discover#index"
+  get "/:locale/:page_slug", to: "discover#index", constraints: {locale: DiscoverController::SUPPORTED_LOCALES}
 
-  get "/en/:page_slug/", to: "content#show"
+  get "/content/:locale/:page_slug/", to: "content#show"
+
+  get "/discover", to: "discover#index"
 
   resources :broadcasts, only: [:show, :index, :edit, :update] do
     scope module: "broadcasts" do
@@ -115,5 +117,4 @@ Rails.application.routes.draw do
       delete :destroy_image, on: :member
     end
   end
-
 end
