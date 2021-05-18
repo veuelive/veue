@@ -70,6 +70,7 @@ module GripBroadcaster
 
     conn = Faraday.new do |f|
       f.ssl[:verify] = false
+      f.ssl[:ca_path] = "/usr/lib/ssl/certs"
       f.ssl[:min_version] = OpenSSL::SSL::TLS1_VERSION
       f.ssl[:max_version] = OpenSSL::SSL::TLS1_3_VERSION
     end
