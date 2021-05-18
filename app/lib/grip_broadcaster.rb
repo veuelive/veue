@@ -68,16 +68,7 @@ module GripBroadcaster
   def self.do_request(payload={})
     request_url = "#{base_url}#{realm_id}/publish/"
 
-    ssl_opts = {
-      verify: false,
-      min_version: OpenSSL::SSL::TLS1_3_VERSION,
-      max_version: OpenSSL::SSL::TLS1_3_VERSION,
-      client_key: "rc4-sha"
-    }
-
-    conn = Faraday.new(request_url, ssl: ssl_opts)
-
-    response = conn.post(
+    response = Faraday.post(
       request_url,
       payload.to_json,
       generate_headers,
