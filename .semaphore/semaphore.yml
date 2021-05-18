@@ -15,6 +15,7 @@ global_job_config:
       - sudo swapoff -a && sudo fallocate -l 2G /swapfile && sudo mkswap /swapfile && sudo swapon /swapfile
       - checkout
       - cache restore
+      - sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install openssl -y
       - sem-version ruby 2.7.3
       - sem-version node 14.16.0
       - bundle config set deployment 'true'

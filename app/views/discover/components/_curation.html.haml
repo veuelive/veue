@@ -1,0 +1,6 @@
+- if curation.collection.present?
+  - cache curation do
+    .discover__strip
+      %h2= curation.title
+      .discover__grid
+        = render collection: curation.collection, partial: "shared/video_card", cached: true
