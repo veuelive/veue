@@ -129,7 +129,7 @@ describe "Discover View" do
       expect(page).to have_text(live_video_title)
       expect(page).to have_text(vod_video_title)
 
-      live_videos.slice(0, limit).each { |video| expect(page).to have_css("##{dom_id(video)}") }
+      expect(page).to have_selector(".live", count: limit)
       vod_videos.each { |video| expect(page).to have_css("a[href*='#{video.id}']") }
     end
 
