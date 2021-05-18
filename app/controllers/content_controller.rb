@@ -9,6 +9,7 @@ class ContentController < ApplicationController
   def show
     # This line is here to escape to make Brakeman happy that we aren't passing in HTML here.
     page_slug = ERB::Util.html_escape(params[:page_slug])
+    # locale = ERB::Util.html_escape(params[:locale])
 
     # This fetches the html and content for the page
     @content = ButterCMS::Page.get("company_content", page_slug, {})

@@ -3,7 +3,10 @@
   .video-card.card{class: video.state, id: dom_id(video)}
     = link_to video_link_path(video), draggable: "false" do
       .video-card__image
-        = image_tag video_card_image_url(video), draggable: "false"
+        - if video.primary_shot.attached?
+          = image_tag video_card_image_url(video), draggable: "false"
+        - else
+          .video-card__image__placeholder
 
         - if video.live?
           .video-card__image__live
