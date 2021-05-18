@@ -1,8 +1,12 @@
-- video = upcoming_card
-%a.upcoming-card.card{href: channel_path(video.channel.slug), draggable: "false"}
-  = video.channel.decorate.profile_image_circle(200)
-  %h3= video.title
+- channel = upcoming_card
+%a.upcoming-card.card{href: channel_path(channel.slug), draggable: "false"}
+  = channel.channel_icon_circle(300)
+  %h3= channel.name
+  - unless channel.tagline.blank?
+    .upcoming-card__tagline
+      = channel.tagline
   .upcoming-card__time
-    - video.scheduled_at_in_words
+    - channel.next_show_at_in_words
   .upcoming-card__channel
-    = video.channel.name
+    = channel.profile_image_circle(50)
+    = channel.users.first.display_name

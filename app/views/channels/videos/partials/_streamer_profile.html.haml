@@ -15,9 +15,6 @@
           = current_channel.name
           - if current_channel.verified?
             = svg_tag 'verified'
-      - if show_video_title?
-        .streamer-profile__info__text__broadcast-title
-          = current_video.title
       .streamer-profile__info__text__about
         = current_channel.about
     .streamer-profile__info__follow
@@ -33,18 +30,19 @@
           %button.follow-btn{data: { action: "click->streamer-profile#follow" }}
             = svg_tag "plus"
             %span Follow
+        - if can? :manage, current_channel
+          = link_to button_tag(svg_tag("edit")), edit_channel_path(current_channel)
       - else
         %button.follow-btn{data: { action: "click->authentication#showModal" }}
           = svg_tag "plus"
           %span Follow
-  - if current_channel.videos.scheduled.any?
-    - upcoming_video = current_channel.videos.scheduled.first
+  - if current_channel.next_show_at
     .streamer-profile__upcoming__broadcast
       .streamer-profile__upcoming__broadcast__text
         = svg_tag "clock"
         = t("channels.scheduled.next_live_at")
       .streamer-profile__upcoming__broadcast__date
-        - upcoming_video.decorate.scheduled_at_in_words
+        - current_channel.next_show_at_in_words
       - unless current_user&.follows?(current_channel)
         .streamer-profile__upcoming__broadcast__cta
           = t("channels.scheduled.cta", name: current_channel.name)

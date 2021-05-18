@@ -3,10 +3,7 @@
 module Channels
   class ChannelsController < ApplicationController
     include ChannelConcern
-
-    before_action :authenticate_user!, only: %i[index edit update]
-
-    load_and_authorize_resource only: %i[edit update upload_image destroy_image]
+    load_and_authorize_resource except: ["viewed"]
 
     def index; end
 
@@ -15,6 +12,7 @@ module Channels
     end
 
     def update
+      authorize!(:manage, @channel)
       if @channel.update(permitted_parameters)
         render(status: :accepted, template: "channels/channels/partials/_edit_form", layout: false)
       else
@@ -23,6 +21,7 @@ module Channels
     end
 
     def upload_image
+      authorize!(:manage, @channel)
       if @channel.update(params.permit(:channel_icon))
         render(partial: "channels/channels/partials/channel_icon", locals: {channel: @channel})
       else
@@ -31,6 +30,7 @@ module Channels
     end
 
     def destroy_image
+      authorize!(:manage, @channel)
       @channel.channel_icon.purge
       render(partial: "channels/channels/partials/channel_icon", locals: {channel: @channel})
     end
@@ -77,7 +77,15 @@ module Channels
     helper_method :current_user_channels
 
     def permitted_parameters
-      params.require(:channel).permit(:name, :bio)
+      params.require(:channel).permit(
+        :name,
+        :description,
+        :tagline,
+        :schedule_day,
+        :schedule_type,
+        :schedule_timezone,
+        :schedule_minutes,
+      )
     end
   end
 end

@@ -19,6 +19,12 @@ module VideosHelper
     end
   end
 
+  def visibilities_for_select
+    Video.visibilities_legend.map do |value, text|
+      [text, value.to_s]
+    end
+  end
+
   def upcoming_stream?
     current_video&.stream_type == "upcoming"
   end
@@ -71,9 +77,5 @@ module VideosHelper
     return unless seconds
 
     [seconds / 3600, seconds / 60 % 60, seconds % 60].map { |t| t.to_s.rjust(2, "0") }.join(":")
-  end
-
-  def show_video_title?
-    upcoming_stream? || current_video && !current_video.scheduled?
   end
 end
