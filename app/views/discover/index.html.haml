@@ -16,13 +16,7 @@
         .discover__strip
           %h2= t("discover.upcoming")
           .discover__strip__items
-
-
-      - if @upcoming_videos.any?
-        .discover__strip
-          %h2= t("discover.upcoming")
-          .discover__strip__items
-            = render collection: @upcoming_videos, partial: "shared/upcoming_card"
+            = render collection: @scheduled_shows, partial: "shared/upcoming_card"
 
       .discover__strip
         %h2= t("discover.our_streamers")
