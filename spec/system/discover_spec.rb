@@ -104,8 +104,6 @@ describe "Discover View" do
   end
 
   describe "for dynamic content" do
-    let(:vod_videos) { create_list(:vod_video, 5) }
-    let(:live_videos) { create_list(:live_video, 5) }
     let(:json_data) { read_file("dynamic_curation.json") }
 
     before(:each) do
@@ -114,8 +112,8 @@ describe "Discover View" do
 
     it "should show dynamic content" do
       # instantiate videos
-      vod_videos
-      live_videos
+      vod_videos = create_list(:vod_video, 5)
+      live_videos = create_list(:live_video, 5)
 
       visit root_path
 
@@ -144,9 +142,6 @@ describe "Discover View" do
       }.dig("fields", "title")
       expect(page).to have_no_text(live_video_title)
       expect(page).to have_no_text(vod_video_title)
-
-      live_videos.each { |video| expect(page).to have_no_css("##{dom_id(video)}") }
-      vod_videos.each { |video| expect(page).to have_no_css("a[href*='#{video.id}']") }
     end
   end
 
