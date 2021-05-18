@@ -53,8 +53,11 @@ class DiscoverController < ApplicationController
   rescue ButterCMS::NotFound
   end
 
+  def public_videos
+    @public_videos ||= Video.visibility_public.most_recent
+  end
+
   def set_default_variables
-    public_videos = Video.visibility_public.most_recent
     @live_videos = public_videos.live.limit(3).decorate
     @recent_videos = public_videos.finished.decorate
     @popular_channels = Channel.most_popular.limit(8).decorate
