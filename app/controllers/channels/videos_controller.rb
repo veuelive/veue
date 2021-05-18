@@ -3,7 +3,7 @@
 module Channels
   class VideosController < ApplicationController
     include ChannelConcern
-    load_and_authorize_resource
+    load_and_authorize_resource except: ["viewed"]
 
     # GET /videos/1
     def show

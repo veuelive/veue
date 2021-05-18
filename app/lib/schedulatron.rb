@@ -19,10 +19,7 @@ module Schedulatron
 
   def self.upcoming_shows(schedule)
     schedule.symbolize_keys!
-    return [] unless schedule[:type] == "weekly"
-    return [] unless schedule[:timezone]
-    return [] unless schedule[:days_of_the_week]
-    return [] unless schedule[:minute_of_day]
+    return [] unless valid_schedule?(schedule)
 
     Time.use_zone(schedule[:timezone]) do
       schedule[:days_of_the_week].map do |week_day|
@@ -32,5 +29,9 @@ module Schedulatron
         date
       end
     end
+  end
+
+  def self.valid_schedule?(schedule)
+    schedule[:type] == "weekly" && schedule[:timezone] && schedule[:days_of_the_week] && schedule[:minute_of_day]
   end
 end

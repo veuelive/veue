@@ -53,8 +53,6 @@ class VideoDecorator < Draper::Decorator
     fallback_social_image_hash
   end
 
-
-
   # Uses the videos primary shot for both +:big_image+ and +:thumbnail+
   # @return {Hash{:thumbnail => String, :big_image => String}}
   def primary_social_image_hash
