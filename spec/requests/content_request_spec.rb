@@ -11,14 +11,14 @@ describe ContentController do
         raise(ButterCMS::NotFound)
       }
 
-      get "/en/do-not-create-me"
+      get "/content/en/do-not-create-me"
       expect(response).to have_http_status(:not_found)
     end
 
     describe "a complex page with seo settings" do
       it "should override page headers with content" do
         mock_page_with_file("landing-page", "seo_optimized")
-        get "/en/landing-page"
+        get "/content/en/landing-page"
 
         expect(response).to have_http_status(:ok)
         render_template "contents/show"
@@ -48,7 +48,7 @@ describe ContentController do
         # This will cause all t() helpers to return their own key name
         do_not_translate
 
-        get "/en/simple"
+        get "/content/en/simple"
 
         # Since we aren't overriding anything, we should have all our default I8tn translation keys
         expect(response.body).to include("header.seo.default_title")
