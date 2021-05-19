@@ -1,4 +1,6 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe AttachInitialSnapshotsJob, type: :job do
   let(:video) { create(:live_video) }
@@ -24,9 +26,9 @@ RSpec.describe AttachInitialSnapshotsJob, type: :job do
 
     AttachInitialSnapshotsJob.perform_now(video)
 
-    expect(primary_snapshot).not_to be_primary_shot(video)
-    expect(secondary_snapshot).not_to be_primary_shot(video)
-    expect(secondary_snapshot).not_to be_secondary_shot(video)
+    expect(primary_snapshot).not_to(be_primary_shot(video))
+    expect(secondary_snapshot).not_to(be_primary_shot(video))
+    expect(secondary_snapshot).not_to(be_secondary_shot(video))
   end
 
   it "should not attempt to attach anything if a primary shot is already in place" do
@@ -35,7 +37,7 @@ RSpec.describe AttachInitialSnapshotsJob, type: :job do
     expect(original_snapshot).to be_primary_shot(video)
 
     # Should not attempt to attach these.
-    expect(primary_snapshot).not_to be_primary_shot(video)
-    expect(secondary_snapshot).not_to be_secondary_shot(video)
+    expect(primary_snapshot).not_to(be_primary_shot(video))
+    expect(secondary_snapshot).not_to(be_secondary_shot(video))
   end
 end
