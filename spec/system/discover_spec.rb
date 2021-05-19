@@ -118,7 +118,7 @@ describe "Discover View" do
 
       # instantiate videos
       vod_videos = create_list(:vod_video, 5)
-      live_videos = create_list(:live_video, live_limit + 1)
+      create_list(:live_video, live_limit + 1)
 
       visit root_path
 
