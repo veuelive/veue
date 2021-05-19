@@ -20,8 +20,11 @@ describe "Broadcast View" do
 
   before :each do
     login_as(streamer)
-
+    streamer.setup_as_streamer!
     visit "/broadcasts"
+
+    shift_to_broadcast_view
+
     find("body").click
 
     ensure_live_event_source
@@ -86,6 +89,7 @@ describe "Broadcast View" do
       wait_for_broadcast_state("finished")
 
       page.refresh
+      shift_to_broadcast_view
 
       wait_for_broadcast_state("ready")
 
@@ -161,7 +165,9 @@ describe "Broadcast View" do
       it "should load with new video" do
         # Refreshing view while broadcasting live video
         page.refresh
-        expect(find("#broadcast")["data-broadcast-video-state"]).to eq("pending")
+        shift_to_broadcast_view
+
+        expect(find("#broadcast-area")["data-broadcast-video-state"]).to eq("pending")
       end
     end
 
@@ -185,6 +191,7 @@ describe "Broadcast View" do
 
       it "should allow for live chat messages to be sent" do
         write_chat_message "Cowabunga!"
+
         expect(page).to have_content("Cowabunga!").once
         expect(video.chat_messages.count).to be(1)
 
@@ -197,29 +204,31 @@ describe "Broadcast View" do
           execute_script("document.dispatchEvent(new CustomEvent('StreamDisconnectErrorEvent'))")
         end
 
+        shift_to_broadcast_view
+
         expect(page).to have_content("Go Live")
         expect(page).to_not have_content("Cowabunga!")
       end
     end
+  end
 
-    describe "update title and visibility feature" do
-      it "updates the broadcast title and visibility on button click" do
-        new_title = "super cool new title"
-        new_visibility = "protected"
+  describe "update title and visibility feature" do
+    it "updates the broadcast title and visibility on button click" do
+      new_title = "super cool new title"
+      new_visibility = "protected"
+      expect(video.title).not_to(eq(new_title))
+      expect(video.visibility).not_to(eq(new_visibility))
 
-        expect(video.title).not_to(eq(new_title))
-        expect(video.visibility).not_to(eq(new_visibility))
+      fill_in("video_title", with: "")
+      fill_in("video_title", with: new_title)
+      find("[value='#{new_visibility}']").select_option
 
-        fill_in("video_title", with: new_title)
-        find("[value='#{new_visibility}']").select_option
+      expect(page).to have_css("svg.loading")
+      expect(page).to have_css(".notification-wrapper", wait: 5)
 
-        expect(page).to have_css("svg.loading")
-        expect(page).to have_css(".notification-wrapper", wait: 5)
-
-        video.reload
-        expect(video.title).to eq(new_title)
-        expect(video.visibility).to eq(new_visibility)
-      end
+      video.reload
+      expect(video.title).to eq(new_title)
+      expect(video.visibility).to eq(new_visibility)
     end
   end
 end
