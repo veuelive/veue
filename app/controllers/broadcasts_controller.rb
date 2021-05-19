@@ -12,7 +12,7 @@ class BroadcastsController < ApplicationController
   end
 
   def show
-    current_broadcast_video.set_browser_broadcast(params)
+    current_broadcast_video.mark_browser_broadcast(params)
     current_broadcast_video.touch
 
     render
