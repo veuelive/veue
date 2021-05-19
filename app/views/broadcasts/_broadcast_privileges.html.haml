@@ -21,4 +21,4 @@
       Click below to grant access
       %button{data: {action: "click->broadcast--welcome-privileges#requestAccess"}} Prompt For Access
     .next{data: {"text-state": "redirect"}}
-      = link_to "Start Broadcast", broadcast_path(current_broadcast_video, browser_broadcast: true), target: "_blank"
+      = link_to "Start Broadcast", broadcast_path(current_channel.active_video!, browser_broadcast: true), target: "_blank", class: "share_broadcast"
