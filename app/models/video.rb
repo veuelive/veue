@@ -159,6 +159,10 @@ class Video < ApplicationRecord
     attach_secondary_shot!(snapshot)
   end
 
+  def set_browser_broadcast(params)
+    update(browser_broadcast: params[:browser_broadcast].present?)
+  end
+
   private
 
   def after_go_live

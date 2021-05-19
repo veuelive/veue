@@ -7,6 +7,8 @@ import { getVideoId } from "helpers/video_helpers";
 import { origin } from "helpers/app_config";
 import { BroadcasterEnvironment, WindowBounds } from "types/electron_env";
 
+export type Steps = "login" | "redirect" | "media" | "done";
+
 export function getBroadcastElement(): HTMLElement {
   return document.getElementById("broadcast");
 }
@@ -82,4 +84,13 @@ export function sendBroadcastLayoutUpdate(broadcastLayout: VideoLayout): void {
     };
     postJson("./layout", payload);
   }
+}
+
+export function toggleNextStep(nextStep: Steps): void {
+  document
+    .querySelectorAll("*[data-text-state]")
+    .forEach((e) => (e["style"] = "display: none;"));
+  document
+    .querySelectorAll(`*[data-text-state='${nextStep}']`)
+    .forEach((e) => (e["style"] = "display: block;"));
 }

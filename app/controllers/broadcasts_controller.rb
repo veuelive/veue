@@ -1,16 +1,20 @@
 # frozen_string_literal: true
 
 class BroadcastsController < ApplicationController
-  before_action :authenticate_user!, except: %i[startup blank]
+  before_action :authenticate_user!, except: %i[startup blank index]
 
   def index
+    return redirect_to(startup_broadcasts_path) unless user_signed_in?
+
     current_user.setup_as_streamer!
     channel = current_user.channels.first
     redirect_to(broadcast_path(channel.active_video!))
   end
 
   def show
+    current_broadcast_video.set_browser_broadcast(params)
     current_broadcast_video.touch
+
     render
   end
 
