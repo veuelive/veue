@@ -64,4 +64,19 @@ describe "Live Audience View" do
       end
     end
   end
+
+  it "scheduled shows hidden during live" do
+    channel.update!(
+      schedule: {
+        days_of_the_week: ["Sunday"],
+        type: "weekly",
+        timezone: "UTC",
+        minute_of_day: 930,
+      },
+    )
+
+    visit channel_path(channel)
+
+    expect(page).to_not have_content("Next Live Show")
+  end
 end

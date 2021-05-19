@@ -6,6 +6,7 @@ describe "Prerecorded Audience View" do
   include AudienceSpecHelpers
 
   let(:video) { create(:vod_video) }
+  let(:channel) { video.channel }
 
   before :example do
     driven_by :media_browser
@@ -30,5 +31,20 @@ describe "Prerecorded Audience View" do
       last_message = video.chat_messages.last
       expect(page).to have_no_css("#message-#{last_message.id}")
     end
+  end
+
+  it "scheduled shows visible during VOD" do
+    channel.update!(
+      schedule: {
+        days_of_the_week: ["Sunday"],
+        type: "weekly",
+        timezone: "UTC",
+        minute_of_day: 930,
+      },
+    )
+
+    visit path_for_video(video)
+
+    expect(page).to have_content("Next Live Show")
   end
 end
