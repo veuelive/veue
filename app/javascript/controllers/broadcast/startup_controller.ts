@@ -1,7 +1,6 @@
 import MediaAccess from "helpers/media_access";
+import { Steps, toggleNextStep } from "helpers/broadcast_helpers";
 import BaseController from "controllers/base_controller";
-
-type Steps = "done" | "login" | "media";
 
 export default class extends BaseController {
   static targets = [
@@ -67,17 +66,11 @@ export default class extends BaseController {
   }
 
   private doNextStep(nextStep: Steps) {
-    console.log(nextStep);
     if (nextStep === "done") {
       this.endSetup();
       return;
     }
-    document
-      .querySelectorAll("*[data-text-state]")
-      .forEach((e) => (e["style"] = "display: none;"));
-    document
-      .querySelectorAll(`*[data-text-state='${nextStep}']`)
-      .forEach((e) => (e["style"] = "display: block;"));
+    toggleNextStep(nextStep);
 
     // We start in a hidden state, and only by this point do we know if we should display at all...
     this.element.style.display = "flex";
