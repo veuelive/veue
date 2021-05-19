@@ -10,12 +10,12 @@
     position: relative;
   }
 
-  .streamer-profile {
+  .channel-bar {
     border-radius: 0;
     padding: 5px;
     border-top: 1px solid color.$neutral-accents;
     border-bottom: 1px solid color.$neutral-accents;
-    z-index: z_index.$streamer-profile;
+    z-index: z_index.$channel-bar;
     top: 0px;
     overflow: hidden;
     width: stretch;
@@ -107,12 +107,12 @@
     }
 
     @include large() {
-      margin-top: 0px;
+      margin-top: 0;
       background: color.$white;
       border-radius: 0 0 10px 10px;
       padding: 0;
 
-      .streamer-profile__info {
+      .channel-bar__info {
         &__follow__count {
           display: flex;
         }
