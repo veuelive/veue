@@ -148,21 +148,34 @@ class Video < ApplicationRecord
     secondary_shot.attach(snapshot.image.blob)
   end
 
-  def attach_initial_shot!(snapshot)
-    attach_primary_shot!(snapshot) if snapshot.priority == 1
-    attach_secondary_shot!(snapshot) if snapshot.priority == 2
-  end
-
   def purge_or_attach_secondary_shot!(snapshot)
     return secondary_shot.purge if snapshot.secondary_shot?(self)
 
     attach_secondary_shot!(snapshot)
   end
 
+  def attach_initial_shots!(snapshots)
+    return if primary_shot.attached?
+
+    primary_snapshot = snapshots.find_by(priority: 1)
+    secondary_snapshot = snapshots.find_by(priority: 2)
+
+    if primary_snapshot
+      attach_primary_shot!(primary_snapshot)
+      attach_secondary_shot!(secondary_snapshot)
+      return
+    end
+
+    return if secondary_snapshot&.image&.blob.nil?
+
+    attach_primary_shot!(secondary_snapshot)
+  end
+
   private
 
   def after_go_live
     transition_audience_to_live
+    AttachInitialSnapshotsJob.perform_later(self)
 
     return unless visibility.eql?("public")
 
