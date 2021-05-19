@@ -13,6 +13,17 @@ module BroadcastSystemHelpers
     expect(find("*[data-broadcast--browser-url]")["data-broadcast--browser-url"]).to eq(url)
   end
 
+  def shift_to_broadcast_view
+    expect(page).to have_css(".broadcast__welcome-page")
+    click_link("Start Broadcast")
+    switch_to_broadcast
+  end
+
+  def switch_to_broadcast
+    broadcast_view = page.driver.browser.window_handles.last
+    page.driver.browser.switch_to.window(broadcast_view)
+  end
+
   def update_video_visibility(visibility)
     find("[value='#{visibility}']").select_option
 

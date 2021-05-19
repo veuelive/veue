@@ -59,7 +59,6 @@ ActiveRecord::Schema.define(version: 2021_05_18_092240) do
   end
 
   create_table "channels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "legacy_user_id"
     t.string "name", null: false
     t.string "slug", null: false
     t.string "mux_live_stream_id"
@@ -68,12 +67,11 @@ ActiveRecord::Schema.define(version: 2021_05_18_092240) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "followers_count", default: 0
     t.boolean "verified", default: false
+    t.uuid "legacy_user_id"
     t.text "description"
     t.json "schedule", default: {}
     t.datetime "next_show_at"
     t.string "tagline", limit: 70
-    t.uuid "legacy_user_id"
-    t.text "bio"
     t.index ["legacy_user_id"], name: "index_channels_on_legacy_user_id"
     t.index ["mux_live_stream_id"], name: "index_channels_on_mux_live_stream_id", unique: true
     t.index ["name"], name: "index_channels_on_name", unique: true
