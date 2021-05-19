@@ -14,17 +14,14 @@
 
       - if @scheduled_shows.any?
         .discover__strip
-          %h2= t("discover.upcoming")
+          %h2= t("discover.featured_shows")
           .discover__strip__items
             = render collection: @scheduled_shows, partial: "shared/upcoming_card"
 
       .discover__strip
-        %h2= t("discover.our_streamers")
+        %h2= t("discover.top_channels")
         .discover__strip__items{data: {controller: "util--click-drag"}}
           = render collection: @popular_channels, partial: "shared/channel_card"
-
-      = render collection: @static_curations, partial: "discover/components/curation"
-
 
       %h2= t("discover.recent")
       .discover__grid

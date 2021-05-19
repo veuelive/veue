@@ -23,7 +23,7 @@ RSpec.describe "Follows", type: :request do
 
     it "should render streamer profile template" do
       get follow_path_for_test
-      expect(response).to render_template(partial: "_streamer_profile")
+      expect(response).to render_template(partial: "_channel_bar")
     end
   end
 

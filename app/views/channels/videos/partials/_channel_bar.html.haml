@@ -1,32 +1,35 @@
-.streamer-profile{
+.channel-bar{
   data: {
-    controller: "streamer-profile",
+    controller: "channel-bar",
     target: "canvas-size-observer.resizable",
     "show-when-video-focused": true
   }
 }
-  .streamer-profile__info
-    .streamer-profile__info__avatar
+  .channel-bar__info
+    .channel-bar__info__avatar
       %a{href: channel_path(current_channel)}
-        = current_channel.profile_image_circle(160)
-    .streamer-profile__info__text
-      .streamer-profile__info__text__name
+        = current_channel.channel_icon_circle(160)
+        - current_channel.users.each do |host|
+          - if host.profile_image.attached?
+            = circle_image_tag(host.profile_image, 160)
+    .channel-bar__info__text
+      .channel-bar__info__text__name
         %a{href: channel_path(current_channel)}
           = current_channel.name
           - if current_channel.verified?
             = svg_tag 'verified'
-      .streamer-profile__info__text__about
-        = current_channel.about
-    .streamer-profile__info__follow
-      .streamer-profile__info__follow__count
+      .channel-bar__info__text__about
+        = current_channel.tagline
+    .channel-bar__info__follow
+      .channel-bar__info__follow__count
         = svg_tag 'user-icon-dark'
         %span
           = current_channel.followers.size
       - if user_signed_in?
         - if current_user.follows?(current_channel)
-          %button.unfollow-btn{data: { action: "click->streamer-profile#unfollow" }} Following
+          %button.unfollow-btn{data: { action: "click->channel-bar#unfollow" }} Following
         - elsif current_channel.user != current_user
-          %button.follow-btn{data: { action: "click->streamer-profile#follow" }}
+          %button.follow-btn{data: { action: "click->channel-bar#follow" }}
             = svg_tag "plus"
             %span Follow
         - if can? :manage, current_channel
@@ -36,12 +39,12 @@
           = svg_tag "plus"
           %span Follow
   - if current_channel.next_show_at && !current_video&.live?
-    .streamer-profile__upcoming__broadcast
-      .streamer-profile__upcoming__broadcast__text
+    .channel-bar__upcoming__broadcast
+      .channel-bar__upcoming__broadcast__text
         = svg_tag "clock"
         = t("channels.scheduled.next_live_at")
-      .streamer-profile__upcoming__broadcast__date
+      .channel-bar__upcoming__broadcast__date
         - current_channel.next_show_at_in_words
       - unless current_user&.follows?(current_channel)
-        .streamer-profile__upcoming__broadcast__cta
+        .channel-bar__upcoming__broadcast__cta
           = t("channels.scheduled.cta", name: current_channel.name)

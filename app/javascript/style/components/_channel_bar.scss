@@ -2,7 +2,7 @@
 @use "../utils/font";
 @use "../utils/breakpoints" as *;
 
-.streamer-profile {
+.channel-bar {
   display: flex;
   flex-direction: column;
   background: color.$white;
@@ -207,7 +207,7 @@
 }
 
 @include smallTall() {
-  .streamer-profile {
+  .channel-bar {
     &__upcoming__broadcast {
       // layout
       padding: 0;
@@ -224,7 +224,7 @@
 }
 
 @include large() {
-  .streamer-profile {
+  .channel-bar {
     &__info {
       margin: 8px 0 10px 0;
 
