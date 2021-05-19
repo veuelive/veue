@@ -30,6 +30,22 @@ class VideoDecorator < Draper::Decorator
     end
   end
 
+  def broadcast_type
+    browser_broadcast ? "browser" : "app"
+  end
+
+  def scheduled_at_in_words
+    if scheduled_at < 1.hour.from_now
+      scheduled_in_one_hour
+    elsif scheduled_at < 16.hours.from_now
+      scheduled_today
+    elsif scheduled_at < 6.days.from_now
+      scheduled_this_week
+    else
+      future_schedule
+    end
+  end
+
   def start_time_in_words(_suffix="ago")
     started_at =
       if started_at_ms

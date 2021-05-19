@@ -1,0 +1,24 @@
+.wrapper{
+  data: {
+    controller: "broadcast--welcome-privileges"
+  }
+}
+  .welcome
+    .logo= svg_tag "logo"
+    Welcome to the Veue Broadcaster application! We're glad you're here and can't wait to get you started
+    streaming as soon as possible.
+
+    Please complete the steps below to set up your ability to stream!
+  .checklist
+    .checklist--step
+      %span.checklist--step--status{data: {target: "broadcast--welcome-privileges.videoAccess"}} ✓
+      1. Access Camera
+    .checklist--step
+      %span.checklist--step--status{data: {target: "broadcast--welcome-privileges.microphoneAccess"}} ✓
+      2. Access Microphone
+  .prompts
+    .next{data: {"text-state": "media"}}
+      Click below to grant access
+      %button{data: {action: "click->broadcast--welcome-privileges#requestAccess"}} Prompt For Access
+    .next{data: {"text-state": "redirect"}}
+      = link_to "Start Broadcast", broadcast_path(current_channel.active_video!, browser_broadcast: true), target: "_blank", class: "share_broadcast"
