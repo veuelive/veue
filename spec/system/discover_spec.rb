@@ -114,7 +114,7 @@ describe "Discover View" do
       live_limit = data_components.find { |c|
         c.dig("fields", "type") == "live"
       }.dig("fields", "max_size")
-      live_limit = Integer(limit)
+      live_limit = Integer(live_limit)
 
       # instantiate videos
       vod_videos = create_list(:vod_video, 5)
