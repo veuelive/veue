@@ -29,12 +29,12 @@
       .video-card__below__picture
         - channel = video.channel
         %a{href: channel_path(channel.slug), draggable: "false"}
-          = channel.profile_image_circle(32)
+          = channel.channel_icon_circle(32)
       .video-card__below__flex
         .video-card__below__title
           = video.title
         .video-card__below__details
-          = video.user.display_name
+          = channel.name
 
           - if !video.pending?
             = svg_tag "ellipse-2"
