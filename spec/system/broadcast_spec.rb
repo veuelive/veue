@@ -60,6 +60,9 @@ describe "Broadcast View" do
       server = Capybara.current_session.server
       current_video_url = channel_path(channel, host: server.host, port: server.port)
 
+      # Check that we attempt to attach initial snapshots
+      expect(AttachInitialSnapshotsJob).to have_been_enqueued
+
       # Needs to be called twice to send text messages
       2.times do
         perform_enqueued_jobs
@@ -104,6 +107,9 @@ describe "Broadcast View" do
 
         click_start_broadcast_button
         wait_for_broadcast_state("live")
+
+        # Check that we attempt to attach initial snapshots
+        expect(AttachInitialSnapshotsJob).to have_been_enqueued
 
         perform_enqueued_jobs
 
