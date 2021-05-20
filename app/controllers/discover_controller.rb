@@ -37,20 +37,20 @@ class DiscoverController < ApplicationController
   end
 
   def fetch_cms_data
+    options = load_options_and_preview
     page_slug = "homepage-en"
     page_slug = ERB::Util.html_escape(params[:page_slug]) if params[:page_slug]
     # locale = ERB::Util.html_escape(params[:locale])
 
-    Rails.cache.fetch("butter-cms-#{page_slug}", expires_in: 10.minutes) do
+    Rails.cache.fetch("butter-cms-#{page_slug}-#{options[:preview]}", expires_in: 10.minutes) do
       ButterCMS::Page.get(
         "*",
         page_slug.to_s,
-        {
-          preview: params[:preview],
-        },
+        options,
       )
     end
   rescue ButterCMS::NotFound
+    # If we don't find it, that's actually just fine... render the discover page as normal!
   end
 
   def public_videos
@@ -62,5 +62,14 @@ class DiscoverController < ApplicationController
     @recent_videos = public_videos.finished.decorate
     @popular_channels = Channel.most_popular.limit(8).decorate
     @scheduled_shows = Channel.where.not(next_show_at: nil).order(:next_show_at).limit(20).decorate
+  end
+
+  def load_options_and_preview
+    return {} unless params[:token] == "1982"
+
+    # Need to set this policy for iframe previews to work
+    response.headers["Content-Security-Policy"] = "frame-ancestors 'self' https://buttercms.com;"
+
+    {preview: params[:preview]}
   end
 end
