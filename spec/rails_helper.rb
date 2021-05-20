@@ -29,7 +29,12 @@ end
 require "webmock/rspec"
 WebMock.disable_net_connect!(
   allow_localhost: true,
-  allow: [%(https://chromedriver.storage.googleapis.com), Regexp.new(GripBroadcaster.base_url)],
+  allow: [
+    /chromedriver.storage.googleapis.com/,
+    /github.com/,
+    /github-releases.githubusercontent.com/,
+    Regexp.new(GripBroadcaster.base_url),
+  ],
 )
 
 RSpec.configure do |config|
