@@ -119,6 +119,8 @@ en:
     recent: "Recent Live Streams"
     live: "LIVE Broadcasts!"
     upcoming: "Upcoming Live Streams"
+    top_channels: "Most Popular Channels"
+    featured_shows: "Featured Weekly Shows"
   scheduling:
     scheduled_today: "Today at "
     very_soon: "Starting"

@@ -6,25 +6,25 @@ module Channels
     before_action :authenticate_user!, only: %i[create destroy]
 
     def show
-      render_streamer_profile
+      render_channel_bar
     end
 
     def create
       current_user.follows.create!(channel: current_channel) unless current_channel.followers.include?(current_user)
 
-      render_streamer_profile
+      render_channel_bar
     end
 
     def destroy
       current_channel.follows.where(user: current_user).each(&:unfollow!)
-      render_streamer_profile
+      render_channel_bar
     end
 
     private
 
-    def render_streamer_profile
+    def render_channel_bar
       render(
-        partial: "channels/videos/partials/streamer_profile",
+        partial: "channels/videos/partials/channel_bar",
         content_type: "html",
       )
     end

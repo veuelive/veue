@@ -50,7 +50,7 @@ RSpec.describe "Follow from VOD" do
         visit path_for_video(video)
         find(".unfollow-btn").click
 
-        expect(page).to have_css(".streamer-profile", count: 1)
+        expect(page).to have_css(".channel-bar", count: 1)
 
         expect(page).to have_content("Follow")
         expect(page).to have_content("REPLAY")
