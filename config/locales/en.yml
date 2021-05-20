@@ -121,6 +121,14 @@ en:
     upcoming: "Upcoming Live Streams"
     top_channels: "Most Popular Channels"
     featured_shows: "Featured Weekly Shows"
+  broadcast:
+    welcome_message: "Welcome to the Veue Broadcaster application! We're glad you're here and can't wait to get you started
+    streaming as soon as possible."
+    complete_steps: "Please complete the steps below to set up your ability to stream!"
+    access:
+      camera: "1. Access Camera"
+      microphone: "2. Access Microphone"
+      login: "3. Login to Veue"
   scheduling:
     scheduled_today: "Today at "
     very_soon: "Starting"
