@@ -46,8 +46,7 @@ export default class extends BaseController {
   }
 
   private checkBrowser(): void {
-    const isChrome =
-      /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+    const isChrome = /Chrome/.test(navigator.userAgent);
     this.browserWarningTarget.style.display = isChrome ? "none" : "block";
   }
 
