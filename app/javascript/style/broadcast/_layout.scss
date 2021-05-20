@@ -25,6 +25,10 @@ textarea {
 
 #broadcast {
   width: 100%;
+  #broadcast-area {
+    height: 100%;
+  }
+
   .broadcast--content {
     display: flex;
     align-items: stretch;
@@ -181,7 +185,6 @@ textarea {
     }
   }
 }
-
 .btn.copy-to-clipboard {
   &:hover {
     cursor: default;

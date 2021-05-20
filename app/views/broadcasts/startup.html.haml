@@ -2,20 +2,19 @@
   .wrapper
     .welcome
       .logo= svg_tag "logo"
-      Welcome to the Veue Broadcaster application! We're glad you're here and can't wait to get you started
-      streaming as soon as possible.
+      = t("broadcast.welcome_message")
 
-      Please complete the steps below to set up your ability to stream!
+      = t("broadcast.complete_steps")
     .checklist
       .checklist--step
         %span.checklist--step--status{data: {target: "broadcast--startup.videoAccess"}} ✓
-        1. Access Camera
+        = t("broadcast.access.camera")
       .checklist--step
         %span.checklist--step--status{data: {target: "broadcast--startup.microphoneAccess"}} ✓
-        2. Access Microphone
+        = t("broadcast.access.microphone")
       .checklist--step
         %span.checklist--step--status{data: {target: "broadcast--startup.loggedInStep"}} ✓
-        3. Login to Veue
+        = t("broadcast.access.login")
     .prompts
       .next{data: {"text-state": "media"}}
         Click below to grant access
