@@ -53,7 +53,7 @@ export default class extends BaseController {
     this.badgeTimeoutId = -1;
 
     this.videoTarget.addEventListener(
-      "canplay",
+      "loadedmetadata",
       this.handleLoadedMetadata.bind(this)
     );
 
@@ -72,7 +72,7 @@ export default class extends BaseController {
     );
 
     this.videoTarget.removeEventListener(
-      "canplay",
+      "loadedmetadata",
       this.handleLoadedMetadata.bind(this)
     );
 
@@ -236,6 +236,7 @@ export default class extends BaseController {
     if (this.element.dataset.audienceViewStreamType === "vod") {
       this.preloadPreviews();
     }
+
     this.togglePlay();
   }
 
