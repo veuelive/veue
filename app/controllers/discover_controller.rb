@@ -50,7 +50,7 @@ class DiscoverController < ApplicationController
       )
     end
   rescue ButterCMS::NotFound
-    render(:not_found)
+    # If we don't find it, that's actually just fine... render the discover page as normal!
   end
 
   def public_videos
