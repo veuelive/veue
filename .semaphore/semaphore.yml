@@ -32,8 +32,6 @@ blocks:
           value: test
         - name: DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL
           value: 'true'
-        - name: GRIP_URL
-          value: "http://api.fanout.io/realm/"
       jobs:
         - name: Rspec Tests
           parallelism: 5
