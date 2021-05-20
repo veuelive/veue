@@ -11,11 +11,13 @@ export default class extends BaseController {
   ];
   private microphoneAccessTarget!: HTMLElement;
   private videoAccessTarget!: HTMLElement;
-  private loggedInStepTarget!: HTMLElement;
+  private loggedInStepTarget: HTMLElement;
   private userInstructionsModalTarget!: HTMLElement;
 
+  private nextStep = "done" as Steps;
+
   connect(): void {
-    this.runChecks();
+    this.browserBroadcast ? this.runPrivilegesChecks() : this.runChecks();
     this.subscribeToAuthChange();
   }
 
@@ -23,7 +25,7 @@ export default class extends BaseController {
     MediaAccess.requestAccess().then((mediaStream) => {
       // We can let go of the media stream
       mediaStream.getTracks().forEach((track) => track.stop());
-      this.runChecks();
+      this.browserBroadcast ? this.runPrivilegesChecks() : this.runChecks();
     });
   }
 
@@ -41,36 +43,52 @@ export default class extends BaseController {
   }
 
   private async runChecks() {
-    let nextStep = "done" as Steps;
     if (document.querySelector("*[data-user-id]")) {
       this.loggedInStepTarget.dataset["status"] = "done";
     } else {
       this.loggedInStepTarget.dataset["status"] = "pending";
-      nextStep = "login";
+      this.nextStep = "login";
     }
+
+    await this.checkMediaAccess();
+    this.doNextStep(this.nextStep);
+  }
+
+  private async runPrivilegesChecks(): Promise<void> {
+    await this.checkMediaAccess();
+
+    await MediaAccess.checkAccess().then((access) => {
+      if (access.hasMicrophone && access.hasVideo) {
+        this.nextStep = "redirect";
+      }
+    });
+
+    toggleNextStep(this.nextStep);
+  }
+
+  private async checkMediaAccess(): Promise<void> {
     await MediaAccess.checkAccess().then((access) => {
       if (access.hasMicrophone) {
         this.microphoneAccessTarget.dataset["status"] = "done";
       } else {
         this.microphoneAccessTarget.dataset["status"] = "pending";
-        nextStep = "media";
+        this.nextStep = "media";
       }
       if (access.hasVideo) {
         this.videoAccessTarget.dataset["status"] = "done";
       } else {
         this.videoAccessTarget.dataset["status"] = "pending";
-        nextStep = "media";
+        this.nextStep = "media";
       }
     });
-    this.doNextStep(nextStep);
   }
 
   private doNextStep(nextStep: Steps) {
-    if (nextStep === "done") {
+    if (this.nextStep === "done") {
       this.endSetup();
       return;
     }
-    toggleNextStep(nextStep);
+    toggleNextStep(this.nextStep);
 
     // We start in a hidden state, and only by this point do we know if we should display at all...
     this.element.style.display = "flex";
@@ -78,5 +96,9 @@ export default class extends BaseController {
 
   private endSetup() {
     window.location.pathname = "/broadcasts";
+  }
+
+  get browserBroadcast(): boolean {
+    return this.data.get("broadcastType") === "browser";
   }
 }
