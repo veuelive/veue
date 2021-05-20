@@ -15,6 +15,7 @@
           "stream-key": current_channel.mux_stream_key,
           "video-state": current_broadcast_video.state,
           "session-token": current_session_token.uuid,
+          "broadcast-type": current_broadcast_video.broadcast_type,
         },
         "video-id": current_broadcast_video.id,
         "video-visibility": current_broadcast_video.visibility,
@@ -30,6 +31,8 @@
         }
       }
     }
+    .browser-warning{data: {target: "broadcast--startup.browserWarning"}}
+      = t('broadcast.browser_warning')
     .broadcast--content
       .content--left
         = render partial: "broadcast_area"
