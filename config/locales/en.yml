@@ -121,6 +121,8 @@ en:
     upcoming: "Upcoming Live Streams"
     top_channels: "Most Popular Channels"
     featured_shows: "Featured Weekly Shows"
+  broadcast:
+    browser_warning: "The Veue Broadcaster is Optimized for the Chrome Browser, please use Chrome for Streaming."
   scheduling:
     scheduled_today: "Today at "
     very_soon: "Starting"
