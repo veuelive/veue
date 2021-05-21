@@ -20,7 +20,6 @@ describe "Broadcast View" do
 
   before :each do
     login_as(streamer)
-    streamer.setup_as_streamer!
     visit "/broadcasts"
 
     shift_to_broadcast_view
@@ -167,7 +166,7 @@ describe "Broadcast View" do
         page.refresh
         shift_to_broadcast_view
 
-        expect(find("#broadcast-area")["data-broadcast-video-state"]).to eq("pending")
+        expect(find("#broadcast")["data-broadcast-video-state"]).to eq("pending")
       end
     end
 
