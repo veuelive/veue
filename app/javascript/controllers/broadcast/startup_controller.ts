@@ -11,13 +11,13 @@ export default class extends BaseController {
   ];
   private microphoneAccessTarget!: HTMLElement;
   private videoAccessTarget!: HTMLElement;
-  private loggedInStepTarget: HTMLElement;
+  private loggedInStepTarget!: HTMLElement;
   private userInstructionsModalTarget!: HTMLElement;
 
   private nextStep = "done" as Steps;
 
   connect(): void {
-    this.browserBroadcast ? this.runPrivilegesChecks() : this.runChecks();
+    this.runChecks();
     this.subscribeToAuthChange();
   }
 
@@ -25,12 +25,12 @@ export default class extends BaseController {
     MediaAccess.requestAccess().then((mediaStream) => {
       // We can let go of the media stream
       mediaStream.getTracks().forEach((track) => track.stop());
-      this.browserBroadcast ? this.runPrivilegesChecks() : this.runChecks();
+      this.runChecks();
     });
   }
 
   authChanged(): void {
-    this.endSetup();
+    this.reloadView();
   }
 
   hideModal(event: Event): void {
@@ -49,21 +49,8 @@ export default class extends BaseController {
       this.loggedInStepTarget.dataset["status"] = "pending";
       this.nextStep = "login";
     }
-
     await this.checkMediaAccess();
     this.doNextStep(this.nextStep);
-  }
-
-  private async runPrivilegesChecks(): Promise<void> {
-    await this.checkMediaAccess();
-
-    await MediaAccess.checkAccess().then((access) => {
-      if (access.hasMicrophone && access.hasVideo) {
-        this.nextStep = "redirect";
-      }
-    });
-
-    toggleNextStep(this.nextStep);
   }
 
   private async checkMediaAccess(): Promise<void> {
@@ -80,25 +67,24 @@ export default class extends BaseController {
         this.videoAccessTarget.dataset["status"] = "pending";
         this.nextStep = "media";
       }
+      if (
+        access.hasMicrophone &&
+        access.hasVideo &&
+        this.nextStep !== "login"
+      ) {
+        this.nextStep = "redirect";
+      }
     });
   }
 
   private doNextStep(nextStep: Steps) {
-    if (this.nextStep === "done") {
-      this.endSetup();
-      return;
-    }
     toggleNextStep(this.nextStep);
 
     // We start in a hidden state, and only by this point do we know if we should display at all...
     this.element.style.display = "flex";
   }
 
-  private endSetup() {
+  private reloadView(): void {
     window.location.pathname = "/broadcasts";
-  }
-
-  get browserBroadcast(): boolean {
-    return this.data.get("broadcastType") === "browser";
   }
 }

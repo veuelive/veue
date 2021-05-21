@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 class BroadcastsController < ApplicationController
-  before_action :authenticate_user!, except: %i[startup blank index]
+  before_action :authenticate_user!, except: %i[blank index]
 
   def index
-    return redirect_to(startup_broadcasts_path) unless user_signed_in?
-
-    current_user.setup_as_streamer!
-    channel = current_user.channels.first
-    redirect_to(broadcast_path(channel.active_video!))
+    if user_signed_in?
+      current_user.setup_as_streamer!
+      channel = current_user.channels.first
+    end
   end
 
   def show
@@ -44,10 +43,6 @@ class BroadcastsController < ApplicationController
 
   def blank
     render(layout: false)
-  end
-
-  def startup
-    index if current_user
   end
 
   private
