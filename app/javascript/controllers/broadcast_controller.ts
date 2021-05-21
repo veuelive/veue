@@ -21,6 +21,7 @@ import {
   attachKeyboardListener,
   removeKeyboardListeners,
 } from "helpers/broadcast/keyboard_listeners";
+import { showNotification } from "util/notifications";
 import { getVideoId } from "helpers/video_helpers";
 import { getChannelId } from "helpers/channel_helpers";
 import { inElectronApp } from "helpers/electron/base";
@@ -54,6 +55,9 @@ export default class extends Controller {
   element!: HTMLElement;
 
   connect(): void {
+    if (this.broadcastType === "browser") {
+    }
+
     this.keyboardListener = attachKeyboardListener();
 
     const currentVideoState = this.data.get("video-state");
@@ -226,5 +230,9 @@ export default class extends Controller {
       .forEach((element: HTMLElement) => {
         element.hidden = element.dataset.showonstate !== state;
       });
+  }
+
+  get broadcastType(): string {
+    return this.data.get("broadcastType");
   }
 }
