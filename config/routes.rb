@@ -29,7 +29,6 @@ Rails.application.routes.draw do
 
     collection do
       get "blank"
-      get "startup"
     end
 
     resources :pins
