@@ -2,6 +2,7 @@
   data:
     {
       controller: "broadcast broadcast--debug broadcast--keepalive",
+      target: "broadcast--content-view.mainArea",
       broadcast: {
         "stream-key": current_channel.mux_stream_key,
         "video-state": current_broadcast_video.state,
@@ -21,6 +22,9 @@
       }
     }
   }
+  .broadcast-warning{data: {target: "broadcast--startup.browserWarning"}}
+    .broadcast-warning__statement
+      = t("broadcast.tab_shift_warning")
   .broadcast--content
     .content--left
       = render partial: "broadcast_area"
