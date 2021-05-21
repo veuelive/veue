@@ -17,6 +17,8 @@ describe "Broadcaster Media Deck" do
   it "can share screen" do
     visit "/broadcasts"
 
+    shift_to_broadcast_view
+
     wait_for_broadcast_state "ready"
 
     click_start_broadcast_button

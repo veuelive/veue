@@ -30,10 +30,6 @@ class VideoDecorator < Draper::Decorator
     end
   end
 
-  def broadcast_type
-    browser_broadcast ? "browser" : "app"
-  end
-
   def start_time_in_words(_suffix="ago")
     started_at =
       if started_at_ms

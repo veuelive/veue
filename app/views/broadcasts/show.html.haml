@@ -1,40 +1,35 @@
 #broadcast{
-  data: {
-    controller: "broadcast--content-view",
-    "broadcast-type": current_broadcast_video.broadcast_type
+data:
+  {
+    controller: "broadcast broadcast--debug broadcast--keepalive",
+    target: "broadcast--content-view.mainArea",
+    broadcast: {
+      "stream-key": current_channel.mux_stream_key,
+      "video-state": current_broadcast_video.state,
+      "session-token": current_session_token.uuid,
+    },
+    "video-id": current_broadcast_video.id,
+    "video-visibility": current_broadcast_video.visibility,
+    "video-title": current_broadcast_video.title,
+    "channel-id": current_broadcast_video.channel.id,
+    "channel-slug": current_broadcast_video.channel.slug,
+    "channel-user-id": current_broadcast_video.user.id,
+    "user-name": current_user.display_name,
+    phenix: {
+      "channel-alias": Phenix.channel_alias(current_channel),
+      "auth-token": Phenix::EdgeAuth.auth_token(current_channel),
+      "publish-token": Phenix::EdgeAuth.publish_token(current_channel, current_broadcast_video)
+    }
   }
 }
-  .broadcast__welcome-page{ data: { target: "broadcast--content-view.welcomePage"}, style: "display: none;"}
-    = render "broadcast_privileges"
-  .broadcast__main#broadcast-area{
-    data:
-      {
-        controller: "broadcast broadcast--debug broadcast--keepalive",
-        target: "broadcast--content-view.mainArea",
-        broadcast: {
-          "stream-key": current_channel.mux_stream_key,
-          "video-state": current_broadcast_video.state,
-          "session-token": current_session_token.uuid,
-        },
-        "video-id": current_broadcast_video.id,
-        "video-visibility": current_broadcast_video.visibility,
-        "video-title": current_broadcast_video.title,
-        "channel-id": current_broadcast_video.channel.id,
-        "channel-slug": current_broadcast_video.channel.slug,
-        "channel-user-id": current_broadcast_video.user.id,
-        "user-name": current_user.display_name,
-        phenix: {
-          "channel-alias": Phenix.channel_alias(current_channel),
-          "auth-token": Phenix::EdgeAuth.auth_token(current_channel),
-          "publish-token": Phenix::EdgeAuth.publish_token(current_channel, current_broadcast_video)
-        }
-      }
-    }
-    .broadcast--content
-      .content--left
-        = render partial: "broadcast_area"
-      .content--right{data: {controller: "broadcast--settings", "broadcast--settings": { "type": "settings" }}}
-        %video#webcam_preview{data: {target: "broadcast.webcamVideoElement"}}
-        %canvas#audioCanvas
-        = render partial: "command_area"
-        = render partial: "shared/chat", locals: {video: current_broadcast_video}
+  .broadcast-warning{data: {target: "broadcast--startup.browserWarning"}}
+    .broadcast-warning__statement
+      = t("broadcast.tab_shift_warning")
+  .broadcast--content
+    .content--left
+      = render partial: "broadcast_area"
+    .content--right{data: {controller: "broadcast--settings", "broadcast--settings": { "type": "settings" }}}
+      %video#webcam_preview{data: {target: "broadcast.webcamVideoElement"}}
+      %canvas#audioCanvas
+      = render partial: "command_area"
+      = render partial: "shared/chat", locals: {video: current_broadcast_video}
