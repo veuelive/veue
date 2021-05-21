@@ -11,7 +11,6 @@ describe BroadcastsController do
   before(:each) do
     login_as user
     get broadcasts_path
-    follow_redirect!
   end
 
   describe "before broadcast" do
