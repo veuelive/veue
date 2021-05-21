@@ -18,12 +18,12 @@
         %span.checklist--step--status{data: {target: "broadcast--startup.loggedInStep"}} ✓
         = t("broadcast.access.login")
     .prompts
-      .next{data: {"text-state": "media"}}
+      .next{data: {target: "broadcast--startup.step", "startup": { step: "media"}}}
         Click below to grant access
         %button{data: {action: "click->broadcast--startup#requestAccess"}} Prompt For Access
-      .next{data: {"text-state": "login"}}
+      .next{data: {target: "broadcast--startup.step", "startup": { step: "login"}}}
         %button{data: {action: "click->authentication#showModal"}} Login
       - if user_signed_in?
-        .next{data: {"text-state": "redirect"}}
+        .next{data: {target: "broadcast--startup.step", "startup": { step: "redirect"}}}
           = link_to "Start Broadcast", broadcast_path(current_channel.active_video!), target: "_blank", class: "share_broadcast"
     = render partial: "broadcasts/user_instructions_modal"

@@ -1,6 +1,7 @@
 import MediaAccess from "helpers/media_access";
-import { Steps, toggleNextStep } from "helpers/broadcast_helpers";
 import BaseController from "controllers/base_controller";
+
+type Steps = "login" | "redirect" | "media" | "done";
 
 export default class extends BaseController {
   static targets = [
@@ -9,12 +10,14 @@ export default class extends BaseController {
     "loggedInStep",
     "userInstructionsModal",
     "browserWarning",
+    "step",
   ];
 
   private microphoneAccessTarget!: HTMLElement;
   private videoAccessTarget!: HTMLElement;
   private loggedInStepTarget!: HTMLElement;
   private userInstructionsModalTarget!: HTMLElement;
+  private stepTargets!: HTMLElement[];
   private browserWarningTarget!: HTMLElement;
 
   private nextStep = "done" as Steps;
@@ -87,7 +90,7 @@ export default class extends BaseController {
   }
 
   private doNextStep(nextStep: Steps) {
-    toggleNextStep(this.nextStep);
+    this.toggleNextStep(this.nextStep);
 
     // We start in a hidden state, and only by this point do we know if we should display at all...
     this.element.style.display = "block";
@@ -95,5 +98,12 @@ export default class extends BaseController {
 
   private reloadView(): void {
     window.location.pathname = "/broadcasts";
+  }
+
+  private toggleNextStep(nextStep: Steps): void {
+    this.stepTargets.forEach((e: HTMLElement) => (e.style.display = "none"));
+    this.stepTargets.forEach((e: HTMLElement) => {
+      if (e.dataset.startupStep === nextStep) e.style.display = "block";
+    });
   }
 }
