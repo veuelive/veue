@@ -1,7 +1,7 @@
 import MediaAccess from "helpers/media_access";
 import BaseController from "controllers/base_controller";
 
-type Steps = "done" | "login" | "media";
+type Steps = "login" | "redirect" | "media" | "done";
 
 export default class extends BaseController {
   static targets = [
@@ -10,13 +10,17 @@ export default class extends BaseController {
     "loggedInStep",
     "userInstructionsModal",
     "browserWarning",
+    "step",
   ];
 
   private microphoneAccessTarget!: HTMLElement;
   private videoAccessTarget!: HTMLElement;
   private loggedInStepTarget!: HTMLElement;
   private userInstructionsModalTarget!: HTMLElement;
+  private stepTargets!: HTMLElement[];
   private browserWarningTarget!: HTMLElement;
+
+  private nextStep = "done" as Steps;
 
   connect(): void {
     this.checkBrowser();
@@ -33,7 +37,7 @@ export default class extends BaseController {
   }
 
   authChanged(): void {
-    this.endSetup();
+    this.reloadView();
   }
 
   hideModal(event: Event): void {
@@ -51,48 +55,55 @@ export default class extends BaseController {
   }
 
   private async runChecks() {
-    let nextStep = "done" as Steps;
     if (document.querySelector("*[data-user-id]")) {
       this.loggedInStepTarget.dataset["status"] = "done";
     } else {
       this.loggedInStepTarget.dataset["status"] = "pending";
-      nextStep = "login";
+      this.nextStep = "login";
     }
+    await this.checkMediaAccess();
+    this.doNextStep(this.nextStep);
+  }
+
+  private async checkMediaAccess(): Promise<void> {
     await MediaAccess.checkAccess().then((access) => {
       if (access.hasMicrophone) {
         this.microphoneAccessTarget.dataset["status"] = "done";
       } else {
         this.microphoneAccessTarget.dataset["status"] = "pending";
-        nextStep = "media";
+        this.nextStep = "media";
       }
       if (access.hasVideo) {
         this.videoAccessTarget.dataset["status"] = "done";
       } else {
         this.videoAccessTarget.dataset["status"] = "pending";
-        nextStep = "media";
+        this.nextStep = "media";
+      }
+      if (
+        access.hasMicrophone &&
+        access.hasVideo &&
+        this.nextStep !== "login"
+      ) {
+        this.nextStep = "redirect";
       }
     });
-    this.doNextStep(nextStep);
   }
 
   private doNextStep(nextStep: Steps) {
-    console.log(nextStep);
-    if (nextStep === "done") {
-      this.endSetup();
-      return;
-    }
-    document
-      .querySelectorAll("*[data-text-state]")
-      .forEach((e) => (e["style"] = "display: none;"));
-    document
-      .querySelectorAll(`*[data-text-state='${nextStep}']`)
-      .forEach((e) => (e["style"] = "display: block;"));
+    this.toggleNextStep(this.nextStep);
 
     // We start in a hidden state, and only by this point do we know if we should display at all...
     this.element.style.display = "block";
   }
 
-  private endSetup() {
+  private reloadView(): void {
     window.location.pathname = "/broadcasts";
+  }
+
+  private toggleNextStep(nextStep: Steps): void {
+    this.stepTargets.forEach((e: HTMLElement) => (e.style.display = "none"));
+    this.stepTargets.forEach((e: HTMLElement) => {
+      if (e.dataset.startupStep === nextStep) e.style.display = "block";
+    });
   }
 }

@@ -25,10 +25,23 @@ textarea {
 
 #broadcast {
   width: 100%;
+  .broadcast-warning {
+    display: flex;
+    justify-content: center;
+
+    &__statement {
+      padding: 5px 10px;
+      background: color.$red-highlight;
+      color: color.$white;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+  }
+
   .broadcast--content {
     display: flex;
     align-items: stretch;
-    height: 100%;
+    height: 95%;
 
     .content--left {
       flex: 1;
@@ -181,7 +194,6 @@ textarea {
     }
   }
 }
-
 .btn.copy-to-clipboard {
   &:hover {
     cursor: default;

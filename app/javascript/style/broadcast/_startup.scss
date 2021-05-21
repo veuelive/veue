@@ -2,6 +2,7 @@
 @use "../utils/font";
 
 #startup {
+  display: flex;
   height: 100vh;
   font-weight: font.$normal-weight;
   font-size: 1.5rem;
@@ -45,6 +46,17 @@
         &--status[data-status="pending"] {
           color: color.$gray-light;
         }
+      }
+    }
+
+    .prompts {
+      a {
+        color: color.$white;
+        padding: 5px 10px;
+        background: color.$veue-corporate;
+        border-radius: 10px;
+        border: 1px solid color.$veue-corporate;
+        font-size: 16px;
       }
     }
   }

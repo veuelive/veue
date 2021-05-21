@@ -52,7 +52,9 @@ describe "Broadcaster" do
         expect(video).to be_cancelled
 
         expect(Video.count).to eq(1)
+
         visit broadcast_path(video)
+        shift_to_broadcast_view
 
         # This will be the second video is ready
         wait_for_broadcast_state("ready")
