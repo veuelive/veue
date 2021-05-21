@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_092240) do
+ActiveRecord::Schema.define(version: 2021_05_17_203129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -292,7 +292,6 @@ ActiveRecord::Schema.define(version: 2021_05_18_092240) do
     t.integer "end_offset", default: 0
     t.string "dash_url"
     t.string "end_reason"
-    t.boolean "browser_broadcast", default: false, null: false
     t.index ["end_reason"], name: "index_videos_on_end_reason"
     t.index ["mux_asset_id"], name: "index_videos_on_mux_asset_id"
     t.index ["mux_live_stream_id"], name: "index_videos_on_mux_live_stream_id"

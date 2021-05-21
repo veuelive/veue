@@ -26,7 +26,7 @@ describe "Broadcaster" do
 
         video.reload
         expect(video.updated_at).to be < 3.minutes.ago
-        visit broadcast_path(video, browser_broadcast: true)
+        visit broadcast_path(video)
         wait_for_broadcast_state("ready")
 
         video.reload
@@ -34,7 +34,7 @@ describe "Broadcaster" do
       end
 
       it "should cancel after a while" do
-        visit broadcast_path(video, browser_broadcast: true)
+        visit broadcast_path(video)
         expect(video).to be_pending
 
         visit cron_path

@@ -13,7 +13,7 @@ describe "Broadcast Commands" do
 
   before :each do
     login_as(channel.user)
-    visit broadcast_path(channel.active_video!, browser_broadcast: true)
+    visit broadcast_path(channel.active_video!)
   end
 
   describe "share features" do
