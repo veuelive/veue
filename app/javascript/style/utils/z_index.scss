@@ -54,3 +54,6 @@ $modal-skirt: next-z-index();
 
 // Any screen-dominating modals
 $modal: next-z-index();
+
+// Important warnings on top of everything
+$warning: next-z-index();
