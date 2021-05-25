@@ -49,6 +49,16 @@ export default class extends BaseController {
     }
   }
 
+  openBroadcastWindow(event: Event): void {
+    const btnElement = event.target as HTMLElement;
+    const broadcastUrl = btnElement.dataset.url;
+    window.open(
+      broadcastUrl,
+      "VEUE Broadcast",
+      `height=${window.innerHeight}, width=${window.innerWidth}`
+    );
+  }
+
   private checkBrowser(): void {
     const isChrome = /Chrome/.test(navigator.userAgent);
     this.browserWarningTarget.style.display = isChrome ? "none" : "block";
