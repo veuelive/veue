@@ -22,9 +22,10 @@
       }
     }
   }
-  .broadcast-warning{data: {target: "broadcast--startup.browserWarning"}}
+  .broadcast-warning{data: {target: "broadcast.foregroundWarning"}}
     .broadcast-warning__statement
-      = t("broadcast.tab_shift_warning")
+      = t("broadcast.foreground_warning")
+    %span.broadcast-warning__btn{data: {action: "click->broadcast#dismissWarning"}}= svg_tag "close"
   .broadcast--content
     .content--left
       = render partial: "broadcast_area"
