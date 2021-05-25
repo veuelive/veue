@@ -226,7 +226,7 @@ export default class extends Controller {
   }
 
   warningRemoveTimeout(): void {
-    setTimeout(() => this.foregroundWarningTarget.remove(), 15000);
+    setTimeout(() => this.dismissWarning(), 15000);
   }
 
   set state(state: BroadcastState) {
