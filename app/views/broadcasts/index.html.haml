@@ -25,5 +25,6 @@
         %button{data: {action: "click->authentication#showModal"}} Login
       - if user_signed_in?
         .next{data: {target: "broadcast--startup.step", "startup": { step: "redirect"}}}
-          = link_to "Start Broadcast", broadcast_path(current_channel.active_video!), target: "_blank", class: "share_broadcast"
+          %a.share_broadcast{href: "javascript:void(0)", data: {action: "click->broadcast--startup#openBroadcastWindow", url: "#{broadcast_url(current_channel.active_video!)}"}}
+            = t("broadcast.open")
     = render partial: "broadcasts/user_instructions_modal"

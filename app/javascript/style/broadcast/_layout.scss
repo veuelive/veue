@@ -26,22 +26,36 @@ textarea {
 #broadcast {
   width: 100%;
   .broadcast-warning {
-    display: flex;
-    justify-content: center;
+    position: absolute;
+    z-index: z_index.$warning;
+    left: 25%;
+    top: 110px;
+    padding: 5px 10px;
 
-    &__statement {
-      padding: 5px 10px;
-      background: color.$red-highlight;
-      color: color.$white;
-      border-radius: 10px;
-      margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+
+    background: color.$red-highlight;
+    color: color.$white;
+    border-radius: 10px;
+
+    &__btn {
+      cursor: pointer;
+      margin-left: 10px;
+
+      display: flex;
+
+      svg {
+        fill: color.$white;
+        width: 12px;
+      }
     }
   }
 
   .broadcast--content {
     display: flex;
     align-items: stretch;
-    height: 95%;
+    height: 100%;
 
     .content--left {
       flex: 1;

@@ -37,9 +37,15 @@ type BroadcastState =
   | "finished";
 
 export default class extends Controller {
-  static targets = ["webcamVideoElement", "timeDisplay", "browserUnderlay"];
+  static targets = [
+    "webcamVideoElement",
+    "timeDisplay",
+    "browserUnderlay",
+    "foregroundWarning",
+  ];
   private webcamVideoElementTarget!: HTMLVideoElement;
   private browserUnderlayTarget!: HTMLDivElement;
+  private foregroundWarningTarget!: HTMLElement;
 
   private videoMixer: VideoMixer;
   private streamRecorder: StreamRecorder;
@@ -55,6 +61,7 @@ export default class extends Controller {
 
   connect(): void {
     this.keyboardListener = attachKeyboardListener();
+    this.warningRemoveTimeout();
 
     const currentVideoState = this.data.get("video-state");
 
@@ -212,6 +219,14 @@ export default class extends Controller {
     };
 
     await postForm("./start", data);
+  }
+
+  dismissWarning(): void {
+    this.foregroundWarningTarget.remove();
+  }
+
+  warningRemoveTimeout(): void {
+    setTimeout(() => this.dismissWarning(), 15000);
   }
 
   set state(state: BroadcastState) {
