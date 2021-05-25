@@ -14,7 +14,7 @@ describe "Broadcast View" do
   let(:video) { channel.active_video }
 
   before :example do
-    driven_by :media_browser
+    driven_by :debug_browser
     resize_window_desktop
   end
 
@@ -234,6 +234,20 @@ describe "Broadcast View" do
       video.reload
       expect(video.title).to eq(new_title)
       expect(video.visibility).to eq(new_visibility)
+    end
+  end
+
+  describe "broadcast foreground warning" do
+    it "should be present on load and can be dismissed" do
+      expect(page).to have_content(I18n.t("broadcast.foreground_warning"))
+
+      find(".broadcast-warning__btn").click
+      expect(page).to_not have_content(I18n.t("broadcast.foreground_warning"))
+    end
+
+    it "should be dismissed after sometime" do
+      expect(page).to have_content(I18n.t("broadcast.foreground_warning"))
+      expect(page).to_not have_content(I18n.t("broadcast.foreground_warning"), wait: 20)
     end
   end
 end
