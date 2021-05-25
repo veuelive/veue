@@ -236,4 +236,18 @@ describe "Broadcast View" do
       expect(video.visibility).to eq(new_visibility)
     end
   end
+
+  describe "broadcast foreground warning" do
+    it "should be present on load and can be dismissed" do
+      expect(page).to have_content(I18n.t("broadcast.foreground_warning"))
+
+      find(".broadcast-warning__btn").click
+      expect(page).to_not have_content(I18n.t("broadcast.foreground_warning"))
+    end
+
+    it "should be dismissed after sometime" do
+      expect(page).to have_content(I18n.t("broadcast.foreground_warning"))
+      expect(page).to_not have_content(I18n.t("broadcast.foreground_warning"), wait: 20)
+    end
+  end
 end

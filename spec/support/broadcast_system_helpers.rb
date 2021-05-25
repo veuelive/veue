@@ -15,7 +15,7 @@ module BroadcastSystemHelpers
 
   def shift_to_broadcast_view
     expect(page).to have_css("#startup")
-    click_link("Start Broadcast")
+    click_on("Open Broadcaster")
     switch_to_broadcast
   end
 
