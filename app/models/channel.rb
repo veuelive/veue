@@ -89,4 +89,10 @@ class Channel < ApplicationRecord
     )
     users.first
   end
+
+  def next_show_day
+    return if next_show_at.nil?
+
+    Date::DAYNAMES[next_show_at.wday]
+  end
 end
