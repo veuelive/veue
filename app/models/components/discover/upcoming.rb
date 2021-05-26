@@ -20,7 +20,7 @@ module Components
       end
 
       def collection
-        return map_channel_names_to_channels(component) if @fields.type == "static_upcoming"
+        return map_channel_names_to_channels if @fields.type == "static_upcoming"
 
         find_channels
       end
