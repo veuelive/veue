@@ -56,6 +56,29 @@
           "fields": {
             "body": "<p>I like to move it move it. you like to move it move it. We like to....move it!</p>"
           }
+        },
+        {
+          "type": "static_upcoming",
+          "fields": {
+            "title": "Static Upcoming Broadcasts",
+            "upcoming_broadcasts": [
+              {
+                "title": "hamptons channel",
+                "slug": "hampton"
+              },
+              {
+                "title": "Konnors channel",
+                "slug": "krog"
+              }
+            ]
+          }
+        },
+        {
+          "type": "dynamic_upcoming",
+          "fields": {
+            "title": "Dynamic Upcoming Broadcasts",
+            "max_size": 10
+          }
         }
       ]
     }
