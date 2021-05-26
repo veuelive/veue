@@ -30,8 +30,10 @@ class DiscoverController < ApplicationController
         Components::Discover::Hero.new(component)
       when "content"
         Components::Discover::Content.new(component)
-      else
+      when "static_curation", "dynamic_curation"
         Components::Discover::Curation.new(component)
+      when "static_upcoming", "dynamic_upcoming"
+        Components::Discover::Upcoming.new(component)
       end
     end
   end

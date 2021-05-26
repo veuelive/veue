@@ -10,7 +10,7 @@ describe "Discover View" do
   end
 
   def stub_butter(slug:, data:)
-    stub_request(:get, "https://api.buttercms.com/v2/pages/*/#{slug}/?auth_token=TEST_TOKEN&preview")
+    stub_request(:get, "https://api.buttercms.com/v2/pages/*/#{slug}/?auth_token=TEST_TOKEN")
       .with(
         headers: {
           Accept: "application/json",
@@ -29,6 +29,7 @@ describe "Discover View" do
     let!(:trending_videos) { create_list(:vod_video_with_video_views, 5, video_views_count: 5) }
     let!(:popular_videos) { create_list(:vod_video_with_video_views, 5, video_views_count: 5) }
     let!(:live_videos) { create_list(:live_video, 5) }
+    let!(:upcoming_broadcasts) { create_list(:channel, 3, next_show_at: 3.days.since) }
     let(:json_data) { read_file("kitchensink.json") }
 
     it "should show everything for root and non-root slugs" do
@@ -49,10 +50,18 @@ describe "Discover View" do
         static_video_id = static_curation.dig("fields", "videos").first["video_id"]
         Video.first.update!(id: static_video_id)
 
+        static_upcoming = data_components.find { |c| c["type"] == "static_upcoming" }
+        static_upcoming_slug = static_upcoming.dig("fields", "upcoming_broadcasts").first["slug"]
+
+        # This makes sure theres something to show for static content.
+        upcoming_broadcasts.first.update!(slug: static_upcoming_slug)
+
         visit(hash[:app_path])
 
+        # Seo Title
         expect(page).to have_title(data_fields["seo_title"])
 
+        # Hero
         hero = data_components.find { |c| c["type"] == "hero_image" }
         hero_url = hero.dig("fields", "link")
         hero_image = hero.dig("fields", "image")
@@ -60,6 +69,9 @@ describe "Discover View" do
         expect(page).to have_css("a[href='#{hero_url}']")
         expect(page).to have_css("img[src='#{hero_image}']")
 
+        # Find the titles for static / dynamic (curations|upcoming)
+        # lets not try to find the elements.
+        # Titles only show up if a colletion is found.
         data_components.each do |component|
           next if %w[content hero_image].include?(component["type"])
 
@@ -73,7 +85,7 @@ describe "Discover View" do
     end
   end
 
-  describe "for static content" do
+  describe "for static curations" do
     let!(:video) { create(:vod_video) }
     let(:json_data) { read_file("static_curation.json") }
 
@@ -103,7 +115,7 @@ describe "Discover View" do
     end
   end
 
-  describe "for dynamic content" do
+  describe "for dynamic curations" do
     let(:json_data) { read_file("dynamic_curation.json") }
 
     before(:each) do
@@ -171,6 +183,67 @@ describe "Discover View" do
 
       expect(page).to have_no_css("a[href='#{hero_url}']")
       expect(page).to have_no_css("img[src='#{hero_image}']")
+    end
+  end
+
+  describe "for static upcoming" do
+    let(:json_data) { read_file("static_upcoming.json") }
+
+    before(:each) do
+      stub_butter(slug: "homepage-en", data: json_data)
+    end
+
+    it "should show static content" do
+      channel = create(:channel)
+      static_upcoming = data_components.find { |c| c["type"] == "static_upcoming" }
+      static_upcoming_slug = static_upcoming.dig("fields", "upcoming_broadcasts").first["slug"]
+
+      channel.update!(slug: static_upcoming_slug)
+      channel.update_columns(next_show_at: 3.days.from_now)
+
+      visit root_path
+
+      expect(page).to have_css("a[href*='/#{channel.slug}']")
+    end
+
+    it "should not show static content if none found" do
+      visit root_path
+
+      static_upcoming = data_components.find { |c| c["type"] == "static_upcoming" }
+      upcoming_title = static_upcoming.dig("fields", "title")
+      expect(page).to have_no_text(upcoming_title)
+    end
+  end
+
+  describe "for dynamic upcoming" do
+    let(:json_data) { read_file("dynamic_upcoming.json") }
+
+    before(:each) do
+      stub_butter(slug: "homepage-en", data: json_data)
+    end
+
+    it "should show dynamic upcoming" do
+      create_list(:channel, 5, next_show_at: 3.days.from_now)
+
+      dynamic_upcoming = data_components.find { |c| c["type"] == "dynamic_upcoming" }
+      limit = dynamic_upcoming.dig("fields", "max_size")
+      channels = Channel.most_popular.where.not(next_show_at: nil).limit(limit)
+      visit root_path
+
+      upcoming_title = dynamic_upcoming.dig("fields", "title")
+      expect(page).to have_text(upcoming_title)
+
+      channels.each do |channel|
+        expect(page).to have_css("a[href*='/#{channel.slug}']")
+      end
+    end
+
+    it "should not show dynamic content if none found" do
+      visit root_path
+
+      dynamic_upcoming = data_components.find { |c| c["type"] == "dynamic_upcoming" }
+      upcoming_title = dynamic_upcoming.dig("fields", "title")
+      expect(page).to have_no_text(upcoming_title)
     end
   end
 end
