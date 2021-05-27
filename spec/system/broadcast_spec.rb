@@ -39,6 +39,7 @@ describe "Broadcast View" do
     expect(page).to have_css("div[data-broadcast-started-at]")
 
     expect(page).to have_css(".stop-btn")
+    wait_for_broadcast_state("live")
 
     expect(Video.last.started_at_ms).to_not be_nil
 
@@ -63,7 +64,7 @@ describe "Broadcast View" do
       current_video_url = channel_path(channel, host: server.host, port: server.port)
 
       # Check that we attempt to attach initial snapshots
-      expect(AttachInitialSnapshotsJob).to have_been_enqueued
+      expect(video).to receive(:attach_initial_shots!).once
 
       # Needs to be called twice to send text messages
       2.times do
@@ -112,7 +113,7 @@ describe "Broadcast View" do
         wait_for_broadcast_state("live")
 
         # Check that we attempt to attach initial snapshots
-        expect(AttachInitialSnapshotsJob).to have_been_enqueued
+        expect(video).to receive(:attach_initial_shots!).once
 
         perform_enqueued_jobs
 
