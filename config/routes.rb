@@ -29,6 +29,7 @@ Rails.application.routes.draw do
 
     collection do
       get "blank"
+      get "no_mobile"
     end
 
     resources :pins
