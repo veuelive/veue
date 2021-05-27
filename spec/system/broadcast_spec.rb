@@ -150,7 +150,7 @@ describe "Broadcast View" do
       wait_for_broadcast_state("live")
 
       # IPC rendered only screenshots the camera
-      # expect(streamer.video_snapshots.count).to eq(1)
+      expect(streamer.video_snapshots.count).to eq(1)
     end
   end
 
