@@ -158,8 +158,8 @@ export default class extends Controller {
       )
       .then(async () => {
         this.state = "starting";
-        this.sendStartingLayout().then(() =>
-          console.log("Starting Layout Sent")
+        this.sendStartingInfo().then(() =>
+          console.log("Starting Layout and Snapshots Sent")
         );
 
         this.snapshotIntervalId = window.setInterval(
@@ -172,8 +172,6 @@ export default class extends Controller {
         // video to end up in sync.
         this.data.set("started-at", Date.now().toString());
         this.metronome.start();
-
-        await this.sendSnapshots();
 
         this.state = "live";
       })
@@ -213,11 +211,12 @@ export default class extends Controller {
     );
   }
 
-  async sendStartingLayout(): Promise<void> {
+  async sendStartingInfo(): Promise<void> {
     const data = {
       video_layout: JSON.stringify(this.videoMixer.broadcastLayout),
     };
 
+    await this.sendSnapshots();
     await postForm("./start", data);
   }
 
