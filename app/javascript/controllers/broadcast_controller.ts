@@ -158,9 +158,8 @@ export default class extends Controller {
       )
       .then(async () => {
         this.state = "starting";
-        this.sendStartingInfo().then(() =>
-          console.log("Starting Layout and Snapshots Sent")
-        );
+        await this.sendStartingInfo();
+        console.log("Starting Layout and Snapshots Sent");
 
         this.snapshotIntervalId = window.setInterval(
           this.sendSnapshots.bind(this),
