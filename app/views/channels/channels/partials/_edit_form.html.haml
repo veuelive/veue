@@ -45,7 +45,7 @@
           .heading-info
             If weekly, what day of the week is this on?
         .channel-edit__body__field__input
-          = f.select :schedule_day, Date::DAYNAMES
+          = f.select :schedule_day, options_for_select(Date::DAYNAMES, @channel.next_show_day)
       .channel-edit__body__field
         .channel-edit__body__field__title
           %label{for: "schedule_minutes"} Time of Day
