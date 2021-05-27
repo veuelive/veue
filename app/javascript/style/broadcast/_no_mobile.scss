@@ -20,7 +20,13 @@
 
     button {
       width: 80vw;
-      font-size: 30px;
+      font-size: 24px;
+
+      svg {
+        width: 24px;
+        height: auto;
+        fill: white;
+      }
     }
   }
 }
