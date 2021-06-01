@@ -122,6 +122,7 @@ class Video < ApplicationRecord
   # This is the primary way to start a broadcast
   def start_broadcast!(params)
     new_layout_event!(params[:video_layout])
+    attach_initial_shots!
 
     # The actual state machine transition
     start!
@@ -154,9 +155,10 @@ class Video < ApplicationRecord
     attach_secondary_shot!(snapshot)
   end
 
-  def attach_initial_shots!(snapshots)
+  def attach_initial_shots!
     return if primary_shot.attached?
 
+    snapshots = video_snapshots.past_snapshots(25)
     primary_snapshot = snapshots.find_by(priority: 1)
     secondary_snapshot = snapshots.find_by(priority: 2)
 
@@ -175,7 +177,6 @@ class Video < ApplicationRecord
 
   def after_go_live
     transition_audience_to_live
-    AttachInitialSnapshotsJob.perform_later(self)
 
     return unless visibility.eql?("public")
 
