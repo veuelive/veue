@@ -13,8 +13,17 @@ export default class LiveEventManager implements EventManagerInterface {
   private subscription;
   private allowRemoteReload: boolean;
   private liveEventSource: LiveEventSource;
+  private startOffsetMs: number;
 
   constructor(allowRemoteReload: boolean) {
+    const element = document.querySelector(
+      "div[data-started-at-ms]"
+    ) as HTMLElement;
+    if (element) {
+      const startOffsetMs = Date.now() - parseInt(element.dataset.startedAtMs);
+      VideoEventProcessor.setStartOffset(startOffsetMs);
+    }
+
     this.allowRemoteReload = allowRemoteReload;
 
     const channelId = getChannelId();

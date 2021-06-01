@@ -6,16 +6,24 @@ export const VideoEventProcessor = new (class VideoEventProcessor {
   public dispatcher: HTMLDivElement;
   private events: VideoEvent[] = [];
   private lastTimecode: number;
+  private startOffsetMs: number;
 
   constructor() {
     this.dispatcher = document.createElement("div");
+    this.startOffsetMs = 0;
+  }
+
+  setStartOffset(timeMs: number) {
+    this.startOffsetMs = timeMs;
   }
 
   syncTime(timecodeMs: number) {
-    while (this.events[0] && this.events[0].timecodeMs <= timecodeMs) {
+    const actualTimecodeMs = timecodeMs + this.startOffsetMs;
+    console.log("Syncing to ", actualTimecodeMs, this.startOffsetMs);
+    while (this.events[0] && this.events[0].timecodeMs <= actualTimecodeMs) {
       this.dispatch(this.events.shift());
     }
-    this.lastTimecode = timecodeMs;
+    this.lastTimecode = actualTimecodeMs;
   }
 
   clear() {
