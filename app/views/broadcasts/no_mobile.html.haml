@@ -1,0 +1,9 @@
+
+.logo
+  = link_to root_path do
+    = svg_tag 'logo-full'
+%h2= t("broadcast.no-mobile.warning")
+
+%button{onclick: "navigator.share({url: 'https://veue.tv/broadcasts', title: 'Veue Broadcaster', text: #{t("broadcast.no-mobile.share-link-text")}})"}
+  = t("broadcast.no-mobile.share-button")
+  = svg_tag :share

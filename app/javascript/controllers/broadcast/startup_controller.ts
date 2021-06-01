@@ -52,14 +52,17 @@ export default class extends BaseController {
   openBroadcastWindow(event: Event): void {
     const btnElement = event.target as HTMLElement;
     const broadcastUrl = btnElement.dataset.url;
-    window.open(
-      broadcastUrl,
-      "VEUE Broadcast",
-      `height=${window.innerHeight}, width=${window.innerWidth}`
-    );
+    window.open(broadcastUrl, "Veue Broadcast", `height=600, width=1000`);
   }
 
   private checkBrowser(): void {
+    if (
+      navigator.userAgent.match(
+        /(iPad)|(iPhone)|(iPod)|(android)|(webOS)|(iOS)/i
+      )
+    ) {
+      window.location.pathname = "/broadcasts/no_mobile";
+    }
     const isChrome = /Chrome/.test(navigator.userAgent);
     this.browserWarningTarget.style.display = isChrome ? "none" : "block";
   }
