@@ -72,7 +72,7 @@ module GripBroadcaster
   def self.do_request(payload={})
     request_url = "#{base_url}#{realm_id}/publish/"
 
-    response = Faraday.post(
+    response = conn.post(
       request_url,
       payload.to_json,
       generate_headers,
