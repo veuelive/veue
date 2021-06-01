@@ -57,6 +57,10 @@ module GripBroadcaster
 
   def self.conn
     Faraday.new do |conn|
+      conn.adapter(:net_http_persistent, pool_size: 5) do |http|
+        # yields Net::HTTP::Persistent
+        http.idle_timeout = 100
+      end
       conn.basic_auth(realm_id, realm_key)
     end
   end
@@ -68,7 +72,7 @@ module GripBroadcaster
   def self.do_request(payload={})
     request_url = "#{base_url}#{realm_id}/publish/"
 
-    response = Faraday.post(
+    response = conn.post(
       request_url,
       payload.to_json,
       generate_headers,
