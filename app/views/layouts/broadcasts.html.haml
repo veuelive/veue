@@ -2,6 +2,7 @@
 %html
   %head
     %meta{content: "text/html; charset=UTF-8", "http-equiv": "Content-Type"}/
+    %title= t("broadcast.title")
     %meta{name: "viewport", content:"width=device-width, initial-scale=1"}/
     :javascript
       globalThis.appConfig = #{raw JSON.generate(app_config)};
@@ -12,7 +13,7 @@
     = stylesheet_pack_tag 'broadcast', media: 'all'
     = javascript_pack_tag 'broadcast'
     = yield :header if content_for?(:header)
-  %body{data: {"user-id": current_user&.id, "controller": "authentication"}}
+  %body{body_attributes.merge(data: {"user-id": current_user&.id, "controller": "authentication"})}
     #layout-container
       #main-container
         = yield

@@ -132,6 +132,11 @@ en:
       camera: "1. Access Camera"
       microphone: "2. Access Microphone"
       login: "3. Login to Veue"
+    title: "Veue Broadcaster"
+    no-mobile:
+      warning: "The Veue Broadcaster is optimized for the Chrome Browser on desktop. Please open this link when you are at your desktop or laptop and stream from Chrome."
+      share-button: "Share To Desktop"
+      share-link-text: "Easily Broadcast yourself from Chrome on Desktop"
   scheduling:
     scheduled_today: "Today at "
     very_soon: "Starting"

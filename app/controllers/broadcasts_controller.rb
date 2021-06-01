@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BroadcastsController < ApplicationController
-  before_action :authenticate_user!, except: %i[blank index]
+  before_action :authenticate_user!, except: %i[blank index no_mobile]
 
   def index
     return render unless user_signed_in?
@@ -42,6 +42,8 @@ class BroadcastsController < ApplicationController
   def blank
     render(layout: false)
   end
+
+  def no_mobile; end
 
   private
 
