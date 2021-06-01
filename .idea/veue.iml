@@ -151,6 +151,7 @@
     <orderEntry type="library" scope="PROVIDED" name="msgpack (v1.4.2, RVM: ruby-2.7.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="multipart-post (v2.1.1, RVM: ruby-2.7.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mux_ruby (v1.9.0, RVM: ruby-2.7.3) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="net-http-persistent (v4.0.1, RVM: ruby-2.7.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="nio4r (v2.5.7, RVM: ruby-2.7.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="nokogiri (v1.11.4, RVM: ruby-2.7.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="parallel (v1.20.1, RVM: ruby-2.7.3) [gem]" level="application" />
