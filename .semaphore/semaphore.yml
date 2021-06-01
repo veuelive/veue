@@ -53,6 +53,8 @@ blocks:
       epilogue:
         on_fail:
           commands:
+            - dig +short myip.opendns.com @resolver1.opendns.com
             - ls -laR /home/semaphore/veue/tmp
-            - artifact push job /home/semaphore/veue/tmp --expire-in 1w -v
+            - artifact push job /home/semaphore/veue/tmp/screenshots --expire-in 1w -v
+            - artifact push job /home/semaphore/veue/log --expire-in 1w -v
 
