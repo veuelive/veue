@@ -135,7 +135,7 @@ en:
     title: "Veue Broadcaster"
     no-mobile:
       warning: "The Veue Broadcaster is optimized for the Chrome Browser on desktop. Please open this link when you are at your desktop or laptop and stream from Chrome."
-      share-button: "Share To Desktop"
+      share-button: "Send Link "
       share-link-text: "Easily Broadcast yourself from Chrome on Desktop"
   scheduling:
     scheduled_today: "Today at "
