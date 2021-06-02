@@ -373,7 +373,7 @@ export default class extends BaseController {
   }
 
   updateVideoTime(event: PointerEvent): void {
-    const currentTime = this.getPointerLocationTime(event);
+    const currentTime = this.getPointerLocationTime(event) || 0;
     this.timeDisplayTarget.innerHTML = displayTime(currentTime);
     this.videoTarget.currentTime = currentTime;
     this.videoTimeLastUpdatedAt = Date.now();
@@ -393,8 +393,8 @@ export default class extends BaseController {
     event: PointerEvent,
     currentTime: number
   ): void {
-    const containerOffset =
-      this.progressBarContainerTarget.getBoundingClientRect().x;
+    const containerOffset = this.progressBarContainerTarget.getBoundingClientRect()
+      .x;
     const timePreviewOffset =
       this.timePreviewTarget.getBoundingClientRect().width / 2;
 
