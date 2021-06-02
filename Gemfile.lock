@@ -274,6 +274,8 @@ GEM
     mux_ruby (1.9.0)
       json (~> 2.1, >= 2.1.0)
       typhoeus (~> 1.0, >= 1.0.1)
+    net-http-persistent (4.0.1)
+      connection_pool (~> 2.2)
     nio4r (2.5.7)
     nokogiri (1.11.4)
       mini_portile2 (~> 2.5.0)
@@ -505,6 +507,7 @@ DEPENDENCIES
   lockbox
   logdna!
   mux_ruby
+  net-http-persistent
   pg (>= 0.18, < 2.0)
   phone
   posix-spawn
