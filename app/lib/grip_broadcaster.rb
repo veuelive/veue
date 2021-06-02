@@ -67,7 +67,8 @@ module GripBroadcaster
   end
 
   def self.base_url
-    ENV.fetch("GRIP_URL", "https://api.fanout.io/realm/")
+    # Due to some SSL errors, unfortunately we need to use HTTP for the time being. :(
+    ENV.fetch("GRIP_URL", "http://api.fanout.io/realm/")
   end
 
   def self.do_request(payload={})
