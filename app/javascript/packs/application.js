@@ -7,6 +7,9 @@ import "simplebar";
 import "simplebar/dist/simplebar.css";
 import "@github/time-elements";
 
+// Sidecar loads our ViewComponent scss files.
+import "../components";
+
 ujs.start();
 
 // including images from javascript folder
