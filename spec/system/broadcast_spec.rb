@@ -60,11 +60,11 @@ describe "Broadcast View" do
       click_start_broadcast_button
       wait_for_broadcast_state("live")
 
+      # System tests only attach primary, no secondary.
+      expect(video.primary_shot).to be_attached
+
       server = Capybara.current_session.server
       current_video_url = channel_path(channel, host: server.host, port: server.port)
-
-      # Check that we attempt to attach initial snapshots
-      expect(video).to receive(:attach_initial_shots!).once
 
       # Needs to be called twice to send text messages
       2.times do
@@ -112,8 +112,7 @@ describe "Broadcast View" do
         click_start_broadcast_button
         wait_for_broadcast_state("live")
 
-        # Check that we attempt to attach initial snapshots
-        expect(video).to receive(:attach_initial_shots!).once
+        expect(video.primary_shot).to be_attached
 
         perform_enqueued_jobs
 
