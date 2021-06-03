@@ -3,9 +3,8 @@
 .content-area
   .discover
     - if @cms_components.present?
-      -# Template Dependency: discover/components/*
-      - cache @cms_components do
-        = render @cms_components
+      -# Template Dependency: app/components/*
+      = render @cms_components
     - else
       - if @live_videos.any?
         .discover__strip
