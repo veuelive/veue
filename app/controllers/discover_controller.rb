@@ -44,13 +44,13 @@ class DiscoverController < ApplicationController
     page_slug = ERB::Util.html_escape(params[:page_slug]) if params[:page_slug]
     # locale = ERB::Util.html_escape(params[:locale])
 
-    # Rails.cache.fetch("butter-cms-#{page_slug}-#{options[:preview]}", expires_in: 10.minutes) do
-    ButterCMS::Page.get(
-      "*",
-      page_slug.to_s,
-      options,
-    )
-    # end
+    Rails.cache.fetch("butter-cms-#{page_slug}-#{options[:preview]}", expires_in: 10.minutes) do
+      ButterCMS::Page.get(
+        "*",
+        page_slug.to_s,
+        options,
+      )
+    end
   rescue ButterCMS::NotFound
     # If we don't find it, that's actually just fine... render the discover page as normal!
   end
