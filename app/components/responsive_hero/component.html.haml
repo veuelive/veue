@@ -1,0 +1,6 @@
+%a.discover__hero{href: @link}
+  %picture
+    - responsive_images.each do |responsive_image|
+      = responsive_image
+    %img{src: @image}
+

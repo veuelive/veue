@@ -100,6 +100,9 @@ gem "activerecord-pg_enum"
 # For Windows users, this is required
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw]
 
+# Allows us to componentize portions of our application
+gem "view_component", require: "view_component/engine"
+
 group :production do
   # Gem for sending production logs to LogDNA
   # TEMPORARY due to https://github.com/logdna/ruby/issues/30
