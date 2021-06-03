@@ -3,7 +3,6 @@
 .content-area
   .discover
     - if @cms_components.present?
-      -# Template Dependency: app/components/*
       = render @cms_components
     - else
       - if @live_videos.any?
