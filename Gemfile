@@ -73,6 +73,9 @@ gem "draper-cancancan"
 # HTTP Client for building API calls
 gem "faraday"
 
+# Adapter for the Faraday HTTP client
+gem "net-http-persistent"
+
 # Inline SVGs renderer
 gem "inline_svg"
 
