@@ -57,7 +57,7 @@ module GripBroadcaster
 
   def self.conn
     @conn ||=
-      Faraday.new do |conn|
+      Faraday.new(base_url) do |conn|
         conn.adapter(:net_http_persistent, pool_size: 5) do |http|
           # yields Net::HTTP::Persistent
           http.idle_timeout = 100
