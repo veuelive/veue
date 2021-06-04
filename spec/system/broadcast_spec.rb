@@ -14,7 +14,6 @@ describe "Broadcast View" do
   let(:video) { channel.active_video }
 
   before :example do
-    driven_by :media_browser
     resize_window_desktop
   end
 

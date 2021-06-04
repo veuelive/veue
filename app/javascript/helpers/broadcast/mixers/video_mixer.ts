@@ -3,9 +3,12 @@ import { VideoCaptureSource } from "helpers/broadcast/capture_sources/video";
 import Mixer from "helpers/broadcast/mixers/mixer";
 import { buildBroadcastLayout } from "util/layout_packer";
 import { sendBroadcastLayoutUpdate } from "helpers/broadcast_helpers";
+import EventBus from "event_bus";
 
 const VIDEO_SIZE = { width: 1920, height: 1080 };
 export const BroadcastLayoutChangedEvent = "BroadcastLayoutChanged";
+export const BroadcastLayoutNeedsRecalculation =
+  "BroadcastLayoutNeedsRecalculation";
 
 interface VideoShot {
   deviceId: string;
@@ -32,6 +35,10 @@ export default class VideoMixer implements Mixer {
     this.canvasContext.imageSmoothingQuality = "high";
 
     this.updateBroadcastLayout();
+
+    EventBus.subscribe(BroadcastLayoutNeedsRecalculation, () => {
+      this.updateBroadcastLayout();
+    });
 
     this.computeFrame();
   }
