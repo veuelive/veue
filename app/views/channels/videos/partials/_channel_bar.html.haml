@@ -11,7 +11,7 @@
         = current_channel.channel_icon_circle(160)
         - current_channel.users.each do |host|
           - if host.profile_image.attached?
-            = circle_image_tag(host.profile_image, 160)
+            = circle_image_tag(host.profile_image, 160, class: "channel-bar__info__avatar__host")
     .channel-bar__info__text
       .channel-bar__info__text__name
         %a{href: channel_path(current_channel)}
