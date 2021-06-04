@@ -26,7 +26,7 @@ class DiscoverController < ApplicationController
   def map_components(components)
     components.map do |component|
       case component.type
-      when "hero_image"
+      when "hero_image", "responsive_hero"
         Components::Discover::Hero.new(component)
       when "content"
         Components::Discover::Content.new(component)
