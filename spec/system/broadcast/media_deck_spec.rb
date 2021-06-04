@@ -10,7 +10,7 @@ describe "Broadcaster Media Deck" do
   let(:user) { channel.user }
 
   before :each do
-    use_media_browser
+    resize_window_desktop
     login_as(user)
   end
 
@@ -23,10 +23,15 @@ describe "Broadcaster Media Deck" do
 
     click_start_broadcast_button
 
+    expect_video_capture_source_count(1, "camera")
+    expect_video_capture_source_count(0, "screen")
+
     wait_for_broadcast_state "live"
 
     expect_video_capture_source_count(1, "camera")
     expect_video_capture_source_count(0, "screen")
+
+    expect(VideoLayoutEvent.count).to eq(1)
 
     click_on("Share Your Screen")
 
@@ -36,6 +41,9 @@ describe "Broadcaster Media Deck" do
     # yes we are connected, but we should be hidden!
     expect_video_capture_source_count(1, "camera")
     expect_video_capture_source_count(0, "screen")
+
+    # And so no video layout event either
+    expect(VideoLayoutEvent.count).to eq(1)
 
     # that means we should also see the hidden overlay
     hidden_overlay_css = ".MediaDeck__screen-share__hidden-cover"
@@ -47,9 +55,25 @@ describe "Broadcaster Media Deck" do
     # The overlay should be gone now
     expect(page).to_not have_css(hidden_overlay_css)
 
+    # And we changed the layout
+    expect(VideoLayoutEvent.count).to eq(2)
+
     # Now we should be sharing!
     expect_video_capture_source_count(1, "camera")
     expect_video_capture_source_count(1, "screen")
+
+    # This simulates the resizing of the sharing content
+    execute_script(
+      %|
+      document.querySelector(".MediaDeck__screen-share__video video").dispatchEvent(new CustomEvent("resize"))
+|,
+    )
+
+    expect_video_capture_source_count(1, "camera")
+    expect_video_capture_source_count(1, "screen")
+
+    # The resize above should have triggered a third layout event
+    expect(VideoLayoutEvent.count).to eq(3)
 
     click_on("Hide Screen")
 
@@ -58,6 +82,9 @@ describe "Broadcaster Media Deck" do
 
     # The screen capture preview is still there
     expect(page).to have_css(video_connected_css)
+
+    # And we're back to the original layout
+    expect(VideoLayoutEvent.count).to eq(4)
 
     # But not a capture source
     expect_video_capture_source_count(1, "camera")
