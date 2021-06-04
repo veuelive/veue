@@ -1,3 +1,4 @@
-- cache hero do
-  %a.discover__hero{href: hero.link}
-    = image_tag hero.image, alt: ""
+- fields = hero.component.fields
+= render ResponsiveHero::Component.new(image: fields.image, link: fields.link) do |component|
+  - component.responsive_images fields.responsive_images&.map(&:to_h)
+

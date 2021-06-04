@@ -43,6 +43,9 @@ RSpec.configure do |config|
   config.include AuthenticationTestHelpers::RequestHelpers, type: :request
   config.include ActionDispatch::TestProcess::FixtureFile, type: :request
 
+  config.include ViewComponent::TestHelpers, type: :component
+  config.include Capybara::RSpecMatchers, type: :component
+
   config.include UrlSpecHelpers
   config.include WebhookHelpers
   config.include PhoneTestHelpers
