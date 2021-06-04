@@ -17,7 +17,6 @@ describe "Modal login flow" do
   end
 
   before :example do
-    driven_by :media_browser
     resize_window_desktop
   end
 

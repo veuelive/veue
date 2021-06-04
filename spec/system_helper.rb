@@ -10,7 +10,7 @@ RSpec.configure do |config|
   config.include SystemSpecHelpers, type: :system
 
   # This is for our tests as a Broadcaster
-  Capybara.register_driver(:media_browser) do |app|
+  Capybara.register_driver(:headless_browser) do |app|
     options = %w[
       disable-popup-blocking
       disable-translate
@@ -64,8 +64,7 @@ RSpec.configure do |config|
     if ENV["RUBYLIB"] =~ /ruby-debug-ide/
       driven_by :debug_browser
     else
-      browser = (ENV["SPEC_BROWSER"] || :headless_chrome).to_sym
-      driven_by :selenium, using: browser
+      driven_by :headless_browser
     end
   end
 end

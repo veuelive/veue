@@ -41,6 +41,7 @@ export function buildBroadcastLayout(
   videoSize: Size,
   videoSections: Array<VideoCaptureInterface>
 ): VideoLayout {
+  console.log("CALCULATING LAYOUT FOR", videoSections);
   const packSections = videoCapturesToPackSections(videoSections);
   const packedSections = performPacking(videoSize, Object.values(packSections));
   const result = { ...videoSize, sections: [] };
@@ -53,6 +54,7 @@ export function buildBroadcastLayout(
       priority: section.priority,
     });
   }
+  console.log("LAYOUT RESULT: ", result);
   return result as VideoLayout;
 }
 

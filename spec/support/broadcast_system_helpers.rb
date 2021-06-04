@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 module BroadcastSystemHelpers
-  def use_media_browser
-    driven_by(:media_browser)
-    resize_window_desktop
-  end
 
   def navigate_to(url)
     bar = find("input[data-target='broadcast--browser.addressBar']")
