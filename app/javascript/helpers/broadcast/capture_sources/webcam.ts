@@ -53,7 +53,6 @@ export class WebcamCaptureSource extends VideoCaptureSource {
       },
       audio: false,
     });
-    console.log(this.mediaStream);
     await this.processMediaStream(this.mediaStream);
     this.layout = {
       width: this.element.videoWidth,

@@ -7,7 +7,6 @@ describe "Scrubber previews" do
   let(:video) { create(:vod_video) }
 
   before(:each) do
-    driven_by :media_browser
     resize_window_desktop
     visit path_for_video(video)
     assert_video_is_playing(10)
