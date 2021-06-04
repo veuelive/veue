@@ -1,6 +1,8 @@
 import { Size } from "types/rectangle";
 import { LayoutSection, VideoSourceType } from "types/video_layout";
 import { CaptureSource } from "helpers/broadcast/capture_sources/base";
+import EventBus from "event_bus";
+import { BroadcastLayoutNeedsRecalculation } from "helpers/broadcast/mixers/video_mixer";
 
 export abstract class VideoCaptureSource extends CaptureSource implements Size {
   layout: LayoutSection;
@@ -28,9 +30,9 @@ export abstract class VideoCaptureSource extends CaptureSource implements Size {
     this.deviceId = track.getSettings().deviceId;
     this.element = videoElement || this.createVideoElement();
     this.element.muted = true;
-    // this.element.addEventListener("resize", () => {
-    //   this.updateLayoutSize();
-    // });
+    this.element.addEventListener("resize", () => {
+      this.updateLayoutSize();
+    });
     this.element.srcObject = mediaStream;
     return new Promise((resolve) => {
       this.element.addEventListener("loadedmetadata", async () => {
@@ -74,5 +76,13 @@ export abstract class VideoCaptureSource extends CaptureSource implements Size {
         }
       });
     });
+  }
+
+  private updateLayoutSize() {
+    if (this.layout) {
+      this.layout.width = this.element.videoWidth;
+      this.layout.height = this.element.videoHeight;
+      EventBus.dispatch(BroadcastLayoutNeedsRecalculation, this.layout);
+    }
   }
 }

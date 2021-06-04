@@ -9,7 +9,6 @@ describe "Prerecorded Audience View" do
   let(:channel) { video.channel }
 
   before :example do
-    driven_by :media_browser
     resize_window_desktop
   end
 
