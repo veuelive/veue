@@ -11,6 +11,11 @@
   }
 
   .channel-bar {
+    box-sizing: border-box;
+
+    * {
+      box-sizing: border-box;
+    }
     border-radius: 0;
     padding: 5px;
     border-top: 1px solid color.$neutral-accents;
@@ -23,6 +28,11 @@
 
     &__info {
       width: inherit;
+
+      &__text__about {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
 
       &__mobile__about {
         display: none;
@@ -47,8 +57,7 @@
     }
 
     @include smallTall() {
-      padding: 15px 10px;
-      height: 40px;
+      margin: 15px 10px;
 
       position: absolute;
 
@@ -74,6 +83,10 @@
 
         &__avatar {
           margin: 0 10px 0 0;
+
+          &__host {
+            display: none;
+          }
         }
       }
     }
