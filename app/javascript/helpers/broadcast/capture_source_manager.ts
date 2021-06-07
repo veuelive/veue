@@ -2,10 +2,8 @@ import { CaptureSource } from "helpers/broadcast/capture_sources/base";
 import VideoMixer from "helpers/broadcast/mixers/video_mixer";
 import AudioMixer from "helpers/broadcast/mixers/audio_mixer";
 import VideoLayout from "types/video_layout";
-import { inElectronApp } from "helpers/electron/base";
 import { AudioCaptureSource } from "helpers/broadcast/capture_sources/audio";
 import { VideoCaptureSource } from "helpers/broadcast/capture_sources/video";
-import ElectronCaptureSource from "helpers/broadcast/capture_sources/electron";
 import EventBus from "event_bus";
 
 export const HideScreenCaptureEvent = "HideScreenCaptureEvent";
@@ -19,7 +17,6 @@ export default class CaptureSourceManager {
   private readonly audioMixer: AudioMixer;
   private readonly mediaChangeListener: (event: CustomEvent) => Promise<void>;
   // This can be removed after the Broadcaster is decommissioned
-  private electronCaptureSource: CaptureSource;
 
   constructor(videoMixer: VideoMixer, audioMixer: AudioMixer) {
     this.videoMixer = videoMixer;
@@ -42,14 +39,6 @@ export default class CaptureSourceManager {
         await this.removeCaptureSource(captureSource);
       }
     );
-
-    EventBus.subscribe(HideScreenCaptureEvent, async () => {
-      await this.removeCaptureSource(this.electronCaptureSource);
-    });
-
-    EventBus.subscribe(ShowScreenCaptureEvent, async () => {
-      await this.addCaptureSource(this.electronCaptureSource);
-    });
   }
 
   addCaptureSource(captureSource: CaptureSource): void {
@@ -76,15 +65,5 @@ export default class CaptureSourceManager {
         );
       }
     }
-  }
-
-  async startBrowserCapture(captureLayout: VideoLayout): Promise<void> {
-    if (!inElectronApp) {
-      return;
-    }
-    this.electronCaptureSource = await ElectronCaptureSource.connect(
-      captureLayout
-    );
-    this.addCaptureSource(this.electronCaptureSource);
   }
 }

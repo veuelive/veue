@@ -1,4 +1,3 @@
-import { ipcRenderer } from "helpers/electron/ipc_renderer";
 import { BROADCAST_DEBUG_KEYBINDINGS } from "types/keyboard_mapping";
 
 export function attachKeyboardListener(): (event) => void {
@@ -8,7 +7,6 @@ export function attachKeyboardListener(): (event) => void {
         if (event.key == key) {
           const name = BROADCAST_DEBUG_KEYBINDINGS[key];
           document.dispatchEvent(new CustomEvent(name));
-          ipcRenderer.send(name);
           event.stopImmediatePropagation();
           event.preventDefault();
         }

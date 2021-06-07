@@ -2,7 +2,6 @@ import DropdownController from "./dropdown_controller";
 import { secureFetch, putForm } from "util/fetch";
 import { Visibility, setVideoVisibility } from "../../helpers/video_helpers";
 import { flash } from "../../helpers/flash_helpers";
-import { inElectronApp } from "helpers/electron/base";
 
 export const ShowSettingsMenuEvent = "ShowSettingsMenu";
 
@@ -16,9 +15,7 @@ export default class SettingsController extends DropdownController {
   connect(): void {
     super.connect();
 
-    if (!inElectronApp) {
-      this.settingsTabTarget.remove();
-    }
+    this.settingsTabTarget.remove();
 
     document.addEventListener(
       ShowSettingsMenuEvent,

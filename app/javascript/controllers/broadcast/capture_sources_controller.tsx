@@ -9,7 +9,6 @@ import {
 import { CaptureSource } from "helpers/broadcast/capture_sources/base";
 import { h, render } from "preact";
 import MediaDeck from "components/media_deck";
-import { inElectronApp } from "helpers/electron/base";
 import EventBus from "event_bus";
 
 export const ChangeMediaDeviceEvent = "ChangeMediaDeviceEvent";
@@ -32,10 +31,7 @@ export default class extends BaseController {
       this.swapMediaDevice.bind(this)
     );
 
-    // If we are NOT in the electron app, then start up the MediaDeck!
-    if (!inElectronApp) {
-      render(<MediaDeck />, this.mediaDeckTarget);
-    }
+    render(<MediaDeck />, this.mediaDeckTarget);
   }
 
   async connectDefaultDevices(): Promise<void> {
