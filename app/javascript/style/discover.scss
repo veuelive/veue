@@ -48,7 +48,11 @@ body#discover__index {
               scroll-snap-align: start;
               margin-right: clamp(10px, 5vw, 34px);
               height: 100%;
-              flex: 1 0 auto;
+            }
+
+            // Dont let video cards shrink!
+            & > .video-card {
+              flex-shrink: 0;
             }
           }
         }
