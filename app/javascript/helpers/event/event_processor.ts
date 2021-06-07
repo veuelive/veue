@@ -19,7 +19,6 @@ export const VideoEventProcessor = new (class VideoEventProcessor {
 
   syncTime(timecodeMs: number) {
     const actualTimecodeMs = timecodeMs + this.startOffsetMs;
-    console.log("Syncing to ", actualTimecodeMs, this.startOffsetMs);
     while (this.events[0] && this.events[0].timecodeMs <= actualTimecodeMs) {
       this.dispatch(this.events.shift());
     }
@@ -33,7 +32,6 @@ export const VideoEventProcessor = new (class VideoEventProcessor {
   }
 
   addEvent(videoEvent: VideoEvent) {
-    console.log("Adding event ", videoEvent);
     this.events.push(videoEvent);
     this.syncTime(this.lastTimecode);
   }
