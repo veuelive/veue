@@ -1,0 +1,37 @@
+@use "../utils/font";
+@use "../utils/color";
+
+.prose {
+  h1 {
+    font-family: font.$poppins;
+    font-weight: bold;
+    font-size: 28px;
+    color: color.$veue-corporate;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-family: font.$poppins;
+    font-weight: font.$medium-weight;
+    font-size: 18px;
+    color: color.$neutral-dark;
+    line-height: 1.2;
+  }
+
+  p {
+    color: color.$neutral-regular;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  a {
+    color: color.$veue-corporate;
+    font-weight: font.$medium-weight;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+    }
+  }
+}
