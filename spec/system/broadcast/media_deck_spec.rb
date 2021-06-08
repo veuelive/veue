@@ -23,9 +23,6 @@ describe "Broadcaster Media Deck" do
 
     click_start_broadcast_button
 
-    expect_video_capture_source_count(1, "camera")
-    expect_video_capture_source_count(0, "screen")
-
     wait_for_broadcast_state "live"
 
     expect_video_capture_source_count(1, "camera")
