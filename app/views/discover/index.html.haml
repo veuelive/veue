@@ -22,8 +22,9 @@
         .discover__strip__items{data: {controller: "util--click-drag"}}
           = render collection: @popular_channels, partial: "shared/channel_card"
 
-      %h2= t("discover.recent")
-      .discover__grid
-        = render collection: @recent_videos, partial: "shared/video_card"
+      .discover__strip
+        %h2= t("discover.recent")
+        .discover__strip__items{data: {controller: "util--click-drag"}}
+          = render collection: @recent_videos, partial: "shared/video_card"
 
   = render partial: "layouts/footer"
