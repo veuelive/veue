@@ -2,7 +2,6 @@ import { Controller } from "stimulus";
 import { debounce } from "util/debounce";
 import { putForm } from "util/fetch";
 import { showNotification } from "util/notifications";
-import { inElectronApp } from "helpers/electron/base";
 import { Visibility, setVideoVisibility } from "../../helpers/video_helpers";
 
 export default class extends Controller {
@@ -11,12 +10,6 @@ export default class extends Controller {
   readonly loadingTarget!: HTMLElement;
   readonly titleInputTarget!: HTMLInputElement;
   readonly visibilityTarget!: HTMLSelectElement;
-
-  connect(): void {
-    if (inElectronApp) {
-      this.element.remove();
-    }
-  }
 
   @debounce(100)
   async saveTitle(): Promise<void> {

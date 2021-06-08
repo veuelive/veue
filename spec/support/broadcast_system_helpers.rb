@@ -2,13 +2,6 @@
 
 module BroadcastSystemHelpers
 
-  def navigate_to(url)
-    bar = find("input[data-target='broadcast--browser.addressBar']")
-    bar.set(url)
-    bar.native.send_keys(:return)
-    expect(find("*[data-broadcast--browser-url]")["data-broadcast--browser-url"]).to eq(url)
-  end
-
   def shift_to_broadcast_view
     expect(page).to have_css("#startup")
     click_on("Open Broadcaster")
