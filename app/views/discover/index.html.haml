@@ -3,7 +3,8 @@
 .content-area
   .discover
     - if @cms_components.present?
-      = render @cms_components
+      - @cms_components.each do |component|
+        = render component
     - else
       - if @live_videos.any?
         .discover__strip
@@ -17,10 +18,7 @@
           .discover__strip__items
             = render collection: @scheduled_shows, partial: "shared/upcoming_card"
 
-      .discover__strip
-        %h2= t("discover.top_channels")
-        .discover__strip__items{data: {controller: "util--click-drag"}}
-          = render collection: @popular_channels, partial: "shared/channel_card"
+      = render DiscoverChannels::Component.new(title: t("discover.top_channels"), channels: @popular_channels)
 
       .discover__strip
         %h2= t("discover.recent")
