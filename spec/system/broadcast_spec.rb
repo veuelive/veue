@@ -224,7 +224,6 @@ describe "Broadcast View" do
 
       fill_in("video_title", with: "")
       fill_in("video_title", with: new_title)
-      expect(page).to have_css("svg.loading")
 
       find("[value='#{new_visibility}']").select_option
       expect(page).to have_css(".notification-wrapper", wait: 5)
