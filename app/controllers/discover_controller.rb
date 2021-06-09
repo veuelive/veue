@@ -38,7 +38,8 @@ class DiscoverController < ApplicationController
       when "static_upcoming", "dynamic_upcoming"
         Components::Discover::Upcoming.new(component)
       when "static_channels", "dynamic_channels"
-        DiscoverChannels::Component.new(title: component.fields.title, channels: component.fields.channels)
+        data = CmsChannelMapper.new(component)
+        DiscoverChannels::Component.new(title: data.title, channels: data.channels)
       end
     end
   end
