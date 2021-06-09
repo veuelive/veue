@@ -27,6 +27,9 @@ class DiscoverController < ApplicationController
     components.map do |component|
       case component.type
       when "hero_image", "responsive_hero"
+        # hero_image should be removed / replaced with responsive_hero.
+        # responsive_hero is a superset of hero_image and uses ResponsiveHero::Component.new
+        # This exists for backwards compatitibiltiy.
         Components::Discover::Hero.new(component)
       when "content"
         Components::Discover::Content.new(component)
@@ -34,6 +37,9 @@ class DiscoverController < ApplicationController
         Components::Discover::Curation.new(component)
       when "static_upcoming", "dynamic_upcoming"
         Components::Discover::Upcoming.new(component)
+      when "static_channels", "dynamic_channels"
+        data = CmsChannelMapper.new(component)
+        DiscoverChannels::Component.new(title: data.title, channels: data.channels)
       end
     end
   end
