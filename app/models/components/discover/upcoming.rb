@@ -5,10 +5,8 @@ module Components
     class Upcoming
       include DiscoverableComponent
 
-      def initialize(component)
-        @component = component
-        @fields = @component.fields
-        @limit = @fields.max_size || 8
+      def limit
+        @limit ||= @fields.max_size || 8
       end
 
       def to_partial_path
@@ -26,7 +24,7 @@ module Components
       end
 
       def find_channels
-        Channel.most_popular.where.not(next_show_at: nil).limit(@limit).decorate
+        Channel.most_popular.where.not(next_show_at: nil).limit(limit).decorate
       end
 
       def map_channel_names_to_channels
