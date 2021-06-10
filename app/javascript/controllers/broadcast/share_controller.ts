@@ -5,6 +5,7 @@ import {
   publicVideoLink,
   privateVideoLink,
 } from "helpers/broadcast_helpers";
+import { trackEvent } from "helpers/event_tracking";
 
 export default class extends DropdownController {
   showHideMenu(): void {
@@ -37,7 +38,7 @@ export default class extends DropdownController {
 
   openLink(event: Event): void {
     event.stopPropagation();
-
+    trackEvent("Broadcast", "Click Share", "Open Share Link");
     openLinkInBrowser(this.getVideoLink());
   }
 
@@ -46,6 +47,7 @@ export default class extends DropdownController {
     try {
       await window.navigator.clipboard.writeText(this.getVideoLink());
       alert("Link Copied to Clipboard!");
+      trackEvent("Broadcast", "Click Share", "Copy Share Link");
     } catch (err) {
       console.warn(err);
     }

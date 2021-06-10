@@ -6,6 +6,7 @@ import pauseSvg from "images/pause.svg";
 import mutedSvg from "images/volume-mute.svg";
 import unmutedSvg from "images/volume-max.svg";
 import { VideoEventProcessor } from "helpers/event/event_processor";
+import { trackEvent } from "helpers/event_tracking";
 
 export default class extends BaseController {
   static targets = [
@@ -176,6 +177,8 @@ export default class extends BaseController {
 
   set state(state: string) {
     this.data.set("state", state);
+
+    trackEvent("Player", "State Changed", state);
 
     const pausedStates = ["paused", "ended"];
 

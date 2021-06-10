@@ -1,5 +1,4 @@
 <% if ENV["VEUE_ENV"] == "production" %>
-  <!-- Matomo Code -->
   <script type="text/javascript">
     var _paq = window._paq = window._paq || [];
     /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
@@ -14,5 +13,8 @@
       g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
     })();
   </script>
-  <!-- End Matomo -->
+<% else %>
+  <script type="text/javascript">
+    window._paq = []
+  </script>
 <% end %>

@@ -22,6 +22,8 @@ describe "Prerecorded Audience View" do
       expect(is_video_playing?).to eq(true)
 
       expect(current_timecode).to be > 0
+
+      expect_analytics_event("Player", "State Changed", "playing")
     end
 
     it "does not update view count on refresh" do
