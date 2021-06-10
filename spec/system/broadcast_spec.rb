@@ -154,14 +154,17 @@ describe "Broadcast View" do
   describe "while live streaming" do
     before :each do
       click_start_broadcast_button
+      expect_analytics_event("Broadcast", "State Changed", "ready")
       # For most of these, it's important we wait until we are actually "live"
       # and things like the WS connection are open
       wait_for_broadcast_state("live")
+      expect_analytics_event("Broadcast", "State Changed", "live")
     end
 
     it "should allow you to stop broadcasting" do
       click_stop_broadcast_button
       expect(page).to have_content("Broadcast Complete")
+      expect_analytics_event("Broadcast", "State Changed", "finished")
     end
 
     describe "reload page" do

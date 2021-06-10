@@ -13,3 +13,7 @@ interface MediaTrackConstraintSet {
   logicalSurface?: ConstrainBoolean;
   // more....
 }
+
+interface Window {
+  _paq: string[][];
+}

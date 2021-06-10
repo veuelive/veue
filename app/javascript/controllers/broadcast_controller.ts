@@ -16,6 +16,7 @@ import {
 } from "helpers/broadcast/keyboard_listeners";
 import { getVideoId } from "helpers/video_helpers";
 import { getChannelId } from "helpers/channel_helpers";
+import { trackEvent } from "helpers/event_tracking";
 
 type BroadcastState =
   | "loading"
@@ -176,6 +177,8 @@ export default class extends Controller {
     this.data.set("state", state);
 
     console.log("state transitions to " + state);
+
+    trackEvent("Broadcast", "State Changed", state);
 
     // Hide all elements that shouldn't be visible in this state!
     document

@@ -3,6 +3,7 @@ import { Controller } from "stimulus";
 import { getChannelId } from "helpers/channel_helpers";
 import { currentUserId } from "helpers/authentication_helpers";
 import { displayChatMessage } from "helpers/chat_helpers";
+import { trackEvent } from "helpers/event_tracking";
 
 export default class extends Controller {
   static targets = [
@@ -59,6 +60,8 @@ export default class extends Controller {
 
     if (message.length > 0 && !this.chatLimitExceeds()) {
       textAreaElement.innerHTML = "";
+
+      trackEvent("Chat", "Message Sent", "Message Sent");
 
       postForm(`/${getChannelId()}/chat_messages`, {
         message,
