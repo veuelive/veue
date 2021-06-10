@@ -23,6 +23,12 @@
     font-weight: normal;
     font-size: 1.1rem;
     line-height: 1.4;
+
+    > img {
+      margin: 3rem 0;
+      width: 100%;
+      height: auto;
+    }
   }
 
   a {
