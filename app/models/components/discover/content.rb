@@ -5,11 +5,6 @@ module Components
     class Content
       include DiscoverableComponent
 
-      def initialize(component)
-        @component = component
-        @fields = @component.fields
-      end
-
       def body
         @fields.body
       end
