@@ -1,6 +1,5 @@
 - if upcoming.collection.present?
-  - cache upcoming do
-    .discover__strip
-      %h2= upcoming.title
-      .discover__strip__items
-        = render collection: upcoming.collection, partial: "shared/upcoming_card", cached: true
+  .discover__strip
+    %h2= upcoming.title
+    .discover__strip__items
+      = render collection: upcoming.collection, partial: "shared/upcoming_card", cached: true
