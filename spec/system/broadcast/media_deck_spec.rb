@@ -63,7 +63,7 @@ describe "Broadcaster Media Deck" do
         %|
       document.querySelector(".MediaDeck__screen-share__video video").dispatchEvent(new CustomEvent("resize"))
 |,
-        )
+      )
 
       expect_video_capture_source_count(1, "camera")
       expect_video_capture_source_count(1, "screen")
@@ -96,7 +96,6 @@ describe "Broadcaster Media Deck" do
       expect_video_capture_source_count(0, "screen")
     end
   end
-
 
   describe "Broadcaster Media Deck Webcam Share" do
     it "attaches camera" do
