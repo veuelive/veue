@@ -65,6 +65,11 @@ body#discover__index {
             width: 100%;
           }
         }
+
+        &__content {
+          margin: 3rem auto 0;
+          width: clamp(200px, 75vw, 1400px);
+        }
       }
 
       .main-footer {
