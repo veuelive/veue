@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module BroadcastSystemHelpers
-
   def shift_to_broadcast_view
     expect(page).to have_css("#startup")
     click_on("Open Broadcaster")
