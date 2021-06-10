@@ -27,6 +27,8 @@ describe "Broadcast Commands" do
 
       accept_alert
 
+      expect_analytics_event("Broadcast", "Click Share", "Copy Share Link")
+
       clip_text = read_clipboard_text
       expect(clip_text).to eq(channel_share_link(channel))
       expect(clip_text).to include(channel.slug)
@@ -39,6 +41,7 @@ describe "Broadcast Commands" do
         window_opened_by do
           find(".select-menu--content__body__item.open").click
         end
+      expect_analytics_event("Broadcast", "Click Share", "Open Share Link")
       switch_to_window audience_window
       expect(current_url).to eq(channel_share_link(channel))
     end

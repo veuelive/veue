@@ -25,6 +25,8 @@ describe "chat during live video" do
       expect(page).to have_content(/Cowabunga!/).once
       expect(video.chat_messages.count).to eq(1)
 
+      expect_analytics_event("Chat", "Message Sent", "Message Sent")
+
       # This seems odd, I know, but it's the main way to repo VEUE-144
       # as Turbolinks with the page transitions was doubling the number
       # of event handlers and this was causing multiple websockets to get

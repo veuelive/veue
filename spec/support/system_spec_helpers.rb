@@ -48,6 +48,11 @@ module SystemSpecHelpers
     )
   end
 
+  def expect_analytics_event(category, action, name)
+    events = page.evaluate_script("window._paq")
+    expect(events).to include(["trackEvent", category, action, name])
+  end
+
   def read_clipboard_text
     page.evaluate_async_script("navigator.clipboard.readText().then(arguments[0])")
   end
