@@ -55,8 +55,24 @@
   }
 
   &__controls {
+    display: flex;
     button {
       margin: 10px;
+    }
+  }
+
+  &__webcam-share {
+    position: absolute;
+    left: 30%;
+    top: 40%;
+    background: color.$white;
+    border-radius: 10px;
+    padding: 20px;
+    z-index: z_index.$modal;
+
+    &--item {
+      cursor: pointer;
+      margin-top: 10px;
     }
   }
 }
