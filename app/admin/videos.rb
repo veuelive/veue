@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register(Video) do
-  permit_params :title, :state, :description, :visibility, :scheduled_at,
-                :start_offset, :end_offset, :active_admin_requested_event
+  permit_params :title,
+                :state,
+                :description,
+                :visibility,
+                :scheduled_at,
+                :start_offset,
+                :end_offset,
+                :active_admin_requested_event
 
   # Needed for AASM + ActiveAdmin
   # https://github.com/activeadmin/activeadmin/wiki/How-to-work-with-AASM
