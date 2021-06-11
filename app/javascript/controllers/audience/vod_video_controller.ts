@@ -10,31 +10,30 @@ export default class extends BaseController {
   readonly videoTarget!: HTMLVideoElement;
   private eventManager: VodEventManager;
 
+  private boundUseStartOffset: EventListener;
+
   element!: HTMLElement;
+
+  initialize(): void {
+    this.boundUseStartOffset = this.useStartOffset.bind(this);
+  }
 
   connect(): void {
     document.addEventListener(VideoSeekEvent, this.seekTo.bind(this));
     this.eventManager = new VodEventManager(0);
 
-    this.videoTarget.addEventListener("loadedmetadata", async () => {
-      const params = new URLSearchParams(window.location.search);
-
-      let startTime: number;
-
-      const requestedStartTime = parseInt(params.get("t"));
-
-      if (requestedStartTime && requestedStartTime < this.duration) {
-        startTime = requestedStartTime;
-      } else {
-        startTime = parseInt(this.element.dataset.startOffset);
-      }
-
-      this.videoTarget.currentTime = startTime;
-    });
+    this.videoTarget.addEventListener(
+      "durationchange",
+      this.boundUseStartOffset
+    );
   }
 
   disconnect(): void {
     document.removeEventListener(VideoSeekEvent, this.seekTo.bind(this));
+    this.videoTarget.removeEventListener(
+      "durationchange",
+      this.boundUseStartOffset
+    );
   }
 
   seekTo(event: CustomEvent): Promise<void> {
@@ -50,6 +49,24 @@ export default class extends BaseController {
   resetChat(): void {
     this.chatTarget.innerHTML = "";
     this.likeNotificationTarget.innerHTML = "";
+  }
+
+  useStartOffset(): void {
+    const params = new URLSearchParams(window.location.search);
+
+    let startTime: number;
+
+    const requestedStartTime = parseInt(params.get("t"));
+
+    if (requestedStartTime && requestedStartTime < this.duration) {
+      startTime = requestedStartTime;
+    } else {
+      startTime = parseInt(this.element.dataset.startOffset);
+    }
+
+    this.resetToTimecode(startTime);
+    this.videoTarget.currentTime = startTime;
+    this.element.dataset.startTime = startTime.toString();
   }
 
   get endOffset(): number {

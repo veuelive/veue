@@ -91,10 +91,16 @@ describe "Prerecorded Audience View" do
   end
 
   describe "Starting further into the video" do
+    it "should not allow you to set t=? > video duration" do
+      visit path_for_video(video, t: 900)
+      expect(page).to have_css("[data-start-time='0']")
+    end
+
     it "should show all chat messages" do
       late_message.update!(timecode_ms: 8_999)
       visit path_for_video(video, t: 1)
       assert_video_is_playing(2)
+      expect(page).to have_css("[data-start-time='1']")
       expect(page).to have_content(ChatMessage.first.payload["message"])
 
       expect(page).to have_no_content(late_message.payload["message"], wait: 0)
@@ -102,6 +108,8 @@ describe "Prerecorded Audience View" do
       # Seeking SHOULD have that message!
       visit path_for_video(video, t: 9)
       assert_video_is_playing(9)
+
+      expect(page).to have_css("[data-start-time='9']")
       # Messages from before stream should show
       first_message = ChatMessage.first
       expect(first_message.timecode_ms).to eq(0)
@@ -116,6 +124,7 @@ describe "Prerecorded Audience View" do
       visit path_for_video(video)
 
       expect(page).to have_css("[data-start-offset='#{start_offset}']")
+      expect(page).to have_css("[data-start-time='#{start_offset}']")
       assert_video_is_playing
 
       # We actually have no clue where in the time code we'll be, but its safe
