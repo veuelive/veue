@@ -61,6 +61,7 @@ export default class extends BaseController {
       startOffset = 0;
     }
 
+    this.element.dataset.startOffset = startOffset.toString();
     this.resetToTimecode(startOffset);
     this.videoTarget.currentTime = startOffset;
   }
