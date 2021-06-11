@@ -54,19 +54,15 @@ export default class extends BaseController {
   useStartOffset(): void {
     const params = new URLSearchParams(window.location.search);
 
-    let startTime: number;
-
-    const requestedStartTime = parseInt(params.get("t"));
-
-    if (requestedStartTime && requestedStartTime < this.duration) {
-      startTime = requestedStartTime;
-    } else {
-      startTime = parseInt(this.element.dataset.startOffset);
+    let startOffset = parseInt(
+      params.get("t") || this.element.dataset.startOffset
+    );
+    if (startOffset > this.videoTarget.duration) {
+      startOffset = 0;
     }
 
-    this.resetToTimecode(startTime);
-    this.videoTarget.currentTime = startTime;
-    this.element.dataset.startTime = startTime.toString();
+    this.resetToTimecode(startOffset);
+    this.videoTarget.currentTime = startOffset;
   }
 
   get endOffset(): number {

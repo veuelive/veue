@@ -93,7 +93,7 @@ describe "Prerecorded Audience View" do
   describe "Starting further into the video" do
     it "should not allow you to set t=? > video duration" do
       visit path_for_video(video, t: 900)
-      expect(page).to have_css("[data-start-time='0']")
+      expect(page).to have_css("[data-start-offset='0']")
     end
 
     it "should show all chat messages" do
