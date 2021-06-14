@@ -1,0 +1,46 @@
+@use "./utils/color";
+
+// Pagy classes (pagination)
+.pagy-nav {
+  text-align: center;
+  padding: 5px;
+
+  .page {
+    &.prev {
+      margin-right: 5px;
+    }
+
+    &.next {
+      margin-left: 5px;
+    }
+
+    &.disabled {
+      opacity: 0.5;
+    }
+
+    &.active {
+      padding: 0 5px;
+      color: color.$veue-corporate;
+    }
+
+    &:not(.next, .prev) {
+      > a {
+        padding: 0 5px;
+      }
+
+      &:not(.active) {
+        border-bottom: 1px solid color.$neutral-middle;
+
+        &:hover {
+          border-color: color.$veue-corporate;
+        }
+
+        > a {
+          &:focus {
+            border-color: color.$veue-corporate;
+          }
+        }
+      }
+    }
+  }
+}
