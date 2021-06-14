@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  include Pagy::Frontend
+
   def body_attributes
     {
       id: "#{controller.controller_name}__#{controller.action_name}",

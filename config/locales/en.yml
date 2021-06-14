@@ -140,5 +140,7 @@ en:
   scheduling:
     scheduled_today: "Today at "
     very_soon: "Starting"
+  videos:
+    recent: "Recent Videos"
 
 
