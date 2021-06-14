@@ -1,7 +1,14 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register(Video) do
-  permit_params :title, :state, :description, :visibility, :scheduled_at, :active_admin_requested_event
+  permit_params :title,
+                :state,
+                :description,
+                :visibility,
+                :scheduled_at,
+                :start_offset,
+                :end_offset,
+                :active_admin_requested_event
 
   # Needed for AASM + ActiveAdmin
   # https://github.com/activeadmin/activeadmin/wiki/How-to-work-with-AASM
@@ -29,6 +36,8 @@ ActiveAdmin.register(Video) do
     state_column :state
     column :visibility
     column :created_at
+    column :start_offset
+    column :end_offset
   end
 
   # /:id/show
@@ -42,6 +51,8 @@ ActiveAdmin.register(Video) do
       state_row :state
       row :visibility
       row :started_at
+      row :start_offset
+      row :end_offset
     end
     active_admin_comments
   end
@@ -56,6 +67,9 @@ ActiveAdmin.register(Video) do
 
       # display current state as disabled to avoid modifying it directly
       f.input(:state, input_html: {disabled: true}, label: "Current state")
+
+      f.input(:start_offset)
+      f.input(:end_offset)
 
       # use the attr_accessor to pass the data
       f.input(
