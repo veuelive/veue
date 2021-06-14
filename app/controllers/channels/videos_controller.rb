@@ -3,7 +3,14 @@
 module Channels
   class VideosController < ApplicationController
     include ChannelConcern
-    load_and_authorize_resource except: ["viewed"]
+    include ::Pagy::Backend
+
+    load_and_authorize_resource except: %w[viewed index]
+
+    # /videos
+    def index
+      @pagy, @videos = pagy(Video.public_videos.most_recent, count: 30)
+    end
 
     # GET /videos/1
     def show

@@ -16,7 +16,7 @@
   @include large() {
     .broadcasts {
       // Has to be calc because <img> is absolute and overflows margins.
-      width: calc(100% - 50px);
+      width: calc(100% - 25px);
       margin-left: 20px;
       margin-right: 30px;
     }
