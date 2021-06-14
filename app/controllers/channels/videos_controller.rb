@@ -3,7 +3,7 @@
 module Channels
   class VideosController < ApplicationController
     include ChannelConcern
-    include Pagy::Backend
+    include ::Pagy::Backend
 
     load_and_authorize_resource except: %w[viewed index]
 
