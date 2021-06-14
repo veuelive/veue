@@ -104,7 +104,7 @@ gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw]
 gem "view_component", require: "view_component/engine"
 
 # Pagination!
-gem 'pagy', '~> 4'
+gem "pagy", "~> 4"
 
 group :production do
   # Gem for sending production logs to LogDNA
