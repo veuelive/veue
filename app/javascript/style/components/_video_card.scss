@@ -3,8 +3,8 @@
 @use "../utils/font.scss";
 @use "../utils/z_index.scss";
 
-$max-width: 350px;
-$min-width: 150px;
+$max-width: 300px;
+$min-width: 230px;
 
 .video-card {
   @include scale.aspect-ratio();

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class DiscoverController < ApplicationController
+  include Pagy::Backend
   SUPPORTED_LOCALES = %w[en es].freeze
   public_constant :SUPPORTED_LOCALES
 
   # GET /discover or / or /en/:page_slug
   def index
     # BE CAREFUL only to use `public_videos` when building these queries!
-
     fields = cms_data&.data&.fields
     @seo_title = fields&.seo_title || "Discovery Veue"
     @cms_components = fields&.components
