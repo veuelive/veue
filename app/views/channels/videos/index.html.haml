@@ -1,6 +1,9 @@
 .videos{style: "width: 100%;"}
   .broadcasts{style: "width: calc(100% - 50px);"}
     %h2.broadcasts__header= t("videos.recent")
+
     = render collection: @videos.decorate, partial: "shared/video_card", cached: true
 
   = pagy_nav(@pagy).html_safe
+
+  = render "layouts/footer"
