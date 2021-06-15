@@ -9,7 +9,7 @@ module Channels
 
     # /videos
     def index
-      @pagy, @videos = pagy(Video.public_videos.most_recent, count: 30)
+      @pagy, @videos = pagy(Video.visibility_public.most_recent.finished, count: 30)
     end
 
     # GET /videos/1
