@@ -13,7 +13,8 @@
           "fields": {
             "title": "Live NOW!",
             "max_size": 2.0,
-            "type": "live"
+            "type": "live",
+            "display_type": "grid"
           }
         },
         {
@@ -21,7 +22,8 @@
           "fields": {
             "title": "Most Watched",
             "max_size": 20.0,
-            "type": "popular-all-time"
+            "type": "popular-all-time",
+            "display_type": "strip"
           }
         }
       ]
