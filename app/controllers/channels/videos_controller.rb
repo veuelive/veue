@@ -7,9 +7,12 @@ module Channels
 
     load_and_authorize_resource except: %w[viewed index]
 
+    COUNT_PER_PAGE = 30
+    public_constant :COUNT_PER_PAGE
+
     # /videos
     def index
-      @pagy, @videos = pagy(Video.visibility_public.most_recent.finished, count: 30)
+      @pagy, @videos = pagy(Video.visibility_public.most_recent.finished, count: COUNT_PER_PAGE)
     end
 
     # GET /videos/1
