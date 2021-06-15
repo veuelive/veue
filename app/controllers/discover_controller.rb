@@ -67,7 +67,7 @@ class DiscoverController < ApplicationController
 
   def set_default_variables
     @live_videos = public_videos.live.limit(3).decorate
-    @recent_videos = public_videos.finished.decorate
+    @recent_videos = public_videos.finished.limit(Channels::VideosController::COUNT_PER_PAGE).decorate
     @popular_channels = Channel.most_popular.limit(8).decorate
     @scheduled_shows = Channel.where.not(next_show_at: nil).order(:next_show_at).limit(20).decorate
   end
