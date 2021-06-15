@@ -122,6 +122,19 @@ describe "Discover View" do
       stub_butter(slug: "homepage-en", data: json_data)
     end
 
+    it "should show a strip and grid" do
+      # instantiate videos
+      create(:live_video)
+      create_list(:vod_video, 3)
+
+      visit root_path
+      expect(page).to have_css(".discover__strip")
+      expect(page).to have_css(".discover__strip__items")
+
+      expect(page).to have_css(".broadcasts")
+      expect(page).to have_css(".broadcasts__header")
+    end
+
     it "should show dynamic content" do
       live_limit = data_components.find { |c|
         c.dig("fields", "type") == "live"
@@ -129,7 +142,7 @@ describe "Discover View" do
       live_limit = Integer(live_limit)
 
       # instantiate videos
-      vod_videos = create_list(:vod_video, 5)
+      vod_videos = create_list(:vod_video, 1)
       create_list(:live_video, live_limit + 1)
 
       visit root_path

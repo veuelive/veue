@@ -19,6 +19,7 @@
           "type": "static_curation",
           "fields": {
             "title": "Static",
+            "display_type": "grid",
             "videos": [
               {
                 "title": "Super cool video",
@@ -30,6 +31,7 @@
         {
           "type": "dynamic_curation",
           "fields": {
+            "display_type": "grid",
             "title": "Live NOW!",
             "max_size": 5.0,
             "type": "live"
@@ -38,6 +40,7 @@
         {
           "type": "dynamic_curation",
           "fields": {
+            "display_type": "grid",
             "title": "Super crazy awesome videos",
             "max_size": 10.0,
             "type": "trending-this-week"
@@ -46,6 +49,7 @@
         {
           "type": "dynamic_curation",
           "fields": {
+            "display_type": "grid",
             "title": "Most Watched",
             "max_size": 20.0,
             "type": "popular-all-time"

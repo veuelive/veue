@@ -13,6 +13,10 @@ module Components
         @fields.title
       end
 
+      def display_type
+        @display_type ||= ::ActiveSupport::StringInquirer.new((@fields.display_type || "grid"))
+      end
+
       # Where to lookup the view for the Model
       def to_partial_path
         "discover/components/curation"
