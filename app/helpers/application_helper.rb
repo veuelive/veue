@@ -53,4 +53,10 @@ module ApplicationHelper
     options = options.merge(style: "border-radius: 50%;", draggable: "false")
     image_tag(image.variant(resize_to_fill: [size, size]), options)
   end
+
+  def call_to_action_link
+    ENV.fetch(
+      "CALL_TO_ACTION_LINK", "https://docs.google.com/forms/d/e/1FAIpQLSdP662xzbx2SnY656on_OMaaWtHA8KzNCba2nobn0kUHYldmQ/viewform"
+    )
+  end
 end
