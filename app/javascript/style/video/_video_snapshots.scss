@@ -29,41 +29,5 @@
         margin: 0.25rem;
       }
     }
-
-    .btn--secondary {
-      background: color.$white;
-      border: 1px solid color.$veue-corporate;
-      color: color.$veue-corporate;
-
-      &:focus,
-      &:hover {
-        color: darken(color.$veue-corporate, 20);
-        background: lighten(color.$veue-corporate, 30);
-      }
-
-      &:disabled {
-        border: 1px solid transparent;
-        color: color.$gray-lighter;
-        background: color.$gray-light-blue;
-      }
-    }
-
-    .btn--danger {
-      background: color.$white;
-      border: 1px solid color.$red-highlight;
-      color: color.$red-highlight;
-
-      &:focus,
-      &:hover {
-        color: darken(color.$red-highlight, 20);
-        background: lighten(color.$red-highlight, 32);
-      }
-
-      &:disabled {
-        border: 1px solid transparent;
-        color: color.$gray-lighter;
-        background: color.$gray-light-blue;
-      }
-    }
   }
 }

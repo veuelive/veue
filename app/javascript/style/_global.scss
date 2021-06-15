@@ -67,6 +67,7 @@ a {
   }
 }
 
+.btn,
 button {
   &:hover {
     cursor: pointer;
@@ -78,6 +79,7 @@ button {
   }
 }
 
+.btn,
 button {
   background: color.$cornflower;
   color: color.$white;

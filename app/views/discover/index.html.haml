@@ -5,6 +5,9 @@
     - if @cms_components.present?
       - @cms_components.each do |component|
         = render component
+
+      .discover__button
+        = link_to "See More", "/videos", class: "btn btn--secondary"
     - else
       - if @live_videos.any?
         .discover__strip
@@ -23,5 +26,9 @@
       .broadcasts
         %h2.broadcasts__header= t("discover.recent")
         = render collection: @recent_videos, partial: "shared/video_card"
+
+      .discover__button
+        -# page 2 because theyve already seen page 1!
+        = link_to "See More", "/videos?page=2", class: "btn btn--secondary"
 
   = render partial: "layouts/footer"
