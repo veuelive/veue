@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 
   get "/discover", to: "discover#index"
 
+  get "/videos", to: "channels/videos#index"
+
   resources :broadcasts, only: [:show, :index, :edit, :update] do
     scope module: "broadcasts" do
       controller "event" do
