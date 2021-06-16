@@ -7,6 +7,7 @@
     "@appsignal/plugin-breadcrumbs-console": "^1.1.12",
     "@appsignal/stimulus": "^1.0.6",
     "@github/time-elements": "^3.1.1",
+    "@logdna/browser": "^1.1.2",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
