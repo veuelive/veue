@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-module DiscoverChannels
+module DiscoverUpcoming
   class Component < ::ViewComponent::Base
-    def initialize(title:, channels:)
+    def initialize(title:, shows:)
       super
       @title = title
-      @channels = channels
+      @shows = shows
     end
 
     def render?
-      @channels.present? && @title.present?
+      @title.present? && @shows.present?
     end
   end
 end

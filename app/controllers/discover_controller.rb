@@ -14,7 +14,7 @@ class DiscoverController < ApplicationController
 
     set_default_variables && return if @cms_components.blank?
 
-    @cms_components = map_components(@cms_components)
+    @cms_components = map_cms_components(@cms_components)
   end
 
   def cms_data
@@ -23,23 +23,19 @@ class DiscoverController < ApplicationController
 
   private
 
-  def map_components(components)
+  def map_cms_components(components)
     components.map do |component|
       case component.type
       when "hero_image", "responsive_hero"
-        # hero_image should be removed / replaced with responsive_hero.
-        # responsive_hero is a superset of hero_image and uses ResponsiveHero::Component.new
-        # This exists for backwards compatitibiltiy.
-        Components::Discover::Hero.new(component)
+        CmsHeroMapper.new(component).view_component
       when "content"
-        Components::Discover::Content.new(component)
+        CmsContentMapper.new(component).view_component
       when "static_curation", "dynamic_curation"
-        Components::Discover::Curation.new(component)
+        CmsCurationMapper.new(component).view_component
       when "static_upcoming", "dynamic_upcoming"
-        Components::Discover::Upcoming.new(component)
+        CmsUpcomingMapper.new(component).view_component
       when "static_channels", "dynamic_channels"
-        data = CmsChannelMapper.new(component)
-        DiscoverChannels::Component.new(title: data.title, channels: data.channels)
+        CmsChannelMapper.new(component).view_component
       end
     end
   end

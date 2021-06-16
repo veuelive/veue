@@ -6,16 +6,23 @@
 class CmsDataMapper
   include ActiveModel::Model
 
-  def initialize(component)
-    @component = component
-    @fields = component[:fields]
+  attr_reader :cms_component, :fields
+
+  # @param {OpenStruct | Hash} cms_component - Expects a ButterCMS component.
+  def initialize(cms_component)
+    @cms_component = cms_component
+    @fields = cms_component[:fields]
   end
 
-  def limit
-    @limit ||= @fields[:max_size]
+  def display_type
+    @display_type ||= fields[:display_type]
   end
 
   def title
-    @title ||= @fields[:title]
+    @title ||= fields[:title]
+  end
+
+  def limit
+    @limit ||= fields[:max_size]
   end
 end
