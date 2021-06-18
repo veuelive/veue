@@ -46,7 +46,7 @@ class DiscoverController < ApplicationController
 
   def fetch_cms_data
     options = load_options_and_preview
-    page_slug = "homepage-en"
+    page_slug = "default-homepage"
     page_slug = ERB::Util.html_escape(params[:page_slug]) if params[:page_slug]
     # locale = ERB::Util.html_escape(params[:locale])
 
