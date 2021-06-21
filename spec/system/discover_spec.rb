@@ -231,7 +231,6 @@ describe "Discover View" do
   end
 
   describe "for dynamic upcoming" do
-
     let(:json_data) { read_file("dynamic_upcoming.json") }
 
     before(:each) do
