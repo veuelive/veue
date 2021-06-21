@@ -1,13 +1,11 @@
 import { Component, h, VNode } from "preact";
 import hiddenIcon from "images/visible-false.svg";
 import { observer } from "mobx-preact";
-import { ScreenSourceStore } from "components/media_deck/secreen_source";
+import { ScreenSourceStore } from "components/media_deck/screen_source";
 
 type Props = { screenSourceStore: ScreenSourceStore };
 
 const ScreenShare = observer(class ScreenShare extends Component<Props, unknown> {
-  private videoTag: HTMLVideoElement;
-
   render(): VNode {
     return (
       <div
