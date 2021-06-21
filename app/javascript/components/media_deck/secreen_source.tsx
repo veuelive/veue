@@ -3,7 +3,8 @@ import { makeAutoObservable } from "mobx";
 import EventBus from "event_bus";
 import { ScreenCaptureSource } from "helpers/broadcast/capture_sources/screen";
 import {
-  RemoveCaptureSourceEvent,
+  NewCaptureSourceEvent,
+  RemoveCaptureSourceEvent
 } from "helpers/broadcast/capture_source_manager";
 
 export class ScreenSourceStore {
@@ -32,7 +33,7 @@ export class ScreenSourceStore {
     this.screenCaptureSource = yield ScreenCaptureSource.connect(
       this.videoTag
     );
-    this.isScreenVisible = true;
+    this.isScreenVisible = false;
   }
 
   disconnectScreenShareSource(): void {
@@ -40,10 +41,18 @@ export class ScreenSourceStore {
     this.screenCaptureSource.stop();
     this.videoTag.srcObject = null;
     this.screenCaptureSource = null;
+    this.isScreenVisible = true;
   }
 
   toggleVisibility(): void {
     this.isScreenVisible = !this.isScreenVisible;
+
+    if (this.screenCaptureSource) {
+      EventBus.dispatch(
+        this.isScreenVisible ? NewCaptureSourceEvent : RemoveCaptureSourceEvent,
+        this.screenCaptureSource
+      );
+    }
   }
 }
 
