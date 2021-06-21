@@ -69,7 +69,7 @@ RSpec.configure do |config|
     stub_request(:post, /#{IfThisThenThatJob.post_url}/)
       .to_return(status: 200, body: "stubbed response", headers: {})
 
-    stub_request(:get, "https://api.buttercms.com/v2/pages/*/homepage-en/?auth_token=TEST_TOKEN")
+    stub_request(:get, "https://api.buttercms.com/v2/pages/*/default-homepage/?auth_token=TEST_TOKEN")
       .with(
         headers: {
           Accept: "application/json",
