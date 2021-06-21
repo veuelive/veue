@@ -4,8 +4,8 @@ import AddScreenShare from "components/media_deck/add_screen_share";
 import CameraShare from "components/media_deck/camera_share";
 import AddWebcamSource from "components/media_deck/add_webcam_source";
 import { observer } from "mobx-preact";
-import ScreenSourceStore from "components/media_deck/screen_source";
-import WebcamSourceStore from "components/media_deck/webcam_source";
+import ScreenSourceStore from "components/media_deck/store/screen_source";
+import WebcamSourceStore from "components/media_deck/store/webcam_source";
 
 const MediaDeck = observer(class MediaDeck extends Component<unknown, unknown> {
   render(): VNode {

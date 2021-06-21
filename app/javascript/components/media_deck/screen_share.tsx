@@ -1,7 +1,7 @@
 import { Component, h, VNode } from "preact";
 import hiddenIcon from "images/visible-false.svg";
 import { observer } from "mobx-preact";
-import { ScreenSourceStore } from "components/media_deck/screen_source";
+import { ScreenSourceStore } from "components/media_deck/store/screen_source";
 
 type Props = { screenSourceStore: ScreenSourceStore };
 
