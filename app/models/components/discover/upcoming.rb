@@ -24,7 +24,7 @@ module Components
       end
 
       def find_channels
-        Channel.most_popular.where.not(next_show_at: nil).order("next_show_at ASC").limit(limit).decorate
+        Channel.where.not(next_show_at: nil).order("next_show_at ASC").limit(limit).decorate
       end
 
       def map_channel_names_to_channels
