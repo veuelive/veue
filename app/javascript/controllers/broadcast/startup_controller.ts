@@ -13,12 +13,12 @@ export default class extends BaseController {
     "step",
   ];
 
-  private microphoneAccessTarget!: HTMLElement;
-  private videoAccessTarget!: HTMLElement;
-  private loggedInStepTarget!: HTMLElement;
-  private userInstructionsModalTarget!: HTMLElement;
-  private stepTargets!: HTMLElement[];
-  private browserWarningTarget!: HTMLElement;
+  private declare microphoneAccessTarget: HTMLElement;
+  private declare videoAccessTarget: HTMLElement;
+  private declare loggedInStepTarget: HTMLElement;
+  private declare userInstructionsModalTarget: HTMLElement;
+  private declare stepTargets: HTMLElement[];
+  private declare browserWarningTarget: HTMLElement;
 
   private nextStep = "done" as Steps;
 

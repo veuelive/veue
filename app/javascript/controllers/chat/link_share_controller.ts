@@ -16,7 +16,8 @@ export default class LinkShareController extends Controller {
 
   static targets = ["source", "success", "failure"];
 
-  element: HTMLElement;
+  declare element: HTMLElement;
+
   hideTimeoutId: number;
   displayNoneTimeoutId: number;
   state: "enabled" | "disabled";

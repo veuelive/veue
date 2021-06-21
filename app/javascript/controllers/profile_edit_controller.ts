@@ -29,7 +29,7 @@ export default class extends Controller {
       const response = await putForm(".", this.formTarget);
 
       const html = await response.text();
-      this.formTarget.parentElement.innerHTML = html;
+      this.formTarget.element.innerHTML = html;
 
       showNotification("Your profile was successfully updated");
     }

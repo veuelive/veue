@@ -18,10 +18,11 @@ export default class extends Controller {
         : "none";
 
     simplebarWrapper.addEventListener("scroll", (event) => {
+      const element = event.target as HTMLElement;
       const displayScrollOffset =
-        event.target.scrollHeight - simplebarWrapper.clientHeight;
+        element.scrollHeight - simplebarWrapper.clientHeight;
       this.scrollButtonTarget.style.display =
-        displayScrollOffset - event.target.scrollTop > 100 ? "flex" : "none";
+        displayScrollOffset - element.scrollTop > 100 ? "flex" : "none";
     });
   }
 

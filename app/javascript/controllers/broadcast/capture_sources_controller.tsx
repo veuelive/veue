@@ -16,10 +16,10 @@ export const ChangeMediaDeviceEvent = "ChangeMediaDeviceEvent";
 export default class extends BaseController {
   static targets = ["mediaDeck"];
 
-  private mediaDeckTarget!: HTMLDivElement;
+  declare private mediaDeckTarget: HTMLDivElement;
 
-  private cameraCaptureSource: WebcamCaptureSource;
-  private audioCaptureSource: AudioCaptureSource;
+  declare private cameraCaptureSource: WebcamCaptureSource;
+  declare private audioCaptureSource: AudioCaptureSource;
 
   connect(): void {
     this.connectDefaultDevices().then(() => {
