@@ -1,10 +1,5 @@
 import { Component, h, VNode } from "preact";
-import {
-  NewCaptureSourceEvent,
-  RemoveCaptureSourceEvent,
-} from "helpers/broadcast/capture_source_manager";
 import hiddenIcon from "images/visible-false.svg";
-import EventBus from "event_bus";
 import { observer } from "mobx-preact";
 import { ScreenSourceStore } from "components/media_deck/secreen_source";
 
@@ -18,7 +13,7 @@ const ScreenShare = observer(class ScreenShare extends Component<Props, unknown>
       <div
         class="MediaDeck__screen-share"
         onClick={() => {
-          this.toggleVisibility();
+          this.props.screenSourceStore.toggleVisibility();
         }}
       >
         {this.props.screenSourceStore.isScreenVisible ? null : (
@@ -47,24 +42,6 @@ const ScreenShare = observer(class ScreenShare extends Component<Props, unknown>
         {this.props.screenSourceStore.isScreenVisible ? "Hide Screen" : "Make Visible"}
       </button>
     );
-  }
-
-  private toggleVisibility() {
-    if (this.props.screenSourceStore.screenCaptureSource) {
-      if (this.props.screenSourceStore.isScreenVisible) {
-        EventBus.dispatch(
-          RemoveCaptureSourceEvent,
-          this.props.screenSourceStore.screenCaptureSource
-        );
-        this.props.screenSourceStore.toggleVisibility();
-      } else {
-        EventBus.dispatch(
-          NewCaptureSourceEvent,
-          this.props.screenSourceStore.screenCaptureSource
-        );
-      }
-      this.props.screenSourceStore.toggleVisibility();
-    }
   }
 });
 

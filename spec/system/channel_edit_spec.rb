@@ -14,7 +14,6 @@ describe "channel edit" do
 
   describe "user logged in" do
     before do
-      # driven_by(:debug_browser)
       resize_window_desktop
       login_as(channel.user)
       visit edit_channel_path(channel.id)
