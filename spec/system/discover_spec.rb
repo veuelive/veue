@@ -5,6 +5,8 @@ require "system_helper"
 # NOTE: These tests are trying to test a sequence that doesn't NORMALLY happen just
 # within the rails app. This has to be combined with the real Electron App to get full / perfect results.
 describe "Discover View" do
+  let(:homepage_slug) { "default-homepage" }
+
   def read_file(file)
     File.read(File.join("spec/support/buttercms/discover/#{file}"))
   end
@@ -34,7 +36,7 @@ describe "Discover View" do
 
     it "should show everything for root and non-root slugs" do
       paths = [
-        {slug: "homepage-en", app_path: root_path},
+        {slug: "default-homepage", app_path: root_path},
         {slug: "konnor", app_path: "/en/konnor"},
       ]
 
@@ -90,7 +92,7 @@ describe "Discover View" do
     let(:json_data) { read_file("static_curation.json") }
 
     before(:each) do
-      stub_butter(slug: "homepage-en", data: json_data)
+      stub_butter(slug: homepage_slug, data: json_data)
     end
 
     it "should show only static videos" do
@@ -119,7 +121,7 @@ describe "Discover View" do
     let(:json_data) { read_file("dynamic_curation.json") }
 
     before(:each) do
-      stub_butter(slug: "homepage-en", data: json_data)
+      stub_butter(slug: homepage_slug, data: json_data)
     end
 
     it "should show a strip and grid" do
@@ -174,7 +176,7 @@ describe "Discover View" do
     let(:json_data) { read_file("content.json") }
 
     it "should not display content if none found" do
-      stub_butter(slug: "homepage-en", data: {}.to_json)
+      stub_butter(slug: homepage_slug, data: {}.to_json)
       visit root_path
 
       content = data_components.find { |c| c["type"] == "content" }.dig("fields", "body")
@@ -187,7 +189,7 @@ describe "Discover View" do
     let(:json_data) { read_file("hero.json") }
 
     it "should not display if no image found" do
-      stub_butter(slug: "homepage-en", data: {}.to_json)
+      stub_butter(slug: homepage_slug, data: {}.to_json)
       visit root_path
 
       hero = data_components.find { |c| c["type"] == "hero_image" }
@@ -203,7 +205,7 @@ describe "Discover View" do
     let(:json_data) { read_file("static_upcoming.json") }
 
     before(:each) do
-      stub_butter(slug: "homepage-en", data: json_data)
+      stub_butter(slug: homepage_slug, data: json_data)
     end
 
     it "should show static content" do
@@ -232,11 +234,12 @@ describe "Discover View" do
     let(:json_data) { read_file("dynamic_upcoming.json") }
 
     before(:each) do
-      stub_butter(slug: "homepage-en", data: json_data)
+      stub_butter(slug: homepage_slug, data: json_data)
     end
 
     it "should show dynamic upcoming" do
       create_list(:channel, 5, next_show_at: 3.days.from_now)
+      next_show_channel = create(:channel, next_show_at: 1.hour.from_now)
 
       dynamic_upcoming = data_components.find { |c| c["type"] == "dynamic_upcoming" }
       limit = dynamic_upcoming.dig("fields", "max_size")
@@ -249,6 +252,8 @@ describe "Discover View" do
       channels.each do |channel|
         expect(page).to have_css("a[href*='/#{channel.slug}']")
       end
+
+      expect(page).to have_css(".discover__strip__items a:first-of-type[href*='/#{next_show_channel.slug}']")
     end
 
     it "should not show dynamic content if none found" do
