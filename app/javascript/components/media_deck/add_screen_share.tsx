@@ -1,5 +1,5 @@
 import { Component, h, VNode } from "preact";
-import { ScreenSourceStore } from "components/media_deck/secreen_source";
+import { ScreenSourceStore } from "components/media_deck/screen_source";
 import { observer } from "mobx-preact";
 
 type Props = {

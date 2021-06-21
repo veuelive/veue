@@ -6,7 +6,6 @@ import { observer } from "mobx-preact";
 type Props = { webcamShared: boolean; webcamSourceStore: WebcamSourceStore; };
 
 const CameraShare = observer(class CameraShare extends Component<Props, unknown> {
-
   render(): VNode {
     return (
       <div class="MediaDeck__camera-stream">
