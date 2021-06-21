@@ -2,7 +2,7 @@ import { Controller } from "stimulus";
 import { putForm } from "util/fetch";
 
 export default class extends Controller {
-  element!: HTMLFormElement;
+  declare element: HTMLFormElement;
 
   async submitForm(event: MouseEvent | KeyboardEvent): Promise<void> {
     if ("key" in event && event.key != "enter") {

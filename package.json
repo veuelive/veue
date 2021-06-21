@@ -27,6 +27,8 @@
     "intl-tel-input": "^17.0.3",
     "jest-fetch-mock": "^3.0.3",
     "mobile-drag-drop": "^2.3.0-rc.2",
+    "mobx": "^6.3.2",
+    "mobx-preact": "^3.0.0",
     "mux-embed": "^3.4.1",
     "node-fetch": "2.6.1",
     "phenix-edge-auth": "hcatlin/EdgeAuth.git#master",
@@ -41,6 +43,7 @@
   "version": "0.1.0",
   "devDependencies": {
     "@babel/eslint-parser": "^7.13.14",
+    "@babel/plugin-transform-typescript": "^7.14.6",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
     "babel-jest": "^26.5.2",

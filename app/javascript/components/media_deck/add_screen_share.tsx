@@ -1,41 +1,43 @@
 import { Component, h, VNode } from "preact";
+import { ScreenSourceStore } from "components/media_deck/secreen_source";
 
 type Props = {
-  isScreenVisible: boolean;
   screenSourceAttached: boolean;
-  addScreenCaptureSource(): void;
   stopSharing(): void;
-  toggleVisibility(): void;
+  screenSourceStore: ScreenSourceStore;
 };
+import { observer } from "mobx-preact";
 
-export default class AddScreenShare extends Component<Props, unknown> {
+const AddScreenShare = observer(class AddScreenShare extends Component<Props, unknown> {
   render(): VNode {
     return (
       <div>
         {this.renderVisibilityControls()}
         {
-          !this.props.screenSourceAttached ?
-            <button onClick={() => this.props.addScreenCaptureSource()}>
+          !this.props.screenSourceStore.screenCaptureSource ?
+            <button onClick={() => this.props.screenSourceStore.connectScreenShareSource()}>
               Share Your Screen
-            </button> : <button onClick={() => this.props.stopSharing()}>Stop Sharing</button>
+            </button> : <button onClick={() => this.props.screenSourceStore.disconnectScreenShareSource()}>Stop Sharing</button>
         }
       </div>
     );
   }
 
   renderVisibilityControls(): VNode {
-    if (!this.props.screenSourceAttached) {
+    if (!this.props.screenSourceStore.screenCaptureSource) {
       return <span />;
     }
 
     return (
       <button
         onClick={() => {
-          this.props.toggleVisibility();
+          this.props.screenSourceStore.toggleVisibility();
         }}
       >
-        {this.props.isScreenVisible ? "Hide Screen" : "Make Visible"}
+        {this.props.screenSourceStore.isScreenVisible ? "Hide Screen" : "Make Visible"}
       </button>
     );
   }
-}
+});
+
+export default AddScreenShare;

@@ -1,38 +1,20 @@
 import { Component, h, VNode } from "preact";
-import EventBus from "event_bus";
-import { RemoveCaptureSourceEvent } from "helpers/broadcast/capture_source_manager";
 import { WebcamCaptureSource } from "helpers/broadcast/capture_sources/webcam";
+import { WebcamSourceStore } from "components/media_deck/webcam_source";
+import { observer } from "mobx-preact";
 
-type Props = { webcamShared: boolean };
-type State = { deviceId: string; streamStarted: boolean; webcamCaptureSource: WebcamCaptureSource; }
+type Props = { webcamShared: boolean; webcamSourceStore: WebcamSourceStore; };
 
-export default class CameraShare extends Component<Props, State> {
-  private videoTag: HTMLVideoElement;
-  private webcamDevices: MediaDeviceInfo[];
-
-  constructor(props: Props) {
-    super(props);
-
-    this.setState({
-      deviceId: null,
-      streamStarted: false,
-      webcamCaptureSource: null,
-    });
-  }
+const CameraShare = observer(class CameraShare extends Component<Props, unknown> {
 
   render(): VNode {
     return (
       <div class="MediaDeck__camera-stream">
         <div class="MediaDeck__screen-share__video">
-          <video
-            data-connected={!!this.props.webcamShared}
-            ref={(videoTag) => {
-              this.videoTag = videoTag;
-            }}
-          />
+          {this.props.webcamSourceStore.renderVideo()}
         </div>
         {
-          this.props.webcamShared && !this.state.streamStarted ?
+          this.props.webcamSourceStore.webcamDialogueVisible && !this.props.webcamSourceStore.webcamCaptureSource ?
             <div class="MediaDeck__webcam-share">
               {this.renderWebcamDevices()}
             </div> : null
@@ -41,26 +23,9 @@ export default class CameraShare extends Component<Props, State> {
     );
   }
 
-  async componentDidMount(): Promise<void> {
-    const devices = await navigator.mediaDevices.enumerateDevices();
-    this.webcamDevices = devices.filter((d: MediaDeviceInfo) => d.kind === "videoinput");
-  }
-
-  async componentDidUpdate(prevProps: Props): Promise<void> {
-    if (prevProps.webcamShared === this.props.webcamShared)
-      return;
-
-    if (!this.props.webcamShared) {
-      EventBus.dispatch(RemoveCaptureSourceEvent, this.state.webcamCaptureSource);
-      this.state.webcamCaptureSource.stop();
-      this.videoTag.srcObject = null;
-      this.setState({ webcamCaptureSource: null });
-    }
-  }
-
   private renderWebcamDevices(): VNode[] {
     const devicesMarkup = [];
-    this.webcamDevices.forEach((device: MediaDeviceInfo) => {
+    this.props.webcamSourceStore.webcamDevices.forEach((device: MediaDeviceInfo) => {
       devicesMarkup.push(this.deviceMarkup(device));
     });
     return devicesMarkup;
@@ -71,24 +36,12 @@ export default class CameraShare extends Component<Props, State> {
       <div
         class="MediaDeck__webcam-share--item"
         data-media-id={device.deviceId}
-        onClick={() => this.startWebcamStream(device.deviceId)}
+        onClick={() => this.props.webcamSourceStore.startWebcamStream(device.deviceId)}
       >
         {device.label}
       </div>
     );
   }
+});
 
-  private async startWebcamStream(deviceId: string): Promise<void> {
-    const webcamCaptureSource = await WebcamCaptureSource.connect(
-      this.state.deviceId,
-      this.videoTag
-    );
-
-    this.setState({
-      deviceId: deviceId,
-      streamStarted: true,
-      webcamCaptureSource,
-    });
-
-  }
-}
+export default CameraShare;

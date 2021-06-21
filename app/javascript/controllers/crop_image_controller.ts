@@ -14,7 +14,6 @@ export default class extends Controller {
     "imageMessage",
   ];
 
-  element!: HTMLElement;
   readonly croppieWrapperTarget!: HTMLElement;
   readonly croppieFieldTarget!: HTMLElement;
   readonly imageFieldTarget!: HTMLInputElement;

@@ -4,6 +4,7 @@
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
+    "useDefineForClassFields": true,
     "lib": ["dom", "ESNext"],
     "module": "es6",
     "moduleResolution": "node",
