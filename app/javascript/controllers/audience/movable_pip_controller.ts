@@ -13,7 +13,7 @@ polyfill({
 export default class MovablePipController extends Controller {
   static targets = ["pipComponent"];
 
-  private pipComponentTarget!: HTMLCanvasElement;
+  private declare pipComponentTarget: HTMLCanvasElement;
 
   connect(): void {
     this.pipComponentTarget.classList.add("bottom-right");

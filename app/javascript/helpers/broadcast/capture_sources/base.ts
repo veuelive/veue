@@ -12,6 +12,7 @@
 export abstract class CaptureSource {
   deviceId: string;
   mediaStream: MediaStream;
+  videoTag: HTMLVideoElement;
 
   get id(): string {
     return this.deviceId;
@@ -19,8 +20,9 @@ export abstract class CaptureSource {
 
   abstract get mediaDeviceType(): MediaDeviceKind;
 
-  protected constructor(deviceId?: string) {
+  protected constructor(deviceId?: string, videoTag?: HTMLVideoElement) {
     this.deviceId = deviceId;
+    this.videoTag = videoTag;
   }
 
   stop(): void {

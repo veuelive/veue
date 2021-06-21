@@ -3,7 +3,7 @@ import { UploadImageEvent } from "./crop_image_controller";
 import EventBus from "event_bus";
 
 export default class extends Controller {
-  element!: HTMLElement;
+  declare element: HTMLElement;
 
   private profileImageUpdateHandler: (event) => void;
 
