@@ -1,6 +1,6 @@
 import { Component, h, VNode } from "preact";
 import { WebcamCaptureSource } from "helpers/broadcast/capture_sources/webcam";
-import { WebcamSourceStore } from "components/media_deck/webcam_source";
+import { WebcamSourceStore } from "components/media_deck/store/webcam_source";
 import { observer } from "mobx-preact";
 
 type Props = { webcamShared: boolean; webcamSourceStore: WebcamSourceStore; };
