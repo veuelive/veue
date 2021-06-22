@@ -1,0 +1,4 @@
+.discover__strip
+  %h2= @title
+  .discover__strip__items
+    = render collection: @shows, partial: "shared/upcoming_card", cached: true

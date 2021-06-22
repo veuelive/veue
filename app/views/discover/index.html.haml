@@ -9,23 +9,10 @@
       .discover__button
         = link_to "See More", "/videos", class: "btn btn--secondary"
     - else
-      - if @live_videos.any?
-        .discover__strip
-          %h2= t("discover.live")
-          .discover__strip__items
-            = render collection: @live_videos, partial: "shared/video_card"
-
-      - if @scheduled_shows.any?
-        .discover__strip
-          %h2= t("discover.featured_shows")
-          .discover__strip__items
-            = render collection: @scheduled_shows, partial: "shared/upcoming_card"
-
+      = render DiscoverCuration::Component.new(title: t("discover.live"), videos: @live_videos, display_type: "strip")
+      = render DiscoverUpcoming::Component.new(title: t("discover.featured_shows"), shows: @scheduled_shows)
       = render DiscoverChannels::Component.new(title: t("discover.top_channels"), channels: @popular_channels)
-
-      .broadcasts
-        %h2.broadcasts__header= t("discover.recent")
-        = render collection: @recent_videos, partial: "shared/video_card"
+      = render DiscoverCuration::Component.new(title: t("discover.recent"), videos: @recent_videos, display_type: "grid")
 
       .discover__button
         -# page 2 because theyve already seen page 1!

@@ -49,20 +49,12 @@ RSpec.describe ResponsiveHero::Component, type: :component do
     expect(rendered_component).to_not have_css(%(source[media*='#{responsive_image[:max_width]}px']))
   end
 
-  it "will raise an error if image is blank" do
+  it "should not render without an image" do
     fields.delete(:image)
 
-    expect {
-      subject
-    }.to raise_error(ArgumentError)
-  end
+    subject
 
-  it "will raise an error if link is blank" do
-    fields.delete(:link)
-
-    expect {
-      subject
-    }.to raise_error(ArgumentError)
+    expect(page).to have_no_selector("body")
   end
 
   it "will raise an error if responsive images are not given an image" do
