@@ -1,16 +1,24 @@
 # frozen_string_literal: true
 
 class CmsChannelMapper < CmsDataMapper
-  def channels
-    return map_channel_slugs_to_channels.decorate if @component[:type] == "static_channels"
+  def view_component
+    DiscoverChannels::Component.new(title: title, channels: channels)
+  end
 
-    queries.fetch(@fields[:type].to_s.underscore.to_sym, queries.fetch(:most_popular)).call.decorate
+  def limit
+    @limit ||= (fields[:max_size] || 8)
+  end
+
+  def channels
+    return map_channel_slugs_to_channels.decorate if cms_component[:type] == "static_channels"
+
+    queries.fetch(fields[:type].to_s.underscore.to_sym, queries.fetch(:most_popular)).call.decorate
   end
 
   private
 
   def map_channel_slugs_to_channels
-    channel_slugs = @fields.channels.map(&:slug)
+    channel_slugs = fields.channels.map(&:slug)
     Channel.where(slug: channel_slugs)
   rescue ButterCMS::NotFound
     Rails.logger.error("Couldn't load static channels")

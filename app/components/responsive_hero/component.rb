@@ -1,17 +1,19 @@
 # frozen_string_literal: true
 
 module ResponsiveHero
-  class Component < ViewComponent::Base
+  class Component < ::ViewComponent::Base
     renders_many :responsive_images, ::ResponsiveImage::Component
 
-    def initialize(image:, link:)
+    attr_reader :image, :link
+
+    def initialize(image:, link: nil)
       super
-
-      raise(ArgumentError.new("Image cannot be nil")) if image.nil?
-      raise(ArgumentError.new("Link cannot be nil")) if link.nil?
-
       @image = image
       @link = link
+    end
+
+    def render?
+      @image.present?
     end
   end
 end
