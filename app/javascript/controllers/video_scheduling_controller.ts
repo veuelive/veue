@@ -11,13 +11,13 @@ export default class extends Controller {
     "submit",
   ];
 
-  scheduledAtTarget!: HTMLInputElement;
-  checkboxTarget!: HTMLInputElement;
+  declare scheduledAtTarget: HTMLInputElement;
+  declare checkboxTarget: HTMLInputElement;
 
-  submitTarget: HTMLInputElement;
+  declare submitTarget: HTMLInputElement;
 
-  daySelectTarget!: HTMLSelectElement;
-  timeSelectTarget!: HTMLSelectElement;
+  declare daySelectTarget: HTMLSelectElement;
+  declare timeSelectTarget: HTMLSelectElement;
 
   connect(): void {
     this.createDayOptions();

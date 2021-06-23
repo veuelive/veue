@@ -28,21 +28,21 @@ export default class extends BaseController {
     "videoContainer",
   ];
 
-  readonly videoTarget!: HTMLVideoElement;
-  readonly videoPreviewImageTarget!: HTMLImageElement;
-  readonly videoPreviewContainerTarget!: HTMLDivElement;
-  readonly timeDurationTarget!: HTMLElement;
-  readonly timeDisplayTarget!: HTMLElement;
-  readonly timePreviewTarget!: HTMLDivElement;
-  readonly audienceViewTarget!: HTMLElement;
-  readonly muteBannerTarget!: HTMLElement;
-  readonly progressBarTarget!: HTMLElement;
-  readonly progressBarContainerTarget!: HTMLElement;
-  readonly progressBarButtonTarget!: HTMLButtonElement;
-  readonly togglePlayTargets!: HTMLElement[];
-  readonly toggleAudioTargets!: HTMLElement[];
-  readonly badgeContainerTarget!: HTMLElement;
-  readonly videoContainerTarget!: HTMLElement;
+  declare readonly videoTarget: HTMLVideoElement;
+  declare readonly videoPreviewImageTarget: HTMLImageElement;
+  declare readonly videoPreviewContainerTarget: HTMLDivElement;
+  declare readonly timeDurationTarget: HTMLElement;
+  declare readonly timeDisplayTarget: HTMLElement;
+  declare readonly timePreviewTarget: HTMLDivElement;
+  declare readonly audienceViewTarget: HTMLElement;
+  declare readonly muteBannerTarget: HTMLElement;
+  declare readonly progressBarTarget: HTMLElement;
+  declare readonly progressBarContainerTarget: HTMLElement;
+  declare readonly progressBarButtonTarget: HTMLButtonElement;
+  declare readonly togglePlayTargets: HTMLElement[];
+  declare readonly toggleAudioTargets: HTMLElement[];
+  declare readonly badgeContainerTarget: HTMLElement;
+  declare readonly videoContainerTarget: HTMLElement;
 
   private pointerIsDown: boolean;
   private badgeTimeoutId: number;
@@ -235,7 +235,6 @@ export default class extends BaseController {
   handleLoadedMetadata(): void {
     this.timeDurationTarget.dataset.duration = this.duration.toString();
     this.timeDurationTarget.innerHTML = displayTime(this.duration);
-
     if (this.element.dataset.audienceViewStreamType === "vod") {
       this.preloadPreviews();
     }

@@ -3,7 +3,9 @@ import { ShowNotificationEvent } from "util/notifications";
 
 export default class extends Controller {
   static targets = ["message"];
-  element!: HTMLElement;
+
+  declare element: HTMLElement;
+
   readonly messageTarget!: HTMLElement;
 
   private notificationHandler: (event) => void;
