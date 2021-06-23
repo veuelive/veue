@@ -67,12 +67,22 @@
     top: 40%;
     background: color.$white;
     border-radius: 10px;
-    padding: 20px;
     z-index: z_index.$modal;
 
+    &--title {
+      color: color.$veue-corporate;
+      border-bottom: 1px solid color.$neutral-soft;
+      padding: 20px;
+    }
+
     &--item {
+      padding: 0 20px 20px;
       cursor: pointer;
       margin-top: 10px;
+
+      &:hover {
+        color: color.$veue-corporate;
+      }
     }
   }
 }

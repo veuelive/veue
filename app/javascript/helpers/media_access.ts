@@ -27,3 +27,12 @@ export default class MediaAccess {
     });
   }
 }
+
+export async function availableMediaDevices(
+  mediaKind: string
+): Promise<MediaDeviceInfo[]> {
+  const devices = await navigator.mediaDevices.enumerateDevices();
+  return devices.filter((d: MediaDeviceInfo) => {
+    return d.kind === mediaKind && !(d.deviceId in globalThis.captureSources);
+  });
+}

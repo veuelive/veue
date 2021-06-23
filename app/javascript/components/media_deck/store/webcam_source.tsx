@@ -2,7 +2,8 @@ import { h, VNode } from "preact";
 import { autorun, makeAutoObservable } from "mobx";
 import { WebcamCaptureSource } from "helpers/broadcast/capture_sources/webcam";
 import EventBus from "event_bus";
-import { RemoveCaptureSourceEvent } from "helpers/broadcast/capture_source_manager";
+import { NewCaptureSourceEvent, RemoveCaptureSourceEvent } from "helpers/broadcast/capture_source_manager";
+import { availableMediaDevices } from "helpers/media_access";
 
 export class WebcamSourceStore {
   webcamDialogueVisible = false;
@@ -13,7 +14,6 @@ export class WebcamSourceStore {
 
   constructor() {
     makeAutoObservable(this);
-    autorun(() => this.enumerateWebcamDevices())
   }
 
   renderVideo(): VNode {
@@ -32,8 +32,7 @@ export class WebcamSourceStore {
   }
 
   *enumerateWebcamDevices() {
-    const devices = yield navigator.mediaDevices.enumerateDevices();
-    this.webcamDevices = devices.filter((d: MediaDeviceInfo) => d.kind === "videoinput");
+    this.webcamDevices = yield availableMediaDevices("videoinput");
   }
 
   *startWebcamStream(deviceId: string) {
@@ -44,6 +43,8 @@ export class WebcamSourceStore {
       this.deviceId,
       this.videoTag
     );
+
+    EventBus.dispatch(NewCaptureSourceEvent, this.webcamCaptureSource);
   }
 
   stopWebcamStream(): void {

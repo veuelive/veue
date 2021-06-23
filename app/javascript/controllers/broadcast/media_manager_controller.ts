@@ -1,4 +1,5 @@
 import DropdownController from "./dropdown_controller";
+import { availableMediaDevices } from "helpers/media_access";
 
 export default class extends DropdownController {
   async showHideMenu(): Promise<void> {
@@ -13,8 +14,7 @@ export default class extends DropdownController {
   }
 
   private async deviceMarkup(): Promise<void> {
-    let devices = await navigator.mediaDevices.enumerateDevices();
-    devices = devices.filter((d) => d.kind === this.type);
+    const devices = await availableMediaDevices(this.type);
 
     devices.forEach((device) => {
       this.appendElement(this.deviceMenuItem(device));

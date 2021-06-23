@@ -12,22 +12,28 @@ const CameraShare = observer(class CameraShare extends Component<Props, unknown>
         <div class="MediaDeck__screen-share__video">
           {this.props.webcamSourceStore.renderVideo()}
         </div>
-        {
-          this.props.webcamSourceStore.webcamDialogueVisible && !this.props.webcamSourceStore.webcamCaptureSource ?
-            <div class="MediaDeck__webcam-share">
-              {this.renderWebcamDevices()}
-            </div> : null
-        }
+        {this.renderWebcamDevices()}
       </div>
     );
   }
 
-  private renderWebcamDevices(): VNode[] {
+  private renderWebcamDevices(): VNode {
     const devicesMarkup = [];
+    this.props.webcamSourceStore.enumerateWebcamDevices();
     this.props.webcamSourceStore.webcamDevices.forEach((device: MediaDeviceInfo) => {
       devicesMarkup.push(this.deviceMarkup(device));
     });
-    return devicesMarkup;
+
+    if (this.props.webcamSourceStore.webcamDialogueVisible && !this.props.webcamSourceStore.webcamCaptureSource) {
+      return (
+        <div class="MediaDeck__webcam-share">
+          <div class="MediaDeck__webcam-share--title">
+            Available Webcam Devices
+          </div>
+          {devicesMarkup}
+        </div>
+      );
+    }
   }
 
   private deviceMarkup(device: MediaDeviceInfo): VNode {
