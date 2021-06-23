@@ -8,26 +8,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  position: relative;
   background: color.$neutral-soft;
 
   &__screen-share {
     flex: 1;
-    position: relative;
     display: flex;
     width: 100%;
 
     &__video {
       flex: 1;
-      position: relative;
       video {
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        bottom: 0;
+        bottom: 30px;
         width: stretch;
-        height: stretch;
+        height: 92%;
 
         z-index: z_index.$primary-video;
       }
@@ -37,7 +35,7 @@
       z-index: z_index.$video-overlay;
       position: absolute;
       top: 0;
-      bottom: 0;
+      bottom: 50px;
       left: 0;
       right: 0;
 
@@ -55,8 +53,36 @@
   }
 
   &__controls {
+    display: flex;
+    position: absolute;
+    bottom: 0;
     button {
       margin: 10px;
+    }
+  }
+
+  &__webcam-share {
+    position: absolute;
+    left: 40%;
+    top: 40%;
+    background: color.$white;
+    border-radius: 10px;
+    z-index: z_index.$modal;
+
+    &--title {
+      color: color.$veue-corporate;
+      border-bottom: 1px solid color.$neutral-soft;
+      padding: 20px;
+    }
+
+    &--item {
+      padding: 0 20px 20px;
+      cursor: pointer;
+      margin-top: 10px;
+
+      &:hover {
+        color: color.$veue-corporate;
+      }
     }
   }
 }

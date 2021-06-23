@@ -34,9 +34,9 @@ export default class extends Controller {
     "browserUnderlay",
     "foregroundWarning",
   ];
-  private webcamVideoElementTarget!: HTMLVideoElement;
-  private browserUnderlayTarget!: HTMLDivElement;
-  private foregroundWarningTarget!: HTMLElement;
+  private declare webcamVideoElementTarget: HTMLVideoElement;
+  private declare browserUnderlayTarget: HTMLDivElement;
+  private declare foregroundWarningTarget: HTMLElement;
 
   private videoMixer: VideoMixer;
   private streamRecorder: StreamRecorder;
@@ -47,7 +47,7 @@ export default class extends Controller {
   private keyboardListener: (event) => void;
   private snapshotIntervalId: number;
 
-  element!: HTMLElement;
+  declare element: HTMLElement;
 
   connect(): void {
     this.keyboardListener = attachKeyboardListener();

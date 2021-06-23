@@ -7,9 +7,9 @@ import { Visibility, setVideoVisibility } from "../../helpers/video_helpers";
 export default class extends Controller {
   static targets = ["loading", "titleInput", "visibility"];
 
-  readonly loadingTarget!: HTMLElement;
-  readonly titleInputTarget!: HTMLInputElement;
-  readonly visibilityTarget!: HTMLSelectElement;
+  declare readonly loadingTarget: HTMLElement;
+  declare readonly titleInputTarget: HTMLInputElement;
+  declare readonly visibilityTarget: HTMLSelectElement;
 
   @debounce(100)
   async saveTitle(): Promise<void> {
