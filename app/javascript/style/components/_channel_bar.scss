@@ -18,6 +18,10 @@
 
     &__avatar {
       margin: 0 10px 0;
+      a {
+        display: flex;
+      }
+
       img,
       svg {
         border-radius: 50%;
@@ -211,7 +215,6 @@
     &__upcoming__broadcast {
       // layout
       padding: 0;
-      margin-top: -5px;
 
       // style
       border-top: none;
