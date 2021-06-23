@@ -5,14 +5,13 @@ import { VideoSeekEvent } from "helpers/video_helpers";
 
 export default class extends BaseController {
   static targets = ["chat", "video", "likeNotification"];
-  readonly chatTarget!: HTMLElement;
-  readonly likeNotificationTarget!: HTMLElement;
-  readonly videoTarget!: HTMLVideoElement;
+  declare readonly chatTarget: HTMLElement;
+  declare readonly likeNotificationTarget: HTMLElement;
+  declare readonly videoTarget: HTMLVideoElement;
   private eventManager: VodEventManager;
-
   private boundUseStartOffset: EventListener;
 
-  element!: HTMLElement;
+  declare element: HTMLElement;
 
   initialize(): void {
     this.boundUseStartOffset = this.useStartOffset.bind(this);

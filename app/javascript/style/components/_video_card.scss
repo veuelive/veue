@@ -124,7 +124,7 @@ $min-width: 230px;
     &__placeholder {
       width: $max-width;
       padding-bottom: 63.25%; // use padding-bottom since height: x% will always be 0.
-      background: hsla(0, 0, 0, 0.1);
+      background: hsla(0, 0%, 0%, 0.1);
       border-radius: 10px;
     }
   }

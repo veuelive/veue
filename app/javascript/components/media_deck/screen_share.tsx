@@ -1,119 +1,46 @@
 import { Component, h, VNode } from "preact";
-import { ScreenCaptureSource } from "helpers/broadcast/capture_sources/screen";
-import {
-  NewCaptureSourceEvent,
-  RemoveCaptureSourceEvent,
-} from "helpers/broadcast/capture_source_manager";
 import hiddenIcon from "images/visible-false.svg";
-import EventBus from "event_bus";
+import { observer } from "mobx-preact";
+import { ScreenSourceStore } from "components/media_deck/store/screen_source";
 
-type State = { isVisible: boolean; screenCaptureSource: ScreenCaptureSource };
-export default class ScreenShare extends Component<unknown, State> {
-  private videoTag: HTMLVideoElement;
+type Props = { screenSourceStore: ScreenSourceStore };
 
-  constructor() {
-    super();
-    this.state = {
-      isVisible: true,
-      screenCaptureSource: null,
-    };
+const ScreenShare = observer(class ScreenShare extends Component<Props, unknown> {
+  render(): VNode {
+    return (
+      <div
+        class="MediaDeck__screen-share"
+        onClick={() => {
+          this.props.screenSourceStore.toggleVisibility();
+        }}
+      >
+        {this.props.screenSourceStore.isScreenVisible ? null : (
+          <div class="MediaDeck__screen-share__hidden-cover">
+            <img src={hiddenIcon} alt="hidden icon" />
+          </div>
+        )}
+        <div class="MediaDeck__screen-share__video">
+          {this.props.screenSourceStore.renderVideo()}
+        </div>
+      </div>
+    );
   }
 
   renderVisibilityControls(): VNode {
-    if (!this.state.screenCaptureSource) {
+    if (!this.props.screenSourceStore.screenCaptureSource) {
       return <span />;
     }
+
     return (
       <button
         onClick={() => {
-          this.toggleVisibility();
+          this.props.screenSourceStore.toggleVisibility();
         }}
       >
-        {this.state.isVisible ? "Hide Screen" : "Make Visible"}
+        {this.props.screenSourceStore.isScreenVisible ? "Hide Screen" : "Make Visible"}
       </button>
     );
   }
+});
 
-  renderStartStopControls(): VNode {
-    if (!this.state.screenCaptureSource) {
-      return (
-        <button onClick={() => this.addScreenCaptureSource()}>
-          Share Your Screen
-        </button>
-      );
-    }
-    return <button onClick={() => this.stopSharing()}>Stop Sharing</button>;
-  }
-
-  renderControls(): VNode {
-    return (
-      <div class="MediaDeck__controls">
-        {this.renderVisibilityControls()}
-        {this.renderStartStopControls()}
-      </div>
-    );
-  }
-
-  render(): VNode {
-    return (
-      <div class="MediaDeck">
-        <div
-          class="MediaDeck__screen-share"
-          onClick={() => {
-            this.toggleVisibility();
-          }}
-        >
-          {this.state.isVisible ? null : (
-            <div class="MediaDeck__screen-share__hidden-cover">
-              <img src={hiddenIcon} alt="hidden icon" />
-            </div>
-          )}
-          <div class="MediaDeck__screen-share__video">
-            <video
-              data-connected={!!this.state.screenCaptureSource}
-              ref={(videoTag) => {
-                this.videoTag = videoTag;
-              }}
-            />
-          </div>
-        </div>
-        {this.renderControls()}
-      </div>
-    );
-  }
-
-  private async addScreenCaptureSource() {
-    const screenCaptureSource = await ScreenCaptureSource.connect(
-      this.videoTag
-    );
-    this.setState({
-      isVisible: false,
-      screenCaptureSource,
-    });
-  }
-
-  private stopSharing() {
-    EventBus.dispatch(RemoveCaptureSourceEvent, this.state.screenCaptureSource);
-    this.state.screenCaptureSource.stop();
-    this.videoTag.srcObject = null;
-    this.setState({ screenCaptureSource: null, isVisible: true });
-  }
-
-  private toggleVisibility() {
-    if (this.state.screenCaptureSource) {
-      if (this.state.isVisible) {
-        EventBus.dispatch(
-          RemoveCaptureSourceEvent,
-          this.state.screenCaptureSource
-        );
-        this.setState({ isVisible: false });
-      } else {
-        EventBus.dispatch(
-          NewCaptureSourceEvent,
-          this.state.screenCaptureSource
-        );
-        this.setState({ isVisible: true });
-      }
-    }
-  }
-}
+export default ScreenShare;

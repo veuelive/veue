@@ -6,8 +6,11 @@ export class WebcamCaptureSource extends VideoCaptureSource {
     return "camera";
   }
 
-  static async connect(deviceId?: string): Promise<WebcamCaptureSource> {
-    const source = new WebcamCaptureSource(deviceId);
+  static async connect(
+    deviceId?: string,
+    videoTag?: HTMLVideoElement
+  ): Promise<WebcamCaptureSource> {
+    const source = new WebcamCaptureSource(deviceId, videoTag);
     await source.start();
     return source;
   }
@@ -53,7 +56,7 @@ export class WebcamCaptureSource extends VideoCaptureSource {
       },
       audio: false,
     });
-    await this.processMediaStream(this.mediaStream);
+    await this.processMediaStream(this.mediaStream, this.videoTag);
     this.layout = {
       width: this.element.videoWidth,
       height: this.element.videoHeight,
