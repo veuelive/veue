@@ -85,6 +85,14 @@ class Video < ApplicationRecord
   scope :public_videos, -> { where(visibility: "public") }
   scope :protected_videos, -> { where(visibility: "protected") }
 
+  scope :not_migrated,
+        -> {
+          left_joins(
+            :hls_video_attachment,
+            :dash_video_attachment,
+          ).finished.where(active_storage_attachments: {id: nil})
+        }
+
   def self.visibilities_legend
     {
       public: "Everyone can view",
