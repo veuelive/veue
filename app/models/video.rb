@@ -23,6 +23,9 @@ class Video < ApplicationRecord
   has_one_attached :primary_shot
   has_one_attached :secondary_shot
 
+  has_one_attached :hls_video
+  has_one_attached :dash_video
+
   has_many :pins, dependent: :destroy
 
   has_many :mux_webhooks, dependent: :nullify
@@ -171,6 +174,42 @@ class Video < ApplicationRecord
     return if secondary_snapshot&.image&.blob.nil?
 
     attach_primary_shot!(secondary_snapshot)
+  end
+
+  def hls_video_url
+    return Router.url_for(hls_video) if hls_video.attached?
+
+    hls_url
+  end
+
+  def dash_video_url
+    return Router.url_for(dash_video) if dash_video.attached?
+
+    dash_url
+  end
+
+  def migrate_to_storage
+    Video.transaction do
+      migrate_hls
+      migrate_dash
+    end
+  end
+
+  def migrate_hls
+    return if hls_url.blank?
+
+    hls_data = Faraday.get(hls_url).body
+    hls_video.attach(
+      io: ::StringIO.new(hls_data),
+      filename: "video-hls-#{id}",
+    )
+  end
+
+  def migrate_dash
+    return if dash_url.blank?
+
+    dash_data = Faraday.get(dash_url).body
+    dash_video.attach(io: ::StringIO.new(dash_data), filename: "video-dash-#{id}")
   end
 
   private

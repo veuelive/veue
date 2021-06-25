@@ -162,5 +162,35 @@ RSpec.describe Video, type: :model do
         expect(video).to eq(trending_this_month[index])
       end
     end
+
+    describe "video migration" do
+      # Use vod_video so we have hls / dash urls that are not nil
+      let(:video) { create(:vod_video) }
+      let(:response_struct) { Struct.new(:body) }
+      let(:response) { response_struct.new("Shhhh! Im pretending to be a video") }
+      let(:body) { response.body }
+
+      before(:each) do
+        allow(Faraday).to receive(:get).and_return(response)
+      end
+
+      it "should attach an hls video" do
+        expect(video.hls_video).not_to be_attached
+        video.migrate_hls
+        expect(video.hls_video).to be_attached
+        blob_content = video.hls_video.blob.open(&:read)
+        expect(blob_content).to eq(body)
+      end
+
+      it "should attach a dash video" do
+        video.update!(dash_url: "/__test/vod/video.mpd")
+        expect(video.dash_video).not_to be_attached
+
+        video.migrate_dash
+        expect(video.dash_video).to be_attached
+        blob_content = video.dash_video.blob.open(&:read)
+        expect(blob_content).to eq(body)
+      end
+    end
   end
 end
