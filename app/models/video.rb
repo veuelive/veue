@@ -85,10 +85,16 @@ class Video < ApplicationRecord
   scope :public_videos, -> { where(visibility: "public") }
   scope :protected_videos, -> { where(visibility: "protected") }
 
-  scope :not_migrated,
+  scope :not_migrated_hls,
         -> {
           left_joins(
             :hls_video_attachment,
+          ).finished.where(active_storage_attachments: {id: nil})
+        }
+
+  scope :not_migrated_dash,
+        -> {
+          left_joins(
             :dash_video_attachment,
           ).finished.where(active_storage_attachments: {id: nil})
         }
@@ -196,21 +202,11 @@ class Video < ApplicationRecord
     dash_url
   end
 
-  def migrate_to_storage
-    Video.transaction do
-      migrate_hls
-      migrate_dash
-    end
-  end
-
   def migrate_hls
     return if hls_url.blank?
 
     hls_data = Faraday.get(hls_url).body
-    hls_video.attach(
-      io: ::StringIO.new(hls_data),
-      filename: "video-hls-#{id}",
-    )
+    hls_video.attach(io: ::StringIO.new(hls_data), filename: "video-hls-#{id}")
   end
 
   def migrate_dash
