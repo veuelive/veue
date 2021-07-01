@@ -166,43 +166,18 @@ RSpec.describe Video, type: :model do
     describe "video migration" do
       # Use vod_video so we have hls / dash urls that are not nil
       let!(:video) { create(:vod_video) }
-      let(:response_struct) { Struct.new(:body) }
-      let(:response) { response_struct.new("Shhhh! Im pretending to be a video") }
-      let(:body) { response.body }
-
-      before(:each) do
-        allow(Faraday).to receive(:get).and_return(response)
-      end
 
       it "should attach an hls video" do
-        expect(Video.where(id: video.id).not_migrated_hls.count).to eq(1)
-        expect(Video.where(id: video.id).not_migrated_dash.count).to eq(1)
+        expect(Video.where(id: video.id).not_migrated.count).to eq(1)
 
-        expect(video.hls_video).not_to(be_attached)
-        video.migrate_hls
-        expect(video.hls_video).to be_attached
+        expect(video.mp4_video).not_to(be_attached)
 
-        blob_content = video.hls_video.blob.open(&:read)
-        expect(blob_content).to eq(body)
+        video.mp4_video.attach(io: ::StringIO.new("something something"), filename: "video.mp4")
 
-        expect(Video.where(id: video.id).not_migrated_hls.count).to eq(0)
-        expect(Video.where(id: video.id).not_migrated_dash.count).to eq(1)
-      end
+        expect(video.mp4_video).to be_attached
+        expect(video.mp4_video).to be_video
 
-      it "should attach a dash video" do
-        expect(Video.where(id: video.id).not_migrated_hls.count).to eq(1)
-        expect(Video.where(id: video.id).not_migrated_dash.count).to eq(1)
-        video.update!(dash_url: "/__test/vod/video.mpd")
-        expect(video.dash_video).not_to(be_attached)
-
-        video.migrate_dash
-        expect(video.dash_video).to be_attached
-
-        blob_content = video.dash_video.blob.open(&:read)
-        expect(blob_content).to eq(body)
-
-        expect(Video.where(id: video.id).not_migrated_hls.count).to eq(1)
-        expect(Video.where(id: video.id).not_migrated_dash.count).to eq(0)
+        expect(Video.where(id: video.id).not_migrated.count).to eq(0)
       end
     end
   end

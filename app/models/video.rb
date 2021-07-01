@@ -23,8 +23,7 @@ class Video < ApplicationRecord
   has_one_attached :primary_shot
   has_one_attached :secondary_shot
 
-  has_one_attached :hls_video
-  has_one_attached :dash_video
+  has_one_attached :mp4_video
 
   has_many :pins, dependent: :destroy
 
@@ -85,17 +84,10 @@ class Video < ApplicationRecord
   scope :public_videos, -> { where(visibility: "public") }
   scope :protected_videos, -> { where(visibility: "protected") }
 
-  scope :not_migrated_hls,
+  scope :not_migrated,
         -> {
           left_joins(
-            :hls_video_attachment,
-          ).finished.where(active_storage_attachments: {id: nil})
-        }
-
-  scope :not_migrated_dash,
-        -> {
-          left_joins(
-            :dash_video_attachment,
+            :mp4_video_attachment,
           ).finished.where(active_storage_attachments: {id: nil})
         }
 
@@ -202,18 +194,18 @@ class Video < ApplicationRecord
     dash_url
   end
 
-  def migrate_hls
+  def migrate_to_mp4
     return if hls_url.blank?
 
-    hls_data = Faraday.get(hls_url).body
-    hls_video.attach(io: ::StringIO.new(hls_data), filename: "video-hls-#{id}")
-  end
+    tempfile = ::Tempfile.new(["temp", ".mp4"])
 
-  def migrate_dash
-    return if dash_url.blank?
-
-    dash_data = Faraday.get(dash_url).body
-    dash_video.attach(io: ::StringIO.new(dash_data), filename: "video-dash-#{id}")
+    begin
+      system("ffmpeg -i ", hls_url, "-acodec copy -bsf:a aac_adtstoasc -vcodec copy ", tempfile.path)
+      mp4_video.attach(io: tempfile, filename: "video-#{id}.mp4")
+    ensure
+      tempfile.close
+      tempfile.unlink
+    end
   end
 
   private
