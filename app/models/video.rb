@@ -182,18 +182,6 @@ class Video < ApplicationRecord
     attach_primary_shot!(secondary_snapshot)
   end
 
-  def hls_video_url
-    return Router.url_for(hls_video) if hls_video.attached?
-
-    hls_url
-  end
-
-  def dash_video_url
-    return Router.url_for(dash_video) if dash_video.attached?
-
-    dash_url
-  end
-
   def migrate_to_mp4
     return if hls_url.blank?
 

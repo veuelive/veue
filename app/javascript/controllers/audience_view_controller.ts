@@ -42,7 +42,8 @@ export default class extends BaseController {
     const config = this.element.dataset;
     if (config.mp4Url) {
       this.remoteMediaProvider = new Mp4MediaProvider(config.mp4Url);
-    } else if (config.hlsUrl) {
+    }
+    if (config.hlsUrl) {
       this.remoteMediaProvider = new HlsMediaProvider(config.hlsUrl);
     } else if (config.phenixAuthToken) {
       this.remoteMediaProvider = new PhenixMediaProvider(
