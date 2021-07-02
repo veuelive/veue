@@ -40,10 +40,11 @@ export default class extends BaseController {
     }
 
     const config = this.element.dataset;
+
+    // Should we use Hls first?? Idk...let me know
     if (config.mp4Url) {
       this.remoteMediaProvider = new Mp4MediaProvider(config.mp4Url);
-    }
-    if (config.hlsUrl) {
+    } else if (config.hlsUrl) {
       this.remoteMediaProvider = new HlsMediaProvider(config.hlsUrl);
     } else if (config.phenixAuthToken) {
       this.remoteMediaProvider = new PhenixMediaProvider(
