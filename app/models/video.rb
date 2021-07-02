@@ -197,14 +197,16 @@ class Video < ApplicationRecord
   def migrate_to_mp4
     return if hls_url.blank?
 
-    tempfile = ::Tempfile.new(["temp", ".mp4"])
+    tempfile = ::Tempfile.new(["video", ".mp4"])
+    path = tempfile.path
+    tempfile.close
+    tempfile.unlink
 
     begin
-      system("ffmpeg -i ", hls_url, "-acodec copy -bsf:a aac_adtstoasc -vcodec copy ", tempfile.path)
-      mp4_video.attach(io: tempfile, filename: "video-#{id}.mp4")
+      system("ffmpeg", "-i", hls_url, "-acodec", "copy", "-bsf:a", "aac_adtstoasc", "-vcodec", "copy", path)
+      mp4_video.attach(io: File.open(tempfile), filename: "video-#{id}.mp4")
     ensure
-      tempfile.close
-      tempfile.unlink
+      File.delete(path)
     end
   end
 

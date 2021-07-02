@@ -3,11 +3,18 @@
 class MigrateVideoStorageJob < ApplicationJob
   queue_as :default
 
-  def perform(video_id)
+  def perform(video_id=nil)
+    if video_id.blank?
+      ids = Video.not_migrated.ids
+
+      ids.each { |id| MigrateVideoStorageJob.perform_later(id) }
+      return
+    end
+
     video = Video.find(video_id)
 
-    return if video.hls_video.attached? && video.dash_video.attached?
+    return if video.mp4_video.attached?
 
-    video.migrate_to_storage
+    video.migrate_to_mp4
   end
 end
