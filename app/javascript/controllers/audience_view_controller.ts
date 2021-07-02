@@ -7,6 +7,7 @@ import { postForm } from "util/fetch";
 import HlsMediaProvider from "helpers/remote_media_providers/hls_media_provider";
 import PhenixMediaProvider from "helpers/remote_media_providers/phenix_media_provider";
 import RemoteMediaProvider from "helpers/remote_media_providers/remote_media_provider";
+import Mp4MediaProvider from "helpers/remote_media_providers/mp4_media_provider";
 import VideoLayout from "types/video_layout";
 
 export default class extends BaseController {
@@ -39,7 +40,9 @@ export default class extends BaseController {
     }
 
     const config = this.element.dataset;
-    if (config.hlsUrl) {
+    if (config.mp4Url) {
+      this.remoteMediaProvider = new Mp4MediaProvider(config.mp4Url);
+    } else if (config.hlsUrl) {
       this.remoteMediaProvider = new HlsMediaProvider(config.hlsUrl);
     } else if (config.phenixAuthToken) {
       this.remoteMediaProvider = new PhenixMediaProvider(

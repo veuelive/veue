@@ -1,3 +1,5 @@
+- mp4_url = url_for(current_video.mp4_video) if current_video.mp4_video.attached?
+
 = content_for :title do
   = "#{current_video.title || 'Video'} - #{current_channel.name} - Veue"
 .content-area#video-show{
@@ -12,6 +14,7 @@
     "start-offset": current_video.start_offset,
     "end-offset": current_video.end_offset,
     "started-at-ms": current_video.started_at_ms,
+    "mp4-url": mp4_url,
     "hls-url": current_video.hls_video_url,
     "phenix": {
       "auth-token": Phenix::EdgeAuth.auth_token(current_channel),

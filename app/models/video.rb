@@ -88,7 +88,7 @@ class Video < ApplicationRecord
         -> {
           left_joins(
             :mp4_video_attachment,
-          ).finished.where(active_storage_attachments: {id: nil})
+          ).finished.where(active_storage_attachments: {id: nil}).where.not(hls_url: nil)
         }
 
   def self.visibilities_legend
