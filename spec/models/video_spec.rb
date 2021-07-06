@@ -162,5 +162,23 @@ RSpec.describe Video, type: :model do
         expect(video).to eq(trending_this_month[index])
       end
     end
+
+    describe "video migration" do
+      # Use vod_video so we have hls / dash urls that are not nil
+      let!(:video) { create(:vod_video) }
+
+      it "should attach an hls video" do
+        expect(Video.where(id: video.id).not_migrated.count).to eq(1)
+
+        expect(video.mp4_video).not_to(be_attached)
+
+        video.mp4_video.attach(io: ::StringIO.new("something something"), filename: "video.mp4")
+
+        expect(video.mp4_video).to be_attached
+        expect(video.mp4_video).to be_video
+
+        expect(Video.where(id: video.id).not_migrated.count).to eq(0)
+      end
+    end
   end
 end

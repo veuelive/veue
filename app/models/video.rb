@@ -23,6 +23,8 @@ class Video < ApplicationRecord
   has_one_attached :primary_shot
   has_one_attached :secondary_shot
 
+  has_one_attached :mp4_video
+
   has_many :pins, dependent: :destroy
 
   has_many :mux_webhooks, dependent: :nullify
@@ -81,6 +83,13 @@ class Video < ApplicationRecord
   scope :private_videos, -> { where(visibility: "private") }
   scope :public_videos, -> { where(visibility: "public") }
   scope :protected_videos, -> { where(visibility: "protected") }
+
+  scope :not_migrated,
+        -> {
+          left_joins(
+            :mp4_video_attachment,
+          ).finished.where(active_storage_attachments: {id: nil}).where.not(hls_url: nil)
+        }
 
   def self.visibilities_legend
     {
@@ -171,6 +180,22 @@ class Video < ApplicationRecord
     return if secondary_snapshot&.image&.blob.nil?
 
     attach_primary_shot!(secondary_snapshot)
+  end
+
+  def migrate_to_mp4
+    return if hls_url.blank?
+
+    tempfile = ::Tempfile.new(["video", ".mp4"])
+    path = tempfile.path
+    tempfile.close
+    tempfile.unlink
+
+    begin
+      system("ffmpeg", "-i", hls_url, "-acodec", "copy", "-bsf:a", "aac_adtstoasc", "-vcodec", "copy", path)
+      mp4_video.attach(io: File.open(tempfile), filename: "video-#{id}.mp4")
+    ensure
+      File.delete(path)
+    end
   end
 
   private
