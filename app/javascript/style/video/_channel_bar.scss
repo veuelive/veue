@@ -57,8 +57,6 @@
     }
 
     @include smallTall() {
-      margin: 15px 10px;
-
       position: absolute;
 
       &.hide-element {
