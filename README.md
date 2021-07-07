@@ -1,21 +1,35 @@
 # Veue
 
-### Quick Links
+## Background
 
-- Production:
+This is a fully featured rails application, built for a startup called Veue that folded in July of 2021.
+The goal of the startup was to build a low-latency, realtime interactive streaming service. "Twitch for everyone!"
 
-  - [Site](https://www.veue.tv)
-  - [SideKiq UI](https://www.veue.tv/_/_/sidekiq)
-  - [Render Service](https://dashboard.render.com/web/srv-bukoj3m9ph1hqurcua20)
-  - [APM](https://appsignal.com/veue/sites/5f1b3af314ad66221c331630/dashboard)
-  - [Logs](https://app.logdna.com/e4202f546b/logs/view/560b2cfe31)
+While the service was live, we hosted over 100 live shows, with 11,000 chat messages, and 1,100
+HOURS of audiences watching shows.
 
-- Stage
-  - [Site](https://preshow.veue.tv)
-  - [SideKiq UI](https://prewshow.veue.tv/_/_/sidekiq)
-  - [Render Service](https://dashboard.render.com/web/srv-bv4jnvgn4r071o276gbg)
-  - [APM](https://appsignal.com/veue/sites/5f9c4d5c7478205001c50b2a/dashboard)
-  - [Logs](https://app.logdna.com/e4202f546b/logs/view/9603e9e850)
+1,760 commits by primarily 3 main developers into this Rails application over ~10 months: [@hcatlin](https://github.com/hcatlin),
+[@ParamagicDev](https://github.com/ParamagicDev), and [@Sirbuland](https://github.com/Sirbuland)
+
+As we are shutting down the company, we decided that since we weren't going to sell off the assets
+that we may as well just share what we built with the world– as long as you know how to read Ruby.
+
+There aren't many "mature" Rails applications out there by experienced dev teams that people can look
+at and so we thought we'd share what we had!
+
+As the project is, it requires access to the [Phenix Live Streaming](https://phenixrts.com/en-us/) platform,
+which at release requires an agreement with them. In this version, you can stream with low-latency
+right from a modern browser.
+
+Previous, there was code that used MUX + an Electron app called the [Broadcaster](https://github.com/veuelive/veue/tree/223357d272bfd48c3b2ea7a8fe0a1d9177798697/broadcaster)
+to send an RTMP feed to Mux, which has self-service sign up. Ideally, if this were to be used by
+other people, we should go with a service that allows quick signup and credit card payments, but for
+now we're leaving the main branch as-is.
+
+It's maybe-but-probably not worth it to run this yourself, but who knows.... better to put it out there
+than have it just blink out of existence!
+
+Also, don't judge us too hard! We did our best to code a great product as quickly as we could!
 
 ## Introduction
 
