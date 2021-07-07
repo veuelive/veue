@@ -12,12 +12,11 @@ export default class extends Controller {
     "messageReaction",
     "linkShare",
   ];
-  element: HTMLElement;
-  private linkShareTarget!: HTMLElement;
-  private messageInputTarget!: HTMLInputElement;
-  private messageSendTarget!: HTMLDivElement;
-  private messageReactionTarget!: HTMLDivElement;
-  private lastMessageFromUserId: string;
+  private declare linkShareTarget: HTMLElement;
+  private declare messageInputTarget: HTMLInputElement;
+  private declare messageSendTarget: HTMLDivElement;
+  private declare messageReactionTarget: HTMLDivElement;
+  private declare lastMessageFromUserId: string;
   private userId: string;
 
   connect(): void {

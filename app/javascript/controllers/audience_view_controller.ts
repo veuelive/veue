@@ -19,12 +19,12 @@ export default class extends BaseController {
     "timeDisplay",
   ];
 
-  readonly videoTarget!: HTMLVideoElement;
-  readonly likeNotificationTarget!: HTMLElement;
-  readonly primaryCanvasTarget!: HTMLCanvasElement;
-  readonly fixedSecondaryCanvasTarget!: HTMLCanvasElement;
-  readonly pipSecondaryCanvasTarget!: HTMLCanvasElement;
-  readonly timeDisplayTarget!: HTMLElement;
+  declare readonly videoTarget: HTMLVideoElement;
+  declare readonly likeNotificationTarget: HTMLElement;
+  declare readonly primaryCanvasTarget: HTMLCanvasElement;
+  declare readonly fixedSecondaryCanvasTarget: HTMLCanvasElement;
+  declare readonly pipSecondaryCanvasTarget: HTMLCanvasElement;
+  declare readonly timeDisplayTarget: HTMLElement;
 
   private broadcastLayout: VideoLayout;
   private videoDemixer: VideoDemixer;
@@ -38,7 +38,6 @@ export default class extends BaseController {
     if (isProduction()) {
       startMuxData();
     }
-
     const config = this.element.dataset;
 
     // Should we use Hls first?? Idk...let me know

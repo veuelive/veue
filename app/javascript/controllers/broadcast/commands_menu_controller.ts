@@ -5,11 +5,10 @@ export const CloseMenuEvent = "CloseMenu";
 export const ResetMenuEvent = "ResetMenu";
 
 export default class extends Controller {
-  element!: HTMLElement;
-
+  declare element: HTMLElement;
   static targets = ["menuItems"];
 
-  private menuItemsTarget!: HTMLElement;
+  private declare menuItemsTarget: HTMLElement;
 
   connect(): void {
     document.addEventListener(ShowMenuEvent, this.showMenuHandler.bind(this));
@@ -30,7 +29,6 @@ export default class extends Controller {
       this.closeMenu();
     } else {
       if (this.type) this.element.classList.remove(this.type);
-
       this.element.classList.add(data.type);
       this.element.style.display = "flex";
       this.type = data.type;

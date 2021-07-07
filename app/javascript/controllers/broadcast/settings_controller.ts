@@ -8,9 +8,9 @@ export const ShowSettingsMenuEvent = "ShowSettingsMenu";
 export default class SettingsController extends DropdownController {
   static targets = ["form", "visibility", "settingsTab"];
 
-  private readonly formTarget!: HTMLFormElement;
-  private readonly visibilityTarget!: HTMLSelectElement;
-  private readonly settingsTabTarget!: HTMLElement;
+  private declare readonly formTarget: HTMLFormElement;
+  private declare readonly visibilityTarget: HTMLSelectElement;
+  private declare readonly settingsTabTarget: HTMLElement;
 
   connect(): void {
     super.connect();

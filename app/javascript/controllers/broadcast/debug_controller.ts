@@ -3,7 +3,7 @@ import { DebugKeyEvent } from "types/keyboard_mapping";
 
 export default class extends Controller {
   static targets = ["debugArea"];
-  private debugAreaTarget!: HTMLElement;
+  private declare debugAreaTarget: HTMLElement;
   hidden = true;
   private debugKeyListener: () => void;
   private environmentListener: (event: CustomEvent) => void;

@@ -14,12 +14,12 @@ export default class extends BaseController {
     "linkShare",
   ];
 
-  readonly linkShareTargets!: HTMLElement[];
-  readonly modalTarget!: HTMLElement;
-  readonly submitButtonTarget!: HTMLButtonElement;
-  readonly formTarget!: HTMLFormElement;
-  readonly secretCodeInputTarget!: HTMLInputElement;
-  readonly nameInputTarget!: HTMLInputElement;
+  declare readonly linkShareTargets: HTMLElement[];
+  declare readonly modalTarget: HTMLElement;
+  declare readonly submitButtonTarget: HTMLButtonElement;
+  declare readonly formTarget: HTMLFormElement;
+  declare readonly secretCodeInputTarget: HTMLInputElement;
+  declare readonly nameInputTarget: HTMLInputElement;
   private iti: IntlTelInput.Plugin;
 
   connect(): void {

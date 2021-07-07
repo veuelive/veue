@@ -1,9 +1,9 @@
 module.exports = function (api) {
-  var validEnv = ["development", "test", "production"];
-  var currentEnv = api.env();
-  var isDevelopmentEnv = api.env("development");
-  var isProductionEnv = api.env("production");
-  var isTestEnv = api.env("test");
+  let validEnv = ["development", "test", "production"];
+  let currentEnv = api.env();
+  let isDevelopmentEnv = api.env("development");
+  let isProductionEnv = api.env("production");
+  let isTestEnv = api.env("test");
 
   if (!validEnv.includes(currentEnv)) {
     throw new Error(
@@ -39,6 +39,14 @@ module.exports = function (api) {
     plugins: [
       "babel-plugin-macros",
       "@babel/plugin-syntax-dynamic-import",
+      [
+        "@babel/plugin-transform-typescript",
+        {
+          allExtensions: true,
+          isTSX: true,
+          allowDeclareFields: true,
+        },
+      ],
       isTestEnv && "babel-plugin-dynamic-import-node",
       ["transform-react-jsx", { pragma: "h" }],
       "@babel/plugin-transform-destructuring",
