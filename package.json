@@ -28,7 +28,7 @@
     "jest-fetch-mock": "^3.0.3",
     "mobile-drag-drop": "^2.3.0-rc.2",
     "mux-embed": "^3.4.1",
-    "node-fetch": "2.6.1",
+    "node-fetch": "3.1.1",
     "phenix-edge-auth": "hcatlin/EdgeAuth.git#master",
     "phenix-web-sdk": "^2021.0.9",
     "preact": "^10.5.13",
