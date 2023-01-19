@@ -157,7 +157,7 @@ GEM
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
     childprocess (3.0.0)
-    concurrent-ruby (1.1.8)
+    concurrent-ruby (1.1.10)
     connection_pool (2.2.3)
     crack (0.4.5)
       rexml
@@ -202,8 +202,8 @@ GEM
     formtastic_i18n (0.6.0)
     friendly_id (5.4.2)
       activerecord (>= 4.0.0)
-    globalid (0.4.2)
-      activesupport (>= 4.2.0)
+    globalid (1.0.1)
+      activesupport (>= 5.0)
     haml (5.2.1)
       temple (>= 0.8.0)
       tilt
@@ -222,7 +222,7 @@ GEM
       haml (>= 4.0, < 6)
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
-    i18n (1.8.10)
+    i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.1)
       mini_magick (>= 4.9.5, < 5)
@@ -268,7 +268,7 @@ GEM
     mini_magick (4.11.0)
     mini_mime (1.0.3)
     mini_portile2 (2.5.1)
-    minitest (5.14.4)
+    minitest (5.17.0)
     msgpack (1.4.2)
     multipart-post (2.1.1)
     mux_ruby (1.9.0)
@@ -439,7 +439,7 @@ GEM
       nokogiri (>= 1.6, < 2.0)
     typhoeus (1.4.0)
       ethon (>= 0.9.0)
-    tzinfo (2.0.4)
+    tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2021.1)
       tzinfo (>= 1.0.0)
@@ -473,7 +473,7 @@ GEM
       rails (>= 3.2.16)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.4.2)
+    zeitwerk (2.6.6)
 
 PLATFORMS
   ruby
